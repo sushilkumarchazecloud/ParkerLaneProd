@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help></help>
+    <label></label>
+    <name>Certificate_of_Currency__c</name>
+    <picklistValues>
+        <masterLabel>Received from client</masterLabel>
+        <translation></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Request sent to client</masterLabel>
+        <translation></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Sent to incoming lender</masterLabel>
+        <translation></translation>
+    </picklistValues>
+</CustomFieldTranslation>
