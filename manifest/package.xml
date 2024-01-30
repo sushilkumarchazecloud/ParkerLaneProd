@@ -532,10 +532,10 @@
         <members>*</members>
         <name>StandardValueSetTranslation</name>
     </types>
-    <!--<types>
+    <types>
         <members>*</members>
         <name>StaticResource</name>
-    </types>-->
+    </types>
     <types>
         <members>*</members>
         <name>SynonymDictionary</name>
