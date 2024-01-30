@@ -4,5 +4,9 @@
         <plural>false</plural>
         <value>계정-계정 관계</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>WM_Household_RelatedAccounts</name>
+    </fieldSets>
     <nameFieldLabel>계정 관계 이름</nameFieldLabel>
 </CustomObjectTranslation>

@@ -40,6 +40,14 @@
         <plural>true</plural>
         <value>Finanzbeteiligungen</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>WM_Client_FinancialHolding</name>
+    </fieldSets>
+    <fieldSets>
+        <label></label>
+        <name>WM_Household_FinancialHolding</name>
+    </fieldSets>
     <gender>Feminine</gender>
     <nameFieldLabel>Name für Finanzbeteiligung</nameFieldLabel>
 </CustomObjectTranslation>

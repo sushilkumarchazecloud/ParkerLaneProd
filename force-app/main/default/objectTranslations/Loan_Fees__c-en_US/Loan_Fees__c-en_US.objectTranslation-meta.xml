@@ -8,5 +8,27 @@
         <plural>true</plural>
         <value>Loan Fees</value>
     </caseValues>
+    <layouts>
+        <layout>Loan Fees Layout</layout>
+        <sections>
+            <label></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Quote Loan Fees</layout>
+        <sections>
+            <label></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <recordTypes>
+        <label></label>
+        <name>Product_Loan_Fees</name>
+    </recordTypes>
+    <recordTypes>
+        <label></label>
+        <name>Quote_Loan_Fees</name>
+    </recordTypes>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

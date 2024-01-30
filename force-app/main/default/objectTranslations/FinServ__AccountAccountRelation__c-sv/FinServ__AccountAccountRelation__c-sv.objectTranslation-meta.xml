@@ -30,6 +30,10 @@
         <plural>true</plural>
         <value>Konto-till-konto-relationer</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>WM_Household_RelatedAccounts</name>
+    </fieldSets>
     <gender>Feminine</gender>
     <nameFieldLabel>Namn på kontorelation</nameFieldLabel>
 </CustomObjectTranslation>

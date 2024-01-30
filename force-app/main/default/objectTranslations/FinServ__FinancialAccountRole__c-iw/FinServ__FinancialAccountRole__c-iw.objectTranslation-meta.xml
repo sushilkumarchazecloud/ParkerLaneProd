@@ -20,6 +20,10 @@
         <plural>true</plural>
         <value>תפקידים בחשבונות פיננסיים</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>WM_Client_FinancialAccountRole</name>
+    </fieldSets>
     <gender>Masculine</gender>
     <nameFieldLabel>מספר תפקיד</nameFieldLabel>
 </CustomObjectTranslation>

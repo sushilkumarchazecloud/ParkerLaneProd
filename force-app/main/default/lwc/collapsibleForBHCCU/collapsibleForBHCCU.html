@@ -1,0 +1,87 @@
+<template>
+    <lightning-card>
+        <template if:true={quoterecord}>     
+            <lightning-accordion class="BHCCUaccordian" allow-multiple-sections-open                           
+                           style="margin-right: 7px" >
+                <lightning-accordion-section name="A" label="TAX FILE NUMBER" class="fontFamBold" style="border-top: 1px solid rgb(201, 201, 201); ">                     
+                    <div class="margin_Cls">
+                        <p class="text2 fontFamreg" >Collection of Tax File Number (TFN) information is authorised and its use and disclosure are strictly regulated by the tax laws and the Privacy Act.  We will ask you whether you want to disclose your Tax File Number or exemption. If you disclose it, we will note your TFN against any account you activate. You do not have to disclose your TFN to us. If you do not, tax may be taken out from interest paid on your deposit accounts. For a joint account, each holder must quote their TFN and/or exemptions, otherwise withholding tax applies to all interest earned on the joint account.</p>       
+                    </div>
+                </lightning-accordion-section>
+                <lightning-accordion-section name="B" label="DECLARATION" class="fontFamBold"> 
+                    <div class="margin_Cls">
+                        <p class="text2 fontFamreg">I declare that the information relating to my personal details provided to be true and correct. I acknowledge it is an offence under the Anti-Money Laundering and Counter Terrorism Financing Act 2006 to give false and misleading information.</p> 
+                    </div>
+                </lightning-accordion-section>
+                <lightning-accordion-section name="C" label="PRIVACY AND ACKNOWLEDGMENT" class="fontFamBold"> 
+                    <div class="margin_Cls">
+                        <p class="text2 fontFamreg" >I acknowledge receipt of a copy of BHCCU’s Account and Access Facility Conditions of Use, Privacy Policy, Fees and Charges and Financial Services Guide, which are obtainable from our website <a href="www.bhccu.com.au">www.bhccu.com.au</a>.</p>  
+                    </div> 
+                </lightning-accordion-section>
+                <lightning-accordion-section name="D" label="CONSENT TO ELECTRONIC IDENTIFICATION" class="fontFamBold" > 
+                    <div class="margin_Cls fontFamreg">
+                        <p class="text2" >We are required under the Anti-Money Laundering and Counter-Terrorism Financing Act, to collect and verify information relating to your identity. </p>
+                        <p class="text2 margin_Cls">Subject to your consent, we will disclose your name, address and date of birth to external organisations in order to electronically match your information with information on their databases.  These organisations will assess and advise us whether all or some of the information you provided matches their records.  We have an arrangement with Equifax Pty Ltd who completes electronic verification on our behalf.</p>
+                        <p class="text2 margin_Cls">The external data sources used to verify your identity include: </p>
+                        <ul class="slds-list_dotted text2">
+                            <li>Credit information files held by Equifax Pty Ltd (this is only to confirm your identity and is not a credit check)</li>
+                            <li>Publicly available information such as the electoral roll and white pages</li>
+                            <li>Information held by the official record holder via third party systems.</li>
+                        </ul>
+                        <p class="text2 margin_Cls">We will share your personal information with the following external organisations for the purpose of verifying your identity;</p>
+                        <ul class="slds-list_dotted text2">
+                            <li>Equifax Pty Ltd</li>
+                            <li>The Australian Government’s Document Verification Service (DVS)</li>
+                        </ul>
+                        <p class="text2 margin_Cls">If you do not wish BHCCU to provide your personal information to the external organisations listed above we will not be able to verify your identity electronically.  Please contact BHCCU on (08) 8088 2199 for information on alternative ways we can verify your identity.</p>
+                        <p class="text2 margin_Cls">Further information about how we collect and handle personal information is available in our Privacy Policy located on our website <a href="www.bhccu.com.au.">www.bhccu.com.au.</a></p>
+                        <p class="text2 margin_Cls">By agreeing to these terms and conditions you agree that;</p>
+                        <ul class="slds-list_dotted text2">
+                            <li>The information you are providing is your personal information and you have authority to provide it to us; and</li>
+                            <li>We may use and disclose your personal information for the purposes of electronic verification as described above.</li>
+                        </ul>
+                    </div>
+                </lightning-accordion-section>
+                <lightning-accordion-section name="E" label="CONSENT FOR ELECTRONIC DELIVERY OF STATEMENTS AND NOTICES" class="fontFamBold"> 
+                    <div class="margin_Cls fontFamreg">
+                        <p class="text2">Please use my email address:</p>
+                        <ul class="slds-list_dotted text2">
+                            <li>to send me statements and notices for all my banking and loan accounts; or</li>
+                            <li>to tell me that they are available to view or download from your internet banking site.</li>
+                            <p class="text2 margin_Cls">I understand that:</p>
+                            <li>you will stop posting me paper statements and notices</li>
+                            <li>I need to check my emails regularly</li>
+                            <li>I can revert to paper statements and notices in the post at any time
+                            </li>
+                        </ul>
+                    </div>
+                </lightning-accordion-section>
+                <lightning-accordion-section class="fontFamBold" name="F" label="CONSENT FOR ELECTRONIC DELIVERY OF NATIONAL CREDIT CODE DOCUMENTS" > 
+                <div class="margin_Cls fontFamreg">
+                    <p class="text2">I consent to your giving me documents such as loan offers (in the form of a contract for me to accept), statements and notices electronically.</p>
+                    <p class="text2 margin_Cls">For loan documents, I understand that you must sign any loan offer you make to me.</p>
+                    <p class="text2 margin_Cls">I consent to that requirement being met by your attaching the offer document to an email addressed to me.</p>
+                    <p class="text2 margin_Cls">THE EMAIL ADDRESS TO BE USED FOR ELECTRONIC DELIVERY WILL BE THE ADDRESS THAT YOU HAVE SUPPLIED IN THIS APPLICATION:  <b>{condata.Email}</b></p>
+                    <p class="text2 margin_Cls">I acknowledge that by signing this consent:</p>
+                    <ul class="slds-list_dotted text2">
+                        <li>I may no longer be given paper documents;</li>
+                        <li>I must regularly check electronic communications for documents;</li>
+                        <li>I may withdraw this consent to receive documents by electronic communication at any time.</li>
+                    </ul>
+                </div>
+                </lightning-accordion-section>
+                 <lightning-accordion-section class="fontFamBold" name="F" label="BHCCU DETAILS" style="border-bottom: 1px solid rgb(201, 201, 201);"> 
+                <div class="margin_Cls fontFamreg">
+                    <p class="text2">The Broken Hill Community Credit Union Ltd<br/>Branch Address: 2 Chloride St Broken Hill NSW 2880.</p>
+                    <p class="text2">Mail Address: PO Box 294 Broken Hill NSW 2880  </p>
+                    <p class="text2">Phone Number: (08) 8088 2199</p>
+                    <p class="text2">Website: <a href="www.bhccu.com.au">www.bhccu.com.au</a></p>
+                    <p class="text2">ABN: 12 087 650 762</p>
+                    <p class="text2">AFSL/ACL:  238020</p>
+                    <p class="text2">BSB:  802-377</p>                
+                </div>
+                </lightning-accordion-section>
+            </lightning-accordion>
+        </template>
+    </lightning-card>
+</template>

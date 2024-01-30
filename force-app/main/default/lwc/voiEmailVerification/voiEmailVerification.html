@@ -1,0 +1,93 @@
+<template>
+    <div if:true={showSpinMain}>
+        <div class="exampleHolder">
+            <lightning-spinner alternative-text="Loading" size="large" class="slds-is-fixed" variant="brand" style="background-color:#ced3db;"></lightning-spinner>
+        </div>
+    </div>
+    <c-generic-header></c-generic-header>       
+     <div class="main_cont bg-lightest slds-p-horizontal--medium">              
+        <div class="max-700 slds-p-around_small" if:false={isEmailVerified} >
+            <div if:true={showErrormsg}>
+                <p class="errorText slds-m-top_x-large fontFamreg">Some thing went wrong! please contact to admin.</p>
+            </div>
+            <div class="slds-align_absolute-center">
+                <img src={emailHead} style="width : 50%;"/>
+            </div>
+            <p class="slds-m-top_x-large fontFamBold" style="color: #1a2745; font-size: 1.85rem;"><b>Verify your email address</b></p>
+            <img src={emailImg} style="height: 40px;margin-top: 20px;"/>
+            <p class="slds-m-top_x-small fontFamreg" style="color: #1a2745; font-size: 1rem;font-weight: 400;">Enter the 4-digit verification code we sent to {applicantEmail}.</p>
+            <div class="slds-grid slds-wrap">
+                <div class="slds-size_8-of-12 slds-medium-size_4-of-12 slds-large-size_4-of-12" style="display: flex;">
+                    <div align="left" class="slds-col" style="padding-right : 0px !important">
+                    <lightning-input class="box-sz fontFamreg" type="number"  maxlength="1" data-id="one" onkeyup={moveNext}></lightning-input>
+                    </div>
+                    <div align="left" class="slds-col" style="padding-right : 0px !important">
+                    <lightning-input class="box-sz fontFamreg" type="number"  maxlength="1" data-id="two" onkeyup={moveNext2}></lightning-input>
+                    </div>
+                    <div align="left" class="slds-col" style="padding-right : 0px !important">
+                    <lightning-input class="box-sz fontFamreg" type="number"  maxlength="1" data-id="three" onkeyup={moveNext3}></lightning-input>
+                    </div>
+                    <div align="left" class="slds-col" style="padding-right : 0px !important">
+                    <lightning-input class="box-sz fontFamreg" type="number"  maxlength="1" data-id="four" onkeyup={moveNext4}></lightning-input>
+                    </div>
+                </div>
+                <div class={incorrectOtp}>
+                    <p class="otpincorrect fontFamBold">OTP is Incorrect.</p>
+                </div>
+            </div>            
+            <div class="slds-m-top_x-large">
+                <div class="slds-grid slds-wrap">
+                    <div style="width: fit-content;height: 2rem" class="slds-align_absolute-left slds-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                        <lightning-button variant="base" label="Click here to resend verification code" class="baseBtn1" onclick={sendVerification}></lightning-button>    
+                    </div>
+                    <div if:false={mailSent} class="slds-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12" >
+                        <div if:true={codeSentSpinner}  style="height: 3rem;">
+                            <lightning-spinner alternative-text="Loading" size="medium"  variant="brand" class="spinnerBTn" ></lightning-spinner>
+                        </div>
+                    </div>
+                    <div if:true={mailSent} class="slds-align_absolute-left slds-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12">                        
+                        <p class="successMsg fontFamBold" >VERIFICATION CODE SENT <img src={greenTick} style="position : relative; bottom: 3px; right: 3px;"/></p>
+                    </div>    
+                </div>  
+                <div class="slds-m-top_small fontFamreg" style="font-size: 1rem; color: #1a2745;">        
+                    <span>Didn't receive the code? Check your spam folder or&nbsp;<a href="javascript:void(0);" onclick={alternateEmail} style="font-size: 16px; color: #1a2745;" class="fontFamBold"><b><u>Click here to try a different email address.</u></b></a></span>
+                </div>
+            </div>
+            <template if:true={isCheck}>
+                <div>
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-m-top_x-large" onkeypress={checkForEnter}>
+                            <label class="fontFamBold" style="font-weight: bold;font-size: 1rem; color : #1a2745; position: relative; top : 3px;">Enter your alternate email address here</label>
+                            <lightning-input type="text" data-id="txtEmailAddress" onchange={handleEmailChange} 
+                                class="input_Email"></lightning-input>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-wrap slds-m-top_x-large">
+                        <div  style="width: fit-content" class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                            <div if:false={flag}>
+                                <div class="sendCode fontFamBold">
+                                    <button type="button" disabled>SEND VERIFICATION CODE</button>
+                                </div>
+                            </div>
+                            <div if:true={flag}>
+                                <lightning-button class="sendCodeGreen fontFamBold" variant="success" label="SEND VERIFICATION CODE" onclick={sendcodeonEmail} title="" ></lightning-button>
+                            </div>
+                        </div>
+                        <div class="slds-align_absolute-left slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                            <div if:true={emailSentOn}  style="height: 3rem;">
+                                <lightning-spinner alternative-text="Loading" size="medium"  variant="brand" class="spinnerOther" ></lightning-spinner>
+                            </div>
+                            <div if:true={emailSentsuccess} class="slds-m-top_x-small slds-align_absolute-left">                        
+                                <p class="successAnother fontFamBold" >VERIFICATION CODE SENT <img src={greenTick} style="position : relative; bottom: 3px; right: 3px;"/></p>
+                            </div>
+                        </div>                        
+                    </div>                
+                </div>
+            </template>    
+        </div>         
+     </div> 
+    <div if:true={isEmailVerified}>
+        <c-new-dl-sections authtoken={authToken} oncallparentforvideo={callforvideo} opprec={oppRecord} quotrec={quoteRecord} conrec={conRecord} voist={voiStatus} empone={emp1} emptwo={emp2} voidetail={VOIdetail}></c-new-dl-sections>
+    </div>
+      <br/><br/><br/><br/><br/><br/>
+</template>

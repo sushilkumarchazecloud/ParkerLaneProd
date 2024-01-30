@@ -4,5 +4,17 @@
         <plural>false</plural>
         <value>자산 및 부채</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>FS_Community_Assets_Liabilities</name>
+    </fieldSets>
+    <fieldSets>
+        <label></label>
+        <name>WM_Client_Assets_Liabilities</name>
+    </fieldSets>
+    <fieldSets>
+        <label></label>
+        <name>WM_Household_Assets_Liabilities</name>
+    </fieldSets>
     <nameFieldLabel>자산 또는 부채 이름</nameFieldLabel>
 </CustomObjectTranslation>

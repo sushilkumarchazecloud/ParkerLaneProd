@@ -20,6 +20,10 @@
         <plural>true</plural>
         <value>קשרי חשבון-חשבון</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>WM_Household_RelatedAccounts</name>
+    </fieldSets>
     <gender>Masculine</gender>
     <nameFieldLabel>שם קשר חשבון</nameFieldLabel>
 </CustomObjectTranslation>

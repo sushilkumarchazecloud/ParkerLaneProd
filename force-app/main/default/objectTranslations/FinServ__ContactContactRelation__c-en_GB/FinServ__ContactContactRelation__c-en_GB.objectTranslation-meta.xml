@@ -8,6 +8,14 @@
         <plural>true</plural>
         <value>Contact Contact Relations</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>WM_Client_RelatedContacts</name>
+    </fieldSets>
+    <fieldSets>
+        <label></label>
+        <name>WM_Household_RelatedContacts</name>
+    </fieldSets>
     <nameFieldLabel>Contact Relation Name</nameFieldLabel>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

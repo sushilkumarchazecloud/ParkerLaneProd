@@ -8,6 +8,10 @@
         <plural>true</plural>
         <value>Account Account Relations</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>WM_Household_RelatedAccounts</name>
+    </fieldSets>
     <nameFieldLabel>Account Relation Name</nameFieldLabel>
     <startsWith>Vowel</startsWith>
 </CustomObjectTranslation>

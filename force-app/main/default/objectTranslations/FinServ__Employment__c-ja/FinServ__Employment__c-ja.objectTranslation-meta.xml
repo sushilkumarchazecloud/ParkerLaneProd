@@ -4,5 +4,9 @@
         <plural>false</plural>
         <value>雇用</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>FS_Community_Employment</name>
+    </fieldSets>
     <nameFieldLabel>雇用主の名前</nameFieldLabel>
 </CustomObjectTranslation>

@@ -1,5 +1,155 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldSets>
+        <label></label>
+        <name>Dependent_Child</name>
+    </fieldSets>
+    <fieldSets>
+        <label></label>
+        <name>FSC_Banker_Profile_Fin_Acct_Summary</name>
+    </fieldSets>
+    <fieldSets>
+        <label></label>
+        <name>FS_Living_Situation</name>
+    </fieldSets>
+    <fieldSets>
+        <label></label>
+        <name>FS_Related_Record</name>
+    </fieldSets>
+    <fieldSets>
+        <label></label>
+        <name>Living_Expenses</name>
+    </fieldSets>
+    <fieldSets>
+        <label></label>
+        <name>MC4SF__Account_Filter_Fields</name>
+    </fieldSets>
+    <fieldSets>
+        <label></label>
+        <name>Risk_Assessment</name>
+    </fieldSets>
+    <fieldSets>
+        <label></label>
+        <name>WM_Client_Profile_Fin_Acct_Summary</name>
+    </fieldSets>
+    <fieldSets>
+        <label></label>
+        <name>WM_Client_Profile_Relations_HH_Summary</name>
+    </fieldSets>
+    <fieldSets>
+        <label></label>
+        <name>WM_Client_Relationship_Group_Members</name>
+    </fieldSets>
+    <fieldSets>
+        <label></label>
+        <name>WM_Client_Relationship_Groups</name>
+    </fieldSets>
+    <layouts>
+        <layout>Account Layout</layout>
+        <sections>
+            <label></label>
+            <section>Account Summary</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Additional Information</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Corp. Credit Rep Details</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>New Section</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Referral Fees</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Referrer Details</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Account-Business Referral</layout>
+        <sections>
+            <label></label>
+            <section>Additional Information</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Corp. Credit Rep Details</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>New Section</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Referral Fees</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Referral Information</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Referrer Details</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Person Account Layout</layout>
+        <layoutType>PersonAccount</layoutType>
+        <sections>
+            <label></label>
+            <section>Additional Information</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Current Address</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Financial Summary</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Identity Infotmation</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Living Expenses</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Postal Address</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Preferences</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Previous Address 1</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Previous Address 2</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Referral Information</section>
+        </sections>
+    </layouts>
     <quickActions>
         <label></label>
         <name>Child_Account</name>
@@ -20,4 +170,96 @@
         <label></label>
         <name>test_who_is_applying</name>
     </quickActions>
+    <recordTypes>
+        <description></description>
+        <label></label>
+        <name>FinServ__IndustriesBusiness</name>
+    </recordTypes>
+    <recordTypes>
+        <description></description>
+        <label></label>
+        <name>FinServ__IndustriesHousehold</name>
+    </recordTypes>
+    <recordTypes>
+        <description></description>
+        <label></label>
+        <name>FinServ__IndustriesIndividual</name>
+    </recordTypes>
+    <recordTypes>
+        <description></description>
+        <label></label>
+        <name>FinServ__IndustriesInstitution</name>
+    </recordTypes>
+    <recordTypes>
+        <label></label>
+        <name>Lender</name>
+    </recordTypes>
+    <recordTypes>
+        <label></label>
+        <name>Referrer_Business</name>
+    </recordTypes>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>FinServ__NonPortalUserReferrer</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>FinServ__NotAllowingConversionFromIndividual</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>FinServ__NotAllowingConversionToIndividual</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage></errorMessage>
+        <name>FinServ__SingleReferredByEntryByRecord</name>
+    </validationRules>
+    <webLinks>
+        <label></label>
+        <name>FinServ__AddMember</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>FinServ__AddRelation</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>GoogleMaps</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>GoogleNews</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>GoogleSearch</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>MC4SF__MailChimp_Subscriptions</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>dsfs__Send_with_DocuSign</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>mercury__SMS_Feed</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>mercury__Send_SMS</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>pi__Send_Pardot_Emails</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>pi__Send_Single_Pardot_Email</name>
+    </webLinks>
+    <webLinks>
+        <label></label>
+        <name>pi__Send_To_Prospect_Insight</name>
+    </webLinks>
 </CustomObjectTranslation>

@@ -8,6 +8,10 @@
         <plural>true</plural>
         <value>Ruoli account finanziario</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>WM_Client_FinancialAccountRole</name>
+    </fieldSets>
     <gender>Masculine</gender>
     <nameFieldLabel>Numero ruolo</nameFieldLabel>
     <startsWith>Consonant</startsWith>

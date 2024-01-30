@@ -8,6 +8,10 @@
         <plural>true</plural>
         <value>Levensgebeurtenissen</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>LifeEventRequired</name>
+    </fieldSets>
     <gender>Feminine</gender>
     <nameFieldLabel>Naam van levensgebeurtenis</nameFieldLabel>
 </CustomObjectTranslation>

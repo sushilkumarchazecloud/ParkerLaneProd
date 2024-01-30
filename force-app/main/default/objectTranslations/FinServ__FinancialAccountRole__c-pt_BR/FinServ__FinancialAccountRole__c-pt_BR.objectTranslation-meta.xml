@@ -8,6 +8,10 @@
         <plural>true</plural>
         <value>Papéis da conta financeira</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>WM_Client_FinancialAccountRole</name>
+    </fieldSets>
     <gender>Masculine</gender>
     <nameFieldLabel>Número do papel</nameFieldLabel>
 </CustomObjectTranslation>

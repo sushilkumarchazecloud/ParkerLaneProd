@@ -20,6 +20,10 @@
         <plural>true</plural>
         <value>אירועים בחיים</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>LifeEventRequired</name>
+    </fieldSets>
     <gender>Masculine</gender>
     <nameFieldLabel>שם אירוע בחיים</nameFieldLabel>
 </CustomObjectTranslation>

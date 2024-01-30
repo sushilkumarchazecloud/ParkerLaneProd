@@ -8,5 +8,16 @@
         <plural>true</plural>
         <value>Supplier Contacts</value>
     </caseValues>
+    <layouts>
+        <layout>Supplier Contact Layout</layout>
+        <sections>
+            <label></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>New Section</section>
+        </sections>
+    </layouts>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

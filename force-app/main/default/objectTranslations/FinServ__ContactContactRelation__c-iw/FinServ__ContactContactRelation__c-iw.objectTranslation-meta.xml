@@ -20,6 +20,14 @@
         <plural>true</plural>
         <value>קשרי איש קשר-איש קשר</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>WM_Client_RelatedContacts</name>
+    </fieldSets>
+    <fieldSets>
+        <label></label>
+        <name>WM_Household_RelatedContacts</name>
+    </fieldSets>
     <gender>Masculine</gender>
     <nameFieldLabel>שם קשר של איש הקשר</nameFieldLabel>
 </CustomObjectTranslation>

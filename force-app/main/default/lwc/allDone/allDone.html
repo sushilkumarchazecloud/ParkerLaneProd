@@ -1,0 +1,88 @@
+<template>
+    <div>
+        <template if:false={pending}>
+            <div class="slds-grid slds-grid_vertical header--section slds-p-around_x-large slds-align_absolute-center">          
+                <div class="slds-col slds-align_absolute-center">
+                    <img src={checkgreen} style="width: 80%;"/>
+                </div>
+                <div class="slds-col">
+                    <h1 class = "heading_style">You're all done!</h1>
+                </div>
+                <div class="slds-col">
+                    <p class="pargraph_style">
+                    We'll contact you if we need something else.
+                    </p>
+                </div>
+            </div>
+        </template>
+        <template if:true={pending}>
+            <div class="slds-grid slds-grid_vertical header--section slds-p-around_x-large slds-align_absolute-center">          
+                <div class="slds-col slds-align_absolute-center">
+                    <img src={greenAlert} style="width: 80%;"/>
+                </div>
+                <div class="slds-col">
+                    <h1 class = "heading_style">One more thing!</h1>
+                </div>
+                <div class="slds-col">
+                    <p class="pargraph_style">
+                    We need {applicantName} to {dynamicText}.
+                    </p>
+                </div>
+            </div>
+        </template>
+    
+    <section class="slds-p-around_large">
+        
+        <div class="max-700 slds-p-bottom_x-large">
+            <div class="slds-align_absolute-center slds-m-top_medium">
+                <img src={signHead} class="trackercls"/>
+            </div>
+            <template if:true={pending}>
+                <div class="slds-grid slds-grid_vertical slds-m-top_xx-large actionStyle">
+                    <div class="slds-col">
+                        <img src={warning} class="warningCss"/>
+                    </div>
+                    <div class="slds-col slds-m-top_xx-small">
+                        <p style="font-size: 20px; font-family: 'ProximaNova-AltBold';">Action Required!</p>
+                    </div>
+                    <div class="slds-col">
+                        <p style="line-height: initial;font-size: 15px">We've sent an email to your co-applicant {applicantName} to {dynamicText} too. Once verified we will be back to you with a decision ASAP.</p>
+                    </div>
+                </div>
+            </template>
+                <div class="slds-grid slds-wrap slds-align_absolute-center slds-m-top_xx-large box_style">
+                    <div class="slds-col slds-size_2-of-12 slds-medium-size_1-of-12 slds-large-size_1-of-12" style="margin-right: auto; margin-left: 6px;">
+                        <img src={userPic} class="userpic"/>
+                    </div>
+                    <div class="slds-col slds-size_9-of-12 slds-medium-size_10-of-12 slds-large-size_10-of-12" style="margin-right: auto;">                        
+                        <p style="font-size: 15px;">Hi there, I'm {csName}. I'll be helping you between now until settlement. My team
+                            has helped thousands of Australians and they're experts at making {purpose} finance easy!
+                        </p>
+                    </div>
+                </div> 
+                <div class="slds-align_absolute-center slds-m-top_x-large">
+                    <img src={stars} class="starStyle"/>
+                </div> 
+                <div class="slds-align_absolute-center slds-m-top_medium review">
+                    <p>"{review}"</p>
+                </div>
+                <div>
+                    <p class="slds-align_absolute-center slds-m-top_xx-small" style="font-size: 12px;font-style: italic;">Source: productreview.com.au</p>
+                </div>        
+                <p class="slds-m-top_xx-large" style="font-size: 25px; font-family: 'ProximaNova-AltBold';">What's next?</p>  
+                <ol class="slds-list_ordered slds-m-top_medium" style="line-height: initial; font-weight: bold;margin-left: 15px;">
+                    <li><p class="text_style"><b style="font-size: 15px">Pre-assessment. </b>{csName} will have our pre-credit team make sure your application is in great shape. If there's
+                        something else you need, they'll reach out to you shortly.</p></li>
+                    <li class="slds-m-top_xx-small"><p class="text_style"><b style="font-size: 15px">Credit Decision. </b>Next your application will go to the lender for sign off.</p></li>
+                    <li class="slds-m-top_xx-small"><p class="text_style"><b style="font-size: 15px">Approval. </b>Assuming you're approved, you'll receive a notification with the good news.</p></li>
+                    <li class="slds-m-top_xx-small"><p class="text_style"><b style="font-size: 15px">Settlement. </b>Refer to your approval email for details about how to fund the loan. Funds are typically
+                        cleared 0 - 2 days after your request.</p></li>
+                  </ol> 
+                <div class="slds-align_absolute-center slds-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12" style="margin-top: 5rem;">
+                    <lightning-button variant="base" label="CLOSE THIS PAGE" class="closeBtn" onclick={closePage}></lightning-button>    
+                </div> 
+        </div>            
+        
+    </section>
+    </div>
+    </template>

@@ -1,0 +1,114 @@
+<template>
+    <div if:true={showSpin}>
+        <div class="exampleHolder">
+            <lightning-spinner alternative-text="Loading" size="large" class="slds-is-fixed" variant="brand" style="background-color:#ced3db;"></lightning-spinner>
+        </div>
+    </div>
+    <lightning-card  class="sign_cont scrollFor" >
+        <div class="slds-scrollable_y  slds-p-horizontal--medium slds-scrollable_y" style="height: 30rem;">
+            <div if:true={opprecord} class="margin_Cls" >
+                <p class="head1 fontFamBold">Broken Hill Community Credit Union Membership Application Form.</p>
+                <p class="text2 fontFamreg">(2 of 2 documents)</p>
+                <p class="margin_Cls text2 fontFamreg">By applying for membership, you subscribe to one $10.00 membership share with The Broken Hill Community Credit Union Limited <b>(BHCCU)</b>.</p>
+                <p class="margin_Cls text2 fontFamreg">Membership confers rights and obligations under the Credit Union’s Constitution, a copy of which you can obtain on request.</p><br/>
+                <p class="fontFamBold"><b>APPLICANT DETAILS</b></p>
+                <div if:false={isApp2}>
+                    <table if:true={emp1} class="fontFamreg">
+                        <tbody>
+                            <tr><td><b>Title: </b>{opprecord.Applicant_1__r.Salutation}</td></tr>
+                            <tr><td><b>First Name: </b>{opprecord.Applicant_1__r.FirstName}</td></tr>
+                            <tr><td><b>Middle Name: </b>{opprecord.Applicant_1__r.MiddleName}</td></tr>
+                            <tr><td><b>Surname: </b>{opprecord.Applicant_1__r.LastName}</td></tr>
+                            <tr><td><b>Date of Birth: </b>{opprecord.Applicant_1__r.PersonBirthdate}</td></tr>
+                            <tr><td><b>Gender: </b>N/A</td></tr>
+                            <tr><td><b>Address: </b>{addressapp1}</td></tr>
+                            <tr><td><b>Postal Address: </b>{opprecord.Applicant_1__r.Postal_Address__pc}</td></tr>
+                            <tr><td><b>Phone: </b>{opprecord.Applicant_1__r.PersonMobilePhone}</td></tr>
+                            <tr><td><b>Email: </b>{opprecord.Applicant_1__r.PersonEmail}</td></tr>
+                            <tr><td><b>Employer: </b>{emp1.Name}</td></tr>
+                            <tr><td><b>Occupation: </b>{emp1.Job_Title__c}</td></tr>
+                        </tbody>
+                    </table><br/><br/>
+                </div>
+                <div if:true={isApp2}>
+                    <table if:true={emp1} class="fontFamreg">
+                        <tbody>
+                            <tr><td><b>Title: </b>{opprecord.Applicant_2__r.Salutation}</td></tr>
+                            <tr><td><b>First Name: </b>{opprecord.Applicant_2__r.FirstName}</td></tr>
+                            <tr><td><b>Middle Name: </b>{opprecord.Applicant_2__r.MiddleName}</td></tr>
+                            <tr><td><b>Surname: </b>{opprecord.Applicant_2__r.LastName}</td></tr>
+                            <tr><td><b>Date of Birth: </b>{opprecord.Applicant_2__r.PersonBirthdate}</td></tr>
+                            <tr><td><b>Gender: </b>N/A</td></tr>
+                            <tr><td><b>Address: </b>{addressapp2}</td></tr>
+                            <tr><td><b>Postal Address: </b>{opprecord.Applicant_2__r.Postal_Address__pc}</td></tr>
+                            <tr><td><b>Phone: </b>{opprecord.Applicant_2__r.PersonMobilePhone}</td></tr>
+                            <tr><td><b>Email: </b>{opprecord.Applicant_2__r.PersonEmail}</td></tr>
+                            <tr><td><b>Employer: </b>{emp2.Name}</td></tr>
+                            <tr><td><b>Occupation: </b>{emp2.Job_Title__c}</td></tr>
+                        </tbody>
+                    </table><br/><br/>
+                </div>
+                <div>
+                    <div>                        
+                        <lightning-combobox                    
+                            class="countrycitizen labelTxt"
+                            label="List all the country(ies) you are a citizen of:"
+                            name="countrycitizen"                
+                            value=""                        
+                            options={options}
+                            id="countrycitizen"
+                            onchange={handleCitizenCountry} ></lightning-combobox>
+                    </div>
+                    <div class="slds-p-vertical_x-small">            
+                        <template for:each={allValuesofCitizen} for:item="val" for:index="index">                 
+                            <lightning-pill label={val} key={val} value={val} name={index} onremove={handleRemove}></lightning-pill>
+                        </template>
+                    </div>
+                </div>
+                <div class="margin_Cls">
+                    <p class="text2 fontFamBold">TAX RESIDENCE OF OTHER COUNTRIES</p>
+                    <p class="text2 fontFamreg">To enable us to comply with Australian Tax Law, we are required to confirm all account holders tax residency. If you are a tax resident of another country, we will contact you and you will need to complete a Self-Certification form and provide us with your Taxpayer Identification Number (TIN).</p>
+                </div>
+                <div>
+                    <div>                        
+                        <lightning-combobox                    
+                            class="countrytax labelTxt"
+                            label="List all countries you are required to pay tax in OTHER than Australia:"
+                            name="countrytax"                
+                            value=""                        
+                            options={options}
+                            id="countrytax"
+                            onchange={handleCitizenTax} ></lightning-combobox>
+                    </div>
+                    <div class="slds-p-vertical_x-small">            
+                        <template for:each={allValuesofTax} for:item="val" for:index="index">                 
+                            <lightning-pill label={val} key={val} value={val} name={index} onremove={handleRemovetax}></lightning-pill>
+                        </template>
+                    </div>
+                </div>
+
+                <div class="margin_Cls">
+                    <p class="text2 fontFamreg">Read the following sections carefully.</p>
+                    <c-collapsible-for-b-h-c-c-u quoterecord={quoterecord} opprecord={opprecord} condata={condata} emp1={emp1} emp2={emp2}></c-collapsible-for-b-h-c-c-u>
+                </div>                                   
+
+                <div class="margin_topforfield fontFamreg"  style="margin-right : 7px;">
+                    <p style="color: #1a2745; font-family: ProximaNovaAlt-Medium;font-weight: 700;font-size: 1rem; margin-right : 7px;" class="margin_topforfield fontFamreg"><b>ACKNOWLEDGMENTS</b></p>
+                    <p class="text2">By signing below you confirm that:</p>
+                    <ul class="slds-list_dotted text2">
+                        <li>I have read and agreed to the terms and conditions set out in the above.</li>
+                        <li>I have read and agreed to BHCCU’s Privacy Policy and Privacy Notice, made available on our website <a href="www.bhccu.com.au">www.bhccu.com.au</a> or by visiting  <a href="https://www.bhccu.com.au/corporate-disclosure-documents">https://www.bhccu.com.au/corporate-disclosure-documents</a></li>                        
+                    </ul>
+                </div>
+
+                <div class="margin_topforfield fontFamreg"  style="margin-right : 7px;">
+                    <div>
+                        <div class="signText margin_Cls slds-align_absolute-center"  style="margin-right : 7px;">
+                            <span>To sign use your finger in the signature panel below then click finish.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </lightning-card>
+</template>

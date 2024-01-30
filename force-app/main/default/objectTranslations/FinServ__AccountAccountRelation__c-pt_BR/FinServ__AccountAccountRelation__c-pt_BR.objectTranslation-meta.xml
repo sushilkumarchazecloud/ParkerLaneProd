@@ -8,6 +8,10 @@
         <plural>true</plural>
         <value>Relacionamentos entre contas</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>WM_Household_RelatedAccounts</name>
+    </fieldSets>
     <gender>Masculine</gender>
     <nameFieldLabel>Nome da relação da conta</nameFieldLabel>
 </CustomObjectTranslation>

@@ -8,6 +8,10 @@
         <plural>true</plural>
         <value>Funciones de cuentas financieras</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>WM_Client_FinancialAccountRole</name>
+    </fieldSets>
     <gender>Feminine</gender>
     <nameFieldLabel>Número de función</nameFieldLabel>
 </CustomObjectTranslation>

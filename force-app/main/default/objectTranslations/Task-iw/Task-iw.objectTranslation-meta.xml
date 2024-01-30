@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <layouts>
+        <layout>Task Layout</layout>
+        <sections>
+            <label></label>
+            <section>Related To</section>
+        </sections>
+    </layouts>
     <quickActions>
         <label></label>
         <name>Defer</name>
@@ -112,4 +119,18 @@
         <label></label>
         <name>UpdateStatus_5</name>
     </quickActions>
+    <recordTypes>
+        <description></description>
+        <label></label>
+        <name>FinServ__AdvisorTask</name>
+    </recordTypes>
+    <recordTypes>
+        <description></description>
+        <label></label>
+        <name>FinServ__ClientAssociateTask</name>
+    </recordTypes>
+    <webLinks>
+        <label></label>
+        <name>Send_SMS</name>
+    </webLinks>
 </CustomObjectTranslation>

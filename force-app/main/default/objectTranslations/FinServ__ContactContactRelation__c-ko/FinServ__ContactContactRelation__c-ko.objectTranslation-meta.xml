@@ -4,5 +4,13 @@
         <plural>false</plural>
         <value>연락처-연락처 관계</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>WM_Client_RelatedContacts</name>
+    </fieldSets>
+    <fieldSets>
+        <label></label>
+        <name>WM_Household_RelatedContacts</name>
+    </fieldSets>
     <nameFieldLabel>연락처 관계 이름</nameFieldLabel>
 </CustomObjectTranslation>

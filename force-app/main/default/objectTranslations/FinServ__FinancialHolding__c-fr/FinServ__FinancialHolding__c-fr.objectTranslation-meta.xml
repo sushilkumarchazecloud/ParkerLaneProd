@@ -8,6 +8,14 @@
         <plural>true</plural>
         <value>Actifs financiers</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>WM_Client_FinancialHolding</name>
+    </fieldSets>
+    <fieldSets>
+        <label></label>
+        <name>WM_Household_FinancialHolding</name>
+    </fieldSets>
     <gender>Masculine</gender>
     <nameFieldLabel>Nom de l&apos;actif financier</nameFieldLabel>
     <startsWith>Vowel</startsWith>

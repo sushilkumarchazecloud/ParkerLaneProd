@@ -8,6 +8,10 @@
         <plural>true</plural>
         <value>Eventi di vita</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>LifeEventRequired</name>
+    </fieldSets>
     <gender>Masculine</gender>
     <nameFieldLabel>Nome evento di vita</nameFieldLabel>
     <startsWith>Vowel</startsWith>

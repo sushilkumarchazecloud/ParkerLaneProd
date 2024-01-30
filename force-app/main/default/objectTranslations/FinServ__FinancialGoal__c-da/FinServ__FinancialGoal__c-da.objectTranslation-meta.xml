@@ -30,6 +30,14 @@
         <plural>true</plural>
         <value>Økonomiske mål</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>WM_Client_FinancialGoal</name>
+    </fieldSets>
+    <fieldSets>
+        <label></label>
+        <name>WM_Household_FinancialGoal</name>
+    </fieldSets>
     <gender>Neuter</gender>
     <nameFieldLabel>Navn på finansielt mål</nameFieldLabel>
     <quickActions>

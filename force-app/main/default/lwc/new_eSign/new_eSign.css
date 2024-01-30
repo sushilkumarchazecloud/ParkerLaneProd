@@ -1,0 +1,81 @@
+.fontFamBold{
+    font-family: ProximaNovaAlt-Medium;
+}
+.fontFamreg{
+    font-family: Proxima Nova Alt Regular;
+}
+.main_cont{
+	max-width: 700px;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;	
+}
+.margin_Cls{
+	margin: 20px 0px;
+	line-height: normal;
+}
+.heading1{
+	font-size: 1.85rem;	
+	color: #1a2745;
+}
+.heading3{
+	font-size: 18px;	
+	color: #1a2745; 	
+}
+.text2{
+	font-size: 14px;
+	font-weight: 400;
+	color: #1a2745;		
+}
+.text3{
+	font-size: 12px;
+	font-weight: 400;
+	color: #1a2745;		
+}
+.text1{
+	font-size: 1rem;
+	color: #1a2745;
+}
+.sign_cont{	
+	background-color: #fff;
+	width: 100%;
+	height: auto;
+	border-radius: 8px;
+}
+.card_cont{
+	margin-left: 15px;
+}
+.blueTxt{
+	margin-top: 15px;
+	color: #119be3;
+	font-size: 14px;
+	font-weight: 500;
+}
+.slds-checkbox_toggle [type=checkbox]:checked+.slds-checkbox_faux_container .slds-checkbox_faux{
+	background-color: #45c65a;
+}
+.slds-checkbox_toggle [type=checkbox]:checked+.slds-checkbox_faux_container .slds-checkbox_faux:after{
+	display: none;
+}
+.signature_Box{
+	width: 100%;
+	background-color: white;
+	height: 125px;
+    border-radius: 8px
+}
+.signText{
+	width: 90% !important;
+	color : #45c65a;
+	font-size : 16px;
+	font-weight : 500;
+}
+.lenderText{
+	color: #a6a6a6;
+}
+.highLightTxt{
+	color: #032d60;
+	font-weight: 700;
+}
+.updateTogreen{
+	color : #45c65a;
+}

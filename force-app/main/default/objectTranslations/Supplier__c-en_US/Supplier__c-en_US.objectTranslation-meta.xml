@@ -8,5 +8,20 @@
         <plural>true</plural>
         <value>Suppliers</value>
     </caseValues>
+    <layouts>
+        <layout>Supplier Layout</layout>
+        <sections>
+            <label></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>New Section</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Solar System</section>
+        </sections>
+    </layouts>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>

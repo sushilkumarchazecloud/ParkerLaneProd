@@ -4,5 +4,9 @@
         <plural>false</plural>
         <value>帳戶對帳戶關係</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>WM_Household_RelatedAccounts</name>
+    </fieldSets>
     <nameFieldLabel>帳戶關係名稱</nameFieldLabel>
 </CustomObjectTranslation>

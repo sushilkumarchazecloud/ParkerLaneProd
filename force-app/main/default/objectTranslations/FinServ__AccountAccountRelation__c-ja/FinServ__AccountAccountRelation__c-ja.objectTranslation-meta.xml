@@ -4,5 +4,9 @@
         <plural>false</plural>
         <value>取引先間リレーション</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>WM_Household_RelatedAccounts</name>
+    </fieldSets>
     <nameFieldLabel>取引先リレーション名</nameFieldLabel>
 </CustomObjectTranslation>

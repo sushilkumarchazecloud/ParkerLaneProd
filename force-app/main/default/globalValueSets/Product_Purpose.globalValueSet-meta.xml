@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Solar</fullName>
+        <default>false</default>
+        <label>Solar</label>
+    </customValue>
+    <customValue>
+        <fullName>Home Improvement</fullName>
+        <default>false</default>
+        <label>Home Improvement</label>
+    </customValue>
+    <customValue>
+        <fullName>Debt Consolidation</fullName>
+        <default>false</default>
+        <label>Debt Consolidation</label>
+    </customValue>
+    <masterLabel>Product Purpose</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

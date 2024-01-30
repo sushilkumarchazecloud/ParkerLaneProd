@@ -8,6 +8,10 @@
         <plural>true</plural>
         <value>Impieghi</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>FS_Community_Employment</name>
+    </fieldSets>
     <gender>Masculine</gender>
     <nameFieldLabel>Nome del datore di lavoro</nameFieldLabel>
     <startsWith>Vowel</startsWith>

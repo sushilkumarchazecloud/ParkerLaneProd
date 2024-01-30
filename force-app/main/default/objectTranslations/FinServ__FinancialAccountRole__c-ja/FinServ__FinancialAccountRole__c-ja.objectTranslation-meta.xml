@@ -4,5 +4,9 @@
         <plural>false</plural>
         <value>金融口座ロール</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>WM_Client_FinancialAccountRole</name>
+    </fieldSets>
     <nameFieldLabel>ロール番号</nameFieldLabel>
 </CustomObjectTranslation>

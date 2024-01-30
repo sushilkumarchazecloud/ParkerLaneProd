@@ -4,5 +4,9 @@
         <plural>false</plural>
         <value>금융 계정 역할</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>WM_Client_FinancialAccountRole</name>
+    </fieldSets>
     <nameFieldLabel>역할 번호</nameFieldLabel>
 </CustomObjectTranslation>

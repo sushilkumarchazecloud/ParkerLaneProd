@@ -40,6 +40,10 @@
         <plural>true</plural>
         <value>Account-Account-Beziehungen</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>WM_Household_RelatedAccounts</name>
+    </fieldSets>
     <gender>Feminine</gender>
     <nameFieldLabel>Name für Accountbeziehung</nameFieldLabel>
 </CustomObjectTranslation>

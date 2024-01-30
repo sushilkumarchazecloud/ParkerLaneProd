@@ -8,6 +8,10 @@
         <plural>true</plural>
         <value>Expériences professionnelles</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>FS_Community_Employment</name>
+    </fieldSets>
     <gender>Feminine</gender>
     <nameFieldLabel>Nom de l&apos;employeur</nameFieldLabel>
     <startsWith>Vowel</startsWith>

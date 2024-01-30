@@ -396,5 +396,9 @@
         <possessive>Second</possessive>
         <value>Tili–tili-suhteitasi</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>WM_Household_RelatedAccounts</name>
+    </fieldSets>
     <nameFieldLabel>Tilisuhteen nimi</nameFieldLabel>
 </CustomObjectTranslation>

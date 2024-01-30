@@ -1,0 +1,118 @@
+<template>
+    <div if:true={showMainSpin}>
+        <div class="exampleHolder">
+            <lightning-spinner alternative-text="Loading" size="large" class="slds-is-fixed" variant="brand" style="background-color:#ced3db;"></lightning-spinner>
+        </div>
+    </div>
+    <div class="main_cont bg-lightest slds-p-horizontal--medium slds-m-top_medium max-700" >
+        <div class="slds-align_absolute-center slds-m-top_medium">
+            <img src={dlHead} style="width : 50%;"/>
+        </div>
+        <div class="slds-m-top_x-large">
+            <p class="heading1"><b>Identity document</b></p>            
+        </div>
+        <div class="slds-m-top_medium">
+            <span><img src={identityImg} width="55px"/></span>
+        </div>  
+        <div class="slds-m-top-x_small">
+            <p class="text2">Choose the  document type you will upload</p>
+            <div class="slds-grid slds-wrap text_margin">
+                <div class="slds-size_1-of-1">
+                    <lightning-radio-group name="radioGroup"                          
+                        options={options}
+                        value={docType}
+                        type="button"
+                        class="my-radio-group" 
+                        onchange={handleRadio}
+                        ></lightning-radio-group>
+                </div>
+            </div>
+            
+        </div>      
+        <div class="slds-m-top_x-large" >
+            <p class="text2">Upload photos of your {idName}. The photos should be</p>
+            <ul class="slds-list_dotted text2" style="margin-left : 19px;">
+                <li><b>Bright and clear</b></li>
+                <li><b>All corners of the document should be visible</b></li>
+            </ul>
+        </div>
+        <div if:true={isErrorForGlitch} class="slds-align_absolute-left">
+            <p class="text2" style="color: red;">Hi, we have found Glitch in your internet please try Again!!</p>
+        </div>
+        <div class="slds-grid slds-wrap slds-m-top_small">
+            <div class="slds-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12"> 
+               <div class="inputWidth" data-id="front-dl-Sec" >
+                    <c-voi-file-upload-gen conrecord={conRecord} voidetail={voidt} type="Dl Front" idtype={frontId} authtoken={authtoken} oncallparentfordl={checkfileuploaded} oncheckerror={callforError}> </c-voi-file-upload-gen>                        
+               </div>
+               <div class="inputWidth"  style="display : none; " data-id="passport" >
+                    <c-voi-file-upload-gen conrecord={conRecord} voidetail={voidt} type="passport" idtype={passport} authtoken={authtoken} oncallparentfordl={checkfileuploaded} oncheckerror={callforError}> </c-voi-file-upload-gen>                        
+               </div>                        
+            </div>
+            <div class="slds-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12"> 
+                <div class="inputWidth"  data-id="back-dl-sec" style="float: right;">
+                    <c-voi-file-upload-gen conrecord={conRecord} voidetail={voidt} type="Dl Back" idtype={backId} authtoken={authtoken} oncallparentfordl={checkfileuploaded} oncheckerror={callforError}> </c-voi-file-upload-gen>                        
+                </div>
+            </div>
+        </div>        
+        <div class="buttonOfAnother slds-m-top_x-large"  align="center">
+            <div class="slds-grid slds-wrap">
+                <div class={hidedivicediv}>
+                </div>
+                <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12" >
+                    <div id="anotherDevBtn" tabindex="0" onfocusout={hidelistbx}> 
+                        <button id="anotherDvBtn" onclick={showBox} >                                    
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-size_4-of-12 slds-medium-size_3-of-12 slds-large-size_3-of-12">
+                                    <img src={anotherDev} width="70%"/>
+                                </div> 
+                                <div class="slds-size_8-of-12 slds-medium-size_9-of-12 slds-large-size_9-of-12 slds-align_absolute-center">
+                                    <p style="font-size: 1rem;font-family: Proxima Nova Alt Regular;"> Continue on another device</p>
+                                </div>                                        
+                            </div>
+                        </button>   
+                        <div if:true={showDailog} >
+                            <div class="listBx" role="listbox" data-id="listData" style="text-align : left;">
+                                <ul class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_12-of-12 slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid dropCss">
+                                    <li id="One" class="slds-listbox__item" role="presentation" data-value="sms" data-record={formatedMobile} onmousedown={handleListItemClick} >
+                                        <span class="slds-media slds-listbox__option slds-listbox__option_entity " role="option">
+                                            <span class="slds-media__body">
+                                                <span class="slds-listbox__option-text slds-listbox__option-text_entity textFrmt" style="font-family: Proxima Nova Alt Regular;">{formatedMobile}</span>
+                                            </span>
+                                        </span>
+                                    </li>
+                                    <li id="Two" class="slds-listbox__item" role="presentation" data-value="email" data-record={formatedEmail} onmousedown={handleListItemClick}>
+                                        <span class="slds-media slds-listbox__option slds-listbox__option_entity " role="option">
+                                            <span class="slds-media__body">
+                                                <span class="slds-listbox__option-text slds-listbox__option-text_entity textFrmt" style="font-family: Proxima Nova Alt Regular;">{formatedEmail}</span>
+                                            </span>
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>                                   
+                        </div>                                
+                    </div>
+                </div>
+                <div class="slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_3-of-12" >
+                    <div if:true={showSpin}>
+                        <div id="spin_forBtn" align="center"  style="padding : 23px 10px 23px 10px; margin-top : 10px;">
+                            <div style="position:relative">
+                                <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+                                    <div class="slds-spinner__dot-a"></div>
+                                    <div class="slds-spinner__dot-b"></div>                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>       
+                    <div style="padding : 23px 10px 23px 10px;">
+                        <p if:true={showForSMS} style="text-align: center; color : #45c65a !important; line-height: initial"><b> SMS SENT</b><img src={tick}/></p>
+                        <p if:true={showForEmail} style="text-align: center; color : #45c65a !important; line-height: initial"><b> EMAIL SENT</b><img src={tick}/></p>
+                    </div>                     
+                </div>
+            </div>
+        </div>        
+        <div class="submitBtn">
+            <lightning-button data-id="submtBtn" variant="success" label="SUBMIT IDENTITY DOCUMENT" title="SUBMIT IDENTITY DOCUMENT" onclick={completeDlSec} disabled={isDeisable}></lightning-button>
+        </div><br/><br/><br/><br/><br/><br/><br/><br/>
+
+    </div>
+</template>

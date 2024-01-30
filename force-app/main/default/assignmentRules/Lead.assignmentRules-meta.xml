@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AssignmentRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assignmentRule>
+        <fullName>Round Robin</fullName>
+        <active>true</active>
+        <ruleEntry>
+            <assignedTo>keely.chapman@parkerlane.com.au</assignedTo>
+            <assignedToType>User</assignedToType>
+            <criteriaItems>
+                <field>Lead.RR_ID__c</field>
+                <operation>equals</operation>
+                <value>1</value>
+            </criteriaItems>
+        </ruleEntry>
+    </assignmentRule>
+</AssignmentRules>

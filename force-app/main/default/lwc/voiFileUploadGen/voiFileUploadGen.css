@@ -1,0 +1,71 @@
+.previewOpst{
+    height: 220px;
+    width: 100%;
+    background-color: #f5f5f0;
+    position: absolute;
+    top: 0px;
+    left: 0px;    
+    display: none;
+}
+.previewOpstforMobile{
+    background-color: transparent;
+    position: absolute;
+    top: 0.2rem;
+    left: 90%; 
+    display: none;       
+}
+.meterStyle{
+    width: 92%;
+    height: 12px;  
+    border-radius: 10px;  
+}
+.max-700{
+	max-width: 700px;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;	
+}
+.meterStyleforOther{
+    width: 92%;
+    height: 8px;
+    border-radius: 10px;
+    margin-top: 2px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+}
+meter::-webkit-meter-optimum-value {
+    background: #45c65a;
+    border-radius: 20px;     
+}
+meter::-webkit-meter-bar {
+    border : none;  
+    background : transparent !important;
+}
+.borderFor{
+    height : 18px;
+    width  : 100%;
+    background : transparent !important;
+    border : 3px solid white;
+    border-radius : 20px;  	
+}
+.meterDiv{
+	background: #192744;
+    height: 205px;
+    margin-top: 19px;
+    width: 98%;
+    border: 1px dashed #d0daec;
+    border-radius: 0.25rem;
+    text-align: center;  
+	padding: 13% 30px;
+}
+
+@media only screen and (max-width: 770px) {	
+    .previewOpstforMobile{
+        background: transparent;
+        position: absolute;
+        top: 0.2rem;
+        left: 90%; 
+        display: Block !important;       
+    }
+}

@@ -4,5 +4,9 @@
         <plural>false</plural>
         <value>客户-客户关系</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>WM_Household_RelatedAccounts</name>
+    </fieldSets>
     <nameFieldLabel>客户关系名称</nameFieldLabel>
 </CustomObjectTranslation>

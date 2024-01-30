@@ -8,6 +8,37 @@
         <plural>true</plural>
         <value>Funding Requests</value>
     </caseValues>
+    <layouts>
+        <layout>Funding Layout</layout>
+        <sections>
+            <label></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Customer Funding Authorisation</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Funding Request General Details</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Funds Available</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Invoice Details</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Lender Replies</section>
+        </sections>
+        <sections>
+            <label></label>
+            <section>Variation Request</section>
+        </sections>
+    </layouts>
     <quickActions>
         <label></label>
         <name>Cancel_Variation</name>

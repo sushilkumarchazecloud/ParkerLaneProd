@@ -30,6 +30,14 @@
         <plural>true</plural>
         <value>Finansinnehav</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>WM_Client_FinancialHolding</name>
+    </fieldSets>
+    <fieldSets>
+        <label></label>
+        <name>WM_Household_FinancialHolding</name>
+    </fieldSets>
     <gender>Neuter</gender>
     <nameFieldLabel>Namn på finansinnehav</nameFieldLabel>
 </CustomObjectTranslation>

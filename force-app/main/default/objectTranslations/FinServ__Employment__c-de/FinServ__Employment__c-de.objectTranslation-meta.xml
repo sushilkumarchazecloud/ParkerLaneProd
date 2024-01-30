@@ -40,6 +40,10 @@
         <plural>true</plural>
         <value>Beschäftigungen</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>FS_Community_Employment</name>
+    </fieldSets>
     <gender>Feminine</gender>
     <nameFieldLabel>Name des Arbeitgebers</nameFieldLabel>
 </CustomObjectTranslation>

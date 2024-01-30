@@ -4,5 +4,13 @@
         <plural>false</plural>
         <value>取引先責任者間リレーション</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>WM_Client_RelatedContacts</name>
+    </fieldSets>
+    <fieldSets>
+        <label></label>
+        <name>WM_Household_RelatedContacts</name>
+    </fieldSets>
     <nameFieldLabel>取引先責任者リレーション名</nameFieldLabel>
 </CustomObjectTranslation>

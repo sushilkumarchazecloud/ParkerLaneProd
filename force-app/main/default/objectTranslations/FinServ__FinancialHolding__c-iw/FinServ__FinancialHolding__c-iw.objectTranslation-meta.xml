@@ -20,6 +20,14 @@
         <plural>true</plural>
         <value>אחזקות פיננסיות</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>WM_Client_FinancialHolding</name>
+    </fieldSets>
+    <fieldSets>
+        <label></label>
+        <name>WM_Household_FinancialHolding</name>
+    </fieldSets>
     <gender>Feminine</gender>
     <nameFieldLabel>שם אחזקה פיננסית</nameFieldLabel>
 </CustomObjectTranslation>

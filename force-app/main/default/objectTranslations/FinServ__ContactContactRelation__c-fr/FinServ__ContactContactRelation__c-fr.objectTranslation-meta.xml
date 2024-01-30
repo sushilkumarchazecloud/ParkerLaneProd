@@ -8,6 +8,14 @@
         <plural>true</plural>
         <value>Relations de contact à contact</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>WM_Client_RelatedContacts</name>
+    </fieldSets>
+    <fieldSets>
+        <label></label>
+        <name>WM_Household_RelatedContacts</name>
+    </fieldSets>
     <gender>Feminine</gender>
     <nameFieldLabel>Nom de la relation du contact</nameFieldLabel>
     <startsWith>Consonant</startsWith>

@@ -8,6 +8,14 @@
         <plural>true</plural>
         <value>Objectifs financiers</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>WM_Client_FinancialGoal</name>
+    </fieldSets>
+    <fieldSets>
+        <label></label>
+        <name>WM_Household_FinancialGoal</name>
+    </fieldSets>
     <gender>Masculine</gender>
     <nameFieldLabel>Nom de l&apos;objectif financier</nameFieldLabel>
     <quickActions>

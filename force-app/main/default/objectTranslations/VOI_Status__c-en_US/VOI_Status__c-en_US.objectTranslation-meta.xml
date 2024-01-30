@@ -8,9 +8,20 @@
         <plural>true</plural>
         <value>VOI Status</value>
     </caseValues>
+    <layouts>
+        <layout>VOI Status Layout</layout>
+        <sections>
+            <label></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
     <quickActions>
         <label></label>
         <name>New_VOI</name>
     </quickActions>
     <startsWith>Consonant</startsWith>
+    <webLinks>
+        <label></label>
+        <name>Resend_SMS</name>
+    </webLinks>
 </CustomObjectTranslation>

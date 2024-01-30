@@ -1,0 +1,39 @@
+<template>
+    <div>
+        <div class="max-700">                    
+            <label if:true={isFront} style="font-family: Proxima Nova Alt Regular;position : relative; top : 15px; left: 2px; font-size : 1rem; color: #1a2745;"><b>Front </b>of your Driving License</label>
+            <label if:true={isBack} style="font-family: Proxima Nova Alt Regular;position : relative; top : 15px; left: 2px; font-size : 1rem; color: #1a2745;"><b>Back </b>of your Driving License</label>
+            <label if:true={isOther} style="font-family: Proxima Nova Alt Regular;position : relative; top : 15px; left: 2px; font-size : 1rem; color: #1a2745;">{idtype}</label>
+            <div if:false={isUploadingFront}>                                                
+                <lightning-input type="file" varient="label-hidden" accept="image/png, image/jpg" onchange={handleUploadFinished} style="width : 100%;"></lightning-input>
+            </div>
+            <div if:false={imageData}>                
+                <div class="meterDiv" align="center" if:true={isUploadingFront}>                
+                    <p><img src={uploadIcon} style="padding : 10px;" /></p>
+                    <div class="borderFor" >                        
+                        <meter if:false={isIOSDevice} class="meterStyle slds-align_absolute-center" value={uploadingPercent} min="0" max="100"></meter>                                                
+                        <meter if:true={isIOSDevice} class="meterStyleforOther slds-align_absolute-center" value={uploadingPercent} min="0" max="100"></meter>                                           
+                    </div>
+                    <p class="heading3" style="margin-top : 10px; color : white; font-size: 16px;font-family: Proxima Nova Alt Regular;" >{isUpl}</p>
+                </div>
+            </div>              
+            <div if:true={imageData}>
+                <div class="PreviewMain slds-align_absolute-center" style="height: 205px; width: 100%; border: 1.5px dashed #d0daec; border-radius: 0.25rem; background: white; margin-top: 19px; overflow: hidden; position: relative;" 
+                    onmouseenter={showPreviewOpst} onmouseleave={hidePreviewOpst} >
+                    <img style="max-height: 191px; max-width: 100%;" alt="Image" src={imageData}/>                        
+                    <img src={greenTick} style="width: 20%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"/>
+                    <div class="previewOpst">
+                        <div class="slds-align_absolute-center" style="position: relative; top: 43%;">
+                            <button onclick={deleteImage} style="background: transparent; border: none; outline: none;"><img src={delIcon} style="height: 30px;"/></button>                            
+                        </div>                            
+                    </div>
+                    <div class="previewOpstforMobile">
+                        <div>
+                            <button onclick={deleteImage} style="background: transparent; border: none; outline: none;"><img src={delIcon} style="height: 22px;"/></button>                            
+                        </div>                          
+                    </div>
+                </div>                                              
+            </div>                              
+        </div>        
+    </div>
+</template>

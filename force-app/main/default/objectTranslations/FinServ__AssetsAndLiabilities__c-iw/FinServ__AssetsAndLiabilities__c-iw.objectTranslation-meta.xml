@@ -20,6 +20,18 @@
         <plural>true</plural>
         <value>נכסים והתחייבויות</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>FS_Community_Assets_Liabilities</name>
+    </fieldSets>
+    <fieldSets>
+        <label></label>
+        <name>WM_Client_Assets_Liabilities</name>
+    </fieldSets>
+    <fieldSets>
+        <label></label>
+        <name>WM_Household_Assets_Liabilities</name>
+    </fieldSets>
     <gender>Masculine</gender>
     <nameFieldLabel>שם נכס או התחייבות</nameFieldLabel>
 </CustomObjectTranslation>

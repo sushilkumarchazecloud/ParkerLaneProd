@@ -4,5 +4,17 @@
         <plural>false</plural>
         <value>资产和负债</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>FS_Community_Assets_Liabilities</name>
+    </fieldSets>
+    <fieldSets>
+        <label></label>
+        <name>WM_Client_Assets_Liabilities</name>
+    </fieldSets>
+    <fieldSets>
+        <label></label>
+        <name>WM_Household_Assets_Liabilities</name>
+    </fieldSets>
     <nameFieldLabel>资产或债务名称</nameFieldLabel>
 </CustomObjectTranslation>

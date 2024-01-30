@@ -20,6 +20,10 @@
         <plural>true</plural>
         <value>תעסוקה</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>FS_Community_Employment</name>
+    </fieldSets>
     <gender>Feminine</gender>
     <nameFieldLabel>שם מעסיק</nameFieldLabel>
 </CustomObjectTranslation>

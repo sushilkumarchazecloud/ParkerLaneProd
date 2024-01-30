@@ -20,6 +20,14 @@
         <plural>true</plural>
         <value>יעדים פיננסיים</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>WM_Client_FinancialGoal</name>
+    </fieldSets>
+    <fieldSets>
+        <label></label>
+        <name>WM_Household_FinancialGoal</name>
+    </fieldSets>
     <gender>Masculine</gender>
     <nameFieldLabel>שם יעד פיננסי</nameFieldLabel>
     <quickActions>

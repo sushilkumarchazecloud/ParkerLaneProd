@@ -14,4 +14,18 @@
         </criteriaItems>
         <includeRecordsOwnedByAll>true</includeRecordsOwnedByAll>
     </sharingCriteriaRules>
+    <sharingGuestRules>
+        <fullName>guest</fullName>
+        <accessLevel>Read</accessLevel>
+        <label>guest</label>
+        <sharedTo>
+            <guestUser>Lanecorp</guestUser>
+        </sharedTo>
+        <criteriaItems>
+            <field>OwnerId</field>
+            <operation>notEqual</operation>
+            <value>NULL</value>
+        </criteriaItems>
+        <includeHVUOwnedRecords>false</includeHVUOwnedRecords>
+    </sharingGuestRules>
 </SharingRules>

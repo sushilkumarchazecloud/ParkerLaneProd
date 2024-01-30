@@ -1,0 +1,123 @@
+.max-700{
+	max-width: 700px;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;	
+}
+.btnCls{
+	width: 300px;
+	height: 60px;
+	color: white !important;
+	font-size: 20px !important;
+	font-weight: 700 !important;
+	background: #45c65a;
+	border: none;
+	outline: none;
+	margin-top: 2rem;
+	border-radius: 50px;
+}
+
+.margin_Cls{
+	margin: 20px 0px;
+	line-height: normal;
+}
+.heading1{
+	font-size: 1.85rem;	
+	font-family: ProximaNovaAlt-Medium;
+	color: #1a2745;	
+}
+.margin_tp{
+	margin-top: 20px;
+}
+.heading3{
+	font-size: 18px;
+	color: #1a2745;
+	font-family: ProximaNovaAlt-Medium;		
+}
+.text2{
+	font-size: 1rem;
+	font-weight: 400;
+	font-family: Proxima Nova Alt Regular;
+	color: #1a2745;		
+}
+.text3{
+	font-size: 12px;
+	font-weight: 400;
+	font-family: Proxima Nova Alt Regular;
+	color:#1a2745;		
+}
+.text1{
+	font-size: 15px;
+	font-family: Proxima Nova Alt Regular;
+	color: #1a2745;
+}
+.text_margin{
+	margin-top : 10px;
+}
+.buttonOfAnother button{
+	width : 100%;
+	padding: 20px 10px 17px 10px; 
+	border : 1px solid #afc2e3;
+	border-radius : 8px;
+	background : #ffffff;
+}
+.customBtnCls button{
+	width : 100%;
+	padding: 20px 10px 17px 10px; 
+	border : 1px solid #0176d3;
+	border-radius : 8px;
+	background : #ffffff;
+	box-Shadow : '5px 5px 5px 0px rgb(0 0 0 / 54%)'
+
+}
+.buttonOfAnother p {
+	color : #afc2e3;
+	font-size: 16px;
+	text-align : left;            
+	}
+	
+
+.listBx{
+	width: 98.5%;
+	position : relative;
+	top: 2px;
+}
+.textFrmt{
+	color : #308ed9;  
+	font-size : 14px;
+	}
+	.textFrmt:hover{
+		font-weight : bold;
+	}
+	.submitBtn{
+		margin-top: 40px;
+	}
+	.blanksection{
+		display: block;
+	}
+	.hideblank{
+		display: none !important;
+	}	
+
+@media only screen and (max-width: 600px) {	
+	.blankSection{
+		display: none !important;
+	}
+	.hideblank{
+		display: none !important;
+	}
+	.buttonOfAnother button{
+width :100%;
+padding: 20px 10px 17px 10px; 
+border : 1px solid #afc2e3;
+margin-top: 10px;
+border-radius : 8px;
+background : #ffffff;
+}
+.listBx{
+	width: 98%;
+}
+.submitBtn{
+	margin-top: 0px !important;
+}
+	}

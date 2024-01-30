@@ -1,0 +1,86 @@
+<template>
+    <div if:true={showSpinEsign}>
+        <div class="exampleHolder">
+            <lightning-spinner alternative-text="Loading" size="large" class="slds-is-fixed" variant="brand" style="background-color:#ced3db;"></lightning-spinner>
+        </div>
+    </div>
+    <div class="main_cont bg-lightest slds-p-horizontal--medium slds-m-top_medium scrollFor" if:true={quoteRecord}>         
+        <div class="slds-align_absolute-center slds-m-top_medium">
+            <img src={signHead} style="width : 50%;"/>
+        </div>
+        <div class="slds-m-top_x-large">
+            <p class="heading1 fontFamBold"><b>eSign Disclosure Documents</b></p>
+        </div>
+        <div class="slds-m-top_medium">
+            <img src={signIcn} width="7%"/>
+        </div>
+        <div class="slds-m-top_medium">
+            <p class="text1 fontFamreg">Read the following disclosure documents then sign at the bottom</p>
+             <ul class="slds-list_dotted fontFamreg">
+                <div if:false={isTMCUorbhcu}>
+                    <li if:false={updateforTMCU}><b>Credit proposal (1 of 1)</b></li>
+                </div>
+                <div if:true={isTMCUorbhcu}>
+                    <li if:true={updateforTMCU} class="updateTogreen"><b>Credit proposal (1 of 2) <img src={tick}/></b></li>
+                    <li if:false={updateforTMCU}><b>Credit proposal (1 of 2)</b></li>
+                    <li if:true={updateforTMCU} class="highLightTxt"><mark>Lender Membership Application (2 of 2)</mark></li>
+                    <li if:false={updateforTMCU} class="lenderText">Lender Membership Application (2 of 2)</li>
+                </div>                
+            </ul>   
+        </div>
+        <div class="margin_Cls" if:true={quoteRecord}>    
+            <div if:false={updateforTMCU} >
+               <c-signed-cqp quoterecord={quoteRecord} opprecord={oppRecord} condata={conRecord} emp1={emp1} emp2={emp2}></c-signed-cqp>                
+            </div>
+            <div if:true={updateforTMCU}>
+                <div if:true={isTMCU} >
+                   <c-signed-t-m-c-u quoterecord={quoteRecord} opprecord={oppRecord} condata={conRecord} emp1={emp1} emp2={emp2} check={checkValidate} ></c-signed-t-m-c-u>
+                </div>
+                <div if:true={isBHCCU}>
+                    <c-signed-b-h-c-c-u quoterecord={quoteRecord} opprecord={oppRecord} condata={conRecord} emp1={emp1} emp2={emp2}></c-signed-b-h-c-c-u>    
+                </div>
+            </div>
+            <div>
+                <div class="slds-form-element margin_Cls">
+                    <div class="slds-grid slds-wrap">
+                        <div class="">
+                            <label class="slds-checkbox_toggle slds-grid">
+                                <input type="checkbox" name="checkbox-toggle-15" value="checkbox-toggle-15" aria-describedby="checkbox-toggle-15" checked={checkTogle} onchange={updateAgree} />
+                                <span id="checkbox-toggle-15" class="slds-checkbox_faux_container" aria-live="assertive">
+                                    <span class="slds-checkbox_faux" style="box-shadow : none; border-color: transparent;"></span>                    
+                                </span>
+                            </label>
+                        </div>
+                        <div class="" style="margin-left: 10px;">
+                             <p class="text1 fontFamBold"><b> I have read and agree to the terms</b></p>   
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="slds-form-element">
+                    <div style="display: flex;">
+                        <div class="">
+                            <label class="slds-checkbox_toggle slds-grid">
+                                <input type="checkbox" name="checkbox-toggle-16" value="checkbox-toggle-16" aria-describedby="checkbox-toggle-16" checked={checkTogle} onchange={updateForSign} />
+                                <span id="checkbox-toggle-16" class="slds-checkbox_faux_container" aria-live="assertive">
+                                    <span class="slds-checkbox_faux" style="box-shadow : none; border-color: transparent;"></span>                    
+                                </span>
+                            </label>
+                        </div>
+                        <div style="margin-left: 10px;">
+                             <p class="text1 fontFamBold"><b> Insert my name as a signature (or use your finger/mouse to sign below)</b></p>   
+                        </div>
+                    </div>
+                </div>
+            </div>            
+        </div>
+        <div >                   
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12">
+                    <p style="margin : 5px 0px !important;" class="fontFamreg">Signed by: <b>{conRecord.Name}</b></p>                    
+                </div>
+            </div>
+        </div>
+    </div>        
+</template>

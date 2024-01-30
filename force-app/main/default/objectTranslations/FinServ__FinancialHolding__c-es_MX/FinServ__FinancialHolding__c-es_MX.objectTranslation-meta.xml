@@ -8,6 +8,14 @@
         <plural>true</plural>
         <value>Participaciones financieras</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>WM_Client_FinancialHolding</name>
+    </fieldSets>
+    <fieldSets>
+        <label></label>
+        <name>WM_Household_FinancialHolding</name>
+    </fieldSets>
     <gender>Feminine</gender>
     <nameFieldLabel>Nombre de participación financiera</nameFieldLabel>
 </CustomObjectTranslation>

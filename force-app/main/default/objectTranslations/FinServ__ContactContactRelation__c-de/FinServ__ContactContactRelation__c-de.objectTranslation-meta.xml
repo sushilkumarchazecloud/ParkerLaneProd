@@ -40,6 +40,14 @@
         <plural>true</plural>
         <value>Kontakt-Kontakt-Beziehungen</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>WM_Client_RelatedContacts</name>
+    </fieldSets>
+    <fieldSets>
+        <label></label>
+        <name>WM_Household_RelatedContacts</name>
+    </fieldSets>
     <gender>Feminine</gender>
     <nameFieldLabel>Name für Kontaktbeziehung</nameFieldLabel>
 </CustomObjectTranslation>

@@ -40,6 +40,10 @@
         <plural>true</plural>
         <value>Lebensereignissen</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>LifeEventRequired</name>
+    </fieldSets>
     <gender>Neuter</gender>
     <nameFieldLabel>Name für Lebensereignis</nameFieldLabel>
 </CustomObjectTranslation>

@@ -30,6 +30,10 @@
         <plural>true</plural>
         <value>Livsbegivenheder</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>LifeEventRequired</name>
+    </fieldSets>
     <gender>Feminine</gender>
     <nameFieldLabel>Navn på livsbegivenhed</nameFieldLabel>
 </CustomObjectTranslation>

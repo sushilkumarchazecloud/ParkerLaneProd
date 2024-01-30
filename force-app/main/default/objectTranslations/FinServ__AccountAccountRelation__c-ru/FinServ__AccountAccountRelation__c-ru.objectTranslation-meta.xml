@@ -60,6 +60,10 @@
         <plural>true</plural>
         <value>Взаимосвязях между организациями</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>WM_Household_RelatedAccounts</name>
+    </fieldSets>
     <gender>Feminine</gender>
     <nameFieldLabel>Имя связи организации</nameFieldLabel>
 </CustomObjectTranslation>

@@ -4,6 +4,14 @@
         <plural>false</plural>
         <value>財務目標</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>WM_Client_FinancialGoal</name>
+    </fieldSets>
+    <fieldSets>
+        <label></label>
+        <name>WM_Household_FinancialGoal</name>
+    </fieldSets>
     <nameFieldLabel>財務目標名稱</nameFieldLabel>
     <quickActions>
         <label></label>

@@ -60,6 +60,14 @@
         <plural>true</plural>
         <value>Взаимосвязях между контактами</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>WM_Client_RelatedContacts</name>
+    </fieldSets>
+    <fieldSets>
+        <label></label>
+        <name>WM_Household_RelatedContacts</name>
+    </fieldSets>
     <gender>Feminine</gender>
     <nameFieldLabel>Имя связи контакта</nameFieldLabel>
 </CustomObjectTranslation>

@@ -396,5 +396,13 @@
         <possessive>Second</possessive>
         <value>Yhteyshenkilö–yhteyshenkilö-suhteitasi</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>WM_Client_RelatedContacts</name>
+    </fieldSets>
+    <fieldSets>
+        <label></label>
+        <name>WM_Household_RelatedContacts</name>
+    </fieldSets>
     <nameFieldLabel>Yhteyshenkilösuhteen nimi</nameFieldLabel>
 </CustomObjectTranslation>

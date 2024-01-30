@@ -4,5 +4,13 @@
         <plural>false</plural>
         <value>金融控股</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>WM_Client_FinancialHolding</name>
+    </fieldSets>
+    <fieldSets>
+        <label></label>
+        <name>WM_Household_FinancialHolding</name>
+    </fieldSets>
     <nameFieldLabel>金融控股名稱</nameFieldLabel>
 </CustomObjectTranslation>

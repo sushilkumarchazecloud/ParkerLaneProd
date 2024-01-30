@@ -4,5 +4,13 @@
         <plural>false</plural>
         <value>連絡人對連絡人關係</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>WM_Client_RelatedContacts</name>
+    </fieldSets>
+    <fieldSets>
+        <label></label>
+        <name>WM_Household_RelatedContacts</name>
+    </fieldSets>
     <nameFieldLabel>連絡人關係名稱</nameFieldLabel>
 </CustomObjectTranslation>

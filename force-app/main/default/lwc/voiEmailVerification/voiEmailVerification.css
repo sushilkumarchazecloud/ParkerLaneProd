@@ -1,0 +1,126 @@
+.fontFamBold{
+    font-family: ProximaNovaAlt-Medium;
+}
+.fontFamreg{
+    font-family: Proxima Nova Alt Regular;
+}
+.max-700{
+	max-width: 700px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;	
+}
+.errorText{
+    color: #c00000;
+    font-size: 1.2rem;
+    font-weight: 500;
+    text-align: center;
+}
+@media only screen and (max-width: 600px) {
+    .successMsg{
+        margin-left : 0px ! important;    
+    }    
+}
+.successMsg{
+    color: #15cd15; 
+    font-size: 1rem; 
+    font-weight: bold; 
+    line-height: 32px;
+    margin-left : 10px;
+}
+.successAnother{
+    color: #15cd15; 
+    font-size: 1rem; 
+    font-weight: bold; 
+    line-height: 32px;
+    margin-left : 10px;
+    margin-top: 8.6%;
+}
+.sendCode button{
+    padding: 19px 35px 19px 35px !important;
+    background: white !important;
+    margin-top: 10px !important;
+    border-radius: 35px !important;
+    cursor: pointer !important;
+    font-weight: bold !important;
+    font-size: 1rem !important;
+    color: lightgray !important;
+    border: 1px solid lightgray !important;
+}
+.box-sz .slds-input{
+    width: 40px !important;
+    height: 55px !important;
+    font-size: 21px !important;
+    border: 2px solid lightgrey;
+}
+
+.baseBtn1 .slds-button{
+    text-decoration: underline !important;
+    color: black !important;
+    font-weight: bold;
+    font-size: 15px !important;
+}
+
+.baseBtn2 .slds-button{
+    text-decoration: underline !important;
+    color: black !important;
+    font-weight: bold;
+    font-size: 15px !important;    
+}
+
+.input_Email .slds-input{
+    height: 55px;
+    border: 2px solid #e5e5e5;
+    margin-top: 8px;
+}
+
+.otpincorrect{
+    color: #c00000;
+    font-size: 1rem;
+    font-weight: 700;
+    position: relative;
+    top: 2rem;
+}
+
+
+.spinnerBTn{
+    position : relative; 
+    top: 16px; 
+    left: 13%; 
+    height: 2.7rem;
+}
+.spinnerOther{
+    position : relative; 
+    top: 78%; 
+    left: 13%; 
+    height: 2.7rem;
+}
+@media only screen and (max-width: 600px) {
+    .spinnerBTn{
+        position : relative; 
+        top: 28px; 
+        left: 7%; 
+        height: 2.7rem;
+    }
+    .spinnerOther{
+        position : relative; 
+        top: 75%; 
+        left: 7%; 
+        height: 2.7rem;
+    }
+    .successAnother{
+        color: #15cd15; 
+        font-size: 1rem; 
+        font-weight: bold; 
+        line-height: 32px;
+        margin-left : 10px;
+        margin-top: 0% !important;
+    }
+    .otpincorrect{
+        color: #c00000;
+        font-size: 1rem;
+        font-weight: 700;
+        position: relative;
+        top: 1rem;
+    }   
+}

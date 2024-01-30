@@ -8,6 +8,14 @@
         <plural>true</plural>
         <value>Relazioni referenti-referenti</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>WM_Client_RelatedContacts</name>
+    </fieldSets>
+    <fieldSets>
+        <label></label>
+        <name>WM_Household_RelatedContacts</name>
+    </fieldSets>
     <gender>Feminine</gender>
     <nameFieldLabel>Nome relazione referente</nameFieldLabel>
     <startsWith>Consonant</startsWith>

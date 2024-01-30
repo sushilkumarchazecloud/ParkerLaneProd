@@ -1,0 +1,63 @@
+.margin_Cls{
+	margin: 20px 0px;
+	line-height: normal;
+}
+.textFields{	
+  --sds-c-input-color-text: #1a2745;
+  --sds-c-input-border-color: #000;
+  --sds-c-input-background-color: white;
+  --sds-c-input-height: 40px;
+  --sds-c-input-font-size-text: 18px;
+  --sds-c-input-padding-vertical: 10px;
+  --sds-c-input-padding-horizontal: 10px;
+
+}
+.head1{
+	font-size : 23px;
+	color:#1a2745;
+	font-weight : 700;
+}
+.text2{
+	font-size: 14px;
+	color:#1a2745;
+	font-weight: 400;		
+}
+.text3{
+	font-size: 12px;
+	color:#1a2745;
+	font-weight: 400;		
+}
+.text1{
+	font-size: 15px;
+	color:#1a2745;
+}
+.margin_tp{
+	margin-top : 15px;
+}
+.margin_topforfield{
+	margin-top : 25px;
+}
+.blueTxt{
+	margin-top: 15px;
+	color: #119be3;
+	font-size: 16px;
+	font-weight: 700;
+}
+.slds-form-element .slds-form-element__label{
+    font-weight: bold;
+    font-size: 13px;
+    margin: 5px 0px;
+	color:#1a2745;
+}
+.signText{
+	width: 90% !important;
+	color : #45c65a;
+	font-size : 16px;
+	font-weight : 500;
+}
+.fontFamBold{
+    font-family: ProximaNovaAlt-Medium;
+}
+.fontFamreg{
+    font-family: Proxima Nova Alt Regular;
+}

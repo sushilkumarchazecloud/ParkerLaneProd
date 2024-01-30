@@ -30,6 +30,10 @@
         <plural>true</plural>
         <value>Roller for finansiel konto</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>WM_Client_FinancialAccountRole</name>
+    </fieldSets>
     <gender>Feminine</gender>
     <nameFieldLabel>Rollenummer</nameFieldLabel>
 </CustomObjectTranslation>

@@ -4,5 +4,9 @@
         <plural>false</plural>
         <value>財務帳戶角色</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>WM_Client_FinancialAccountRole</name>
+    </fieldSets>
     <nameFieldLabel>角色號碼</nameFieldLabel>
 </CustomObjectTranslation>

@@ -4,5 +4,9 @@
         <plural>false</plural>
         <value>人生大事</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>LifeEventRequired</name>
+    </fieldSets>
     <nameFieldLabel>人生大事名称</nameFieldLabel>
 </CustomObjectTranslation>

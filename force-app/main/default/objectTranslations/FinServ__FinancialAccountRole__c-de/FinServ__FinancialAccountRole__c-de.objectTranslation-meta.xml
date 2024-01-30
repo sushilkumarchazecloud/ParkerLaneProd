@@ -40,6 +40,10 @@
         <plural>true</plural>
         <value>Finanz-Accountrollen</value>
     </caseValues>
+    <fieldSets>
+        <label></label>
+        <name>WM_Client_FinancialAccountRole</name>
+    </fieldSets>
     <gender>Feminine</gender>
     <nameFieldLabel>Rollennummer</nameFieldLabel>
 </CustomObjectTranslation>

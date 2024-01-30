@@ -8,5 +8,12 @@
         <plural>true</plural>
         <value>Stage Tracking</value>
     </caseValues>
+    <layouts>
+        <layout>Stage Tracking Layout</layout>
+        <sections>
+            <label></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
     <startsWith>Consonant</startsWith>
 </CustomObjectTranslation>
