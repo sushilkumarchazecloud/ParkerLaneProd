@@ -1,0 +1,676 @@
+<aura:component controller="ParkerLaneLoanController">
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="aCCircumstance" type="Anticipated_Changes_to_Circumstance__c" default="{'sobjectType':'Anticipated_Changes_to_Circumstance__c'}"/>
+    <aura:attribute name="applicationSection" type="String" default=""/>
+    <aura:attribute name="appSectionPath" type="List" default="[]"/>
+    <aura:attribute name="showError" type="Boolean" default="false"/>
+    <aura:attribute name="applicant1Age" type="Decimal" default="0"/>
+    <aura:attribute name="applicant2Age" type="Decimal" default="0"/>
+    <aura:attribute name="retireAgeApp1" type="Decimal" default="0"/>
+    <aura:attribute name="retireAgeApp2" type="Decimal" default="0"/>
+    <aura:attribute name="isMortgage" type="Boolean" default="false"/>
+    <aura:attribute name="errorMsg" type="String" default="Please update the form entries highlighted in red and try again"/>
+    
+    <aura:attribute name="retireYearOptions" type="List" default="[]"/>
+    <aura:attribute name="yesNoOptions" type="List" default="[{'label': 'Yes', 'value': 'Yes'},{'label': 'No', 'value': 'No'}]"/>
+    
+    
+    <aura:attribute name="timeApplicationSettlement" type="String" default=""/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:method name="saveAnticipatedDetails" action="{!c.saveApplication}" access="PUBLIC"  >
+        <aura:attribute name="isShare" type="Boolean" />
+        <aura:attribute name="isNext" type="Boolean" />
+    </aura:method>
+    <div class="anticipated-changes">
+        <aura:if isTrue="{!v.showError}">
+            <div class="slds-notify slds-notify_toast slds-theme_error slds-align_absolute-center slds-m-vertical--medium">
+                <span class="slds-assistive-text">error</span>
+                <div class="slds-notify__content">
+                    <p class="slds-align_absolute-center">{!v.errorMsg}.</p>                
+                </div>
+            </div>
+        </aura:if>
+        <lightning:spinner aura:id="mySpinner" variant="brand" size="large" class="" />
+        <header class="checkout-page-banner--gradient">
+            <div class="slds-align_absolute-center ">
+                <div class="page-banner__content-text">
+                    <h1 class="slds-p-vertical--medium heading--page">Anticipated Changes to Circumstances</h1>
+                </div>
+            </div>
+        </header>
+        <section class="bg-lightest slds-p-horizontal--medium slds-p-vertical--large">
+            <div class="slds-form max-700">
+                <div class="slds-form" role="list">
+                    <div class="slds-form__row slds-p-top--medium slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_10-of-12">
+                            <div class="slds-form__item " role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <p style="text-align: justify;"><abbr title="required" class="slds-required">*</abbr>Do you plan or anticipate changes (other than retirement) to your future financial circumstances that could ADVERSELY impact their ability to repay the loan?</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_2-of-12">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing no-abbr">
+                                    <lightning:radioGroup name="legalProceedingRadioGroup"
+                                                          label="" aura:id="fieldcheck" required="true"
+                                                          options="{! v.yesNoOptions }"
+                                                          value="{!v.aCCircumstance.Do_you_plan_or_anticipate_changes__c}"
+                                                          type="button"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <aura:if isTrue="{!v.aCCircumstance.Do_you_plan_or_anticipate_changes__c =='Yes'}">
+                    <div class="slds-form" role="list">
+                        <h2 class="header">Please list all the changes you anticipate</h2>
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <lightning:input type="checkbox"
+                                                     checked="{!v.aCCircumstance.Extended_unpaid_Leave__c}"
+                                                     label="Extended unpaid Leave (e.g. parental leave)"/>
+                                </div>	
+                            </div>
+                        </div>
+                        <aura:if isTrue="{!v.aCCircumstance.Extended_unpaid_Leave__c}">
+                            <div class="slds-form__row">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                        <lightning:textarea aura:id="fieldcheck" required="true" 
+                                                            value="{!v.aCCircumstance.Extended_unpaid_Leave_Description__c}" 
+                                                            label="Please provide description" maxlength ="250"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </aura:if>
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <lightning:input type="checkbox" 
+                                                     checked="{!v.aCCircumstance.Reduced_income__c}"
+                                                     label="Reduced income"/>
+                                </div>	
+                            </div>
+                        </div>
+                        <aura:if isTrue="{!v.aCCircumstance.Reduced_income__c}">
+                            <div class="slds-form__row">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                        <lightning:textarea aura:id="fieldcheck" required="true" 
+                                                            value="{!v.aCCircumstance.Reduced_income_Description__c}" 
+                                                            label="Please provide description" maxlength ="250"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </aura:if>
+                        
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <lightning:input type="checkbox" 
+                                                     checked="{!v.aCCircumstance.End_of_contract_loss_of_emp__c}"
+                                                     label="End of contract / loss of employment"/>
+                                </div>	
+                            </div>
+                        </div>
+                        <aura:if isTrue="{!v.aCCircumstance.End_of_contract_loss_of_emp__c}">
+                            <div class="slds-form__row">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                        <lightning:textarea aura:id="fieldcheck" required="true" 
+                                                            value="{!v.aCCircumstance.End_of_contract_loss_of_emp_Description__c}" 
+                                                            label="Please provide description" maxlength ="250"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </aura:if>
+                        
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <lightning:input type="checkbox" 
+                                                     checked="{!v.aCCircumstance.Leaving_employment__c}"
+                                                     label="Leaving employment"/>
+                                </div>	
+                            </div>
+                        </div>
+                        <aura:if isTrue="{!v.aCCircumstance.Leaving_employment__c}">
+                            <div class="slds-form__row">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                        <lightning:textarea aura:id="fieldcheck" required="true" 
+                                                            value="{!v.aCCircumstance.Leaving_employment_Description__c}" 
+                                                            label="Please provide description" maxlength ="250"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </aura:if>
+                        
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <lightning:input type="checkbox" 
+                                                     checked="{!v.aCCircumstance.Increased_debt_repayment__c}"
+                                                     label="Increased debt repayment(s) for an existing loan"/>
+                                </div>	
+                            </div>
+                        </div>
+                        <aura:if isTrue="{!v.aCCircumstance.Increased_debt_repayment__c}">
+                            <div class="slds-form__row">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                        <lightning:textarea aura:id="fieldcheck" required="true" 
+                                                            value="{!v.aCCircumstance.Increased_debt_repayment_Description__c}" 
+                                                            label="Please provide description" maxlength ="250"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </aura:if>
+                        
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <lightning:input type="checkbox" 
+                                                     checked="{!v.aCCircumstance.Large_expenditure__c}"
+                                                     label="Large expenditure"/>
+                                </div>	
+                            </div>
+                        </div>
+                        <aura:if isTrue="{!v.aCCircumstance.Large_expenditure__c}">
+                            <div class="slds-form__row">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                        <lightning:textarea aura:id="fieldcheck" required="true" 
+                                                            value="{!v.aCCircumstance.Large_expenditure_Description__c}" 
+                                                            label="Please provide description" maxlength ="250"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </aura:if>
+                        
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <lightning:input type="checkbox" 
+                                                     checked="{!v.aCCircumstance.Medical_treatment_illness__c}"
+                                                     label="Medical treatment / illness"/>
+                                </div>	
+                            </div>
+                        </div>
+                        <aura:if isTrue="{!v.aCCircumstance.Medical_treatment_illness__c}">
+                            <div class="slds-form__row">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                        <lightning:textarea aura:id="fieldcheck" required="true" 
+                                                            value="{!v.aCCircumstance.Medical_treatment_illness_Description__c}" 
+                                                            label="Please provide description" maxlength ="250"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </aura:if>
+                        
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <lightning:input type="checkbox" 
+                                                     checked="{!v.aCCircumstance.Other_anticipate_changes__c}"
+                                                     label="Other"/>
+                                </div>	
+                            </div>
+                        </div>
+                        <aura:if isTrue="{!v.aCCircumstance.Other_anticipate_changes__c}">
+                            <div class="slds-form__row">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                        <lightning:textarea aura:id="fieldcheck" required="true" 
+                                                            value="{!v.aCCircumstance.Other_anticipate_changes_Description__c}" 
+                                                            label="Please provide description" maxlength ="250"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </aura:if>
+                       
+                    </div>
+                    
+                    <div class="slds-form slds-p-top--medium" role="list">
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <h2 class="slds-form-element slds-form-element_stacked slds-is-editing header" >
+                                    How do you intend to meet the loan repayment during this period of change?
+                                </h2>	
+                            </div>
+                            
+                        </div>
+                        <h2 class="header">Please select one or more relevant options and provide details</h2>
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <lightning:input type="checkbox" 
+                                                     checked="{!v.aCCircumstance.Additional_income_source__c}"
+                                                     label="Additional income source"/>
+                                </div>	
+                            </div>
+                        </div>
+                        <aura:if isTrue="{!v.aCCircumstance.Additional_income_source__c}">
+                            <div class="slds-form__row">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                        <lightning:textarea aura:id="fieldcheck" required="true" 
+                                                            value="{!v.aCCircumstance.Additional_income_source_Description__c}" 
+                                                            label="Please provide description" maxlength ="250"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </aura:if>
+                        
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <lightning:input type="checkbox" 
+                                                     checked="{!v.aCCircumstance.Reduce_expenditure__c}"
+                                                     label="Reduce expenditure"/>
+                                </div>	
+                            </div>
+                        </div>
+                        <aura:if isTrue="{!v.aCCircumstance.Reduce_expenditure__c}">
+                            <div class="slds-form__row">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                        <lightning:textarea aura:id="fieldcheck" required="true" 
+                                                            value="{!v.aCCircumstance.Reduce_expenditure_Description__c}" 
+                                                            label="Please provide description" maxlength ="250"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </aura:if>
+                        
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <lightning:input type="checkbox" 
+                                                     checked="{!v.aCCircumstance.Sale_of_assets__c}"
+                                                     label="Sale of assets"/>
+                                </div>	
+                            </div>
+                        </div>
+                        <aura:if isTrue="{!v.aCCircumstance.Sale_of_assets__c}">
+                            <div class="slds-form__row">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                        <lightning:textarea aura:id="fieldcheck" required="true" 
+                                                            value="{!v.aCCircumstance.Sale_of_assets_Description__c}" 
+                                                            label="Please provide description" maxlength ="250"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </aura:if>
+                        
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <lightning:input type="checkbox" 
+                                                     checked="{!v.aCCircumstance.Savings_and_or_Superannuation__c}"
+                                                     label="Savings and/or Superannuation (please give details if not already captured in Financials)"/>
+                                </div>	
+                            </div>
+                        </div>
+                        <aura:if isTrue="{!v.aCCircumstance.Savings_and_or_Superannuation__c}">
+                            <div class="slds-form__row">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                        <lightning:textarea aura:id="fieldcheck" required="true" 
+                                                            value="{!v.aCCircumstance.Savings_Superannuation_Description__c}" 
+                                                            label="Please provide description" maxlength ="250"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </aura:if>
+                        
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <lightning:input type="checkbox" 
+                                                     checked="{!v.aCCircumstance.Co_applicant_s_income__c}"
+                                                     label="Co-applicant's income (please give details if not already captured in Financials)"/>
+                                </div>	
+                            </div>
+                        </div>
+                        <aura:if isTrue="{!v.aCCircumstance.Co_applicant_s_income__c}">
+                            <div class="slds-form__row">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                        <lightning:textarea aura:id="fieldcheck" required="true" 
+                                                            value="{!v.aCCircumstance.Co_applicant_s_income_Description__c}" 
+                                                            label="Please provide description" maxlength ="250"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </aura:if>
+                        
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <lightning:input type="checkbox" 
+                                                     checked="{!v.aCCircumstance.Relevant_options_Other__c}"
+                                                     label="Other"/>
+                                </div>	
+                            </div>
+                        </div>
+                        <aura:if isTrue="{!v.aCCircumstance.Relevant_options_Other__c}">
+                            <div class="slds-form__row">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                        <lightning:textarea aura:id="fieldcheck" required="true" 
+                                                            value="{!v.aCCircumstance.Relevant_options_Other_Description__c}" 
+                                                            label="Please provide description" maxlength ="250"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </aura:if>
+                    </div>
+                </aura:if>
+                <div class="slds-form slds-p-top--large" role="list">
+                    <h1 class="header-text txt-blue">RETIREMENT PLANS</h1>
+                </div>
+                <div class="slds-form slds-p-top--small" role="list">
+                    <h2 class="header">Applicant <aura:If isTrue ="{!v.aCCircumstance.Opportunity__r.Number_of_applicants__c == 2}">1</aura:If></h2>
+                    <div class="slds-form__row">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <lightning:combobox aura:id="fieldcheck" required="true"
+                                                    label="At what age are you planning to retire?" 
+                                                    value="{!v.aCCircumstance.Applicant_1_planning_to_retire_Age__c }"                                                 
+                                                    options="{! v.retireYearOptions }"
+                                                    onchange ="{!c.changeAgeApp1}"
+                                                    placeholder="Select Year"/>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <aura:if isTrue="{!v.aCCircumstance.Applicant_1_planning_to_retire_Age__c != NULL}">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <lightning:input aura:id="fieldcheck" type="text" value="{!v.retireAgeApp1 +' Years' }"
+                                                     label="Years until retirement" readonly="true"
+                                                     placeholder="0" required="true"/>
+                                </div>
+                            </aura:if>
+                        </div>
+                    </div>
+                </div>
+                <aura:If isTrue ="{!v.aCCircumstance.Opportunity__r.Number_of_applicants__c == 2}">
+                    <div class="slds-form" role="list">
+                        <h2 class="header">Applicant 2</h2>
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <lightning:combobox aura:id="fieldcheck" required="true"
+                                                        label="At what age are you planning to retire?" 
+                                                        value="{!v.aCCircumstance.Applicant_2_planning_to_retire_Age__c }"                                                 
+                                                        options="{! v.retireYearOptions }"
+                                                        onchange ="{!c.changeAgeApp2}"
+                                                        placeholder="Select Year"/>
+                                </div>
+                            </div>
+                            <div class="slds-form__item" role="listitem">
+                                <aura:if isTrue="{!v.aCCircumstance.Applicant_2_planning_to_retire_Age__c != NULL}">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                        <lightning:input aura:id="fieldcheck" type="text" value="{!v.retireAgeApp2 +' Years'}"
+                                                         label="Years until retirement" readonly="true"
+                                                         placeholder="0" required="true"/>
+                                    </div>
+                                </aura:if>
+                            </div>
+                        </div>
+                    </div>
+                </aura:If>
+                <div class="slds-form slds-p-top--large" role="list">
+                    <h2 class="header txt-blue">Exit strategy</h2>
+                </div>
+                <div class="slds-form slds-p-top--small" role="list">
+                    <div class="slds-form__row">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing" style="font-weight: 100;">
+                                Years remaining on mortgage after retirement : 
+
+                                <aura:if isTrue="{!v.aCCircumstance.Opportunity__r.Number_of_applicants__c == 2 &amp;&amp; lessthanorequal(v.retireAgeApp2,v.retireAgeApp1)}">
+                                    {!v.retireAgeApp2}
+                                    <aura:set attribute="else">
+                                        {!v.retireAgeApp1}
+                                    </aura:set>
+                                </aura:if>
+                                Years
+                            </div>	
+                        </div>
+                    </div>
+                    <div class="slds-form__row">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing" style="font-weight: 100;">
+                                It is important that you have a retirement plan in place to either continue to make loan repayments or to have paid out the home loan before you retire.
+                            </div>	
+                        </div>
+                    </div>
+                    <h2 class="header">Please list how you plan to manage your loan into retirements.</h2>
+                    <div class="slds-form__row">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <lightning:input type="checkbox" 
+                                                 checked="{!v.aCCircumstance.Repayment_of_loan_prior_to_retirement__c}"
+                                                 label="Repayment of loan prior to retirement"/>
+                            </div>	
+                        </div>
+                    </div>
+                    <aura:if isTrue="{!v.aCCircumstance.Repayment_of_loan_prior_to_retirement__c}">
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <lightning:textarea aura:id="fieldcheck" required="true" 
+                                                        value="{!v.aCCircumstance.Repayment_of_loan_prior_retirement_Desc__c}" 
+                                                        label="Please provide description" maxlength ="250"/>
+                                </div>
+                            </div>
+                        </div>
+                    </aura:if>
+                    
+                    <div class="slds-form__row">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <lightning:input type="checkbox" 
+                                                 checked="{!v.aCCircumstance.Downsizing_home__c}"
+                                                 label="Downsizing home (may not be accepted by all lenders)"/>
+                            </div>	
+                        </div>
+                    </div>
+                    <aura:if isTrue="{!v.aCCircumstance.Downsizing_home__c}">
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <lightning:textarea aura:id="fieldcheck" required="true" 
+                                                        value="{!v.aCCircumstance.Downsizing_home_Description__c}" 
+                                                        label="Please provide description" maxlength ="250"/>
+                                </div>
+                            </div>
+                        </div>
+                    </aura:if>
+                    
+                    <div class="slds-form__row">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <lightning:input type="checkbox" 
+                                                 checked="{!v.aCCircumstance.Savings__c}"
+                                                 label="Savings"/>
+                            </div>	
+                        </div>
+                    </div>
+                    <aura:if isTrue="{!v.aCCircumstance.Savings__c}">
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <lightning:textarea aura:id="fieldcheck" required="true" 
+                                                        value="{!v.aCCircumstance.Savings_Description__c}" 
+                                                        label="Please provide description" maxlength ="250"/>
+                                </div>
+                            </div>
+                        </div>
+                    </aura:if>
+                    <div class="slds-form__row">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <lightning:input type="checkbox" 
+                                                 checked="{!v.aCCircumstance.Sale_of_assets_Retirement__c}"
+                                                 label="Sale of assets eg. Investment property, Shares etc."/>
+                            </div>	
+                        </div>
+                    </div>
+                    <aura:if isTrue="{!v.aCCircumstance.Sale_of_assets_Retirement__c}">
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <lightning:textarea aura:id="fieldcheck" required="true" 
+                                                        value="{!v.aCCircumstance.Sale_of_assets_Retirement_Description__c}" 
+                                                        label="Please provide description" maxlength ="250"/>
+                                </div>
+                            </div>
+                        </div>
+                    </aura:if>
+                    
+                    <div class="slds-form__row">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <lightning:input type="checkbox" 
+                                                 checked="{!v.aCCircumstance.Ongoing_income_from_your_superannuation__c}"
+                                                 label="Ongoing income from your superannuation"/>
+                            </div>	
+                        </div>
+                    </div>
+                    <aura:if isTrue="{!v.aCCircumstance.Ongoing_income_from_your_superannuation__c}">
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <lightning:textarea aura:id="fieldcheck" required="true" 
+                                                        value="{!v.aCCircumstance.Ongoing_income_superannuation_descriptio__c}" 
+                                                        label="Please provide description" maxlength ="250"/>
+                                </div>
+                            </div>
+                        </div>
+                    </aura:if>
+                    
+                    <div class="slds-form__row">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <lightning:input type="checkbox" 
+                                                 checked="{!v.aCCircumstance.Superannuation_lump_sum_retirement__c}"
+                                                 label="Superannuation lump sum following retirement (may not be accepted by all lenders)"/>
+                            </div>	
+                        </div>
+                    </div>
+                    <aura:if isTrue="{!v.aCCircumstance.Superannuation_lump_sum_retirement__c}">
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <lightning:textarea aura:id="fieldcheck" required="true" 
+                                                        value="{!v.aCCircumstance.Superannuation_lump_sum_retirement_Desc__c}" 
+                                                        label="Please provide description" maxlength ="250"/>
+                                </div>
+                            </div>
+                        </div>
+                    </aura:if>
+                    
+                    <div class="slds-form__row">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <lightning:input type="checkbox" 
+                                                 checked="{!v.aCCircumstance.Income_from_other_investments__c}"
+                                                 label="Income from other investments eg. Rental Income, shares etc."/>
+                            </div>	
+                        </div>
+                    </div>
+                    <aura:if isTrue="{!v.aCCircumstance.Income_from_other_investments__c}">
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <lightning:textarea aura:id="fieldcheck" required="true" 
+                                                        value="{!v.aCCircumstance.Income_from_other_investment_Description__c}" 
+                                                        label="Please provide description" maxlength ="250"/>
+                                </div>
+                            </div>
+                        </div>
+                    </aura:if>
+                    
+                    <div class="slds-form__row">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <lightning:input type="checkbox" 
+                                                 checked="{!v.aCCircumstance.Co_applicant_s_income_Retirement__c}"
+                                                 label="Co-applicant's income"/>
+                            </div>	
+                        </div>
+                    </div>
+                    <aura:if isTrue="{!v.aCCircumstance.Co_applicant_s_income_Retirement__c}">
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <lightning:textarea aura:id="fieldcheck" required="true" 
+                                                        value="{!v.aCCircumstance.Co_applicant_s_income_Retirement_Desc__c}" 
+                                                        label="Please provide description" maxlength ="250"/>
+                                </div>
+                            </div>
+                        </div>
+                    </aura:if>
+                    
+                    <div class="slds-form__row">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <lightning:input type="checkbox" 
+                                                 checked="{!v.aCCircumstance.Reducing_loan_term__c}"
+                                                 label="Reducing loan term"/>
+                            </div>	
+                        </div>
+                    </div>
+                    <aura:if isTrue="{!v.aCCircumstance.Reducing_loan_term__c}">
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <lightning:textarea aura:id="fieldcheck" required="true" 
+                                                        value="{!v.aCCircumstance.Reducing_loan_term_Description__c}" 
+                                                        label="Please provide description" maxlength ="250"/>
+                                </div>
+                            </div>
+                        </div>
+                    </aura:if>
+                    
+                    <div class="slds-form__row">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <lightning:input type="checkbox" 
+                                                 checked="{!v.aCCircumstance.Loan_into_retirements_Other__c}"
+                                                 label="Other"/>
+                            </div>	
+                        </div>
+                    </div>
+                    
+                    <aura:if isTrue="{!v.aCCircumstance.Loan_into_retirements_Other__c}">
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <lightning:textarea aura:id="fieldcheck" required="true" 
+                                                        value="{!v.aCCircumstance.Loan_into_retirements_Other_Description__c}" 
+                                                        label="Please provide description" maxlength ="250"/>
+                                </div>
+                            </div>
+                        </div>
+                    </aura:if>
+                </div>
+            </div>
+        </section>
+        <div class="max-700 preNxtBtn ">
+            <lightning:button class="slds-m-vertical_medium slds-float_left" variant="brand" 
+                              label="Previous" title="Previous" 
+                              onclick="{! c.prevSave }" />
+            <lightning:button class="slds-m-vertical_medium slds-float_right" variant="success" 
+                              label="Save &amp; Next" title="Save &amp; Next" 
+                              onclick="{! c.saveNext }" />
+        </div>
+    </div>
+</aura:component>

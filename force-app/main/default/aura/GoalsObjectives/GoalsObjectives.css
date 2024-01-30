@@ -1,0 +1,45 @@
+.THIS .rg-style {
+    width: 100%;
+}
+.THIS .rg-style .slds-radio_button-group, .THIS .rg-style .slds-radio--button-group {
+    border : 0;
+    text-align: center;
+    width: 100%;
+}
+.THIS .rg-style label.slds-radio_button__label {
+    margin: 0px 5px;
+    padding: 1px 5px;
+    border-radius: .25rem !important;
+    border: 1px solid rgb(217, 219, 221);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+.THIS .rg-style .slds-radio_faux{
+    padding: 5px !important;
+    line-height: 1.4;
+}
+
+.THIS .rg-style .slds-radio_button, .THIS .rg-style .slds-radio--button {
+    border: 0 !important;
+    width: 25%;
+}
+.THIS.goals-objectives h2.header {
+    font-weight: 800;
+}
+.THIS .not-imp span.slds-form-element__label{
+    color: #0070d2;
+    font-size: 10px;
+}
+.THIS .not-imp span.slds-checkbox_faux {
+    height: 13px !important;
+    width: 13px !important;
+}
+
+.THIS .no-abbr .slds-form-element__label abbr,
+.THIS .life-event legend.slds-form-element__legend.slds-form-element__label, 
+.THIS .no-err .slds-form-element__help {
+    display: none;
+}

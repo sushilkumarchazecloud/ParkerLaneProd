@@ -1,0 +1,4 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" >
+<!-- call doInit js function on component load to get User's Device-->
+      <smagicinteract:conversationView uiContext = "Lightning" embedContext = "Tab" />
+</aura:component>

@@ -1,0 +1,158 @@
+<aura:component >
+    <aura:attribute name="sliderValue" default="0" type="Integer"/>
+    <aura:attribute name="val" type="Integer" default="0" />
+    <aura:attribute name="heading" type="String" default="Personal care" />
+    <aura:attribute name="subHeading" type="String" default="Personal care" />
+    <aura:attribute name="sliderNo" type="String" default="Personal care" />
+    <aura:attribute name="imgName" type="String" default="" />
+    <aura:attribute name="isIconImag" type="Boolean" default="false" />
+	<aura:handler action="{!c.changeInputValue}" name="init" value="{!this}"/>
+    <aura:handler name="change" value="{!v.val}" action="{!c.changeInputValue}"/>
+   <!-- <aura:method name="rangeSelectorValidate" action="{!c.rangeSelectorValidate}" access="PUBLIC" />
+    -->
+    <aura:html tag="style" >
+        .{!v.sliderNo}-range-selector input[type=range] {
+            -moz-apperance: none;
+        	height: 12px;
+        	background-image: -webkit-gradient(linear, left top, right top, color-stop({!(v.sliderValue)/100}, #91DADC), color-stop({!(v.sliderValue)/100}, #192744));
+        }
+        .{!v.sliderNo}-range-selector .slds-slider__range::-webkit-slider-runnable-track {
+        	background-image: -webkit-gradient( linear, left top, right top, color-stop({!(v.sliderValue)/100},#91DADC), color-stop({!(v.sliderValue)/100},#192744) );
+        }
+    </aura:html>
+    <div class="{!v.sliderNo + '-range-selector'}">
+        <div class="slds-p-vertical_small slds-grid slds-wrap">
+            <div class="slds-col slds-size_8-of-12 slds-large-size_9-of-12"
+                 style = "display:flex;">
+                <span style="padding: 5px 0px;">
+                    <aura:if isTrue="{!v.isIconImag}">
+                        <img src="{!$Resource.SolarLoan + '/img/' + v.imgName}" class="img-icon-style"/>
+                        <aura:set attribute="else">
+                            <lightning:icon iconName="standard:agent_home"  size="large"  />
+                        </aura:set>
+                        
+                    </aura:if>
+                </span>
+                <span class="slds-p-horizontal_x-small">
+                    <div class="slds-text-heading_medium sub_heading_font"><strong>{!v.heading}</strong></div>
+                    <div><span style="line-height: 16px;font-size: 14px;"> {!v.subHeading} </span></div>
+                </span>
+            </div>
+            <div class="slds-col slds-size_4-of-12 slds-large-size_3-of-12">
+                <span class="input-euro left">
+                <lightning:input aura:id="fieldcheck" type="number" class="range-input slds-text-align_right" onchange="{!c.changeInputValue}"
+                                 value="{!v.val}"  step="1"/>
+                </span>
+            </div>
+        </div>
+        <div class="range-container">
+            
+
+            <lightning:slider aura:id="fieldcheck" label="Volume" variant="label-hidden" 
+                              value="{!v.sliderValue}" step ="4" 
+                              onchange="{! c.getValue }"/>
+            <div>
+                <ul class="slider-line-container">
+                	<li>
+                    	<div class="slider-line-main"></div>
+                    </li>
+                    <li>
+                    	<div class="slider-line"></div>
+                    </li>
+                    <li>
+                    	<div class="slider-line"></div>
+                    </li>
+                    <li>
+                    	<div class="slider-line"></div>
+                    </li>
+                    <li>
+                    	<div class="slider-line"></div>
+                    </li>
+                    <li>
+                    	<div class="slider-line-main"></div>
+                    </li>
+                    <li>
+                    	<div class="slider-line"></div>
+                    </li>
+                    <li>
+                    	<div class="slider-line"></div>
+                    </li>
+                    <li>
+                    	<div class="slider-line"></div>
+                    </li>
+                    <li>
+                    	<div class="slider-line"></div>
+                    </li>
+                    <li>
+                    	<div class="slider-line-main"></div>
+                    </li>
+                    <li>
+                    	<div class="slider-line"></div>
+                    </li>
+                    <li>
+                    	<div class="slider-line"></div>
+                    </li>
+                    <li>
+                    	<div class="slider-line"></div>
+                    </li>
+                    <li>
+                    	<div class="slider-line"></div>
+                    </li>
+                    <li>
+                    	<div class="slider-line-main"></div>
+                    </li>
+                    <li>
+                    	<div class="slider-line"></div>
+                    </li>
+                    <li>
+                    	<div class="slider-line"></div>
+                    </li>
+                    <li>
+                    	<div class="slider-line"></div>
+                    </li>
+                    <li>
+                    	<div class="slider-line"></div>
+                    </li>
+                    <li>
+                    	<div class="slider-line-main"></div>
+                    </li>
+                    <li>
+                    	<div class="slider-line"></div>
+                    </li>
+                    <li>
+                    	<div class="slider-line"></div>
+                    </li>
+                    <li>
+                    	<div class="slider-line"></div>
+                    </li>
+                    <li>
+                    	<div class="slider-line"></div>
+                    </li>
+                    <li>
+                    	<div class="slider-line-main"></div>
+                    </li>
+                </ul>
+            	<ul class="slider-line-data-container">
+                	<li>
+                        <div class="font_size">0</div>
+                    </li>
+                    <li>
+                        <div style="margin-left: 26px;" class="font_size">100</div>
+                    </li>
+                    <li>
+                        <div style="margin-left: 20px;" class="font_size">250</div>
+                    </li>
+                    <li>
+                        <div style="margin-left: 20px;" class="font_size">500</div>
+                    </li>
+                    <li>
+                        <div style="margin-left: 20px;" class="font_size">1000</div>
+                    </li>
+                    <li>
+                        <div class="font_size">2500</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</aura:component>

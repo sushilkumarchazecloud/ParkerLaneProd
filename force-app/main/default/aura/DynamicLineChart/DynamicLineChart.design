@@ -1,0 +1,5 @@
+<design:component>
+	<design:attribute name="lender" label="Lender" />
+    <design:attribute name="adviser" label="Adviser" />
+    <design:attribute name="loanType" label="Loan Type" />
+</design:component>

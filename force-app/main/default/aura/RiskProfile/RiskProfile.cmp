@@ -1,0 +1,651 @@
+<aura:component controller="ParkerLaneLoanController">
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="applicationSection" type="String" default=""/>
+    <aura:attribute name="appSectionPath" type="List" default="[]"/>
+    
+    <aura:attribute name="YesNoOptions" type="List" default="[{'label': 'Yes', 'value': 'Yes'},{'label': 'No', 'value': 'No'}]"/>
+    <aura:attribute name="YesMaybeNoOptions" type="List" default="[{'label': 'Yes', 'value': 'Yes'},{'label': 'Maybe', 'value': 'Maybe'},{'label': 'No', 'value': 'No'}]"/>
+    <aura:attribute name="jobSecurityOptions" type="List" default="[{'label': '1', 'value': '1'},{'label': '2', 'value': '2'},{'label': '3', 'value': '3'},{'label': '4', 'value': '4'},{'label': '5', 'value': '5'},{'label': '6', 'value': '6'},{'label': '7', 'value': '7'},{'label': '8', 'value': '8'},{'label': '9', 'value': '9'},{'label': '10', 'value': '10'}]"/>
+    <aura:attribute name="primaryReasonOptions" type="List" default="[{'label': 'Save money', 'value': 'Save money'},{'label': 'Reduce expenditure', 'value': 'Reduce expenditure'},{'label': 'Improve lifestyle', 'value': 'Improve lifestyle'},{'label': 'Improve property value', 'value': 'Improve property value'},{'label': 'Build wealth', 'value': 'Build wealth'},{'label': 'Home ownership', 'value': 'Home ownership'},{'label': 'Benefit environment', 'value': 'Benefit environment'}]"/>
+    <aura:attribute name="interestTypeOptions" type="List" default="[{'label': 'Fixed', 'value': 'Fixed'},{'label': 'Variable', 'value': 'Variable'},{'label': 'Either', 'value': 'Either'}]"/>
+    <aura:attribute name="creditContractOptions" type="List" default="[{'label': 'Under 2 years', 'value': 'Under 2 years'},{'label': '2 to 5 years', 'value': '2 to 5 years'},{'label': '5 to 10 years', 'value': '5 to 10 years'},{'label': '10 years +', 'value': '10 years +'}]"/>
+    <aura:attribute name="repaymentFrequencyOptions" type="List" default="[{'label': 'Weekly', 'value': 'Weekly'},{'label': 'Fortnightly', 'value': 'Fortnightly'},{'label': 'Monthly', 'value': 'Monthly'}]"/>
+    <aura:attribute name="yesNoOtherOptions" type="List" default="[{'label': 'Yes', 'value': 'Yes'},{'label': 'No', 'value': 'No'},{'label': 'Unsure', 'value': 'Unsure'}]"/>
+    <aura:attribute name="fundsOptions" type="List" default="[{'label': 'Owner Occupied', 'value': 'Owner Occupied'},{'label': 'Residential Investment', 'value': 'Residential Investment'},{'label': 'Commercial', 'value': 'Commercial'}]"/>
+    <aura:attribute name="lenderTypeOptions" type="List" default="[{'label': 'Major bank', 'value': 'Major bank'},{'label': 'Credit Union (customer owned bank)', 'value': 'Credit Union (customer owned bank)'},{'label': 'Challenger bank', 'value': 'Challenger bank'},{'label': 'Don’t mind', 'value': 'Don’t mind'}]"/>
+    <aura:attribute name="productTypeOptions" type="List" default="[{'label': 'Basic Loan', 'value': 'Basic Loan'},{'label': 'Professional Package', 'value': 'Professional Package'},{'label': 'Line of Credit', 'value': 'Line of Credit'},{'label': 'Fixed Rate', 'value': 'Fixed Rate'},{'label': 'Low Doc','value':'Low Doc'},{'label': 'Don’t know', 'value': 'Don’t know'}]"/>
+    <aura:attribute name="yearsOptions" type="List" default="[]"/>
+    <aura:attribute name="fixedTermYearOptions" type="List" default="[]"/>
+    
+    <aura:attribute name="showError" type="Boolean" default="false"/>
+    <aura:attribute name="errorMsg" type="String" default="Please update the form entries highlighted in red and try again"/>
+
+    <aura:attribute name="title" type="String" />
+    <aura:attribute name="selectedPerson" type="String" />
+    <aura:attribute name="opportunity" type="Opportunity" default="{'sobjectType': 'Opportunity'}"/>
+    <aura:attribute name="applicant1" type="Contact" default="{'sobjectType': 'Contact'}"/>
+    <aura:attribute name="applicant2" type="Contact" default="{'sobjectType': 'Contact'}"/>
+                                              
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:method name="savePreferensesDetails" action="{!c.saveApplication}" access="PUBLIC" >
+        <aura:attribute name="isShare" type="Boolean" />
+        <aura:attribute name="isNext" type="Boolean" />
+    </aura:method>
+    
+    <div class="risk-profile">
+        <aura:if isTrue="{!v.showError}">
+            <div class="slds-notify slds-notify_toast slds-theme_error slds-align_absolute-center slds-m-vertical--medium">
+                <span class="slds-assistive-text">error</span>
+                <div class="slds-notify__content">
+                    <p class="slds-align_absolute-center">{!v.errorMsg}.</p>                
+                </div>
+            </div>
+        </aura:if>
+        <header class="checkout-page-banner--gradient">
+            <div class="slds-align_absolute-center">
+                <div class="page-banner__content-text">
+                    <h1 class="slds-p-vertical--medium heading--page">{!v.title}</h1>
+                    
+                </div>
+            </div>
+        </header>
+        <lightning:spinner aura:id="mySpinner" variant="brand" size="large" class="" />
+        <section class="bg-lightest slds-p-horizontal--medium slds-p-vertical--large">
+            <div class="slds-form max-700">
+                <div class="slds-form questions" role="list">
+                    <aura:if isTrue="{!v.selectedPerson=='joint'}">
+                        <h1 class="header-text txt-blue">Applicant 1</h1>
+                    </aura:if>
+                    <div class="slds-form__row slds-p-top--medium slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-medi1um-size_6-of-12 slds-lar1ge-size_6-of-12">
+                            <div class="slds-form__item " role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <p><abbr title="required" class="slds-required">*</abbr>On a scale of 1-10 how would you rate current Job Security?<br/>
+                                        (The higher number, the more secure you feel - 1 is Not Secure, 10 is Highly Secure )</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 s1lds-medium-size_6-of-12 s1lds-large-size_6-of-12">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing no-abbr">
+                                    <lightning:radioGroup name="jobSecurityRadioGroup"
+                                                          label="" aura:id="fieldcheck" required="true"
+                                                          options="{! v.jobSecurityOptions }"
+                                                          value="{! v.applicant1.Rate_current_Job_Security__c }"
+                                                          type="radio"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-form__row slds-p-top--medium slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-medi1um-size_6-of-12 slds-lar1ge-size_6-of-12">
+                            <div class="slds-form__item " role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <p><abbr title="required" class="slds-required">*</abbr>On a scale of 1-10 how concerned are you about rising interest rates<br/>
+                                        (1 not concerned, 10 highly concerned)</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 s1lds-medium-size_6-of-12 s1lds-large-size_6-of-12">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing no-abbr">
+                                    <lightning:radioGroup name="concernedRadioGroup"
+                                                          label="" aura:id="fieldcheck" required="true"
+                                                          options="{! v.jobSecurityOptions }"
+                                                          value="{! v.applicant1.rising_interest_rates__c}"
+                                                          type="radio"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-form__row slds-p-top--medium slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_10-of-12">
+                            <div class="slds-form__item " role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <p><abbr title="required" class="slds-required">*</abbr>Have you ever had any defaults, judgements or legal proceedings recorded against you?</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_2-of-12">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing no-abbr">
+                                    <lightning:radioGroup name="legalProceedingRadioGroup"
+                                                          label="" aura:id="fieldcheck" required="true"
+                                                          options="{! v.YesNoOptions }"
+                                                          value="{! v.applicant1.Judgements_or_legal_proceedings_recorded__c }"
+                                                          type="button"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <aura:if isTrue="{!v.applicant1.Judgements_or_legal_proceedings_recorded__c=='Yes'}">
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <lightning:textarea aura:id="fieldcheck" required="true" 
+                                                        value="{!v.applicant1.Description_Judgement_legal_proceeding__c}" 
+                                                        label="Please provide details" maxlength ="250"/>
+                                </div>
+                            </div>
+                        </div>
+                    </aura:if>
+                    <div class="slds-form__row slds-p-top--medium slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_10-of-12">
+                            <div class="slds-form__item " role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <p><abbr title="required" class="slds-required">*</abbr>Are all of your current credit commitments up to date?</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_2-of-12">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing no-abbr">
+                                    <lightning:radioGroup name="creditCommitmentsRadioGroup"
+                                                          label="" aura:id="fieldcheck" required="true"
+                                                          options="{! v.YesNoOptions }"
+                                                          value="{! v.applicant1.Credit_commitments_up_to_date__c }"
+                                                          type="button"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <aura:if isTrue="{!v.applicant1.Credit_commitments_up_to_date__c=='No'}">
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <lightning:textarea aura:id="fieldcheck" required="true" 
+                                                        value="{!v.applicant1.Description_Credit_commitment_up_to_date__c}" 
+                                                        label="Please provide details" maxlength ="250"/>
+                                </div>
+                            </div>
+                        </div>
+                    </aura:if>
+                    <div class="slds-form__row slds-p-top--medium slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_10-of-12">
+                            <div class="slds-form__item " role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <p><abbr title="required" class="slds-required">*</abbr>Are you a tax resident of a foreign country?</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_2-of-12">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing no-abbr">
+                                    <lightning:radioGroup name="taxResidentRG"
+                                                          label="" aura:id="fieldcheck" required="true"
+                                                          options="{! v.YesNoOptions }"
+                                                          value="{!v.applicant1.Are_you_tax_resident_of_foreign_country__c}"
+                                                          type="button"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <aura:if isTrue="{!v.applicant1.Are_you_tax_resident_of_foreign_country__c=='Yes'}">
+                        <div class="slds-form__row ">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <lightning:textarea aura:id="fieldcheck" required="true" 
+                                                        value="{!v.applicant1.Description_resident_of_foreign_country__c}" 
+                                                        label="Please provide details" maxlength ="250"/>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </aura:if>
+                    <div class="slds-form__row slds-p-top--medium slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_10-of-12">
+                            <div class="slds-form__item " role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <p><abbr title="required" class="slds-required">*</abbr>Do you anticipate any changes to your income in the next 6-12 months?</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_2-of-12">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing no-abbr">
+                                    <lightning:radioGroup name="anticipateChangesRadioGroup"
+                                                          label="" aura:id="fieldcheck" required="true"
+                                                          options="{! v.YesNoOptions }"
+                                                          value="{! v.applicant1.Your_income_in_the_next_6_12_months__c }"
+                                                          type="button"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <aura:if isTrue="{!v.applicant1.Your_income_in_the_next_6_12_months__c=='Yes'}">
+                        <div class="slds-form__row ">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <lightning:textarea aura:id="fieldcheck" required="true" 
+                                                        value="{!v.applicant1.Decription_income_in_next_6_12_months__c}" 
+                                                        label="Please provide details" maxlength ="250"/>
+                                </div>
+                            </div>
+                        </div>
+                    </aura:if>
+                    
+                    <div class="slds-form__row slds-p-top--medium slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_10-of-12">
+                            <div class="slds-form__item " role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <p><abbr title="required" class="slds-required">*</abbr>Do you anticipate your expenses will change materially in the next 6-12 months?</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_2-of-12">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing no-abbr">
+                                    <lightning:radioGroup name="anticipateExpensesRadioGroup"
+                                                          label="" aura:id="fieldcheck" required="true"
+                                                          options="{! v.YesNoOptions }"
+                                                          value="{! v.applicant1.Materially_in_the_next_6_12_months__c }"
+                                                          type="button"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <aura:if isTrue="{!v.applicant1.Materially_in_the_next_6_12_months__c=='Yes'}">
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <lightning:textarea aura:id="fieldcheck" required="true" 
+                                                        value="{!v.applicant1.Description_materially_next_6_12_months__c}" 
+                                                        label="Please provide details" maxlength ="250"/>
+                                </div>
+                            </div>
+                        </div>
+                    </aura:if>
+                    
+                    <div class="slds-form__row slds-p-top--medium slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_10-of-12">
+                            <div class="slds-form__item " role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <p><abbr title="required" class="slds-required">*</abbr>Are there any other factors that you can think of that may materially affect your income and/or expenses in the next 6-12 months?</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_2-of-12">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing no-abbr">
+                                    <lightning:radioGroup name="otherFactorsRadioGroup"
+                                                          label="" aura:id="fieldcheck" required="true"
+                                                          options="{! v.YesNoOptions }"
+                                                          value="{! v.applicant1.Income_expenses_in_the_next_6_12_months__c }"
+                                                          type="button"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <aura:if isTrue="{!v.applicant1.Income_expenses_in_the_next_6_12_months__c=='Yes'}">
+                        <div class="slds-form__row ">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <lightning:textarea aura:id="fieldcheck" required="true" 
+                                                        value="{!v.applicant1.Description_Income_expenses_6_12_months__c}" 
+                                                        label="Please provide details" maxlength ="250"/>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </aura:if>
+                    
+                    
+                </div>
+                
+                <aura:if isTrue="{!v.selectedPerson=='joint'}">
+                    <div class="slds-form questions slds-p-top--large" role="list">
+                        <h1 class="header-text txt-blue">Applicant 2</h1>
+                        <div class="slds-form__row slds-p-top--medium slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-medi1um-size_6-of-12 slds-lar1ge-size_6-of-12">
+                                <div class="slds-form__item " role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                        <p><abbr title="required" class="slds-required">*</abbr>On a scale of 1-10 how would you rate current Job Security?<br/>
+                                            (The higher number, the more secure you feel - 1 is Not Secure, 10 is Highly Secure )</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 s1lds-medium-size_6-of-12 s1lds-large-size_6-of-12">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing no-abbr">
+                                        <lightning:radioGroup name="jobSecurity2RadioGroup"
+                                                              label="" aura:id="fieldcheck" required="true"
+                                                              options="{! v.jobSecurityOptions }"
+                                                              value="{! v.applicant2.Rate_current_Job_Security__c }"
+                                                              type="radio"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-form__row slds-p-top--medium slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-medi1um-size_6-of-12 slds-lar1ge-size_6-of-12">
+                                <div class="slds-form__item " role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                        <p><abbr title="required" class="slds-required">*</abbr>On a scale of 1-10 how concerned are you about rising interest rates<br/>
+                                            (1 not concerned, 10 highly concerned)</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 s1lds-medium-size_6-of-12 s1lds-large-size_6-of-12">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing no-abbr">
+                                        <lightning:radioGroup name="concerned2RadioGroup"
+                                                              label="" aura:id="fieldcheck" required="true"
+                                                              options="{! v.jobSecurityOptions }"
+                                                              value="{!v.applicant2.rising_interest_rates__c}"
+                                                              type="radio"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-form__row slds-p-top--medium slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_10-of-12">
+                                <div class="slds-form__item " role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                        <p><abbr title="required" class="slds-required">*</abbr>Have you ever had any defaults, judgements or legal proceedings recorded against you?</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_2-of-12">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing no-abbr">
+                                        <lightning:radioGroup name="legalProceeding2RadioGroup"
+                                                              label="" aura:id="fieldcheck" required="true"
+                                                              options="{! v.YesNoOptions }"
+                                                              value="{! v.applicant2.Judgements_or_legal_proceedings_recorded__c }"
+                                                              type="button"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <aura:if isTrue="{!v.applicant2.Judgements_or_legal_proceedings_recorded__c=='Yes'}">
+                            <div class="slds-form__row">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                        <lightning:textarea aura:id="fieldcheck" required="true" 
+                                                        value="{!v.applicant2.Description_Judgement_legal_proceeding__c}" 
+                                                        label="Please provide details" maxlength ="250"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </aura:if>
+                        <div class="slds-form__row slds-p-top--medium slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_10-of-12">
+                                <div class="slds-form__item " role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                        <p><abbr title="required" class="slds-required">*</abbr>Are all of your current credit commitments up to date?</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_2-of-12">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing no-abbr">
+                                        <lightning:radioGroup name="creditCommitments2RadioGroup"
+                                                              label="" aura:id="fieldcheck" required="true"
+                                                              options="{! v.YesNoOptions }"
+                                                              value="{! v.applicant2.Credit_commitments_up_to_date__c }"
+                                                              type="button"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <aura:if isTrue="{!v.applicant2.Credit_commitments_up_to_date__c=='No'}">
+                            <div class="slds-form__row">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                        <lightning:textarea aura:id="fieldcheck" required="true" 
+                                                        value="{!v.applicant2.Description_Credit_commitment_up_to_date__c}" 
+                                                        label="Please provide details" maxlength ="250"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </aura:if>
+                        
+                        <div class="slds-form__row slds-p-top--medium slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_10-of-12">
+                                <div class="slds-form__item " role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                        <p><abbr title="required" class="slds-required">*</abbr>Are you a tax resident of a foreign country?</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_2-of-12">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing no-abbr">
+                                        <lightning:radioGroup name="taxResidentRadioGroup"
+                                                              label="" aura:id="fieldcheck" required="true"
+                                                              options="{! v.YesNoOptions }"
+                                                              value="{!v.applicant2.Are_you_tax_resident_of_foreign_country__c }"
+                                                              type="button"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <aura:if isTrue="{!v.applicant2.Are_you_tax_resident_of_foreign_country__c =='Yes'}">
+                            <div class="slds-form__row ">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                        <lightning:textarea aura:id="fieldcheck" required="true" 
+                                                            value="{!v.applicant2.Description_resident_of_foreign_country__c}" 
+                                                            label="Please provide details" maxlength ="250"/>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </aura:if>
+                        
+                        <div class="slds-form__row slds-p-top--medium slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_10-of-12">
+                                <div class="slds-form__item " role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                        <p><abbr title="required" class="slds-required">*</abbr>Do you anticipate any changes to your income in the next 6-12 months?</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_2-of-12">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing no-abbr">
+                                        <lightning:radioGroup name="anticipateChanges2RadioGroup"
+                                                              label="" aura:id="fieldcheck" required="true"
+                                                              options="{! v.YesNoOptions }"
+                                                              value="{! v.applicant2.Your_income_in_the_next_6_12_months__c }"
+                                                              type="button"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <aura:if isTrue="{!v.applicant2.Your_income_in_the_next_6_12_months__c=='Yes'}">
+                            <div class="slds-form__row ">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                        <lightning:textarea aura:id="fieldcheck" required="true" 
+                                                        value="{!v.applicant2.Decription_income_in_next_6_12_months__c}" 
+                                                        label="Please provide details" maxlength ="250"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </aura:if>
+                        
+                        <div class="slds-form__row slds-p-top--medium slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_10-of-12">
+                                <div class="slds-form__item " role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                        <p><abbr title="required" class="slds-required">*</abbr>Do you anticipate your expenses will change materially in the next 6-12 months?</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_2-of-12">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing no-abbr">
+                                        <lightning:radioGroup name="anticipateExpenses2RadioGroup"
+                                                              label="" aura:id="fieldcheck" required="true"
+                                                              options="{! v.YesNoOptions }"
+                                                              value="{! v.applicant2.Materially_in_the_next_6_12_months__c }"
+                                                              type="button"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <aura:if isTrue="{!v.applicant2.Materially_in_the_next_6_12_months__c=='Yes'}">
+                            <div class="slds-form__row">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                        <lightning:textarea aura:id="fieldcheck" required="true" 
+                                                        value="{!v.applicant2.Description_materially_next_6_12_months__c}" 
+                                                        label="Please provide details" maxlength ="250"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </aura:if>
+                        
+                        <div class="slds-form__row slds-p-top--medium slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_10-of-12">
+                                <div class="slds-form__item " role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                        <p><abbr title="required" class="slds-required">*</abbr>Are there any other factors that you can think of that may materially affect your income and/or expenses in the next 6-12 months?</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_2-of-12">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing no-abbr">
+                                        <lightning:radioGroup name="otherFactors2RadioGroup"
+                                                              label="" aura:id="fieldcheck" required="true"
+                                                              options="{! v.YesNoOptions }"
+                                                              value="{! v.applicant2.Income_expenses_in_the_next_6_12_months__c }"
+                                                              type="button"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <aura:if isTrue="{!v.applicant2.Income_expenses_in_the_next_6_12_months__c=='Yes'}">
+                            <div class="slds-form__row ">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                        <lightning:textarea aura:id="fieldcheck" required="true" 
+                                                            value="{!v.applicant2.Description_Income_expenses_6_12_months__c}" 
+                                                            label="Please provide details" maxlength ="250"/>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </aura:if>
+                        
+                    </div>
+                </aura:if>
+                
+                <div class="slds-form questions" role="list">
+                    <h1 class="header-text txt-blue slds-p-top--medium">Risk &amp; Personal Insurance</h1>
+                    <p>We are obliged to ask these questions for compliance purposes.</p>
+                    <div class="slds-form__row slds-p-top--medium slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_10-of-12">
+                            <div class="slds-form__item " role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <p><abbr title="required" class="slds-required">*</abbr>Do you currently have adequate Life Insurance?</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_2-of-12">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing no-abbr">
+                                    <lightning:radioGroup label="" aura:id="fieldcheck" required="true"
+                                                          options="{! v.yesNoOtherOptions }"
+                                                          value="{! v.opportunity.Have_adequate_Life_Insurance__c }"
+                                                          type="button"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-form__row slds-p-top--medium slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_10-of-12">
+                            <div class="slds-form__item " role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <p><abbr title="required" class="slds-required">*</abbr>Do you currently have adequate Debt Protection Insurance?</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_2-of-12">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing no-abbr">
+                                    <lightning:radioGroup label="" aura:id="fieldcheck" required="true"
+                                                          options="{! v.yesNoOtherOptions }"
+                                                          value="{! v.opportunity.Have_adequate_Debt_Protection_Insurance__c }"
+                                                          type="button"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-form__row slds-p-top--medium slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_10-of-12">
+                            <div class="slds-form__item " role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <p><abbr title="required" class="slds-required">*</abbr>Do you currently have adequate Income Protection Insurance?</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_2-of-12">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing no-abbr">
+                                    <lightning:radioGroup label="" aura:id="fieldcheck" required="true"
+                                                          options="{! v.yesNoOtherOptions }"
+                                                          value="{! v.opportunity.Have_adequate_Income_Protection__c }"
+                                                          type="button"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-form__row slds-p-top--medium slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_10-of-12">
+                            <div class="slds-form__item " role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <p><abbr title="required" class="slds-required">*</abbr>Do you have adequate insurance that will repay your loan repayments and/or outstanding balance (current and/or new) should you not be able to work?</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_2-of-12">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing no-abbr">
+                                    <lightning:radioGroup label="" aura:id="fieldcheck" required="true"
+                                                          options="{! v.yesNoOtherOptions }"
+                                                          value="{! v.opportunity.Have_adequate_insurance__c }"
+                                                          type="button"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="slds-form__row slds-p-top--medium slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_10-of-12">
+                            <div class="slds-form__item " role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <p><abbr title="required" class="slds-required">*</abbr>If you answered No, or Unsure to any of the above questions, would you like us to arrange a meeting for you to discuss options regarding your insurance needs and requirements?</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_2-of-12">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing no-abbr">
+                                    <lightning:radioGroup name="needsRequirementsRadioGroup"
+                                                          label="" aura:id="fieldcheck" required="true"
+                                                          options="{! v.YesNoOptions }"
+                                                          value="{! v.opportunity.Would_you_like_us_to_arrange_a_meeting__c }"
+                                                          type="button"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>  
+            </div>
+        </section>
+        <div class="max-700 preNxtBtn ">
+            <lightning:button class="slds-m-vertical_medium slds-float_left" variant="brand" 
+                              label="Previous" title="Previous" 
+                              onclick="{! c.prevSave }" />
+            <lightning:button class="slds-m-vertical_medium slds-float_right" variant="success" 
+                              label="Save &amp; Next" title="Save &amp; Next" 
+                              onclick="{! c.saveNext }" />
+        </div>
+    </div>
+</aura:component>

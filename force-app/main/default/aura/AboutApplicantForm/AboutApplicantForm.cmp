@@ -1,0 +1,69 @@
+<aura:component >
+    <aura:attribute name="applicant1Name" type="String" default=""/>
+    <aura:attribute name="applicant2Name" type="String" default=""/>
+    <aura:attribute name="applicant1" type="Contact" />
+    <aura:attribute name="applicant2" type="Contact"/>
+    <aura:attribute name="app1Children" type="Contact[]" />
+    <aura:attribute name="app2Children" type="Contact[]" />
+    <aura:attribute name="selectedApplicant" type="Contact" default=""/>
+    <aura:attribute name="selectedPerson" type="String" />
+    <aura:attribute name="relationship" type="String" />
+    <aura:attribute name="appRelationship" type="String" />
+    <aura:attribute name="applicantNameOptions" type="List" default=""/>
+    <aura:attribute name="applicantGrpValue" type="String" />
+    <aura:attribute name="maritalStatus1Options" type="List" default="[{'label': 'Single', 'value': 'Single'},{'label': 'Married / defacto (non-applicant)', 'value': 'Married / defacto (non-applicant)'},{'label': 'Married / Defacto (to applicant 2)', 'value': 'Married / Defacto (to applicant 2)'},{'label': 'Divorced', 'value': 'Divorced'},{'label': 'Separated', 'value': 'Separated'},{'label': 'Widowed', 'value': 'Widowed'}]"/>
+    <aura:attribute name="maritalStatus2Options" type="List" default="[{'label': 'Single', 'value': 'Single'},{'label': 'Married / defacto (non-applicant)', 'value': 'Married / defacto (non-applicant)'},{'label': 'Married / Defacto (to applicant 1)', 'value': 'Married / Defacto (to applicant 1)'},{'label': 'Divorced', 'value': 'Divorced'},{'label': 'Separated', 'value': 'Separated'},{'label': 'Widowed', 'value': 'Widowed'}]"/>
+    <aura:attribute name="maritalStatus3Options" type="List" default="[{'label': 'Single', 'value': 'Single'},{'label': 'Married / defacto (non-applicant)', 'value': 'Married / defacto (non-applicant)'},{'label': 'Divorced', 'value': 'Divorced'},{'label': 'Separated', 'value': 'Separated'},{'label': 'Widowed', 'value': 'Widowed'}]"/>
+    <aura:attribute name="showError" type="Boolean" default="false"/>
+    
+    <aura:handler name="change" value="{!v.applicantGrpValue}" action="{!c.handleChange}"/>
+    <aura:handler name="change" value="{!v.appRelationship}" action="{!c.relationshipChange}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:method name="checkAboutApp" action="{!c.checkAboutApp}" access="PUBLIC" />
+    
+    <section class="bg-lightest slds-p-horizontal--medium slds-p-vertical--large  ">
+        <aura:if isTrue="{!v.showError}">
+            <div class="slds-notify width100 slds-notify_toast slds-theme_error slds-align_absolute-center slds-m-vertical--medium">
+                <span class="slds-assistive-text">error</span>
+                <div class="slds-notify__content">
+                    <p class="slds-align_absolute-center">Error: Relationship statuses of Applicant 1 and Applicant 2 are not consistent. Please update.</p>                
+                </div>
+            </div>
+        </aura:if>
+        <div class="slds-clearfix slds-text-align_center slds-p-top--medium slds-form solar-radio-button">
+            <h4>About You</h4>
+            <aura:if isTrue="{!v.selectedPerson=='joint'}">
+                <lightning:radioGroup aura:id="radioGrp" name="radioButtonGroup" 
+                                      options="{! v.applicantNameOptions }" 
+                                      value="{! v.applicantGrpValue }" onchange="{! c.handleChange }" 
+                                      type="button" class="max-700 disabled-btn"/>
+            </aura:if>
+        </div>    
+        <div class="max-700">
+            <div aura:id="applicant1details" class="slds-m-horizontal_xx-small slds-p-around--medium">
+                <c:ApplicantDetails aura:id="applicant1detail"
+                                    relationship="{!v.appRelationship}" 
+                                    selectedPerson="{!v.selectedPerson}" 
+                                    applicant ="{!v.applicant1}"
+                                    applicant1 ="{!v.applicant2}"
+                                    applicantChildren = "{!v.app1Children}"
+                                    isShowDependents = "true"
+                                    applicantNo = "1"/>
+            </div> 
+            <aura:if isTrue="{!v.selectedPerson=='joint'}">
+                <div aura:id="applicant2details" class="slds-hide applicant2-BG-color slds-m-horizontal_xx-small slds-p-around--medium">
+                    <c:ApplicantDetails aura:id="applicant2detail"
+                                        relationship="{!v.appRelationship}"
+                                        selectedPerson="{!v.selectedPerson}" 
+                                        applicant ="{!v.applicant2}"
+                                        applicant1 ="{!v.applicant1}"
+                                        applicantChildren = "{!v.app2Children}"
+                                        isShowDependents = "false"
+                                        applicantNo = "2"/>
+                    
+                </div>
+                
+            </aura:if>
+        </div>
+    </section>
+</aura:component>

@@ -1,0 +1,204 @@
+<apex:page renderAs="PDF" controller="Genrate_PDF_For_VOI_Controller"  showHeader="false" sidebar="false"  standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false" action="{!generateImageURL}">
+    <html>
+        <head>
+            <style>
+                body{
+                font-family: sans-serif;
+                }
+                .PHead{
+                font-size : 28px;
+                font-weight : bold;
+                }
+                .BodyData{
+                font-size : 15px;
+                }
+                .heading{
+                font-size : 14px;
+                color : blue;
+                text-align : center;
+                font-family: sans-serif;
+                }
+                .tableData{
+                font-size : 14px;
+                font-family: sans-serif;
+                }
+                .TmcuInfo{
+                font-size : 14px;
+                font-family : Arial Unicode MS;
+                }
+                .normalHead{
+                font-size : 14px;
+                font-weight : bold;
+                }
+            </style>
+        </head>
+        <body>
+            <div>
+                <apex:pageBlock >
+                    <div class="heading">
+                        <div align="left">
+                            <span>It is a requirement of a credit union that you become a member of the bank when taking out a product or servicewith them. Please read and sign the document below</span><br/>           
+                        </div>
+                    </div>
+                    <div style="font-size : 25px; font-family: sans-serif;">
+                        <span><b>Transport Mutual Credit<br/> Union - {!IF(opportunity.Applicant_2__c != null, 'Joint', 'Single')} Membership Application<br/> Form.</b></span>
+                    </div><br/>
+                    <div class="tableData" >
+                        <div>
+                            <table>
+                                <tr>
+                                    <td style="font-size : 18px"><u>Applicant 1</u></td>
+                                </tr>
+                                <tr>
+                                    <td><b style="">Surname : </b>{!opportunity.Applicant_1__r.LastName}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>First Name : </b>{!opportunity.Applicant_1__r.FirstName}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Date of Birth : </b>{!opportunity.Applicant_1__r.PersonBirthdate}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Gender : </b>{!opportunity.Applicant_1__r.FinServ__Gender__pc}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Address : </b>{!opportunity.Applicant_1__r.Residential_Address__pc}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Postal Address : </b>{!opportunity.Applicant_1__r.Postal_Address__pc}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Phone : </b>{!opportunity.Applicant_1__r.PersonMobilePhone}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Email : </b>{!opportunity.Applicant_1__r.PersonEmail}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Employer : </b>{!emp1.Name}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Occupation : </b>{!emp1.FinServ__Occupation__c}</td>
+                                </tr>
+                            </table><br/>
+                        </div>
+                        <div style="Display : {!IF(opportunity.Applicant_2__c != null, 'Block', 'none')}">
+                            <table>
+                                <tr>
+                                    <td style="font-size : 18px"><u>Applicant 2</u></td>
+                                </tr>
+                                <tr>
+                                    <td><b style="">Surname : </b>{!opportunity.Applicant_2__r.LastName}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>First Name : </b>{!opportunity.Applicant_2__r.FirstName}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Date of Birth : </b>{!opportunity.Applicant_2__r.PersonBirthdate}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Gender : </b>{!opportunity.Applicant_2__r.FinServ__Gender__pc}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Address : </b>{!opportunity.Applicant_2__r.Residential_Address__pc}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Postal Address : </b>{!opportunity.Applicant_2__r.Postal_Address__pc}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Phone : </b>{!opportunity.Applicant_2__r.PersonMobilePhone}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Email : </b>{!opportunity.Applicant_2__r.PersonEmail}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Employer : </b>{!emp2.Name}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Occupation : </b>{!emp2.FinServ__Occupation__c}</td>
+                                </tr>
+                            </table><br/>
+                        </div>
+                    </div><br/>
+                    <div class="tableData">
+                        <span>I am a tax resident of each of the following countries and am not a tax resident of any other country: {!contact.Tax_Resident_of_countries__c}</span><br/><br/>                   
+                    </div>
+                    <div class="tableData">
+                        <span>My tax file number is (optional): {!contact.Tax_File_Number_TFN__c}</span><br/>
+                        <span style="font-size : 12px; font-family: sans-serif;">Disclosure of your tax File Number [TFN] is optional. declining to quote is not an offence.</span><br/><br/>
+                    </div>
+                    <div class="tableData">
+                        <span>If you are a tax resident of a foreign country, enter your Tax Identification Number (optional): {!contact.Tax_Identification_Number_TIN__c}</span><br/>
+                        <span style="font-size : 12px; font-family: sans-serif;">The TIN is the taxpayer identification number used in the relevant country. If you do not have a TIN for a country you are a tax resident of please explain why in the fieldabove, being either (A) the country does not issue TINs to residents or (B) other reason why you do not have a TIN (with explanation)</span><br/><br/>
+                    </div>
+                    <div class="tableData">
+                        <span>Please read the following sections carefully.</span>
+                    </div><br/><br/>
+                    
+                    <div class="BodyData">
+                        <span>Head Office : 
+                            Ground Floor 410 Elizabeth Street Surry Hills NSW. 
+                        </span><br/>
+                        <span>Phone: 02 9763 3190 Fax: 02 9763 3199</span><br/>
+                        <span>AFSL / Australian Credit License 240718
+                            ABN 78 087 650 600  BSB 802 847
+                        </span><br/><br/>
+                    </div>
+                    <div class="BodyData">
+                        <span style="font-size : 16px;"><b>APPLICATION DETAILS</b></span><br/>
+                        <span>I/We apply for membership and one $10 dollar share per Member in Transport Mutual Credit Union Limited (TMCU). I/We agree to be bound by the Constitution of TMCU and the Customer Owned Banking Code of Practice. I/We agree to be bound by TMCU’s Account and Access Facility Conditions of Use, as amended, from time to time.</span>
+                    </div><br/><br/>
+                    <div class="BodyData">
+                        <span style="font-size : 16px;"><b>PRIVACY AND ACKNOWLEDGMENT</b></span><br/>
+                        <span>I/We acknowledge receipt of a copy of TMCU’s Account and Access Facility Conditions of Use, Privacy Statement, Fees &amp; Charges, and Financial Services Guide, which are obtainable from our website www. transportmutual.com.au.
+                            I/We understand that collection of my Tax File Number or Exemption is authorised and their use and disclosure are strictly regulated by the law and the Privacy Act 1988 (Cth). I/We understand that quoting  my Tax File Number is not compulsory but failing to do so may result in tax being taken out of my interest. I/ We understand that the Tax File Number will be applied to all accounts under this membership unless I/We specifically request otherwise. The Australian Taxation Office has specific laws on Savings and Investment accounts in regard to the Tax File Number (TFN). For more information refer to the Australian Taxation Office at www.ato.gov.au.</span><br/><br/>
+                        <span>I/We understand that TMCU may disclose personal information to Illion, the credit reporting agency for the purpose of identification only. Illion may use the personal information contained in credit information files to electronically verify your identity for the purposes of AML/CTF Act.</span><br/><br/>
+                        <span>TMCU may disclose your name, residential address and date of birth to the credit reporting agency, Illion, for the purpose of verifying your identity. TMCU may request from Illion, and Illion may prepare and provide to TMCU, an assessment of whether this personal information about you matches, in whole or part, the information contained in credit information files in Illion’s possession or control. Illion may use the personal information about you, and the names, residential addresses and dates of birth contained in credit information file of other individuals, for the purpose of preparing such an assessment.</span><br/><br/>
+                        <span>I/We agree to TMCU providing my personal information to Illion and requesting Illion to assess whether it matches information in credit information files in Illion’s possession or control.
+                            If you do not wish TMCU to provide your personal information to Illion we will not be able to verify your identity electronically. Please contact TMCU on (02) 8202 8555 for information on alternative ways we can verify your identity.
+                        </span>
+                    </div> <br/><br/>
+                    <div class="BodyData">
+                        <span style="font-size : 16px;"><b>DECLARATION</b></span><br/>
+                        <span>I/We declare that the information relating to my/our personal details and the products and services provided to be true and correct.
+                            I/We understand that all parties named on the account will be jointly responsible for its operation and any debt incurred on it.
+                            I/We acknowledge it is an offence under the Anti-Money Laundering and Counter Terrorism Financing Act 2006 (Cth) to give false and misleading information.
+                        </span><br/>
+                    </div>
+                    
+                    <div class="BodyData">
+                        <span style="font-size : 16px;"><b>Consent for Electronic Delivery of Statements &amp; Notices</b></span><br/>
+                        <span>Please use my email address:</span><br/>
+                        <ul>
+                            <li>to send me statements and notices for all my banking and loan accounts; or</li>
+                            <li>to tell me that they are available to view or download from your internet banking site.</li>
+                        </ul>
+                        <span>I understand that:</span><br/>
+                        <span>you will stop posting me paper statements and notices</span>
+                        <span>I need to check my emails regularly</span><br/>
+                        <span>I can revert to paper statements and notices in the post at any time</span><br/><br/>
+                    </div>
+                    <div class="BodyData">
+                        <span><b>Select the number of applicants required to sign to operate your Transport Mutual Credit Union  accounts: </b>{!contact.Number_of_applicants_to_operate_account__c}</span><br/><br/>
+                    </div>
+                    <div class="BodyData">
+                        <span style="font-size : 16px;"><b>By signing below you confirm that you have read and agreed to the terms and conditions set out in this document and the Annexure Documents accessible via the links above</b></span>
+                    </div><br/><br/>
+                    <div class="BodyData">
+                        <span><b>Signed by: </b>{!contact.Name}</span><br/>
+                        <apex:image value="{!ImageSrc}" width="220" height="155" alt="Not Found"/>
+                        
+                    </div><br/>
+                    <!-- <div class="TmcuInfo">
+                        <span><u>Completion Certificate</u></span><br/>
+                        <span>Document ID #: {Case ID Number}</span><br/>
+                        <span>Sent via SMS to: {Mobile Number}</span><br/>
+                        <span>Sent: {send date}</span><br/>
+                        <span>Viewed:  {opened date}</span><br/>
+                        <span>Signed:  {signed date}</span><br/>
+                        <span>IP address: {IP Address when signed}</span><br/>
+                        </div>-->
+                </apex:pageBlock>
+            </div>
+        </body>
+    </html>
+</apex:page>

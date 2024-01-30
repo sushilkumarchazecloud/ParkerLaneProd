@@ -1,0 +1,43 @@
+.THIS .esp-mark{
+    border: 1px solid;
+    border-radius: 47px;
+    height: 18px;
+    width: 18px;
+    text-align: center;
+    margin-right: 4px;
+}
+
+.THIS .circle {
+    width: 10px;
+    color: #057cd6;
+    border: 1px solid #057cd6;
+    border-radius: 50%;
+    padding: 2px;
+    height: 10px;
+    margin-right:4px;
+    margin-bottom: 3px;
+}
+.THIS .customMargin{
+    margin-top:-10px;
+    margin-bottom:-10px;
+}
+.THIS .custom_bussiness_style{
+    font-size: 16px;
+    font-family: Proxima Nova Alt Regular;
+    margin-bottom: 5px;
+    color: #192744;
+    padding-left: 4px!important;
+}
+.THIS .custom_bussiness_style span.slds-checkbox{
+    display: block;
+    white-space: nowrap;
+}
+.THIS .child_label label.slds-form-element__label{
+    display:none;
+}
+.THIS span.slds-checkbox_faux{
+    margin-right:0px !important;
+}
+.THIS .custom_bussiness_style label.slds-checkbox__label{
+    margin-left: -30px;
+}

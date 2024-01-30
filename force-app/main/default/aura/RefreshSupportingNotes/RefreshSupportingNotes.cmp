@@ -1,0 +1,10 @@
+<aura:component controller="UpdateSupportingNotesController" implements="forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader,force:appHostable,force:hasSObjectName,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" >
+	<aura:attribute name="recordId" type="String" />
+    <div class="slds-page-header1">
+        <lightning:card  title="Refresh Application Supporting Notes" class="card-style">
+            <aura:set attribute="actions">
+                <lightning:button label="Refresh" onclick="{!c.doInit}" />
+            </aura:set>
+        </lightning:card>
+    </div>
+</aura:component>

@@ -1,0 +1,15 @@
+<aura:component controller = "ParkerLaneLoanController">
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="masterQuote" type="String" />
+    <aura:attribute name="isMortgage" type="Boolean" default="False"/>
+    <aura:handler action="{!c.doInit}" name="init" value="{!this}"/>
+    <div class="solarloanfont">
+
+        <aura:if isTrue="{!v.isMortgage}">
+            <c:LoanSections recordId = "{!v.recordId}"  masterQuote = "{!v.masterQuote}"/>
+        </aura:if>
+        <aura:if isTrue="{!!v.isMortgage}">
+           <c:LoanSections_PL recordId = "{!v.recordId}" masterQuote = "{!v.masterQuote}"/>
+        </aura:if>
+    </div>
+</aura:component>

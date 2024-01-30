@@ -1,0 +1,57 @@
+.THIS .uiInput--textarea .textarea, .THIS .uiInput--textarea.textarea {
+    background-color: rgb(255, 255, 255);
+    color: rgb(8, 7, 7);
+    border: 1px solid rgb(221, 219, 218);
+    border-radius: .25rem;
+    width: 100%;
+    transition: border .1s linear,background-color .1s linear;
+    resize: vertical;
+    padding: .75rem;
+}
+.THIS.risk-profile .questions .slds-form-element__label {
+    font-size: 16px;
+    font-family: 'Salesforce Sans',Arial,sans-serif;
+    line-height: 1.5;
+    color: rgb(22, 50, 92);
+    -webkit-tap-highlight-color: transparent;;
+}
+.THIS.risk-profile .slds-form__row {
+    width: 100%;
+}
+
+.THIS.risk-profile .slds-form-element__control .slds-radio {
+    display: inline;
+}
+.THIS.risk-profile h2.header {
+    font-weight: 800;
+}
+
+
+.THIS .rg-style {
+    width: 100%;
+}
+.THIS .rg-style .slds-radio_button-group, .THIS .rg-style .slds-radio--button-group {
+    border : 0;
+    text-align: center;
+    width: 100%;
+}
+.THIS .rg-style label.slds-radio_button__label {
+    margin: 0px 5px;
+    padding: 1px 5px;
+    border-radius: .25rem !important;
+    border: 1px solid rgb(217, 219, 221);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+.THIS .rg-style .slds-radio_faux{
+    padding: 5px !important;
+    line-height: 1.4;
+}
+
+.THIS .rg-style .slds-radio_button, .THIS .rg-style .slds-radio--button {
+    border: 0 !important;
+    width: 25%;
+}

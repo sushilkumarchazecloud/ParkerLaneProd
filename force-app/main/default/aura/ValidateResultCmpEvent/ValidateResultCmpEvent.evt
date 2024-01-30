@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT" description="Event to ValidateResultCmpEvent" >
+    <aura:attribute name="result" type="Boolean" description="Use For result" />
+    <aura:attribute name="name" type="String" description="Use For result" />
+</aura:event>

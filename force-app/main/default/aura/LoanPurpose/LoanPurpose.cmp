@@ -1,0 +1,54 @@
+<aura:component >
+	<aura:attribute name="loanPurposeOptions" type="List" default="[{'label': 'Refinance', 'value': 'Refinance'},{'label': 'Purchase property','value': 'Purchase property'},{'label': 'Investment Purposes','value': 'Investment Purposes'},{'label': 'Construction','value': 'Construction'},{'label': 'Renovate','value': 'Renovate'},{'label': 'Purchase a vehicle, caraval etc','value': 'Purchase a vehicle, caraval etc'},{'label': 'Debt consolidation','value': 'Debt consolidation'},{'label': 'Other','value': 'Other'}]"/>
+    <aura:attribute name="loanPurpose" type="Loan_Purpose__c" />
+    <aura:attribute name="showError" type="boolean" default="false"/>
+    <aura:attribute name="errorMsg" type="String" default="false"/>
+    
+    <aura:method name="validateLoanPurpose" action="{!c.validateLoanPurpose}" access="PUBLIC" />
+    
+    <aura:if isTrue="{!v.showError}">
+        <div class="slds-notify slds-notify_toast slds-theme_error slds-align_absolute-center slds-m-vertical--medium">
+            <span class="slds-assistive-text">error</span>
+            <div class="slds-notify__content">
+                <p class="slds-align_absolute-center">Error: {!v.errorMsg}.</p>                
+            </div>
+        </div>
+    </aura:if>
+    
+    <div class="slds-p-top_small" role="list">   
+        <div class="slds-form__row">
+            <div class="slds-form__item" role="listitem">
+                
+            </div>
+        </div>
+        <div class="slds-form__row">
+            <div class="slds-form__item" role="listitem">
+                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                    <lightning:combobox aura:id="fieldcheck" required="true"
+                                        label="Loan Purpose" 
+                                        value="{!v.loanPurpose.Name}"                                                 
+                                        options="{! v.loanPurposeOptions }"
+                                        placeholder="Select Loan Purpose"/>                
+                </div>
+            </div>
+            <div class="slds-form__item" role="listitem">
+                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                    <lightning:input aura:id="fieldcheck" required="true" type="number"
+                                     formatter="currency"
+                                     value="{!v.loanPurpose.Amount__c}"
+                                     label="Amount" placeholder="Amount"/>
+                </div>
+            </div> 
+        </div>
+        <div class="slds-form__row">
+            <div class="slds-form__item" role="listitem">
+                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                    <lightning:textarea maxlength = "150"
+                                     value="{!v.loanPurpose.Description__c}"
+                                     label="Description" placeholder="Description"/>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</aura:component>

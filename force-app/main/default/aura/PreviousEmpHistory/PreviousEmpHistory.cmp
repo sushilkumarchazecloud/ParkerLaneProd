@@ -1,0 +1,203 @@
+<aura:component >
+    <aura:attribute name="incomeFrom" type="String" default=""/>
+    <aura:attribute name="empName" type="String" default=""/>
+    <aura:attribute name="years" type="Integer" default="0"/>
+    <aura:attribute name="months" type="Integer" default="0"/>
+    <aura:attribute name="annualIncome" type="Decimal" default=""/>
+    <aura:attribute name="occupation" type="String" default=""/>
+    <aura:attribute name="addressStr" type="String" default=""/>
+    <aura:attribute name="isFindAddress" type="Boolean" default="false"/>
+    <aura:attribute name="unitNumber" type="String" default=""/>
+    <aura:attribute name="streetNumber" type="String" default=""/>
+    <aura:attribute name="streetType" type="String" default=""/>
+    <aura:attribute name="street" type="String" default=""/>
+    <aura:attribute name="suburb" type="String" default=""/>
+    <aura:attribute name="state" type="String" default=""/>
+    <aura:attribute name="postalCode" type="String" default=""/>
+    <aura:attribute name="country" type="String" default=""/>
+    <aura:attribute name="applicantNo" type="Integer" />
+    <aura:attribute name="index" type="Integer" />
+    
+    <aura:attribute name="countriesOptions" type="List" default="[{'label': 'Australia', 'value': 'Australia'}]"/>
+    <aura:attribute name="statesTerritoriesOptions" type="List" default="[{'label': 'Queensland', 'value': 'Queensland'},{'label': 'New South Wales', 'value': 'New South Wales'},{'label': 'Australian Capital Territory', 'value': 'Australian Capital Territory'},{'label': 'Victoria', 'value': 'Victoria'},{'label': 'South Australia', 'value': 'South Australia'},{'label': 'Western Australia', 'value': 'Western Australia'},{'label': 'Tasmania', 'value': 'Tasmania'},{'label': 'Northern Territory', 'value': 'Northern Territory'}]"/>
+    <aura:attribute name="streetTypeOptions" type="List" default="[{'label': 'Alley', 'value': 'Alley'},{'label': 'Ambl', 'value': 'Ambl'},{'label': 'Arcade', 'value': 'Arcade'},{'label': 'Avenue', 'value': 'Avenue'},{'label': 'Bend', 'value': 'Bend'},{'label': 'Boulevard', 'value': 'Boulevard'},{'label': 'Brace', 'value': 'Brace'},{'label': 'Centre', 'value': 'Centre'},{'label': 'Chase', 'value': 'Chase'},{'label': 'Circle', 'value': 'Circle'},{'label': 'Circuit', 'value': 'Circuit'},{'label': 'Circus', 'value': 'Circus'},{'label': 'Close', 'value': 'Close'},{'label': 'Concourse', 'value': 'Concourse'},{'label': 'Corner', 'value': 'Corner'},{'label': 'Corso', 'value': 'Corso'},{'label': 'Court', 'value': 'Court'},{'label': 'Crescent', 'value': 'Crescent'},{'label': 'Crossing', 'value': 'Crossing'},{'label': 'Drive', 'value': 'Drive'},{'label': 'Entrance', 'value': 'Entrance'},{'label': 'Esplanade', 'value': 'Esplanade'},{'label': 'Freeway', 'value': 'Freeway'},{'label': 'Frontage', 'value': 'Frontage'},{'label': 'Gate', 'value': 'Gate'},{'label': 'Glade', 'value': 'Glade'},{'label': 'Glen', 'value': 'Glen'},{'label': 'Grange', 'value': 'Grange'},{'label': 'Green', 'value': 'Green'},{'label': 'Ground', 'value': 'Ground'},{'label': 'Grove', 'value': 'Grove'},{'label': 'Heights', 'value': 'Heights'},{'label': 'Highway', 'value': 'Highway'},{'label': 'Junction', 'value': 'Junction'},{'label': 'Lane', 'value': 'Lane'},{'label': 'Link', 'value': 'Link'},{'label': 'Loop', 'value': 'Loop'},{'label': 'Mews', 'value': 'Mews'},{'label': 'Mount', 'value': 'Mount'},{'label': 'Nook', 'value': 'Nook'},{'label': 'Outlook', 'value': 'Outlook'},{'label': 'Parade', 'value': 'Parade'},{'label': 'Parkway', 'value': 'Parkway'},{'label': 'Pass', 'value': 'Pass'},{'label': 'Place', 'value': 'Place'},{'label': 'Plaza', 'value': 'Plaza'},{'label': 'Point', 'value': 'Point'},{'label': 'Port', 'value': 'Port'},{'label': 'Promenade', 'value': 'Promenade'},{'label': 'Quadrangle', 'value': 'Quadrangle'},{'label': 'Quadrant', 'value': 'Quadrant'},{'label': 'Quay', 'value': 'Quay'},{'label': 'Reserve', 'value': 'Reserve'},{'label': 'Rest', 'value': 'Rest'},{'label': 'Retreat', 'value': 'Retreat'},{'label': 'Ridge', 'value': 'Ridge'},{'label': 'Right of Way', 'value': 'Right of Way'},{'label': 'Rise', 'value': 'Rise'},{'label': 'Road', 'value': 'Road'},{'label': 'Roadway', 'value': 'Roadway'},{'label': 'Round', 'value': 'Round'},{'label': 'Row', 'value': 'Row'},{'label': 'Siding', 'value': 'Siding'},{'label': 'Square', 'value': 'Square'},{'label': 'Street', 'value': 'Street'},{'label': 'Terrace', 'value': 'Terrace'},{'label': 'Tollway', 'value': 'Tollway'},{'label': 'Track', 'value': 'Track'},{'label': 'View', 'value': 'View'},{'label': 'Walk', 'value': 'Walk'},{'label': 'Walkway', 'value': 'Walkway'},{'label': 'Way', 'value': 'Way'},{'label': 'Wynd', 'value': 'Wynd'}]"/>
+    <aura:attribute name="incomeFromOptions" type="List" default="[{'label': 'Full time permanent', 'value': 'Full time permanent'},{'label': 'Part time permanent', 'value': 'Part time permanent'},{'label': 'Self Employed / Contractor', 'value': 'Self Employed / Contractor'},{'label': 'Casual / Temporary', 'value': 'Casual / Temporary'},{'label': 'New Start Allowance', 'value': 'New Start Allowance'},{'label': 'Rental Income', 'value': 'Rental Income'},{'label': 'Pension', 'value': 'Pension'},{'label': 'Dividends or Annuity', 'value': 'Dividends or Annuity'},{'label': 'Family Tax Benefits', 'value': 'Family Tax Benefits'},{'label': 'Disability Pension', 'value': 'Disability Pension'},{'label': 'Carer’s Pension', 'value': 'Carer’s Pension'},{'label': 'Child Support', 'value': 'Child Support'},{'label': 'Other', 'value': 'Other'}]"/>
+    <aura:attribute name="occupationOptions" type="List" default="[{'label': 'Administration', 'value': 'Administration'},{'label': 'Professional', 'value': 'Professional'},{'label': 'Sales', 'value': 'Sales'},{'label': 'Technical', 'value': 'Technical'},{'label': 'Trade', 'value': 'Trade'},{'label': 'Self Employed', 'value': 'Self Employed'},{'label': 'Home Duties', 'value': 'Home Duties'},{'label': 'Retired', 'value': 'Retired'},{'label': 'Self Funded Retired', 'value': 'Self Funded Retired'},{'label': 'Carer', 'value': 'Carer'},{'label': 'Government Benefits', 'value': 'Government Benefits'},{'label': 'Student', 'value': 'Student'},{'label': 'Workcover / Workers Compensation', 'value': 'Workcover / Workers Compensation'},{'label': 'Unemployed', 'value': 'Unemployed'}]"/>    
+    <aura:attribute name="occupationOptions1" type="List" default="[{'label': 'Advertising', 'value': 'Advertising'},{'label': 'Agri/Horticulture', 'value': 'Agri/Horticulture'},{'label': 'Armed Servies', 'value': 'Armed Servies'},{'label': 'Banking/Finance', 'value': 'Banking/Finance'},{'label': 'Civil Servies', 'value': 'Civil Servies'},{'label': 'Cleaning/Laundry', 'value': 'Cleaning/Laundry'},{'label': 'Construction', 'value': 'Construction'},{'label': 'Education', 'value': 'Education'},{'label': 'Emergency Servies', 'value': 'Emergency Servies'},{'label': 'Home Duties', 'value': 'Home Duties'},{'label': 'Hospital', 'value': 'Hospital'},{'label': 'Hotel', 'value': 'Hotel'},{'label': 'Industry Servies', 'value': 'Industry Servies'},{'label': 'Insurance', 'value': 'Insurance'},{'label': 'IT', 'value': 'IT'},{'label': 'Leisure/Enttainmnt', 'value': 'Leisure/Enttainmnt'},{'label': 'Menufaturing', 'value': 'Menufaturing'},{'label': 'Media', 'value': 'Media'},{'label': 'Mining', 'value': 'Mining'},{'label': 'Other Category', 'value': 'Other Category'},{'label': 'Pensioner', 'value': 'Pensioner'},{'label': 'Property/Business', 'value': 'Property/Business'},{'label': 'Restaurant', 'value': 'Restaurant'},{'label': 'Retail/Wholesale', 'value': 'Retail/Wholesale'},{'label': 'Retired', 'value': 'Retired'},{'label': 'Sciences', 'value': 'Sciences'},{'label': 'Student', 'value': 'Student'},{'label': 'Transport', 'value': 'Transport'},{'label': 'Unemployed', 'value': 'Unemployed'}]"/>
+    <aura:attribute name="monthsOptions" type="List" default="[]"/>
+    <aura:attribute name="yearsOptions" type="List" default="[]"/>
+    
+    <aura:registerEvent name="SolarDeleteRowEvent" type="c:SolarDeleteRowEvent"/>
+    <aura:registerEvent name="monthYearChangeEvent" type="c:monthYearChangeEvent"/>
+    <aura:handler action="{!c.doInit}" name="init" value="{!this}"/>
+    <aura:method name="validatePreEmp" action="{!c.validatePreEmp}" access="PUBLIC" />
+    
+    <h2 class="header">Previous Employment {!v.index +1} 
+        
+        <lightning:buttonIcon iconName="utility:delete"
+                              class="slds-m-left_medium"
+                              size="x-small" 
+                              onclick="{! c.deletePreEmp }"  />
+        
+    </h2>
+    <div class="slds-form__row">
+        <div class="slds-form__item" role="listitem">
+            <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                <lightning:combobox label="Previous Occupation" aura:id="fieldcheck" required="true"
+                                    value="{!v.occupation}" onchange ="{!c.occupationChanged}"                                           
+                                    options="{! v.occupationOptions }"/>
+            </div>
+        </div>
+    </div>
+    
+    <div class="slds-form__row">
+        <div class="slds-form__item" role="listitem">
+            <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                <lightning:combobox label="Income From" aura:id="fieldcheck" required="true"
+                                    value="{!v.incomeFrom}"                                                 
+                                    options="{! v.incomeFromOptions }"/>
+            </div>
+        </div>
+    </div>
+    
+    <div class="slds-form__row">
+        <div class="slds-form__item" role="listitem">
+            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                
+                <lightning:input label="Employer Name" aura:id="fieldcheck" required="true"
+                                 value="{!v.empName}" placeholder="Employer Name"
+                                 maxlength="80"/>
+            </div>
+        </div>
+        <div class="slds-form__item" role="listitem">
+            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                <lightning:input type="number" formatter="currency"
+                                 value="{!v.annualIncome}" aura:id="fieldcheck" required="true"
+                                 label="Annual Income" placeholder="Annual Income"/>
+            </div>
+        </div>
+    </div>
+    
+    <div class="slds-form__row">
+        <div class="slds-form__item" role="listitem">
+            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                <c:AddressAPItool aura:id="addressTool" isFindAdd = "{!v.isFindAddress}"
+                                  searchString="{!v.addressStr}" label="Address" isShowRequired="false"
+                                  streetNumber="{!v.streetNumber}" street="{!v.street}"
+                                  state="{!v.state}" suburb="{!v.suburb}"
+                                  postalCode="{!v.postalCode}" country="{!v.country}"
+                                  streetType ="{!v.streetType}"/> 
+            </div>
+        </div>
+    </div>
+    <div class="slds-form__row">
+        <div class="slds-form__item" role="listitem">
+            <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                <lightning:input type="checkbox" 
+                                 checked="{!v.isFindAddress}" 
+                                 label=" Can't find your address?"/>
+            </div>
+        </div>
+    </div>
+    <aura:if isTrue="{!v.isFindAddress}">
+        <div class="slds-form__row">
+            <div class="slds-form__item" role="listitem">
+                <div class="slds-form-element slds-form-element_stacked slds-is-editing" style="display: inline-flex;">
+                    
+                    <lightning:input aura:id="fieldcheck" 
+                                     value="{!v.unitNumber}" maxlength="50"
+                                     label="Unit Number (Optional)" placeholder="Unit Number"/>
+                    <lightning:input aura:id="fieldcheck" required="true"
+                                     value="{!v.streetNumber}" maxlength="25"
+                                     label="Street Number" placeholder="Street Number"/>
+                </div>
+            </div>
+            <div class="slds-form__item" role="listitem">
+                <div class="slds-form-element slds-form-element_stacked slds-is-editing"></div>
+            </div>
+        </div>
+        <div class="slds-form__row">
+            <div class="slds-form__item" role="listitem">
+                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                    <lightning:input aura:id="fieldcheck" required="true"
+                                     value="{!v.street}" maxlength="100"
+                                     label="Street" placeholder="Street"/>
+                </div>
+            </div>
+            <div class="slds-form__item" role="listitem">
+                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                    <lightning:combobox aura:id="fieldcheck" required="true"
+                                        label="Street Type" 
+                                        value="{!v.streetType}"
+                                        options="{!v.streetTypeOptions}" 
+                                        placeholder="Street Type"/>
+                </div>
+            </div>
+        </div>
+        <div class="slds-form__row">
+            <div class="slds-form__item" role="listitem">
+                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                    <lightning:input aura:id="fieldcheck" required="true"
+                                     value="{!v.suburb}" maxlength="100"
+                                     label="Suburb" placeholder="Suburb"/>
+                </div>
+            </div>
+            <div class="slds-form__item" role="listitem">
+                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                    <lightning:combobox aura:id="fieldcheck" required="true"
+                                        label="State" 
+                                        value="{!v.state}"
+                                        options="{! v.statesTerritoriesOptions }" 
+                                        placeholder="State"/>
+                </div>
+            </div>
+        </div>
+        <div class="slds-form__row">
+            <div class="slds-form__item" role="listitem">
+                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                    <lightning:input aura:id="fieldcheck" required="true"
+                                     value="{!v.postalCode}" maxlength="10"
+                                     label="Postal Code" placeholder="Postal Code"/>
+                </div>
+            </div>
+            <div class="slds-form__item" role="listitem">
+                <div class="slds-form-element slds-form-element_stacked slds-is-editing"></div>
+            </div>
+        </div>
+        <div class="slds-form__row">
+            <div class="slds-form__item" role="listitem">
+                <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                    <lightning:input aura:id="fieldcheck" required="true"
+                                     label="Country" maxlength="50"
+                                     value="{!v.country}" 
+                                     placeholder="Country"/>
+                </div>
+            </div>
+        </div>
+    </aura:if>
+    
+    
+    <div class="slds-form__row">
+        <div class="slds-form__item" role="listitem">
+            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                <lightning:combobox aura:id="fieldcheck" required="true"
+                                    label="Time with this employer (years and months)" 
+                                    value="{!v.years}" 
+                                    options="{! v.yearsOptions }" 
+                                    placeholder="Years"
+                                    onchange="{!c.checkEmployment}"/>
+            </div>
+        </div>
+        <div class="slds-form__item" role="listitem">
+            <div class="slds-form-element slds-form-element_stacked slds-is-editing no-abbr">
+                <lightning:combobox label="&nbsp;"
+                                    aura:id="fieldcheck" required="true"
+                                    value="{!v.months}" 
+                                    options="{! v.monthsOptions }" 
+                                    placeholder="Months"
+                                    onchange="{!c.checkEmployment}"/>
+            </div>
+        </div>
+    </div>
+    
+</aura:component>

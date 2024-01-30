@@ -1,0 +1,384 @@
+<aura:component >
+    <aura:attribute name="assetTypeOptions" type="List" default="[{'label': 'Home', 'value': 'Home'},{'label': 'Investment Property', 'value': 'Investment Property'},{'label': 'Motor Vehicle', 'value': 'Motor Vehicle'},{'label': 'Bank Account', 'value': 'Bank Account'},{'label': 'Superannuation', 'value': 'Superannuation'},{'label': 'Commercial Property', 'value': 'Commercial Property'},{'label': 'Home Contents', 'value': 'Home Contents'},{'label': 'Shares Portfolio', 'value': 'Shares Portfolio'},{'label': 'Collectibles', 'value': 'Collectibles'},{'label': 'Leisure', 'value': 'Leisure'},{'label': 'Other', 'value': 'Other'}]"/>
+    <aura:attribute name="OwnershipOptions" type="List" default="[{'label': 'Applicant 1', 'value': 'Applicant 1'},{'label': 'Applicant 2', 'value': 'Applicant 2'},{'label': 'Joint', 'value': 'Joint'},{'label': 'Joint (non-applicant)', 'value': 'Joint (non-applicant)'}]"/>
+    <aura:attribute name="OwnershipSingleOptions" type="List" default="[{'label': 'Applicant 1', 'value': 'Applicant 1'},{'label': 'Joint with Spouse', 'value': 'Joint with Spouse'},{'label': 'Joint (non-applicant)', 'value': 'Joint (non-applicant)'}]"/>
+    <aura:attribute name="typeOptions" type="List" default="[{'label': 'Savings', 'value': 'Savings'},{'label': 'Term deposit', 'value': 'Term deposit'}]"/>
+    <aura:attribute name="typeOfFundOptions" type="List" default="[{'label': 'Industry', 'value': 'Industry'},{'label': 'Retail fund', 'value': 'Retail fund'},{'label': 'Self-managed super fund', 'value': 'Self-managed super fund'}]"/>
+    <aura:attribute name="incomeFrequencyOptions" type="List" default="[{'label': 'Weekly', 'value': 'Weekly'},{'label': 'Fortnightly', 'value': 'Fortnightly'},{'label': 'Monthly', 'value': 'Monthly'},{'label': 'Annually', 'value': 'Annually'}]"/>
+    <aura:attribute name="typeOfTenancyOptions" type="List" default="[{'label': 'Permanent lease', 'value': 'Permanent lease'},{'label': 'Holiday / corporate letting', 'value': 'RHoliday / corporate letting'},{'label': 'Airbnb', 'value': 'Airbnb'}]"/>
+    <aura:attribute name="propertyManagedOptions" type="List" default="[{'label': 'Privately', 'value': 'Privately'},{'label': 'By a real estate agent', 'value': 'By a real estate agent'}]"/>
+    <aura:attribute name="statesTerritoriesOptions" type="List" default="[{'label': 'Queensland', 'value': 'Queensland'},{'label': 'New South Wales', 'value': 'New South Wales'},{'label': 'Australian Capital Territory', 'value': 'Australian Capital Territory'},{'label': 'Victoria', 'value': 'Victoria'},{'label': 'South Australia', 'value': 'South Australia'},{'label': 'Western Australia', 'value': 'Western Australia'},{'label': 'Tasmania', 'value': 'Tasmania'},{'label': 'Northern Territory', 'value': 'Northern Territory'}]"/>
+    <aura:attribute name="streetTypeOptions" type="List" default="[{'label': 'Alley', 'value': 'Alley'},{'label': 'Ambl', 'value': 'Ambl'},{'label': 'Arcade', 'value': 'Arcade'},{'label': 'Avenue', 'value': 'Avenue'},{'label': 'Bend', 'value': 'Bend'},{'label': 'Boulevard', 'value': 'Boulevard'},{'label': 'Brace', 'value': 'Brace'},{'label': 'Centre', 'value': 'Centre'},{'label': 'Chase', 'value': 'Chase'},{'label': 'Circle', 'value': 'Circle'},{'label': 'Circuit', 'value': 'Circuit'},{'label': 'Circus', 'value': 'Circus'},{'label': 'Close', 'value': 'Close'},{'label': 'Concourse', 'value': 'Concourse'},{'label': 'Corner', 'value': 'Corner'},{'label': 'Corso', 'value': 'Corso'},{'label': 'Court', 'value': 'Court'},{'label': 'Crescent', 'value': 'Crescent'},{'label': 'Crossing', 'value': 'Crossing'},{'label': 'Drive', 'value': 'Drive'},{'label': 'Entrance', 'value': 'Entrance'},{'label': 'Esplanade', 'value': 'Esplanade'},{'label': 'Freeway', 'value': 'Freeway'},{'label': 'Frontage', 'value': 'Frontage'},{'label': 'Gate', 'value': 'Gate'},{'label': 'Glade', 'value': 'Glade'},{'label': 'Glen', 'value': 'Glen'},{'label': 'Grange', 'value': 'Grange'},{'label': 'Green', 'value': 'Green'},{'label': 'Ground', 'value': 'Ground'},{'label': 'Grove', 'value': 'Grove'},{'label': 'Heights', 'value': 'Heights'},{'label': 'Highway', 'value': 'Highway'},{'label': 'Junction', 'value': 'Junction'},{'label': 'Lane', 'value': 'Lane'},{'label': 'Link', 'value': 'Link'},{'label': 'Loop', 'value': 'Loop'},{'label': 'Mews', 'value': 'Mews'},{'label': 'Mount', 'value': 'Mount'},{'label': 'Nook', 'value': 'Nook'},{'label': 'Outlook', 'value': 'Outlook'},{'label': 'Parade', 'value': 'Parade'},{'label': 'Parkway', 'value': 'Parkway'},{'label': 'Pass', 'value': 'Pass'},{'label': 'Place', 'value': 'Place'},{'label': 'Plaza', 'value': 'Plaza'},{'label': 'Point', 'value': 'Point'},{'label': 'Port', 'value': 'Port'},{'label': 'Promenade', 'value': 'Promenade'},{'label': 'Quadrangle', 'value': 'Quadrangle'},{'label': 'Quadrant', 'value': 'Quadrant'},{'label': 'Quay', 'value': 'Quay'},{'label': 'Reserve', 'value': 'Reserve'},{'label': 'Rest', 'value': 'Rest'},{'label': 'Retreat', 'value': 'Retreat'},{'label': 'Ridge', 'value': 'Ridge'},{'label': 'Right of Way', 'value': 'Right of Way'},{'label': 'Rise', 'value': 'Rise'},{'label': 'Road', 'value': 'Road'},{'label': 'Roadway', 'value': 'Roadway'},{'label': 'Round', 'value': 'Round'},{'label': 'Row', 'value': 'Row'},{'label': 'Siding', 'value': 'Siding'},{'label': 'Square', 'value': 'Square'},{'label': 'Street', 'value': 'Street'},{'label': 'Terrace', 'value': 'Terrace'},{'label': 'Tollway', 'value': 'Tollway'},{'label': 'Track', 'value': 'Track'},{'label': 'View', 'value': 'View'},{'label': 'Walk', 'value': 'Walk'},{'label': 'Walkway', 'value': 'Walkway'},{'label': 'Way', 'value': 'Way'},{'label': 'Wynd', 'value': 'Wynd'}]"/>
+    <aura:attribute name="CountriesOptions" type="List" default="[{'label': 'Australia', 'value': 'Australia'}]"/>
+    <aura:attribute name="makeModelOptions" type="List" default="[]"/>
+    <aura:attribute name="jointYesNoOptions" type="List" default="[{'label': 'Joint (other applicant)', 'value': 'Yes'},{'label': 'Joint (other)', 'value': 'No'}]"/>
+    <aura:attribute name="JointApplicant" type="String" default=""/>
+    <aura:attribute name="address" type="String" default=""/>
+	<aura:attribute name="description" type="String" default=""/>
+    <aura:attribute name="app1Ownership" type="String" default="Applicant 1 Ownership Share (%)"/>
+    <aura:attribute name="app2Ownership" type="String" default="Applicant 2 Ownership Share (%)"/>
+    <aura:attribute name="selectedPerson" type="String" default="single"/>
+    <aura:attribute name="consumerAssets" type="FinServ__AssetsAndLiabilities__c" />
+    <aura:attribute name="index" type="Integer" />
+    <aura:attribute name="showError" type="Boolean" default="false"/>
+    <aura:attribute name="errorMsg" type="String" default="Please update the form entries highlighted in red and try again"/>
+    
+    <aura:registerEvent name="SolarDeleteRowEvent" type="c:SolarDeleteRowEvent"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <aura:method name="validateAsset" action="{!c.validateAsset}" access="PUBLIC" />
+    
+    <aura:if isTrue="{!v.showError}">
+        <div class="slds-notify slds-notify_toast slds-theme_error slds-align_absolute-center slds-m-vertical--medium">
+            <span class="slds-assistive-text">error</span>
+            <div class="slds-notify__content">
+                <p class="slds-align_absolute-center">Error: {!v.errorMsg}.</p>                
+            </div>
+        </div>
+    </aura:if>
+    
+    <div class="slds-p-top_small" role="list">        
+        <div class="slds-form__row"> 
+            <div class="slds-form__item" role="listitem">
+                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                    <lightning:combobox label="Asset Type" aura:id="fieldcheckType" required="true"
+                                        value="{!v.consumerAssets.FinServ__AssetsAndLiabilitiesType__c}" 
+                                        options="{! v.assetTypeOptions }" 
+                                        placeholder="Asset Type"/>
+                </div>
+            </div>
+            
+            <div class="slds-form__item" role="listitem">
+                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                    <aura:if isTrue="{!v.consumerAssets.FinServ__AssetsAndLiabilitiesType__c != null &amp;&amp; v.consumerAssets.FinServ__AssetsAndLiabilitiesType__c != ''}">
+                        <aura:if isTrue="{!v.selectedPerson == 'joint'}">
+                            <lightning:combobox label="Ownership" aura:id="fieldcheck" required="true"
+                                                value="{!v.consumerAssets.FinServ__Ownership__c}" 
+                                                options="{! v.OwnershipOptions }" 
+                                                placeholder="Ownership"
+                                                onchange="{!c.handleOwnership}"/>
+                            <aura:set attribute="else">
+                                <lightning:combobox label="Ownership" aura:id="fieldcheck" required="true"
+                                                    value="{!v.consumerAssets.FinServ__Ownership__c}" 
+                                                    options="{! v.OwnershipSingleOptions }" 
+                                                    placeholder="Ownership"
+                                                    onchange="{!c.handleOwnership}"/>
+                            </aura:set>
+                        </aura:if>
+                    </aura:if>
+                </div>
+            </div>
+        </div>
+       
+        <aura:if isTrue="{!v.consumerAssets.FinServ__Ownership__c == 'Joint' || 
+                         v.consumerAssets.FinServ__Ownership__c == 'Joint (non-applicant)' ||
+                         v.consumerAssets.FinServ__Ownership__c == 'Joint with Spouse'}">
+            <div aura:id = "ownShare" class="slds-form__row ">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input type="number" label="{!v.app1Ownership}" 
+                                         aura:id="fieldcheck" required="true"
+                                         value="{!v.consumerAssets.Ownership_Share__c}"
+                                         formatter="percent-fixed"
+                                         placeholder="Ownership Share" max ="100" min="0" 
+                                         messageWhenRangeOverflow ="Share (%) shouldn't more than 100"
+                                         messageWhenRangeUnderflow ="Share (%) shouldn't less than 0"/>
+                    </div>
+                </div>
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input type="number" label="{!v.app2Ownership}" 
+                                         aura:id="fieldcheck" required="true"
+                                         value="{!v.consumerAssets.Other_Ownership_Share__c}"
+                                         formatter="percent-fixed"
+                                         placeholder="Ownership Share" max ="100" min="0" 
+                                         messageWhenRangeOverflow ="Share (%) shouldn't more than 100"
+                                         messageWhenRangeUnderflow ="Share (%) shouldn't less than 0"/>
+                    </div>
+                </div>                
+            </div> 
+        </aura:if>
+        
+        <aura:if isTrue="{!v.consumerAssets.FinServ__AssetsAndLiabilitiesType__c=='Home' ||v.consumerAssets.FinServ__AssetsAndLiabilitiesType__c=='Investment Property' || v.consumerAssets.FinServ__AssetsAndLiabilitiesType__c=='Commercial Property'}">
+            <div class="slds-form__row ">
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element">
+                            <label class="slds-form-element__label" ><abbr title="required" class="slds-required">*</abbr>Address</label>
+                        </div>
+                    </div>
+                </div>
+            <aura:if isTrue="{!v.consumerAssets.FinServ__AssetsAndLiabilitiesType__c=='Home'}">
+                
+                <div class="slds-form__row">
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                            <lightning:input type="checkbox" 
+                                             checked="{!v.consumerAssets.Is_Address_Same__c}" 
+                                             label="Same as my residential address"/>
+                        </div>
+                    </div>
+                </div>
+            </aura:if>
+            <aura:if isTrue="{!!v.consumerAssets.Is_Address_Same__c}" >
+                <div class="slds-form__row">
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_stacked slds-is-editing no-address">
+                            <c:AddressAPItool aura:id="addressTool" isFindAdd = "{!v.consumerAssets.Is_Find_Address__c}"
+                                              searchString="{!v.consumerAssets.Address__c}" label="Address"
+                                              streetNumber="{!v.consumerAssets.Street_Number__c}" street="{!v.consumerAssets.Street__c}"
+                                              state="{!v.consumerAssets.State__c}" suburb="{!v.consumerAssets.Suburb__c}"
+                                              postalCode="{!v.consumerAssets.Postal_Code__c}" country="{!v.consumerAssets.Country__c}"
+                                              streetType ="{!v.consumerAssets.Street_Type__c}" /> 
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="slds-form__row">
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                            <lightning:input type="checkbox" 
+                                             checked="{!v.consumerAssets.Is_Find_Address__c}" 
+                                             label=" Can't find your address?"/>
+                        </div>
+                    </div>
+                </div>
+                <aura:if isTrue="{!v.consumerAssets.Is_Find_Address__c}">
+                    <div class="slds-form__row">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing" style="display: inline-flex;">
+                                
+                                <lightning:input aura:id="fieldcheck" value="{!v.consumerAssets.Unit_Number__c}"
+                                                 label="Unit Number(Optional)" placeholder="Unit Number"
+                                                 maxlength="50"/>
+                                <lightning:input aura:id="fieldcheck" 
+                                                 value="{!v.consumerAssets.Street_Number__c}" required="true"
+                                                 label="Street Number" placeholder="Street Number"
+                                                 maxlength="25"/>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing"></div>
+                        </div>
+                    </div>
+                    <div class="slds-form__row">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <lightning:input aura:id="fieldcheck" required="true"
+                                                 value="{!v.consumerAssets.Street__c}"
+                                                 label="Street" placeholder="Street"
+                                                 maxlength="100"/>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <lightning:combobox aura:id="fieldcheck" required="true"
+                                                    label="Street Type" 
+                                                    value="{!v.consumerAssets.Street_Type__c}" 
+                                                    options="{!v.streetTypeOptions}" 
+                                                    placeholder="Street Type"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-form__row">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <lightning:input aura:id="fieldcheck" required="true"
+                                                 value="{!v.consumerAssets.Suburb__c}"
+                                                 label="Suburb" placeholder="Suburb"
+                                                 maxlength="100"/>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <lightning:combobox aura:id="fieldcheck" required="true"
+                                                    label="State" 
+                                                    value="{!v.consumerAssets.State__c}"
+                                                    options="{! v.statesTerritoriesOptions }" 
+                                                    placeholder="State"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-form__row">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <lightning:input aura:id="fieldcheck" required="true" maxlength="10"
+                                                 value="{!v.consumerAssets.Postal_Code__c}"
+                                                 label="Postal Code" placeholder="Postal Code"/>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <lightning:input aura:id="fieldcheck" required="true"
+                                                 label="Country" maxlength="50"
+                                                 value="{!v.consumerAssets.Country__c}" 
+                                                 placeholder="Country"/>
+                            </div>
+                        </div>
+                    </div>
+                </aura:if>
+            </aura:if>
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input label="Value" formatter="currency"
+                                         type="number" aura:id="fieldcheck" required="true"
+                                         placeholder="Value" maxlength = "12"
+                                         value="{!v.consumerAssets.Value__c}"/>
+                    </div>
+                </div>
+            </div>
+        </aura:if>
+        <aura:if isTrue="{!v.consumerAssets.FinServ__AssetsAndLiabilitiesType__c=='Motor Vehicle'}">
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input label="Make &amp; Model" 
+                                         aura:id="fieldcheck" required="true"
+                                         value="{!v.consumerAssets.Make_Model__c}"
+                                         placeholder="Make &amp; Model"
+                                         maxlength="50"/>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:combobox label="Year" aura:id="fieldcheck" required="true"
+                                            value="{!v.consumerAssets.Year__c}"
+                                            options="{! v.makeModelOptions }" 
+                                            placeholder="Year"/>
+                        
+                    </div>
+                </div>
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input label="Value" formatter="currency"
+                                         type="number" aura:id="fieldcheck" required="true"
+                                         placeholder="Value" 
+                                         value="{!v.consumerAssets.Value__c}"/>
+                    </div>
+                </div>
+            </div>
+        </aura:if>
+        <aura:if isTrue="{!v.consumerAssets.FinServ__AssetsAndLiabilitiesType__c=='Bank Account'}">
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input label="Institution" aura:id="fieldcheck" required="true"
+                                         value="{!v.consumerAssets.Institution__c}"
+                                         placeholder="Institution"
+                                         maxlength="250"/>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:combobox label="Type" aura:id="fieldcheck" required="true"
+                                            value="{!v.consumerAssets.Bank_Type__c}"
+                                            options="{! v.typeOptions }" 
+                                            placeholder="Type"/>
+                    </div>
+                </div>
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input label="Balance" formatter="currency"
+                                         type="number" aura:id="fieldcheck" required="true"
+                                         placeholder="Balance" 
+                                         value="{!v.consumerAssets.Value__c}"/>
+                    </div>
+                </div>
+            </div>
+        </aura:if>
+        <aura:if isTrue="{!v.consumerAssets.FinServ__AssetsAndLiabilitiesType__c=='Superannuation'}">
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:combobox label="Type of Fund" aura:id="fieldcheck" required="true"
+                                            value="{!v.consumerAssets.Type_of_Fund__c}" 
+                                            options="{! v.typeOfFundOptions }" 
+                                            placeholder="Type of Fund"/>
+                    </div>
+                </div>
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input label="Value" formatter="currency"
+                                         type="number" aura:id="fieldcheck" required="true"
+                                         placeholder="Value" 
+                                         value="{!v.consumerAssets.Value__c}"/>
+                    </div>
+                </div>
+            </div>
+        </aura:if>
+        
+        <aura:if isTrue="{!v.consumerAssets.FinServ__AssetsAndLiabilitiesType__c=='Home Contents' ||v.consumerAssets.FinServ__AssetsAndLiabilitiesType__c=='Shares Portfolio' ||
+                         v.consumerAssets.FinServ__AssetsAndLiabilitiesType__c=='Collectibles' || v.consumerAssets.FinServ__AssetsAndLiabilitiesType__c=='Leisure' ||
+                         v.consumerAssets.FinServ__AssetsAndLiabilitiesType__c=='Other'}">
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input label="Value" formatter="currency"
+                                         type="number" aura:id="fieldcheck" required="true"
+                                         placeholder="Value" 
+                                         value="{!v.consumerAssets.Value__c}"/>
+                    </div>
+                </div>
+            </div>
+        </aura:if>
+        <aura:if isTrue="{!v.consumerAssets.FinServ__AssetsAndLiabilitiesType__c=='Investment Property' || v.consumerAssets.FinServ__AssetsAndLiabilitiesType__c=='Commercial Property'}">
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input label="Rental income amount" formatter="currency"
+                                         type="number" aura:id="fieldcheck" required="true"
+                                         value="{!v.consumerAssets.Rental_Amount__c}"
+                                         placeholder="Rental amount"/>
+                        
+                    </div>
+                </div>
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        
+                        <lightning:combobox label="Rental Frequency" aura:id="fieldcheck" required="true"
+                                            value="{!v.consumerAssets.Rental_Frequency__c}"
+                                            options="{!v.incomeFrequencyOptions}"
+                                            placeholder="Rental Frequency"/>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        
+                        <lightning:combobox label="Type of Tenancy" aura:id="fieldcheck" required="true"
+                                            value="{!v.consumerAssets.Type_of_Tenancy__c}"  
+                                            options="{! v.typeOfTenancyOptions }" 
+                                            placeholder="Type of Tenancy"/>
+                        
+                    </div>
+                </div>
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        
+                        <lightning:combobox label="How is the property managed?" 
+                                            aura:id="fieldcheck" required="true"
+                                            value="{!v.consumerAssets.Property_Managed_By__c}" 
+                                            options="{! v.propertyManagedOptions }" 
+                                            placeholder="How is the property managed?"/>
+                    </div>
+                </div>
+            </div>
+        </aura:if>
+        <aura:if isTrue="{!v.consumerAssets.FinServ__AssetsAndLiabilitiesType__c != null &amp;&amp; v.consumerAssets.FinServ__AssetsAndLiabilitiesType__c != ''}">
+            
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input label="Description (optional)" maxlength="255"
+                                         value="{!v.consumerAssets.FinServ__Description__c}" placeholder="Description"/>
+                    </div>
+                </div>
+            </div>
+        </aura:if>
+    </div>
+</aura:component>

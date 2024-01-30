@@ -1,0 +1,388 @@
+<aura:component controller="ParkerLaneLoanController">
+    
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="applicationSection" type="String" default=""/>
+    <aura:attribute name="appSectionPath" type="List" default="[]"/>
+    <aura:attribute name="title" type="String" default=""/>      
+    <aura:attribute name="facesOptions" type="List" default="[{'label': 'No &#128577;', 'value': 'No'},{'label': 'Yes &#128578;', 'value': 'Yes'}]"/>
+    <aura:attribute name="lifeEventsOptions" type="List" default="[{ label: 'Buying a home', value: 'Buying a home' },{ label: 'Buying a car', value: 'Buying a car' },{ label: 'Buying an investment property', value: 'Buying an investment property' },{ label: 'Renovating / DIY', value: 'Renovating / DIY' },{ label: 'Refinancing', value: 'Refinancing' },{ label: 'Get married', value: 'Get married' }]"/>
+    <aura:attribute name="lifeEventsOptions2" type="List" default="[{ label: 'Downsizing', value: 'Downsizing' },{ label: 'Planning a holiday', value: 'Planning a holiday' },{ label: 'Changing jobs', value: 'Changing jobs' },{ label: 'Starting a business', value: 'Starting a business' },{ label: 'Expanding business', value: 'Expanding business' },{'label': 'Planning for Retirement', 'value': 'Planning for Retirement'}]"/>  
+    <aura:attribute name="stageInLifeOptions" type="List" default="[{'label': 'Establishing yourself', 'value': 'Establishing yourself'},{'label': 'Building wealth', 'value': 'Building wealth'},{'label': 'Consolidating wealth', 'value': 'Consolidating wealth'},{'label': 'Planning for Retirement', 'value': 'Planning for Retirement'}]"/>
+    <aura:attribute name="parkerLaneOptions" type="List" default="[{'label': 'Product / rate', 'value': 'Product / rate'},{'label': 'Recommended', 'value': 'Recommended'},{'label': 'Easiest process', 'value': 'Easiest process'},{'label': 'Customer service', 'value': 'Customer service'}]"/>
+    <aura:attribute name="financialPrioritiesOptions1" type="List" default="[{ label: 'Save for a house', value: 'Save for a house' },{ label: 'Manage my finances', value: 'Manage my finances' },{ label: 'Repay mortgage early', value: 'Repay mortgage early' },{ label: 'Lower household expenditure', value: 'Lower household expenditure' },{ label: 'Lower cost of interest', value: 'Lower cost of interest' },{ label: 'Save for an event or purchase', value: 'Save for an event or purchase' }]"/>
+    <aura:attribute name="financialPrioritiesOptions2" type="List" default="[{ label: 'Be debt free sooner', value: 'Be debt free sooner' },{ label: 'Track and improve cash flow', value: 'Track and improve cash flow' },{ label: 'Consolidate debt', value: 'Consolidate debt' },{ label: 'Build wealth through investment', value: 'Build wealth through investment' },{ label: 'Lower loan repayments', value: 'Lower loan repayments' }]"/>
+    <aura:attribute name="lifeEvents" type="List" default=""/>
+    <aura:attribute name="lifeEvents2" type="List" default=""/>
+    <aura:attribute name="financialPriorities" type="List" default=""/>
+    <aura:attribute name="financialPriorities2" type="List" default=""/>
+	<aura:attribute name="isLifeEventRequired" type="Boolean" default="false"/>
+    <aura:attribute name="isFinPriorityRequired" type="Boolean" default="false"/>
+    <aura:attribute name="isMortgage" type="Boolean" default="false"/>
+    <aura:attribute name="showError" type="Boolean" default="false"/>
+    <aura:attribute name="errorMsg" type="String" default="Please update the form entries highlighted in red and try again"/>
+	<aura:attribute name="goal" type="FinServ__FinancialGoal__c" default="{'sobjectType': 'FinServ__FinancialGoal__c'}"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:method name="saveGoalsDetails" action="{!c.saveApplication}" access="PUBLIC" >
+        <aura:attribute name="isShare" type="Boolean" />
+        <aura:attribute name="isNext" type="Boolean" />
+    </aura:method>
+    
+    <div class="goals-objectives">
+        <aura:if isTrue="{!v.showError}">
+            <div class="slds-notify slds-notify_toast slds-theme_error slds-align_absolute-center slds-m-vertical--medium">
+                <span class="slds-assistive-text">error</span>
+                <div class="slds-notify__content">
+                    <p class="slds-align_absolute-center">{!v.errorMsg}.</p>                
+                </div>
+            </div>
+        </aura:if>
+        <header class="checkout-page-banner--gradient">
+            <div class="slds-align_absolute-center slds-p-vertical--medium">
+                <div class="page-banner__content-text">
+                    <h1 class="slds-p-vertical--medium heading--page">{!v.title}</h1>
+                    <p class="font-intro">
+                        
+                    </p>
+                </div>
+            </div>
+        </header>
+        <lightning:spinner aura:id="mySpinner" variant="brand" size="large" class="" />
+        <section class="max-700 slds-p-around--medium slds-col">
+            <div class="slds-form" role="list">
+                <h1 class="header-text txt-blue">Financial Priorities</h1>
+                <div class="slds-form__row">
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element rg-style">
+                            <lightning:radioGroup name="stageInLifeRG"
+                                                  aura:id="fieldcheck" 
+                                                  required="true"
+                                                  label="What is your stage in life? "
+                                                  options="{! v.stageInLifeOptions }"
+                                                  value="{! v.goal.What_is_your_stage_in_life__c }"
+                                                  type="button"/>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slds-form__row slds-m-top--medium">
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element">
+                            <label class="slds-form-element__label" style="font-weight: 700;"><abbr title="required" class="slds-required">*</abbr>Which life events could be relevant to you in the next 6 months?</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-form__row life-event">
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element">
+                            <lightning:checkboxGroup name="lifeEventsCG"
+                                                     aura:id="fieldcheckLifeEvent" 
+                                                     required="{!v.isLifeEventRequired }"
+                                                     label="Which life events could be relevant to you in the next 6 months?"
+                                                     options="{! v.lifeEventsOptions }"
+                                                     value="{! v.lifeEvents }"
+                                                     onchange="{! c.handlelifeEvents }"/>
+                        </div>
+                    </div>
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element no-abbr no-err">
+                            <lightning:checkboxGroup name="lifeEventsCG"
+                                                     aura:id="fieldcheckLifeEvent" 
+                                                     required="{!v.isLifeEventRequired}"
+                                                     label="&nbsp;"
+                                                     options="{! v.lifeEventsOptions2 }"
+                                                     value="{! v.lifeEvents2 }"
+                                                     onchange="{! c.handlelifeEvents }"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-form__row slds-p-vertical--medium">
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element ">
+                            <lightning:checkboxGroup name="financialPrioritiesCG"
+                                                     aura:id="fieldcheckfinPriority" 
+                                                     required="{!v.isFinPriorityRequired}"
+                                                     label="What are your top financial priorities now?"
+                                                     options="{! v.financialPrioritiesOptions1 }"
+                                                     value="{! v.financialPriorities }"
+                                                     onchange="{! c.handleFinancialPriorities }"/>
+                        </div>
+                    </div>
+                    <div class="slds-form__item " role="listitem">
+                        <div class="slds-form-element no-abbr no-err">
+                            <lightning:checkboxGroup name="financialPrioritiesCG"
+                                                     aura:id="fieldcheckfinPriority"
+                                                     label="&nbsp;"
+                                                     required="{!v.isFinPriorityRequired }"
+                                                     options="{! v.financialPrioritiesOptions2 }"
+                                                     value="{! v.financialPriorities2 }"
+                                                     onchange="{! c.handleFinancialPriorities }"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-form__row slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_8-of-12">
+                        <div class="slds-form__item " role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <p>
+                                    <aura:if isTrue="{!v.goal.Control_of_your_finances__c !='Not applicable'}"><abbr title="required" class="slds-required">*</abbr></aura:if>
+                                    Do you feel in control of your finances?
+                                </p>
+                                <div class="slds-form-element not-imp">
+                                    <lightning:input name="financialControlRG" type="checkbox" 
+                                                     value="Control_of_your_finances__c"
+                                                     onchange="{!c.handleNotApp}"
+                                                     checked="{!v.goal.Control_of_your_finances__c =='Not applicable'}" 
+                                                     label="Not applicable to me right now"/>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing no-abbr">
+                                <lightning:radioGroup name="financialControlRG"
+                                                      aura:id="fieldcheck" 
+                                                      required="{!v.goal.Control_of_your_finances__c !='Not applicable'}"
+                                                      label=""
+                                                      options="{! v.facesOptions }"
+                                                      value="{! v.goal.Control_of_your_finances__c }"
+                                                      type="button"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slds-form__row slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_8-of-12">
+                        <div class="slds-form__item " role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <p>
+                                    <aura:if isTrue="{!v.goal.Take_action_to_save_money__c !='Not applicable'}"><abbr title="required" class="slds-required">*</abbr></aura:if>
+                                    Do you often take action to save money?
+                                </p>
+                                <div class="slds-form-element not-imp">
+                                    <lightning:input type="checkbox" 
+                                                     value="Take_action_to_save_money__c"
+                                                     onchange="{!c.handleNotApp}" 
+                                                     checked="{!v.goal.Take_action_to_save_money__c =='Not applicable'}" 
+                                                     label="Not applicable to me right now"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing no-abbr">
+                                <lightning:radioGroup name="saveMoneyRG"
+                                                      aura:id="fieldcheck" 
+                                                      required="{!v.goal.Take_action_to_save_money__c !='Not applicable'}"
+                                                      label=""
+                                                      options="{! v.facesOptions }"
+                                                      value="{! v.goal.Take_action_to_save_money__c }"
+                                                      type="button"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slds-form__row slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_8-of-12">
+                        <div class="slds-form__item " role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <p>
+                                    <aura:if isTrue="{!v.goal.Find_ways_to_save_money__c !='Not applicable'}"><abbr title="required" class="slds-required">*</abbr></aura:if>
+                                    Is it easy to find ways to save money?
+                                </p>
+                                <div class="slds-form-element not-imp">
+                                    <lightning:input type="checkbox" 
+                                                     value="Find_ways_to_save_money__c"
+                                                     onchange="{!c.handleNotApp}"
+                                                     checked="{!v.goal.Find_ways_to_save_money__c =='Not applicable'}" 
+                                                     label="Not applicable to me right now"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing no-abbr">
+                                <lightning:radioGroup name="WaysSaveMoneyRG"
+                                                      aura:id="fieldcheck" 
+                                                      required="{!v.goal.Find_ways_to_save_money__c !='Not applicable'}"
+                                                      label=""
+                                                      options="{! v.facesOptions }"
+                                                      value="{! v.goal.Find_ways_to_save_money__c }"
+                                                      type="button"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slds-form__row slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_8-of-12">
+                        <div class="slds-form__item " role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <p>
+                                    <aura:if isTrue="{!v.goal.Rates_of_interest_you_currently_pay__c !='Not applicable'}"><abbr title="required" class="slds-required">*</abbr></aura:if>
+                                   Are you satisfied with the rates of interest you currently pay? (e.g. mortgage / car / personal finance)
+                                </p>
+                                <div class="slds-form-element not-imp">
+                                    <lightning:input type="checkbox" 
+                                                     value="Rates_of_interest_you_currently_pay__c"
+                                                     onchange="{!c.handleNotApp}"
+                                                     checked="{!v.goal.Rates_of_interest_you_currently_pay__c =='Not applicable'}" 
+                                                     label="Not applicable to me right now"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing no-abbr">
+                                <lightning:radioGroup name="ImpRateOfInterestRG"
+                                                      aura:id="fieldcheck" 
+                                                      required="{!v.goal.Rates_of_interest_you_currently_pay__c !='Not applicable'}"
+                                                      label=""
+                                                      options="{! v.facesOptions }"
+                                                      value="{! v.goal.Rates_of_interest_you_currently_pay__c }"
+                                                      type="button"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slds-form__row slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_8-of-12">
+                        <div class="slds-form__item " role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <p>
+                                    <aura:if isTrue="{!v.goal.Plan_to_repay_debt_quickly__c !='Not applicable'}"><abbr title="required" class="slds-required">*</abbr></aura:if>
+                                    Are you confident with your plan to repay debt quickly?
+                                </p>
+                                <div class="slds-form-element not-imp">
+                                    <lightning:input type="checkbox" 
+                                                     value="Plan_to_repay_debt_quickly__c"
+                                                     onchange="{!c.handleNotApp}"
+                                                     checked="{!v.goal.Plan_to_repay_debt_quickly__c =='Not applicable'}" 
+                                                     label="Not applicable to me right now"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing no-abbr">
+                                <lightning:radioGroup name="debtQuicklyRG"
+                                                      aura:id="fieldcheck" 
+                                                      required="{!v.goal.Plan_to_repay_debt_quickly__c !='Not applicable'}"
+                                                      label=""
+                                                      options="{! v.facesOptions }"
+                                                      value="{! v.goal.Plan_to_repay_debt_quickly__c }"
+                                                      type="button"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slds-form__row slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_8-of-12">
+                        <div class="slds-form__item " role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <p>
+                                    <aura:if isTrue="{!v.goal.Plan_to_achieve_your_financial_goals__c !='Not applicable'}"><abbr title="required" class="slds-required">*</abbr></aura:if>
+                                    Are you happy with your plan to achieve your financial goals?
+                                </p>
+                                <div class="slds-form-element not-imp">
+                                    <lightning:input type="checkbox" 
+                                                     value="Plan_to_achieve_your_financial_goals__c"
+                                                     onchange="{!c.handleNotApp}"
+                                                     checked="{!v.goal.Plan_to_achieve_your_financial_goals__c =='Not applicable'}" 
+                                                     label="Not applicable to me right now"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing no-abbr">
+                                <lightning:radioGroup name="financialGoalsRG"
+                                                      aura:id="fieldcheck" 
+                                                      required="{!v.goal.Plan_to_achieve_your_financial_goals__c !='Not applicable'}"
+                                                      label=""
+                                                      options="{! v.facesOptions }"
+                                                      value="{! v.goal.Plan_to_achieve_your_financial_goals__c }"
+                                                      type="button"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slds-form__row slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_8-of-12">
+                        <div class="slds-form__item " role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                
+                                <p>
+                                    <aura:if isTrue="{!v.goal.Track_and_manage_your_finances__c !='Not applicable'}"><abbr title="required" class="slds-required">*</abbr></aura:if>
+                                    Do you use a system to track and manage your finances?
+                                </p>
+                                <div class="slds-form-element not-imp">
+                                    <lightning:input type="checkbox" 
+                                                     value="Track_and_manage_your_finances__c"
+                                                     onchange="{!c.handleNotApp}"
+                                                     checked="{!v.goal.Track_and_manage_your_finances__c =='Not applicable'}" 
+                                                     label="Not applicable to me right now"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing no-abbr">
+                                <lightning:radioGroup name="manageFinancesRG"
+                                                      aura:id="fieldcheck" 
+                                                      required="{!v.goal.Track_and_manage_your_finances__c !='Not applicable'}"
+                                                      label=""
+                                                      options="{! v.facesOptions }"
+                                                      value="{! v.goal.Track_and_manage_your_finances__c }"
+                                                      type="button"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-form__row">
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element rg-style">
+                            <lightning:radioGroup name="parkerLaneRG"
+                                                  aura:id="fieldcheck" 
+                                                  required="true"
+                                                  label="Why did you chose Parker Lane?"
+                                                  options="{! v.parkerLaneOptions }"
+                                                  value="{! v.goal.Why_did_you_chose_Parker_Lane__c }"
+                                                  type="button"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </section>
+        <div class="max-700 preNxtBtn ">
+            <lightning:button class="slds-m-vertical_medium slds-float_left" variant="brand" 
+                              label="Previous" title="Previous" 
+                              onclick="{! c.prevSave }" />
+            <aura:if isTrue = "{!v.isMortgage}">
+                <lightning:button class="slds-m-vertical_medium slds-float_right" variant="success" 
+                                  label="Save &amp; Next" title="Save &amp; Next" 
+                                  onclick="{!c.save}"/>
+            </aura:if>
+            <aura:if isTrue = "{!!v.isMortgage}">
+                <lightning:button class="slds-m-vertical_medium slds-float_right" variant="success" 
+                                  label="Submit Application" title="Submit Application" 
+                                  onclick="{!c.save}"/>
+            </aura:if>
+        </div>
+    </div>
+</aura:component>

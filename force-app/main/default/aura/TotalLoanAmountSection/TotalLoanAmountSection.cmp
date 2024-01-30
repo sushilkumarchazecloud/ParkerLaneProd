@@ -1,0 +1,66 @@
+<aura:component  controller="ParkerLaneLoanController">
+    <aura:attribute name="customerAmount" type="Integer" default=""/>
+    <aura:attribute name="totalAmount" type="Integer" />
+    <aura:attribute name="applicantFName" type="String" default=""/>
+    <aura:attribute name="applicantLName" type="String" default=""/>
+    <aura:attribute name="applicantEmail" type="String" default=""/>
+    <aura:attribute name="headerName" type="String" default=""/>
+    <aura:attribute name="isGettingStarted" type="Boolean" default="true"/>
+    <aura:attribute name="selectedQuote" type="sObject" />
+    <aura:attribute name="recordId" type="Id" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="change" value="{!v.isGettingStarted}" action="{!c.doInit}"/>
+    
+    <div class="loan-recommendation">
+        <section class="bg-dark-blue slds-p-around--large slds-text-align_center txt-white">
+            <h4 class="txt-white">{!v.headerName}</h4>
+            <div class="loan-rec-panel slds-container_medium slds-container_center">
+                <aura:if isTrue="{!v.isGettingStarted}">
+                    <div class="slds-grid slds-p-vertical_x-small slds-grid_vertical-align-center">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12">
+                            <span class="slds-p-horizontal--small ">Prepared for:</span>
+                            <span class="slds-m-vertical--small slds-col slds-size_1-of-1 slds-medium-size_2-of-12">
+                                {!v.applicantFName}&nbsp;{!v.applicantLName} ({!v.applicantEmail})
+                            </span>
+                        </div>
+                    </div>
+                </aura:if>
+                <div class="slds-grid slds-wrap slds-p-vertical_x-small slds-grid_vertical-align-center">
+                    <div class="slds-col slds-size_1-of-1">
+                        <aura:if isTrue="{!v.isGettingStarted}">
+                            <span class="slds-p-horizontal--small ">I need:</span>
+                            <lightning:input type="number" min="0" formatter="currency"
+                                             value="{!v.selectedQuote.Customer_Amount__c}" 
+                                             style="width:10rem;padding: 0;margin: 0;border: 0;background-color: #1a2745;"
+                                             class="slds-input slds-col slds-size_1-of-1 slds-medium-size_4-of-12" 
+                                             placeholder="how much?"
+                                             onchange="{!c.changeCustomerAmount}"/>
+                        </aura:if>
+                        <aura:if isTrue="{!!v.isGettingStarted}">
+                            <span class="slds-p-horizontal--small ">
+                                Total Loan Amount: $
+                                <lightning:formattedNumber value="{!v.selectedQuote.Total_loan_amount__c}" maximumFractionDigits="0"/>
+                            </span>
+                        </aura:if>
+                    <!--</div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12">-->
+                        <span class="slds-p-horizontal--small ">Over a term of {!v.selectedQuote.Loan_Term__c} Months</span>
+                    </div>
+                </div>
+                <div class="slds-grid slds-p-vertical_x-small slds-grid_vertical-align-center">
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12">
+                        <span class="slds-p-horizontal--small ">For the purpose of: {!v.selectedQuote.Purpose__c}</span>
+                        
+                    </div>
+                </div>
+                <div class="slds-grid slds-p-vertical_x-small slds-grid_vertical-align-center">
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12">
+                        <span class="slds-p-horizontal--small ">Monthly Repayment: ${!v.totalAmount}</span>
+                    </div>
+                </div>
+                
+            </div>
+        </section> 
+    </div>
+</aura:component>

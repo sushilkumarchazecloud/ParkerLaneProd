@@ -1,0 +1,91 @@
+<aura:component >
+	<aura:attribute name="applicant1Name" type="String" default=""/>
+    <aura:attribute name="applicant2Name" type="String" default=""/>
+    <aura:attribute name="selectedPerson" type="String" />
+    <aura:attribute name="selectedTab" type="String" default=""/>
+    <section class="slds-p-around--medium slds-col slds-si1ze_1-of-1 bg-lightest txt-blue">
+        <div class="max-700 getting-started ">
+            <h3 class="headerFont">Getting Started</h3>
+            <p class="slds-p-vertical--medium ">The number of people applying for this loan</p>
+            <div class="slds-form-element">
+                <div class="slds-form-element__control">
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                            <lightning:select value="{!v.selectedPerson}"   class="slds-form_inline slds-align_absolute-center slds-m-around--xx-small">
+                                <option value="single">One Person</option>
+                                <option value="joint">Two Person</option>
+                            </lightning:select>
+                        </div>
+                        <aura:if isTrue="{!v.selectedPerson=='joint'}">
+                            
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                                <ui:inputText value="{!v.applicant1Name}" class="slds-m-around--xx-small slds-input " placeholder="First Applicant"/>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                                <ui:inputText value="{!v.applicant2Name}" class="slds-m-around--xx-small slds-input " placeholder="Second Applicant"/>
+                            </div>
+                        </aura:if>
+                    </div>
+                    
+                </div>
+            </div>
+            <article class="slds-m-top--medium">
+                <div class="slds-col slds-p-vertical--medium">
+                    <div class="slds-size_1-of-1">
+                        <h5>Privacy and Credit reporting</h5>
+                    </div>
+                    <div class="slds-grid">
+                        <div class="slds-col slds-size_8-of-12">
+                            <p>I have read and agree to the Latitude's Important Privacy Notice.</p>
+                        </div>
+                        <div class=" slds-m-top--x-small slds-col slds-size_2-of-12 lds-form-element">
+                            <label class="slds-checkbox_toggle slds-grid">
+                                <input name="checkbox-toggle-4" type="checkbox" aria-describedby="checkbox-toggle-4" value="checkbox-toggle-4" />
+                                <span id="checkbox-toggle-4" class="slds-checkbox_faux_container" aria-live="assertive">
+                                    <span class="slds-checkbox_faux"></span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-col slds-p-vertical--medium">
+                    <div class="slds-size_1-of-1">
+                        <h5>Privacy and Credit reporting</h5>
+                    </div>
+                    <div class="slds-grid">
+                        <div class="slds-col slds-size_8-of-12">
+                            <p>I have read and agree to the Latitude's Important Privacy Notice.</p>
+                        </div>
+                        <div class="slds-m-top--x-small slds-col slds-size_2-of-12 slds-form-element">
+                            <label class="slds-checkbox_toggle slds-grid">
+                                <input name="checkbox-toggle-4" type="checkbox" aria-describedby="checkbox-toggle-4" value="checkbox-toggle-4" />
+                                <span id="checkbox-toggle-4" class="slds-checkbox_faux_container" aria-live="assertive">
+                                    <span class="slds-checkbox_faux"></span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-col slds-p-vertical--medium">
+                    <div class="slds-size_1-of-1">
+                        <h5>Privacy and Credit reporting</h5>
+                    </div>
+                    <div class="slds-grid">
+                        <div class="slds-col slds-size_8-of-12">
+                            <p>I have read and agree to the Latitude's Important Privacy Notice.</p>
+                        </div>
+                        <div class="slds-m-top--x-small slds-col slds-size_2-of-12 slds-form-element">
+                            <label class="slds-checkbox_toggle slds-grid">
+                                <input name="checkbox-toggle-4" type="checkbox" aria-describedby="checkbox-toggle-4" value="checkbox-toggle-4" />
+                                <span id="checkbox-toggle-4" class="slds-checkbox_faux_container" aria-live="assertive">
+                                    <span class="slds-checkbox_faux"></span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+            </article>
+        </div>
+    </section>
+</aura:component>

@@ -1,0 +1,281 @@
+.THIS{
+    font-family: Proxima Nova Alt Regular/*ProximaNovaAlt-Medium*/;
+}
+.THIS.own-and-owe .uiInput--textarea .textarea, .THIS .uiInput--textarea.textarea {
+    background-color: rgb(255, 255, 255);
+    color: rgb(8, 7, 7);
+    border: 1px solid rgb(221, 219, 218);
+    border-radius: .25rem;
+    width: 100%;
+    transition: border .1s linear,background-color .1s linear;
+    resize: vertical;
+    padding: .75rem;
+    
+}
+.THIS.own-and-owe h1.header-text {
+    font-size: 22px;
+    font-weight: 800;
+    font-family: Proxima Nova Alt Regular/* ProximaNovaAlt-Medium*/;
+}
+
+.THIS .slds-form_areYouSure  ul {
+    list-style: unset;
+    padding-left: 40px;
+}
+.THIS .slds-form_areYouSure  h2 {
+    color: #000;
+}
+.THIS .net-wealth{
+    font-size: 22px;
+    padding: .5rem;
+    font-weight: 700;
+    border-top: 1px solid rgb(217, 219, 221);
+    border-bottom: 1px solid rgb(217, 219, 221);
+}
+.THIS .col-size,.THIS .col-detail-width {
+    min-width: 15rem;
+    width: 15rem;
+    max-width: 15rem;
+}
+.THIS .col-amount-width{
+    min-width: 4.5rem;
+    width: 4.5rem;
+    max-width: 4.5rem
+}
+.THIS .col-delete-width{
+    min-width: 2.5rem;
+    width: 2.5rem;
+    max-width: 2.5rem
+}
+.THIS .col-edit-width{
+    min-width: 3.5rem;
+    width: 3.5rem;
+    max-width: 3.5rem
+}
+.THIS .col-ownership-width{
+    min-width: 7.5rem;
+    width: 7.5rem;
+    max-width: 7.5rem
+}
+
+.THIS .txt-darkgrey {
+    color: #8b8888;
+}
+.THIS .errMoreThan50{
+    border-color: rgb(194, 57, 52);
+    box-shadow: rgb(194, 57, 52) 0 0 0 2px inset;
+    border: 1px solid rgb(217, 219, 221);
+    border-radius: .25rem;
+    margin: 0px !important;
+}
+.THIS .text-err{
+    color: rgb(194, 57, 52);
+}
+.THIS .text-warning{
+    color:rgb(255, 183, 93);
+}
+.THIS .heading-edit1{
+    text-align: left;
+    font-size: 1.45rem;
+    font-weight: 900;
+    font-family: ProximaNova-AltBold;
+}
+.THIS .heading-edit{
+    padding: 5px;
+    font-size: 18px;
+    font-family: ProximaNova-AltBold;
+    font-weight: 900;
+}
+.THIS .input-dollar2 .slds-input,.THIS .input-dollar1 .slds-input{
+   	
+    padding-left: 2rem !important;
+    
+}
+.THIS .slds-input{
+   	height:50px;
+    background: white;
+    font-size: 18px;
+}
+.THIS .slds-select_container select.slds-select{
+	height:50px;
+    background: white;  
+    font-size: 18px;
+}
+
+.THIS .addSelectEdit .slds-select_container select.slds-select{
+	text-align:center;
+    
+    border-width: 2px!important;
+}
+.THIS .addAnotherAsset .slds-select_container:before, .THIS .addAnotherAsset .slds-select_container:after,
+.THIS .addAnotherAsset .slds-select_container select.slds-select{
+    color: #2076d3!important;
+    border-color: #2076d3;
+    background-color:#F5F5F5;
+}
+
+.THIS .slds-select_container:before {
+    border-bottom: 7px solid currentColor !important;
+    
+}
+.THIS .slds-select_container:before, .THIS  .slds-select_container:after {
+    border-left: 6px solid transparent !important;
+    border-right: 6px solid transparent !important;
+}
+.THIS .slds-select_container:after {
+    border-top: 7px solid currentColor !important;
+}
+.THIS .slds-select_container:before {
+    top: calc((var(--lwc-lineHeightButtonSmall,1.75rem) / 2) + 3px) !important;
+}
+.THIS .slds-select_container:after {
+    bottom: calc((var(--lwc-lineHeightButtonSmall,1.75rem) / 2) + 3px) !important ;
+}
+
+.THIS .text_decoration_underline{
+    text-decoration: underline 2px;
+    color: #3994db;
+}
+.THIS .button_icon_radius svg{
+    border: 1.5px solid;
+    height: 1.2rem;
+    width: 1.2rem;
+    padding: 2px;
+    border-radius: 50%;
+}
+
+.THIS .highlightOnselect{
+    padding-left:0.2rem;
+    padding-right:0.2rem;
+    /*box-shadow: 0 0 3px #6b6767;*/
+    background-color: #D2EDEE;
+    border: 1px solid rgb(217, 219, 221);
+    border-radius: 0.30rem;
+    border-color: rgb(243, 243, 243);
+    padding-bottom: 10px;
+    padding-top: 10px;
+    margin-left: -5px;
+    margin-right: -5px;
+}
+.THIS .input-dollar1, .THIS .input-dollar2 {
+    position: relative;
+    text-align: left;
+}
+.THIS .input-dollar1:before {
+    position: absolute;
+    top: 0;
+    content: "$";
+    z-index: 1;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 1.5rem 12px!important;
+
+}
+.THIS .input-dollar2:before {
+    position: absolute;
+    top: 0;
+    content: "$";
+    z-index: 1;
+    padding: 48px 20px!important;
+    font-size: 18px;
+    font-weight: 700;
+}
+.THIS .inputPercentage{
+    position: relative;
+    text-align: left;
+}
+.THIS .inputPercentage:before {
+    position: absolute;
+    top: 0;
+    content: "%";
+    z-index: 1;
+    padding: 3rem 20px!important;
+    font-size: 18px;
+    font-weight: 700;
+    right:0px;
+}
+.THIS .privious-button_style{
+    padding: 0.8rem !important;
+    border: 2px solid !important;
+    padding-left: 2.8rem !important;
+    padding-right: 2.8rem !important;
+    color: var(--slds-c-button-color-border, var(--sds-c-button-color-border, transparent)) !important;
+    background: rgb(245 245 245) !important;
+}
+.THIS .save-button_style{
+    padding: 0.8rem !important;
+    border: 2px solid !important;
+    padding-left: 2.8rem !important;
+    padding-right: 2.8rem !important;
+    color:white !important;
+}
+.THIS .slds-modal__header,.THIS .slds-modal__content,.THIS .slds-modal__footer{
+    background-color: #D2EDEE !important;
+    border:none !important;
+}
+
+.THIS .slds-combobox_container button.slds-combobox__input{
+	padding: 10px !important;
+    background: white;
+    
+}
+.THIS .continue-btn-style1{
+    width: 100%;
+    padding: 10px !important;
+    background-color: #45C65A!important;
+    border-color: #45C65A!important;
+    color: #fff;
+    font-size: 1.25rem;
+}
+.THIS .delete-btn-style,.THIS .cancel-btn-style{
+       color: black !important;
+       text-decoration: underline !important;      
+}
+.THIS .modal_footer .privious-button_style{
+       background-color:#D2EDEE !important;
+}
+.THIS label.slds-form-element__label,.THIS .slds-form-element__label,
+.THIS legend.slds-form-element__legend.slds-form-element__label{
+     white-space: nowrap;
+     overflow: hidden;
+     text-overflow: clip;
+}
+/*Applicant Details css*/
+.THIS .header1{
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: black;
+    margin-bottom: 10px;
+    font-family: ProximaNovaAlt-Medium;
+}
+.THIS .div-color,.THIS .div-color1{
+    background: #d2eded;
+    vertical-align: middle;
+    alignment-baseline: middle;
+    height: 5rem;
+    width: 18rem;
+    font-weight: bold;
+    color: #3aa5b0;
+    font-size: 20px;
+    margin-left: -16px;
+    padding-left: 10px;
+    align-items: center;
+    display: flex;
+}
+     
+.THIS .no-commitment-error {
+    color: red;
+    font-weight: 800;
+    padding-left: 5px;
+} 
+                            
+.THIS .div-color1{
+        background: #a3e1e1;       
+}
+.THIS  button.slds-button.slds-align_absolute-center{
+            font-weight:800;    
+             font-family: ProximaNova-AltBold;                                               
+}
+.THIS .customsave button.slds-button.slds-button_success.slds-m-vertical_medium.slds-float_right.save-button_style{
+            white-space: nowrap;                    
+}

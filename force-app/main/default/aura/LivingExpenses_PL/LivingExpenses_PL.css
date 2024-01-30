@@ -1,0 +1,40 @@
+.THIS.living-expenses  .slds-scope .slds-form-element_horizontal .slds-form-element__label {
+    max-width: calc(50% - 1.25rem);
+    flex-basis: calc(50% - 1.25rem);
+}
+.THIS .total{
+    font-size: 1.25rem !important;
+    font-weight: 600;
+
+}
+.THIS .slds-form_areYouSure  ul {
+
+    color: rgb(107, 109, 112);
+    padding-left: 40px;
+}
+.THIS .no-abbr label.slds-form-element__label abbr {
+    display: none;
+}
+.THIS .header-text{
+    font-size: 1.75rem !important;
+    line-height: 1;
+    letter-spacing: 1px;
+    font-family: ProximaNova-AltBold;
+}
+.THIS .div-color{
+   	background: #d2eded;
+    vertical-align: middle;
+    alignment-baseline: middle;
+    height: 5rem;
+    width: 18rem;
+    font-weight: bold;
+    color: #3aa5b0;
+    font-size: 20px;
+    margin-left: -16px;
+    padding-left: 10px;
+    align-items: center;
+    display: flex;
+}
+.THIS .customsave button.slds-button.slds-button_success.slds-m-vertical_medium.slds-float_right.save-button_style{
+            white-space: nowrap;                    
+}

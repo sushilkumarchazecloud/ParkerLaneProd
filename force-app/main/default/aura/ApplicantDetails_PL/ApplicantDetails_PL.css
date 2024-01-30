@@ -1,0 +1,205 @@
+.THIS .uiInput--textarea .textarea, .THIS .uiInput--textarea.textarea {
+    background-color: rgb(255, 255, 255);
+    color: rgb(8, 7, 7);
+    border: 1px solid rgb(221, 219, 218);
+    border-radius: .25rem;
+    width: 100%;
+    transition: border .1s linear,background-color .1s linear;
+    resize: vertical;
+    padding: .75rem;
+}
+
+.THIS .dob .slds-input {
+    /*width: 110px;*/
+}
+.THIS .dob .slds-form-element {
+     /*min-width: 8rem !important;*/
+}
+.THIS .margin_set span.slds-button.slds-radio_button{
+    margin-left:-0.3rem !important;
+}
+.THIS .label-color-size{
+    margin-bottom: -1.5rem;
+    font-size: 16px;
+	color: black; 
+    font-family: Proxima Nova Alt Regular;
+}
+
+
+.THIS .cAddressAPItool .slds-input{
+ 	padding-left: 2rem !important;   
+}
+.THIS .set_radioWidth .slds-radio_button-group .slds-button label.slds-radio_button__label{
+    min-width:6rem;
+    margin-right:10px;
+}
+.THIS .header1{
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: black;
+    margin-bottom: 10px;
+    font-family: ProximaNovaAlt-Medium;
+}
+.THIS .input-dollar2,.THIS .input-dollar3 {
+    position: relative;
+    text-align: left;
+}
+.THIS .input-dollar3:before{
+    position: absolute;
+    top: 0;
+    content: "$";
+    z-index: 1;
+    font-size:18px;
+    padding: 22px 10px!important;
+    font-weight: 700;
+}
+.THIS .input-dollar2:before {
+    position: absolute;
+    top: 0;
+    content: "$";
+    z-index: 1;
+    font-size:18px;
+    padding: 45px  10px!important;
+    font-weight: 700;
+}
+.THIS .inputPercentage{
+    position: relative;
+    text-align: left;
+}
+.THIS .inputPercentage:before {
+    position: absolute;
+    top: 0;
+    content: "%";
+    z-index: 1;
+    padding: 46px 10px!important;
+    font-weight: 700;
+    right:0px;
+}
+.THIS .edit_inputbox .slds-input {
+    padding-left: 2rem !important;
+}
+.THIS .slds-input,.THIS .slds-select_container select.slds-select{
+    height:50px;
+    background: white;
+    font-size: 18px;
+}
+.THIS .slds-select_container:before {
+    border-bottom: 7px solid currentColor !important;
+}
+.THIS .slds-select_container:before, .THIS  .slds-select_container:after {
+    border-left: 6px solid transparent !important;
+    border-right: 6px solid transparent !important;
+}
+.THIS .slds-select_container:after {
+    border-top: 7px solid currentColor !important;
+}
+.THIS .slds-select_container:before {
+    top: calc((var(--lwc-lineHeightButtonSmall,1.75rem) / 2) + 3px) !important;
+}
+.THIS .slds-select_container:after {
+    bottom: calc((var(--lwc-lineHeightButtonSmall,1.75rem) / 2) + 3px) !important ;
+}
+.THIS .heading_edit{
+    font-size: 16px;
+    font-weight: 900;
+    color: rgb(1 118 211);
+    font-family: Proxima Nova Alt Regular;
+    
+}
+.THIS .addmore-btn{
+    padding: 10px !important;
+    font-size: 1.25rem;
+    border: 2px solid !important;
+    font-family: ProximaNovaAlt-Medium;
+    color: var(--slds-c-button-color-border, var(--sds-c-button-color-border, transparent)) !important;
+    background: rgb(245 245 245) !important;
+}
+.THIS .width_of_combo .slds-scope .slds-dropdown-trigger_click.slds-is-open .slds-dropdown,.THIS .slds-scope .slds-dropdown-trigger--click.slds-is-open .slds-dropdown{ 
+    bottom: -100px;
+    left: 10px;
+    max-width: 70%;
+    width: 70%;
+    min-width: 6rem;
+    border-radius: 3%;
+    background-color: white;
+    color: black;
+    font-family: Proxima Nova Alt Regular;
+}
+@media screen and (max-width: 770px) {
+     .THIS .set_widthofChildren {
+            width: 60% !important;
+      }
+}
+.THIS .heading-edit{
+    font-weight: 800;
+    font-size: 1.4rem;
+    font-family: ProximaNova-AltBold;
+}
+.THIS .subheading-edit{
+    font-weight: 700;
+    font-size: 18px;
+    font-family: ProximaNova-AltBold;
+    /*font-family: Proxima Nova Alt Regular;*/
+}
+.THIS .button_icon_radius svg{
+    border: 1.5px solid;
+    height: 1.2rem;
+    width: 1.2rem;
+    padding: 2px;
+    border-radius: 50%;
+}
+.THIS .text_decoration_underline{
+    text-decoration: underline 2px;
+    color: #3994db;
+}
+.THIS .addSelectEdit .slds-select_container select.slds-select{
+	text-align:center;
+    border-width: 2px!important;
+}
+.THIS .div-color{
+    background: #d2eded;
+    vertical-align: middle;
+    alignment-baseline: middle;
+    height: 5rem;
+    width: 18rem;
+    font-weight: bold;
+    color: #3aa5b0;
+    font-size: 20px;
+    margin-left: -16px;
+    padding-left: 10px;
+    align-items: center;
+    display: flex;
+}
+
+.THIS .highlightOnselect1{
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    background-color: #d2edee; 
+    border-radius: 0.3rem;
+    border-color: rgb(243, 243, 243);
+    padding-bottom: 10px;
+    margin-left: -7px;
+    margin-right: -7px
+}
+.THIS .highlightOnselect{
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+            border-radius: 0.3rem;
+            border-color: rgb(243, 243, 243);
+            padding-bottom: 10px;
+            margin-left: -7px;
+            margin-right: -7px      
+}
+.THIS .highlightOnselect:focus-within{
+          background-color: #d2edee;                       
+}
+.THIS span.slds-checkbox {
+    margin-top: 8px !important;
+}
+.THIS .box_shadow{
+                 box-shadow:none !important;             
+ }
+.THIS  button.slds-button.slds-align_absolute-center{
+            font-weight:800; 
+            font-family: ProximaNova-AltBold;
+}

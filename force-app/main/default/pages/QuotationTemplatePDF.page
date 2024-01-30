@@ -1,0 +1,453 @@
+<apex:page renderAs="PDF" controller="QuotationTemplatePDFCtrl" applyHtmlTag="false" applyBodyTag="false" standardStylesheets="false"  showHeader="false"  sidebar="false">
+    <head>
+        <style TYPE="text/css">
+            @page {
+            margin-left: 0cm;
+            margin-right: 0cm;
+            margin-top: 220px;
+            margin-bottom: 0cm;
+            size:A4 portrait;
+            @top-left {
+            content: element(header);
+            } 
+            
+            @bottom-left {
+            content: element(footer);
+            }
+            }
+            .container {
+            position: relative;
+            font-family: Helvetica;
+            z-index:1;
+            }
+            .text-block {
+            position: absolute;
+            top: 30px;
+            left: 60px;
+            font-size: 40px;
+            width:500px;
+            color: white;
+            z-index:2;
+            font-weight: bold; 
+            font-family: sans-serif;
+            }
+            div.header {
+            position: running(header);
+            width: 100%;
+            margin-right: 1px;
+            }
+            
+            div.footer {
+            width:100%;height:80px;position:absolute;content : "My Footer on right Side";bottom:0;left:0;background:#ee5;
+            display: block;
+            padding: 5px;
+            position: running(footer);
+            }
+            
+            body {
+            margin: 0px ;
+            }
+            .image-block {
+            position: absolute;
+            bottom: 20px;
+            right: 60px;
+            z-index:1;
+            }
+            .disclaimer-text {
+            font-size: 7px;
+            line-height : 1;
+            text-align: justify;
+            padding-top: 5px;
+            }
+            .loan-col{
+            width: 100%;
+            border: 1px solid rgb(221, 219, 218);
+            text-align: center;
+            box-shadow: 4px 4px 9px #aaaaaa;
+            }
+            
+            .rate strong {
+            font-size: 8px;
+            }
+            .rate em {
+            font-size: 10px;
+            font-style: unset;
+            }
+            .rate .rate-header {
+            background-color: #304061;
+            padding: 4px 10px;
+            color: #fff;
+            width: 100%;
+            }
+            .rate .rate-body {
+            color: #304061;
+            padding: 2px 8px;
+            background: #e8f4ff;
+            }
+            .percentage {
+            top: 0;
+            left: 0;
+            font-size: 8px;
+            line-height: 5px;
+            }
+            .percentage-container {
+            margin-top: 4px;
+            margin-left: 2px;
+            height: 22px;
+            text-align: left;
+            }
+            .rate-value {
+            font-size: 21px;
+            line-height: 22px;
+            font-weight: bold; font-family: sans-serif;
+            padding-bottom:5px;
+            text-align: right;
+            }
+            .rate-container {
+            display: inline-flex;
+            }
+            .pa {
+            top: 15px;
+            left: 1px;
+            font-size: 8px;
+            line-height: 8px;
+            }
+            .interval .month-interval{
+            color: #304061;
+            font-size: 20px;
+            font-weight: 300;
+            text-align: -webkit-center;
+            }
+            .interval .rate-interval{
+            color: #304061;
+            font-size: 28px;
+            font-weight: 800;
+            }
+            .interval .rate-interval-w{
+            color: #304061;
+            padding-bottom: 5px;
+            font-size: 15px;
+            }
+            .slds-card{
+            padding: 0px 10px;
+            }
+            .loan-td{
+            width:33%;
+            }
+            
+            .product-details{
+            padding-bottom: 5px;
+            text-align: left;
+            font-size: 10px;
+            }
+            .rate-body{
+            padding: 2px 10px;
+            width: 100%;
+            }
+            .elig-section{
+            background-color: #304061;
+            color: #fff;
+            font-size: 9px;
+            padding: 5px;
+            }
+            .rate-type{
+            text-align: left;
+            font-size: 8px;
+            line-height: 11px;
+            width:50%;
+            }
+            .font-family{
+            font-family:Arial, Helvetica, sans-serif;;
+            }
+            .logo {
+            position: absolute;
+            top: 40px;
+            right: 60px;
+            }
+            .logo img{
+            width: 125px;
+            }
+            .apply-now {
+            background: #38b3c3;
+            padding: 4px;
+            border-radius: 24px;
+            color: #fff;
+            font-weight: 600;
+            font-size: 15px;
+            
+            }
+            .align_absolute-center{
+            display: inline-block;
+            justify-content: center;
+            align-content: center;
+            align-items: center;
+            }
+            .rec-text {
+            color: #304061;
+            text-align: center;
+            font-size: 28px;
+            font-weight: 700;
+            padding: 5px;
+            }
+            .product-desc {
+            border-bottom: 1px solid #737272;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+            font-size: 9px;
+            }
+            .slds-card__header.interval {
+            font-size: 12px;
+            padding: 10px 6px;
+            }
+            .recommended-options{
+            padding: 5px 0px;
+            }  
+            li.pro-detail-bullets div {
+            margin-left: 0px;
+            padding-left: 0px;            
+            }
+        </style>
+        
+    </head>
+    <div class="font-family">
+        <div class="container header">
+            <apex:image url="{!URLFOR($Resource.SolarLoan, 'img/banner1.png')}" style="width: 100%;" />
+            <div class="text-block">
+                <b>Finance for money conscious households</b>
+            </div>
+            <div class="logo ">
+                <apex:image url="{!URLFOR($Resource.SolarLoan, 'img/logowhite.png')}" style="" />
+            </div>
+            
+            <div class="image-block">
+                <apex:image url="{!URLFOR($Resource.SolarLoan, 'img/ProductReview_HomeLoans.jpg')}" style="width:165px" />
+                <apex:image url="{!URLFOR($Resource.SolarLoan, 'img/ProductReview_PersonalLoans.jpg')}" style="width:165px" />
+            </div>
+        </div>
+        <apex:repeat value="{!quoteWrpMap}" var="qtmap">
+            <div style="padding:15px; color: #324458;">
+                <div class="align_absolute-center" style="margin-top: 52px;width:100%;">
+                    
+                    <table style="width:100%">
+                        <tr>
+                            <td style="width:4%"></td>
+                            <td style="width:92%">
+                                
+                                <div style="background: #e8f4ff;position: relative;margin-top:15px;padding: 5px;">
+                                    <table style="width:100%">
+                                        <tr>
+                                            <td style="width:25%">
+                                                <div style="position: absolute;margin-top: -90px; margin-left: 25px;">
+                                                    <apex:image url="{!URLFOR($Resource.SolarLoan, 'img/'+IF(opprtunity.Purpose__c=='Solar', 'tree', IF(opprtunity.Purpose__c=='Home Improvement', 'painting', 'lakelandMortar'))+'.png')}" style="width:120px" />
+                                                </div>
+                                            </td>
+                                            <td  style="width:50%; color: #324458; font-size: 10px; text-align: center;">
+                                                <div>
+                                                    OUR FEATURED 
+                                                </div>
+                                                <div style="font-size: 20px; font-weight: 800;">
+                                                    {!IF(opprtunity.Purpose__c=='Solar', 'Solar Green', opprtunity.Purpose__c)} Loans
+                                                </div>
+                                            </td>
+                                            <td style="width:25%; text-align:center;">
+                                                <div class="apply-now1">
+                                                    <apex:image url="{!URLFOR($Resource.SolarLoan, 'img/applynow.png')}" style="width:100px" />
+                                                </div>
+                                                <div style="font-size:12px;">
+                                                    www.parkerlane.com.au/apply<br/>
+                                                    <b>Call 1300 131 711</b>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                
+                                
+                                <div style="text-align:center;">
+                                    <div style="text-align:center;padding:15px 30px;font-size:12px">
+                                        Award winning service, super fast approvals plus Australia’s leading range of<br/>
+                                        home and personal loans from lenders who care as much as we do.
+                                    </div>                                    
+                                    
+                                    <div style="text-align:center;font-size:15px;padding-bottom:5px;font-weight: bold;">
+                                        {!qtmap}
+                                    </div>
+                                    
+                                    <div style="text-align:center;font-size:16px">
+                                        <b>Amount: 
+                                            <u>
+                                                <apex:outputText value="{0, number, $###,##0}" >
+                                                    <apex:param value="{!custmerAmountMap[qtmap]}"/>
+                                                </apex:outputText>
+                                            </u>
+                                        </b>
+                                    </div>
+                                    
+                                </div>
+                                <div class="recommended-options">
+                                    
+                                    <div>
+                                        <section class="our-loans">
+                                            <apex:outputPanel rendered="true">
+                                                <table width="100%">
+                                                    <tr>
+                                                        <apex:variable value="{!0}" var="index"/>
+                                                        <apex:repeat value="{!quoteWrpMap[qtmap]}" var="qt">
+                                                            <apex:variable value="{!index + 1}" var="index"/>
+                                                            <td class="loan-td" valign="top" style="padding:{!IF(index==1,'12px 24px 12px 0px',IF(index==3,'12px 0px 12px 24px','12px'))}">
+                                                                <div style="font-size:10px; margin-bottom:2px">
+                                                                    <b>{!IF(index==1,'Option B',IF(index==2,'Option A','Option C'))}</b>
+                                                                    ({!qt.Loan_Term_Year} years)
+                                                                    <apex:outputpanel rendered="{!IF(qt.isFeatured == true, true, false)}" >
+                                                                        <apex:image url="{!URLFOR($Resource.SolarLoan, 'img/featured.PNG')}" style="width:60px; height:15px; float:right; margin-top:-3px;"/>                                                                            
+                                                                    </apex:outputpanel> 
+                                                                </div>                                                                
+                                                                <div class="loan-col ">
+                                                                    <div class="slds-card ">
+                                                                        <div class="slds-card__header interval" style="font-size: 10px;">
+                                                                            <div style="color:#38b3c3; font-size: 8px; padding-top:5px;">ESTIMATED MONTHLY REPAYMENTS</div>
+                                                                            <div class="rate-interval" style="padding-top:10px;">
+                                                                                <apex:outputText value="{0, number, $###,##0}" >
+                                                                                    <apex:param value="{!CEILING(qt.Monthly_Repayment)}"/>
+                                                                                </apex:outputText>
+                                                                            </div>
+                                                                            <div class="rate-interval-w">(
+                                                                                <apex:outputText value="{0, Number, Currency}" >
+                                                                                    <apex:param value="{!qt.Weekly_Repayments}"/>
+                                                                                </apex:outputText>
+                                                                                Weekly)
+                                                                            </div>
+                                                                            <div style="color:#38b3c3;padding-top:10px;font-size: 8px;">
+                                                                                LOAN TERM
+                                                                            </div>
+                                                                            <div class="month-interval"> 
+                                                                                {!qt.Loan_Term} months
+                                                                            </div>
+                                                                            ({!qt.Loan_Term_Available} months available)
+                                                                        </div>
+                                                                        
+                                                                        <div class="slds-card__body">
+                                                                            <div class="rate">
+                                                                                <table class="rate-header">
+                                                                                    <tr>
+                                                                                        <td class="rate-type">
+                                                                                            {!qt.Security}<br/>
+                                                                                            {!qt.Interest_Rate_Type} 
+                                                                                            Rate {!qt.fromStr}
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <div class="rate-value"><b>{!qt.Interest_Rate}</b></div>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <div class="percentage-container">
+                                                                                                <div class="percentage">%</div>
+                                                                                                <div class="pa">p.a.</div>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                                <table class="rate-body" >
+                                                                                    <tr>
+                                                                                        <td class="rate-type">Comparison<br/> Rate{!qt.fromStr}</td>
+                                                                                        <td>
+                                                                                            <div class="rate-value"><b>{!qt.Actual_Comparison_Rate}</b></div>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <div class="percentage-container">
+                                                                                                <div class="percentage">%*</div>
+                                                                                                <div class="pa">p.a.</div>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                        
+                                                                        <div style="font-size:11px;padding-top:10px">
+                                                                            
+                                                                            <div class ="product-desc">
+                                                                                {!qt.Description}
+                                                                            </div>
+                                                                            
+                                                                            <div class ="product-details">
+                                                                                <table style="">
+                                                                                <apex:repeat value="{!qt.features}" var="feature">
+                                                                                    
+                                                                                        <!--<li class="pro-detail-bullets"><div>{!feature}</div></li>-->
+
+                                                                                    <tr>
+                                                                                        <td style="padding: 0px 6px; vertical-align: top; font-size:15px;">
+                                                                                            &#8226;
+                                                                                        </td>
+                                                                                        <td>{!feature}</td>
+                                                                                    </tr>
+                                                                                    
+                                                                                    </apex:repeat> 
+                                                                                </table>
+                                                                            </div>
+                                                                            <div class ="product-details">
+                                                                                <apex:outputpanel rendered="{!IF(qt.whatYouGet != '' , true, false)}" >
+                                                                                	<b style="margin-left: 8px;font-size:10px">What you'll need to apply</b>
+                                                                                </apex:outputpanel>
+                                                                                <table>                                                                                    
+                                                                                    <apex:repeat value="{!qt.whatYouGet}" var="whatYouGet">
+                                                                                        <tr>
+                                                                                            <td style="padding: 2px 5px; vertical-align: top;">
+                                                                                                <apex:image url="{!URLFOR($Resource.SolarLoan, 'img/blackbox.PNG')}" style="width: 8px; height: 8px" />
+                                                                                            </td>                                                                                            
+                                                                                            <td>{!whatYouGet}</td>
+                                                                                        </tr>
+                                                                                        
+                                                                                    </apex:repeat>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            
+                                                        </apex:repeat>
+                                                    </tr>
+                                                </table>
+                                            </apex:outputPanel>
+                                        </section>
+                                    </div>
+                                </div>
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                <div class="disclaimer-text">
+                                    Parker Lane is the registered trading name of Upside Downside Pty Ltd. Australian Credit Licence number 482276.
+                                    Disclaimer: This report is for informational purposes only and is provided as a guide only. The information contained in this report may not be current or complete, or may not remain current or complete, and therefore under no circumstances should be relied upon. 
+                                    The information is based upon the data provided by you and others which changes regularly. 
+                                    It is your responsibility to assess and verify the accuracy, currency, completeness and reliability of the information and whether it applies in your individual circumstances. 
+                                    No warranty or representations as to its accuracy or completeness is provided. We are not liable to your or any other person for loss, damage or injury arising from the use of, 
+                                    or reliance on, this information, including but not limited to loss suffered in connection with incorrect or out of date information. *The comparison rate is based on a secured 
+                                    or unsecured loan amount of $30,000 over a loan term of 5 years. WARNING: This comparison rate applies only to the example or examples given and assumes a borrower with an excellent credit history. 
+                                    Different amounts and terms will result in different comparison rates. Costs such as redraw fees or early repayment fees, and cost savings such as fee waivers, 
+                                    are not included in the comparison rate but may influence the cost of the loan. Comparison rate has been calculated based upon the nominal interest rate and any one-off and/or ongoing 
+                                    fees which apply to your loan and is based on monthly repayments. Rates subject to change, or may be withdrawn at any time. All applications for credit are subject to normal credit approval criteria. 
+                                    Parker Lane specifically disclaims any responsibility or liability for any losses or damages arising from any use of or reliance upon any calculations or conclusions reached using the payment table. 
+                                    See our credit guide for further detail: https://www.parkerlane.com.au/credit-guide. Conditions Apply.
+                                    
+                                </div>
+                            </td>
+                            <td style="width:4%"></td>
+                        </tr>
+                    </table>
+                    
+                    
+                </div>
+            </div>
+            <div>
+                
+            </div>
+        </apex:repeat>
+    </div>
+    
+</apex:page>

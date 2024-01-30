@@ -1,0 +1,83 @@
+.THIS .file-upload-container {
+    width: 80px;
+    height: 80px;
+    border-radius: 100px;
+    border: 2px solid #ffffff;
+    overflow: hidden;
+    color: #ffffff;
+    font-size: 100px;
+    
+    border-style: dashed;
+    justify-content: center;
+    align-items: center;
+}
+
+.THIS .file-upload {
+    height: 70px;
+    width: 70px;
+    border-radius: 100px;
+    position: relative !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 4px solid ;
+    overflow: hidden;
+    /*background-image: linear-gradient(to bottom, #FFF 50%, #0665EA 50%);*/
+    background-size: 100% 100%;
+    transition: all 1s;
+    color: #FFFFFF;
+    font-size: 100px;
+    margin: 3px;
+}
+.THIS .file-upload .slds-file-selector__dropzone{
+    opacity:0;
+}
+.THIS .file-upload:hover {
+    background-position: 0 -100%;
+    color: #2590EB;
+}
+.THIS .file-upload input[type='file']{
+    
+    height: 80px !important;
+    width: 80px !important;
+    position: absolute !important;
+    top:0;
+    left:0;
+    opacity:0;
+    cursor:pointer;
+    
+}
+.THIS .slds-form-element__label{
+    color: #ffffff !important;
+}
+.THIS button.slds-button {
+    color: #ffffff!important;
+    font-size: .75rem;
+    font-weight: 100;
+}
+.THIS .processing-icon-style{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.THIS .processing-icon-style img {
+    width: 2rem;
+    height: auto;
+}
+.THIS meter::-webkit-meter-optimum-value {
+    background: #45C65A;
+}
+.THIS .completedcheck {
+    border: 1px solid;
+    border-radius: 100px;
+    padding: 2px;
+    width: fit-content;
+}
+
+.THIS .greenicon {
+    border-color: #45C65A;
+}
+
+.THIS .greenicon svg {
+    fill: #45C65A;
+}

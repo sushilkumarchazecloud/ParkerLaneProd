@@ -1,0 +1,203 @@
+<aura:component controller="ParkerLaneLoanController">
+    <aura:attribute name="typesOptions" type="List" default="[{'label': 'Solar', 'value': 'Solar'},{'label': 'Home Improvement', 'value': 'Home Improvement'},{'label': 'Debt Consolidation', 'value': 'Debt Consolidation'}]"/>
+    <aura:attribute name="sendQuoteOptions" type="List" default="[{'label': 'Me and my customer', 'value': 'Me and my customer'},{'label': 'Me only', 'value': 'Me only'}]"/>
+    <aura:attribute name="supportOptions" type="List" default="[{'label': 'Please contact the customer', 'value': 'Please contact the customer'},{'label': 'The customer will contact you', 'value': 'The customer will contact you'}]"/>
+    
+    <aura:attribute name="isReferralAgreement" type="Boolean" default="false"/>
+    <aura:attribute name="isObtainedTheCustomer" type="Boolean" default="false"/>
+    <aura:attribute name="showMessage" type="Boolean" default="false"/>
+    <aura:attribute name="status" type="String"/>
+    <aura:attribute name="message" type="String"/>
+    <aura:attribute name="support" type="String"/>
+    <aura:attribute name="sendQuote" type="String"/>
+    <aura:attribute name="referrerEmail" type="String"/>
+    <aura:attribute name="quoteType" type="String"/>
+    <aura:attribute name="quoteAmount" type="Integer"/>
+    <aura:attribute name="custName" type="String"/>  
+    <aura:attribute name="custEmail" type="String"/>
+    <aura:attribute name="custPhone" type="String"/>
+    <aura:attribute name="custInstallationAddress" type="String"/>
+    
+    <div class="company-logo"> 
+        <div class="slds-float_left">
+            <img src="{!$Resource.SolarLoan + '/img/parkerlane.png'}"/>
+        </div >
+    </div>
+    <section class="slds-p-around--large slds-text-align_center company-banner">
+        <h4 class="txt-h4">REFER A CUSTOMER</h4>
+        <div class="loan-rec-panel slds-container_medium slds-container_center">
+            <div class="slds-grid slds-p-vertical_x-small slds-grid_vertical-align-center">
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12">
+                    <span class="slds-p-horizontal--small ">Delivering awesome value and customer service doesn’t have to stop with you. Give your customers access to the best value finance from Australia’s #1 rated finance team for customer service.</span>
+                </div>
+            </div>
+        </div>
+       
+    </section>
+   	<lightning:spinner aura:id="mySpinner" variant="brand" size="large" class="slds-hide" />
+    <div class="bg-white slds-p-around--medium">
+        <header class="checkout-page-banner--gradient">
+            <div class="slds-align_absolute-center ">
+                <div class="page-banner__content-text">
+                    <h1 class="slds-p-vertical--medium heading--page">Please add your referral details here</h1>
+                    <p class="font-intro">
+                        
+                    </p>
+                </div>
+            </div>
+        </header>
+        <aura:if isTrue="{!v.showMessage}">
+            <div class="{!'slds-notify slds-notify_toast slds-align_absolute-center slds-m-vertical--medium slds-theme_'+ v.status}" style="min-width: inherit;">
+                <span class="slds-assistive-text">{!v.status}</span>
+                <div class="slds-notify__content">
+                    <p class="slds-align_absolute-center">{!v.message}.</p>                
+                </div>
+            </div>
+        </aura:if>
+        <div class="slds-clearfix  slds-p-vertical--medium slds-form max-700  ">
+            <div class="slds-form" role="list">
+                <h2 class="header">Quote Details</h2>
+                <div class="slds-form__row">
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                            <lightning:combobox label="Quote Type" aura:id="fieldcheck" required="true"
+                                                value="{!v.quoteType}" 
+                                                options="{! v.typesOptions }" 
+                                                placeholder="Quote Type"/>
+                            
+                        </div>
+                    </div>
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                            <lightning:input label="Quote Amount" type="number" aura:id="fieldcheck" required="true" 
+                                             placeholder="Quote Amount" formatter="currency"
+                                             value="{!v.quoteAmount}"/>
+                        </div>
+                    </div>
+                </div>
+                
+                <h2 class="header">Customer Details</h2>
+                <div class="slds-form__row">
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                            <lightning:input label="Full Name" aura:id="fieldcheck" required="true" 
+                                             placeholder="Full Name" value="{!v.custName}"/>
+                        </div>
+                    </div>
+               
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                            <lightning:input label="Email" placeholder="Email"
+                                             aura:id="fieldcheck" required="true"
+                                             value="{!v.custEmail}"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-form__row">
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                            <lightning:input label="Phone" aura:id="fieldcheck" required="true" 
+                                             pattern="([0-9]{10}|[0-9]{4} [0-9]{3} [0-9]{3})"
+                                             type="tel"
+                                             messageWhenPatternMismatch="Pattern should be 1234567890 or 1234 567 890"
+                                             placeholder="Phone" value="{!v.custPhone}"/>
+                        </div>
+                    </div>
+               
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                            <lightning:input label="Installation Address" placeholder="Installation Address"
+                                             value="{!v.custInstallationAddress}"/>
+                        </div>
+                    </div>
+                </div>
+                
+                <h2 class="header">Referrer Details</h2>
+                <div class="slds-form__row">
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                            <lightning:input label="Your Email" placeholder="Your Email"
+                                             aura:id="fieldcheck" required="true"
+                                             value="{!v.referrerEmail}"/>
+                        </div>
+                    </div>
+               
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                            
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slds-form__row">
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element rg-style">
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-size_1-of-1 slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                                    <lightning:radioGroup name="sendQuoteRG"
+                                                          aura:id="fieldcheck" 
+                                                          required="true"
+                                                          label="Please send the quote to"
+                                                          options="{! v.sendQuoteOptions }"
+                                                          value="{! v.sendQuote }"
+                                                          type="button"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <div class="slds-form__row">
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element rg-style">
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-size_1-of-1 slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                                    <lightning:radioGroup name="supportRG"
+                                                          aura:id="fieldcheck" 
+                                                          required="true"
+                                                          label="How would you like us to support you?"
+                                                          options="{! v.supportOptions }"
+                                                          value="{! v.support }"
+                                                          type="button"/>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <div class="slds-form__row">
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element" style="text-align: justify">
+                            <lightning:input type="checkbox" aura:id="fieldcheck" 
+                                                          required="true"
+                                             value="{!v.isObtainedTheCustomer}"
+                                             label="Within the last 5 days I have obtained the customer’s consent to pass their details to Parker Lane." />
+                        </div>
+                    </div>
+                    
+                </div>
+                <br/>
+                <div class="slds-form__row">
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element" style="text-align: justify">
+                            <lightning:input type="checkbox" aura:id="fieldcheck" 
+                                                          required="true"
+                                             value="{!v.isReferralAgreement}"
+                                             label="I will comply with my commitments under our referral agreement and I will not provide any recommendations or advice concerning loans." />
+                        </div>
+                    </div>
+                    
+                </div>
+                
+            </div>
+            
+            <div class="max-7001 preNxtBtn">
+                <lightning:button class="slds-button slds-button_brand slds-m-vertical_medium slds-size_1-of-1 slds-small-size_3-of-12 slds-medium-size_2-of-12 slds-large-size_2-of-12 slds-float_right" variant="brand" 
+                                              label="Submit" title="Submit" 
+                                              onclick="{! c.submit }" />
+            </div>
+        </div>
+    </div>
+    <c:ParkerLaneFooter/>
+</aura:component>

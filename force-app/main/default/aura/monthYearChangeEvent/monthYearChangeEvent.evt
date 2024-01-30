@@ -1,0 +1,5 @@
+<aura:event type="COMPONENT" description="monthYearChangeEvent Event template" >
+    <aura:attribute name="months" type="Integer"/>
+    <aura:attribute name="years" type="Integer"/>
+    <aura:attribute name="applicantNo" type="Integer"/>
+</aura:event>

@@ -1,0 +1,17 @@
+.THIS .slds-card .slds-card__header, .THIS .slds-card.slds-card .slds-card__header {
+    background-color: #f3f2f2;
+    padding: 15px;
+}
+.THIS .slds-card{
+    position: relative;
+    padding: 0;
+    background: #fff;
+    border: 1px solid #dddbda !important;
+    border-radius: .25rem;
+    background-clip: padding-box;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.1);
+}
+
+.THIS .slds-card__footer {
+    text-align: center;
+}

@@ -1,0 +1,219 @@
+.THIS.path-header .slds-path.pa-card.slds-card {
+    border: 0;
+}
+.THIS.section-content{
+    margin-top: 75px;
+}
+.THIS.path-header{
+    width:100%;
+    position: fixed;
+    top: 0;
+    z-index: 999;
+    max-width: 80rem;
+}
+.THIS {
+    font-size: 16px;
+}
+
+.THIS h4 {
+    color: #006ac6;
+    font-size: 2rem;
+}
+.THIS .txt-white {
+    color: #fff;
+}
+.THIS .txt-blue {
+    color: #006ac6;
+}
+.THIS.bg-dark-blue,.THIS .bg-dark-blue {
+    background-color: #1a2745;
+}
+.THIS.txt-dark-blue,.THIS .txt-dark-blue{
+    color: #1a2745;
+}
+.THIS.bg-lightest,
+.THIS .bg-lightest {
+    background-color: #fff;
+}
+
+.THIS .bg-blue,.THIS.bg-blue {
+    background-color: #006ac6;
+}
+.THIS .bg-white {
+    background-color: #fff;
+}
+
+.THIS.application img {
+   max-width:50%;
+}
+.THIS.application h3 {
+   color: #006ac6;
+}
+.THIS.application h5 {
+    font-size: 18px;
+    color: #75787b;
+    font-weight: 700;
+}
+.THIS.application p {
+    font-size: 1.125rem;
+    color: #75787b;
+    margin-bottom: 10px;
+}
+.THIS .image-container .img-logo {
+    width: 7rem;
+    height: 7rem;
+}
+.THIS input{
+    color: #75787b !important;
+}
+
+.THIS .loan-content h2 {
+    font-size: 2.625rem;
+    margin: 0 0 8px;
+    color:#fff;
+    
+}
+.THIS .loan-content h3 {
+    font-size: 3rem;
+    line-height: 5rem;
+    color: #fff;
+    text-shadow: 3px 3px rgba(219, 222, 226, 0.55);
+}
+.THIS .loan-content p {
+    margin-bottom: 24px;
+    color: #fff;
+    font-size: 1.4rem;
+    text-align: justify;
+}
+.THIS.application .start-options h5{
+    font-size: 32px;
+    color: #75787b;
+    font-weight: 700;
+}
+.THIS .max-700,
+.THIS.max-700{
+    max-width: 700px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.THIS .max-900,
+.THIS.max-900{
+    max-width: 900px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.THIS select, .THIS input {
+    color: #75787b;
+}
+.THIS .slds-form-element_compound .slds-form-element__row {
+    display: flex;
+    margin-bottom: .25rem;
+    margin-left: -.25rem;
+    margin-right: -.25rem;
+}
+.THIS .slds-form-element_compound .slds-form-element {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+}
+
+.THIS .checkout-page-banner--gradient {
+    color: #006ac6;
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+}
+
+.THIS .checkout-page-banner--gradient .heading--page {
+    font-size: 2.5rem;
+    line-height: 1;
+    letter-spacing: 1px;
+    font-weight: 900;
+    text-align: center;
+    font-family: Lexia Ad,Lexia,Trebuchet MS,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Tahoma,sans-serif;
+}
+
+.THIS .checkout-page-banner--gradient .page-banner__content-text, .THIS .txt-center-align{
+    width:100%;
+    text-align: center;
+}
+
+.THIS .width100{
+    width:100%;
+}
+
+.THIS .width1280{
+    width:1280px;
+}
+
+.THIS .width33_3{
+    width:33.3%;
+}
+.THIS .justify-text{
+    text-align: justify;
+}
+.THIS .company-logo, .THIS.company-logo{
+    padding: 10px;
+    background-color: #fff;
+    color: #1a2645;
+    min-height: 50px;
+}
+.THIS .company-logo img, .THIS.company-logo img{
+    width: 200px;
+    padding: 10px;
+    height: 43px;
+    
+}
+.THIS button.slds-button.slds-button_success {
+    color: #fff;
+}
+.THIS .no-anchor, .THIS .no-anchor:hover, .THIS .no-anchor:active{
+    text-decoration: none !important;
+    color: #1a2645 !important;
+}
+.THIS .no-anchor-footer, .THIS .no-anchor-footer:hover, .THIS .no-anchor-footer:active{
+    text-decoration: none !important;
+    color: #333435 !important;
+}
+
+
+.THIS.send-email .header{
+    text-align: left;
+}
+
+.THIS.send-email .header p{
+    font-size: 12px;
+}
+
+.THIS.send-email .header h2{
+    font-weight: 800;
+    padding-bottom: 6px;
+
+}
+.THIS .preNxtBtn{
+    display: table;
+}
+.THIS .warning-msg {
+    font-size: 9px;
+    text-align: justify;
+}
+.THIS lightning-radio-group.rgbtn legend {
+    font-weight: 400 !important;
+}
+.THIS .no-abbr label.slds-form-element__label abbr, .THIS .no-abbr legend.slds-form-element__label abbr {
+    display: none;
+}
+
+.THIS .disabled-btn span.slds-button.slds-radio_button:nth-child(2) label {
+    display: block;
+    pointer-events: none;
+}
+
+.THIS .applicant2-BG-color{
+    background-color: #f0f8ff;
+}
+.THIS h1.header-text {
+    font-size: 22px;
+    font-weight: 800;
+}

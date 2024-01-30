@@ -1,0 +1,179 @@
+<aura:component controller="ParkerLaneLoanController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name = "isexpanded1" type="boolean" default="false"/>
+    <aura:attribute name = "isexpanded2" type="boolean" default="false"/>
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="redirectURL" type="String" default=""/>
+    <aura:attribute name="selectedQuote" type="sObject"/>
+    <aura:attribute name="setAddress" type="String" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <div style="color: #1a2745;">
+        <section class="header--section slds-p-bottom_medium">
+            <div>
+                <img src="{!$Resource.SolarLoan + '/img/checkgreen.png'}" style="border-radius: 72px; border: 2px solid #5bc65b;" />
+            </div>
+            <div>
+                <h1 class = "heading_edit">Pre-approved!</h1>
+            </div>
+            <div>
+                <p class="pargraph_edit">Verify your income and identity
+                </p>
+            </div>
+            
+        </section>
+        <lightning:spinner aura:id="mySpinner" variant="brand" size="large" class="" />
+        <section class="max-700 slds-p-around_medium" style="line-height: normal;">
+            
+            <div class="">
+                
+                <div class=" applicant-compact-form">
+                    <div class="slds-grid slds-wrap slds-p-bottom_medium">
+                        <div class="slds-size_2-of-2 slds-m-top_large">
+                            <h1 class = "heading_edit">Congratulations! You're almost done.</h1>
+                        </div>
+                        <div class="slds-size_2-of-2 slds-m-top_x-small">
+                            <div class="slds-text-link_reset" >
+                                <p class="pargraph-bold-style">Your application is pre-approved! All that's left to do now is verify your income and identify so we can satisfy Australian Responsible Lending laws.
+                                </p>
+                            </div> 
+                        </div>
+                    </div>
+                    <div style="margin-top:-7px"> 
+                        <div class="slds-grid slds-wrap slds-m-top_large">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 verify-col">
+                                <div class="identity-col">
+                                    <h1 class="steps_heading">STEP 1: VERIFY YOUR INCOME</h1>
+                                    <p class="step_paragraph">Upload a bank statement or send your income details online.</p>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 verify-col">
+                                <div class="identity-col">
+                                    <h1 class="steps_heading">STEP 2: VERIFY YOUR IDENTITY</h1>
+                                    <p class="step_paragraph">Verify your identity via SMS message sent to your phone.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-m-top_x-large">
+                        <div>
+                            <h1 style="font-size:22px; font-weight:bold;font-family: ProximaNova-AltBold;">STEP 1. Income verification: it's your choice.</h1>
+                        </div>
+                        <div class="slds-m-top_medium" style="width: 101%">
+                            <p>68% of {!v.selectedQuote.Purpose__c} applicants in {!v.setAddress} provide their income information via our online portal because it is faster, safer and 100% secure.</p>
+                        </div>
+                    </div>
+                    <div class="slds-m-top_large">
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 per-box-container" >
+                                <div class="slds-p-around_medium percentage-box">
+                                    <img src="{!$Resource.SolarLoan + '/img/68percent.png'}" style="height:45px; width:auto"/>
+                                    <div class="slds-m-top_x-small" style="font-family: ProximaNova-AltBold; font-weight:bold; font-size: 22px;">Provide Online</div>
+                                    <p class="slds-m-top_x-small">The service trusted by CBA, NAB &amp; Westpac to summarise their customer's income data.</p>
+                                    
+                                    <div class="slds-m-top_small">  
+                                        <div style="display: flex;">
+                                            <img src="{!$Resource.SolarLoan + '/img/checkmark.png'}" style="height:12px; width:auto; margin-block: 4px;"/>
+                                            <p class="slds-m-left_small">Bank level encryption (logins never stored)</p>
+                                        </div>
+                                        <div class="slds-m-top_x-small" style="display: flex;">
+                                            <img src="{!$Resource.SolarLoan + '/img/checkmark.png'}" style="height:12px; width:auto; margin-block: 4px;"/>
+                                            <p class="slds-m-left_small">Only show selected accounts</p>
+                                        </div>
+                                        <div class="slds-m-top_x-small" style="display: flex;">
+                                            <img src="{!$Resource.SolarLoan + '/img/checkmark.png'}" style="height:12px; width:auto; margin-block: 4px;"/>
+                                            <p class="slds-m-left_small">3x faster approvals</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="">
+                                        <div style="display: flow-root;margin-bottom: -25px;">
+                                            <lightning:button class="slds-m-vertical_x-large continue-btn-style1" variant="success" 
+                                                              label="Choose online" onclick="{!c.saveSummary}" />
+                                        </div>
+                                    </div> 
+                                </div>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 per-box-container" >
+                                <div class="slds-p-around_medium percentage-box">
+                                    <img src="{!$Resource.SolarLoan + '/img/32percent.png'}" style="height:45px; width:auto"/>
+                                    <div class="slds-m-top_x-small" style="font-family: ProximaNova-AltBold; font-weight:bold; font-size: 22px;">Upload Statement</div>
+                                    <p class="slds-m-top_x-small">Upload an official bank statement of the account your income goes into (less than 6 weeks old).</p>
+                                    
+                                    <div class="slds-m-top_small">  
+                                        <div style="display: flex;">
+                                            <img src="{!$Resource.SolarLoan + '/img/checkmark.png'}" style="height:12px; width:auto; margin-block: 4px;"/>
+                                            <p class="slds-m-left_small"><b>Official </b>statements only</p>
+                                        </div>
+                                        <div class="slds-m-top_x-small" style="display: flex;">
+                                            <img src="{!$Resource.SolarLoan + '/img/checkmark.png'}" style="height:12px; width:auto; margin-block: 4px;"/>
+                                            <p class="slds-m-left_small">Requires our team to read your statement line-by-line</p>
+                                        </div>
+                                        <div class="slds-m-top_x-small" style="display: flex;">
+                                            <img src="{!$Resource.SolarLoan + '/img/checkmark.png'}" style="height:12px; width:auto; margin-block: 4px;"/>
+                                            <p class="slds-m-left_small">Allow 1-2 business days more</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="">
+                                        <div style="display: flow-root;margin-bottom: -25px;">
+                                            <lightning:button class="slds-m-vertical_x-large continue-btn-style2" variant="success" 
+                                                              label="Choose manual" onclick="{!c.uploadManually}" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                                                        
+                        </div>                        
+                    </div>
+                </div>                          
+                
+                <div class="slds-p-bottom_large">
+                    <div style="text-align:center; font-family: ProximaNova-AltBold;" class="slds-p-around_small">
+                        <h1 style="font-family: ProximaNova-AltBold;">Frequently Asked Questions</h1>
+                    </div>
+                    <div>
+                        <div style="{! 'background-color:' + (!v.isexpanded1 ? ' #D9D9D9' : '#d2edee')}" onclick="{!c.changeStateQuesion1}" >
+                            <h1 class = "faq-heading">Q. What Does Pre-approved mean?</h1>
+                        </div>
+                        
+                        <div class="slds-hide" aura:id="WhatDoesPre">
+                            <p style="padding: 10px;font-size: .9rem;">
+                                Based  on the information you have provided, our system
+                                has determined that you may meet the lender's qualifying
+                                criteria. Your applicantion remains subject to credit assessment
+                                including verifying you income, checking your credit history
+                                and lender's final approval.
+                                <b>You should not make purchase decision
+                                    util you have received a final loan approval</b>
+                            </p>
+                        </div>
+                        
+                        
+                        <div class="slds-m-top_medium" style="{! 'background-color:' + (!v.isexpanded2 ? ' #D9D9D9' : '#d2edee')}" onclick="{!c.changeStateQuesion2}" >
+                            <h1 class = "faq-heading">Q. How secure is the online bank statement service?</h1>
+                        </div>
+                        
+                        <div class="slds-hide" aura:id="WhatisMogo">
+                            <p style="padding: 10px;font-size: .9rem;">
+                                MogoPlus is an industry leading, secure and indepently verified
+                                third-party bank data provider. They help you access your
+                                account information quickly and analyse that data to give us fast,accurate
+                                and reliable information about your income and expenses.
+                                <b>
+                                    MogoPlus are trusted by millions of Australians
+                                    and is used by many of Australia's largest and  leading banks
+                                    for the same reason we are using them today.
+                                </b>   
+                                
+                            </p>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            
+            
+        </section>
+    </div>
+</aura:component>

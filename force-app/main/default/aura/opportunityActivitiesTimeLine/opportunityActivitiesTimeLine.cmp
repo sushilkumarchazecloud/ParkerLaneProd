@@ -1,0 +1,14 @@
+<aura:component controller="OppActivitiesTimeLineController" implements="forceCommunity:availableForAllPageTypes,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:dependency resource="markup://force:editRecord" type="EVENT" />
+    <aura:handler event="force:refreshView" action="{!c.doInit}" />
+    <aura:attribute name="lstActivity" type="list" />
+    <div class="opportunity-activities-track">
+        <!--<lightning:spinner aura:id="mySpinner" variant="brand" size="large" class="mySpinner" />-->
+        <ul class="slds-timeline">
+        <aura:iteration items="{!v.lstActivity}" var="task">
+            <c:ActivitiesTracker activity="{!task}"/>
+        </aura:iteration>
+        </ul>
+    </div>
+</aura:component>

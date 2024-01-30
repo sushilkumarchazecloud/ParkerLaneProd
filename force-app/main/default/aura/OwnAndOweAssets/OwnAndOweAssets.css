@@ -1,0 +1,6 @@
+.THIS.slds-form{
+    border-bottom: 1px solid #c2c2c2;
+}
+.THIS .no-address label.slds-form-element__label{
+    display: none;
+}

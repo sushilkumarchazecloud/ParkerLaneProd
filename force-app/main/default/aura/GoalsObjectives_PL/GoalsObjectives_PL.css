@@ -1,0 +1,204 @@
+.THIS{
+    font-family: Proxima Nova Alt Regular;
+}
+.THIS .rg-style {
+    width: 100%;
+}
+.THIS .rg-style .slds-radio_button-group, .THIS .rg-style .slds-radio--button-group {
+    border : 0;
+    text-align: center;
+    width: 100%;
+}
+.THIS .rg-style label.slds-radio_button__label {
+    margin: 0px 5px;
+    padding: 1px 5px;
+    border-radius: .25rem !important;
+    border: 1px solid rgb(217, 219, 221);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    color: #1a2745;
+}
+.THIS .rg-style .slds-radio_faux{
+    padding: 5px !important;
+    line-height: 1.4;
+}
+
+.THIS .rg-style .slds-radio_button, .THIS .rg-style .slds-radio--button {
+    border: 0 !important;
+    width: 25%;
+}
+.THIS.goals-objectives h2.header {
+    font-weight: 800;
+    font-family:ProximaNova-AltBold;
+}
+.THIS .not-imp span.slds-form-element__label{
+    color: #0070d2;
+    font-size: 10px;
+}
+.THIS .not-imp span.slds-checkbox_faux {
+    height: 13px !important;
+    width: 13px !important;
+}
+
+.THIS .no-abbr .slds-form-element__label abbr,
+.THIS .life-event legend.slds-form-element__legend.slds-form-element__label, 
+.THIS .no-err .slds-form-element__help {
+    display: none;
+}
+.THIS .colored-rg .slds-radio_button:nth-child(1) [type=radio]:checked+label.slds-radio_button__label,
+.THIS .colored-fixed-rg .slds-radio_button:nth-child(1) label.slds-radio_button__label{
+    background:#ff0000;
+    color:#192744;;
+}
+
+.THIS .colored-rg .slds-radio_button:nth-child(2) [type=radio]:checked+label.slds-radio_button__label,
+.THIS .colored-fixed-rg .slds-radio_button:nth-child(2) label.slds-radio_button__label{
+    background:#f2cf5b;
+    color:#192744;
+}
+.THIS .colored-rg .slds-radio_button:nth-child(3) [type=radio]:checked+label.slds-radio_button__label,
+.THIS .colored-fixed-rg .slds-radio_button:nth-child(3) label.slds-radio_button__label{
+    background:#ffff00;
+    color:#192744;
+                       
+}
+.THIS .colored-rg .slds-radio_button:nth-child(4) [type=radio]:checked+label.slds-radio_button__label,
+.THIS .colored-fixed-rg .slds-radio_button:nth-child(4) label.slds-radio_button__label{
+    background: #67bc83;
+    color:#192744;                    
+}
+.THIS .colored-rg .slds-radio_button:nth-child(5) [type=radio]:checked+label.slds-radio_button__label,
+.THIS .colored-fixed-rg .slds-radio_button:nth-child(5) label.slds-radio_button__label{
+    background: #008000;
+    color:#192744;                  
+}
+.THIS .heading_edit{	
+    font-size: 1.8rem;
+    font-weight: bolder;
+    color:#1a2745;
+    font-family:ProximaNova-AltBold;
+}
+.THIS .slds-input,.THIS .slds-select_container select.slds-select{
+	height:50px;
+    background: white;
+    padding-left: 2rem !important;
+    font-size: 18px;
+    
+    /*color: #2076d3;
+    border-color: #2076d3;*/
+}
+.THIS .slds-select_container:before {
+    border-bottom: 7px solid currentColor !important;
+}
+.THIS .slds-select_container:before, .THIS  .slds-select_container:after {
+    border-left: 6px solid transparent !important;
+    border-right: 6px solid transparent !important;
+}
+.THIS .slds-select_container:after {
+    border-top: 7px solid currentColor !important;
+}
+.THIS .slds-select_container:before {
+    top: calc((var(--lwc-lineHeightButtonSmall,1.75rem) / 2) + 3px) !important;
+}
+.THIS .slds-select_container:after {
+    bottom: calc((var(--lwc-lineHeightButtonSmall,1.75rem) / 2) + 3px) !important ;
+}
+
+.THIS .pargraph_edit
+{
+    /*color:black;*/
+    color: #1a2745;
+    font-size:1.1rem;
+    
+}
+
+.THIS legend.slds-form-element__legend.slds-form-element__label{
+     color: #1a2745;
+     margin-bottom: 8px !important;
+     padding: 2px !important;
+     font-size: 16px!important;
+     word-spacing: 2px !important;
+   
+}
+.THIS span.slds-checkbox_faux{
+     width:20px !important;
+    height:20px !important;
+    
+}
+.THIS span.slds-checkbox{
+     margin-left:0.5rem;
+    
+}
+
+
+.THIS .radio_button_size .slds-radio_button-group .slds-button label.slds-radio_button__label{
+    min-width: 3.5rem;
+    margin-right:0px;
+                   
+}
+.THIS .radio_button_size1 .slds-radio_button-group .slds-button label.slds-radio_button__label{
+    min-width: 3.85rem;
+    margin-right:0px;
+                   
+}
+                
+.THIS .highlightOnselect{
+    padding-left:0.4rem;
+    padding-right:0.4rem;
+    padding-bottom:0.4rem;
+    padding-top:0.4rem;
+}
+.THIS .highlightOnselect:focus-within {
+    background-color: #D2EDEE;
+    
+    border-radius: .25rem;
+    
+}
+.THIS span.slds-form-element__label {
+    font-size: 16px !important;
+}
+.THIS .save-button_style1{
+    font-family: ProximaNovaAlt-Medium;
+    padding: 20px!important;
+    border: 2px #45c65a!important;
+    padding-left: 0.8rem!important;
+    padding-right: 0.8rem!important;
+    color: white!important;
+    background-color: #45c65a!important;
+}
+.THIS .set_alignmentOf-rg .slds-radio_button-group .slds-button label.slds-radio_button__label{   
+    margin-left:0px !important;
+    margin-right:5px !important;
+            
+}            
+.THIS textarea{
+    height:80px;
+ }
+.THIS .privious-button_style1{
+    padding: 18px!important;
+    border: 2px solid!important;
+    padding-left: 2.7rem!important;
+    padding-right: 2.7rem!important;
+    font-family: ProximaNovaAlt-Medium;
+    color: var(--slds-c-button-color-border, var(--sds-c-button-color-border, transparent))!important;
+    background: rgb(245 245 245)!important;
+     
+}
+.THIS .custom button.slds-button.slds-button_success.slds-m-vertical_medium.slds-float_right.save-button_style1.slds-m-right_x-small{
+            white-space: nowrap;                    
+}
+.THIS .highlightOnselect1{
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    border-radius: 0.3rem;
+    border-color: rgb(243, 243, 243);
+    padding-bottom: 10px;
+    margin-left: -7px;
+    margin-right: -7px      
+}
+.THIS .highlightOnselect1:focus-within{
+  background-color: #d2edee;                       
+}

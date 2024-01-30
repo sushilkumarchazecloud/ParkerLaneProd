@@ -1,0 +1,3 @@
+<aura:event type="COMPONENT" description="ApplyNowEvent" >
+	<aura:attribute name = "selectedQuote" type="sObject" />
+</aura:event>

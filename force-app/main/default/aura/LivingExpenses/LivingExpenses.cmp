@@ -1,0 +1,221 @@
+<aura:component controller="ParkerLaneLoanController">
+    <aura:attribute name="applicant" type="Contact" default="{'sobjectType': 'Contact'}"/>
+    <aura:attribute name="total" type="decimal" default=""/>
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="applicationSection" type="String" default=""/>
+    <aura:attribute name="appSectionPath" type="List" default="[]"/>
+    <aura:attribute name="showError" type="Boolean" default="false"/>
+    <aura:attribute name="errorMsg" type="String" default="Please update the form entries highlighted in red and try again"/>
+    
+    <aura:handler action="{!c.doInit}" name="init" value="{!this}"/>
+    <aura:method name="saveLivingExpensesDetails" action="{!c.saveApplication}" access="PUBLIC"  >
+        <aura:attribute name="isShare" type="Boolean" />
+        <aura:attribute name="isNext" type="Boolean" />
+    </aura:method>
+    
+    <div class="living-expenses">
+        <aura:if isTrue="{!v.showError}">
+            <div class="slds-notify slds-notify_toast slds-theme_error slds-align_absolute-center slds-m-vertical--medium">
+                <span class="slds-assistive-text">error</span>
+                <div class="slds-notify__content">
+                    <p class="slds-align_absolute-center">{!v.errorMsg}.</p>                
+                </div>
+            </div>
+        </aura:if>
+        <lightning:spinner aura:id="mySpinner" variant="brand" size="large" class="" />
+        <header class="checkout-page-banner--gradient">
+            <div class="slds-align_absolute-center ">
+                <div class="page-banner__content-text">
+                    <h1 class="slds-p-vertical--medium heading--page">Household Living Expenses</h1>
+                </div>
+            </div>
+        </header>
+        
+        <section class="max-700 slds-p-around--medium slds-col slds-si1ze_1-of-1 bg-lightest txt-blue">
+            
+            <div class="slds-form ">
+                <div class="slds-border_bottom">
+                  
+                    <h2 class="header justify-text">
+                        On a monthly basis, how much do you currently repay and/or spend on the following items?
+                    
+                    <span class="justify-text" style="color:red;">
+                        Please add the living expenses for your entire household (including all adults and dependent children).
+                        </span></h2>
+                </div>
+                <div class="slds-border_bottom  slds-p-vertical--x-small slds-grid slds-wrap">
+                    <label class="slds-form-element__label slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_8-of-12" >
+                        <abbr title="required" class="slds-required">*</abbr>
+                        <b>Owner occupied property</b><br/>Utilities, rates and relates costs including taxes, levies, body corporate and Strata fees, repairs, maintenance and other household items.
+                    </label>
+                    <div class=" slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 no-abbr">
+                        <lightning:input aura:id="fieldcheck" type="number" value="{!v.applicant.Utilities__c}"
+                                         onchange="{!c.totalExpenses}"
+                                         placeholder="$0" formatter="currency" required="true"/>
+                    </div>
+                </div>
+                <div class="slds-border_bottom  slds-p-vertical--x-small slds-grid slds-wrap">
+                    <label class="slds-form-element__label slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_8-of-12" >
+                        <abbr title="required" class="slds-required">*</abbr>               
+                        <b>Investment property</b><br/> Utilities, rates and relates costs including taxes, levies, body corporate and Strata fees, repairs, maintenance and other household items.
+                    </label>
+                    <div class=" slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 no-abbr">
+                        <lightning:input aura:id="fieldcheck" type="number" value="{!v.applicant.Investment_property_utilities__c}"
+                                         onchange="{!c.totalExpenses}"
+                                         placeholder="$0" formatter="currency" required="true"/>
+                    </div>
+                </div>
+                <div class="slds-border_bottom  slds-p-vertical--x-small slds-grid slds-wrap">
+                    <label class="slds-form-element__label slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_8-of-12" >
+                        <abbr title="required" class="slds-required">*</abbr>
+                        <b>Connections</b><br/> Phone, mobile, internet, cable TV and streaming services such as Netflix and Spotify.
+                    </label>
+                    <div class=" slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 no-abbr">
+                        <lightning:input aura:id="fieldcheck" type="number" value="{!v.applicant.Connections_Phone_Mobile_Internet_C__c}"
+                                         onchange="{!c.totalExpenses}"
+                                         placeholder="$0" formatter="currency" required="true"/>
+                    </div>
+                </div>
+                <div class="slds-border_bottom  slds-p-vertical--x-small slds-grid slds-wrap">
+                    <label class="slds-form-element__label slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_8-of-12" >
+                        <abbr title="required" class="slds-required">*</abbr>
+                        <b>Childcare</b><br/> All childcare expenses. Including nannies.
+                    </label>
+                    <div class=" slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 no-abbr">
+                        <lightning:input aura:id="fieldcheck" type="number" value="{!v.applicant.Education_ChildCare_SchoolFees_Uniform__c}"
+                                         onchange="{!c.totalExpenses}"
+                                         placeholder="$0" formatter="currency" required="true"/>
+                    </div>
+                </div>
+                <div class="slds-border_bottom  slds-p-vertical--x-small slds-grid slds-wrap">
+                    <label class="slds-form-element__label slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_8-of-12" >
+                        <abbr title="required" class="slds-required">*</abbr>
+                        <b>Education</b><br/> Public and private education fees and associated costs including books, uniforms etc.
+                    </label>
+                    <div class=" slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 no-abbr">
+                        <lightning:input aura:id="fieldcheck" type="number" value="{!v.applicant.Education_public_and_private__c}"
+                                         onchange="{!c.totalExpenses}"
+                                         placeholder="$0" formatter="currency" required="true"/>
+                    </div>
+                </div>
+                <div class="slds-border_bottom  slds-p-vertical--x-small slds-grid slds-wrap">
+                    <label class="slds-form-element__label slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_8-of-12" >
+                        <abbr title="required" class="slds-required">*</abbr>
+                        <b>Groceries</b><br/> Supermarket, meat, fruit and vegetables.
+                    </label>
+                    <div class=" slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 no-abbr">
+                        <lightning:input aura:id="fieldcheck" type="number" value="{!v.applicant.Food_Groceries_Meat_Fruit_Vegetabl__c}"
+                                         onchange="{!c.totalExpenses}"
+                                         placeholder="$0" formatter="currency" required="true"/>
+                    </div>
+                </div>
+                <div class="slds-border_bottom  slds-p-vertical--x-small slds-grid slds-wrap">
+                    <label class="slds-form-element__label slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_8-of-12" >
+                        <abbr title="required" class="slds-required">*</abbr>
+                        <b>Clothing and personal care</b><br/> Clothing, footwear, cosmetics and personal care.
+                    </label>
+                    <div class=" slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 no-abbr">
+                        <lightning:input aura:id="fieldcheck" type="number" value="{!v.applicant.Clothing_and_personal_care__c}"
+                                         onchange="{!c.totalExpenses}"
+                                         placeholder="$0" formatter="currency" required="true"/>
+                    </div>
+                </div>
+                <div class="slds-border_bottom  slds-p-vertical--x-small slds-grid slds-wrap">
+                    <label class="slds-form-element__label slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_8-of-12" >
+                        <abbr title="required" class="slds-required">*</abbr>
+                        <b>Transport</b><br/> Public transport fees, car expenses including petrol, registration, insurance, servicing, tolls.
+                    </label>
+                    <div class=" slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 no-abbr">
+                        <lightning:input aura:id="fieldcheck" type="number" value="{!v.applicant.Transport_Public_Petrol_Registration__c}"
+                                         onchange="{!c.totalExpenses}"
+                                         placeholder="$0" formatter="currency" required="true"/>
+                    </div>
+                </div>
+                <div class="slds-border_bottom  slds-p-vertical--x-small slds-grid slds-wrap">
+                    <label class="slds-form-element__label slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_8-of-12" >
+                       <abbr title="required" class="slds-required">*</abbr>
+                        <b>Medical and Health</b><br/> Including doctor and dentist, optical and pharmaceutical (excluding health insurance).
+                    </label>
+                    <div class=" slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 no-abbr">
+                        <lightning:input aura:id="fieldcheck" type="number" value="{!v.applicant.Medical_Private_Health_Insurance_Ong__c}"
+                                         onchange="{!c.totalExpenses}"
+                                         placeholder="$0" formatter="currency" required="true"/>
+                    </div>
+                </div>
+                <div class="slds-border_bottom  slds-p-vertical--x-small slds-grid slds-wrap">
+                    <label class="slds-form-element__label slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_8-of-12" >
+                        <abbr title="required" class="slds-required">*</abbr>
+                        <b>General Insurances</b><br/>All insurance including health, home and contents, motor vehicle.
+                    </label>
+                    <div class=" slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 no-abbr">
+                        <lightning:input aura:id="fieldcheck" type="number" value="{!v.applicant.Insurances_Home_Personal_Voluntary__c}"
+                                         onchange="{!c.totalExpenses}"
+                                         placeholder="$0" formatter="currency" required="true"/>
+                    </div>
+                </div>
+                <div class="slds-border_bottom  slds-p-vertical--x-small slds-grid slds-wrap">
+                    <label class="slds-form-element__label slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_8-of-12" >
+                        <abbr title="required" class="slds-required">*</abbr>
+                        <b>Personal Insurances</b><br/>Life and income protection, illness and accident, pet insurance, voluntary superannuation.
+                    </label>
+                    <div class=" slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 no-abbr">
+                        <lightning:input aura:id="fieldcheck" type="number" value="{!v.applicant.Personal_Insurances_life_and_income_pro__c}"
+                                         onchange="{!c.totalExpenses}"
+                                         placeholder="$0" formatter="currency" required="true"/>
+                    </div>
+                </div>
+                <div class="slds-border_bottom  slds-p-vertical--x-small slds-grid slds-wrap">
+                    <label class="slds-form-element__label slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_8-of-12" >
+                        <abbr title="required" class="slds-required">*</abbr>
+                        <b>Recreation and Entertainment</b><br/>Dining out, movies, gifts, membership fees, sporting, pet care, holidays and other items.
+                    </label>
+                    <div class=" slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 no-abbr">
+                        <lightning:input aura:id="fieldcheck" type="number" value="{!v.applicant.Entertainment_Dining_Out_Movies_Gift__c}"
+                                         onchange="{!c.totalExpenses}"
+                                         placeholder="$0" formatter="currency" required="true"/>
+                    </div>
+                </div>
+                <div class="slds-border_bottom  slds-p-vertical--x-small slds-grid slds-wrap">
+                    <label class="slds-form-element__label slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_8-of-12" >
+                        <abbr title="required" class="slds-required">*</abbr>
+                        <b>Gambling, Betting &amp; lottery</b>
+                    </label>
+                    <div class=" slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 no-abbr">
+                        <lightning:input aura:id="fieldcheck" type="number" value="{!v.applicant.Gambling_Betting_and_Lottery__c}"
+                                         onchange="{!c.totalExpenses}"
+                                         placeholder="$0" formatter="currency" required="true"/>
+                    </div>
+                </div>
+                <div class="slds-border_bottom  slds-p-vertical--x-small slds-grid slds-wrap">
+                    <label class="slds-form-element__label slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_8-of-12" >
+                        <abbr title="required" class="slds-required">*</abbr>
+                        <b>Other</b><br/>Any unique items not covered in the above categories.
+                    </label>
+                    <div class=" slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12 no-abbr">
+                        <lightning:input aura:id="fieldcheck" type="number" value="{!v.applicant.Other_Regular_Expenditure__c}"
+                                         onchange="{!c.totalExpenses}"
+                                         placeholder="$0" formatter="currency" required="true"/>
+                    </div>
+                </div>
+                <div class="slds-border_bottom  slds-p-vertical--x-small slds-grid slds-wrap">
+                    <label class="total slds-form-element__label slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_8-of-12" >
+                        Total
+                    </label>
+                    
+                    <div class="total slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_4-of-12">
+                        
+                        <lightning:formattedNumber style="currency" value="{!v.applicant.Total_Living_Expenses__c}" currencyCode="AUD"></lightning:formattedNumber>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="max-700 preNxtBtn ">
+            <lightning:button class="slds-m-vertical_medium slds-float_left" variant="brand" 
+                              label="Previous" title="Previous" 
+                              onclick="{! c.prevSave }" />
+            <lightning:button class="slds-m-vertical_medium slds-float_right" variant="success" 
+                              label="Save &amp; Next" title="Save &amp; Next" 
+                              onclick="{! c.save }" />
+        </div>
+    </div>
+</aura:component>

@@ -1,0 +1,136 @@
+.THIS .applicant-compact-form{
+    border-radius: .25rem;
+    font-family: Proxima Nova Alt Regular;
+    padding-bottom:10px;
+}
+.THIS .applicant-compact-form:focus-within {
+    background-color: #D2EDEE;
+    
+}
+.THIS .customclass {
+    background-color: #D2EDEE;
+    padding-bottom:10px;
+    
+}
+
+.THIS .email-validation{
+    padding: 2px 14px !important;
+    width: 100%;
+    background-color: #f8be45 !important;
+    border-color: #c99934 !important;
+    color: #292723!important;
+}
+
+.THIS .slds-input, .THIS .slds-combobox_container button.slds-combobox__input{
+    padding: 10px !important;
+    background: white;
+    font-size:18px;
+    
+}
+.THIS .number_of_app{
+    color: #1a2745;
+    padding-bottom: 0.6rem;
+    font-size: 1.5rem;
+    margin-top: 20px;
+    line-height: 1;
+    letter-spacing: 1px;
+    font-weight: 900;
+    font-family: ProximaNova-AltBold;
+    
+}
+.THIS .applicant-header{
+    text-align: left;
+    font-weight:700;
+    font-size:20px;
+}
+@media screen and (max-width: 770px) {
+    .THIS .applicant-header{
+        text-align: left;
+    }
+}
+.THIS .radio_buttonWidth .slds-radio_button-group .slds-button label.slds-radio_button__label{
+    min-width:6rem;
+}
+.THIS label.slds-form-element__label,.THIS .slds-form-element__label,
+.THIS legend.slds-form-element__legend.slds-form-element__label{
+    margin-bottom:8px;
+    color:#192744;
+    font-family: Proxima Nova Alt Regular;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
+}
+.THIS .number_of_applicant{
+    margin-bottom: -10px;
+    color: #1a2745;
+}
+.THIS .customPaddingOndesktopview{
+    padding-left:12px;
+}
+
+@media screen and (max-width: 770px) {
+    .THIS .applicant-compact-form{
+        border-radius: .25rem;
+        margin-left: -7px;
+        margin-right: -7px;
+        padding: 2px;
+        margin-top:10px;
+        border-radius: 2%;
+        font-family: Proxima Nova Alt Regular;
+    }
+    .THIS .applicant-compact-form:focus-within {
+        background-color: #D2EDEE;        
+    }
+    .THIS .set_header{
+        margin-bottom: 0.8rem;
+        font-size: 22px;
+        font-family: ProximaNova-AltBold;
+    }
+    .THIS .customPaddingOndesktopview{
+        padding-left:0px;
+    }
+}
+.THIS .disable_privious-button_style{
+    padding: 18px!important;
+    padding-left: 3rem!important;
+    padding-right: 3rem!important;
+    font-family: ProximaNovaAlt-Medium;
+    
+}
+.THIS .slds-select_container select.slds-select{
+    height:50px;
+    background: white;  
+    font-size: 18px;
+    
+}
+
+
+.THIS .slds-select_container:before {
+    border-bottom: 7px solid currentColor !important;
+    
+}
+.THIS .slds-select_container:before, .THIS  .slds-select_container:after {
+    border-left: 6px solid transparent !important;
+    border-right: 6px solid transparent !important;
+}
+.THIS .slds-select_container:after {
+    border-top: 7px solid currentColor !important;
+}
+.THIS .slds-select_container:before {
+    top: calc((var(--lwc-lineHeightButtonSmall,1.75rem) / 2) + 3px) !important;
+        }
+        .THIS .slds-select_container:after {
+            bottom: calc((var(--lwc-lineHeightButtonSmall,1.75rem) / 2) + 3px) !important ;
+                }
+                .THIS .radio_width span.slds-button.slds-radio_button {
+                    margin-left:-4px;
+                }
+                .THIS lightning-radio-group.slds-p-around_x-small.slds-form-element {
+                    padding-left:0px;
+                }
+                .THIS .customsave button.slds-button.slds-button_success.slds-m-vertical_medium.slds-float_right.save-button_style{
+                    white-space: nowrap;                    
+                }
+                .THIS .lowerCase_email input{
+                    text-transform: lowercase;
+                }

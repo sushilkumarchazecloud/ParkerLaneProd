@@ -1,0 +1,12 @@
+<aura:component >
+    <aura:attribute name="label" type="String" />  
+    
+    <aura:registerEvent name="PathChangeEvent" type="c:PathChangeEvent"/>
+    
+    <div class="slds-path__link"  selecteddata="qwer" onclick="{!c.SelectPath}">
+        <span class="slds-path__stage">
+            <lightning:icon iconName="utility:check" size="xx-small" variant="inverse"/>
+        </span>
+        <span class="slds-path__title">{!v.label}</span>
+    </div>
+</aura:component>

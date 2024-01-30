@@ -1,0 +1,65 @@
+<aura:component controller="CustomRelatedRecordController" implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" >
+    <aura:attribute name="relatedListURL" type="String"/>  
+    <aura:attribute name="title" type="String" />  
+    <aura:attribute name="parentFieldName" type="String" /> 
+    <aura:attribute name="parentRecId" type="String" /> 
+    <aura:attribute name="sobjectName" type="String" />  
+    <aura:attribute name="childRelName" type="String" />
+    <aura:attribute name="fieldSetName" type="String" />
+    <aura:attribute name="iconName" type="String" />  
+    <aura:attribute name="fieldsList" type="List" />
+    <aura:attribute name="fieldsAPIList" type="List" />
+    <aura:attribute name="listRecords" type="sObject[]"/>  
+    
+    <aura:handler name="init" value="{!this}" action="{!c.fetchRecords}"/>  
+    <div class= "custom-related-record slds-tabs_card1">
+        <lightning:card iconName="{!v.iconName}" >
+            <aura:set attribute="title">  
+                <lightning:button variant="base"   
+                                  label="{!v.title}"   
+                                  title="View All Action"   
+                                  onclick="{! c.viewRelatedList }"/>  
+            </aura:set>  
+            <aura:if isTrue="{!not(empty(v.listRecords))}">  
+                <p class="slds-p-horizontal_small">  
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_fixed-layout slds-table_resizable-cols">
+                        <thead>
+                            <tr class="slds-line-height_reset">
+                                <aura:iteration items="{!v.fieldsList}" var="item">  
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="{!item}">{!item}</div>
+                                    </th>
+                                </aura:iteration>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <aura:iteration items="{!v.listRecords}" var="obj"> 
+                                <tr class="slds-hint-parent">
+                                    <aura:iteration items="{!v.fieldsAPIList}" var="field"> 
+                                        <td data-label="Account Name">
+                                            <div class="slds-truncate" >
+                                                <c:CellValue recordData="{!obj}" fieldAPIName="{!field}"/>
+                                            </div>
+                                        </td>
+                                    </aura:iteration>
+                                </tr>
+                            </aura:iteration>
+                        </tbody>
+                    </table>
+                </p>  
+                <aura:set attribute="else">  
+                    <div class="slds-p-around_medium">No Record Found</div>
+                </aura:set>
+            </aura:if>  
+            
+            <aura:set attribute="footer">  
+                <aura:if isTrue="{!not(empty(v.listRecords))}">  
+                    <lightning:button variant="base"   
+                                      label="View All"   
+                                      title="View All Action"   
+                                      onclick="{! c.viewRelatedList }"/>  
+                </aura:if>  
+            </aura:set>  
+        </lightning:card>  
+    </div>
+</aura:component>

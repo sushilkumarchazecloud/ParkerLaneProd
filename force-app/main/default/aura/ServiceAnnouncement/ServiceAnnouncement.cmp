@@ -1,0 +1,24 @@
+<aura:component controller="ServiceAnnouncementController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome" access="global">
+    <!--Service_Announcement-->
+    <aura:attribute name="message" type="String" default=""/>
+    <aura:attribute name="isOpenModal" type="boolean" default="false"/>
+    <aura:attribute name="serviceName" type="String" default=""/>
+    <aura:attribute name="pageType" type="String" default=""/>
+    <aura:attribute name="config" type="Configuration__c" default=""/>
+    <aura:handler name="change" value="{!v.pageType}" action="{!c.doInit}"/>
+    <aura:handler action="{!c.doInit}" name="init" value="{!this}"/>
+
+    <aura:if isTrue="{!v.isOpenModal}">
+        <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_warning" role="alert">
+            <p style="text-align: justify;padding: 0px 20px;"><b>{!v.config.Message_Title__c}</b>&nbsp;{!v.config.Message__c}&nbsp;{!v.config.Message_2__c} &nbsp;{!v.config.Message_3__c} &nbsp;{!v.config.Message_4__c} </p>
+
+            <div class="slds-notify__close">
+                <lightning:buttonIcon iconName="utility:close"
+                                      onclick="{! c.close }"
+                                      alternativeText="close"
+                                      variant="bare-inverse"
+                                      size="large"/>
+            </div>
+        </div>
+    </aura:if>
+</aura:component>

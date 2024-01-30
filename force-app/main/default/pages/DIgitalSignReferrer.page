@@ -1,0 +1,2246 @@
+<apex:page controller="Digital_ID_Sign_For_Reffer" docType="html-5.0"  manifest="/apex/CacheManifestVF" sidebar="false" showHeader="false" standardStylesheets="false">
+    <html>
+        <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+            <apex:stylesheet value="{!$Resource.fontAwsome + '/fontAwsome/css/all.css'}"/>
+            <apex:includeScript value="{!$Resource.fontAwsome + '/fontAwsome/js/all.js'}"/>
+            <apex:includeScript value="/soap/ajax/20.0/connection.js"/>
+            
+            <apex:includeScript value="/soap/ajax/20.0/apex.js"/>
+            <apex:includeScript value="{!$Resource.Jquery}"/>
+            <apex:includeScript value="{!$Resource.Jquerymin}"/>
+            <apex:includeScript value="{!$Resource.ESIGNATURE}"/>
+            <apex:includeScript value="{!$Resource.File_Saver}"/>
+            <apex:slds />
+            <script>
+            (function(h,o,t,j,a,r){
+                h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+                h._hjSettings={hjid:3089317,hjsv:6};
+                a=o.getElementsByTagName('head')[0];
+                r=o.createElement('script');r.async=1;
+                r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+                a.appendChild(r);
+            })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+            </script>
+            <!-- Google tag (gtag.js) --> 
+            <script src="https://www.googletagmanager.com/gtag/js?id=G-K2K45FK4PR"></script> 
+            <script> 
+                window.dataLayer = window.dataLayer || []; 
+                function gtag(){dataLayer.push(arguments);} 
+                gtag('js', new Date()); 
+                gtag('config', 'G-K2K45FK4PR'); 
+            </script>
+            <style>
+                @font-face {
+                font-family: ProximaNova-AltBold;
+                src: url('/resource/customfonts/ProximaNova-AltBold.otf') format('OpenType');
+                }
+                .slds-scope{
+                line-height: 1.1;
+                }
+                body {
+                margin : 0px !important;
+                padding : 0px !important;
+                background : #fafafa !important;
+                }
+                .slds-scope .slds-card {
+                background : transparent !important; <!--#fafafa !important;-->
+                border :none;
+                box-shadow : none;
+                border-radius : none;
+                }
+                .card1 .slds-card__header{
+                padding : 0px !important;
+                }
+                
+                .logo{
+                padding: 9px;
+                background-color: #1a2745;
+                color: #fff;
+                align-items: center;
+                width : 100%;
+                height : 50px;
+                }
+                .logo img{
+                width: 200px;
+                padding: 9px 22px;
+                height: 40px;
+                }
+                .sfLogo{
+                height : 103px !important;
+                width : 157px;
+                }
+                @font-face {
+                font-family: ProximaNovaAlt-Medium;
+                src: url('/resource/customfonts/ProximaNovaAlt-Medium.otf') format('OpenType');
+                }
+                .Head1 b{
+                color : rgba(26,39,69,255);
+                font-family: ProximaNova-AltBold;
+                font-size : 23px;
+                margin-top : 13px;
+                }
+                .text1{
+                color : rgba(26,39,69,255);
+                font-family: ProximaNovaAlt-Medium;
+                font-size : 18px;
+                text-align: justify;
+                line-height: initial;
+                }
+                
+                .DoneText b{
+                color : #45c65a;
+                font-family: ProximaNova-AltBold;
+                font-size : 22px;
+                text-align: justify;
+                line-height : 1.7;
+                }
+                
+                .fron-Icon{
+                position : relative;
+                top : 3px;
+                }
+                
+                .step1{
+                color : rgb(201 201 201);
+                font-size : 14px;
+                }
+                .photoid{
+                color : rgba(26,39,69,255);
+                font-family: ProximaNova-AltBold;
+                font-size : 20px;
+                }
+                .icon1 img{
+                border-radius: 100%;
+                height: 28px;
+                width: 26px;
+                position: relative;
+                top: 6px;
+                }
+                .icon2 img{
+                border-radius: 100%;
+                height: 26px;
+                width: 26px;
+                position: relative;
+                top: 6px;
+                }
+                .icon3 img{
+                border-radius: 100%;
+                height: 26px;
+                width: 26px;
+                position: relative;
+                top: 6px;
+                }
+                
+                .slds-scope .slds-box.box1{
+                border : none;
+                }
+                
+                .box1{
+                box-shadow: 5px 5px 5px 0px rgb(0 0 0 / 54%);
+                background : #FFFFFF;
+                padding : 9px !important;
+                height: 62px;
+                }
+                
+                .box2{
+                border : 1px solid #EEEEEE;
+                margin-top: 13px;
+                background : #fafafa;
+                padding : 9px !important;
+                height: 62px;
+                }
+                
+                .box3{
+                border : 2px solid #EEEEEE;
+                margin-top: 13px;
+                background : #fafafa;
+                padding : 9px !important;
+                height: 62px;
+                }
+                .launchbtn button{
+                width: 100%;
+                height: 65px;
+                background: #45c65a;
+                border: none;
+                border-radius: 6px;
+                color: white;
+                font-size: 20px;
+                font-weight: bold;
+                }
+                .anchor a{
+                color : #1a2745;
+                font-size : 16px;
+                }
+                <!--Card2-->
+                @media only screen and (max-width: 600px) {
+                #video{
+                height : auto !important;
+                }   
+                #canvas{
+                height : auto !important;
+                }   
+                #videoRec{
+                height: 70% !important;
+                }
+                #preview{
+                height: auto !important;
+                max-height : 350px;
+                }
+                .videoRecDiv{
+                height : auto !important;
+                max-height : 320px;
+                }
+                }
+                .videoDiv{
+                width : 100%;
+                height : auto !important;
+                max-height : 510px;
+                overflow : hidden;
+                }
+                #video {
+                width : 100%;
+                <!--margin : 0px 0px 0px -42px;
+transform: scaleX(-1)-;-->
+                filter: brightness(1);
+                object-fit: cover;
+                position:relative;
+                top : 0px;
+                left : 0px;
+                z-index:0;
+                }
+                .cameraP{
+                color : rgba(26,39,69,255);
+                font-family: ProximaNovaAlt-Medium;
+                font-size : 17px;
+                text-align: justify;
+                }
+                .capture-Btn{
+                height : 69px;
+                width : 69px;
+                border : 10px solid rgba(69,198,90,255);
+                border-radius : 100%;
+                }
+                #Click-Photo{
+                background: rgba(69,198,90,255);
+                border-radius: 100%;
+                height: 47px;
+                width: 47px;
+                border: none;
+                margin-top : 1px;
+                }
+                .corner{
+                width : 100%;
+                height : auto !important;
+                max-height : 450px;
+                overflow : hidden;
+                border: 3px solid #3aa5b0;
+                }
+                #canvas{
+                width : 100%;
+                <!--margin : -10px 0px 0px -42px;-->
+                height : auto;
+                <!--transform: scaleX(-1);-->
+                border-radius: 3px;
+                position:relative;
+                top : 0px;
+                left :  0px;
+                z-index:0;
+                }
+                .text3{
+                color : rgba(26,39,69,255);
+                font-family: ProximaNovaAlt-Medium;
+                font-size : 20px;
+                }
+                .takeagain button{
+                width : 100%;
+                height: 65px;
+                font-size: 20px;
+                font-weight : 600;
+                background : transparent;
+                color : #0176d3;
+                border : 2px solid #0176d3;
+                border-radius : 7px;
+                }
+                .confirm button{
+                background : #45c65a;
+                border : none;
+                color : #ffffff;
+                width : 100%;
+                height: 65px;
+                font-size: 20px;
+                font-weight : 600;
+                border-radius : 7px;    
+                }
+                
+                
+                <!--Video Section Starts-->
+                
+                .vHead1 b{
+                color : rgba(26,39,69,255);
+                font-family: ProximaNova-AltBold;
+                font-size : 23px;
+                }
+                .VsfLogo{
+                height : 180px !important;
+                width  : 272px;
+                }
+                .dicsripction{
+                color : rgba(26,39,69,255);
+                font-family: ProximaNovaAlt-Medium;
+                font-size : 17px;
+                text-align : left;
+                }
+                .slds-scope .slds-list_ordered, .slds-scope .slds-list--ordered{
+                line-height: normal;
+                }
+                .launchFrontcam button{
+                width: 100%;
+                height: 65px;
+                background: #45c65a;
+                border: none;
+                border-radius: 7px;
+                color: white;
+                font-size: 20px;
+                font-weight: bold;
+                }
+                
+                .videroText{
+                color : rgba(26,39,69,255);
+                font-family: ProximaNovaAlt-Medium;
+                font-size : 16px;
+                text-align: justify;
+                }
+                .videoRecDiv{
+                width : 80%;
+                overflow : hidden;
+                }
+                #videoRec {
+                width: 100%;
+                max-height : 320px;
+                <!--margin: 0px 0px 0px -20px;-->
+                height: 70%;
+                <!---webkit-transform: scaleX(-1);-->
+                object-fit: cover;
+                border-radius : 25px;
+                }
+                
+                <!--video::-webkit-media-controls-panel{
+transform: rotateY(180deg);
+-webkit-transform: rotateY(180deg);
+-moz-transform: rotateY(180deg);
+}-->
+                .secureText{
+                color : rgba(26,39,69,255);
+                font-family: ProximaNovaAlt-Medium;
+                font-size : 14px;
+                text-align: center;
+                }
+                #random{
+                color : rgba(26,39,69,255);
+                font-family: ProximaNovaAlt-Medium;
+                font-size : 43px;
+                font-weight: bold;
+                text-align: center;
+                line-height : 1;
+                }
+                .box {
+                display: inline-block;
+                }
+                
+                <!--Circle For Video-->
+                .main{
+                height: 100px;
+                width: 100px;
+                position: relative;
+                }
+                #Circle_button{
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                }
+                .videRecButton {
+                position: inherit;
+                left : 0px;
+                top: 16px;
+                height: 68px;
+                width: 68px;
+                color : white !important;
+                font-weight : 500 !important;
+                font-size: 17px !important;
+                border : none;
+                outline : none;
+                }
+                <!--Circle For Video-->
+                
+                #videoRecText{
+                color : rgba(26,39,69,255);
+                font-family: ProximaNovaAlt-Medium;
+                font-size : 18px;
+                font-weight : 100;
+                }
+                
+                #preview{
+                width : 85%;
+                height: 70%;
+                webkit-transform: scaleX(-1);
+                <!---webkit-transform:rotateY(180deg);-->
+                object-fit: cover;
+                border-radius : 25px;
+                }
+                .vide2Text{
+                color : rgba(26,39,69,255);
+                font-family: ProximaNovaAlt-Medium;
+                font-size : 17px;
+                }
+                .video2text2{
+                color : rgba(26,39,69,255);
+                font-family: ProximaNovaAlt-Medium;
+                font-size : 18px;
+                }
+                
+                <!--Document Section-->
+                .docBox{
+                color : blue;
+                font-family: ProximaNovaAlt-Medium;
+                font-size : 18px;
+                font-weight : 100;
+                padding : 0px !important;
+                }
+                
+                .ReadListDoc{
+                color : rgba(26,39,69,255);
+                font-family: ProximaNovaAlt-Medium;
+                font-size : 16px;
+                text-align : left;
+                }
+                .creditAPP{
+                color : rgba(26,39,69,255);
+                font-family: ProximaNovaAlt-Medium;
+                font-size : 18px;
+                font-weight : bold;
+                text-align : left;
+                }
+                .oppData{
+                color : rgba(26,39,69,255);
+                font-family: ProximaNovaAlt-Medium;
+                font-size : 16px;
+                }
+                .Disclaimer{
+                color : rgba(26,39,69,255);
+                font-family: ProximaNovaAlt-Medium;
+                font-size : 16px;
+                }
+                
+                .signText{
+                color : green;
+                font-family: ProximaNovaAlt-Medium;
+                font-size : 18px;
+                font-weight : 500;
+                }
+                
+                <!--digital sign-->
+                
+                .clearText a{
+                color : rgba(26,39,69,255);
+                font-family: ProximaNovaAlt-Medium;
+                font-size : 16px;
+                }
+                .finishbtn button{
+                width: 100%;
+                height: 68px;
+                background: #45c65a;
+                border: none;
+                border-radius: 7px;
+                color: white;
+                font-size: 24px;
+                }
+                .collapsible{
+                background-color: transparent;
+                color: blue !important;
+                border-bottom : none !important;
+                cursor: pointer;
+                padding: 18px;
+                width: 100%;
+                border: 1px solid black;
+                border-left : none;
+                border-right : none;
+                text-align: left;
+                outline: none;
+                font-size: 15px !important;
+                font-weight : bold !important;
+                padding : 12px 6px !important
+                }
+                .content {
+                padding: 0 18px;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.2s ease-out;
+                font-size : 18x;
+                text-align : left;
+                }
+                .textHead{
+                color : rgba(26,39,69,255);
+                font-family: ProximaNovaAlt-Medium;
+                font-size : 23px;
+                }
+                .labelofTable{
+                color : rgba(26,39,69,255);
+                font-family: ProximaNovaAlt-Medium;
+                font-size : 16px;
+                }
+                .taxText{
+                color : rgba(26,39,69,255);
+                font-family: ProximaNovaAlt-Medium;
+                font-size : 17px;
+                text-align : left;
+                font-weight : 100;
+                }
+                .centerText{
+                color : #61cf73;
+                font-family: ProximaNovaAlt-Medium;
+                font-size : 18px;
+                }
+                #sig-canvasSec{
+                width: 100%;
+                height: auto;
+                border: 1px solid blue;
+                cursor: crosshair;
+                }
+                
+                <!--SIGNATURE -->
+                
+                .signature-component {
+                text-align: left;
+                display: inline-block;
+                width : 100%;   
+                max-width: 100%;
+                }
+                .signature-component canvas {
+                display: block;
+                position: relative;
+                border: 1px solid; 
+                }
+                
+                
+                
+                .signature-component-sec {
+                text-align: left;
+                display: inline-block;
+                width : 100%;   
+                max-width: 100%;
+                }
+                .signature-component-sec canvas {
+                display: block;
+                position: relative;
+                border: 1px solid; 
+                }
+                
+                <!--SIGNATURE-->
+                .container {
+                position: relative;
+                z-index:1;
+                }
+                .image-block {
+                position: absolute;
+                bottom: 10px;
+                right: 10px;
+                
+                z-index:1;
+                }   
+                div.header {
+                position: running(header);
+                width: 100%;
+                margin-right: 1px;
+                }
+                
+                .logo_Sign {
+                position: absolute;
+                top: 7px;
+                right: 20px;
+                }
+                .logo_Sign img{
+                width: 80px;
+                }   
+                
+                .text-block {
+                position: absolute;
+                top: 23px;
+                left: 22px;
+                font-size: 20px;
+                color: white;
+                z-index:2;
+                font-weight: bold;
+                border-bottom: 2px solid;
+                }  
+                
+                .data-container{
+                font-size : 10px;
+                padding-top:20px;
+                margin:5px 20px;
+                }
+                
+                
+            </style>
+        </head>
+        <body onload="defaultHIde()" id="dataBody" >
+            <apex:form id="frm" style="display : {!If(redirectToError == false, 'Block', 'none')}">
+                <div id="spin">
+                    <div id="spinner" class="slds-spinner_container slds-is-relative" style="position : fixed;">
+                        <div role="status" class="slds-spinner slds-spinner--large slds-spinner--brand">
+                            <div class="slds-spinner__dot-a"></div>
+                            <div class="slds-spinner__dot-b"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <apex:actionFunction name="jsActionFunction" action="{!securecode}" reRender="none">
+                    <apex:param name="vfParam" value="" assignTo="{!SecureCodeOriginal}" />
+                </apex:actionFunction>
+                <apex:actionFunction name="SenImageData" action="{!ImageDataforClass}" reRender="none">
+                    <apex:param name="imageDeta" value=""/>
+                </apex:actionFunction>
+                <apex:actionFunction name="SendSign1Data" action="{!Sign1DataforClass}" reRender="none">
+                    <apex:param name="sign1" value="" />
+                </apex:actionFunction>
+                <apex:actionFunction name="OtherSign" action="{!Sign1DataforClass}" reRender="none" oncomplete="finishSignature();">
+                    <apex:param name="sign1" value="" />
+                </apex:actionFunction>
+                <apex:actionFunction name="sendVideo" action="{!videoDataforClass}" oncomplete="StopSpin();">
+                    <apex:param name="videoData" value=""/>
+                </apex:actionFunction>
+                <apex:actionFunction name="sendMail" action="{!sendEmail}" reRender="none" oncomplete="showSpin();">
+                </apex:actionFunction>
+                <apex:actionFunction name="GeneratePDF" action="{!insertPdf}" oncomplete="sendMail();">
+                    <apex:param name="a" value=""/>
+                </apex:actionFunction>
+                <apex:actionFunction name="addLog" action="{!generateLog}" reRender="none">
+                    <apex:param name="startTime" value=""/>
+                    <apex:param name="endTime" value=""/>
+                </apex:actionFunction>
+                
+                
+                <apex:pageBlock >
+                    <div class="card1" id="pb1">
+                        <article class="slds-card">
+                            <div class="slds-card__header slds-grid">
+                                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                    <div class="slds-media__figure logo" align="center">
+                                        <span><img src="{!$Resource.New_PL_Logo}" /></span>
+                                    </div>
+                                </header>
+                            </div>
+                            <div class="slds-card__body slds-card__body_inner">
+                                <div id="firstText">
+                                    <div>
+                                        <center><img src="{!$Resource.VOI_Fron_Icons+'/PhotographID.png'}" class="sfLogo" style="margin-top : 12px;"/></center>
+                                    </div><br/>
+                                    <h1 class="Head1">
+                                        <center><b>Upload your ID</b></center>
+                                    </h1>
+                                    <div style="height : 90px">
+                                        <div class="text1" style="margin-top : 10px;">
+                                            <center><p>In order to complete your application we <br/>need to be 100% sure that you are you.<br/>This take about 60 seconds.</p>   </center> 
+                                        </div><br/>
+                                    </div>
+                                </div>
+                                <div id="SecondText">
+                                    <div>
+                                        <center><img src="{!$Resource.VOI_Fron_Icons+'/RecordVideo.png'}" class="sfLogo" style="margin-top : 12px;"/></center>
+                                    </div><br/>
+                                    <h1 class="Head1">
+                                        <center><b>Verify it's you</b></center>
+                                    </h1>
+                                    <div style="height : 100px">
+                                        <h1 class="DoneText">
+                                            <center><b>Step 1 done!</b></center>
+                                        </h1>
+                                        <div class="text1">
+                                            <center><p>Now let's verify it's you by taking a<br/>secure 5 second clip.</p></center> 
+                                        </div><br/>
+                                    </div>
+                                </div>
+                                
+                                <div id="ThirdText">
+                                    <div>
+                                        <center><img src="{!$Resource.VOI_Fron_Icons+'/eSignature.png'}" class="sfLogo" style="margin-top : 12px;"/></center>
+                                    </div><br/>
+                                    <h1 class="Head1">
+                                        <center><b>e-sign docs</b></center>
+                                    </h1>
+                                    <h1 class="DoneText">
+                                        <center><b>Step 2 done!</b></center>
+                                    </h1>
+                                    <div class="text1">
+                                        <center><p>Lastly, read and sign the privacy and<br/>application docs.</p></center> 
+                                    </div><br/>
+                                </div>
+                                
+                                <div id="FourthText">
+                                    <div>
+                                        <center><img src="{!$Resource.VOI_Fron_Icons+'/final.png'}" style="height:122px !important;width:122px;"/></center>
+                                    </div><br/>
+                                    <h1 class="Head1">
+                                        <center><b>Congratulations!</b></center>
+                                    </h1>
+                                    <div style="height : 100px">
+                                        <h1 class="DoneText">
+                                            <center><b>We'll be back to you shortly.</b></center>
+                                        </h1>
+                                        <div class="text1">
+                                            <center><p>A copy of the document have been <br/>emailed to you.</p></center> 
+                                        </div><br/>
+                                    </div>
+                                </div>
+                                <div class="slds-text-align_center slds-col slds-size_1-of-1 slds-medium-size_6-of-6 slds-large-size_6-of-6 slds-order_2 slds-medium-order_2 slds-large-order_2">
+                                    <div class="slds-box box1" style="border-radius : 6px">
+                                        <div class="slds-grid">
+                                            <div class="slds-col slds-size_3-of-12" align="left">
+                                                <span class="fron-Icon"><img src="{!$Resource.Front_Panle_Icons + '/photo.png'}" style="height:33px; width : 52px"/></span>
+                                            </div>
+                                            <div class="slds-col slds-size_6-of-12" align="left">
+                                                <span class="step1" align="center">STEP 1</span><br/>
+                                                <span class="photoid"><b>Photo ID</b></span>
+                                            </div>
+                                            <div class="slds-col slds-size_3-of-12" align="center">
+                                                <div id="icon1">
+                                                    <span class="icon1"><img src="{!$Resource.VOI_Icons + '/grey.png'}" /></span>       
+                                                </div>
+                                                <div id="icon2">
+                                                    <span class="icon2" ><img src="{!$Resource.VOI_Icons + '/orangecircle.png'}" /></span>    
+                                                </div>
+                                                <div id="icon3">
+                                                    <span class="icon3"><img src="{!$Resource.VOI_Icons + '/greencircle.png'}" /></span>        
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--Panel 2 start-->
+                                    <div class="slds-box box2" style="border-radius : 6px">
+                                        <div class="slds-grid">
+                                            <div class="slds-col slds-size_3-of-12" align="left">
+                                                <span><img src="{!$Resource.Front_Panle_Icons + '/video.png'}" style="height:45px; width : 57px"/></span>
+                                            </div>
+                                            <div class="slds-col slds-size_6-of-12" align="left">
+                                                <span class="step1" align="center">STEP 2</span><br/>
+                                                <span class="photoid"><b>Take a clip</b></span>
+                                            </div>
+                                            <div class="slds-col slds-size_3-of-12" align="center">
+                                                <div id="icon1-1">
+                                                    <span class="icon1"><img src="{!$Resource.VOI_Icons + '/grey.png'}" /></span>       
+                                                </div>
+                                                <div id="icon1-2">
+                                                    <span class="icon2" ><img src="{!$Resource.VOI_Icons + '/orangecircle.png'}" /></span>    
+                                                </div>
+                                                <div id="icon1-3">
+                                                    <span class="icon3"><img src="{!$Resource.VOI_Icons + '/greencircle.png'}" /></span>        
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--Panel 3 start-->
+                                    <div class="slds-box box3" style="border-radius : 6px">
+                                        <div class="slds-grid">
+                                            <div class="slds-col slds-size_3-of-12" align="left">
+                                                <span class="fron-Icon"><img src="{!$Resource.Front_Panle_Icons + '/sign.png'}" style="height:38px; width : 56px"/></span>
+                                            </div>
+                                            <div class="slds-col slds-size_6-of-12" align="left">
+                                                <span class="step1" align="center">STEP 3</span><br/>
+                                                <span class="photoid"><b>e-sign docs</b></span>
+                                            </div>
+                                            <div class="slds-col slds-size_3-of-12" align="center">
+                                                <div id="icon2-1">
+                                                    <span class="icon1"><img src="{!$Resource.VOI_Icons + '/grey.png'}" /></span>       
+                                                </div>
+                                                <div id="icon2-2">
+                                                    <span class="icon2" ><img src="{!$Resource.VOI_Icons + '/orangecircle.png'}" /></span>    
+                                                </div>
+                                                <div id="icon2-3">
+                                                    <span class="icon3"><img src="{!$Resource.VOI_Icons + '/greencircle.png'}" /></span>        
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><br/>
+                                    <!--Button-->
+                                    <div id="launchBtn">
+                                        <div class="launchbtn">
+                                            <button type="button" onclick="startCamera()">BEGIN</button>
+                                        </div><br/> 
+                                    </div>
+                                    <div id="nextBtn">
+                                        <div class="launchbtn">
+                                            <button type="button" onclick="onVideoSec()">Next</button>
+                                        </div><br/>
+                                    </div>
+                                    <div id="ReadSignBtn">
+                                        <div class="launchbtn">
+                                            <button type="button" onclick="ReadANDSign()">ACCEPT AND SIGN</button>
+                                        </div><br/>
+                                    </div>
+                                    <div id="FinishBtn">
+                                        <div class="launchbtn">
+                                            <a href="https://www.parkerlane.com.au/"><button type="button">Finish</button></a>
+                                        </div><br/>
+                                    </div>
+                                    <!--anchor start-->
+                                    <div id="firstAnchor">
+                                        <div class="anchor">
+                                            <a href="#"><u>Why is this needed?</u></a>
+                                        </div>    
+                                    </div>
+                                    <div id="2ndAnchor">
+                                        <div class="anchor" >
+                                            <a href="#"><u>Speak to someone</u></a>
+                                        </div>   
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    <!--Card 2 Start-->
+                    <div class="card2" id="pb2">
+                        <article class="slds-card">
+                            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                <div class="videoDiv">
+                                    <center><video id="video"></video></center>    
+                                </div>
+                                
+                            </header>
+                            <div class="slds-card__body slds-card__body_inner" style="padding-right : 0px !important; padding-left : 0px !important;">
+                                <div class="slds-text-align_center slds-col slds-size_1-of-1 slds-medium-size_6-of-6 slds-large-size_6-of-6 slds-order_2 slds-medium-order_2 slds-large-order_2">
+                                    <div class="cameraP">
+                                        <center><p>Take picture when your ID is in focus</p></center>
+                                    </div><br/>
+                                    <div align="center" style="margin-top : 12px;">
+                                        <div class="capture-Btn">
+                                            <button type="button" id="Click-Photo" onclick="stopCamera()"></button> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    <!--Card 3 Start-->
+                    <div class="card2" id="pb3">
+                        <article class="slds-card">
+                            <div class="slds-card__body slds-card__body_inner">
+                                <h1 class="Head1">
+                                    <center><b>Check your ID</b></center>
+                                </h1><br/>
+                                <div class="slds-text-align_center slds-col slds-size_1-of-1 slds-medium-size_6-of-6 slds-large-size_6-of-6 slds-order_2 slds-medium-order_2 slds-large-order_2">
+                                    <div class="corner">
+                                        <center><canvas id="canvas"></canvas></center>
+                                    </div><br/>
+                                    
+                                    <div class="cameraP">
+                                        <center><p>Is the picture in focus?</p></center>
+                                    </div><br/><br/>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_3-of-6 takeagain">
+                                        <button type="button" onclick="takeAgain()">Take Again</button>
+                                    </div>
+                                    <div class="slds-col slds-size_3-of-6 confirm">
+                                        <button type="button" onclick="confirm()">Yes</button>
+                                    </div><br/><br/>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    
+                    <!--Video Section Start-->
+                    <div id="Vid1">
+                        <article class="slds-card">
+                            <div class="slds-card__body slds-card__body_inner">
+                                <br/><br/>
+                                <div class="slds-text-align_center slds-col slds-size_1-of-1 slds-medium-size_6-of-6 slds-large-size_6-of-6 slds-order_2 slds-medium-order_2 slds-large-order_2">
+                                    <div class="imagevideo">
+                                        <br/><center><img src="{!$Resource.VOI_Fron_Icons+'/RecordVideo.png'}" class="VsfLogo"/></center>
+                                    </div><br/><br/><br/><br/>
+                                    <!--Not Responsive-->
+                                    <div class="dicsripction">
+                                        <span>&nbsp;&nbsp;To verify it's you follow these three steps:</span><br/>
+                                        <div class="orderList">
+                                            <ol class="slds-list_ordered">
+                                                <li style="margin-top : 15px;">Click <b style="font-size : 16px">YES</b> to enable access to camera</li>
+                                                <li style="margin-top : 15px">Hold the phone up to your face then click <b style="font-size : 16px; font-weight : 700;">START</b> to begin the 3 second recording</li>
+                                                <li style="margin-top : 15px">Speak the 4 digit <b style="font-size : 16px">SECURE CODE</b> clearly into the video</li>
+                                            </ol>
+                                        </div>
+                                    </div><br/><br/><br/><br/><br/>
+                                    <!--Not Responsive-->
+                                    <div class="launchFrontcam">
+                                        <button type="button" onclick="startVideCam()">LAUNCH FRONT CAMERA</button>  
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    <!--video record-->
+                    <div id="Vid2">
+                        <article class="slds-card">
+                            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                <div id="videoRecText" class="slds-text-align_center slds-m-horizontal_large slds-m-top_large">
+                                    <p>Click <b style="font-size : 16px !important; font-weight: 800 !important">START</b> then speak the 4-digit secure code into the phone</p>
+                                </div><br/>
+                            </header>
+                            <div class="slds-card__body slds-card__body_inner">
+                                <div class="slds-text-align_center slds-col slds-size_1-of-1 slds-medium-size_6-of-6 slds-large-size_6-of-6 slds-order_2 slds-medium-order_2 slds-large-order_2">
+                                    <div align="center">
+                                        <div class="videoRecDiv" align="center">
+                                            <video id="videoRec" muted="true" ></video>
+                                        </div>    
+                                    </div><br/><br/>
+                                    
+                                    <div class="securityCode">
+                                        <div class="slds-box" style="padding : 5px !important; background : #E8E8E8 !important; border-radius : none !important;">
+                                            <center class="secureText"><b>SECURE CODE</b></center>
+                                            <center id="random"></center>
+                                        </div>
+                                    </div>
+                                    <div id="startTest"> 
+                                        <div class="box" id="box" >
+                                            <div class="main">
+                                                <canvas id="Circle_button" width="100px" height="100px"></canvas>
+                                                <button type="button" class="videRecButton slds-button slds-button_success" onclick="startRecording(),StartRecButton()" id="circlebtn" style="border-radius : 50%; background : green;">START</button>    
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="videoRecText">
+                                        <span><center>The recording with automatically<br/> stop after 3 seconds</center></span>                                
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    
+                    <!--video 3-->
+                    <div id="Vid3">
+                        <article class="slds-card">
+                            <div class="slds-card__body slds-card__body_inner">                           
+                                <h1 class="vHead1">
+                                    <center><b>Check your clip</b></center>
+                                </h1><br/>
+                                <div class="slds-text-align_center slds-col slds-size_1-of-1 slds-medium-size_6-of-6 slds-large-size_6-of-6 slds-order_2 slds-medium-order_2 slds-large-order_2">
+                                    <div class="rercordedVid">
+                                        <video id="preview" autoplay="true" x-webkit-airplay="deny"></video>
+                                    </div><br/>
+                                    <div class="vide2Text">
+                                        <h1><center><b>Is the secure code audible?</b></center></h1>
+                                    </div>
+                                    <div class="video2text2">
+                                        <span><center>(check that your volume is up if<br/> you can't hear yourself)</center></span>
+                                    </div>
+                                    <br/><br/>
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-size_3-of-6 takeagain">
+                                            <button type="button" onclick="videoTakeAgain()" id="take">Take Again</button>
+                                        </div>
+                                        <div class="slds-col slds-size_3-of-6 confirm">
+                                            <button type="button" onclick="videoconfirm(); return false;">UPLOAD CLIP</button>
+                                        </div><br/>
+                                    </div><br/>
+                                    <div class="anchor">
+                                        <a href="#"><u>I need help with this</u></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>       
+                    
+                    <!--READ SIGN-->
+                </apex:pageBlock>
+                <apex:pageBlock >
+                    <div id="ReadSign1" style="font-size: 13px;font-family:Arial, Helvetica, sans-serif;;">
+                        <div class="container header">
+                            <apex:image url="{!URLFOR($Resource.SolarLoan, 'img/banner.JPG')}" style="width: 100%;" />
+                            <div class="text-block">
+                                <b>Referral Agreement  </b>
+                            </div>
+                            <div class="logo_Sign">
+                                <apex:image url="{!URLFOR($Resource.SolarLoan, 'img/logowhite.png')}" style="80px" />
+                            </div>
+                            
+                            <div class="image-block">
+                                <apex:image url="{!URLFOR($Resource.SolarLoan, 'img/ProductReview_HomeLoans.jpg')}" style="width:70px"/>
+                                <apex:image url="{!URLFOR($Resource.SolarLoan, 'img/ProductReview_PersonalLoans.jpg')}" style="width:70px" />
+                            </div>
+                        </div>
+                        <div class="data-container">
+                            <div>
+                                The advent of the National Consumer Credit Protection Act 2009 (the Act) has required that we have a formal agreement in place to detail our obligations in respect to the conduct of referring customers. This letter is intended to explain those obligations.    
+                            </div><br/><br/>
+                            <div>
+                                <div align="left">
+                                    <div>
+                                        <div style="font-size : 16px;">
+                                            <span><b>Agreement:</b></span>
+                                        </div><br/><br/>
+                                        <div style="font-size : 14px;">
+                                            <b>It is agreed that</b>
+                                        </div><br/>
+                                        <div>
+                                            <ul class="slds-list_dotted">
+                                                <li>the Referrer may refer consumers to the Broker for the Broker to contact the consumer to discuss finance options.</li>
+                                                <li>the Referrer may provide to the consumer the Broker’s up to date Broker Material such as brochures, product sheets and repayment calculation tables;</li>
+                                            </ul>
+                                        </div><br/>
+                                        <div style="font-size : 14px;">
+                                            <span><b>The Referrer must</b></span>
+                                        </div><br/>
+                                        <div>
+                                            <ul class="slds-list_dotted">
+                                                <li>only engage in credit activities as a referrer incidentally to another business you are carrying on,  </li>
+                                                <li>not charge a fee to the consumer for the referral,</li>
+                                                <li>only inform the consumer that we are able to arrange loans and leases but not specify any particular product, and not provide any recommendations or advice concerning loans or leases,</li>
+                                                <li>inform the consumer of any commissions or other benefits you may receive,  </li>
+                                                <li>obtain the consent of the consumer to pass their name, contact details and a short description of the purpose for which the consumer may want the credit or lease, and</li>
+                                                <li>pass the consumer’s contact details to us within five business days of informing the consumer that we are able to arrange loans and leases but not any specified particular product.</li>
+                                                <li>gain approval in writing from the Broker before advertising or publishing material which relates to any form of credit or finance; and</li>
+                                                <li>not use any imagery, material or written content provided by the Broker except for the express written purposes for which it was approved.</li>
+                                            </ul> 
+                                        </div><br/><br/>
+                                        <div style="font-size : 14px;">
+                                            <span><b>The Referrer warrants that</b></span>
+                                        </div><br/>
+                                        <div>
+                                            <ul class="slds-list_dotted">
+                                                <li>it will ensure its employees and representatives will comply with the terms of this agreement; and</li>
+                                                <li>it will comply with the Privacy Act 1988 (Cth); and</li>
+                                                <li>it is not banned from from making Referrals or engaging in any other Credit Activity; </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="slds-grid">
+                                            <div class="slds-col slds-size_8-of-12" style="color:#48b6c7;font-weight: bold;text-align: left;">
+                                                <br/><br/><br/><span>We recommend that you advise customers about our services in a form similar to the following script:</span>
+                                            </div>
+                                            <div class="slds-col slds-size_4-of-12">
+                                                <apex:image url="{!URLFOR($Resource.SolarLoan, 'img/tree.png')}" style="width: 70px;" />
+                                            </div>
+                                        </div><br/>
+                                        <div style="background-color: #e8f4fd; text-align : justify">
+                                            <div>
+                                                <i><b>“Our business has a referral arrangement with Parker Lane, would you mind if I passed your details to them, then they can contact you to offer their assistance for your finance requirements?</b></i>    
+                                            </div><br/>
+                                            <div>
+                                                <i>And if the consumer responds affirmatively:</i>
+                                            </div><br/>
+                                            <div>
+                                                <i>“I just need to let you know that Parker Lane is a licensed broker. When they contact you, they will check to make sure that you and I had this conversation before asking your permission to continue the conversation. Please be aware that you’re under no obligation to use their services, so you can decline their assistance at that point if you want to.”</i><br/><br/>
+                                            </div>
+                                        </div><br/><br/>
+                                        <div>
+                                            <b>The Referrer acknowledges that is has read and understood both this agreement and the terms attached, and agrees to be bound by them.</b>
+                                        </div><br/><br/>
+                                        <div>
+                                            <span>Executed as an agreement:</span><br/><br/>
+                                            <div style="font-size : 16px; "><b>REFERRER</b></div><br/><br/>
+                                            <b>Name: </b>  {!acc.Company_Legal_Name__c}<br/>
+                                            <b>ABN: </b> {!acc.ABN__c}<br/>
+                                            <b>Address: </b>{!acc.BillingStreet} {!acc.BillingCity} {!acc.BillingState} {!acc.BillingCountry} {!acc.BillingPostalCode}<br/>
+                                        </div><br/><br/><br/>
+                                        <div>
+                                            <div style="border-top: 1px solid;">
+                                                {!acc.Contacts[0].Name}, {!acc.Contacts[0].Position__c}
+                                            </div>
+                                        </div><br/><br/>
+                                        <div>
+                                            <p>
+                                                BROKER<br/>
+                                                Name: Upside Downside Pty Ltd T/As Parker Lane<br/>
+                                                Australian Credit License number: 482276 <br/>
+                                                ABN: 35 608 107 428<br/>
+                                                Head Office: 12a Howitt Street, South Yarra VIC<br/></p>
+                                        </div><br/><br/>
+                                        <div>
+                                            <div>
+                                                <apex:image url="{!URLFOR($Resource.SolarLoan, 'img/chrissign.png')}" style="width:120px; background : transparent;" />
+                                            </div>
+                                        </div><br/><br/>
+                                        <div style="border-top: 1px solid;">
+                                            Chris White, CEO
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div><br/><br/>
+                        <div class="data-container">
+                            <div style="font-size : 16px;">
+                                <b>Terms to the Referral Agreement</b>
+                            </div><br/><br/>
+                            <div>
+                                <div style="font-size : 14px;">
+                                    <b>Confidentiality Agreement</b>
+                                </div><br/><br/>
+                                <div>
+                                    The Broker agrees to keep all information, records and documentation of a private and
+                                    confidential nature in relation to a client which comes into possession of the Broker, not to
+                                    disclose any such information except as required by law and generally to respect the
+                                    confidential nature and integrity of the other party’s relationship with the client.
+                                </div>
+                                
+                            </div><br/><br/>
+                            <div>
+                                <div style="font-size : 14px;">
+                                    <b>Relationship</b>
+                                </div><br/><br/>
+                                <div>
+                                    The relationship between the Broker and the Referrer created by this agreement is that of
+                                    an independent contractor. Nothing in this agreement constitutes a party to the partner,
+                                    agency or authorised representative of another party or for any purpose or creates any
+                                    partnership, agency or relationship.
+                                </div>
+                            </div><br/><br/>
+                            <div>
+                                <div style="font-size : 14px;">
+                                    <b>Termination</b>
+                                </div><br/><br/>
+                                <div>
+                                    
+                                    This agreement may be terminated by either party on 14 days written notice to the other.
+                                    Any termination is without prejudice to any existing rights, liabilities or obligations of the
+                                    parties.
+                                </div>
+                            </div><br/><br/>
+                            <div>
+                                <div style="font-size : 14px;">
+                                    <b>Non-Exclusivity</b>
+                                </div><br/><br/>
+                                <div>
+                                    Each party is free to enter into referral arrangements with other parties and to render
+                                    similar services to other persons.
+                                </div>
+                            </div><br/><br/>
+                            <div>
+                                <div style="font-size : 14px;">
+                                    <b>Assignment</b>
+                                </div><br/><br/>
+                                <div>
+                                    The Referrer cannot assign or transfer any of its rights, benefits or obligations under this
+                                    agreement without the written consent of the Broker, except the termination of this
+                                    agreement.
+                                </div>
+                            </div><br/><br/>
+                            <div>
+                                <div style="font-size : 14px;">
+                                    <b>Notices</b>
+                                </div><br/><br/>
+                                <div>
+                                    Any notice or other communication in connection to this agreement must be in writing and
+                                    be sent to the address set out of this letter and signed by the party making the
+                                    communication or its authorised agent, and is deemed to have been received by the
+                                    addressee within five days.
+                                </div>
+                            </div><br/><br/>
+                            <div>
+                                <div style="font-size : 14px;">
+                                    <b>Amendment and Waiver</b>
+                                </div><br/><br/>
+                                <div>
+                                    This agreement may not be amended or any provision waived in whole or in part except in
+                                    writing signed by the parties.
+                                </div><br/><br/>
+                            </div>  
+                            <div>
+                                <p><b>By signing below you confirm that you have read and agreed to the terms and conditions set out in this document and the Annexure Documents accessible via the links above.</b></p>
+                            </div><br/><br/>
+                            <div style="color : green;font-family: ProximaNovaAlt-Medium;font-size : 12px;font-weight : 500;">
+                                <span><center>To sign use your finger in the signature panel below then click finish.</center></span>
+                            </div><br/>
+                            <div>
+                                <p><b>Signed by: </b>{!acc.Contacts[0].Name}</p>
+                            </div>
+                        </div>
+                        <div class="data-container">
+                            <section class="signature-component" align="center">
+                                
+                                <center><canvas id="signature-pad"></canvas><br/></center>
+                                
+                                <div>
+                                    <center><a href="" id="clear"><u>Clear and redo</u></a></center> <br/><br/>
+                                </div>
+                                <div class="finishbtn">
+                                    <button type="button" id="save">SAVE</button>  
+                                </div>
+                                <br/><br/><br/><br/><br/><br/><br/>
+                            </section>
+                        </div>
+                    </div>
+                </apex:pageBlock>
+                
+            </apex:form>
+            <div style="display : {!IF(redirectToError == true, 'Block', 'none')}">
+                <div>
+                    <article class="slds-card" style="display : {!IF(redirectToError == true, 'Block', 'none')}">
+                        <div class="slds-card__header slds-grid">
+                            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                <div class="slds-media__figure logo" align="center">
+                                    <span><img src="{!$Resource.New_PL_Logo}" /></span>
+                                </div>
+                            </header>
+                        </div>
+                        <div class="slds-card__body slds-card__body_inner">
+                            <div id="FourthText">
+                                <div>
+                                    <center><img src="{!$Resource.VOI_Fron_Icons+'/final.png'}" style="height:122px !important;width:122px;"/></center>
+                                </div><br/>
+                                <h1 class="Head1">
+                                    <center><b>Congratulations!</b></center>
+                                </h1>
+                                <div style="height : 100px">
+                                    <h1 class="DoneText">
+                                        <center><b>We'll be back to you shortly.</b></center>
+                                    </h1>
+                                    <div class="text1">
+                                        <center><p>A copy of the document have been <br/>emailed to you.</p></center> 
+                                    </div><br/>
+                                </div>
+                            </div>
+                            <div class="slds-text-align_center slds-col slds-size_1-of-1 slds-medium-size_6-of-6 slds-large-size_6-of-6 slds-order_2 slds-medium-order_2 slds-large-order_2">
+                                <div class="slds-box box1" style="border-radius : 6px; box-shadow : none; border : 2px solid #EEEEEE; background : #fafafa">
+                                    <div class="slds-grid">
+                                        <div class="slds-col slds-size_3-of-12" align="left">
+                                            <span class="fron-Icon"><img src="{!$Resource.Front_Panle_Icons + '/photo.png'}" style="height:33px; width : 52px"/></span>
+                                        </div>
+                                        <div class="slds-col slds-size_6-of-12" align="left">
+                                            <span class="step1" align="center">STEP 1</span><br/>
+                                            <span class="photoid"><b>Photo ID</b></span>
+                                        </div>
+                                        <div class="slds-col slds-size_3-of-12" align="center">
+                                            <div id="icon3">
+                                                <span class="icon3"><img src="{!$Resource.VOI_Icons + '/greencircle.png'}" /></span>        
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Panel 2 start-->
+                                <div class="slds-box box2" style="border-radius : 6px; box-shadow : none; border : 2px solid #EEEEEE; background : #fafafa">
+                                    <div class="slds-grid">
+                                        <div class="slds-col slds-size_3-of-12" align="left">
+                                            <span><img src="{!$Resource.Front_Panle_Icons + '/video.png'}" style="height:45px; width : 57px"/></span>
+                                        </div>
+                                        <div class="slds-col slds-size_6-of-12" align="left">
+                                            <span class="step1" align="center">STEP 2</span><br/>
+                                            <span class="photoid"><b>Take a clip</b></span>
+                                        </div>
+                                        <div class="slds-col slds-size_3-of-12" align="center">
+                                            <div id="icon1-3">
+                                                <span class="icon3"><img src="{!$Resource.VOI_Icons + '/greencircle.png'}" /></span>        
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Panel 3 start-->
+                                <div class="slds-box box3" style="border-radius : 6px; box-shadow : none; border : 2px solid #EEEEEE; background : #fafafa">
+                                    <div class="slds-grid">
+                                        <div class="slds-col slds-size_3-of-12" align="left">
+                                            <span class="fron-Icon"><img src="{!$Resource.Front_Panle_Icons + '/sign.png'}" style="height:38px; width : 56px"/></span>
+                                        </div>
+                                        <div class="slds-col slds-size_6-of-12" align="left">
+                                            <span class="step1" align="center">STEP 3</span><br/>
+                                            <span class="photoid"><b>e-sign docs</b></span>
+                                        </div>
+                                        <div class="slds-col slds-size_3-of-12" align="center">
+                                            <div id="icon2-3">
+                                                <span class="icon3"><img src="{!$Resource.VOI_Icons + '/greencircle.png'}" /></span>        
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><br/>
+                                <!--Button-->
+                                <div id="FinishBtn">
+                                    <div class="launchbtn">
+                                        <a href="https://www.parkerlane.com.au/"><button type="button">Finish</button></a>
+                                    </div><br/>
+                                </div>
+                                <div id="2ndAnchor">
+                                    <div class="anchor" >
+                                        <a href="#"><u>Speak to someone</u></a>
+                                    </div>   
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </body>
+    </html>
+    <script>
+     var startTime;
+    var endTime;
+    var currentdate;
+    function showSpin(){
+    	document.getElementById('spinner').className += ' slds-hide';
+    }
+    
+    function defaultHIde(){
+      
+        document.getElementById("spin").style.display = 'none';
+        document.getElementById("pb2").style.display = 'none';
+        document.getElementById("pb3").style.display = 'none';
+        
+        document.getElementById("icon1").style.display = 'none';
+        document.getElementById("icon3").style.display = 'none';
+        
+        document.getElementById("icon1-2").style.display = 'none';
+        document.getElementById("icon1-3").style.display = 'none';
+        
+        document.getElementById("icon2-2").style.display = 'none';
+        document.getElementById("icon2-3").style.display = 'none';
+        
+        document.getElementById("SecondText").style.display = 'none';
+        
+        document.getElementById("nextBtn").style.display = 'none';
+        
+        document.getElementById("firstText").style.display = 'Block';
+        document.getElementById("SecondText").style.display = 'none';
+        document.getElementById("ThirdText").style.display = 'none';
+        
+        
+        
+        document.getElementById("Vid1").style.display = 'none';
+        document.getElementById("Vid2").style.display = 'none';
+        document.getElementById("Vid3").style.display = 'none';
+        document.getElementById("ReadSignBtn").style.display = 'none';
+        
+        document.getElementById("ReadSign1").style.display = 'none';
+        
+        document.getElementById("FinishBtn").style.display = 'none';
+        
+        document.getElementById("FourthText").style.display = 'none';
+        
+        document.getElementById("2ndAnchor").style.display = 'none';
+       
+        document.querySelector('.box2').style.boxShadow = 'none';
+        document.querySelector('.box2').style.background = 'none';
+        document.querySelector('.box2').style.background = '#fafafa';
+        document.querySelector('.box2').style.border = '2px solid #EEEEEE';    
+        
+        document.querySelector('.box3').style.boxShadow = 'none';
+        document.querySelector('.box3').style.background = 'none';
+        document.querySelector('.box3').style.background = '#fafafa';
+        document.querySelector('.box3').style.border = '2px solid #EEEEEE';
+        
+    }
+    
+    
+    
+    let imagedata = [];
+    function startCamera(){
+        
+        
+        
+        var video = document.getElementById('video');
+        video.setAttribute('autoplay', '');
+        video.setAttribute('muted', '');
+        video.setAttribute('playsinline', '');
+        
+        
+        document.getElementById("pb1").style.display = 'none';
+        document.getElementById("pb2").style.display = 'Block';
+        const con = {
+            audio: false,
+            video: { facingMode: { exact: "environment" } } //true
+        };
+        
+        if (navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia(con)
+            .then(function (stream) {
+                video.srcObject = stream;
+            }).catch(function (error) {
+                console.log("Something went wrong!");
+            });
+            
+        }
+    }
+    function stopCamera(){
+        document.getElementById("pb2").style.display = 'none';
+        document.getElementById("pb3").style.display = 'Block';
+        try {
+            const canvas = document.querySelector('#canvas');
+            
+            /*Increase Image Quality*/
+            
+            var video = document.getElementById('video');
+            var aspect = video.videoHeight / video.videoWidth;
+            var wantedWidth = 1280;   // or use height 1280
+            var height = Math.round(wantedWidth * aspect);
+            
+            canvas.width = wantedWidth;
+            canvas.height = height;
+            
+            canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+            
+            /*Increase Image Quality*/
+            
+            let image_data_url = canvas.toDataURL('image/jpeg');
+            //console.log('image BSAE 64  '+image_data_url);
+            imagedata = image_data_url;
+            //alert('imagedata'+imagedata);
+            //document.querySelector('#Image').src = image_data_url;
+            
+            // // Send Image data to Apex class
+            
+        } catch(error){
+            console.error('Error to Capture.', error);
+        }
+        stopcam();
+    }
+    function stopcam(){
+        var stream = video.srcObject;
+        var tracks = stream.getTracks();
+        for (var i = 0; i < tracks.length; i++) {
+            var track = tracks[i];
+            track.stop();
+        }
+        video.srcObject = null;
+    }
+    
+    
+    function takeAgain(){
+        var video = document.getElementById('video');
+        
+        video.removeAttribute('autoplay');
+        video.removeAttribute('muted');
+        video.removeAttribute('playsinline');
+        startCamera();
+        document.getElementById("pb3").style.display = 'none';
+        document.getElementById("pb2").style.display = 'Block';
+    }
+    
+    function confirm(){
+        var val = Math.floor(1000 + Math.random() * 9000); 
+        document.getElementById("random").innerHTML = val;
+        
+        jsActionFunction(val);
+        
+        document.getElementById("pb3").style.display = 'none';
+        document.getElementById("pb1").style.display = 'Block';
+        
+        document.getElementById("icon2").style.display = 'none';
+        document.getElementById("icon3").style.display = 'Block';
+        
+        document.querySelector('.box1').style.border = '2px solid #EEEEEE';
+        document.querySelector('.box1').style.boxShadow = 'none';
+        document.querySelector('.box1').style.background = 'none';
+        document.querySelector('.box1').style.background = '#fafafa';
+        
+        
+        document.querySelector('.box2').style.border = 'none';
+        document.querySelector('.box2').style.background = 'none';
+        document.querySelector('.box2').style.boxShadow = '5px 5px 5px 0px rgb(0 0 0 / 54%)';
+        document.querySelector('.box2').style.background = '#ffffff';    
+        
+        document.querySelector('.box3').style.boxShadow = 'none';
+        document.querySelector('.box3').style.background = 'none';
+        document.querySelector('.box3').style.background = '#fafafa';
+        document.querySelector('.box3').style.border = '2px solid #EEEEEE';
+        
+        document.getElementById("icon1-1").style.display = 'none';
+        document.getElementById("icon1-2").style.display = 'Block';
+        
+        document.getElementById("firstText").style.display = 'none';
+        document.getElementById("SecondText").style.display = 'block';
+        
+        document.getElementById("launchBtn").style.display = 'none';
+        document.getElementById("nextBtn").style.display = 'Block';
+        
+        SenImageData(imagedata);
+        
+        
+        
+    }
+    
+    /*video Recording*/ 
+    
+    var video1 = document.getElementById("videoRec");
+    
+    video1.setAttribute('autoplay', '');
+    video1.setAttribute('playsinline', '');
+    
+    
+    var constraints ={video: {width: 720, height: 480, facingMode: "user"},
+                      audio: true
+                     };
+    let camera_stream = null;
+    let media_recorder = null;
+    let blobs_recorded = [];
+    let video_local; 
+    let recordedData = [];
+    let recordedDataSecond = [];
+    
+    async function startVideCam(){
+        try {
+            camera_stream = await navigator.mediaDevices.getUserMedia(constraints);
+            
+        }
+        catch(error) {
+            alert(error.message);
+            return;
+        }
+        
+        video1.srcObject = camera_stream;
+        //console.log(camera_stream);
+        
+        document.getElementById("Vid1").style.display = 'none';
+        document.getElementById("Vid2").style.display = 'Block';
+    }
+    
+    var blobDATA = [];
+    var fileItem;
+    async function startRecording() {
+        
+        var videoType = '';
+        function isIOSDevice(){
+            return !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
+        }
+        if(isIOSDevice()){
+            videoType = 'video/MP4';
+        }
+        else{
+            videoType = 'video/webm';
+        }
+        const options = {
+            videoBitsPerSecond : 800000, // important for set the video size..
+            mimeType: videoType
+        }
+        
+        media_recorder = new MediaRecorder(camera_stream, options);
+        
+        media_recorder.addEventListener('dataavailable', function(e) {
+            blobs_recorded.push(e.data);
+            //console.log('record -------------------------'+blobs_recorded);
+            // blobDATA = blobs_recorded;
+        });
+        
+        media_recorder.addEventListener('stop', function() {
+            const userAgent = navigator.userAgent;
+            video_local = URL.createObjectURL(new Blob(blobs_recorded, { type: videoType }));
+            blobDATA = video_local;
+            //console.log('rec link'+video_local);
+            if(video_local != null){   
+                const toDataURL = url => fetch(url)
+                .then(response => response.blob())
+                .then(blob => new Promise((resolve, reject) => {
+                    const reader = new FileReader()
+                    reader.onloadend = () => resolve(reader.result)
+                    reader.onerror = reject
+                    fileItem = blob;
+                    reader.readAsDataURL(blob)
+                }))
+                //alert('toDataURL(video_local)------'+toDataURL(video_local));
+                toDataURL(video_local)
+                .then(dataUrl => {
+                    //alert('RESULT:', dataUrl);
+                    document.getElementById("preview").setAttribute("src", dataUrl);
+                    document.getElementById("preview").setAttribute('playsinline', '');
+                    document.getElementById("preview").setAttribute('controls', 'controls');
+                    console.log('base64 size : '+dataUrl.length);
+                    console.log('base64 size : '+dataUrl);
+                    recordedData = dataUrl;
+                    //alert('recordedData++'+recordedData);
+                    blobs_recorded = [];
+                })
+                }
+                });
+                    
+                    media_recorder.start();
+                    
+                    setTimeout(stopFun, 3500);
+                }
+                    
+                    function stopFun(){
+                    //  alert('timeout Video Recorded : ');
+                    media_recorder.stop(); 
+                    var stream = video1.srcObject;
+                    var tracks = stream.getTracks();
+                    for (var i = 0; i < tracks.length; i++) {
+                    var track = tracks[i];
+                    track.stop();
+                }
+                    video1.srcObject = null;
+                    document.getElementById("Vid2").style.display = 'none';
+                    document.getElementById("Vid3").style.display = 'Block';    
+                    
+                }
+                    
+                    function StartRecButton() {
+                    document.getElementById("circlebtn").innerHTML = '3';
+                    var ctx = document.getElementById('Circle_button').getContext('2d');
+                    var al = 0;
+                    var start = 4.72;
+                    if ( navigator.platform != "iPad" && navigator.platform != "iPhone" && navigator.platform != "iPod" ) {
+                    cw = window.innerWidth; 
+                    //I'll use window.innerWidth in production
+                } else {
+                    cw = screen.width;
+                }
+                    var ch = ctx.canvas.height;  
+                    var diff;
+                    function progressSim(){
+                    diff = ((al / 100) * Math.PI*2*10).toFixed(2);
+                    ctx.clearRect(0, 0, cw, ch);
+                    ctx.lineWidth = 10;
+                    ctx.textAlign = 'center';
+                    ctx.strokeStyle = "green";
+                    ctx.beginPath();
+                    ctx.arc(50, 50, 40, start, diff/10+start, false);
+                    ctx.stroke();
+                    if(al >= 100){
+                    clearTimeout(sim);
+                    // Add scripting here that will run when progress completes
+                }
+                    al++;
+                }
+                    var sim = setInterval(progressSim, 35);
+                    
+                    // timer button
+                    
+                    let timeleft = 2;
+                    let downloadTimer = setInterval(function(){
+                    //console.log('downloadTimerdownloadTimer : '+downloadTimer);
+                    if(timeleft <= 0){
+                    clearInterval(downloadTimer);
+                    document.getElementById("circlebtn").innerHTML = "start";
+                } else {
+                    document.getElementById("circlebtn").innerHTML = timeleft;
+                    
+                }
+                    timeleft -= 1;
+                    //console.log('to9me :: '+timeleft);
+                }, 1350);
+                    
+                    //  console.log('downloadTimerdownloadTimer : '+downloadTimer);
+                    document.getElementById('circlebtn').disabled = true;
+                }
+                    
+                    function onVideoSec(){
+                    document.getElementById("pb1").style.display = 'none';
+                    document.getElementById("Vid1").style.display = 'Block';
+                    
+                }     
+                    
+                    function videoTakeAgain(){
+                    var vid = document.getElementById("preview");
+                    vid.pause();
+                    var video1 = document.getElementById("videoRec");
+                    
+                    $("#startTest").load(location.href + " #startTest");//done
+                    
+                    startVideCam();
+                    
+                    document.getElementById("Vid3").style.display = 'none';
+                    document.getElementById("Vid2").style.display = 'Block';
+                    
+                }  
+                    function videoconfirm(){
+                    currentdate = new Date();
+                    startTime = currentdate.getDate() + "/"
+                    + (currentdate.getMonth()+1)  + "/" 
+                    + currentdate.getFullYear() + " @ "  
+                    + currentdate.getHours() + ":"  
+                    + currentdate.getMinutes() + ":" 
+                    + currentdate.getSeconds();
+                    console.log('start '+startTime);
+                    document.getElementById("spin").style.display = 'Block';
+                    var vid = document.getElementById("preview");
+                    vid.pause();
+                    document.getElementById("pb1").style.display = 'Block';
+                    document.getElementById("Vid3").style.display = 'none';
+                    document.getElementById("SecondText").style.display = 'none';
+                    document.getElementById("ThirdText").style.display = 'Block';
+                    document.getElementById("icon1-2").style.display = 'None';
+                    document.getElementById("icon1-3").style.display = 'Block';
+                    document.getElementById("icon2-1").style.display = 'None'; 
+                    document.getElementById("icon2-2").style.display = 'Block';
+                    
+                    document.querySelector('.box2').style.boxShadow = 'none';
+                    document.querySelector('.box2').style.background = 'none';
+                    document.querySelector('.box2').style.background = '#fafafa';
+                    document.querySelector('.box2').style.border = '2px solid #eeeeee';
+                    
+                    document.querySelector('.box3').style.border = 'none';
+                    document.querySelector('.box3').style.background = 'none';
+                    document.querySelector('.box3').style.boxShadow = '5px 5px 5px 0px rgb(0 0 0 / 54%)';
+                    document.querySelector('.box3').style.background = '#ffffff';    
+                    
+                    
+                    document.getElementById("nextBtn").style.display = 'None';
+                    document.getElementById("ReadSignBtn").style.display = 'Block';
+                    // dataQuerymethod(); 
+                    sendVideo(recordedData);
+                    
+                    
+                }
+                    
+                    function StopSpin(){
+                    document.getElementById("spin").style.display = 'none';
+                    var newDate = new Date();
+                    endTime = newDate.getDate() + "/"
+                    + (newDate.getMonth()+1)  + "/" 
+                    + newDate.getFullYear() + " @ "  
+                    + newDate.getHours() + ":"  
+                    + newDate.getMinutes() + ":" 
+                    + newDate.getSeconds();
+                    console.log('start +'+startTime);
+                    console.log('END +'+endTime);
+                    addLog(startTime,endTime);
+                    
+                }
+                    
+                    /*SIGN Section*/
+                    
+                    function ReadANDSign(){
+                    document.getElementById("pb1").style.display = 'None';
+                    document.getElementById("ReadSign1").style.display = 'Block';
+                    var SignaturePad = (function(document) {
+                    "use strict";
+                    
+                    var log = console.log.bind(console);
+                    
+                    var SignaturePad = function(canvas, options) {
+                    var self = this,
+                    opts = options || {};
+                    
+                    this.velocityFilterWeight = opts.velocityFilterWeight || 0.7;
+                    this.minWidth = opts.minWidth || 0.5;
+                    this.maxWidth = opts.maxWidth || 2.5;
+                    this.dotSize = opts.dotSize || function() {
+                    return (self.minWidth + self.maxWidth) / 2;
+                };
+                    this.penColor = opts.penColor || "black";
+                    this.backgroundColor = opts.backgroundColor || "rgba(0,0,0,0)";
+                    this.throttle = opts.throttle || 0;
+                    this.throttleOptions = {
+                    leading: true,
+                    trailing: true
+                };
+                      this.minPointDistance = opts.minPointDistance || 0;
+                      this.onEnd = opts.onEnd;
+                      this.onBegin = opts.onBegin;
+                      
+                      this._canvas = canvas;
+                      this._ctx = canvas.getContext("2d");
+                this._ctx.lineCap = 'round';
+                this.clear();
+                
+                // we need add these inline so they are available to unbind while still having
+                //  access to 'self' we could use _.bind but it's not worth adding a dependency
+                this._handleMouseDown = function(event) {
+                    if (event.which === 1) {
+                        self._mouseButtonDown = true;
+                        self._strokeBegin(event);
+                    }
+                };
+                
+                var _handleMouseMove = function(event) {
+                    event.preventDefault();
+                    if (self._mouseButtonDown) {
+                        self._strokeUpdate(event);
+                        if (self.arePointsDisplayed) {
+                            var point = self._createPoint(event);
+                            self._drawMark(point.x, point.y, 5);
+                        }
+                    }
+                };
+                
+                this._handleMouseMove = _.throttle(_handleMouseMove, self.throttle, self.throttleOptions);
+                //this._handleMouseMove = _handleMouseMove;
+                
+                this._handleMouseUp = function(event) {
+                    if (event.which === 1 && self._mouseButtonDown) {
+                        self._mouseButtonDown = false;
+                        self._strokeEnd(event);
+                    }
+                };
+                
+                this._handleTouchStart = function(event) {
+                    if (event.targetTouches.length == 1) {
+                        var touch = event.changedTouches[0];
+                        self._strokeBegin(touch);
+                    }
+                };
+                
+                var _handleTouchMove = function(event) {
+                    // Prevent scrolling.
+                    event.preventDefault();
+                    
+                    var touch = event.targetTouches[0];
+                    self._strokeUpdate(touch);
+                    if (self.arePointsDisplayed) {
+                        var point = self._createPoint(touch);
+                        self._drawMark(point.x, point.y, 5);
+                    }
+                };
+                this._handleTouchMove = _.throttle(_handleTouchMove, self.throttle, self.throttleOptions);
+                //this._handleTouchMove = _handleTouchMove;
+                
+                this._handleTouchEnd = function(event) {
+                    var wasCanvasTouched = event.target === self._canvas;
+                    if (wasCanvasTouched) {
+                        event.preventDefault();
+                        self._strokeEnd(event);
+                    }
+                };
+                
+                this._handleMouseEvents();
+                this._handleTouchEvents();
+            };
+            
+            SignaturePad.prototype.clear = function() {
+                var ctx = this._ctx,
+                    canvas = this._canvas;
+                
+                ctx.fillStyle = this.backgroundColor;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                this._reset();
+            };
+            
+            
+            
+            SignaturePad.prototype.toDataURL = function(imageType, quality) {
+                var canvas = this._canvas;
+                return canvas.toDataURL.apply(canvas, arguments);
+            };
+            
+            SignaturePad.prototype.fromDataURL = function(dataUrl) {
+                var self = this,
+                    image = new Image(),
+                    ratio = window.devicePixelRatio || 1,
+                    width = this._canvas.width / ratio,
+                    height = this._canvas.height / ratio;
+                
+                this._reset();
+                image.src = dataUrl;
+                image.onload = function() {
+                    self._ctx.drawImage(image, 0, 0, width, height);
+                };
+                this._isEmpty = false;
+            };
+            
+            SignaturePad.prototype._strokeUpdate = function(event) {
+                var point = this._createPoint(event);
+                if(this._isPointToBeUsed(point)){
+                    this._addPoint(point);
+                }
+            };
+            
+            var pointsSkippedFromBeingAdded = 0;
+            SignaturePad.prototype._isPointToBeUsed = function(point) {
+                // Simplifying, De-noise
+                if(!this.minPointDistance)
+                    return true;
+                
+                var points = this.points;
+                if(points && points.length){
+                    var lastPoint = points[points.length-1];
+                    if(point.distanceTo(lastPoint) < this.minPointDistance){
+                        // log(++pointsSkippedFromBeingAdded);
+                        return false;
+                    }
+                }
+                return true;
+            };
+            
+            SignaturePad.prototype._strokeBegin = function(event) {
+                this._reset();
+                this._strokeUpdate(event);
+                if (typeof this.onBegin === 'function') {
+                    this.onBegin(event);
+                }
+            };
+            
+            SignaturePad.prototype._strokeDraw = function(point) {
+                var ctx = this._ctx,
+                    dotSize = typeof(this.dotSize) === 'function' ? this.dotSize() : this.dotSize;
+                
+                ctx.beginPath();
+                this._drawPoint(point.x, point.y, dotSize);
+                ctx.closePath();
+                ctx.fill();
+            };
+            
+            SignaturePad.prototype._strokeEnd = function(event) {
+                var canDrawCurve = this.points.length > 2,
+                    point = this.points[0];
+                
+                if (!canDrawCurve && point) {
+                    this._strokeDraw(point);
+                }
+                if (typeof this.onEnd === 'function') {
+                    this.onEnd(event);
+                }
+            };
+            
+            SignaturePad.prototype._handleMouseEvents = function() {
+                this._mouseButtonDown = false;
+                
+                this._canvas.addEventListener("mousedown", this._handleMouseDown);
+                this._canvas.addEventListener("mousemove", this._handleMouseMove);
+                document.addEventListener("mouseup", this._handleMouseUp);
+            };
+            
+            SignaturePad.prototype._handleTouchEvents = function() {
+                // Pass touch events to canvas element on mobile IE11 and Edge.
+                this._canvas.style.msTouchAction = 'none';
+                this._canvas.style.touchAction = 'none';
+                
+                this._canvas.addEventListener("touchstart", this._handleTouchStart);
+                this._canvas.addEventListener("touchmove", this._handleTouchMove);
+                this._canvas.addEventListener("touchend", this._handleTouchEnd);
+            };
+            
+            SignaturePad.prototype.on = function() {
+                this._handleMouseEvents();
+                this._handleTouchEvents();
+            };
+            
+            SignaturePad.prototype.off = function() {
+                this._canvas.removeEventListener("mousedown", this._handleMouseDown);
+                this._canvas.removeEventListener("mousemove", this._handleMouseMove);
+                document.removeEventListener("mouseup", this._handleMouseUp);
+                
+                this._canvas.removeEventListener("touchstart", this._handleTouchStart);
+                this._canvas.removeEventListener("touchmove", this._handleTouchMove);
+                this._canvas.removeEventListener("touchend", this._handleTouchEnd);
+            };
+            
+            SignaturePad.prototype.isEmpty = function() {
+                return this._isEmpty;
+            };
+            
+            SignaturePad.prototype._reset = function() {
+                this.points = [];
+                this._lastVelocity = 0;
+                this._lastWidth = (this.minWidth + this.maxWidth) / 2;
+                this._isEmpty = true;
+                this._ctx.fillStyle = this.penColor;
+            };
+            
+            SignaturePad.prototype._createPoint = function(event) {
+                var rect = this._canvas.getBoundingClientRect();
+                return new Point(
+                    event.clientX - rect.left,
+                    event.clientY - rect.top
+                );
+            };
+            
+            SignaturePad.prototype._addPoint = function(point) {
+                var points = this.points,
+                    c2, c3,
+                    curve, tmp;
+                
+                points.push(point);
+                
+                if (points.length > 2) {
+                    // To reduce the initial lag make it work with 3 points
+                    // by copying the first point to the beginning.
+                    if (points.length === 3) points.unshift(points[0]);
+                    
+                    tmp = this._calculateCurveControlPoints(points[0], points[1], points[2]);
+                    c2 = tmp.c2;
+                    tmp = this._calculateCurveControlPoints(points[1], points[2], points[3]);
+                    c3 = tmp.c1;
+                    curve = new Bezier(points[1], c2, c3, points[2]);
+                    this._addCurve(curve);
+                    
+                    // Remove the first element from the list,
+                    // so that we always have no more than 4 points in points array.
+                    points.shift();
+                }
+            };
+            
+            SignaturePad.prototype._calculateCurveControlPoints = function(s1, s2, s3) {
+                var dx1 = s1.x - s2.x,
+                    dy1 = s1.y - s2.y,
+                    dx2 = s2.x - s3.x,
+                    dy2 = s2.y - s3.y,
+                    
+                    m1 = {
+                        x: (s1.x + s2.x) / 2.0,
+                        y: (s1.y + s2.y) / 2.0
+                    },
+                    m2 = {
+                        x: (s2.x + s3.x) / 2.0,
+                        y: (s2.y + s3.y) / 2.0
+                    },
+                    
+                    l1 = Math.sqrt(1.0 * dx1 * dx1 + dy1 * dy1),
+                    l2 = Math.sqrt(1.0 * dx2 * dx2 + dy2 * dy2),
+                    
+                    dxm = (m1.x - m2.x),
+                    dym = (m1.y - m2.y),
+                    
+                    k = l2 / (l1 + l2),
+                    cm = {
+                        x: m2.x + dxm * k,
+                        y: m2.y + dym * k
+                    },
+                    
+                    tx = s2.x - cm.x,
+                    ty = s2.y - cm.y;
+                
+                return {
+                    c1: new Point(m1.x + tx, m1.y + ty),
+                    c2: new Point(m2.x + tx, m2.y + ty)
+                };
+            };
+            
+            SignaturePad.prototype._addCurve = function(curve) {
+                var startPoint = curve.startPoint,
+                    endPoint = curve.endPoint,
+                    velocity, newWidth;
+                
+                velocity = endPoint.velocityFrom(startPoint);
+                velocity = this.velocityFilterWeight * velocity +
+                    (1 - this.velocityFilterWeight) * this._lastVelocity;
+                
+                newWidth = this._strokeWidth(velocity);
+                this._drawCurve(curve, this._lastWidth, newWidth);
+                
+                this._lastVelocity = velocity;
+                this._lastWidth = newWidth;
+            };
+            
+            SignaturePad.prototype._drawPoint = function(x, y, size) {
+                var ctx = this._ctx;
+                
+                ctx.moveTo(x, y);
+                ctx.arc(x, y, size, 0, 2 * Math.PI, false);
+                this._isEmpty = false;
+            };
+            
+            SignaturePad.prototype._drawMark = function(x, y, size) {
+                var ctx = this._ctx;
+                
+                ctx.save();
+                ctx.moveTo(x, y);
+                ctx.arc(x, y, size, 0, 2 * Math.PI, false);
+                ctx.fillStyle = 'rgba(255, 0, 0, 0.2)';
+                ctx.fill();
+                ctx.restore();
+            };
+            
+            SignaturePad.prototype._drawCurve = function(curve, startWidth, endWidth) {
+                var ctx = this._ctx,
+                    widthDelta = endWidth - startWidth,
+                    drawSteps, width, i, t, tt, ttt, u, uu, uuu, x, y;
+                
+                drawSteps = Math.floor(curve.length());
+                ctx.beginPath();
+                for (i = 0; i < drawSteps; i++) {
+                    // Calculate the Bezier (x, y) coordinate for this step.
+                    t = i / drawSteps;
+                    tt = t * t;
+                    ttt = tt * t;
+                    u = 1 - t;
+                    uu = u * u;
+                    uuu = uu * u;
+                    
+                    x = uuu * curve.startPoint.x;
+                    x += 3 * uu * t * curve.control1.x;
+                    x += 3 * u * tt * curve.control2.x;
+                    x += ttt * curve.endPoint.x;
+                    
+                    y = uuu * curve.startPoint.y;
+                    y += 3 * uu * t * curve.control1.y;
+                    y += 3 * u * tt * curve.control2.y;
+                    y += ttt * curve.endPoint.y;
+                    
+                    width = startWidth + ttt * widthDelta;
+                    this._drawPoint(x, y, width);
+                }
+                ctx.closePath();
+                ctx.fill();
+            };
+            
+            SignaturePad.prototype._strokeWidth = function(velocity) {
+                return Math.max(this.maxWidth / (velocity + 1), this.minWidth);
+            };
+            
+            var Point = function(x, y, time) {
+                this.x = x;
+                this.y = y;
+                this.time = time || new Date().getTime();
+            };
+            
+            Point.prototype.velocityFrom = function(start) {
+                return (this.time !== start.time) ? this.distanceTo(start) / (this.time - start.time) : 1;
+            };
+            
+            Point.prototype.distanceTo = function(start) {
+                return Math.sqrt(Math.pow(this.x - start.x, 2) + Math.pow(this.y - start.y, 2));
+            };
+            
+            var Bezier = function(startPoint, control1, control2, endPoint) {
+                this.startPoint = startPoint;
+                this.control1 = control1;
+                this.control2 = control2;
+                this.endPoint = endPoint;
+            };
+            
+            // Returns approximated length.
+            Bezier.prototype.length = function() {
+                var steps = 10,
+                    length = 0,
+                    i, t, cx, cy, px, py, xdiff, ydiff;
+                
+                for (i = 0; i <= steps; i++) {
+                    t = i / steps;
+                    cx = this._point(t, this.startPoint.x, this.control1.x, this.control2.x, this.endPoint.x);
+                    cy = this._point(t, this.startPoint.y, this.control1.y, this.control2.y, this.endPoint.y);
+                    if (i > 0) {
+                        xdiff = cx - px;
+                        ydiff = cy - py;
+                        length += Math.sqrt(xdiff * xdiff + ydiff * ydiff);
+                    }
+                    px = cx;
+                    py = cy;
+                }
+                return length;
+            };
+            
+            Bezier.prototype._point = function(t, start, c1, c2, end) {
+                return start * (1.0 - t) * (1.0 - t) * (1.0 - t) +
+                    3.0 * c1 * (1.0 - t) * (1.0 - t) * t +
+                    3.0 * c2 * (1.0 - t) * t * t +
+                    end * t * t * t;
+            };
+            
+            return SignaturePad;
+        })(document);
+        
+        var signaturePad = new SignaturePad(document.getElementById('signature-pad'), {
+            backgroundColor: 'rgba(255, 255, 255, 0)',
+            penColor: 'rgb(0, 0, 0)',
+            velocityFilterWeight: .9,
+            minWidth: 0.5,
+            maxWidth: 2.5,
+            throttle: 16, // max x milli seconds on event update, OBS! this introduces lag for event update
+            minPointDistance: 3,
+        });
+        var saveButton = document.getElementById('save'),
+                clearButton = document.getElementById('clear');
+        
+       /* saveButton.addEventListener('click', function(event) {
+            var data = signaturePad.toDataURL();
+            if(data.length == 1614){
+                alert('Please sign the Document');
+                return;
+            }
+            else{
+                SendSign1Data(data);
+                
+            }
+            
+        });*/
+        
+        clearButton.addEventListener('click', function(event) {
+            signaturePad.clear();
+        });
+        
+        //var signSave = document.getElementById('signsignSave');
+        saveButton.addEventListener('click', function(event) {
+            var data = signaturePad.toDataURL();
+            //console.log('data'+data);
+            //console.log('data'+data.length);
+            if(data.length == 1614){
+                alert('Please sign the Document : ');
+                //document.getElementById("errorMSG").innerHTML = 'email not valid';
+                //document.getElementById("errorMSG").style.color = 'red';
+                return;
+            }
+            else{
+                document.getElementById("spin").style.display = 'Block';
+                OtherSign(data);
+                // document.getElementById('save').disabled = 'true';
+                //finishSignature();
+            }
+            
+        });
+        
+    }
+    
+    
+    /*SIGN Section*/         
+    
+    
+    function finishSignature(){
+        document.getElementById("spin").style.display = 'none';
+        document.getElementById("spin").style.display = 'Block';
+        
+        document.getElementById("ReadSign1").style.display = 'none';
+        document.getElementById("pb1").style.display = 'Block';
+        document.getElementById("icon2-2").style.display = 'none';
+        document.getElementById("icon2-3").style.display = 'Block';
+        document.getElementById("ReadSignBtn").style.display = 'none';  
+        document.getElementById("FinishBtn").style.display = 'Block';   
+        document.getElementById("ThirdText").style.display = 'none';
+        
+        document.getElementById("FourthText").style.display = 'Block';
+        
+        
+        document.getElementById("firstAnchor").style.display = 'none';
+        
+        document.getElementById("2ndAnchor").style.display = 'Block';
+        GeneratePDF();
+        
+        document.querySelector('.box3').style.boxShadow = 'none';
+        document.querySelector('.box3').style.background = 'none';
+        document.querySelector('.box3').style.background = '#fafafa';
+        document.querySelector('.box3').style.border = '2px solid #eeeeee';
+    }
+    
+    
+    
+    /*SIGN Section*/
+    
+    function finalShow(){
+        document.getElementById("pb1").style.display = 'Block';
+        document.getElementById("icon2-3").style.display = 'Block';
+        document.getElementById("FinishBtn").style.display = 'Block';   
+        
+        document.getElementById("FourthText").style.display = 'Block';
+        
+        
+        document.getElementById("2ndAnchor").style.display = 'Block';
+        
+        document.querySelector('.box3').style.boxShadow = 'none';
+        document.querySelector('.box3').style.background = 'none';
+        document.querySelector('.box3').style.background = '#fafafa';
+        document.querySelector('.box3').style.border = '2px solid #eeeeee';
+    }   
+    
+    
+    
+    
+    
+    /*Important code for collapse*/
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+    
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight){
+                content.style.maxHeight = null;
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+            } 
+        });
+    }
+    /*Important code for collapse*/
+    
+    
+    
+    
+    
+    </script>
+</apex:page>

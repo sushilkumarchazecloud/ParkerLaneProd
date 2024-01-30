@@ -1,0 +1,4 @@
+.THIS .cg-style-horizontal .slds-form-element__control .slds-checkbox{
+    display: inline-grid;
+    min-width: 200px;
+}

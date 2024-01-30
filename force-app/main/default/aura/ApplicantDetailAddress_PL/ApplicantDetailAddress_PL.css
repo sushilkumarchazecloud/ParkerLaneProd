@@ -1,0 +1,13 @@
+.THIS button.slds-button.slds-button_icon.slds-m-left_medium.slds.slds-button_icon-x-small.slds-button_icon-border{
+    float:right;
+}
+.THIS .custom_bussiness_style{
+    font-size: 16px;
+    font-family: Proxima Nova Alt Regular;
+    margin-bottom: 8px;
+    color: #192744;
+    padding-left: 4px!important;
+}
+.THIS .custom_bussiness_style button.slds-button.slds-button_icon.slds-button_icon-x-small.slds-button_icon-border {
+    margin-top: -5px !important;
+}

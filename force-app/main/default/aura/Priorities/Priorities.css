@@ -1,0 +1,127 @@
+.THIS .solar-radio-button .slds-radio_button-group .slds-button label.slds-radio_button__label {
+    padding: 10px;
+    border-radius: 0;
+    width:100%;
+    text-align: center;
+    height: 100%;
+}
+.THIS .solar-radio-button .slds-radio_button-group {
+    width:100%;
+    border-radius: 0;
+    border: none;
+}
+.THIS .solar-radio-button .slds-radio_button-group .slds-button  {
+    width:33.3%;
+    margin: 0px 5px;
+    border:1px solid rgb(217, 219, 221);
+}
+.THIS.priorities-form .slds-form-element__label{
+    font-weight: 700;
+}
+.THIS.priorities-form .bg-blue {
+    background-color: #006ac6;
+}
+.THIS.priorities-form .bg-dark-blue {
+    background-color: #1a2745;
+}
+.THIS.txt-dark-blue,.THIS .txt-dark-blue{
+    color: #1a2745;
+}
+.THIS .personalised-button button {
+    /*width: 10rem;
+    margin: 10px;
+    padding: 10px;
+    display: inline-block;
+    height: 8.2rem;
+    color: #1a2745;
+    text-align: center;
+    border: 1.5px solid #91dadc;
+    border-radius: 16px;*/
+    width: 10.6rem;
+    margin: 10px;
+    padding: 10px;
+    display: inline-block;
+    height: 7.2rem;
+    color: #91dadc;
+    text-align: center;
+    border: 1.5px solid #91dadc;
+    border-radius: 10px;
+
+}
+.THIS .personalised-button button:hover{
+    /*background-color: #d2edee;*/
+	background-color: #91dadc;
+    text-transform: none;
+    color: #1a2745;
+}
+.THIS .slds-btn-img {
+    padding-right: 3px;
+    padding-top: 5px;
+}
+
+.THIS .slds-btn-img img {
+    width: 2.5rem;
+}
+
+.THIS .slds-btn-txt {
+    padding: 10px;
+    font-size: .8rem;
+    font-weight: 700;
+    line-height: normal;
+    color: #1a2745;
+    /*text-transform: uppercase;*/
+}
+.THIS .personalised-button .slds-button span {
+    display: block;
+    text-align: left;
+    line-height: 1.4;
+}
+.THIS .personalised-button button svg {
+    display: block;
+}
+
+.THIS .header-text {
+    font-weight: 900;
+    font-size: 2.75rem;
+    line-height: 1.25;
+}
+.THIS.btn-continue,.THIS .btn-continue{
+    font-size: 1.25rem;
+    padding: 0.5rem 4rem!important;
+}
+.THIS .sub-header-quoting{
+    font-size:1.6rem;
+    font-family: /*Proxima Nova Alt Bold inherit*/ProximaNova-AltBold;
+    font-weight: 600;
+}
+.THIS .priority-section-height{
+    min-height:25rem;
+}
+
+@media (max-width: 768px) {       
+    .THIS .personalised-button .button-parent {
+        display: flex;
+    	flex-flow: column;
+    }
+    .THIS .personalised-button button {
+        margin: 10px auto !important;
+        width: 9.6rem;
+    }
+    .THIS .width_on_small_device_right{
+        width:50%;
+        float:right;
+    }
+    .THIS .width_on_small_device_left{
+        width:50%;
+        float:left;
+    }
+    .THIS .custom_width button.slds-button.slds-button_success.btn-light-sky-blue {
+        padding: 0.5rem 1rem !important;
+    }
+    
+}
+@media screen and (min-width: 768px) {
+   .THIS .custom_width button.slds-button.slds-button_success.btn-light-sky-blue {
+         padding: 0.5rem 2.5rem !important;
+    }
+}

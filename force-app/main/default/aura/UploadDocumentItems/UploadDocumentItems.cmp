@@ -1,0 +1,29 @@
+<aura:component controller="UploadDocuments" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" access="global" >
+    <aura:attribute name="sessionId" type="String" />
+    <aura:attribute name="sldUploadList" type="List" />
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="PersonName" type="String" />
+    <div class="slds-grid slds-wrap slds-p-around_small1">
+        <aura:iteration items="{!v.sldUploadList}" var="mapKey" indexVar="index">
+            <div class="slds-m-around_medium1 slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                <div  class="{! (mapKey.isComplete?'doc-box-green':'doc-box') +' slds-m-around_medium  ' }">
+                    
+                    <c:uploadFile PersonName="{!v.PersonName}" ishide="{!mapKey.isOpen}" 
+                                  CategryName="{!mapKey.Document}" recordId ="{!v.recordId}" 
+                                  Description ="{!mapKey.Details}"
+                                  docDescription = "{!mapKey.Discription}"
+                                  label="Attachment" isComplete="{!mapKey.isComplete}"   
+                                  parentId="{!mapKey.Id}" sessionId="{!v.sessionId}" 
+                                  count="{!mapKey.count}" />
+                    
+                    <aura:if isTrue="{!mapKey.isOpen}">
+                        <div class="slds-p-around_x-small">
+                            <lightning:button class="slds-float_right save-btn" name="{!index}" variant="brand" label="Save &amp; Close" title="Mark as complete"  onclick="{!c.handleComplete}" /><br/><br/>
+                        </div>
+                    </aura:if>
+                </div>
+            </div>
+        </aura:iteration>
+    </div>
+    
+</aura:component>

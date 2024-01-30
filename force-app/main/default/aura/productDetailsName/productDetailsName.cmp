@@ -1,0 +1,31 @@
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    <aura:attribute name="FeeList" type="List" />
+	<div class="slds-p-around_x-small">
+        <table>
+            <tr><td><lightning:input  readonly="true" value="Lender"/></td></tr>
+            <tr><td><lightning:input  readonly="true" value="Product Name"/></td></tr>
+            <tr><td><lightning:input  readonly="true" value="Loan Amount"/></td></tr>
+            <tr><td><lightning:input  readonly="true" value="Loan Term"/></td></tr>
+            <tr><td><lightning:input  readonly="true" value="Interest Rate"/></td></tr>
+            <tr><td><lightning:input  readonly="true" value="Interest Rate Type"/></td></tr>
+            <tr><td><lightning:input  readonly="true" value="Comparison Rate"/></td></tr>
+            <tr><td><lightning:input  readonly="true" value="Brokerage Amount"/></td></tr>
+            <tr><td><lightning:input  readonly="true" value="Commission Amount"/></td></tr>
+        </table>        
+    </div>
+    <hr style="margin: 0px;"/>
+    <div class="slds-p-around_x-small">
+        <table>
+            <aura:iteration items="{!v.FeeList}" var="op" >
+                <tr><td><lightning:input  readonly="true" value="{!op.Label+' Fees'}"/></td></tr>
+            </aura:iteration>
+        </table>
+    </div>   
+     <hr style="margin: 0px;"/>
+    <div class="slds-p-around_x-small">
+        <table>
+            <tr><td Style="height:150px"><lightning:input  readonly="true" value="Description"/></td></tr>
+            <tr><td Style="height:150px"><lightning:input  readonly="true" value="Features"/></td></tr>
+        </table>        
+    </div>
+</aura:component>

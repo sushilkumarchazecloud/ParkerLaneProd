@@ -1,0 +1,114 @@
+<aura:component controller="productSearch" implements="forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="option" type="List" />
+    <aura:attribute name="amount" type="Decimal" />
+    <aura:attribute name="QuoteName" type="String" />
+    <aura:attribute name="Type" type="String" />
+    <aura:attribute name="oppStage" type="Boolean" />
+    <aura:attribute name="productList" type="List" />
+    <aura:attribute name="selectedProduct" type="List" />
+    <aura:attribute name="maxItem" type="Integer" default="0" />
+    <aura:attribute name="isCompare" type="boolean" default="true" />
+    <aura:attribute name="issearching" type="boolean" default="false"/>
+    <aura:attribute name="FeeList" type="List" />
+    <aura:if isTrue="{!v.isCompare}" >
+        <div class="slds-theme_shade slds-theme_alert-texture slds-text-align_center slds-text-color_inverse" style="background-color:rgb(22, 50, 92)">
+        <div class="slds-text-heading_large" 
+             style="font-weight:bold;padding-top: 1%;font-size: xx-large ;padding-bottom: 1%;">
+            <h1>Product Search</h1>
+        </div>
+        
+    </div>
+        <div class="slds-p-around_x-small">
+            <div class="slds-grid slds-wrap" style="margin: auto;max-width: 100%;background-color: #70767f;border: 1px solid darkbule;border-radius: 5px;">
+                <div class="slds-col slds-size_1-of-1">
+                    <div class="slds-p-around_x-small">
+                        <lightning:input type="number" formatter="currency" step="0.01" name="input1" value="{!v.amount}" label="Amount" placeholder="Enter a amount..." />
+                        <lightning:select aura:id="select" name="select" value="{!v.Type}" label="Purpose">
+                            <option value="">Select Purpose...</option>
+                            <aura:iteration items="{!v.option}" var="op" >
+                                <option value="{!op}">{!op}</option>
+                            </aura:iteration>
+                        </lightning:select>
+                        <lightning:input  aura:id="enter-search"
+                                         name="enter-search"	
+                                         label="Quote Name"
+                                         value="{!v.QuoteName}"
+                                         type="text" /><br/>
+                        <lightning:button variant="success" label="Search" title="Search" onclick="{!c.SearchProduct}"/>
+                    </div><br/>
+                    <div class="slds-p-around_x-small">
+                        <aura:if isTrue="{!not(empty(v.productList))}" >
+                            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped" style="border-radius: 5px;">
+                                <tr class="slds-line-height_reset">
+                                    <th class="" scope="col">
+                                        
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Lender">Lender</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Name">Name</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Interest Rate">Interest Rate</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Loan Amounts">Loan Amounts</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Min Loan Term">Min Loan Term</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Max Loan Term">Max Loan Term</div>
+                                    </th>
+                                </tr>
+                                <aura:iteration items="{!v.productList}" var="op" >
+                                    <tr  class="slds-hint-parent">
+                                        <td>
+                                            <lightning:input type="checkbox" onchange="{!c.checkSelectedItem}"  checked="{!op.chk}"  />
+                                        </td>
+                                        <td>
+                                            {!op.Lender}
+                                        </td>
+                                        <td>
+                                            {!op.ProductName}
+                                        </td>
+                                        <td>
+                                            {!op.IntRate}
+                                        </td>
+                                        <td>
+                                            {!op.LoanAmounts}                              
+                                        </td>
+                                        <td>
+                                            {!op.MinTerm}
+                                        </td>
+                                        <td>
+                                            {!op.MaxTerm}
+                                        </td>
+                                    </tr>
+                                </aura:iteration>
+                            </table><br/>
+                            <lightning:button variant="success" 
+                                              label="Compare" 
+                                              title="Compare" 
+                                              onclick="{!c.getCompare}"/>
+                        </aura:if>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <aura:set attribute="else">
+            <aura:if isTrue="{!not(empty(v.productList))}" >
+                <c:productDetails selectedProduct="{!v.selectedProduct}"
+                                  QuoteName="{!v.QuoteName}"
+                                  isCompare="{!v.isCompare}" 
+                                  Type = "{!v.Type}"
+                                  FeeList="{!v.FeeList}" 
+                                  oppStage = "{!v.oppStage}" recordId="{!v.recordId}"/>
+            </aura:if>
+        </aura:set>
+    </aura:if>
+</aura:component>

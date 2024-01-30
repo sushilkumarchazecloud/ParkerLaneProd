@@ -1,0 +1,103 @@
+<aura:component controller="groupQuoteController" implements="forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+	<aura:attribute name="quoteList" type="List" />
+    <aura:attribute name="masterQuote" type="String" />
+    <aura:attribute name="recordId" type="String" />
+    <aura:registerEvent name="groupEventC" type="c:groupAppLicationEvent" />
+    <lightning:navigation aura:id="navService"/>
+    
+    <lightning:card>
+        <aura:set attribute="title">
+            <div >
+                <div>
+                    <lightning:icon iconName="utility:connected_apps" size="small"/>
+                    {!v.masterQuote}
+                </div>
+                <div style="font-size: 11px; padding-left: 1.5rem;">
+                    Created: {!v.quoteList[0].CreatedDate}
+                </div>
+            </div>
+        </aura:set>
+        <aura:set attribute="actions">
+            <lightning:button label="Send Quote" onclick="{!c.sendQuote}" />
+            <lightning:button label="Send Application" onclick="{!c.sendAppToCustomer}" />
+            <lightning:button label="Open Form" onclick="{!c.viewApplication}"/>
+            <lightning:button label="Delete" onclick="{!c.deleteMasterQuote}"/>            
+        </aura:set>
+        <p class="slds-p-horizontal_small">
+            <table class="slds-table slds-table_bordered slds-table_fixed-layout slds-table_resizable-cols" role="grid">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th class="" scope="col">
+                            <div title="Quote Number">Quote Number</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div title="Quote Name">Quote Name</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div title="Loan Amount">Loan Amount</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div title="Interest Rate">Interest Rate</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div title="Monthly Repayment">Monthly Repayment</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div title="Ongoing Fees">Ongoing Fees</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div title="Total Price">Setup Fees</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div title="Brokerage">Brokerage</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div title="Total Price">Total Loan Cost</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div title="Application">Application</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <aura:iteration items="{!v.quoteList}" var="op" indexVar="index">
+                        <tr class="slds-hint-parent">
+                            <td data-label="Quote Number">
+                                <a href="javascript:void(0);" onclick="{!c.navigateToRecord}" data-record-id="{!op.Id}">{!op.QNumber}</a>
+                            </td>
+                            <td data-label="Quote Name">
+                                <div title="{!op.Name}">{!op.Name}</div>
+                            </td>
+                            <td data-label="Syncing">
+                                <div title="{!op.LoanAmount}">{!op.LoanAmount}</div>
+                            </td>
+                            <td data-label="Expiration Date">
+                                <div title="{!op.InterestRate}">{!op.InterestRate}%</div>
+                            </td>
+                            <td data-label="Monthly Repayment">
+                                <div title="{!op.MonthlyRepayment}">{!op.MonthlyRepayment}</div>
+                            </td>
+                            <td data-label="Ongoing Fees">
+                                <div title="{!op.ongoingFees}">{!op.ongoingFees}</div>
+                            </td>
+                            <td data-label="Total Setup">
+                                <div title="{!op.TotalSetup}">{!op.TotalSetup}</div>
+                            </td>
+                            <td data-label="Brokerage Amount">
+                                <div title="{!op.brokerageAmount}">{!op.brokerageAmount}</div>
+                            </td>
+                            <td data-label="Total Price">
+                                <div title="{!op.TotalCost}">{!op.TotalCost}</div>
+                            </td>
+                            <td data-label="Application">
+                                <div title="{!op.CreatedBy}">
+                                	<lightning:input type="checkbox" label="" name="{!op.Id}" onchange="{!c.checkApplication}" checked="{!op.application}" disabled="{!op.isAppDisable}"/>
+                                </div>
+                            </td>
+                        </tr>
+                    </aura:iteration>
+                </tbody>
+            </table>	
+        </p>
+    </lightning:card>
+</aura:component>

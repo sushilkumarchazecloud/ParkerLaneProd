@@ -1,0 +1,34 @@
+<aura:component controller="ParkerLaneLoanController">
+    <aura:attribute name="bannerImageURL" type="string" default=""/>
+    <aura:attribute name="Products" type="Product2[]"/>
+    <aura:attribute name="loanTitle" type="String" default="Featured"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <div class="solar-loan-banner">
+        <lightning:spinner aura:id="mySpinner" variant="brand" size="large" class="slds-hide" />
+        <section aura:id="finHomeContainer" class="home-banner">
+            <div class="solar-text slds-grid slds-wrap slds-p-horizontal--medium width100">
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_7-of-12 slds-large-size_6-of-12">
+                    <h2>Welcome to better off</h2>
+                    <p>Parker Lane offers award winning service plus Australia's best range of low rate home and personal loans from lenders who care as much as we do. How will you save?</p>
+                </div>
+            </div>
+            <div class="solar-loan slds-grid slds-wrap slds-p-horizontal--medium">
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_7-of-12 slds-large-size_3-of-12 action">
+                    
+                    <lightning:button variant="Neutral" class="slds-button" label="SOLAR" onclick="{! c.handleSOLAR }"/>
+                    <lightning:button variant="Neutral" label="HOME IMPROVEMENT"  onclick="{! c.handleHOME }"/>
+                    <lightning:button variant="Neutral" label="DEBT CONSOLIDATION" onclick="{! c.handleDEBT }"/>  
+                    
+                </div>  
+                <div style="text-align:center;" class="slds-col slds-size_1-of-1 slds-medium-size_7-of-12 slds-large-size_5-of-12 action">
+                    
+                    <span class="slds-logo-btn-img"><img src="{!$Resource.SolarLoan + '/img/Personal-Loans.png'}"/></span>
+                    <span class="slds-logo-btn-img"><img src="{!$Resource.SolarLoan + '/img/Home-Loans.png'}"/></span>
+                    
+                </div>  
+            	<div class="loan-image" style="{!'background-image: url(' + v.bannerImageURL + ');'}"></div>          
+            </div>
+        </section>
+    </div>
+</aura:component>

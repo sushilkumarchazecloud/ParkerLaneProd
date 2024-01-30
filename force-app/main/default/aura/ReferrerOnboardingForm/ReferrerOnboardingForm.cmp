@@ -1,0 +1,566 @@
+<aura:component controller="ReferrerOnboardingFormController">
+    <aura:attribute name="conductAppointmentsOptions" type="List" default="[{'label': 'Face to face', 'value': 'Face to face'},{'label': 'Phone call', 'value': 'Phone call'},{'label': 'Video call', 'value': 'Video call'}]"/>
+    <aura:attribute name="financeToCustomersOptions" type="List" default="[{'label': 'Frequently', 'value': 'Frequently'},{'label': 'Occasionally', 'value': 'Occasionally'},{'label': 'Only when asked', 'value': 'Only when asked'}]"/>
+    <aura:attribute name="yesNoOptions" type="List" default="[{'label': 'Yes', 'value': 'Yes'},{'label': 'No', 'value': 'No'}]"/>
+
+    <aura:attribute name="appointmentsOptions" type="List" default="[{'label': '0-10', 'value': '0-10'},{'label': '10-50', 'value': '10-50'},{'label': '50-100', 'value': '50-100'},{'label': '100+', 'value': '100+'}]"/>
+    <aura:attribute name="businessTypeOptions" type="List" default="[{'label': 'Builder', 'value': 'Builder'},{'label': 'Accountant', 'value': 'Accountant'},{'label': 'Real Estate Agent', 'value': 'Real Estate Agent'},{'label': 'Solar Installer', 'value': 'Solar Installer'},{'label': 'Solar Retailer', 'value': 'Solar Retailer'},{'label': 'Home improvement retailer', 'value': 'Home improvement retailer'},{'label': 'Home improvement installer', 'value': 'Home improvement installer'},{'label': 'Other', 'value': 'Other'}]"/>
+    <aura:attribute name="positionsOptions1" type="List" default="[{'label': 'Director', 'value': 'Director'},{'label': 'Company Secretary', 'value': 'Company Secretary'}]"/>
+    <aura:attribute name="positionsOptions" type="List" default="[{'label': 'Owner', 'value': 'Owner'},{'label': 'Director', 'value': 'Director'},{'label': 'Company Secretary', 'value': 'Company Secretary'},{'label': 'Manager', 'value': 'Manager'},{'label': 'Sales', 'value': 'Sales'},{'label': 'Admin', 'value': 'Admin'}]"/>
+    <aura:attribute name="statesTerritoriesOptions" type="List" default="[{'label': 'Queensland', 'value': 'Queensland'},{'label': 'New South Wales', 'value': 'New South Wales'},{'label': 'Australian Capital Territory', 'value': 'Australian Capital Territory'},{'label': 'Victoria', 'value': 'Victoria'},{'label': 'South Australia', 'value': 'South Australia'},{'label': 'Western Australia', 'value': 'Western Australia'},{'label': 'Tasmania', 'value': 'Tasmania'},{'label': 'Northern Territory', 'value': 'Northern Territory'}]"/>
+    <aura:attribute name="emp" type="FinServ__Employment__c" default="{'sobjectType':'FinServ__Employment__c'}"/>
+    <aura:attribute name="acc" type="Account" default="{'sobjectType':'Account'}"/>
+    <aura:attribute name="con" type="Contact" default="{'sobjectType':'Contact','Is_Authorised_Signatory__c':true}"/>
+    <aura:attribute name="conList" type="Contact[]"/>
+    <aura:attribute name="businessAddress" type="String" />
+    <aura:attribute name="isOpenAlertModal" type="Boolean" default="false"/>
+    <aura:attribute name="deleteIndex" type="Integer" default="0"/>
+    
+    <aura:attribute name="errorMsg" type="String" default="Please update the form entries highlighted in red and try again"/>
+    <aura:attribute name="showError" type="Boolean" default="false"/>
+    <aura:attribute name="pageNo" type="Integer" default="1"/>
+    <aura:attribute name="bType" type="String" />
+    <aura:attribute name="NextCall" type="Boolean" default="true" />
+
+	<div class="company-logo"> 
+        <div class="slds-float_left">
+            <img src="{!$Resource.SolarLoan + '/img/parkerlane.png'}"/>
+        </div >
+        <div class="slds-float_right" style="font-size: 16px; padding-top: 9px;">
+            <span class="slds-p-horizontal--medium">
+                Call 1300 131 711
+            </span>
+            <span class="slds-p-horizontal--medium" >
+                <a class="no-anchor" href="https://www.parkerlane.com.au/book-appointment" target="_blank">Book a call</a>
+            </span>
+        </div>
+    </div>
+    <c:ServiceAnnouncement serviceName="Referrer on boarding Service Message"/>
+    <div class="slds-docked-composer__body1 section-content1" >
+        <div class="bg-lightest ">
+            <div class="anticipated-changes">
+                <aura:if isTrue="{!v.showError}">
+                    <div class="slds-notify slds-notify_toast slds-theme_error slds-align_absolute-center slds-m-vertical--medium">
+                        <span class="slds-assistive-text">error</span>
+                        <div class="slds-notify__content">
+                            <p class="slds-align_absolute-center">Error: {!v.errorMsg}.</p>                
+                        </div>
+                    </div>
+                </aura:if>
+                <lightning:spinner aura:id="mySpinner" variant="brand" size="large" class="slds-hide" />
+                <header class="checkout-page-banner--gradient">
+                    <div class="slds-align_absolute-center ">
+                        <div class="page-banner__content-text">
+                            <h1 class="slds-p-vertical--medium heading--page">BECOME A REFERRER</h1>
+                        </div>
+                    </div>
+                </header>
+                <aura:if isTrue="{!v.pageNo == 1}">
+                    <div class="slds-form max-1000">
+                        <div style="text-align: justify;color: #0000ff;">
+                            Introduce your customers to easy, immediate and affordable lending and you’ll never again have to worry about finance getting in the way of making another sale.<br/>
+                            Complete this form to begin your referral relationship with the team awarded #1 in Australia for Personal Loans and Home Loans.                            
+                        </div>
+                    </div>
+                </aura:if>
+                <section class="bg-lightest slds-p-horizontal--medium slds-p-vertical--large">
+                    <div class="slds-form max-1000">
+                        <aura:if isTrue="{!v.pageNo == 1}">
+                            <div class="slds-form slds-p-top--small" role="list">
+                                <div class="slds-form__row">
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                            <lightning:input aura:id="fieldcheck" required="true" type="text"
+                                                             label="Company Legal Name" 
+                                                             value="{!v.acc.Company_Legal_Name__c}"                                                 
+                                                             placeholder="Company Legal Name"
+                                                             maxlength = "100"/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                            <lightning:input aura:id="fieldcheck" required="true" type="text"
+                                                             label="Trading Name" 
+                                                             value="{!v.acc.Name}"                                                 
+                                                             placeholder="Trading Name"
+                                                             maxlength = "100"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__row">
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                            <lightning:combobox aura:id="fieldcheck" required="true"
+                                                    label="Business Type" 
+                                                    value="{!v.acc.Referrer_Business_Type__c}"                                                 
+                                                    options="{! v.businessTypeOptions }"
+                                                    placeholder="Business Type"/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                            <lightning:input aura:id="fieldcheck" required="true" type="text"
+                                                             label="ABN" maxlength="20"
+                                                             value="{!v.acc.ABN__c}"                                                 
+                                                             placeholder="ABN"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <aura:if isTrue="{!v.acc.Referrer_Business_Type__c == 'Other'}">
+                                    <div class="slds-form__row">
+                                        <div class="slds-form__item" role="listitem">
+                                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                                <lightning:input aura:id="fieldcheck" required="true" type="text"
+                                                                 label="Please detail your business type" maxlength="100"
+                                                                 value="{!v.acc.Other_Business_Type_Description__c}"                                                 
+                                                                 placeholder="Please detail your business type"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </aura:if>
+                                <div class="slds-form__row">
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                            <lightning:input type="tel" label="Phone (office)" aura:id="fieldcheck"
+                                                             required="true" placeholder="Phone" 
+                                                             value="{!v.acc.Phone}"
+                                                             pattern="([0-9]{10}|[0-9]{4} [0-9]{3} [0-9]{3}|[0-9]{2} [0-9]{4} [0-9]{4})"
+                                                             messageWhenPatternMismatch="Pattern should be 1234567890 or 1234 567 890 or 12 3456 7890"/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form__item" role="listitem"></div>
+                                </div>
+                                <div class="slds-form__row">
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                            <c:AddressAPItool aura:id="addressTool" isFindAdd = "{!v.acc.Is_Find_Billing_Address__c}"
+                                                              searchString="{!v.businessAddress}" label="Business Address"
+                                                              street="{!v.acc.BillingStreet}" state="{!v.acc.BillingState}" 
+                                                              suburb="{!v.acc.BillingCity}" postalCode="{!v.acc.BillingPostalCode}"
+                                                              country="{!v.acc.BillingCountry}" /> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__row">
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                                            <lightning:input type="checkbox" 
+                                                             checked="{!v.acc.Is_Find_Billing_Address__c}" 
+                                                             label="Can't find your address?"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <aura:if isTrue="{!v.acc.Is_Find_Billing_Address__c}">
+                                    <div class="slds-form__row">
+                                        <div class="slds-form__item" role="listitem">
+                                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                                <lightning:input aura:id="fieldcheck" required="true"
+                                                                 value="{!v.acc.BillingStreet}"
+                                                                 label="Street" placeholder="Street"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form__row">
+                                        <div class="slds-form__item" role="listitem">
+                                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                                <lightning:input aura:id="fieldcheck" required="true"
+                                                                 value="{!v.acc.BillingCity}"
+                                                                 label="City" placeholder="City"/>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form__item" role="listitem">
+                                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                                
+                                                <lightning:combobox aura:id="fieldcheck" required="true"
+                                                                    label="State" 
+                                                                    value="{!v.acc.BillingState}"
+                                                                    options="{! v.statesTerritoriesOptions }" 
+                                                                    placeholder="State"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form__row">
+                                        <div class="slds-form__item" role="listitem">
+                                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                                <lightning:input aura:id="fieldcheck" required="true"
+                                                                 value="{!v.acc.BillingPostalCode}"
+                                                                 label="Postal Code" placeholder="Postal Code"/>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form__item" role="listitem">
+                                            <div class="slds-form-element slds-form-element_stacked slds-is-editing"></div>
+                                        </div>
+                                    </div>
+                                </aura:if>
+                            </div>
+                            <div class="slds-form slds-p-top--small" role="list">
+                                <h2 class="header">Authorised Signatory for Referral Agreement</h2>
+                                <p>If your business is a company, the Director or Company Secretary details must go here.</p>
+                                <div class="slds-form__row">
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                            <lightning:input aura:id="fieldcheck" required="true" type="text"
+                                                             label="First Name" 
+                                                             value="{!v.con.FirstName}"                                                 
+                                                             placeholder="First Name"/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                            <lightning:input aura:id="fieldcheck" required="true" type="text"
+                                                             label="Last Name" 
+                                                             value="{!v.con.LastName}"                                                 
+                                                             placeholder="Last Name"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__row">
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                            <lightning:input type="tel" label="Mobile Phone (to authorise referral agreement)" aura:id="fieldcheck"
+                                                             required="true" placeholder="Mobile Phone" 
+                                                             value="{!v.con.Phone}"
+                                                             pattern="([0-9]{10}|[0-9]{4} [0-9]{3} [0-9]{3}|[0-9]{2} [0-9]{4} [0-9]{4})"
+                                                             messageWhenPatternMismatch="Pattern should be 1234567890 or 1234 567 890 or 12 3456 7890"/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                            <lightning:input aura:id="fieldcheck" required="true" type="email"
+                                                             label="Email" 
+                                                             value="{!v.con.Email}"                                                 
+                                                             placeholder="Email"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__row">
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                            <lightning:combobox aura:id="fieldcheck" required="true"
+                                                    label="Position" 
+                                                    value="{!v.con.Position__c}"                                                 
+                                                    options="{! v.positionsOptions }"
+                                                    placeholder="Position"/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form__item" role="listitem"></div>
+                                </div>
+                            </div>
+                        </aura:if>
+                        <aura:if isTrue="{!v.pageNo == 2}">
+                            <div class="slds-form slds-p-top--small" role="list">
+                                <h2 class="header">Business Details</h2>
+                                
+                                <div class="slds-form__row">
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                            <lightning:input type="text"
+                                                             label="Website URL" 
+                                                             value="{!v.acc.Website}"                                                 
+                                                             placeholder="Website URL"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <aura:if isTrue="{!v.acc.Referrer_Business_Type__c == 'Solar Installer' || v.acc.Referrer_Business_Type__c == 'Solar Retailer'}">
+                                    <div class="slds-form__row">
+                                        <div class="slds-form__item" role="listitem">
+                                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                                <lightning:radioGroup name="CleanEnergRG"
+                                                                      label="Are you Clean Energy Council Accredited"
+                                                                      options="{! v.yesNoOptions }"
+                                                                      value="{!v.acc.Are_you_Clean_Energy_Council_Accredited__c}"
+                                                                      type="button"/>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form__item" role="listitem">
+                                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                                <lightning:input type="text"
+                                                                 label="Listing URL on www.cleanenergycouncil.org.au/" 
+                                                                 value="{!v.acc.Listing_URL__c}"                                                 
+                                                                 placeholder="Listing URL"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </aura:if>
+                                <div class="slds-form__row">
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                            <lightning:radioGroup name="appointmentsRG"
+                                                                  label="How many sales appointments does your team conduct each week?"
+                                                                  options="{! v.appointmentsOptions }"
+                                                                  value="{!v.acc.How_many_new_sales_appointments_per_week__c}" 
+                                                                  type="button"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__row">
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing rg-style-horizontal">
+                                            <lightning:radioGroup name="conductAppointmentsRG"
+                                                                  label="How do you conduct most of your appointments"
+                                                                  options="{! v.conductAppointmentsOptions }"
+                                                                  value="{!v.acc.How_do_you_conduct_your_appointment__c}"
+                                                                  type="radio"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__row">
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing rg-style-horizontal">
+                                            <lightning:radioGroup name="finToCustRG"
+                                                                  label="How often do you anticipate introducing finance to your customers?"
+                                                                  options="{! v.financeToCustomersOptions }"
+                                                                  value="{!v.acc.Anticipate_intro_finance_to_customer__c}"
+                                                                  type="radio"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="slds-form slds-p-top--small" role="list">
+                                <h2 class="header">Representatives</h2>
+                                <p>Please list all people in your business who will be referring or require updates.</p>
+                                
+                                <div class="slds-scrollable_x1">
+                                    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-m-vertical--small" style="min-width: 475px;">
+                                        <thead>
+                                            <tr class="slds-line-height_reset">
+                                                <th class="col-size" scope="col">
+                                                    <div class="slds-truncate">First Name</div>
+                                                </th>
+                                                <th class="col-detail-width" scope="col">
+                                                    <div class="slds-truncate">Last Name</div>
+                                                </th>
+                                                <th class="col-size" scope="col">
+                                                    <div class="slds-truncate">Email</div>
+                                                </th>
+                                                <th class="col-detail-width" scope="col">
+                                                    <div class="slds-truncate">Phone</div>
+                                                </th>
+                                                <th class="col-size" scope="col">
+                                                    <div class="slds-truncate">Position</div>
+                                                </th>
+                                                <th class="col-size" scope="col">
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <aura:iteration items="{!v.conList}" var="cont" indexVar="index">
+                                                <tr class="slds-line-height_reset">
+                                                    <td >
+                                                        <lightning:input type="text" value="{!cont.FirstName}" disabled="{!index == 0}"
+                                                                         placeholder="First Name" label="" />
+                                                    </td>
+                                                    <td class="no-abbr">
+                                                        <lightning:input type="text" value="{!cont.LastName}" disabled="{!index == 0}"
+                                                                         placeholder="Last Name" label="" 
+                                                                         aura:id="fieldcheck" required="true"/>
+                                                    </td>
+                                                    <td >
+                                                        <lightning:input type="email" disabled="{!index == 0}"
+                                                                         label="" 
+                                                                         value="{!cont.Email}"                                                 
+                                                                         placeholder="Email" />
+                                                    </td>
+                                                    <td >
+                                                        <lightning:input type="tel" label="" placeholder="Phone" value="{!cont.Phone}" disabled="{!index == 0}"
+                                                                         pattern="([0-9]{10}|[0-9]{4} [0-9]{3} [0-9]{3}|[0-9]{2} [0-9]{4} [0-9]{4})"
+                                                                         messageWhenPatternMismatch="Pattern should be 1234567890 or 1234 567 890 or 12 3456 7890" />
+                                                    </td>
+                                                    <td >
+                                                        <lightning:combobox label=""  disabled="{!index == 0}"
+                                                                            value="{!cont.Position__c}"                                                 
+                                                                            options="{! v.positionsOptions }"
+                                                                            placeholder="Position"/>
+                                                        
+                                                    </td>
+                                                    <td role="gridcell" class="slds-text-align_center">
+                                                        <aura:if isTrue="{!index != 0}">
+                                                            <div class="slds-text-link_reset" id="{!index}" onclick="{!c.deleteRow}">
+                                                                <lightning:icon iconName="utility:delete" size="x-small"/>
+                                                            </div>
+                                                        </aura:if>
+                                                    </td>
+                                                </tr>
+                                            </aura:iteration>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="slds-p-vertical_small" style="text-align: right;">
+                                    <lightning:button label="Add Another"
+                                                      onclick="{! c.addMore }" 
+                                                      iconName="utility:add" 
+                                                      iconPosition="right"                                   
+                                                      variant="brand" />
+                                </div>
+                                
+                            </div>
+                        </aura:if>
+                        <aura:if isTrue="{!v.pageNo == 3}">
+                            <div class="slds-form slds-p-top--small" role="list">
+                                <div class="slds-form__row">
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                            Providing this information will help us
+                                            <ul class="ul-style">
+                                                <li>give your customers a more personalised experience</li>
+                                                <li>Provide marketing material which suits your needs</li>
+                                                <li>develop better marketing material in the future</li>
+                                            </ul>
+                                            The information you provide is considered confidential and will never be shared outside the business.
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-form slds-p-top--small" role="list">
+                                <h2 class="header">Tell us about your business</h2>
+                                <div class="slds-form__row">
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                            <lightning:textarea value="{!v.acc.General_Business_Description__c}" 
+                                                                maxlength="1500"
+                                                                label="Business Description"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="slds-form slds-p-top--small" role="list">
+                                <h2 class="header">Tell us what makes you unique</h2>
+                                <div class="slds-form__row">
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing rg-style-horizontal">
+                                            Unique Value Proposition
+                                        </div>
+                                    </div>
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing rg-style-horizontal">
+                                            Accreditations or Awards
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__row">
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                            <lightning:input type="text"
+                                                             label="" maxlength="255"
+                                                             value="{!v.acc.Unique_Value_Proposition_1__c}"/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                            <lightning:input type="text"
+                                                             label=""  maxlength="255"
+                                                             value="{!v.acc.Key_Accreditations_1__c}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__row">
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                            <lightning:input  type="text"
+                                                             label=""  maxlength="255"
+                                                             value="{!v.acc.Unique_Value_Proposition_2__c}"/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                            <lightning:input type="text"
+                                                             label=""  maxlength="255"
+                                                             value="{!v.acc.Key_Accreditations_2__c}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__row">
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                            <lightning:input type="text"
+                                                             label="" maxlength="255" 
+                                                             value="{!v.acc.Unique_Value_Proposition_3__c}"/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                            <lightning:input type="text"
+                                                             label=""  maxlength="255"
+                                                             value="{!v.acc.Key_Accreditations_3__c}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-form slds-p-top--small" role="list">
+                                <div >
+                                    <h2 class="header">Important! What happens next…</h2>
+                                    <div>On Submit, the authorised person will receive an SMS with instructions to verify their identity and sign the referral agreement. </div><br/>
+                                    <div>
+                                        <p>
+                                            Step 1:		Complete ID verification &amp; e-sign agreement <br/>
+                                            Step 2:		Your team will receive a welcome email with unique referral link <br/>
+                                            Step 3:		Make your first referrals <br/>
+                                        </p><br/>
+                                    </div>
+                                    <div>
+                                        If you have any questions please call us on 1300 131 711 or email hello@parkerlane.com.au
+                                    </div>
+                                </div>
+                            </div>
+                        </aura:if>
+                    </div>
+                </section>
+                <aura:if isTrue="{!v.isOpenAlertModal}">
+                    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                        <div class="slds-modal__container">
+                            
+                            <header class="slds-modal__header">
+                                <lightning:buttonIcon iconName="utility:close"
+                                                      onclick="{! c.closeAlertModel }"
+                                                      alternativeText="close"
+                                                      variant="bare-inverse"
+                                                      class="slds-modal__close"/>
+                                    <lightning:icon iconName="utility:clear" alternativeText="error !" 
+                                                    size ="large" variant="error "/>
+                                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate text-err">Are You Sure?</h2>
+                                
+                            </header>
+                            
+                            <div class="slds-modal__content slds-p-around_medium slds-text-align_center" >
+                                    Do you really want to delete this?
+                            </div>
+                            
+                            <footer class="slds-modal__footer slds-text-align_center">
+                                    <lightning:button variant="neutral" 
+                                                      label="GO BACK"
+                                                      title="GO BACK"
+                                                      onclick="{! c.closeAlertModel }"/>
+                                    <lightning:button variant="brand" 
+                                                      label="DELETE"
+                                                      title="DELETE"
+                                                      onclick="{! c.deleteRecord }"/>
+                            </footer>
+                        </div>
+                    </section>
+                    <div class="slds-backdrop slds-backdrop_open"></div>
+                </aura:if>
+                <div class="max-1000 preNxtBtn ">
+                    <lightning:button class="slds-m-vertical_medium slds-float_left" variant="brand" 
+                                      label="Previous" title="Previous" disabled = "{!v.pageNo==1}"
+                                      onclick="{! c.prev }" />
+                    <aura:if isTrue="{!v.pageNo != 3}">
+                        <lightning:button class="slds-m-vertical_medium slds-float_right" variant="success" 
+                                          label="Next" title="Next" 
+                                          onclick="{! c.next }" />
+                    </aura:if>
+                    <aura:if isTrue="{!v.pageNo == 3}">
+                        <lightning:button class="slds-m-vertical_medium slds-float_right" variant="success" 
+                                          label="Submit" title="Submit" 
+                                          onclick="{! c.submit }" />
+                    </aura:if>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <c:ParkerLaneFooter/>
+</aura:component>

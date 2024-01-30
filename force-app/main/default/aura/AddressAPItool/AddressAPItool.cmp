@@ -1,0 +1,76 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:appHostable" access="global" controller="AddresApiController">
+
+    <aura:attribute name="selectedOption" type="String"/>
+    <aura:attribute name="predictions" type="String[]"/>
+    <aura:attribute name="searchString" type="String"/>
+    <aura:attribute name="street" type="String" />
+    <aura:attribute name="postalCode" type="String" />
+    <aura:attribute name="suburb" type="String" />
+    <aura:attribute name="country" type="String" />
+    <aura:attribute name="state" type="String" />
+    <aura:attribute name="streetNumber" type="String" />
+    <aura:attribute name="streetType" type="String" />
+	<aura:attribute name="label" type="String" default="Address"/>
+    <aura:attribute name="isFindAdd" type="Boolean"/>
+    <aura:attribute name="isShowErr" type="Boolean" default="false"/>
+	<aura:attribute name="isShowRequired" type="Boolean" default="true"/>   
+    <aura:attribute name="isAddressLabelPresent" type="Boolean" default="true"/>
+    
+    <aura:method name="checkAddress" action="{!c.checkAddress}" access="PUBLIC" />
+    
+    <div class="slds-form-element">
+        <div class="slds-form-element__control">
+            <aura:if isTrue="{!v.isAddressLabelPresent}">
+                <label lightning-combobox_combobox="" class="slds-form-element__label">
+                  <!--  <aura:if isTrue="{! !v.isFindAdd &amp;&amp; v.isShowRequired}">
+                        <abbr lightning-combobox_combobox="" title="required" class="slds-required">*</abbr>
+                    </aura:if>-->
+                    {!v.label}</label>
+            </aura:if>
+            <div class="slds-combobox_container slds-has-inline-listbox">
+                <div class="slds-combobox slds-combobox-lookup slds-dropdown-trigger slds-dropdown-trigger_click " aura:id="searchLookup"
+                     aria-expanded="false" aria-haspopup="listbox" role="combobox">
+                    <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_left" aura:id="iconPosition">
+                        <ui:inputText aura:id="inputAdd" required="true"
+                                      updateOn="keyup" keyup="{!c.KeyUpHandler}"
+                                      class="slds-input slds-combobox__input"
+                                      value="{!v.searchString}"
+                                      placeholder="Enter a location"/>
+                        <aura:if isTrue="{!empty(v.selectedOption)}">
+                            <span class="slds-icon_container slds-input__icon">
+                                <div class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default icon" >
+                                    <lightning:icon iconName="utility:checkin" size="x-small"/>
+                                </div>
+                            </span>
+                            <aura:set attribute="else">
+                                <button class="slds-button slds-button_icon slds-input__icon slds-input__icon_right" onclick="{!c.clear}">
+                                    <div class="slds-button__icon">
+                                        <lightning:icon iconName="utility:close" size="x-small"/>
+                                    </div>
+                                </button>
+                            </aura:set>
+                        </aura:if>
+                    </div>
+					
+                    <div role="listbox">                   
+                        <ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid">
+                            <aura:iteration items="{!v.predictions}" var="option">
+                                <li class="slds-listbox__item" role="presentation" onclick="{!c.selectOption}" data-value="{!option.value}" data-record="{!option.label}">
+                                    <span class="slds-media slds-listbox__option slds-listbox__option_entity " role="option">
+                                        <span class="slds-media__body">
+                                            <span class="slds-listbox__option-text slds-listbox__option-text_entity">{!option.label}</span>
+                                        </span>
+                                    </span>
+                                </li>
+                            </aura:iteration>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <aura:if isTrue="{!v.isShowErr}">
+                <div style="color: rgb(194, 57, 52);" class="slds-form-element__help">
+                    Complete this field.</div>
+            </aura:if>
+        </div>
+    </div>
+</aura:component>

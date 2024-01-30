@@ -1,0 +1,38 @@
+<aura:component controller="CustomRelatedRecordController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" >
+    <aura:attribute name="parentRecordId" type="String" />
+    <aura:attribute name="parentRecordAPIName" type="String" />
+    <aura:attribute name="objectName" type="String" default="Account"/>
+    <aura:attribute name="headerName" type="String" />
+    <aura:attribute name="fieldSetName" type="String" />
+    <aura:attribute name="iconName" type="String" />
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="fieldLabel" type="String" />
+    <aura:attribute name="lookupFields" type="List" />
+    <aura:attribute name="fieldsList" type="List" />
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    
+    <div class= "custom-related-record slds-tabs_card1">
+        <aura:if isTrue="{! not( empty( v.parentRecordId ) ) }">
+            <lightning:card title="{!v.headerName}" iconName="{!v.iconName}" >
+                <!--<aura:set attribute="actions">
+                <lightning:button label="New"/>
+            </aura:set>-->
+                <div class= "record-details slds-p-around_medium">
+                    <lightning:recordForm recordId = "{!v.parentRecordId}" objectApiName="{!v.objectName}"
+                                          columns="2" fields="{!v.fieldsList}" mode="view" 
+                                          onsubmit="{!c.handleSubmit}" aura:id="myRecordForm"
+                                          onsuccess="{!c.handleSuccess}"
+                                          onerror="{!c.handleError}"/>
+                </div>
+            </lightning:card>
+        </aura:if>
+        <!--<lightning:recordViewForm recordId="{!v.parentRecordId}" objectApiName="{!v.objectName}">
+        <lightning:messages />iconName="{!'standard:' + v.objectName}" 
+        <lightning:outputField fieldName="Name" />
+
+        <aura:iteration items="{!v.fieldsList}" var="field">
+            <lightning:outputField fieldName="{!field}" />
+        </aura:iteration>
+    </lightning:recordViewForm>-->
+    </div>
+</aura:component>

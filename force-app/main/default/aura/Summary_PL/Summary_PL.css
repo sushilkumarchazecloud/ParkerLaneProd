@@ -1,0 +1,154 @@
+.THIS img{
+    width:85px;
+    height:auto;
+}
+.THIS .max-700{
+    max-width: 700px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.THIS .identity-col{
+    margin-top:10px;
+    margin-bottom:10px;
+}
+
+.THIS .verify-col:nth-child(2) .identity-col{
+    margin-left: 10px;
+}
+
+.THIS .percentage-box{
+    background-color:white; 
+    border-radius:5px;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+.THIS .per-box-container:nth-child(1) .percentage-box {
+    margin-right: 10px;
+}
+.THIS .per-box-container:nth-child(2) .percentage-box {
+    margin-left: 10px;
+}
+
+@media screen and (max-width: 768px) {
+    .THIS .verify-col:nth-child(2) .identity-col{
+        margin-left: 0px;
+    }
+    
+    .THIS .identity-col:nth-child(1){
+        margin: 10px 0px;
+    } 
+    
+    .THIS .identity-col:nth-child(2){
+        margin: 10px 0px;
+    } 
+    
+    .THIS .hideing_when_small_size{
+        display:none;
+    }
+    
+    .THIS .hideing_when_size_big{
+        display:none;
+    } 
+    
+    .THIS .per-box-container:nth-child(1) .percentage-box {
+        margin: 10px 0px;
+    }
+    
+    .THIS .per-box-container:nth-child(2) .percentage-box {
+        margin: 10px 0px;
+    }
+}
+.THIS .applicant-compact-form{
+    font-family: Proxima Nova Alt Regular;
+    padding-bottom:10px;
+    margin-top:15px;
+}
+.THIS .heading_edit{
+    font-size: 1.85rem;
+    font-family: ProximaNova-AltBold;
+    line-height: normal;
+    padding-bottom: 10px;
+}
+.THIS .pargraph_edit{
+    font-size: 1rem;
+    font-family: ProximaNovaAlt-Medium;
+}
+.THIS .pargraph-bold-style{
+    font-size: 1rem;
+    font-family: ProximaNova-AltBold;
+    line-height: normal;
+    display: contents;
+}
+
+.THIS .background_color{
+    border-radius: .25rem;
+    font-family: Proxima Nova Alt Regular;
+    background-color: #D2EDEE;
+}
+.THIS .steps_heading{
+    color: #e73970;
+    font-size: 13px;
+    font-family: ProximaNova-AltBold;
+}
+.THIS .faq-heading{
+    font-family: ProximaNova-AltBold;
+    padding:10px;
+    cursor: pointer;
+}
+.THIS ul {
+  list-style: none;
+}
+
+.THIS ul li:before {
+  content: '✓';
+    margin-right:10px;
+}
+.THIS .step_paragraph{
+    font-size: 1rem;
+    font-family: ProximaNovaAlt-Medium;
+    color: #1a2745!important;
+    padding-top: 4px;
+    line-height: normal;
+    width: 86%;
+}
+.THIS .mobile_or_photoColor{
+    color: #e73c6f;
+    text-decoration: underline;
+}
+.THIS .continue-btn-style1{
+    width: 100%;
+    padding: 12px !important;    
+    background-color: #45c65a !important;
+    border-color: #45c65a !important;
+    color: #FFF !important;
+    font-size: 1rem;
+}
+
+.THIS .continue-btn-style1:hover{  
+    background-color: #329241 !important;
+    border-color: #329241 !important;
+    color: #FFF !important;
+}
+
+.THIS .continue-btn-style2{
+    width: 100%;
+    padding: 12px !important;
+    background-color: #192744 !important;
+    border-color: #192744 !important;
+    color: #FFF !important;
+    font-size: 1rem;
+}
+
+.THIS .continue-btn-style2:hover{  
+    background-color: #2a4170 !important;
+    border-color: #2a4170 !important;
+    color: #FFF !important;
+}
+
+.THIS .header--section{
+    background-color: #d2edee;
+    text-align: center;
+    padding: 15px;
+}

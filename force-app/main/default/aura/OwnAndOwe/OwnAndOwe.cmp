@@ -1,0 +1,374 @@
+<aura:component controller="ParkerLaneLoanController">
+    <aura:attribute name="title" type="String" default=""/>
+    <aura:attribute name="isNotAsset" type="Boolean" default="false"/>
+    <aura:attribute name="isNotLiability" type="Boolean" default="false"/>
+    <aura:attribute name="assetsList" type="FinServ__AssetsAndLiabilities__c[]" />
+    <aura:attribute name="liabilitiesList" type="FinServ__AssetsAndLiabilities__c[]" />
+    <aura:attribute name="assetsSelected" type="FinServ__AssetsAndLiabilities__c" />
+    <aura:attribute name="liabilitiesSelected" type="FinServ__AssetsAndLiabilities__c" />
+    <aura:attribute name="totalAssetsAmount" type="Decimal" default="0"/>
+    <aura:attribute name="totalLiabilitiesAmount" type="Decimal" default="0"/>
+    <aura:attribute name="selectedType" type="String" default=""/>
+    <aura:attribute name="isEdit" type="Boolean" default="false"/>
+    
+    <aura:attribute name="isOpenAlertModal" type="Boolean" default="false"/>
+    <aura:attribute name="isSave" type="Boolean" default="true"/>
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="isNotAssetAndLiability" type="Boolean" default="false"/>
+    <aura:attribute name="saveNextClicked" type="Integer" default="0"/>
+    <aura:attribute name="deleteIndex" type="Integer" default="0"/>
+    <aura:attribute name="assetSize" type="Integer" default="0"/>
+    <aura:attribute name="liabilitySize" type="Integer" default="0"/>
+    <aura:attribute name="applicationSection" type="String" default=""/>
+    <aura:attribute name="appSectionPath" type="List" default="[]"/>
+    <aura:attribute name="selectedPerson" type="String" />
+    <aura:attribute name="isOpenModal" type="boolean" default="false"/>
+    <aura:attribute name="showError" type="Boolean" default="false"/>
+    <aura:attribute name="errorMsg" type="String" default="Something went wrong please contact to Administrator"/>
+    <aura:attribute name="delOrEmpty" type="String" default=""/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="SolarDeleteRowEvent" event="c:SolarDeleteRowEvent" action="{!c.deleteRow}"/>
+    <aura:method name="saveAssetAndLiability" action="{!c.saveApplication}" access="PUBLIC" >
+        <aura:attribute name="isShare" type="Boolean" />
+        <aura:attribute name="isNext" type="Boolean" />
+    </aura:method>
+    
+    <div class="own-and-owe">
+        <aura:if isTrue="{!v.showError}">
+            <div class="slds-notify slds-notify_toast slds-theme_error slds-align_absolute-center slds-m-vertical--medium">
+                <span class="slds-assistive-text">error</span>
+                <div class="slds-notify__content">
+                    <p class="slds-align_absolute-center">{!v.errorMsg}.</p>                
+                </div>
+            </div>
+        </aura:if>
+        <header class="checkout-page-banner--gradient">
+            <div class="slds-align_absolute-center">
+                <div class="page-banner__content-text">
+                    <h1 class="slds-p-vertical--medium heading--page">{!v.title}</h1>
+                    <p class="font-intro">
+                        
+                    </p>
+                </div>
+            </div>
+        </header>
+        <lightning:spinner aura:id="mySpinner" variant="brand" size="large" class="" />
+        <section class="max-900 slds-p-around--medium slds-col  bg-lightest txt-blue">
+            <div class="slds-form slds-m-top--medium" role="list">
+                <h1 class = "header-text">Personal Assets</h1>
+                
+                <div class="slds-form__row txt-darkgrey" >
+                    <div class="slds-form__item"  style="display:block;text-align: justify" >
+                        <p>Listing your assets will strengthen your application. We've pre-populated the most common assets to get your started. Click <span style="color:green;">"Update"</span> or delete where applicable then add any others we've missed.</p>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="slds-scrollable_x">
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-m-vertical--small" style="min-width: 475px;">
+                    <thead>
+                        
+                        <tr class="slds-line-height_reset">
+                            <th class="col-size" scope="col">
+                                <div class="slds-truncate" title="Your Total Assets">Your Total Assets</div>
+                            </th>
+                            <th class="col-detail-width" scope="col"></th>
+                            <th class="col-ownership-width" scope="col"></th>
+                            <th class="col-amount-width" scope="col">
+                                <div class=" slds-text-align_right" title="Total Amount">
+                                    $<lightning:formattedNumber value="{!v.totalAssetsAmount}" maximumFractionDigits="2"/>
+                                </div>
+                            </th>
+                            <th class="col-delete-width" scope="col"></th>
+                            <th class="col-edit-width" scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <aura:iteration items="{!v.assetsList}" var="asset" indexVar="index">
+                            <tr class="slds-hint-parent">
+                                <td data-label="Asset Name"  class="col-size">
+                                    <div class="slds-truncate" title="{!asset.FinServ__AssetsAndLiabilitiesType__c}">
+                                        {!asset.FinServ__AssetsAndLiabilitiesType__c}
+                                    </div>
+                                </td>
+                                <td data-label="Detail" class="col-detail-width">
+                                    <div class="slds-truncate" title="Detail">
+                                        <aura:if isTrue="{!asset.FinServ__AssetsAndLiabilitiesType__c=='Home' ||asset.FinServ__AssetsAndLiabilitiesType__c=='Investment Property' || asset.FinServ__AssetsAndLiabilitiesType__c=='Commercial Property'}">
+                                        	{!asset.Address__c}
+                                        </aura:if>
+                                        <aura:if isTrue="{!asset.FinServ__AssetsAndLiabilitiesType__c=='Bank Account'}">
+                                        	{!asset.Institution__c}
+                                        </aura:if>
+                                        <aura:if isTrue="{!asset.FinServ__AssetsAndLiabilitiesType__c=='Motor Vehicle'}">
+                                        	{!asset.Make_Model__c}
+                                        </aura:if>
+                                        <aura:if isTrue="{!asset.FinServ__AssetsAndLiabilitiesType__c != 'Home' &amp;&amp; 
+                                                         asset.FinServ__AssetsAndLiabilitiesType__c != 'Investment Property' &amp;&amp;
+                                                         asset.FinServ__AssetsAndLiabilitiesType__c != 'Commercial Property' &amp;&amp;
+                                                         asset.FinServ__AssetsAndLiabilitiesType__c != 'Bank Account' &amp;&amp;
+                                                         asset.FinServ__AssetsAndLiabilitiesType__c != 'Motor Vehicle'}">
+                                        	{!asset.FinServ__Description__c}
+                                        </aura:if>
+                                    </div>
+                                </td>
+                                <td data-label="Ownership" class="col-ownership-width">
+                                    <div class="slds-truncate" title="{!asset.FinServ__Ownership__c}">
+                                        {!asset.FinServ__Ownership__c}
+                                    </div>
+                                </td>
+                                <td data-label="Amount">
+                                    <div class="slds-truncate slds-text-align_right" title="{!asset.Value__c}">
+                                        <aura:if isTrue="{!asset.Value__c}">$</aura:if>
+                                        <lightning:formattedNumber value="{!asset.Value__c}" maximumFractionDigits="2"/>
+                                    </div>
+                                </td>
+                                <td role="gridcell" class="slds-text-align_center">
+                                    <div class="slds-text-link_reset" id="{!index}" onclick="{!c.deleteAsset}">
+                                        <lightning:icon iconName="utility:delete" size="x-small"/>
+                                    </div>
+                                </td>
+                                <td role="gridcell" class="slds-text-align_center">
+                                    <div class="slds-text-link_reset" id="{!index}" onclick="{!c.openAssetModel}">
+                                        <aura:if isTrue="{!asset.Value__c}">
+                                            <span class="txt-blue">Edit</span>
+                                            <aura:set attribute="else">
+                                                <span style="color:green;">Update</span>
+                                            </aura:set>
+                                        </aura:if>
+                                    </div>
+                                </td>
+                                
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+                </table>
+            </div>
+            <div class="slds-p-vertical_small">
+                <lightning:button label="Add Another Asset"
+                                  onclick="{! c.addAsset }" 
+                                  iconName="utility:add" 
+                                  iconPosition="right"                                   
+                                  variant="brand" />
+            </div>
+            
+            <div class="slds-form slds-m-vertical--medium " role="list">
+                <h1 class = "header-text">Financial Commitments</h1>
+                <div class="slds-form__row txt-darkgrey">
+                    <div class="slds-form__item" role="listitem" style="text-align: justify;">
+                        <p>Failing to disclose all liabilities may result in your application being declined. Some examples of liabilities to include are:</p>
+                    </div>
+                </div>
+                <div class="slds-form__row txt-darkgrey">
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                            <ul style="list-style: disc;padding-left: 3rem;">
+                                <li>Home Loans</li>
+                                <li>Personal &amp; Investment Loans</li>
+                                <li>Credit/Store Cards</li>
+                                <li>HECS/HELP</li>
+                                <li>Zip/Afterpay</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-scrollable_x">
+                
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered" style="min-width: 475px;">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th class="col-size" scope="col">
+                                <div class="slds-truncate" title="Your Total Liabilities">Your Total Liabilities</div>
+                            </th>
+                            <th class="col-detail-width" scope="col"></th>
+                            <th class="col-ownership-width" scope="col"></th>
+                            <th class="col-amount-width" scope="col">
+                                <div class="slds-truncate slds-text-align_right" title="Total Amount">
+                                    $<lightning:formattedNumber value="{!v.totalLiabilitiesAmount}" maximumFractionDigits="2"/>
+                                </div>
+                            </th>
+                            <th class="col-delete-width" scope="col"></th>
+                            <th class="col-edit-width" scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <aura:iteration items="{!v.liabilitiesList}" var="liability" indexVar="index">
+                            <tr class="slds-hint-parent" >
+                                <td data-label="Liability Name" class="col-size">
+                                    <div class="slds-truncate" title="{!liability.FinServ__AssetsAndLiabilitiesType__c}">
+                                        {!liability.FinServ__AssetsAndLiabilitiesType__c}
+                                    </div>
+                                </td>
+                                <td data-label="detail" class="col-detail-width">
+                                    <div class="slds-truncate" title="Detail">
+                                        {!liability.Institution__c}
+                                    </div>
+                                </td>
+                                <td data-label="Ownership" class="col-ownership-width">
+                                    <div class="slds-truncate" title="{!liability.FinServ__Ownership__c}">
+                                        {!liability.FinServ__Ownership__c}
+                                    </div>
+                                </td>
+                                <td data-label="Amount">
+                                    <div class="slds-truncate slds-text-align_right" title="{!liability.Value__c}">
+                                        <aura:if isTrue="{!liability.Value__c}">$</aura:if><lightning:formattedNumber value="{!liability.Value__c}" maximumFractionDigits="2"/>
+                                    </div>
+                                </td>
+                                <td role="gridcell" class="slds-text-align_center">
+                                    <div class="slds-text-link_reset" id="{!index}" onclick="{!c.deleteLiability}">
+                                        <lightning:icon iconName="utility:delete" size="x-small"/>
+                                    </div>
+                                </td>
+                                <td role="gridcell" class="slds-text-align_center">
+                                    <div class="slds-text-link_reset" id="{!index}" onclick="{!c.openLiabilityModel}">
+                                        <aura:if isTrue="{!liability.Value__c || liability.FinServ__AssetsAndLiabilitiesType__c=='Child Maintenance'}">
+                                            <span class="txt-blue">Edit</span>
+                                            <aura:set attribute="else">
+                                                <span style="color:green;">Update</span>
+                                            </aura:set>
+                                        </aura:if>
+                                    </div>
+                                </td>
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+                </table>
+            </div>
+            <div class="slds-p-top_small">
+                <lightning:button label="Add another Commitment"
+                                  onclick="{! c.addLiability }" 
+                                  iconName="utility:add" 
+                                  iconPosition="right" 
+                                  variant="brand" />
+            </div>
+            
+            <div class="slds-grid slds-wrap net-wealth slds-m-top_x-large">
+                <div class="slds-col slds-size_1-of-2">
+                    <span>Your Net Wealth:</span>
+                </div>
+                <div class="slds-col slds-size_1-of-2 slds-text-align_right">
+                    <span>$<lightning:formattedNumber value="{!v.totalAssetsAmount - v.totalLiabilitiesAmount }" maximumFractionDigits="2"/></span>
+                </div>
+            </div>
+            <aura:if isTrue="{!v.isOpenAlertModal}">
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        
+                        <header class="slds-modal__header">
+                            <lightning:buttonIcon iconName="utility:close"
+                                                  onclick="{! c.closeAlertModel }"
+                                                  alternativeText="close"
+                                                  variant="bare-inverse"
+                                                  class="slds-modal__close"/>
+                            <aura:if isTrue="{!v.delOrEmpty=='delete'}">
+                                <lightning:icon iconName="utility:clear" alternativeText="error !" 
+                                                size ="large" variant="error "/>
+                                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate text-err">Are You Sure?</h2>
+                            </aura:if>
+                            <aura:if isTrue="{!v.delOrEmpty=='empty'}">
+                                <lightning:icon iconName="utility:warning" alternativeText="Warning!" 
+                                                size ="large" variant="warning"/>
+                                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate text-warning">Are You Sure?</h2>
+                            </aura:if>
+
+                        </header>
+                        
+                        <div class="slds-modal__content slds-p-around_medium slds-text-align_center" >
+                            <aura:if isTrue="{!v.delOrEmpty=='delete'}">
+                                Do you really want to delete this {!v.selectedType}?
+                            </aura:if>
+                            <aura:if isTrue="{!v.delOrEmpty=='empty'}">
+                                You have not listed any items in either the assets or liabilities section. 
+                            </aura:if>
+                            
+                        </div>
+                        
+                        <footer class="slds-modal__footer slds-text-align_center">
+                            <aura:if isTrue="{!v.delOrEmpty=='delete'}">
+                                <lightning:button variant="neutral" 
+                                                  label="GO BACK"
+                                                  title="GO BACK"
+                                                  onclick="{! c.closeAlertModel }"/>
+                                <lightning:button variant="brand" 
+                                                  label="DELETE"
+                                                  title="DELETE"
+                                                  onclick="{! c.deleteAssLiability }"/>
+                            </aura:if>
+                            <aura:if isTrue="{!v.delOrEmpty=='empty'}">
+                                <lightning:button variant="neutral" 
+                                                  label="OOPS! GO BACK"
+                                                  title="OOPS! GO BACK"
+                                                  onclick="{! c.closeAlertModel }"/>
+                                <lightning:button variant="brand" 
+                                                  label="I'M SURE, KEEP GOING"
+                                                  title="I'M SURE, KEEP GOING"
+                                                  onclick="{! c.save }"/>
+                            </aura:if>
+                        </footer>
+                    </div>
+                </section>
+            	<div class="slds-backdrop slds-backdrop_open"></div>
+            </aura:if>
+            <aura:if isTrue="{!v.isOpenModal}">
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+
+                        <header class="slds-modal__header">
+                            <lightning:buttonIcon iconName="utility:close"
+                                                  onclick="{! c.closeModel }"
+                                                  alternativeText="close"
+                                                  variant="bare-inverse"
+                                                  class="slds-modal__close"/>
+                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{!v.selectedType} Details</h2>
+                        </header>
+
+                        <div class="slds-modal__content slds-p-around_medium" style="min-height: 20rem;">
+                            <aura:if isTrue="{!v.selectedType == 'Asset'}">
+                                <c:OwnAndOweAssets aura:id="OwnAndOweAssets"
+                                                   consumerAssets = "{!v.assetsSelected}" 
+                                                   selectedPerson = "{!v.selectedPerson}"/>
+                            </aura:if>
+                            <aura:if isTrue="{!v.selectedType == 'Liability'}">
+                                <c:OwnAndOweFinancialCommitments aura:id="OwnAndOweFinancialCommitments"
+                                                                 liability = "{!v.liabilitiesSelected}"
+                                                                 selectedPerson = "{!v.selectedPerson}"/>
+                            </aura:if>
+                            
+                        </div>
+
+                        <footer class="slds-modal__footer">
+                            <lightning:button variant="neutral" 
+                                              label="Cancel"
+                                              title="Cancel"
+                                              onclick="{! c.closeModel }"/>
+                            <aura:if isTrue="{!v.selectedType == 'Asset'}">
+                                <lightning:button variant="brand" 
+                                                  label="Add and Close"
+                                                  title="Add and Close"
+                                                  onclick="{! c.AddCloseAsset }"/>
+                            </aura:if>
+                            <aura:if isTrue="{!v.selectedType == 'Liability'}">
+                                <lightning:button variant="brand" 
+                                                  label="Add and Close"
+                                                  title="Add and Close"
+                                                  onclick="{! c.AddCloseLiability }"/>
+                            </aura:if>
+                            
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+                
+            </aura:if>
+        </section>
+        <div class="max-900 preNxtBtn">
+            <lightning:button class="slds-m-vertical_medium slds-float_left" variant="brand" 
+                              label="Previous" title="Previous" 
+                              onclick="{! c.prevSave }" />
+            <lightning:button class="slds-m-vertical_medium slds-float_right" variant="success" 
+                              label="Save &amp; Next" title="Save &amp; Next" 
+                              onclick="{! c.saveAndNext }" />
+        </div>
+    </div>
+</aura:component>

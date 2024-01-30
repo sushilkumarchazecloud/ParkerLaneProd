@@ -1,0 +1,13 @@
+.THIS.bg-lightest-footer,
+.THIS .bg-lightest-footer {
+    background-color: #cccccc;
+
+    border-top: 2px solid #bbb;
+}
+.THIS.txt-center-align,.THIS .txt-center-align {
+    width: 100%;
+    text-align: center;
+}
+.THIS{
+    font-size: 16px;
+}

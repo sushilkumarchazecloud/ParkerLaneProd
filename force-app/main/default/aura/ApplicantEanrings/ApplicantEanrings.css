@@ -1,0 +1,40 @@
+.THIS .uiInput--textarea .textarea, .THIS .uiInput--textarea.textarea {
+    background-color: rgb(255, 255, 255);
+    color: rgb(8, 7, 7);
+    border: 1px solid rgb(221, 219, 218);
+    border-radius: .25rem;
+    width: 100%;
+    transition: border .1s linear,background-color .1s linear;
+    resize: vertical;
+    padding: .75rem;
+}
+.THIS .h3-heading{
+    color: rgb(107, 109, 112);
+    font-size: 14px;
+}
+.THIS h1.header-text {
+    font-size: 22px;
+    font-weight: 800;
+}
+.THIS .solar-radio-button .slds-radio_button-group .slds-button label.slds-radio_button__label {
+    padding: 10px;
+    border-radius: 0;
+    width:100%;
+    text-align: center;
+    height: 100%;
+}
+.THIS .solar-radio-button .slds-radio_button-group {
+    width:100%;
+    border-radius: 0;
+    border: none;
+}
+.THIS .solar-radio-button .slds-radio_button-group .slds-button  {
+    width: 50%;
+    margin: 0 5px;
+    padding-bottom: 0px;
+    border: 1px solid rgb(45, 119, 203);
+
+}
+.THIS .solar-radio-button{
+    border-bottom: 1px solid rgb(45, 119, 203);
+}

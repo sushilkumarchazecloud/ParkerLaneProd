@@ -1,0 +1,56 @@
+.THIS .header-text {
+    font-weight: 900;
+    font-size: 2.75rem;
+    line-height: 1.25;
+}
+.THIS .select-opt-inline-block{
+    display: inline-block;
+}
+.THIS .loan-rec-panel .slds-combobox__input.slds-input, .THIS .loan-rec-panel .slds-combobox__input.slds-input:focus {
+    background-color: #006ac6;
+    border: #006ac6;
+    border-radius: 0;
+    width: 100%;
+    transition: border .1s linear,background-color .1s linear;
+    height: calc(1.875rem + (1px * 2));
+    color: #fff !important;
+    border-bottom: 1px solid;
+    font-size: 20px;
+}
+.THIS .loan-rec-panel .slds-dropdown{
+    background: #006ac6;
+    text-align: left;
+    
+}
+.THIS .inpt-style .slds-input{
+    text-align: right;
+}
+ .THIS .loan-rec-panel .slds-listbox__option.slds-has-focus, .THIS .loan-rec-panel .slds-listbox__option:hover{
+    background-color: #006ac6;
+    color: #000;
+}
+@media (max-width: 700px) {
+    .THIS #container > div {
+        width: auto;
+        display: block;
+        float: none;
+    }
+    .THIS #index-0 { order: 2 }
+    .THIS #index-1 { order: 1 }
+    .THIS #index-2 { order: 3 }
+}
+.THIS .input-style input {
+    text-align: right;
+    color: #1a2745 !important;
+    
+    width: 7rem;
+}
+.THIS .esp-mark{
+    border: 1px solid;
+    border-radius: 40px;
+    height: 15px;
+    width: 15px;
+    text-align: center;
+    border-color: #0176D3;
+    background-color: #0176D3;                        
+}

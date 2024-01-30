@@ -1,0 +1,61 @@
+.THIS.bg-lightest,
+.THIS .bg-lightest {
+    background-color: #f5f5f5;
+}
+.THIS.solarloanfont, .THIS .solarloanfont, .THIS h1, .THIS h2, .THIS h3, .THIS h4, .THIS h5{
+    font-family: Proxima Nova Alt Regular;
+}
+.THIS.slds-scope .slds-input,.THIS .slds-scope .slds-input  {
+    padding: 10px !important;
+}
+
+
+.THIS .boldBelyFont {
+ font-family: Bely-Bold;
+}
+
+@font-face {
+    font-family: Bely-Bold;
+    src: url('/resource/customfonts/Bely-Bold.otf') format('OpenType');
+}
+
+.THIS .proximaNovaReg {
+    font-family: ProximaNovaAlt-Medium;
+}
+
+@font-face {
+    font-family: ProximaNovaAlt-Medium;
+    src: url('/resource/customfonts/ProximaNovaAlt-Medium.otf') format('OpenType');
+}
+
+.THIS .proximaNovafont{
+    font-family: Proxima Nova Alt Regular;
+}
+@font-face {
+    font-family: Proxima Nova Alt Regular;
+    src: url('/resource/ProximaNovaRegularFont') format('TrueType'); 
+}
+.THIS .ProximaNova-AltBold{
+    font-family: ProximaNova-AltBold;
+}
+@font-face {
+    font-family: ProximaNova-AltBold;
+    src: url('/resource/customfonts/ProximaNova-AltBold.otf') format('OpenType');
+}
+
+
+.THIS .input-dollar {
+    position: relative;
+    text-align: left;
+}
+
+.THIS .input-dollar:before {
+    position: absolute;
+    top: 0;
+    content: "$";
+    z-index: 1;
+    padding: 14px 10px!important;
+}
+.THIS .firstLatterCapital .slds-input{
+   text-transform: capitalize !important;
+}

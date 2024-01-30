@@ -1,0 +1,602 @@
+<aura:component controller="ParkerLaneLoanController">
+    <!--<aura:attribute name="applicant" type="Contact" default="{'sobjectType': 'Contact'}"/>-->
+    
+    <aura:attribute name="title" type="String" default=""/>
+    <aura:attribute name="isNotAsset" type="Boolean" default="false"/>
+    <aura:attribute name="isNotLiability" type="Boolean" default="false"/>
+    <aura:attribute name="assetsList" type="FinServ__AssetsAndLiabilities__c[]" />
+    <aura:attribute name="liabilitiesList" type="FinServ__AssetsAndLiabilities__c[]" />
+    <aura:attribute name="assetsSelected" type="FinServ__AssetsAndLiabilities__c" />
+    <aura:attribute name="liabilitiesSelected" type="FinServ__AssetsAndLiabilities__c" />
+    <aura:attribute name="totalAssetsAmount" type="Decimal" default="0"/>
+    <aura:attribute name="totalLiabilitiesAmount" type="Decimal" default="0"/>
+    <aura:attribute name="selectedType" type="String" default=""/>
+    <aura:attribute name="selectedTypeName" type="String" default=""/>
+    <aura:attribute name="isEdit" type="Boolean" default="false"/>
+    
+    <aura:attribute name="isOpenAlertModal" type="Boolean" default="false"/>
+    <aura:attribute name="isSave" type="Boolean" default="true"/>
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="isNotAssetAndLiability" type="Boolean" default="false"/>
+    <aura:attribute name="saveNextClicked" type="Integer" default="0"/>
+    <aura:attribute name="deleteIndex" type="Integer" default="0"/>
+    <aura:attribute name="assetSize" type="Integer" default="0"/>
+    <aura:attribute name="liabilitySize" type="Integer" default="0"/>
+    <aura:attribute name="applicationSection" type="String" default=""/>
+    <aura:attribute name="appSectionPath" type="List" default="[]"/>
+    <aura:attribute name="selectedPerson" type="String" />
+    <aura:attribute name="isOpenModal" type="boolean" default="false"/>
+    <aura:attribute name="showError" type="Boolean" default="false"/>
+    <aura:attribute name="errorMsg" type="String" default="Something went wrong please contact to Administrator"/>
+    <aura:attribute name="delOrEmpty" type="String" default=""/>
+    <!-- start attribute-->
+    <aura:attribute name="finacialCommitmentsOption" type="List" default="[{'label': 'Yes', 'value': 'Yes'},{'label': 'None', 'value': 'No'}]"/>
+    <aura:attribute name="HomeAndInvestmentOption" type="List" default="[{'label': 'Home', 'value': 'Home Loan/Mortgage'},{'label': 'Investment', 'value': 'Investment Home Loan'}]"/>
+    <aura:attribute name="PersonalAndAutoOption" type="List" default="[{'label': 'Personal', 'value': 'Personal Loan'},{'label': 'Auto', 'value': 'Auto Loan'}]"/>
+    
+    <aura:attribute name="mortgageList" type="FinServ__AssetsAndLiabilities__c[]" />
+    <aura:attribute name="creditCardlist" type="FinServ__AssetsAndLiabilities__c[]" />
+    <aura:attribute name="personalAndAutoloanlist" type="FinServ__AssetsAndLiabilities__c[]" />
+    <aura:attribute name="otherCommitmentlist" type="FinServ__AssetsAndLiabilities__c[]" />
+    <aura:attribute name="OtherliabilityTypeOptions" type="List" default="[{'label': 'HECS/HELP', 'value': 'HECS/HELP'},{'label': 'Child Maintenance', 'value': 'Child Maintenance'},{'label': 'Car Lease', 'value': 'Car Lease'},{'label': 'Tax liability', 'value': 'Tax liability'},{'label': 'Margin Loan', 'value': 'Margin Loan'},{'label': 'Overdraft', 'value': 'Overdraft'},{'label': 'Commercial Mortgage', 'value': 'Commercial Mortgage'}]"/>
+    <aura:attribute name="propertyLoanlist" type="FinServ__AssetsAndLiabilities__c[]" />
+    
+    <aura:attribute name="homeAndInvestmentcheck" type="String" />
+    <aura:attribute name="PersonalAndAutoLoanscheck" type="String" />
+    <aura:attribute name="CreditCardscheck" type="String"/>
+    <aura:attribute name="OtherCommitmentscheck" type="String"/>
+    
+    <aura:attribute name="paymentFrequencyOptions" type="List" default="[{'label': 'Weekly', 'value': 'Weekly'},{'label': 'Fortnightly', 'value': 'Fortnightly'},{'label': 'Monthly', 'value': 'Monthly'},{'label': 'Annually', 'value': 'Annually'}]"/>
+    <!-- <aura:attribute name="assetTypeOptions" type="List" default="[{'label': 'Add another asset', 'value': ''},{'label': 'Home', 'value': 'Home'},{'label': 'Investment Property', 'value': 'Investment Property'},{'label': 'Motor Vehicle', 'value': 'Motor Vehicle'},{'label': 'Bank Account', 'value': 'Bank Account'},{'label': 'Superannuation', 'value': 'Superannuation'},{'label': 'Commercial Property', 'value': 'Commercial Property'},{'label': 'Home Contents', 'value': 'Home Contents'},{'label': 'Shares Portfolio', 'value': 'Shares Portfolio'},{'label': 'Collectibles', 'value': 'Collectibles'},{'label': 'Leisure', 'value': 'Leisure'},{'label': 'Other', 'value': 'Other'}]"/>-->
+    
+    <aura:attribute name="assetTypeOptions" type="List" default="[{'label': 'Add another asset', 'value': ''},{'label': 'Investment Property', 'value': 'Investment Property'},{'label': 'Commercial Property', 'value': 'Commercial Property'},{'label': 'Shares Portfolio', 'value': 'Shares Portfolio'}]"/>
+    <aura:attribute name="addAssetValue" type="String" default=""/>
+    
+    <aura:attribute name="isSaveDisabled" type="boolean" default="true"/>
+    
+    <aura:attribute name="savedDone" type="Boolean" default="false"/>
+    
+    <!-- end attribute-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="SolarDeleteRowEvent" event="c:SolarDeleteRowEvent" action="{!c.deleteRow}"/>
+    <aura:method name="saveAssetAndLiability" action="{!c.saveApplication}" access="PUBLIC" >
+        <aura:attribute name="isShare" type="Boolean" />
+        <aura:attribute name="isNext" type="Boolean" />
+    </aura:method>
+    
+    <!-- Applicant details attribute-->
+    <aura:attribute name="isShowDependents" type="Boolean" default="true"/>
+    <aura:attribute name="livingSituationOptions" type="List" default="[{'label': 'Own home outright', 'value': 'Own home outright'},{'label': 'Own home with mortgage', 'value': 'Own home with mortgage'},{'label': 'Renting', 'value': 'Renting'},{'label': 'Boarding with parents', 'value': 'Boarding with parents'},{'label': 'Boarding with other', 'value': 'Boarding with other'},{'label': 'Supplied by employer', 'value': 'Supplied by employer'}]"/>
+    <aura:attribute name="noChildrenOptions" type="List" default="[{'label': '0', 'value': '0'},{'label': '1', 'value': '1'},{'label': '2', 'value': '2'},{'label': '3', 'value': '3'},{'label': '4', 'value': '4'},{'label': '5+', 'value': '5'}]"/>
+    
+    <div class="own-and-owe">
+        <aura:if isTrue="{!v.showError}">
+            <div class="slds-notify slds-notify_toast slds-theme_error slds-align_absolute-center slds-m-vertical--medium error-section">
+                <span class="slds-assistive-text">error</span>
+                <div class="slds-notify__content">
+                    <p class="slds-align_absolute-center">{!v.errorMsg}.</p>                
+                </div>
+            </div>
+        </aura:if>
+        <lightning:spinner aura:id="mySpinner" variant="brand" size="large" class="" />
+        
+        
+        <section class="max-700 slds-p-around--medium slds-col  bg-lightest txt-blue">
+        	<div class="listYourCommitments">
+                <h1 style="font-size: 1.75rem;font-weight: 900;font-family:ProximaNova-AltBold;">List <u>all</u> your financial commitments</h1>
+            </div>
+            <div class="HomeInvestment">
+                <aura:if isTrue="{!v.mortgageList.length || v.propertyLoanlist.length}">
+                
+                    <aura:iteration items="{!v.mortgageList}" var="liability" indexVar="index">
+                        
+                        <div class="slds-grid slds-wrap slds-m-top_medium">
+
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_10-of-12">
+                                  <aura:if isTrue ="{!index lt  1}"> 
+                                    <h6 class="heading-edit1">
+
+                                        Complete your home loan details
+                                    </h6>
+                                  </aura:if>
+                                </div>
+
+                        </div>
+                        <div class="highlightOnselect slds-m-top_medium">
+                            <div class="slds-grid slds-wrap">
+
+                                    <div style="width:100%">
+                                        <h6 style="padding: 5px;">Home loan for:</h6>
+                                    </div>
+                                <div style="width:100%">
+                                    <h6 class="heading-edit"> {!liability.Address__c}</h6>
+                                </div>
+                                <div class="slds-size_2-of-2">                     
+                                    <lightning:input label="Lender" type="text" required="true"
+                                                     value="{!liability.Institution__c}" 
+                                                     class="no-abbr slds-m-around1_xx-small slds-p-around_xx-small"
+                                                     aura:id="fieldcheck"/> 
+                                </div>
+                                <div class="slds-size_1-of-2 ">
+                                    <div class="input-dollar2">
+                                        <lightning:input label="Balance Outstanding" 
+                                                         type="number"
+                                                         required="true"
+                                                         aura:id="fieldcheck"
+                                                         value="{!liability.Value__c}"
+                                                         onchange="{!c.doCalculation}"
+                                                         class="no-abbr slds-m-around1_xx-small slds-p-around_xx-small"/>   
+                                    </div>
+                                </div>
+                                <div class="slds-size_1-of-2 ">
+                                    <div class="inputPercentage">
+                                        <lightning:input label="Interest rate"
+                                                         step="0.01" messageWhenStepMismatch ="Maximum of 2 decimal places allowed"
+                                                         type="number" aura:id="fieldcheck" required="true"
+                                                         value="{!liability.Interest_Rate__c}"
+                                                         class="no-abbr slds-m-around1_xx-small slds-p-around_xx-small"/> 
+                                    </div>
+                                </div>
+                                <div class="slds-size_1-of-2 ">
+                                    <div class="input-dollar2">
+                                        <lightning:input label="Min.Repayment" 
+                                                         type="number" aura:id="fieldcheck" required="true"
+                                                         value="{!liability.Monthly_Repayment__c}"
+                                                         class="no-abbr slds-m-around1_xx-small slds-p-around_xx-small"/>  
+                                    </div>
+                                </div>
+                                <div class="slds-size_1-of-2 ">
+                                    <lightning:select aura:id="fieldcheck" name="select" onchange="{}" label="Frequency"
+                                                      required="true" class="no-abbr slds-m-around1_xx-small slds-p-around_xx-small"
+                                                      value="{!liability.Repayment_Frequency__c}">
+                                        <option value="">Select</option>
+                                        <aura:iteration items="{!v.paymentFrequencyOptions}" var="Frequency">
+                                            <option value="{!Frequency.value}" text="{!Frequency.value}"></option>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+                    </aura:iteration>
+                    <aura:iteration items="{!v.propertyLoanlist}" var="liability" indexVar="index">
+                        <div class="slds-grid slds-wrap slds-m-top_x-large">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_10-of-12">
+                                <h6 class="heading-edit1">
+                                    <aura:if isTrue ="{!index lt  1}">
+                                        Complete your Other property loan details ({!v.propertyLoanlist.length})
+                                    </aura:if>
+                                </h6>
+                            </div>
+                        </div>   
+                        <div class="highlightOnselect slds-m-top_medium">
+                            <div class="slds-grid slds-wrap">
+                                
+                                <div style="width:100%">
+                                    <h6 style="padding: 5px;">Other Property loan {!index+1}:</h6>
+                                </div>
+                                <div style="width:100%">
+                                    <h6 class="heading-edit">{!liability.Address__c}</h6>
+                                </div>
+                                
+                                <div class="slds-size_2-of-2">                     
+                                    <lightning:input label="Lender" type="text" required="true"
+                                                     value="{!liability.Institution__c}" 
+                                                     class="no-abbr slds-m-around1_xx-small slds-p-around_xx-small"
+                                                     aura:id="fieldcheck"/> 
+                                </div>
+                                <div class="slds-size_1-of-2 ">
+                                    <div class="input-dollar2">
+                                        <lightning:input label="Balance Outstanding" 
+                                                         type="number"
+                                                         required="true"
+                                                         aura:id="fieldcheck"
+                                                         value="{!liability.Value__c}"
+                                                         onchange="{!c.doCalculation}"
+                                                         class="no-abbr slds-m-around1_xx-small slds-p-around_xx-small"/>   
+                                    </div>
+                                </div>
+                                <div class="slds-size_1-of-2 ">
+                                    <div class="inputPercentage">
+                                        <lightning:input label="Interest rate" 
+                                                         step="0.01" messageWhenStepMismatch ="Maximum of 2 decimal places allowed"
+                                                         type="number" aura:id="fieldcheck" required="true"
+                                                         value="{!liability.Interest_Rate__c}"
+                                                         class="no-abbr slds-m-around1_xx-small slds-p-around_xx-small"/> 
+                                    </div>
+                                </div>
+                                <div class="slds-size_1-of-2 ">
+                                    <div class="input-dollar2">
+                                        <lightning:input label="Min.Repayment" 
+                                                         type="number" aura:id="fieldcheck" required="true"
+                                                         value="{!liability.Monthly_Repayment__c}"
+                                                         class="no-abbr slds-m-around1_xx-small slds-p-around_xx-small"/>  
+                                    </div>
+                                </div>
+                                <div class="slds-size_1-of-2 ">
+                                    <lightning:select aura:id="fieldcheck" name="select" onchange="{}" label="Frequency"
+                                                      required="true" class="no-abbr slds-m-around1_xx-small slds-p-around_xx-small"
+                                                      value="{!liability.Repayment_Frequency__c}">
+                                        <option value="">Select</option>
+                                        <aura:iteration items="{!v.paymentFrequencyOptions}" var="Frequency">
+                                            <option value="{!Frequency.value}" text="{!Frequency.value}"></option>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                </div>
+                            </div>    
+                        </div>   
+                    </aura:iteration>
+                </aura:if>  
+            </div>
+            <div class="listYourCommitments slds-m-top_x-large">
+                <h1 style="font-size: 1.75rem;font-weight: 900;font-family:ProximaNova-AltBold;">List your Other financial commitments</h1>
+            </div>
+            <div class="Creditcard slds-m-vertical_small">
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_10-of-12">
+                        <h6 class="heading-edit">
+                            <!--Credit cards &amp; Buy Now Pay Later?-->
+                            Do you have any credit cards or buy now pay later?
+                        </h6>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_2-of-12 rg-split">
+                        <lightning:radioGroup name="CreditcardYesOrno"
+                                              aura:id="fieldcheck" 
+                                              label=""
+                                              options="{! v.finacialCommitmentsOption }"
+                                              value="{!v.CreditCardscheck}"
+                                              onchange="{!c.addCreditCardRowOnYes}"
+                                              type="button"/>
+                    </div>
+                </div>
+                <aura:if isTrue="{!v.CreditCardscheck == undefined &amp;&amp; v.showError}">
+                    <div class="no-commitment-error">
+                        Please select credit cards details
+                    </div>
+                </aura:if>
+                <aura:if isTrue="{!v.CreditCardscheck == 'Yes'}">
+                    <aura:if isTrue="{!v.creditCardlist.length == 0}">
+                        <div class="no-commitment-error">
+                            Please add credit cards details
+                        </div>
+                    </aura:if>
+                    <aura:iteration items="{!v.creditCardlist}" var="liability" indexVar="index">   
+                        <div class="highlightOnselect slds-m-top_medium">
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-size_1-of-2 ">
+                                    <h6 class="heading-edit">Credit Card/BNPL {!index + 1}</h6>
+                                </div>
+                                <div class="slds-size_1-of-2">
+                                    <div class="slds-text-link_reset" id="{!index}" onclick="{!c.deleteCreditCard}">
+                                        <lightning:icon iconName="utility:delete" size="x-small" style="float:right;" class="slds-m-around1_xx-small slds-p-around_xx-small"/>
+                                    </div> 
+                                </div>
+                                <div class="slds-size_2-of-2">    
+                                    <lightning:input label="Lender" type="text" required="true"
+                                                     value="{!liability.Institution__c}" 
+                                                     class="no-abbr slds-m-around1_xx-small slds-p-around_xx-small"
+                                                     aura:id="fieldcheck"/> 
+                                </div>
+                                <div class="slds-size_1-of-2 ">
+                                    <div class="input-dollar2">
+                                        <lightning:input label="Limit" 
+                                                         type="number" aura:id="fieldcheck" required="true"
+                                                         value="{!liability.Limit__c}"
+                                                         class="no-abbr slds-m-around1_xx-small slds-p-around_xx-small"/>   
+                                    </div>
+                                </div>
+                                <div class="slds-size_1-of-2 ">
+                                    <div class="input-dollar2">
+                                        <lightning:input label="Current balance" 
+                                                         type="number" aura:id="fieldcheck" required="true"
+                                                         onchange="{!c.doCalculation}"
+                                                         value="{!liability.Value__c}"
+                                                         min="0"
+                                                         max="{!liability.Limit__c}"
+                                                         messageWhenRangeOverflow="Balance can not be higher than credit limit"
+                                                         class="no-abbr slds-m-around1_xx-small slds-p-around_xx-small"
+                                                        />
+ 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>    
+                    </aura:iteration>       
+                    <div class="slds-size_2-of-2 button_icon_radius">
+                        <div class="slds-p-vertical_small text_decoration_underline">
+                            <lightning:button label="Add another credit card / BNPL"
+                                              onclick="{!c.addCreditCardRow}" 
+                                              iconName="utility:add" 
+                                              iconPosition="left"                                   
+                                              variant="base"
+                                              class="slds-align_absolute-center"/>
+                        </div>
+                    </div>
+                    
+                    
+                </aura:if>
+            </div>
+            <div class="PersonalLoan slds-m-top_large">
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_10-of-12">
+                        <h6 class="heading-edit"><!--Personal and auto loans? -->
+                            Do you have any other loans?<br/> 
+                            <p style="font-weight: normal;font-size: 16px;font-family: 'Proxima Nova Alt Regular';">(eg personal loan, car loan, overdraft etc)?</p>
+                        </h6>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_2-of-12 rg-split">
+                        <lightning:radioGroup name="PersonalAndAutoOption"
+                                              aura:id="fieldcheck" 
+                                              label=""
+                                              onchange="{!c.addPersonalRowOnYes}"
+                                              options="{! v.finacialCommitmentsOption }"
+                                              value="{!v.PersonalAndAutoLoanscheck}"
+                                              type="button"/>
+                    </div>
+                </div>
+                <aura:if isTrue="{!v.PersonalAndAutoLoanscheck == undefined &amp;&amp; v.showError}">
+                    <div class="no-commitment-error">
+                        Please select other loans details
+                    </div>
+                </aura:if>
+                <aura:if isTrue="{!v.PersonalAndAutoLoanscheck == 'Yes'}">
+                    <aura:if isTrue="{!v.personalAndAutoloanlist.length == 0}">
+                        <div class="no-commitment-error">
+                            Please add other loans details
+                        </div>
+                    </aura:if>
+                    <aura:iteration items="{!v.personalAndAutoloanlist}" var="liability" indexVar="index">
+                        <div class="highlightOnselect slds-m-top_medium">
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-size_5-of-6 ">
+                                    <h6 class="heading-edit">Personal / Auto Loan {!index + 1}</h6>
+                                </div>
+                                
+                                <div class="slds-size_1-of-6">
+                                    <div class="slds-text-link_reset" id="{!index}" onclick="{!c.deletePersonalAndAutoloan}">
+                                        <lightning:icon iconName="utility:delete" size="x-small" style="float:right;" class="slds-m-around1_xx-small slds-p-around_xx-small"/>
+                                    </div> 
+                                </div>
+
+                                <div class="slds-size_1-of-2 rg-split">
+                                    <lightning:radioGroup name="{!'PersonalAndAauto' + index}"
+                                                          aura:id="fieldcheck" 
+                                                          label=""
+                                                          options="{! v.PersonalAndAutoOption }"
+                                                          value="{!liability.FinServ__AssetsAndLiabilitiesType__c}"
+                                                          type="button"
+                                                          class="no-abbr "/> 
+                                </div>
+                                <div class="slds-size_2-of-2">  
+                                    <lightning:input label="Lender" type="text" 
+                                                     value="{!liability.Institution__c}" 
+                                                     aura:id="fieldcheck" required="true"
+                                                     class="no-abbr slds-m-around1_xx-small slds-p-around_xx-small"/> 
+                                </div>                   
+                                <div class="slds-size_2-of-2 ">
+                                    <div class="input-dollar2">
+                                        <lightning:input label="Balance Outstanding" 
+                                                         type="number" aura:id="fieldcheck" required="true"
+                                                         value="{!liability.Value__c}"
+                                                         onchange="{!c.doCalculation}"
+                                                         class="no-abbr slds-m-around1_xx-small slds-p-around_xx-small"/>   
+                                    </div>
+                                </div>
+                                <div class="slds-size_1-of-2 ">
+                                    <div class="input-dollar2">
+                                        <lightning:input label="Min.Repayment" 
+                                                         type="number" aura:id="fieldcheck" required="true"
+                                                         value="{!liability.Monthly_Repayment__c}"
+                                                         class="no-abbr slds-m-around1_xx-small slds-p-around_xx-small"/> 
+                                    </div>
+                                </div>
+                                <div class="slds-size_1-of-2 ">
+                                    <lightning:select aura:id="fieldcheck" name="select" onchange="{}" label="Frequency"
+                                                      required="true" class="no-abbr slds-m-around1_xx-small slds-p-around_xx-small"
+                                                      value="{!liability.Repayment_Frequency__c}">
+                                        <option value="">Select</option>
+                                        <aura:iteration items="{!v.paymentFrequencyOptions}" var="Frequency">
+                                            <option value="{!Frequency.value}" text="{!Frequency.value}"></option>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                </div>
+                            </div> 
+                        </div>
+                    </aura:iteration>
+                    <div class="slds-size_2-of-2 button_icon_radius">
+                        <div class="slds-p-vertical_small text_decoration_underline">
+                            <lightning:button label="Add another Personal / Auto loan"
+                                              onclick="{!c.addPersonalRow}" 
+                                              iconName="utility:add" 
+                                              iconPosition="left"                                   
+                                              variant="base"
+                                              class="slds-align_absolute-center"/>
+                        </div>
+                    </div>
+                    
+                </aura:if>
+            </div>
+            <div class="AnyOtherCommitments slds-m-vertical_large">
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_10-of-12">
+                        <h6 class="heading-edit">
+                            <!--Any Other commitments?-->
+                            Do you have any other commitments?<br/>
+                            <p style="font-weight: normal;font-size: 16px;font-family: 'Proxima Nova Alt Regular';">(eg child maintenance, HECS, tax, deb etc)?</p>
+                        </h6>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_2-of-12 rg-split">
+                        <lightning:radioGroup name="AnyOtherCommitmentsYesOrno"
+                                              aura:id="fieldcheck" 
+                                              label=""
+                                              onchange="{!c.addOtherCommitmentOnYes}" 
+                                              options="{! v.finacialCommitmentsOption }"
+                                              value="{!v.OtherCommitmentscheck}"
+                                              type="button"/>
+                    </div>
+                </div>
+                <aura:if isTrue="{! v.OtherCommitmentscheck == undefined &amp;&amp; v.showError}">
+                    <div class="no-commitment-error">
+                        Please select other commitments details
+                    </div>
+                </aura:if>
+                <aura:if isTrue="{!v.OtherCommitmentscheck == 'Yes'}">
+                    <aura:if isTrue="{!v.otherCommitmentlist.length == 0}">
+                        <div class="no-commitment-error">
+                            Please add other commitments details
+                        </div>
+                        
+                    </aura:if>
+
+                    <aura:iteration items="{!v.otherCommitmentlist}" var="liability" indexVar="index">
+                        <div class="highlightOnselect slds-m-top_medium">
+                            <div class="slds-grid slds-wrap ">
+                                <div class="slds-size_5-of-6 ">
+                                    <h6 class="heading-edit">Other Commitment {!index + 1}</h6>
+                                </div>
+                                <div class="slds-size_1-of-6">
+                                    <div class="slds-text-link_reset" id="{!index}" onclick="{!c.deleteAnotherCommitment}">
+                                        <lightning:icon iconName="utility:delete" size="x-small" style="float:right;" class="slds-m-around1_xx-small slds-p-around_xx-small"/>
+                                    </div> 
+                                </div>
+                                <div class="slds-size_2-of-2">    
+                                    <lightning:select aura:id="fieldcheck" name="select" onchange="" label="Other Commitment Type"
+                                                      required="true" class="no-abbr slds-m-around1_xx-small slds-p-around_xx-small"
+                                                      value="{!liability.FinServ__AssetsAndLiabilitiesType__c}">
+                                        <option value="">Select</option>
+                                        <aura:iteration items="{!v.OtherliabilityTypeOptions}" var="liabilityTypeOption">
+                                            <option value="{!liabilityTypeOption.value}" text="{!liabilityTypeOption.value}"></option>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                </div>
+                                <div class="slds-size_2-of-2 ">
+                                    <div class="input-dollar2">
+                                        <lightning:input label="Commitment Amount" 
+                                                         type="number" aura:id="fieldcheck" required="true"
+                                                         onchange="{!c.doCalculation}"
+                                                         value="{!liability.Value__c}"
+                                                         class="no-abbr slds-m-around1_xx-small slds-p-around_xx-small"/>   
+                                    </div>
+                                </div>
+                                <div class="slds-size_1-of-2 ">
+                                    <div class="input-dollar2">
+                                        <lightning:input label="Min.Repayment" 
+                                                         type="number" aura:id="fieldcheck" required="true"
+                                                         value="{!liability.Monthly_Repayment__c}"
+                                                         class="no-abbr slds-m-around1_xx-small slds-p-around_xx-small"/>   
+                                    </div>
+                                </div>
+                                <div class="slds-size_1-of-2 ">
+                                    <lightning:select aura:id="fieldcheck" name="select" onchange="" label="Frequency"
+                                                      required="true" class="no-abbr slds-m-around1_xx-small slds-p-around_xx-small"
+                                                      value="{!liability.Repayment_Frequency__c}">
+                                        <option value="">Select</option>
+                                        <aura:iteration items="{!v.paymentFrequencyOptions}" var="Frequency">
+                                            <option value="{!Frequency.value}" text="{!Frequency.value}"></option>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                </div>
+                            </div>
+                        </div>
+                    </aura:iteration>
+                    <div class="slds-size_2-of-2 button_icon_radius">
+                        <div class="slds-p-vertical_small text_decoration_underline">
+                            <lightning:button label="Add another commitment"
+                                              onclick="{!c.addOtherCommitment}" 
+                                              iconName="utility:add" 
+                                              iconPosition="left"                                   
+                                              variant="base"
+                                              class="slds-align_absolute-center"/>
+                        </div>
+                    </div>
+                    
+                </aura:if>
+            </div>
+            <div class="slds-m-top_xx-large div-color">
+                <div class="" title="Total Amount">
+                    Total Debts: <span>$<lightning:formattedNumber value="{!v.totalLiabilitiesAmount}" maximumFractionDigits="2"/></span>
+                </div>
+            </div>
+            <div class="div-color1 slds-m-bottom--medium">
+                <div class="" title="Total Amount">
+                    Net Assets: <span>$<lightning:formattedNumber value="{!v.totalAssetsAmount - v.totalLiabilitiesAmount }" maximumFractionDigits="2"/></span>
+                </div>
+            </div>
+            <aura:if isTrue="{!v.isOpenAlertModal}">
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        
+                        <header class="slds-modal__header">
+                            <lightning:buttonIcon iconName="utility:close"
+                                                  onclick="{! c.closeAlertModel }"
+                                                  alternativeText="close"
+                                                  variant="bare-inverse"
+                                                  class="slds-modal__close"/>
+                            <aura:if isTrue="{!v.delOrEmpty=='delete'}">
+                                <lightning:icon iconName="utility:clear" alternativeText="error !" 
+                                                size ="large" variant="error "/>
+                                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate text-err">Are You Sure?</h2>
+                            </aura:if>
+                            <aura:if isTrue="{!v.delOrEmpty=='empty'}">
+                                <lightning:icon iconName="utility:warning" alternativeText="Warning!" 
+                                                size ="large" variant="warning"/>
+                                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate text-warning">Are You Sure?</h2>
+                            </aura:if>
+                            
+                        </header>
+                        
+                        <div class="slds-modal__content slds-p-around_medium slds-text-align_center" >
+                            <aura:if isTrue="{!v.delOrEmpty=='delete'}">
+                                Do you really want to delete this {!v.selectedType}?
+                            </aura:if>
+                            <aura:if isTrue="{!v.delOrEmpty=='empty'}">
+                                You have not listed any items in either the assets or liabilities section. 
+                            </aura:if>
+                            
+                        </div>
+                        
+                        <footer class="slds-modal__footer slds-text-align_center modal_footer">
+                            <aura:if isTrue="{!v.delOrEmpty=='delete'}">
+                                <lightning:button variant="neutral" 
+                                                  label="GO BACK"
+                                                  title="GO BACK"
+                                                  onclick="{! c.closeAlertModel }"/>
+                                <lightning:button variant="brand" 
+                                                  label="DELETE"
+                                                  title="DELETE"
+                                                  onclick="{! c.deleteAssLiability }"/>
+                            </aura:if>
+                            <aura:if isTrue="{!v.delOrEmpty=='empty'}">
+                                
+                                
+                                <lightning:button class="privious-button_style" variant="brand" 
+                                                  label="OOPS! GO BACK" title="OOPS! GO BACK" 
+                                                  onclick="{! c.closeAlertModel }" />
+                                <lightning:button class="slds-m-vertical_medium  save-button_style" variant="success" 
+                                                  label="I'M SURE, KEEP GOING" title="I'M SURE, KEEP GOING" 
+                                                  onclick="{! c.save }" />
+                            </aura:if>
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </aura:if>
+        </section>
+        <div class="max-700 preNxtBtn slds-p-around_medium" style="margin-bottom: 40px;">
+            <div class="slds-grid slds-wrap">
+                    <div class="slds-size_1-of-2">
+                        <lightning:button class="slds-m-vertical_medium slds-float_left privious-button_style" variant="brand" 
+                              label="Go Back" title="Go Back" 
+                              onclick="{! c.prevSave }" />
+                    </div>
+                    <div class="slds-size_1-of-2 customsave">
+                        <lightning:button class="slds-m-vertical_medium slds-float_right save-button_style" variant="success" 
+                              label="Save &amp; Next" title="Save &amp; Next" 
+                              onclick="{! c.saveAndNext }" 
+                              />
+                    </div>
+                </div>
+        </div>
+    </div>
+</aura:component>

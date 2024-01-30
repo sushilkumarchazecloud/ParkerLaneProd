@@ -1,0 +1,374 @@
+<aura:component >	
+    <aura:attribute name="priorityOptions" type="List" default="[
+                                                         {'label': 'Lowest Rate', 'value': 'Lowest Rate'},
+                                                         {'label': 'Lowest Repayment', 'value': 'Lowest Repayment'},
+                                                         {'label': 'Lowest Documentation', 'value': 'Lowest Documentation'}
+                                                         ]"/>
+    <aura:attribute name="repayOptions" type="List" default="[
+                                                             {'label': 'LESS THAN 3 YEARS', 'value': 'Less than 3 Years'},
+                                                             {'label': '3-5 YEARS', 'value': 'Between 3-5 Years'},
+                                                             {'label': 'MORE THAN 5 YEARS', 'value': 'More than 5 Years'}
+                                                             ]"/>
+    <aura:attribute name="value" type="String" default="rate 1"/>
+    <aura:attribute name="myPriority" type="String" default=""/>
+    <aura:attribute name="repayOverTerm" type="String" default=""/>
+    <aura:attribute name="homeOwner" type="String" default=""/>
+    <aura:attribute name="customerAmount" type="Integer" default=""/>
+    <aura:attribute name="applicantFName" type="String" default=""/>
+    <aura:attribute name="applicantLName" type="String" default=""/>
+    <aura:attribute name="applicantEmail" type="String" default=""/>
+    <aura:attribute name="isShowGetQuote" type="Boolean" />
+    <aura:attribute name="purpose" type="String" default=""/>
+    <aura:attribute name="showError" type="Boolean" default="false"/>
+    
+    <aura:attribute name="lessThenThreeyear" type="String" default="Less than 3 Years"/>
+    <aura:attribute name="threeToFiveyear" type="String" default="Between 3-5 Years"/>
+    <aura:attribute name="morethenFiveyear" type="String" default="More than 5 Years"/>
+    
+
+    <aura:attribute name="errorMessage" type="String" default="Error: Please update the form entries highlighted in red and try again."/>
+    
+    <aura:method name="checkApplicantDetails" action="{!c.checkDetails}" access="PUBLIC" />
+    
+    <div class="solar-loan-get-qoute">
+        <aura:if isTrue="{!v.showError}">
+            <div class="slds-notify slds-notify_toast slds-theme_error slds-align_absolute-center slds-m-vertical--medium error-section">
+                <span class="slds-assistive-text">error</span>
+                <div class="slds-notify__content">
+                    <p class="slds-align_absolute-center">{!v.errorMessage}</p>                
+                </div>
+            </div>
+        </aura:if>
+        <div aura:id="want-borrow">
+            <section class="bg-light-sky-blue slds-p-around_large slds-text-align_center">
+                <div class="product-selector__choices-container">
+                    <h3 class="" style="font-size:1.75rem;font-family: Bely-Bold;">Your Personalised Quote</h3>
+                    <h5 class="slds-p-top_medium"><b>Purpose:</b>&nbsp;{!v.purpose} </h5>
+                </div>
+            </section>
+            <section  class="priority-section-height slds-p-around_large slds-text-align_center">
+                <div class="product-selector " style="justify-content:flex-start">
+
+                    <h5 class="slds-p-around_medium sub-header-quoting max_width250" style="">How much would you like to borrow?</h5>
+                    <div class="product-selector__choices-container">
+                        <div class="product-selector__choices slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12"></div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 text-number input-dollar1 slds-align_absolute-center" onkeypress="{!c.getPreferRepayOnEnter}">
+
+                                  <!--<div class="input-dollar1">  -->
+                                
+                                    <lightning:input aura:id="howMuchFieldcheck" required="true"
+                                                     min="0" type="number" 
+                                                     class="txt-left1 no-abbr"  
+                                                     step="1"
+                                                     formatter=""
+                                                     value = "{!v.customerAmount}" 
+                                                     />
+                                 <!--</div>-->
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12"></div>
+                        </div>
+                        <div class="slds-m-top_large " >
+                            <lightning:button label="NEXT"  class="btn-light-sky-blue"
+                                              title="NEXT" 
+                                              variant="success"
+                                              onclick="{!c.getPreferRepay}"/>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <!--<div aura:id="want-borrow" class="bg-dark-blue txt-white slds-p-around_large slds-m-top_large1 ">
+            <div class="product-selector txt-white" style="justify-content:flex-start">
+                <h3>Get a personalised quote</h3>
+                <h5 class="slds-p-top_medium">I want to borrow...</h5>
+                <div class="product-selector__choices-container">
+                    <div class="product-selector__choices slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12"></div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 text-number">
+                            <lightning:input aura:id="howMuchFieldcheck" required="true"
+                                             min="0" type="number" 
+                                             class="txt-left"                                             
+                                             formatter="currency"
+                                             value = "{!v.customerAmount}" 
+                                             placeholder="How much do you need?"/>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12"></div>
+                    </div>
+                    <div class="slds-m-top_large " >
+                        <lightning:button label="Continue"  class="btn-continue"
+                                          title="Continue" 
+                                          variant="success"
+                                          onclick="{!c.getPreferRepay}"/>
+                    </div>
+                    
+                </div>
+            </div>
+            
+        </div>-->
+        <div aura:id="prefer-repay" class="slds-hide">
+            <section class="bg-light-sky-blue slds-p-around_large slds-text-align_center">
+                <div class="product-selector__choices-container">
+                    <h3 style="font-size:1.75rem;font-family: Bely-Bold;">Your Personalised Quote</h3>
+                    <div class="header-input-loan-amount">
+                        <span class="slds-align_absolute-center" style="padding-top:8px"><b>Loan Amount:</b>&nbsp;</span>
+                        <span class="input-dollar ">
+                            <lightning:input aura:id="howMuchFieldcheck" required="true"
+                                                 min="0" type="number" 
+                                                 class="txt-left no-abbr input-style"  
+                                                 step="1" 
+                                                 value = "{!v.customerAmount}" 
+                                                 placeholder="How much do you need?"/>
+                        </span>
+                    </div>
+                    
+                    <h5 class="slds-p-top_medium"><b>Purpose:</b>&nbsp;{!v.purpose} </h5>
+                </div>
+            </section>
+            <section  class="priority-section-height slds-p-around_large slds-text-align_center" style="margin-bottom: 70px;">
+                <div class="product-selector slds-grid slds-wrap" style="justify-content:flex-start">
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12"></div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12"><!-- What pace would you like to repay the loan over?-->
+                        <h5 class="slds-p-around_medium sub-header-quoting" style="">What term would you like to repay the loan over?</h5>
+                        <div class="product-selector__choices-container slds-p-horizontal_x-large" onkeypress="{!c.getSendQuoteOnEnter}" style="margin-top:15px;margin-bottom:40px">
+                           <!-- <div class="product-selector__choices ">
+                                
+                                <div class="slds-co1l slds-size1_1-of-1 slds-m1edium-size_4-of-12 repay-radio">
+                                  <lightning:radioGroup name="repayRadioGroup" class="slds-text-align_left  no-abbr"
+                                                          aura:id="repayOverTermcheck" required="true"
+                                                          options="{! v.repayOptions }"
+                                                          value="{! v.repayOverTerm }"
+                                                          type="radio"/>
+								
+
+                                </div>
+                                
+                            </div>-->
+                            <div class="button_editing">
+                                <lightning:button variant="brand-outline" label="Less than 3 Years" title="Less than 3 Years" value="{!v.lessThenThreeyear}" onclick="{!c.getSendQuote}" class="btn-light-sky-blue1"/>
+                            </div> 
+                            <div class="slds-m-vertical_medium button_editing">
+                                <lightning:button variant="brand-outline" label="3 - 5 Years" title="3 - 5 Years" value="{!v.threeToFiveyear}" onclick="{!c.getSendQuote}" class="btn-light-sky-blue1"/>
+                            </div>
+                            <div class="button_editing ">
+                                <lightning:button variant="brand-outline" label="More than 5 Years" title="More than 5 Years" value="{!v.morethenFiveyear}" onclick="{!c.getSendQuote}" class="btn-light-sky-blue1"/>
+                            </div>
+                        <!--    <div class="slds-m-top_large ">
+                                <lightning:button label="NEXT"  class="btn-light-sky-blue"
+                                                  title="NEXT" 
+                                                  variant="success"
+                                                  onclick="{!c.getSendQuote}"/>
+                            </div>-->
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12"></div>
+                </div>
+            </section>
+        </div>
+        <!--
+        <div aura:id="prefer-repay1" id="animate-prefer-repay" class="bg-dark-blue txt-white slds-p-around_large slds-hide1">
+            <div class="product-selector txt-white" style="justify-content:flex-start">
+                <h3>Get a personalised quote</h3>
+                <div class="product-selector__choices-container">
+                    <div class="product-selector__choices slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12">
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-small-size_12-of-12 slds-large-size_12-of-12">
+                            <fieldset class="slds-form-element slds-text-align_center">
+                                <legend class="slds-p-vertical_medium">I prefer to repay over a term of...</legend>
+                                <div class="slds-form-element__control">
+                                    <div class="slds-radio_button-group">
+                                        <span class="slds-button slds-radio_button" onclick="{!c.getHomeOwner3y}">
+                                            <input name="borrow" type="radio" id="3years" value="3 years" />
+                                            <label class="slds-radio_button__label slds-p-around_medium" for="3years">
+                                                <span>Less than</span>
+                                                <strong class="slds-radio_faux">3 years</strong>
+                                            </label>
+                                        </span>
+                                        <span class="slds-button slds-radio_button" onclick="{!c.getHomeOwner3_5y}">
+                                            <input name="borrow" type="radio" id="3to5years" value="3 - 5 years" />
+                                            <label class="slds-radio_button__label slds-p-around_medium" for="3to5years">
+                                                <span>Between</span>
+                                                <strong class="slds-radio_faux">3 - 5 years</strong>
+                                            </label>
+                                        </span>
+                                        <span class="slds-button slds-radio_button" onclick="{!c.getHomeOwner5y}">
+                                            <input name="borrow" type="radio" id="5years" value="5 years" />
+                                            <label class="slds-radio_button__label slds-p-around_medium" for="5years">
+                                                <span>More than</span>
+                                                <strong class="slds-radio_faux">5 years</strong>
+                                            </label>
+                                        </span>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>                        
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        - ->
+        <div aura:id="home-owner" id="animate-home-owner" class="bg-dark-blue txt-white slds-p-around_large slds-text-align_center slds-hide1">
+            <div class="product-selector txt-white" style="justify-content:flex-start">
+                <h3>Get a personalised quote</h3>
+                <div class="product-selector__choices-container">
+                    <div class="product-selector__choices slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12">
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-small-size_12-of-12 slds-large-size_12-of-12">
+                            <fieldset class="slds-form-element">
+                                <legend class="slds-p-vertical_medium">Home Owner...?</legend>
+                                <div class="slds-form-element__control">
+                                    <div class="slds-radio_button-group">
+                                        <span class="slds-button slds-radio_button" onclick="{!c.getMyPriorityYes}">
+                                            <input name="homeOwner" type="radio" id="Yes" value="Yes" />
+                                            <label class="slds-radio_button__label slds-p-around_medium" for="Yes">
+                                                <strong class="slds-radio_faux">
+                                                    <lightning:icon iconName="action:approval" alternativeText="Yes!" variant="success" size="small"/>
+                                                    Yes
+                                                </strong>
+                                                <span>I am a homeowner</span>
+                                            </label>
+                                        </span>
+                                        <span class="slds-button slds-radio_button" onclick="{!c.getMyPriorityNo}">
+                                            <input name="homeOwner" type="radio" id="No" value="No" />
+                                            <label class="slds-radio_button__label slds-p-around_medium" for="No">
+                                                <strong class="slds-radio_faux">
+                                                    <lightning:icon iconName="action:close" alternativeText="No!" variant="error" size="small"/>    
+                                                    No
+                                                </strong>
+                                                <span>I am a homeowner</span>
+                                            </label>
+                                        </span>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>                        
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div aura:id="my-priority" id="animate-my-priority" class="bg-dark-blue txt-white slds-p-around_large slds-text-align_center slds-hide1">
+            <div class="product-selector txt-white" style="justify-content:flex-start">
+                <h3>Get a personalised quote</h3>
+                <div class="product-selector__choices-container">
+                    <div class="product-selector__choices slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_5-of-12">
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-text-align_left text-alignment-mobile">
+                            <lightning:radioGroup name="priority"
+                                                  label="My priority is..."
+                                                  options="{! v.priorityOptions }"
+                                                  value="{!v.myPriority}"
+                                                  type="radio"
+                                                  onchange = "{!c.getSendQuote}"/>
+                        </div>                        
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+        <div aura:id="send-quote" id="animate-send-quote" class="slds-hide">
+            <section class="bg-light-sky-blue slds-p-around_large slds-text-align_center" >
+                <div class="product-selector__choices-container">
+                    <h3 style="font-size:1.75rem;font-family: Bely-Bold;">Your Personalised Quote</h3>
+                    <div class="header-input-loan-amount">
+                        <span style="padding-top: 8px;"><b>Loan Amount:</b>&nbsp;</span>
+                        <span class="input-dollar">
+                            <lightning:input aura:id="howMuchFieldcheck" required="true"
+                                                 min="0" type="number" 
+                                                 class="txt-left no-abbr input-style"  
+                                                 step="1" 
+                                                 value = "{!v.customerAmount}" 
+                                                 placeholder="How much do you need?"/>
+                        </span>
+                    </div>
+                    <h5 class="slds-p-top_medium"><b>Purpose:</b>&nbsp;{!v.purpose} </h5>
+                </div>
+            </section>
+            <section  class="priority-section-height1 slds-p-around_large slds-text-align_center" >
+                <div class="product-selector slds-grid slds-wrap" style="justify-content:flex-start">
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12"></div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12">
+                    
+                    <h5 class="slds-p-around_medium sub-header-quoting" style="">All done! Where should we send your quote?</h5>
+                    <div class="product-selector__choices-container">
+                        <div class="product-selector__choices ">
+                            <div class="slds-c1ol slds-s1ize_1-of-1 slds-1medium-size_8-of-12">
+                                <div class="product-selector__choices slds-grid slds-wrap slds-grid_align-center">
+                                    <div class="slds-col slds-size_1-of-2 slds-medium-size_6-of-12  slds-p-around_x-small">
+                                        <lightning:input aura:id="fieldcheck" required="true"
+                                                         class="field txt-left no-abbr" value="{!v.applicantFName}" placeholder="First Name"
+                                                         maxlength="40"/>
+                                    </div> 
+                                    <div class="slds-col slds-size_1-of-2 slds-medium-size_6-of-12  slds-p-around_x-small">
+                                        <lightning:input aura:id="fieldcheck" required="true"
+                                                         class="field txt-left no-abbr" value="{!v.applicantLName}" placeholder="Last Name"
+                                                         maxlength="40"/>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-2 slds-medium-size_8-of-12 slds-p-around_x-small inputbox">
+                                        <lightning:input aura:id="fieldcheck" required="true"
+                                                         type="email" value="{!v.applicantEmail}" 
+                                                         pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{1,5})$"
+                                                         messageWhenPatternMismatch = "Please enter valid Email Id"
+                                                         class="field txt-left no-abbr" placeholder="Email to"/>
+                                    </div> 
+                                </div>
+                            </div>
+
+                        </div>
+                        <!--<div class="slds-m-top_large " >
+                            <lightning:button label="GET MY QUOTES"  class="btn-light-sky-blue"
+                                              title="GET MY QUOTES" 
+                                              variant="success"
+                                              onclick="{!c.getPreferRepay}"/>
+                        </div>-->
+                    </div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12"></div>
+                </div>
+            </section>
+        </div>
+        <!--<div aura:id="send-quote1" id="animate-send-quote1" class="bg-dark-blue txt-white slds-p-around_large slds-text-align_center slds-hide1">
+            <div class="product-selector txt-white" style="justify-content:flex-start">
+                <h3>Get a personalised quote</h3>
+                <h5 class="slds-p-vertical_medium">Please send your quote to...</h5>
+                <div class="product-selector__choices-container">
+                    <div class="product-selector__choices slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-12">
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_10-of-12">
+                            <div class="product-selector__choices slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12  slds-p-horizontal_medium">
+                                    <lightning:input aura:id="fieldcheck" required="true"
+                                                     class="field txt-left no-abbr" value="{!v.applicantFName}" placeholder="First Name"
+                                                     maxlength="40"/>
+                                </div> 
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12  slds-p-horizontal_medium">
+                                    <lightning:input aura:id="fieldcheck" required="true"
+                                                     class="field txt-left no-abbr" value="{!v.applicantLName}" placeholder="Last Name"
+                                                     maxlength="40"/>
+                                </div>
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-p-horizontal_medium">
+                                    <lightning:input aura:id="fieldcheck" required="true"
+                                                     type="email" value="{!v.applicantEmail}" 
+                                                     pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{1,5})$"
+                                                     messageWhenPatternMismatch = "Please enter valid Email Id"
+                                                     class="field txt-left no-abbr" placeholder="Email to"/>
+                                </div> 
+                            </div>
+                        </div>
+                        
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-12">
+                        </div>        
+                    </div>
+                </div>
+            </div>
+        </div>-->
+    </div>
+</aura:component>

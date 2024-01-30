@@ -1,0 +1,160 @@
+<aura:component >
+    <aura:attribute name="monthsOptions" type="List" default="[]"/>
+    <aura:attribute name="yearsOptions" type="List" default="[]"/>
+    <aura:attribute name="statesTerritoriesOptions" type="List" default="[{'label': 'Queensland', 'value': 'Queensland'},{'label': 'New South Wales', 'value': 'New South Wales'},{'label': 'Australian Capital Territory', 'value': 'Australian Capital Territory'},{'label': 'Victoria', 'value': 'Victoria'},{'label': 'South Australia', 'value': 'South Australia'},{'label': 'Western Australia', 'value': 'Western Australia'},{'label': 'Tasmania', 'value': 'Tasmania'},{'label': 'Northern Territory', 'value': 'Northern Territory'}]"/>
+    <aura:attribute name="streetTypeOptions" type="List" default="[{'label': 'Alley', 'value': 'Alley'},{'label': 'Ambl', 'value': 'Ambl'},{'label': 'Arcade', 'value': 'Arcade'},{'label': 'Avenue', 'value': 'Avenue'},{'label': 'Bend', 'value': 'Bend'},{'label': 'Boulevard', 'value': 'Boulevard'},{'label': 'Brace', 'value': 'Brace'},{'label': 'Centre', 'value': 'Centre'},{'label': 'Chase', 'value': 'Chase'},{'label': 'Circle', 'value': 'Circle'},{'label': 'Circuit', 'value': 'Circuit'},{'label': 'Circus', 'value': 'Circus'},{'label': 'Close', 'value': 'Close'},{'label': 'Concourse', 'value': 'Concourse'},{'label': 'Corner', 'value': 'Corner'},{'label': 'Corso', 'value': 'Corso'},{'label': 'Court', 'value': 'Court'},{'label': 'Crescent', 'value': 'Crescent'},{'label': 'Crossing', 'value': 'Crossing'},{'label': 'Drive', 'value': 'Drive'},{'label': 'Entrance', 'value': 'Entrance'},{'label': 'Esplanade', 'value': 'Esplanade'},{'label': 'Freeway', 'value': 'Freeway'},{'label': 'Frontage', 'value': 'Frontage'},{'label': 'Gate', 'value': 'Gate'},{'label': 'Glade', 'value': 'Glade'},{'label': 'Glen', 'value': 'Glen'},{'label': 'Grange', 'value': 'Grange'},{'label': 'Green', 'value': 'Green'},{'label': 'Ground', 'value': 'Ground'},{'label': 'Grove', 'value': 'Grove'},{'label': 'Heights', 'value': 'Heights'},{'label': 'Highway', 'value': 'Highway'},{'label': 'Junction', 'value': 'Junction'},{'label': 'Lane', 'value': 'Lane'},{'label': 'Link', 'value': 'Link'},{'label': 'Loop', 'value': 'Loop'},{'label': 'Mews', 'value': 'Mews'},{'label': 'Mount', 'value': 'Mount'},{'label': 'Nook', 'value': 'Nook'},{'label': 'Outlook', 'value': 'Outlook'},{'label': 'Parade', 'value': 'Parade'},{'label': 'Parkway', 'value': 'Parkway'},{'label': 'Pass', 'value': 'Pass'},{'label': 'Place', 'value': 'Place'},{'label': 'Plaza', 'value': 'Plaza'},{'label': 'Point', 'value': 'Point'},{'label': 'Port', 'value': 'Port'},{'label': 'Promenade', 'value': 'Promenade'},{'label': 'Quadrangle', 'value': 'Quadrangle'},{'label': 'Quadrant', 'value': 'Quadrant'},{'label': 'Quay', 'value': 'Quay'},{'label': 'Reserve', 'value': 'Reserve'},{'label': 'Rest', 'value': 'Rest'},{'label': 'Retreat', 'value': 'Retreat'},{'label': 'Ridge', 'value': 'Ridge'},{'label': 'Right of Way', 'value': 'Right of Way'},{'label': 'Rise', 'value': 'Rise'},{'label': 'Road', 'value': 'Road'},{'label': 'Roadway', 'value': 'Roadway'},{'label': 'Round', 'value': 'Round'},{'label': 'Row', 'value': 'Row'},{'label': 'Siding', 'value': 'Siding'},{'label': 'Square', 'value': 'Square'},{'label': 'Street', 'value': 'Street'},{'label': 'Terrace', 'value': 'Terrace'},{'label': 'Tollway', 'value': 'Tollway'},{'label': 'Track', 'value': 'Track'},{'label': 'View', 'value': 'View'},{'label': 'Walk', 'value': 'Walk'},{'label': 'Walkway', 'value': 'Walkway'},{'label': 'Way', 'value': 'Way'},{'label': 'Wynd', 'value': 'Wynd'}]"/>
+    <aura:attribute name="CountriesOptions" type="List" default="[{'label': 'Australia', 'value': 'Australia'}]"/>
+	
+    <aura:attribute name="applicantNo" type="Integer"/>
+    <aura:attribute name="headerLabel" type="String"/>
+    <aura:attribute name="index" type="Integer" />
+    <aura:attribute name="years" type="Integer" default="0"/>
+    <aura:attribute name="months" type="Integer" default="0"/>
+    <aura:attribute name="isFindAdd" type="Boolean" default="false"/>
+    <aura:attribute name="showAddressSame" type="Boolean" default="false"/>
+    <aura:attribute name="searchString" type="String"/>
+    <aura:attribute name="unitNumber" type="String"/>
+    <aura:attribute name="streetNumber" type="String"/>
+    <aura:attribute name="street" type="String"/>
+    <aura:attribute name="streetType" type="String"/>
+    <aura:attribute name="suburb" type="String"/>
+    <aura:attribute name="state" type="String"/>
+    <aura:attribute name="postalCode" type="String"/>
+    <aura:attribute name="country" type="String"/>
+    
+    <aura:registerEvent name="SolarDeleteRowEvent" type="c:SolarDeleteRowEvent"/>
+    <aura:registerEvent name="monthYearChangeEvent" type="c:monthYearChangeEvent"/>
+    <aura:method name="checkDetailsAddress" action="{!c.checkDetailsAddress}" access="PUBLIC" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <!-- changes-->
+    <aura:attribute name="changeYearsOptions" type="List" default="[{'label': '1 year', 'value': '1'},{'label': '2 year', 'value': '2'},{'label': '3 years +', 'value': '3'}]"/>
+   <!-- changes-->
+    
+    <div class="slds-grid slds-wrap">
+        <div class="slds-size_2-of-2 custom_bussiness_style">
+            <span>{!v.headerLabel} <aura:if isTrue="{!v.index ==0 || v.index ==1}">
+                						<lightning:buttonIcon iconName="utility:delete"
+                                         class=""
+                                         size="x-small" 
+                                         onclick="{! c.deletePreEmp }"
+                                        />
+                					</aura:if>
+                
+            </span>
+        </div>
+       
+        <div class="slds-size_2-of-2">
+            <c:AddressAPItool aura:id="addressTool" isFindAdd = "{!v.isFindAdd}"
+                              searchString="{!v.searchString}" 
+                              streetNumber="{!v.streetNumber}" street="{!v.street}"
+                              state="{!v.state}" suburb="{!v.suburb}"
+                              postalCode="{!v.postalCode}" country="{!v.country}"
+                              streetType ="{!v.streetType}"
+                              isAddressLabelPresent="false"/>     
+        </div>
+        
+    </div>
+    <div class="slds-form__row">
+        <div class="slds-form__item" role="listitem">
+            <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                <lightning:input type="checkbox" 
+                                 checked="{!v.isFindAdd}" 
+                                 label=" Can't find your address?"/>
+            </div>
+        </div>
+    </div>
+    <aura:if isTrue="{!v.isFindAdd}">
+        <div class="slds-grid slds-wrap"> 
+            <div class="slds-size_1-of-2" >
+                <lightning:input aura:id="fieldcheck" value="{!v.unitNumber}"
+                                 label="Unit Number (Optional)" placeholder="Unit Number"
+                                 maxlength="50" class="slds-scope slds-m-right_x-small slds-p-right_xx-small"/>
+                
+            </div>
+            <div class="slds-size_1-of-2 " >
+                <lightning:input aura:id="fieldcheck" value="{!v.streetNumber}" required="true"
+                                 label="Street Number" placeholder="Street Number"
+                                 maxlength="25" class="slds-scope slds-m-left_x-small slds-p-left_xx-small no-abbr"/>
+            </div>      
+        </div>
+       
+        <div class="slds-form__row">
+            <div class="slds-form__item" role="listitem">
+                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                    <lightning:input aura:id="fieldcheck" value="{!v.street}" required="true"
+                                     label="Street" placeholder="Street"
+                                     maxlength="100"
+                                     class="no-abbr"/>
+                </div>
+            </div>
+            <div class="slds-form__item" role="listitem">
+                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                    <lightning:combobox aura:id="fieldcheck" required="true"
+                                        label="Street Type" 
+                                        value="{!v.streetType}" 
+                                        options="{!v.streetTypeOptions}" 
+                                        placeholder="Street Type"
+                                        dropdownAlignment="bottom-left"
+                                        class="no-abbr slds-scope"/>
+                </div>
+            </div>
+        </div>
+        <div class="slds-form__row">
+            <div class="slds-form__item" role="listitem">
+                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                    <lightning:input aura:id="fieldcheck" required="true"
+                                     value="{!v.suburb}"
+                                     label="Suburb" placeholder="Suburb"
+                                     maxlength="100"
+                                     class="no-abbr"/>
+                </div>
+            </div>
+            <div class="slds-form__item" role="listitem">
+                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                    <lightning:combobox aura:id="fieldcheck" required="true"
+                                        label="State" 
+                                        value="{!v.state}" 
+                                        options="{! v.statesTerritoriesOptions }" 
+                                        placeholder="State"
+                                        dropdownAlignment="bottom-left"
+                                        class="no-abbr slds-scope"/>
+                </div>
+            </div>
+        </div>
+        <div class="slds-form__row">
+            <div class="slds-form__item" role="listitem">
+                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                    <lightning:input aura:id="fieldcheck" required="true"
+                                     value="{!v.postalCode}" maxlength="10"
+                                     label="Postal Code" placeholder="Postal Code"
+                                     class="no-abbr"/>
+                </div>
+            </div>
+            <div class="slds-form__item" role="listitem">
+                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                    <lightning:input aura:id="fieldcheck" required="true"
+                                     label="Country" maxlength="50"
+                                     value="{!v.country}" 
+                                     placeholder="Country"
+                                     class="no-abbr"/>
+                </div>
+            </div>
+        </div>
+    </aura:if>
+    
+    <div class="slds-grid slds-wrap slds-m-vertical_small"> 
+        <div class="slds-size_1-of-2 rg-split">
+          
+            <lightning:radioGroup name="{!'TimeThere' + v.index}"
+                                  aura:id="fieldcheckradio"
+                                  label="Time living there" 
+                                  value="{!v.years}" 
+                                  onchange="{!c.checkAddress}"
+                                  options="{! v.changeYearsOptions }"
+                                  type="button"
+                                  class="no-abbr"
+                                  required="true"/> 
+        </div>
+    </div>
+</aura:component>

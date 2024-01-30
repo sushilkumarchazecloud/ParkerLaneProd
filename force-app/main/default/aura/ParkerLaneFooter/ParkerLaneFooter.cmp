@@ -1,0 +1,22 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,force:appHostable,force:hasSObjectName,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+	<section class="bg-lightest-footer ">
+        <div class="slds-form max-700 slds-p-bottom--large">
+            <div class="slds-p-top--large txt-center-align">
+                <div>  
+                    <span class="slds-p-horizontal--medium">Contact Us: 1300 13 17 11</span>
+                </div>
+                <div class="slds-p-top--medium"><strong>Awarded Best in Australia</strong></div>
+                <div>Home Loans and Personal Loans</div>
+                <div>by ProductReview.com.au</div>
+                <div class="slds-p-top--medium">
+                    <span class="slds-p-horizontal--medium"><a href="https://www.parkerlane.com.au/credit-guide" target="_blank">Credit Guide</a></span>
+                    <span class="slds-p-horizontal--medium"><a href="https://www.parkerlane.com.au/privacy" target="_blank">Privacy Policy</a></span>
+                    <span class="slds-p-horizontal--medium"><a href="https://www.parkerlane.com.au/terms-and-conditions" target="_blank">Terms &amp; Conditions</a></span>
+                </div>
+                <div>Parker Lane is a trading name of Upside Downside Pty. Ltd.</div>
+                <div>Australian Credit License Number 482276</div>
+                <div><span></span></div>
+            </div>
+        </div>
+    </section>
+</aura:component>

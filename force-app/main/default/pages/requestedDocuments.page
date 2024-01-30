@@ -1,0 +1,28 @@
+<apex:page standardController="Opportunity"  applyHtmlTag="true" lightningStylesheets="true" sidebar="false" tabStyle="Opportunity" showHeader="false">
+    <html>
+        <head>
+            <title>Request Documents</title>
+            <meta charset="UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            <apex:slds />
+            <apex:includeLightning />
+        </head>
+        <body>
+            <div id="FlipcardContainer" />
+            <script>
+            
+            $Lightning.use("c:LightningApp", function() {
+                $Lightning.createComponent("c:ManageDocument",
+                                           { 
+                                               recordId :' {!$CurrentPage.parameters.oppId}'
+                                           },
+                                           "FlipcardContainer",
+                                           function(cmp) {
+                                               console.log('Ready for Document Request {!Opportunity.Id}');
+                                               console.log('Ready for Document Request 2: {!$CurrentPage.parameters.oppId} ');
+                                           });
+            });
+            </script>
+        </body>
+    </html>
+</apex:page>

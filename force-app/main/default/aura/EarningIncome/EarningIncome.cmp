@@ -1,0 +1,671 @@
+<aura:component >
+    <aura:attribute name="emp" type="FinServ__Employment__c" />
+    <aura:attribute name="incomeFrom" type="String" default=""/>
+    <aura:attribute name="incomeSource" type="String" default=""/>
+    <aura:attribute name="managedSource" type="String" default=""/>
+    <aura:attribute name="typeOfTenancy" type="String" default=""/>
+    <aura:attribute name="incomeFrequency" type="String" default=""/>
+    <aura:attribute name="description" type="String" default=""/>
+    <aura:attribute name="rentalProperty" type="String" default=""/>
+    <aura:attribute name="occupation" type="String" default=""/>
+    <aura:attribute name="selfEmployedType" type="String" default=""/>
+    <aura:attribute name="jointYesNoOptions" type="List" default="[{'label': 'Joint (other applicant)', 'value': 'Joint (other applicant)'},{'label': 'Joint (other)', 'value': 'Joint (other)'}]"/>
+    <aura:attribute name="yesNoOptions" type="List" default="[{'label': 'Yes', 'value': 'Yes'},{'label': 'No', 'value': 'No'}]"/>
+    <aura:attribute name="incomeFromOptions" type="List" default="[{'label': 'Full time permanent', 'value': 'Full time permanent'},{'label': 'Part time permanent', 'value': 'Part time permanent'},{'label': 'Self Employed / Contractor', 'value': 'Self Employed / Contractor'},{'label': 'Casual / Temporary', 'value': 'Casual / Temporary'},{'label': 'New Start Allowance', 'value': 'New Start Allowance'},{'label': 'Pension', 'value': 'Pension'},{'label': 'Dividends or Annuity', 'value': 'Dividends or Annuity'},{'label': 'Family Tax Benefits', 'value': 'Family Tax Benefits'},{'label': 'Disability Pension', 'value': 'Disability Pension'},{'label': 'Carer’s Pension', 'value': 'Carer’s Pension'},{'label': 'Child Support', 'value': 'Child Support'},{'label': 'Other', 'value': 'Other'}]"/>
+    <aura:attribute name="incomeFrequencyOptions" type="List" default="[{'label': 'Weekly', 'value': 'Weekly'},{'label': 'Fortnightly', 'value': 'Fortnightly'},{'label': 'Monthly', 'value': 'Monthly'},{'label': 'Annually', 'value': 'Annually'}]"/>
+    <aura:attribute name="occupationOptions" type="List" default="[{'label': 'Advertising', 'value': 'Advertising'},{'label': 'Agri/Horticulture', 'value': 'Agri/Horticulture'},{'label': 'Armed Services', 'value': 'Armed Services'},{'label': 'Banking/Finance', 'value': 'Banking/Finance'},{'label': 'Civil Services', 'value': 'Civil Services'},{'label': 'Cleaning/Laundry', 'value': 'Cleaning/Laundry'},{'label': 'Construction', 'value': 'Construction'},{'label': 'Education', 'value': 'Education'},{'label': 'Emergency Services', 'value': 'Emergency Services'},{'label': 'Home Duties', 'value': 'Home Duties'},{'label': 'Hospital', 'value': 'Hospital'},{'label': 'Hotel', 'value': 'Hotel'},{'label': 'Industry Services', 'value': 'Industry Services'},{'label': 'Insurance', 'value': 'Insurance'},{'label': 'IT', 'value': 'IT'},{'label': 'Leisure/Entertainment', 'value': 'Leisure/Enttainmnt'},{'label': 'Menufaturing', 'value': 'Menufaturing'},{'label': 'Media', 'value': 'Media'},{'label': 'Mining', 'value': 'Mining'},{'label': 'Other Category', 'value': 'Other Category'},{'label': 'Pensioner', 'value': 'Pensioner'},{'label': 'Property/Business', 'value': 'Property/Business'},{'label': 'Restaurant', 'value': 'Restaurant'},{'label': 'Retail/Wholesale', 'value': 'Retail/Wholesale'},{'label': 'Retired', 'value': 'Retired'},{'label': 'Sciences', 'value': 'Sciences'},{'label': 'Student', 'value': 'Student'},{'label': 'Transport', 'value': 'Transport'},{'label': 'Unemployed', 'value': 'Unemployed'}]"/>
+    <aura:attribute name="selfEmployedTypeOptions" type="List" default="[{'label': 'Sole trader', 'value': 'Sole trader'},{'label': 'Partnership', 'value': 'Partnership'},{'label': 'Company', 'value': 'Company'}]"/>
+    <aura:attribute name="rentalPropertyOptions" type="List" default="[{'label': 'Full time permanent', 'value': 'Full time permanent'},{'label': 'Part time permanent', 'value': 'Part time permanent'},{'label': 'Self Employed / Contractor', 'value': 'Self Employed / Contractor'},{'label': 'Other', 'value': 'Other'}]"/>
+    <aura:attribute name="typeTenancyOptions" type="List" default="[{'label': 'Permanent lease', 'value': 'Permanent lease'},{'label': 'Holiday corporate letting', 'value': 'Holiday / corporate letting'},{'label': 'Airbnb', 'value': 'Airbnb'}]"/>
+    <aura:attribute name="ManagedOptions" type="List" default="[{'label': 'Privately', 'value': 'Privately'},{'label': 'ByAgent', 'value': 'By an agent'}]"/>
+    <aura:attribute name="streetTypeOptions" type="List" default="[{'label': 'Alley', 'value': 'Alley'},{'label': 'Ambl', 'value': 'Ambl'},{'label': 'Arcade', 'value': 'Arcade'},{'label': 'Avenue', 'value': 'Avenue'},{'label': 'Bend', 'value': 'Bend'},{'label': 'Boulevard', 'value': 'Boulevard'},{'label': 'Brace', 'value': 'Brace'},{'label': 'Centre', 'value': 'Centre'},{'label': 'Chase', 'value': 'Chase'},{'label': 'Circle', 'value': 'Circle'},{'label': 'Circuit', 'value': 'Circuit'},{'label': 'Circus', 'value': 'Circus'},{'label': 'Close', 'value': 'Close'},{'label': 'Concourse', 'value': 'Concourse'},{'label': 'Corner', 'value': 'Corner'},{'label': 'Corso', 'value': 'Corso'},{'label': 'Court', 'value': 'Court'},{'label': 'Crescent', 'value': 'Crescent'},{'label': 'Crossing', 'value': 'Crossing'},{'label': 'Drive', 'value': 'Drive'},{'label': 'Entrance', 'value': 'Entrance'},{'label': 'Esplanade', 'value': 'Esplanade'},{'label': 'Freeway', 'value': 'Freeway'},{'label': 'Frontage', 'value': 'Frontage'},{'label': 'Gate', 'value': 'Gate'},{'label': 'Glade', 'value': 'Glade'},{'label': 'Glen', 'value': 'Glen'},{'label': 'Grange', 'value': 'Grange'},{'label': 'Green', 'value': 'Green'},{'label': 'Ground', 'value': 'Ground'},{'label': 'Grove', 'value': 'Grove'},{'label': 'Heights', 'value': 'Heights'},{'label': 'Highway', 'value': 'Highway'},{'label': 'Junction', 'value': 'Junction'},{'label': 'Lane', 'value': 'Lane'},{'label': 'Link', 'value': 'Link'},{'label': 'Loop', 'value': 'Loop'},{'label': 'Mews', 'value': 'Mews'},{'label': 'Mount', 'value': 'Mount'},{'label': 'Nook', 'value': 'Nook'},{'label': 'Outlook', 'value': 'Outlook'},{'label': 'Parade', 'value': 'Parade'},{'label': 'Parkway', 'value': 'Parkway'},{'label': 'Pass', 'value': 'Pass'},{'label': 'Place', 'value': 'Place'},{'label': 'Plaza', 'value': 'Plaza'},{'label': 'Point', 'value': 'Point'},{'label': 'Port', 'value': 'Port'},{'label': 'Promenade', 'value': 'Promenade'},{'label': 'Quadrangle', 'value': 'Quadrangle'},{'label': 'Quadrant', 'value': 'Quadrant'},{'label': 'Quay', 'value': 'Quay'},{'label': 'Reserve', 'value': 'Reserve'},{'label': 'Rest', 'value': 'Rest'},{'label': 'Retreat', 'value': 'Retreat'},{'label': 'Ridge', 'value': 'Ridge'},{'label': 'Right of Way', 'value': 'Right of Way'},{'label': 'Rise', 'value': 'Rise'},{'label': 'Road', 'value': 'Road'},{'label': 'Roadway', 'value': 'Roadway'},{'label': 'Round', 'value': 'Round'},{'label': 'Row', 'value': 'Row'},{'label': 'Siding', 'value': 'Siding'},{'label': 'Square', 'value': 'Square'},{'label': 'Street', 'value': 'Street'},{'label': 'Terrace', 'value': 'Terrace'},{'label': 'Tollway', 'value': 'Tollway'},{'label': 'Track', 'value': 'Track'},{'label': 'View', 'value': 'View'},{'label': 'Walk', 'value': 'Walk'},{'label': 'Walkway', 'value': 'Walkway'},{'label': 'Way', 'value': 'Way'},{'label': 'Wynd', 'value': 'Wynd'}]"/>
+    <aura:attribute name="statesTerritoriesOptions" type="List" default="[{'label': 'Queensland', 'value': 'Queensland'},{'label': 'New South Wales', 'value': 'New South Wales'},{'label': 'Australian Capital Territory', 'value': 'Australian Capital Territory'},{'label': 'Victoria', 'value': 'Victoria'},{'label': 'South Australia', 'value': 'South Australia'},{'label': 'Western Australia', 'value': 'Western Australia'},{'label': 'Tasmania', 'value': 'Tasmania'},{'label': 'Northern Territory', 'value': 'Northern Territory'}]"/>
+    <aura:attribute name="countriesOptions" type="List" default="[{'label': 'Australia', 'value': 'Australia'}]"/>
+    <aura:attribute name="monthsOptions" type="List" default="[]"/>
+    <aura:attribute name="yearsOptions" type="List" default="[]"/>
+    <aura:attribute name="minHourOptions" type="List" default="[]"/>
+    <aura:attribute name="JointApplicant" type="String" default=""/>
+    <aura:attribute name="selectedPerson" type="String" />
+    <aura:attribute name="applicant" type="contact" default=""/>
+    <aura:attribute name="index" type="Integer" />
+    <aura:attribute name="applicantNo" type="Integer" />
+    <aura:attribute name="yearsEmp" type="Integer" />
+    <aura:attribute name="monthsEmp" type="Integer" />
+    
+    <aura:registerEvent name="SolarDeleteRowEvent" type="c:SolarDeleteRowEvent"/>
+    <aura:registerEvent name="monthYearChangeEvent" type="c:monthYearChangeEvent"/>
+    <aura:registerEvent name="validateResultCmpEvent" type="c:ValidateResultCmpEvent"/>
+    <aura:handler event="c:validateAppEvent" action="{!c.doValidate}" />
+    <!--aura:handler name="change" value="{!v.applicant.FinServ__Occupation__c}" action="{!c.occupationChanged}" /-->
+	<aura:handler name="change" value="{!v.occupation}" action="{!c.occupationChanged}" />
+    <aura:handler action="{!c.doInit}" name="init" value="{!this}"/>
+    
+    <div class="slds-form slds-p-top_small" role="list">
+        
+        <h2 class="header">
+            <aura:if isTrue = "{! v.index != 0}">
+                Income {!v.index + 1} 
+                <aura:set attribute="else">
+                    Income from Primary Occupation 
+                </aura:set>
+            </aura:if>
+            
+            <aura:if isTrue = "{! v.index != 0}">
+                <lightning:buttonIcon iconName="utility:delete"
+                                      class="slds-m-left_medium"
+                                      size="x-small" 
+                                      onclick="{! c.deleteIncome }"  />
+            </aura:if>
+        </h2>
+        <div class="slds-form__row">
+            <div class="slds-form__item" role="listitem">
+                <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                    <lightning:combobox label="Income From" 
+                                        value="{!v.emp.FinServ__EmploymentStatus__c}"                                                 
+                                        options="{! v.incomeFromOptions }"
+                                        onchange="{!c.changeMonthYear}"
+                                        aura:id="fieldcheckIncome"
+                                        required="true"/>
+                </div>
+            </div>
+        </div>
+        
+        <aura:if isTrue="{!v.emp.FinServ__EmploymentStatus__c=='Full time permanent' ||
+                         v.emp.FinServ__EmploymentStatus__c=='Part time permanent' || 
+                         v.emp.FinServ__EmploymentStatus__c=='Casual / Temporary'}">
+            
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input label="Income amount (before taking out tax)" 
+                                         value="{!v.emp.FinServ__AnnualIncome__c}"
+                                         formatter="currency"
+                                         type="number"
+                                         placeholder="Income amount"
+                                         aura:id="fieldcheck"
+                                         required="true"/>
+                    </div>
+                </div>
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing ">
+                        <lightning:combobox label="Income Frequency" 
+                                            value="{!v.emp.Income_Frequency__c}"                                                 
+                                            options="{!v.incomeFrequencyOptions}"
+                                            aura:id="fieldcheck"
+                                            required="true"/>
+                    </div>
+                </div>
+            </div>
+            
+            <aura:if isTrue="{!v.emp.FinServ__EmploymentStatus__c == 'Part time permanent'}">
+                <div class="slds-form__row">
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_stacked slds-is-editing ">
+                            <lightning:combobox label="Minimum hours per week" 
+                                                value="{!v.emp.Minimum_hours_per_week__c}"                                                 
+                                                options="{!v.minHourOptions}"
+                                                aura:id="fieldcheck"
+                                                required="true"/>
+                        </div>
+                    </div>
+                </div>
+            </aura:if>
+            <aura:if isTrue="{!v.emp.FinServ__EmploymentStatus__c != 'Casual / Temporary'}">
+                <div class="slds-form__row">
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                            <h3 class="h3-heading">
+                                <abbr title="required" class="slds-required">*</abbr>Do you regularly work Overtime?
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_stacked slds-is-editing no-abbr">
+                            <lightning:radioGroup class="slds-p-around_x-small" name="{!'overtimeRG'+ v.applicant.Id + v.index}"
+                                                  label=""    
+                                                  options="{! v.yesNoOptions }"
+                                                  value="{! v.emp.Regularly_work_Overtime__c}"
+                                                  type="button"
+                                                  aura:id="fieldcheck"
+                                                  required="true"/>
+                        </div>
+                    </div>
+                </div>
+                <aura:if isTrue="{!v.emp.Regularly_work_Overtime__c=='Yes'}">
+                    <div class="slds-form__row">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <lightning:input label="Work Overtime amount" 
+                                                 formatter="currency"
+                                                 value="{!v.emp.Work_Overtime_amount__c}"
+                                                 type="number"
+                                                 placeholder="Work Overtime amount"
+                                                 aura:id="fieldcheck"
+                                                 required="true"/>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing ">
+                                <lightning:combobox label="Work Overtime Frequency" 
+                                                    value="{!v.emp.Work_Overtime_Frequency__c}"                                                 
+                                                    options="{! v.incomeFrequencyOptions }"
+                                                    aura:id="fieldcheck"
+                                                    required="true"/>
+                            </div>
+                        </div>
+                    </div>
+                </aura:if>
+                <div class="slds-form__row">
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                            <h3 class="h3-heading">
+                                <abbr title="required" class="slds-required">*</abbr>Do you regularly receive Commission or Bonus?
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_stacked slds-is-editing no-abbr">
+                            <lightning:radioGroup class="slds-p-around_x-small" name="{!'commBonusRG'+ v.applicant.Id + v.index}"
+                                                  label=""    
+                                                  options="{! v.yesNoOptions }"
+                                                  value="{! v.emp.Regularly_receive_Commission_or_Bonus__c}"
+                                                  type="button"
+                                                  aura:id="fieldcheck"
+                                                  required="true"/>
+                        </div>
+                    </div>
+                </div>
+                <aura:if isTrue="{!v.emp.Regularly_receive_Commission_or_Bonus__c=='Yes'}">
+                    <div class="slds-form__row">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <lightning:input label="Commission or Bonus amount" 
+                                                 value="{!v.emp.Commission_or_Bonus_amount__c}"
+                                                 formatter="currency"
+                                                 type="number"
+                                                 placeholder="Commission or Bonus amount"
+                                                 aura:id="fieldcheck"
+                                                 required="true"/>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing ">
+                                <lightning:combobox label="Commission or Bonus Frequency" 
+                                                    value="{!v.emp.Commission_or_Bonus_Frequency__c}"                                                 
+                                                    options="{! v.incomeFrequencyOptions }"
+                                                    aura:id="fieldcheck"
+                                                    required="true"/>
+                            </div>
+                        </div>
+                    </div>
+                </aura:if>
+                <div class="slds-form__row">
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                            <h3 class="h3-heading">
+                                <abbr title="required" class="slds-required">*</abbr>Do you regularly receive allowance?
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_stacked slds-is-editing no-abbr">
+                            <lightning:radioGroup class="slds-p-around_x-small" name="{!'recieveAllowanceRG'+ v.applicant.Id + v.index}"
+                                                  label=""    
+                                                  options="{! v.yesNoOptions }"
+                                                  value="{! v.emp.Regularly_Receive_Allowance__c}"
+                                                  type="button"
+                                                  aura:id="fieldcheck"
+                                                  required="true"/>
+                        </div>
+                    </div>
+                </div>
+                <aura:if isTrue="{!v.emp.Regularly_Receive_Allowance__c=='Yes'}">
+                    <div class="slds-form__row">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <lightning:input label="Allowance amount" formatter="currency"
+                                                 value="{!v.emp.Allowance_Amount__c}"
+                                                 type="number"
+                                                 placeholder="Allowance amount"
+                                                 aura:id="fieldcheck"
+                                                 required="true"/>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing ">
+                                <lightning:combobox label="Allowance Frequency" 
+                                                    value="{!v.emp.Allowance_Frequency__c}"                                                 
+                                                    options="{! v.incomeFrequencyOptions }"
+                                                    aura:id="fieldcheck"
+                                                    required="true"/>
+                            </div>
+                        </div>
+                    </div>
+                </aura:if>
+                <div class="slds-form__row">
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                            <h3 class="h3-heading">
+                                <abbr title="required" class="slds-required">*</abbr>Does your employer provide a company car?
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_stacked slds-is-editing no-abbr">
+                            <lightning:radioGroup class="slds-p-around_x-small" name="{!'companyCarRG'+ v.applicant.Id + v.index}"
+                                                  label=""    
+                                                  options="{! v.yesNoOptions }"
+                                                  value="{! v.emp.Provide_a_Company_Car__c}"
+                                                  type="button"
+                                                  aura:id="fieldcheck"
+                                                  required="true"/>
+                        </div>
+                    </div>
+                </div>
+            </aura:if>
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                        <lightning:combobox label="Industry" 
+                                            value="{!v.emp.FinServ__Occupation__c}"                                                 
+                                            options="{! v.occupationOptions }"
+                                            aura:id="fieldcheck"
+                                            required="true"/>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input label="Job Title" value="{!v.emp.Job_Title__c}" 
+                                         aura:id="fieldcheck" required="true" placeholder="Job Title"
+                                         maxlength="100"/>
+                    </div>
+                </div>
+                <div class="slds-form__item" role="listitem"></div>
+            </div>
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input label="Employer Name" value="{!v.emp.Name}" placeholder="Employer Name"
+                                         aura:id="fieldcheck" maxlength="80" 
+                                         required="true"/>
+                    </div>
+                </div>
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input type="tel" label="Employer Contact Number" 
+                                         value="{!v.emp.FinServ__EmployerPhoneNumber__c}" 
+                                         pattern="([0-9]{10}|[0-9]{4} [0-9]{3} [0-9]{3}|[0-9]{2} [0-9]{4} [0-9]{4})"
+                                         messageWhenPatternMismatch="Pattern should be 1234567890 or 1234 567 890 or 12 3456 7890"
+                                         placeholder="Employer Contact Number"
+                                         aura:id="fieldcheck"
+                                         required="true"/>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <c:AddressAPItool aura:id="addressTool" isFindAdd = "{!v.emp.Is_Find_Address__c}"
+                                              searchString="{!v.emp.FinServ__EmployerAddress__c}" label="Address"
+                                              streetNumber="{!v.emp.Street_Number__c}" street="{!v.emp.Street__c}"
+                                              state="{!v.emp.State__c}" suburb="{!v.emp.Suburb__c}"
+                                              postalCode="{!v.emp.Postal_Code__c}" country="{!v.emp.Country__c}"
+                                              streetType ="{!v.emp.Street_Type__c}" /> 
+                    </div>
+                </div>
+            </div>
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                        <lightning:input type="checkbox" 
+                                         checked="{!v.emp.Is_Find_Address__c}" 
+                                         label=" Can't find your address?"/>
+                    </div>
+                </div>
+            </div>
+            <aura:if isTrue="{!v.emp.Is_Find_Address__c}">
+                <div class="slds-form__row">
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_stacked slds-is-editing" style="display: inline-flex;">
+                            
+                            <lightning:input aura:id="fieldcheck" 
+                                             value="{!v.emp.Unit_Number__c}"
+                                             label="Unit Number (Optional)" placeholder="Unit Number"
+                                             maxlength="50"/>
+                            <lightning:input aura:id="fieldcheck" required="true"
+                                             value="{!v.emp.Street_Number__c}"
+                                             label="Street Number" placeholder="Street Number"
+                                             maxlength="25"/>
+                        </div>
+                    </div>
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_stacked slds-is-editing"></div>
+                    </div>
+                </div>
+                <div class="slds-form__row">
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                            <lightning:input aura:id="fieldcheck" required="true"
+                                             value="{!v.emp.Street__c}"
+                                             label="Street" placeholder="Street"
+                                             maxlength="100"/>
+                        </div>
+                    </div>
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                            <lightning:combobox aura:id="fieldcheck" required="true"
+                                                label="Street Type" 
+                                                value="{!v.emp.Street_Type__c}"
+                                                options="{!v.streetTypeOptions}" 
+                                                placeholder="Street Type"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-form__row">
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                            <lightning:input aura:id="fieldcheck" required="true"
+                                             value="{!v.emp.Suburb__c}"
+                                             label="Suburb" placeholder="Suburb"
+                                             maxlength="100"/>
+                        </div>
+                    </div>
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                            <lightning:combobox aura:id="fieldcheck" required="true"
+                                                label="State" 
+                                                value="{!v.emp.State__c}"
+                                                options="{! v.statesTerritoriesOptions }" 
+                                                placeholder="State"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-form__row">
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                            <lightning:input aura:id="fieldcheck" required="true"
+                                             value="{!v.emp.Postal_Code__c}" maxlength="10"
+                                             label="Postal Code" placeholder="Postal Code"/>
+                        </div>
+                    </div>
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                            <lightning:input aura:id="fieldcheck" required="true"
+                                             label="Country" maxlength="50"
+                                             value="{!v.emp.Country__c}" 
+                                             placeholder="Country"/>
+                        </div>
+                    </div>
+                </div>
+            </aura:if>
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:combobox aura:id="fieldcheck" required="true"
+                                            label="Time with this employer (years and months)" 
+                                            value="{!v.emp.Years__c}" 
+                                            options="{! v.yearsOptions }" 
+                                            placeholder="Years"
+                                            onchange="{!c.changeMonthYear}"/>
+                    </div>
+                </div>
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing no-abbr">
+                        <lightning:combobox label="&nbsp;" 
+                                            value="{!v.emp.Months__c}" 
+                                            options="{! v.monthsOptions }" 
+                                            placeholder="Months"
+                                            onchange="{!c.changeMonthYear}"
+                                            aura:id="fieldcheck"
+                                            required="true"/>
+                    </div>
+                </div>
+            </div>
+            
+        </aura:if>
+        <aura:if isTrue="{!v.emp.FinServ__EmploymentStatus__c=='Self Employed / Contractor' || 
+                         v.emp.FinServ__EmploymentStatus__c=='Business Income' || 
+                         v.emp.FinServ__EmploymentStatus__c=='Workcover Workers / Compensation'}">
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                        <lightning:combobox label="Self Employed Type" 
+                                            value="{!v.emp.Self_Employed_Type__c}"                                                 
+                                            options="{! v.selfEmployedTypeOptions }"
+                                            aura:id="fieldcheck"
+                                            required="true"/>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input type="number" label="Ownership Share (%)" 
+                                         step="0.01"
+                                         value="{!v.emp.Ownership_Share__c}"
+                                         placeholder="Ownership Share"
+                                         aura:id="fieldcheck"
+                                         required="true"/>
+                    </div>
+                </div>
+                
+                <div class="slds-form__item no-abbr" role="listitem">
+                    <aura:if isTrue="{!v.selectedPerson == 'joint'}">
+                        <lightning:radioGroup class="slds-p-around_x-small" name="{!'sameHouseholdRG'+ v.applicant.Id + v.index}"
+                                              options="{! v.jointYesNoOptions }"
+                                              value="{! v.emp.Ownership_Share_Type__c}"
+                                              type="radio"
+                                              aura:id="fieldcheck"
+                                              required="true"/>
+                    </aura:if>
+                </div>
+            </div>                
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                        <lightning:combobox label="Industry" 
+                                            value="{!v.emp.FinServ__Occupation__c}"                                                 
+                                            options="{! v.occupationOptions }"
+                                            aura:id="fieldcheck"
+                                            required="true"/>
+                    </div>
+                </div>
+            </div>
+            <aura:if isTrue="{!v.emp.FinServ__EmploymentStatus__c=='Self Employed / Contractor'}">
+                <div class="slds-form__row">
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                            <lightning:input label="Job Title" value="{!v.emp.Job_Title__c}" placeholder="Job Title"
+                                             maxlength="100"/>
+                        </div>
+                    </div>
+                    <div class="slds-form__item" role="listitem"></div>
+                </div>		 
+            </aura:if> 
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input label="Business Name" value="{!v.emp.Name}" 
+                                         placeholder="Business Name"
+                                         aura:id="fieldcheck" maxlength="80"
+                                         required="true"/>
+                    </div>
+                </div>
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input label="ABN" maxlength="50"
+                                         value="{!v.emp.ABN__c}"
+                                         placeholder="ABN"/>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input label="Date ABN registered" 
+                                         type="date"
+                                         value="{!v.emp.Date_ABN_registered__c}"
+                                         placeholder="Date ABN registered"/>
+                    </div>
+                </div>
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:radioGroup class="slds-p-around_x-small" name="{!'GSTRG'+ v.applicant.Id + v.index}"
+                                              label="Are you registered for GST"    
+                                              options="{! v.yesNoOptions }"
+                                              value="{! v.emp.Are_you_registered_for_GST__c}"
+                                              type="radio"
+                                              aura:id="fieldcheck"
+                                              required="true"/>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input label="Last year net profit" formatter="currency"
+                                         type="number"
+                                         value="{!v.emp.Last_year_net_profit__c}"
+                                         placeholder="Last year net profit"
+                                         aura:id="fieldcheck"
+                                         required="true"/>
+                    </div>
+                </div>
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input label="Previous year net profit" formatter="currency"
+                                         type="number" 
+                                         value="{!v.emp.Previous_year_net_profit__c}"
+                                         placeholder="Previous year net profit"
+                                         aura:id="fieldcheck"
+                                         required="true"/>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:radioGroup class="slds-p-around_x-small" name="{!'salaryProfitRG'+ v.applicant.Id + v.index}"
+                                              label="Do you pay yourself a salary on top of profit"    
+                                              options="{! v.yesNoOptions }"
+                                              value="{! v.emp.Pay_yourself_salary__c}"
+                                              type="button"
+                                              aura:id="fieldcheck"
+                                              required="true"/>
+                    </div>
+                </div>
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <aura:if isTrue="{!v.emp.Pay_yourself_salary__c=='Yes'}">
+                            <lightning:input label="Annual salary (before tax)" 
+                                             value="{!v.emp.Annual_salary_before_tax__c}"
+                                             formatter="currency"
+                                             type="number" 
+                                             placeholder="Annual salary (before tax)"
+                                             aura:id="fieldcheck"
+                                             required="true"/>
+                        </aura:if>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <aura:if isTrue="{!v.emp.FinServ__EmploymentStatus__c=='Self Employed / Contractor'}">
+                            <lightning:combobox aura:id="fieldcheck" required="true"
+                                                label="Time running this business (years and months)" 
+                                                value="{!v.emp.Years__c}" 
+                                                options="{! v.yearsOptions }" 
+                                                placeholder="Years"
+                                                onchange="{!c.changeMonthYear}"/>
+                        </aura:if>
+                        <aura:if isTrue="{!v.emp.FinServ__EmploymentStatus__c!='Self Employed / Contractor'}">
+                            <lightning:combobox aura:id="fieldcheck" required="true"
+                                                label="Time with this employer (years and months)" 
+                                                value="{!v.emp.Years__c}" 
+                                                options="{! v.yearsOptions }" 
+                                                placeholder="Years"
+                                                onchange="{!c.changeMonthYear}"/>
+                        </aura:if>
+                    </div>
+                </div>
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing no-abbr">
+                        <lightning:combobox label="&nbsp;" 
+                                            value="{!v.emp.Months__c}" 
+                                            options="{! v.monthsOptions }" 
+                                            placeholder="Months"
+                                            onchange="{!c.changeMonthYear}"
+                                            aura:id="fieldcheck"
+                                            required="true"/>
+                    </div>
+                </div>
+            </div>
+        </aura:if>
+        
+        <aura:if isTrue="{!v.emp.FinServ__EmploymentStatus__c == 'Other' || v.emp.FinServ__EmploymentStatus__c == 'Family Tax Benefits' || v.emp.FinServ__EmploymentStatus__c == 'Dividends or Annuity' ||
+                         v.emp.FinServ__EmploymentStatus__c == 'New Start Allowance' || v.emp.FinServ__EmploymentStatus__c == 'Disability Pension' ||
+                         v.emp.FinServ__EmploymentStatus__c == 'Carer’s Pension' || v.emp.FinServ__EmploymentStatus__c == 'Child Support' || 
+                         v.emp.FinServ__EmploymentStatus__c == 'Pension'}">
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input label="Income amount" formatter="currency"
+                                         type="number"
+                                         value="{!v.emp.FinServ__AnnualIncome__c}" 
+                                         placeholder="Income amount"
+                                         aura:id="fieldcheck"
+                                         required="true"/>
+                    </div>
+                </div>                
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:combobox label="Income Frequency" 
+                                            value="{!v.emp.Income_Frequency__c}"                                                 
+                                            options="{! v.incomeFrequencyOptions }"
+                                            aura:id="fieldcheck"
+                                            required="true"/>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:combobox aura:id="fieldcheck" required="true"
+                                            label="Time receiving this income (years and months)" 
+                                            value="{!v.emp.Years__c}" 
+                                            options="{! v.yearsOptions }" 
+                                            placeholder="Years"
+                                            onchange="{!c.changeMonthYear}"/>
+                    </div>
+                </div>
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing no-abbr">
+                        <lightning:combobox label="&nbsp;" 
+                                            value="{!v.emp.Months__c}" 
+                                            options="{! v.monthsOptions }" 
+                                            placeholder="Months"
+                                            onchange="{!c.changeMonthYear}"
+                                            aura:id="fieldcheck"
+                                            required="true"/>
+                    </div>
+                </div>
+            </div>
+            
+        </aura:if>
+        <aura:if isTrue="{!v.emp.FinServ__EmploymentStatus__c != ''}">
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input label="Description (Optional)" maxlength="255"
+                                         value="{!v.emp.Description__c}" 
+                                         placeholder="Description"/>
+                    </div>
+                </div>
+            </div>
+        </aura:if>
+        
+    </div>
+</aura:component>

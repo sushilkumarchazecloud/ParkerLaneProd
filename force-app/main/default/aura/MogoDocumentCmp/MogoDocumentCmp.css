@@ -1,0 +1,219 @@
+.THIS .boldBelyFont {
+ font-family: Bely-Bold;
+}
+
+@font-face {
+    font-family: Bely-Bold;
+    src: url('/resource/customfonts/Bely-Bold.otf') format('OpenType');
+}
+
+.THIS .proximaNovaReg {
+    font-family: ProximaNovaAlt-Medium;
+}
+
+@font-face {
+    font-family: ProximaNovaAlt-Medium;
+    src: url('/resource/customfonts/ProximaNovaAlt-Medium.otf') format('OpenType');
+}
+
+.THIS .proximaNovafont{
+    font-family: Proxima Nova Alt Regular;
+}
+@font-face {
+    font-family: Proxima Nova Alt Regular;
+    src: url('/resource/ProximaNovaRegularFont') format('TrueType'); 
+}
+.THIS .ProximaNova-AltBold{
+    font-family: ProximaNova-AltBold;
+}
+@font-face {
+    font-family: ProximaNova-AltBold;
+    src: url('/resource/customfonts/ProximaNova-AltBold.otf') format('OpenType');
+}
+
+.THIS .textarea{
+    max-width: 238px !important;
+    margin-left: .5rem;
+}
+.THIS .slds-accordion__summary-action{
+    font-size: large !important;
+    font-weight: 600 !important;
+}
+.THIS .btnC {
+    color:white;
+}
+.THIS .buttonIconClass svg {
+    width: 1.4rem;
+    height: 1.4rem;
+}
+.THIS .company-logo, .THIS.company-logo{
+    padding: 10px;
+    background-color: #1a2745;
+    color: #fff;
+    min-height: 70px;
+    align-items: center;
+}
+.THIS .company-logo img, .THIS.company-logo img{
+    width: 200px;
+    padding: 10px;
+    height: 43px;
+}
+.THIS .bg-blue {
+    background-color: #006ac6;
+}
+.THIS .sub-section{
+    background-color: #FFF;
+    border-radius: 10px;
+    background-color: #FFF;
+    border-radius: 10px;
+}
+.THIS .max-700, .THIS.max-700{
+    max-width: 700px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+.THIS .txt-white {
+    color: #fff;
+}
+.THIS .checkout-page-banner--gradient .heading--page {
+    font-size: 2.5rem;
+    line-height: 1;
+    letter-spacing: 1px;
+    font-weight: 900;
+    text-align: center;
+    font-family: Lexia Ad,Lexia,Trebuchet MS,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Tahoma,sans-serif;
+}
+.THIS .checkout-page-banner--gradient {
+    color: #006ac6;
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+}
+.THIS h4 {
+    color: #006ac6;
+    font-size: 2rem;
+}
+.THIS .security-box{
+    text-align: center;
+    border: 1px solid #BFBFBF;
+    background-color: white;
+    box-shadow: 0px 5px 5px #c4c4c4;
+}
+
+@media screen and (max-width: 600px) {
+    .THIS .headingText {
+        text-align: left;
+    }
+    .THIS .phonetext{
+        color: #FFF;
+    }
+    .THIS .iframe-style{
+        height:550px !important;
+    }
+}
+
+.THIS .header-logo{
+    border-radius: 72px;
+    border: 2px solid #5bc65b;
+    width: 90px;
+    padding: 10px;
+    height: 90px;
+    background-color: #FFF;
+}
+.THIS .heading-style{
+    font-size: 1.85rem;
+    font-family: ProximaNova-AltBold;
+    line-height: normal;
+    padding-bottom: 10px;
+}
+.THIS .pargraph-style{
+    font-size: 1rem;
+    font-family: ProximaNovaAlt-Medium;
+}
+.THIS .pargraph-style-bullets{
+    text-align: initial;
+    font-size: 1rem;
+    font-family: ProximaNovaAlt-Medium;
+}
+
+.THIS .pargraph-bold-style{
+    font-size: 1rem;
+    font-family: ProximaNova-AltBold;
+    text-align: justify;
+}
+
+.THIS .mogo-txt-color{
+    color: #e73c6f;
+}
+
+.THIS .iframe-style{
+    /*
+    box-shadow: 0 5px 5px #c4c4c4;
+    
+    height:430px;*/
+    border: 0px solid #66A9DA;
+    min-height:460px;
+}
+
+.THIS .header--section,.THIS.header--section{
+    background-color: #d2edee;
+    text-align: center;
+    padding: 15px;
+}
+
+.THIS .box-security-header{
+    padding: 14px;
+    background-color: #66A9DA;
+    color: #fff;
+    font-size: 23px;
+}
+.THIS .icon-style {
+    text-align: center;
+    font-family: ProximaNovaAlt-Medium;
+}
+
+.THIS .icon-style img{
+    width: auto;
+    height: 60px;
+}
+
+.THIS .icon-style .sub-heading {
+    font-family: ProximaNova-AltBold;
+    font-size: .75rem;
+    padding-top: 15px;
+    text-transform: uppercase;
+    line-height: normal;
+}
+
+.THIS .icon-style .sub-paragraph {
+    font-family: ProximaNovaAlt-Medium;
+    font-size: 1rem;
+    line-height: normal;
+}
+.THIS .max-700,.THIS.max-700{
+    max-width: 700px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media screen and (max-width: 768px) {
+    .THIS .icon-style img{
+        height: 50px;
+    }
+    .THIS .icon-style .txt-container {
+        text-align: left;
+		padding-left: 20px;
+    }
+    .THIS .icon-style .sub-heading {
+        padding-top: 0px;
+    }
+    
+    .THIS .company-logo div, .THIS.company-logo div {
+        text-align: center;
+        padding: 7px;
+        font-size: 12px;
+    }
+}

@@ -1,0 +1,17 @@
+.THIS .nolabel .slds-form-element__label{
+   	display: none; 
+    visibility: hidden;
+} 
+.THIS .slds-table td {
+    white-space: normal;
+}
+
+.THIS .slds-file-selector_files .slds-file-selector__text{
+    display : none;
+    visibility: hidden;
+}
+
+.THIS .greyBTN{
+    background : grey;
+    color : white;
+}

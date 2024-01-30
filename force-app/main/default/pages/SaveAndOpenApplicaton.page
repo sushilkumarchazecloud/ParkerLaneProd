@@ -1,0 +1,1046 @@
+<apex:page standardController="Opportunity" extensions="SaveAndSavePDFController" renderAs="pdf" applyHtmlTag="false" applyBodyTag="false" standardStylesheets="false"  showHeader="false"  sidebar="false">
+    <apex:pageMessages ></apex:pageMessages>
+    <head>
+        <style TYPE="text/css">
+            @page {
+                margin-top: 1cm;
+                margin-bottom: 0.5cm;
+                border: 2px solid;
+                border-color:black;
+                @top-center {
+                    content: element(header);
+                }
+                @bottom-left {
+                    content: element(footer);
+                }  
+            }
+            
+            div.header {
+                padding: 10px;
+                position: running(header);
+                font-size:40px;
+            }
+            .bordered {
+                color:#5DBCD2;
+            }
+            a:-webkit-any-link {
+                color: black !important;
+                cursor: None !important;
+                text-decoration: None !important;
+            }
+            a{
+                color: black !important;
+                cursor: None !important;
+                text-decoration: None !important;
+            }
+            .box101 {
+                width:660px;
+                margin:0 auto 0 auto;
+                padding:5px;
+                border:2px solid #000000;
+                background:#fff;
+                border-radius: 20px;
+            }
+            .box102 {
+                width:640px;
+                margin:0 auto 0 auto;
+                padding:5px;
+                border:2px solid #000000;
+                background:#fff;
+                box-sizing: border-box;
+            }
+            .table-bordered {
+                empty-cells: show;
+                border: 0px solid silver;
+                border-left-width: 0;
+                border-collapse: collapse;
+                border-spacing: 0;
+                font-family: Helvetica, Arial, sans-serif;/* Nicer font */
+                text-align: center; 
+                font-size: 13px;
+            }
+            .table-bordered td{
+                    height: 35px;
+            }
+            .table-bordered th{
+                    height: 30px;
+            }      
+            .table-bordered td,
+            .table-bordered th {
+                border-top: 1px solid silver;
+                border-left: 1px solid silver;
+                border-bottom:1px solid silver;
+                border-right:1px solid silver;
+            }
+
+           th{
+                text-align: center;
+                font-family: Helvetica, Arial, sans-serif;/* Nicer font */
+                font-size: 13px;
+                background:#d3d3d3;
+            }
+            #navv {
+                background-color: #d3d3d3;
+                
+            } 
+      </style>
+    </head>
+    
+    <!-- CONTENT -->
+    <div class ="box100">
+        <table width="100%">
+            <tr>
+                <td width="50%">
+                    <b style="font-size:25px;font-family:Times New Roman, Times, serif;">Parker Lane Credit Documents</b>
+                </td>
+                <td width="40%">
+                    <div style="float:right">
+                        <apex:image width="180px" height="35px" id="logo1" url="{!$Resource.HeaderLogo}"/>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <br/>
+        <br/>
+        
+        <span style="font-family:Times New Roman, Times, serif;"> CREDIT QUOTE &amp; PROPOSAL </span><br/>
+        <span> <b>{!quoteWrap.ProductName}</b> </span>
+        <br/>
+        <br/>
+        <br/>
+        
+        <span style="font-family:Times New Roman, Times, serif;"> Date&nbsp;:&nbsp;<apex:outputText value="{0,date,MM/dd/yyyy}"><apex:param value="{!TODAY()}"/></apex:outputText></span>
+        <br/>
+        <br/>
+        
+        <hr/>
+        <span style="font-family:Times New Roman, Times, serif;"><center><b>SCHEDULE</b></center></span>
+        <hr/>
+        <br/>
+        
+        <table width="100%" align="left">
+            <tr>
+                <td valign="top" colspan="2" style="text-align:left;font-family:Times New Roman, Times, serif;">
+                    <b>CUSTOMER("you")</b>
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    Name:
+                </td>
+                <td width="70%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    {!wpObj.opp.Applicant_1__r.Name}
+                    <br/>
+                    {!wpObj.opp.Applicant_2__r.Name}
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    Address:
+                </td>
+                <td width="70%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    {!wpObj.opp.Applicant_1__r.Residential_Address__pc}
+                </td>
+            </tr>
+        </table>
+        
+        <table width="100%" align="left">
+            <tr></tr>
+            <tr></tr>
+            <tr>
+                <td valign="top" colspan="2" style="text-align:left;font-family:Times New Roman, Times, serif;">
+                    <b>BROKER("us")</b>
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    Credit License:
+                </td>
+                <td width="70%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    Upside Downside Pty Ltd trading as Parker Lane
+                    <br/>
+                    Level 1, 212 Commercial Road, Prahran VIC 3181
+                    <br/>
+                    1300 13 17 11 | hello@parkerlane.com.au
+                    <br/>
+                    Australian Credit License Number: 482276
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    Adviser:
+                </td>
+                <td width="70%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    {!wpObj.opp.Owner.Name}<br/>
+                    {!wpObj.opp.Owner.Phone} 
+                    <apex:outputpanel rendered="{!wpObj.opp.Owner.Phone != null}">
+                    &nbsp; | &nbsp; 
+                    </apex:outputpanel>
+                    {!wpObj.opp.Owner.Email}
+                </td>
+            </tr>
+        </table>
+        
+        <table width="100%" align="left">
+            <tr></tr>
+            <tr></tr>
+            <tr>
+                <td valign="top" colspan="2" style="text-align:left;font-family:Times New Roman, Times, serif;">
+                    <b>PROPOSED CREDIT APPLICATION</b>
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    Credit Provider (Lender):
+                </td>
+                <td width="70%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    {!quoteWrap.Lender}
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    Product:
+                </td>
+                <td width="70%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    {!quoteWrap.ProductName}
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    Loan Amount:
+                </td>
+                <td width="70%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <apex:outputPanel rendered="{!quoteWrap.TotalLoanAmount != null}"> $</apex:outputPanel>{!quoteWrap.TotalLoanAmount}
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    Interest Rate:
+                </td>
+                <td width="70%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    {!quoteWrap.InterestRate}<apex:outputPanel rendered="{!quoteWrap.InterestRate != null}">% p.a. {!quoteWrap.InterestRateType}</apex:outputPanel>
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    Repayments:
+                </td>
+                <td width="70%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <apex:outputPanel rendered="{!quoteWrap.MonthlyRepayments != null}">$</apex:outputPanel>
+                        {!quoteWrap.MonthlyRepayments}
+                    <apex:outputPanel rendered="{!quoteWrap.MonthlyRepayments != null}"> per month</apex:outputPanel>
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    Loan Term:
+                </td>
+                <td width="70%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    {!quoteWrap.LoanTerm}<apex:outputPanel rendered="{!quoteWrap.LoanTerm != null}"> months</apex:outputPanel>
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    Total set-up costs:
+                </td>
+                <td width="70%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <apex:outputPanel rendered="{!quoteWrap.TotalSetupFees != null}">$</apex:outputPanel>{!quoteWrap.TotalSetupFees}
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    Ongoing fees:
+                </td>
+                <td width="70%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    {!quoteWrap.accountKeepingFees}
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <b>Total cost of loan</b>:
+                </td>
+                <td width="70%" style="text-align:left;font-family:font-size:13px;Arial, Helvetica, sans-serif;">
+                    <b><apex:outputPanel rendered="{!quoteWrap.TotalLoanCost != null}">$</apex:outputPanel>{!quoteWrap.TotalLoanCost}</b>        
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    <i>Disclaimer: The above figures were current at the time this Credit Proposal Disclosure was issued.</i>
+                </td>
+            </tr>
+        </table>
+        
+        <table width="100%" align="left">
+            <tr></tr>
+            <tr></tr>
+            <tr>
+                <td valign="top" colspan="2" style="text-align:left;font-family:Times New Roman, Times, serif;">
+                    <b>ESTIMATE OF THE TOTAL FEES AND CHARGES PAYABLE BY YOU TO US</b>
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td width="100%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    <i>Represents the fee payable in providing credit assistance to you under the credit contract.</i>
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td width="50%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    Brokerage Origination Fee:
+                </td>
+                <td width="50%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <apex:outputPanel rendered="{!quoteWrap.BrokerageAmount != null}">$</apex:outputPanel>{!quoteWrap.BrokerageAmount}
+                </td>
+            </tr>
+            
+        </table>
+        
+        <table width="100%" align="left">
+            <tr></tr>
+            <tr></tr>
+            <tr>
+                <td valign="top" colspan="2" style="text-align:left;font-family:Times New Roman, Times, serif;">
+                    <b>ESTIMATE OF THE TOTAL FEES AND CHARGES PAYABLE BY YOU TO THE LENDER</b>
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td width="100%" valign="top" style="padding-bottom:10px;text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    <i>Represents the reasonable cost of providing credit to you under the credit contract.</i>
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td width="50%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    Establishment Fee:
+                </td>
+                <td width="50%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <apex:outputPanel rendered="{!wpObj.Establishment != null}">$</apex:outputPanel>{!wpObj.Establishment}
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td width="50%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    Risk Fee:
+                </td>
+                <td width="50%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <apex:outputPanel rendered="{!wpObj.Risk!= null}">$</apex:outputPanel>{!wpObj.Risk}
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td width="50%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    Application Fee:
+                </td>
+                <td width="50%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <apex:outputPanel rendered="{!wpObj.Application != null}">$</apex:outputPanel>{!wpObj.application}
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td width="50%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    Account Keeping Fees:
+                </td>
+                <td width="50%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <apex:outputPanel rendered="{!quoteWrap.AccountKeeping != null}">$</apex:outputPanel>{!quoteWrap.AccountKeeping}
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td width="50%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    Valuation Fee:
+                </td>
+                <td width="50%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <apex:outputPanel rendered="{!wpObj.Valuation != null}">$</apex:outputPanel>{!wpObj.valuation}
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td width="50%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    Legal Fees:
+                </td>
+                <td width="50%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <apex:outputPanel rendered="{!wpObj.Legal != null}">$</apex:outputPanel>{!wpObj.legal}
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td width="50%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    Government Charges:
+                </td>
+                <td width="50%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <apex:outputPanel rendered="{!wpObj.GovernmentCharges != null}">$</apex:outputPanel>{!wpObj.GovernmentCharges}
+                </td>
+            </tr>
+            <tr></tr>
+            <tr></tr>
+            <tr>
+                <td width="100%" valign="top" style="padding-top:10px;padding-bottom:20px;text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    <i>Fee estimates are rounded to the nearest dollar. The final amount of fees and charges will be shown within the credit contract which will be issued by the lender. Some or all of these fees and charges may be payable from the loan proceeds and do not include any ongoing charges.</i>
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td valign="top" colspan="2" style="text-align:left;font-family:Times New Roman, Times, serif;">
+                    <b>ESTIMATE OF THE TOTAL COMMISSIONS PAID BY THE LENDER TO US</b>
+                </td>
+            </tr>
+            <tr>
+                <td width="50%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    Commission on credit contract:
+                </td>
+                <td width="50%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <apex:outputPanel rendered="{!quoteWrap.CommissionAmount != null}">$</apex:outputPanel>{!quoteWrap.CommissionAmount}
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td width="50%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    Payable to:
+                </td>
+                <td width="50%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    Upside Downside Pty Ltd
+                </td>
+            </tr>
+            <tr></tr>
+            <tr></tr>
+            <tr>
+                <td width="100%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    <i>Represents commission payable in providing credit assistance to you under the credit contract.</i>
+                </td>
+            </tr>
+        </table>
+        
+        <table width="100%" align="left">
+            <tr></tr>
+            <tr></tr>
+            <tr>
+                <td valign="top" colspan="2" style="text-align:left;font-family:Times New Roman, Times, serif;">
+                    <b>CREDIT QUOTE</b>
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td width="100%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    This document provides information on the maximum amount of fees and charges payable by you in relation to credit assistance and services we provide to you.
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td width="100%" valign="top" style="padding-top:10px;text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    We provide credit assistance by:
+                    <ul style="margin:0px;padding:0px 30px;">
+                      <li>supplying you with information in relation to a loan,</li>
+                      <li>recommending a loan that is suitable for your current objectives and financial situation,</li>
+                      <li>assisting you with a loan application, and</li>
+                      <li>liaising with lenders on your behalf.</li>
+                    </ul>  
+                </td>
+            </tr>
+            <tr></tr>
+            <tr></tr>
+            <tr>
+                <td width="100%" valign="top" style="padding-top:10px;text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    TOTAL AMOUNT PAYABLE: $Nil (GST inclusive) is made up of:
+                    <ul style="margin:0px;padding:0px 30px;">
+                        <li>Commitment Fee: Nil</li>
+                        <li>Service Fee: Nil</li>
+                    </ul>  
+                </td>
+            </tr>
+            <tr></tr>
+            <tr></tr>
+            <tr>
+                <td width="100%" valign="top" style="padding-top:10px;text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    <b>Brokerage</b>
+                </td>
+            </tr>
+            <tr>
+                <td width="100%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    In the provision of products and services we may charge a brokerage fee which is paid by you to the lender who in turn pays us. Refer to the Schedule above for amounts.
+                    <br/>
+                    <br/>
+                    Note: a copy of signed Credit Quote will be provided for your records.
+                </td>
+            </tr>    
+        </table>
+        
+        <table width="100%" align="left">
+            <tr></tr>
+            <tr></tr>
+            <tr>
+                <td valign="top" colspan="2" style="text-align:left;font-family:Times New Roman, Times, serif;">
+                    <b>CREDIT PROPOSAL</b>
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td width="100%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    This Credit Proposal Disclosure sets out important information that we must give you when we provide you with credit assistance. We provide “credit assistance” when we:
+                </td>
+            </tr>
+            <tr>
+                <td width="100%" valign="top" style="padding-top:10px;text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    <ol style="margin:0px;padding:0px 30px;">
+                        <li>Suggest or assist you in applying for:
+                            <ol style="margin:0px;padding:0px 30px;">
+                                <li>A particular loan with a particular lender</li>
+                                <li>An increase to an existing loan with a particular lender, or</li>
+                            </ol>
+                        </li>
+                        <li>Recommend that you remain in an existing loan contract.</li>
+                    </ol>  
+                </td>
+            </tr>
+            <tr></tr>
+            <tr></tr>
+            <tr>
+                <td width="100%" valign="top" style="padding-top:10px;text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    <b>Proposed Credit Application</b>
+                </td>
+            </tr>
+            <tr>
+                <td width="100%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    Refer to the Schedule above for amounts.
+                </td>
+            </tr>
+            <tr></tr>
+            <tr></tr>
+            <tr>
+                <td width="100%" valign="top" style="padding-top:10px;text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    <b>Estimate of the total fees and charges paid to us</b>
+                </td>
+            </tr>
+            <tr>
+                <td width="100%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    We may charge a fee for providing credit assistance to you. If applicable, details about these fees payable are set out in the Credit Quote we have previously given to you. You are also required to pay the following fee if you enter into the credit contract. This is a once only fee and will not be payable if you do not proceed with the credit contract. The credit provider may apportion the fee to us from the loan proceeds.
+                    <br/>
+                    <br/>
+                    Refer to the Schedule above for amounts.
+                </td>
+            </tr>
+            <tr></tr>
+            <tr></tr>
+            <tr>
+                <td width="100%" valign="top" style="padding-top:10px;text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    <b>Estimate of the total fees and charges paid to the lender</b>
+                </td>
+            </tr>
+            <tr>
+                <td width="100%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    Refer to the Schedule above for amounts.
+                </td>
+            </tr>
+            <tr></tr>
+            <tr></tr>
+            <tr>
+                <td width="100%" valign="top" style="padding-top:10px;text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    <b>Amount of net funds available</b>
+                </td>
+            </tr>
+            <tr>
+                <td width="100%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    The net amount available from the draw-down of your asset finance / personal loan facility does not necessarily represent the amount of funds that will be available to you. Other associated fees and charges may be disbursed from the loan funds. Please refer to your credit contract for details.
+                </td>
+            </tr>
+            <tr>
+                <td width="100%" valign="top" style="padding-top:10px;text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    <b>Funding Worksheet</b>
+                </td>
+            </tr>
+            <tr>
+                <td width="100%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    <table width="100%" align="left">
+                        <tr>
+                            <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                                Loan Amount Requested:
+                            </td>
+                            <td width="70%" style="text-align:left;font-family:font-size:13px;Arial, Helvetica, sans-serif;">
+                                <apex:outputPanel rendered="{!quoteWrap.TotalLoanAmount != null}">$</apex:outputPanel>{!quoteWrap.TotalLoanAmount}        
+                            </td>
+                        </tr>
+                        <tr></tr>
+                        <tr>
+                            <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                                <b>LESS:</b>
+                            </td>
+                            <td width="70%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                            </td>
+                        </tr>
+                        <tr></tr>
+                        <tr>
+                            <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                                Total Setup Fees:
+                            </td>
+                            <td width="70%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                                <apex:outputPanel rendered="{!quoteWrap.UpFrontFees != null}">$</apex:outputPanel>{!quoteWrap.UpFrontFees}
+                            </td>
+                        </tr>
+                        <tr></tr>
+                        <tr>
+                            <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                                Brokerage:
+                            </td>
+                            <td width="70%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                                <apex:outputPanel rendered="{!quoteWrap.BrokerageAmount != null}">$</apex:outputPanel>{!quoteWrap.BrokerageAmount}
+                            </td>
+                        </tr>
+                        <tr></tr>
+                        <tr>
+                            <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                                <b>Credit Available After Fees:</b>
+                            </td>
+                            <td width="70%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                                <b><apex:outputPanel rendered="{!quoteWrap.CreditAvailableAfterSetupCosts != null}">$</apex:outputPanel>{!quoteWrap.CreditAvailableAfterSetupCosts}</b>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr></tr>
+            <tr></tr>
+            <tr>
+                <td width="100%" valign="top" style="padding-top:10px;text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    <b>Commission we will / may receive in relation to this loan.</b>
+                </td>
+            </tr>
+            <tr>
+                <td width="100%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    Commission the credit representative may receive from the lender directly or indirectly in relation to the loan is not payable by you. The commission to be paid by the lender will be disbursed between our aggregator, the credit representative and any business referrer (if applicable).
+                    <br/>
+                    <br/>
+                    Please find in the schedule the estimate of commission that we are likely to receive.
+                </td>
+            </tr>
+            <tr></tr>
+            <tr></tr>
+            <tr>
+                <td width="50px" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" >
+                    Volume Bonus
+                </td>
+                <td width="50px" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    0% to 5%
+                </td>
+            </tr>
+            <tr>
+                <td width="50px" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" >
+                    Payable to
+                </td>
+                <td width="50px" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" >
+                    Upside Downside Pty Ltd
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td width="100%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    <i>Depending on type of finance, total volume introduced and performance benchmarks. Represents commission payable in providing credit assistance to you under the credit contract.</i>
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td width="100%" valign="top" style="padding-top:10px;text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    From time to time, Upside Downside Pty Ltd and its employees may receive a non-commission benefit by way of training, professional development, entertainment, gift, conference attendance, sponsorship, or entry into a competition run by a lender or my aggregator, at no extra cost to you. The nature of such arrangements are temporary, and the occurrence and amounts are often not readily ascertainable, however if they are apparent as a result of assisting you with credit assistance, this will be disclosed to you.
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td width="100%" valign="top" style="padding-top:10px;text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    As disclosed in our Credit Guide, we and/or our employees have a preferential relationship with this lender. This preferential program gives you, as our customer access to preferential services. This does not include any additional commission paid to us nor customer discounts. 
+                </td>
+            </tr>
+            <tr>
+                <td width="100%" valign="top" style="padding-top:10px;text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    <b>Referral Fees</b>
+                </td>
+            </tr>
+            <tr>
+                <td width="100%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    If you were introduced or ‘referred by’ SolarQuotes.com.au, we will be paying a referral fee of approximately <apex:outputPanel rendered="{!quoteWrap.SQReferralCommission == null}"> $0.00</apex:outputPanel><apex:outputPanel rendered="{!quoteWrap.SQReferralCommission != null}"> $</apex:outputPanel>{!quoteWrap.SQReferralCommission} to this authorised referrer. This fee is not paid by you. We do not pay referral fees to any other referrer.
+                </td>
+            </tr>
+            <tr>
+                <td width="100%" valign="top" style="padding-top:10px;text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    <b>Acknowledgement of risk insurance offering</b>
+                </td>
+            </tr>
+            <tr>
+                <td width="100%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    Insurance can be an effective way of minimising any potential financial hardship on you, your family and your business. Financial hardship may result from a death, disability, trauma or personal injury. 
+                </td>
+            </tr>
+            <tr>
+                <td width="100%" valign="top" style="padding-top:10px;text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    If you do not have adequate risk protection insurance in place:  
+                    <ul style="margin:0px;padding:0px 30px;">
+                        <li>You may not be able to meet the repayments on your loan should an unexpected or unforeseen event arise; or</li>
+                        <li>Your savings may not be sufficient to meet your financial obligations.</li>
+                    </ul>  
+                </td>
+            </tr>
+            <tr>
+                <td width="100%" valign="top" style="padding-left:10px;padding-top:10px;text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                        I/We acknowledge that I/we may be at risk if we do not take out adequate risk protection insurance.<br/>
+                        I/We acknowledge that Parker Lane does not offer risk insurance for the type of credit being applied for.<br/>
+                        I am / we are aware that there is no obligation to apply for risk insurance as a condition of the loan.
+                </td>
+            </tr>
+            <tr>
+                <td width="100%" valign="top" style="padding-top:10px;text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    Note: a copy of the signed Credit Proposal Disclosure and Credit Quote will be provided for your records.
+                </td>
+            </tr>
+        </table>
+        <table width="100%" align="left">
+            <tr></tr>
+            <tr></tr>
+            <tr>
+                <td valign="top" colspan="2" style="text-align:left;font-family:Times New Roman, Times, serif;">
+                    <b>PRIVACY POLICY &amp; CONSENT TO GIVE NOTICES ELECTRONICALLY</b>
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td width="100%" valign="top" style="padding-top:10px;text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    <b>Privacy disclosure and consent</b>
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td width="100%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    {!wpObj.opp.Owner.Name}, on behalf of Upside Downside Pty Ltd ABN 35 608 107 428 Australian Credit Licence 482276 of Level 1, 212 Commercial Road, Prahran Victoria 3181, trading as Parker Lane, (‘we’, ‘us’, ‘our’) is collecting personal and financial information about you.
+                    <ol type="1" style="margin:0px;padding:0px 30px;">
+                      <li>The information you provide will be held by us.</li>
+                      <li>You appoint us your agent to act as an ‘access seeker’ to obtain your credit information from a credit reporting body on your behalf and for the purpose of assisting you with your finance application. You authorise us to disclose any credit information we obtain to prospective financiers in connection with your finance application.</li>
+                      <li>We may use credit information and any other information you provide to arrange or provide finance and other services.</li>
+                      <li>We may exchange the information with the following types of entities, some of which may be located overseas:
+                          <ol type="a" style="margin:0px;padding:0px 30px;">
+                              <li>Persons who provide finance or other products to you, or to whom an application has been made for those products.</li>
+                              <li>Financial consultants, accountants, lawyers and advisers.</li>
+                              <li>Any industry body, tribunal, court or otherwise in connection with any complaint regarding our services.</li>
+                              <li>Any person where we are required by law to do so.</li>
+                              <li>Any of our associates, related entities or contractors.</li>
+                              <li>Your referees, such as your employer, to verify information you have provided.</li>
+                              <li>Any person considering acquiring an interest in our business or assets.</li>
+                              <li>Any organisation providing online verification of your identity.</li>
+                              <li>Referrers and stakeholders to your dealings with us.</li>
+                          </ol>  
+                      </li>
+                      <li>You may gain access to the personal information that we hold about you by contacting us. A copy of our privacy policy can be obtained at www.parkerlane.com.au or by contacting us on 1300 131 711. Our privacy policy contains information about how you may access or seek correction of the information we hold about you, how we manage that information and our complaints process.</li>
+                    </ol>  
+                </td>
+            </tr>
+            <tr></tr>
+            <tr></tr>
+            <tr>
+                <td width="100%" valign="top" style="padding-top:10px;text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    You may gain access to the personal information that we hold about you by contacting us. A copy of our privacy policy can be obtained at www.parkerlane.com.au or by contacting us on 1300 131 711. Our privacy policy contains information about how you may access or seek correction of the information we hold about you, how we manage that information and our complaints process.
+                </td>
+            </tr>
+            <tr>
+                <td width="100%" valign="top" style="padding-top:10px;text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    <b>Consent to give notices electronically</b>
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td width="100%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    You consent to us sending you notices and other documents in connection with your dealings with us by email or by accessing our website. You understand that upon the giving this consent:
+                    <ol type="a" style="margin:0px;padding:0px 30px;">
+                      <li>We will either make all notices and other documents available for a reasonable period of time on our website for retrieval by you from www.parkerlane.com.au or will send you notices and other documents by email;</li>
+                      <li>If the information is displayed on our web site we will promptly send you an email to the email address nominated below notifying you that information is available for retrieval from our website and notify you of the nature of that information;</li>
+                      <li>We will not send paper copies of notices and other documents;</li>
+                      <li>You must regularly check your nominated email address for notices;</li>
+                      <li>You may withdraw your consent to the giving of notices and other documents at any time; and</li>
+                      <li>You have facilities to enable you to readily print notices or other documents retrieved from our website if you desire.</li>
+                    </ol>  
+                </td>
+            </tr>
+            <tr>
+                <td width="100%" valign="top" style="padding-top:10px;text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    If you do not provide the information we may be unable to assist in arranging finance or providing other services.
+                </td>
+            </tr>
+            <tr>
+                <td width="100%" valign="top" style="padding-top:10px;text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    By signing this consent, you agree that we may collect use and disclose your information as specified above, and that we may access your credit report as an Access Seeker. If you give your consent for us to give you notices electronically, please provide your email below.
+                </td>
+            </tr>
+            <tr>
+                <td width="100%" valign="top" style="padding-top:10px;text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    By signing this document you agree to its terms. It forms a legal contract between us. If you have any questions, ask before you sign.
+                </td>
+            </tr>
+            <tr>
+                <td width="100%" valign="top" style="padding-top:10px;text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    Where you are taking out a high LVR loan (i.e. a loan where the loan amount represents an amount which is 85% or greater of the value of the security) or a low doc loan, you acknowledge that you have ensured that you are not overcommitting yourself financially and are able to meet the repayment requirements on your proposed loan without suffering hardship.
+                </td>
+            </tr>
+            <tr>
+                <td width="100%" valign="top" style="padding-top:10px;text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    <ul style="margin:0px;padding:0px 30px">
+                        <li>I/we have disclosed to the person to whom this form is given all information that I am/we are of that would be relevant to the making of a recommendation by a questionnaire on the date shown.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td width="100%" valign="top" style="padding-top:10px;text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    <b>Acceptance</b>
+                </td>
+            </tr>
+            <tr>
+                <td width="100%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    By signing this document you acknowledge that you understand the:
+                    <ul style="margin:0px;padding:0px 30px">
+                        <li>Proposed application for credit;</li>
+                        <li>Fees and charges payable by you to us and the proposed lender;</li>
+                        <li>Net amount of funds available is subject to the lenders credit contract;</li>
+                        <li>Commission payable to us from lender;</li>
+                        <li>Commission payable by us to a business referrer (if applicable);</li>
+                        <li>Offering of risk insurance and confirmation of your decision.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td width="100%" valign="top" style="padding-top:10px;text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    <b>Acknowledgement &amp; Consent</b>
+                </td>
+            </tr>
+            <tr>
+                <td width="100%" valign="top" style="padding-top:10px;text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    <ul style="margin:0px;padding:0px 30px">
+                        <li>I/we have read and certify that this information is correct </li>
+                        <li>I/we agree to proceed with the above Credit Quote and the above Credit Proposal</li>
+                        <li>I/we agree to the Privacy Policy</li>
+                        <li>I/we have read and agree to the Lender’s Privacy Policy which can be accessed via this website address:
+                            <apex:outputPanel rendered="{!quoteWrap.Lender == 'Transport Mutual Credit Union'}"><a href="https://www.transportmutual.com.au/about-transport-mutual/privacy-policy/" target="_blank">https://www.transportmutual.com.au/about-transport-mutual/privacy-policy/</a></apex:outputPanel>
+                            <apex:outputPanel rendered="{!quoteWrap.Lender == 'Community First Credit Union'}"><a href="https://www.communityfirst.com.au/support/important-information/privacy-policy" target="_blank">https://www.communityfirst.com.au/support/important-information/privacy-policy</a></apex:outputPanel>
+                            <apex:outputPanel rendered="{!quoteWrap.Lender == 'RateSetter'}"><a href="https://www.ratesetter.com.au/privacy-policy/" target="_blank">https://www.ratesetter.com.au/privacy-policy/</a></apex:outputPanel>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td width="100%" valign="top" style="padding-top:20px;text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                    SIGNED BY
+                </td>
+            </tr>
+        </table>
+        <table width="100%" align="left">
+            <tr>
+                <td width="50%" valign="top" style="padding-top:20px;padding-left:30px;padding-right:30px;text-align:center;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <hr style="border-top: 1px solid black;" />
+                </td>
+                <td width="50%" style="padding-top:20px;padding-left:30px;padding-right:30px;text-align:center;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <hr style="border-top: 1px solid black;IF(wpObj.opp.Applicant_2__r.Name != null,'display:block;','display:none;')" />
+                </td>
+                
+            </tr>
+            <tr></tr>
+            <tr>
+                <td width="50%" valign="top" style="padding:0px 30px;text-align:center;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    {!wpObj.opp.Applicant_1__r.Name}
+                </td>
+                <td width="50%" style="padding:0px 30px;text-align:center;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    {!wpObj.opp.Applicant_2__r.Name}
+                </td>
+            </tr>
+        </table>
+        <apex:outputText rendered="{!quoteWrap.BrokerageAmount > 0.0}">
+            <table width="100%" align="left" style="margin-top:800px;">
+                <tr>
+                    <td width="50%" style="font-size:11px;font-family:Arial, Helvetica, sans-serif;">
+                        Upside Downside Pty Ltd<br/>
+                        ABN 35 608 107 428<br/>
+                        PO Box 460 Prahran VIC 3181
+                    </td>
+                    <td width="40%">
+                        <div style="float:right">
+                            <apex:image width="180px" height="35px" url="{!$Resource.HeaderLogo}"/>
+                        </div>
+                    </td>
+                </tr>
+            </table>   
+            
+            <table width="100%" align="left">
+                <tr></tr>
+                <tr></tr>
+                <tr>
+                    <td valign="top" colspan="2" style="text-align:left;font-size:25px;font-family:Times New Roman, Times, serif;">
+                        <b>Direction to Pay at Settlement</b>
+                    </td>
+                </tr>
+            </table>
+             
+            <table width="100%" align="left">
+                <tr>
+                    <td width="25%" valign="top" style="font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        <b>Lender</b>
+                    </td>
+                    <td valign="top" width="25%" style="font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        {!quoteWrap.Lender}
+                    </td>
+                    <td valign="top" align="center" width="25%" style="font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        <b>Date</b>
+                    </td>
+                    <td valign="top" width="25%" style="font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        <apex:outputText value="{0,date,MM/dd/yyyy}"><apex:param value="{!TODAY()}"/></apex:outputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" width="25%" style="font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        <b>Borrower</b>
+                    </td>
+                    <td valign="top" width="25%" style="font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        {!wpObj.opp.Applicant_1__r.Name}
+                        <br/>
+                        {!wpObj.opp.Applicant_2__r.Name}
+                        <br/>
+                        {!wpObj.opp.Applicant_1__r.Residential_Address__pc}
+                    </td>
+                    <td valign="top" align="center" width="25%" style="font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        <b>Loan</b>
+                    </td>
+                    <td valign="top" width="25%" style="font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        Type:&nbsp;{!quoteWrap.ProductName}<br/>
+                        Loan Amount:&nbsp; <apex:outputPanel rendered="{!quoteWrap.TotalLoanAmount != null}"> $</apex:outputPanel>{!quoteWrap.TotalLoanAmount}
+                    </td>
+                </tr>
+            </table>
+             
+            <table width="100%" align="left">
+                <tr></tr>
+                <tr></tr>
+                <tr>
+                    <td valign="top" colspan="2" style="padding-top:20px;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        Dear {!quoteWrap.Lender},
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr></tr>
+                <tr>
+                    <td valign="top" colspan="2" style="padding-top:10px;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        This direction to pay is in relation to our application for the Loan.
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr></tr>
+                <tr>
+                    <td valign="top" colspan="2" style="padding-top:10px;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        I/We have engaged the following Payees for goods and/or services in relation to the Loan described above. 
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr></tr>
+                <tr>
+                    <td valign="top" colspan="2" style="padding-top:10px;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        If the application for the Loan is successful:
+                        <ul style="margin:0px;padding:0px 30px">
+                            <li>I/We authorise and request you to make the following payments from the Loan proceeds; and</li>
+                            <li>I/We authorise payment to be made at settlement (time of funding) of the Loan:</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>  
+            
+            <table width="100%" align="left" style="margin-top:20px;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                <tr></tr>
+                <tr></tr>
+                <tr>
+                    <th valign="top" width="20%" style="font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        Payee
+                    </th>
+                    <th valign="top" width="20%" style="font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        For
+                    </th>
+                    <th valign="top" width="15%" style="font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        Institution
+                    </th>
+                    <th valign="top" width="15%" style="font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        BSB
+                    </th>
+                    <th valign="top" width="15%" style="font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        Account
+                    </th>
+                    <th valign="top" width="15%" style="font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        Amount
+                    </th>
+                </tr>
+                <tr>
+                    <td valign="top" width="20%" style="font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        Parker Lane (Upside Downside Pty Ltd)
+                    </td>
+                    <td valign="top" width="20%" style="font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        The provision of credit services.
+                    </td>
+                    <td valign="top" width="10%" style="font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        St George
+                    </td>
+                    <td valign="top" width="20%" style="font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        112 879
+                    </td>
+                    <td valign="top" width="20%" style="font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        432 649 727
+                    </td>
+                    <td valign="top" width="10%" style="font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        ${!quoteWrap.BrokerageAmount}
+                    </td>
+                </tr>
+            </table>
+            
+            <table width="100%" align="left" style="margin-top:20px;">
+                <tr></tr>
+                <tr></tr>
+                <tr>
+                    <td valign="top" colspan="2"  style="font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        In giving this Direction to Pay, I/we hereby warrant that:
+                        <ul style="margin:0px;padding:0px 30px;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                            <li>The Lender is not responsible for any performance or service issues, product warranties or the use or other benefits which the Borrower may or may not obtain from the Goods; and</li>
+                            <li>My/Our obligation to make all payments under the Agreement is absolute and unconditional without limitation by the Borrower being unable to use the Goods for any reason or the Goods being damaged, lost, stolen, not in my/our possession or not working at any time.</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+            
+            <table width="100%" align="left" style="margin-top:20px;">
+                <tr>
+                    <td width="100%" valign="top" style="padding-top:20px;text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
+                        SIGNED BY
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" valign="top" style="padding-top:20px;padding-left:30px;padding-right:30px;text-align:center;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        <hr style="border-top: 1px solid black;" />
+                    </td>
+                    <td width="50%" style="padding-top:20px;padding-left:30px;padding-right:30px;text-align:center;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        <hr style="border-top: 1px solid black;IF(wpObj.opp.Applicant_2__r.Name != null,'display:block;','display:none;')" />
+                    </td>
+                    
+                </tr>
+                <tr></tr>
+                <tr>
+                    <td width="50%" valign="top" style="padding:0px 30px;text-align:center;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        {!wpObj.opp.Applicant_1__r.Name}
+                    </td>
+                    <td width="50%" style="padding:0px 30px;text-align:center;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        {!wpObj.opp.Applicant_2__r.Name}
+                    </td>
+                </tr>
+            </table>
+        </apex:outputText>
+    </div>
+</apex:page>

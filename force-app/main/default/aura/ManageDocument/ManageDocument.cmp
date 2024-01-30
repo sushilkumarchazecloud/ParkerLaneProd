@@ -1,0 +1,413 @@
+<aura:component controller="ManageDocumentController" implements="force:lightningQuickAction,force:hasRecordId,force:appHostable,lightning:isUrlAddressable">
+    
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="applicantOne" type="object" />
+    <aura:attribute name="applicantTwo" type="object" />
+    <aura:attribute name="jointApplication" type="object" />
+    <aura:handler name="render" value="{!this}" action="{!c.done}" />
+    <aura:attribute name="isApplicantTwo" type="Boolean" />
+    <aura:attribute name="isWating" type="Boolean"  default="false"/>
+    <aura:attribute name="isSuccess" type="Boolean"  default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>
+    <lightning:notificationsLibrary aura:id="notifLib"/>
+    <div class="slds-scope" style="background-color:white">
+        {!v.body}
+        <!-- PAGE HEADER -->
+        <div class="slds-page-header" role="banner">
+            <aura:if isTrue="{!v.isWating}">
+                <div aura:id="spinnerId" class="slds-spinner_container">
+                    <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                        <span class="slds-assistive-text">Loading</span>
+                        <div class="slds-spinner__dot-a"></div>
+                        <div class="slds-spinner__dot-b"></div>
+                    </div>
+                </div>
+            </aura:if>
+            <div class="slds-grid">
+                <div class="slds-col slds-has-flexi-truncate">
+                    <!-- HEADING AREA -->
+                    <h1 class="slds-page-header__title slds-truncate" title="Application Type">Application Type</h1>
+                    <br/>
+                    <button class="slds-button slds-button_neutral" id="Standard Application" onclick="{!c.selectCategory}">Standard Application</button>
+                    <button class="slds-button slds-button_neutral" id="Solar Application" onclick="{!c.selectCategory}">Solar Application</button>
+                    <button class="slds-button slds-button_neutral" id="Debit Consolidation" onclick="{!c.selectCategory}">Debit Consolidation</button>
+                    <button class="slds-button slds-button_neutral" id="Home Loan Refinance" onclick="{!c.selectCategory}">Home Loan Refinance</button>
+                    <button class="slds-button slds-button_neutral" id="Home Purchase" onclick="{!c.selectCategory}">Home Purchase</button>
+                    <button class="slds-button slds-button_neutral" id="Generic Unknown" onclick="{!c.selectCategory}">Generic Unknown</button>
+                    <!--button class="slds-button slds-button_neutral" Style="float:right"  id="Create Request" onclick="{!c.makeRequest}">Create Request</button-->
+                    
+                    <lightning:button variant="brand" class="Right" label="Create And Send Request" disabled="{!v.isSuccess}" title="Success" onclick="{! c.makeRequest }"/>
+                    <lightning:button variant="brand" class="Right" label="Create Request" disabled="{!v.isSuccess}" title="Success" onclick="{! c.sendRequest }"/>
+                    <!-- / HEADING AREA -->
+                </div>
+            </div>
+        </div>
+        <!-- / PAGE HEADER -->	
+        <aura:if isTrue="{!!v.isApplicantTwo}">
+            <!-- GRID HEADER -->	
+            <article class="slds-card">
+                <div class="slds-card__header slds-grid">
+                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                        <div class="slds-media__body">
+                            <h2 class="slds-card__header-title">
+                                <span>Applicant 1</span>
+                                
+                            </h2>
+                            
+                        </div>
+                    </header>
+                    <hr height="1rem"></hr>
+                </div>
+            </article>
+            <!-- / GRID HEADER -->	            
+            <!-- RESPONSIVE GRID EXAMPLE -->
+            <div class="slds-grid slds-wrap">
+                <aura:iteration items="{!v.applicantOne}" var="mapKey" indexVar="key">
+                    <div class="slds-align-top slds-size_1-of-1 slds-small-size_1-of-2 slds-medium-size_2-of-4">
+                        
+                        <article class="slds-card" id="{!'Applicant1'+key}">
+                            <div class="slds-card__body slds-card__body_inner">
+                                <!--lightning:checkboxGroup name="Checkbox Group"
+                                                         label="{!mapKey.key}"
+                                                         options="{!mapKey.value}"
+                                                         value="{!mapKey.selected}"
+                                                         /-->
+                                <table class="slds-table slds-max-medium-table_stacked-horizontal">
+                                    <thead>
+                                        <tr class="slds-line-height_reset">
+                                            <th class="slds-text-title_caps" scope="col" colspan ="3">{!mapKey.key}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <aura:iteration items="{!mapKey.value}" var="opt" >
+                                            <tr>
+                                                <td>
+                                                    <lightning:input type="checkbox" 
+                                                                     label="{!opt.label}" 
+                                                                     name="input2" 
+                                                                     checked="{!opt.isSelected}" />
+                                                </td>
+                                                <td colspan="2" width="62%" title="{!opt.Discription}">
+                                                    <lightning:input disabled="{!!opt.isSelected}"
+                                                                     value="{!opt.Discription}"
+                                                                     variant="label-hidden"
+                                                                     />
+                                                </td>
+                                            </tr>
+                                        </aura:iteration>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </article>
+                    </div>
+                </aura:iteration>
+            </div>
+            <!-- / RESPONSIVE GRID EXAMPLE -->
+            <!-- Joint Application -->
+            <!-- GRID HEADER -->	
+            <article class="slds-card" id="{!key}">
+                <div class="slds-card__header slds-grid">
+                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                        <div class="slds-media__body">
+                            <h2 class="slds-card__header-title">
+                                <span>General</span>
+                            </h2>
+                        </div>
+                    </header>
+                </div>
+            </article>
+            <!-- / GRID HEADER -->	            
+            <!-- RESPONSIVE GRID EXAMPLE -->
+            <div class="slds-grid slds-wrap" style="background:white;border:none !important;">
+                <aura:iteration items="{!v.jointApplication}" var="mapKey" indexVar="key">
+                    <div class="slds-col slds-align-top slds-size_1-of-1 slds-small-size_1-of-2 slds-medium-size_2-of-4">
+                        
+                        <article class="slds-card" id="{!'General'+key}">
+                            <div class="slds-card__body slds-card__body_inner">
+                                <!--lightning:checkboxGroup name="Checkbox Group"
+                                                         label="{!mapKey.key}"
+                                                         options="{!mapKey.value}"
+                                                         value="{!mapKey.selected}"
+                                                         /-->
+                                <table class="slds-table slds-max-medium-table_stacked-horizontal">
+                                    <thead>
+                                        <tr class="slds-line-height_reset">
+                                            <th class="slds-text-title_caps" scope="col" colspan ="3">{!mapKey.key}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                        <aura:if isTrue="{!mapKey.key != 'Others'}">
+                                            <aura:iteration items="{!mapKey.value}" var="opt" >
+                                                <tr>
+                                                    <td width="50px">
+                                                        <div style="width:330px" class="slds-truncate" title="{!opt.label}">
+                                                            <lightning:input type="checkbox" 
+                                                                             label="{!opt.label}" 
+                                                                             name="input2" 
+                                                                             checked="{!opt.isSelected}"
+                                                                             />
+                                                        </div>
+                                                    </td>
+                                                    <td colspan="2" width="50px" title="{!opt.Discription}">
+                                                        <lightning:input disabled="{!!opt.isSelected}"
+                                                                         value="{!opt.Discription}"
+                                                                         variant="label-hidden"
+                                                                         />
+                                                    </td>
+                                                </tr>
+                                            </aura:iteration>
+                                            <aura:set attribute="else">
+                                                <aura:iteration items="{!mapKey.value}" var="opt" >
+                                                    <tr>
+                                                        <td>
+                                                            <lightning:input type="checkbox" 
+                                                                             label="{!opt.label}" 
+                                                                             name="input2" 
+                                                                             checked="{!opt.isSelected}" />
+                                                        </td>
+                                                        <td>
+                                                            <lightning:input value="{!opt.value}"
+                                                                             variant="label-hidden"
+                                                                             placeholder="Document Name..."
+                                                                             />
+                                                        </td>
+                                                        <td colspan="2" width="62%" title="{!opt.Discription}">
+                                                            <lightning:input disabled="{!!opt.isSelected}"
+                                                                             value="{!opt.Discription}"
+                                                                             variant="label-hidden"
+                                                                             placeholder="Instructions..."
+                                                                             />
+                                                        </td>
+                                                    </tr>
+                                                </aura:iteration>
+                                            </aura:set>
+                                        </aura:if>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </article>
+                    </div>
+                </aura:iteration>
+            </div>
+            <!-- / RESPONSIVE GRID EXAMPLE -->
+            <!-- / Joint Application -->
+        </aura:if>
+        <aura:if isTrue="{!v.isApplicantTwo}">
+            <div class="slds-grid">
+                <!--Applicant One Grid-->
+                <div class="slds-col slds-size_1-of-2">
+                    <article class="slds-card">
+                        <div class="slds-card__body slds-card__body_inner">
+                            <article class="slds-card">
+                                <div class="slds-card__header slds-grid">
+                                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                        <div class="slds-media__body">
+                                            <h2 class="slds-card__header-title">
+                                                <span>Applicant 1</span>
+                                            </h2>
+                                        </div>
+                                    </header>
+                                </div>
+                            </article>
+                        </div>
+                    </article>
+                    <div class="slds-grid slds-wrap">
+                        <aura:iteration items="{!v.applicantOne}" var="mapKey" indexVar="key">
+                            <div class="slds-col slds-align-top slds-size_1-of-1 slds-small-size_1-of-1 ">
+                                
+                                <article class="slds-card" id="{!'Applicant1'+key}">
+                                    <div class="slds-card__body slds-card__body_inner">
+                                        <!--lightning:checkboxGroup name="CheckboxGroup"
+                                                                 label="{!mapKey.key}"
+                                                                 options="{!mapKey.value}"
+                                                                 value="{!mapKey.selected}"
+                                                                 /-->
+                                        <table class="slds-table slds-max-medium-table_stacked-horizontal">
+                                            <thead>
+                                                <tr class="slds-line-height_reset">
+                                                    <th class="slds-text-title_caps" scope="col" colspan ="3">{!mapKey.key}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <aura:iteration items="{!mapKey.value}" var="opt" >
+                                                    <tr>
+                                                        <td>
+                                                            <lightning:input type="checkbox" 
+                                                                             label="{!opt.label}" 
+                                                                             name="input2" 
+                                                                             checked="{!opt.isSelected}" />
+                                                        </td>
+                                                        <td colspan="2" width="62%" title="{!opt.Discription}">
+                                                            <lightning:input disabled="{!!opt.isSelected}"
+                                                                             value="{!opt.Discription}"
+                                                                             variant="label-hidden"
+                                                                             />
+                                                        </td>
+                                                    </tr>
+                                                </aura:iteration>
+                                            </tbody>
+                                        </table>
+                                        
+                                    </div>
+                                </article>
+                            </div>
+                        </aura:iteration>
+                    </div>
+                </div>
+                <!-- / Applicant One Grid-->
+                <!--Applicant Two Grid-->
+                <div class="slds-col slds-size_1-of-2">
+                    <article class="slds-card">
+                        <div class="slds-card__body slds-card__body_inner">
+                            <article class="slds-card">
+                                <div class="slds-card__header slds-grid">
+                                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                        <div class="slds-media__body">
+                                            <h2 class="slds-card__header-title">
+                                                <span>Applicant 2</span>
+                                            </h2>
+                                        </div>
+                                    </header>
+                                </div>
+                            </article>
+                        </div>
+                    </article>
+                    <div class="slds-grid slds-wrap">
+                        <aura:iteration items="{!v.applicantTwo}" var="mapKey" indexVar="key">
+                            <div class="slds-col slds-align-top slds-size_1-of-1 slds-small-size_1-of-1 ">
+                                
+                                <article class="slds-card" id="{!'Applicant2'+key}">
+                                    <div class="slds-card__body slds-card__body_inner">
+                                        <!--lightning:checkboxGroup name="CheckboxGroup"
+                                                                 label="{!mapKey.key}"
+                                                                 options="{!mapKey.value}"
+                                                                 value="{!mapKey.selected}"
+                                                                 /-->
+                                        <table class="slds-table slds-max-medium-table_stacked-horizontal">
+                                            <thead>
+                                                <tr class="slds-line-height_reset">
+                                                    <th class="slds-text-title_caps" scope="col" colspan ="3">{!mapKey.key}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <aura:iteration items="{!mapKey.value}" var="opt" >
+                                                    <tr>
+                                                        <td>
+                                                            <lightning:input type="checkbox" 
+                                                                             label="{!opt.label}" 
+                                                                             name="input2" 
+                                                                             checked="{!opt.isSelected}" />
+                                                        </td>
+                                                        <td colspan="2" width="62%" title="{!opt.Discription}">
+                                                            <lightning:input disabled="{!!opt.isSelected}"
+                                                                             value="{!opt.Discription}"
+                                                                             variant="label-hidden"
+                                                                             />
+                                                        </td>
+                                                    </tr>
+                                                </aura:iteration>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </article>
+                            </div>
+                        </aura:iteration>
+                    </div>
+                </div>
+                <!--Applicant Two Grid-->
+            </div>
+            <!-- Joint Application -->
+            <!-- GRID HEADER -->	
+            <article class="slds-card">
+                <div class="slds-card__header slds-grid">
+                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                        <div class="slds-media__body">
+                            <h2 class="slds-card__header-title">
+                                <span>Joint</span>
+                            </h2>
+                        </div>
+                    </header>
+                </div>
+            </article>
+            <!-- / GRID HEADER -->	            
+            <!-- RESPONSIVE GRID EXAMPLE -->
+            <div class="slds-grid slds-wrap" style="background:white;border:none !important;">
+                <aura:iteration items="{!v.jointApplication}" var="mapKey" indexVar="key">
+                    <div class="slds-col slds-align-top slds-size_1-of-1 slds-small-size_1-of-2 slds-medium-size_2-of-4">
+                        
+                        <article class="slds-card" id="{!'Joint'+key}">
+                            <div class="slds-card__body slds-card__body_inner">
+                                <!--lightning:checkboxGroup name="Checkbox Group"
+                                                         label="{!mapKey.key}"
+                                                         options="{!mapKey.value}"
+                                                         value="{!mapKey.selected}"
+                                                         /-->
+                                <table class="slds-table slds-max-medium-table_stacked-horizontal">
+                                    <thead>
+                                        <tr class="slds-line-height_reset">
+                                            <th class="slds-text-title_caps" scope="col" colspan ="3">{!mapKey.key}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <aura:if isTrue="{!mapKey.key != 'Others'}">
+                                            <aura:iteration items="{!mapKey.value}" var="opt" >
+                                                <tr>
+                                                    <td width="50px">
+                                                        <div style="width:330px" class="slds-truncate" title="{!opt.label}">
+                                                            <lightning:input type="checkbox" 
+                                                                             label="{!opt.label}" 
+                                                                             name="input2" 
+                                                                             checked="{!opt.isSelected}"
+                                                                             />
+                                                        </div>
+                                                    </td>
+                                                    <td colspan="2" width="50px" title="{!opt.Discription}">
+                                                        <lightning:input disabled="{!!opt.isSelected}"
+                                                                         value="{!opt.Discription}"
+                                                                         variant="label-hidden"
+                                                                         />
+                                                    </td>
+                                                </tr>
+                                            </aura:iteration>
+                                            <aura:set attribute="else">
+                                                <aura:iteration items="{!mapKey.value}" var="opt" >
+                                                    <tr>
+                                                        <td>
+                                                            <lightning:input type="checkbox" 
+                                                                             label="{!opt.label}" 
+                                                                             name="input2" 
+                                                                             checked="{!opt.isSelected}" />
+                                                        </td>
+                                                        <td>
+                                                            <lightning:input value="{!opt.value}"
+                                                                             variant="label-hidden"
+                                                                             placeholder="Document Name..."
+                                                                             />
+                                                        </td>
+                                                        <td colspan="2" width="62%" title="{!opt.Discription}">
+                                                            <lightning:input disabled="{!!opt.isSelected}"
+                                                                             value="{!opt.Discription}"
+                                                                             variant="label-hidden"
+                                                                             placeholder="Instructions..."
+                                                                             />
+                                                        </td>
+                                                    </tr>
+                                                </aura:iteration>
+                                            </aura:set>
+                                        </aura:if>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </article>
+                    </div>
+                </aura:iteration>
+            </div>
+            <!-- / RESPONSIVE GRID EXAMPLE -->
+            <!-- / Joint Application -->
+        </aura:if>
+        
+    </div>
+</aura:component>

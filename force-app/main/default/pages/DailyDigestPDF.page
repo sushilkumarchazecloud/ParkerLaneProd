@@ -1,0 +1,10 @@
+<apex:page applyHtmlTag="false" applyBodyTag="false" standardStylesheets="false"  showHeader="false"  sidebar="false">
+    <c:DailyDigestCmp conId="0030o00002yxVEFAA2"/>
+    <c:DailyDigestCmp conId="0030o00002mvPxxAAE"/>
+    <c:DailyDigestCmp conId="0030o00003Dm2YYAAZ"/>
+    <c:DailyDigestCmp conId="0030o00002mvPypAAE"/>
+    <c:DailyDigestCmp conId="0030o00002mvQ0KAAU"/>
+    <c:DailyDigestCmp conId="0030o00002mvPwiAAE"/>
+    <c:DailyDigestCmp conId="0030o00002orRgBAAU"/>
+    <c:DailyDigestCmp conId="0030o00003DnBZzAAN"/>
+</apex:page>

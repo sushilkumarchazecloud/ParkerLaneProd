@@ -1,0 +1,527 @@
+<apex:component controller="DailyDigestController" access="global">
+    <apex:attribute name="conId" assignTo="{!referrerId}" description="This is the Id of Referrer." type="String"/>   
+    <head></head>
+    <apex:outputText rendered="{!init}" />
+    <div style="font-family:Arial, Helvetica, sans-serif;">
+        
+        <table style="width: 710px;background-color: #f5f5f5;padding: 10px;">
+            <tr>
+                <td style="font-size: 10px;">Introducer Update:&nbsp; 
+                    <apex:outputText value="{0,date,EEEEE' 'dd' 'MMMMM', 'yyyy}">
+                        <apex:param value="{!TODAY()}" /> 
+                    </apex:outputText>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="background-image: url(https://lanecorp--teamindi--c.documentforce.com/servlet/servlet.ImageServer?id=0159D0000006CSj&oid=00D9D0000008cJz&lastMod=1584287113000);height: 160px;width: 100%;background-repeat: no-repeat;background-size: contain;color: #fff;font-size: 20px;">
+                        <div style="float: right;width: 100%;display: flex;">
+                            <div style="width: 80%;"></div>
+                            <div style="width: 20%;text-transform: uppercase;text-align: center;">
+                                <div style="padding-top: 15px;font-size: 10px;">
+                                    status
+                                </div>
+                                <div style="font-size: 17px;font-weight: 700;padding-top: 5px;">
+                                   {!referrer.Referrer_Rating__c}&nbsp;
+                                </div>
+                            </div>
+                        </div>
+                        <div style="float: right;padding-top: 25px;text-align: right;padding-right: 15px;">
+                            <div style="padding-top: 15px;">
+                                {!referrer.Name}
+                            </div>
+                            <div style="font-size: 11px;">
+                                {!referrer.Account.Name}
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="background-color: #fff;padding: 10px;color: #696868;">
+                        <div>
+                            <div>Dear {!referrer.Name},</div>
+                            <div style="padding-top: 10px;">{!description}</div>
+                        </div>
+                        <div style="font-weight: 600;padding-top: 10px;">
+                            
+                            {!regards}
+                        </div>
+                        
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table style="width: 100%;">
+                        <tr>
+                            <td style="width: 50%;padding: 10px 5px 10px 0px;">
+                                <div style="height: 180px;">
+                                    <apex:image style="width: 100%;height: 100%;" value="{!Image2Link}"/>
+                                </div>
+                            </td>
+                            <td style="width: 50%;padding: 10px 0px 10px 5px;">
+                                <div style="height: 180px;">
+                                    <apex:image style="width: 100%;height: 100%;" value="{!Image1Link}"/>
+                                </div>
+                            </td>
+                            
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table style="background-color: #fff;padding: 5px;width: 100%;">
+                        <tr>
+                            <td style="width: 25%;">
+                                <div>
+                                    <apex:image style="width: 90px;" value="https://lanecorp--teamindi--c.documentforce.com/servlet/servlet.ImageServer?id=0159D0000006CkH&oid=00D9D0000008cJz&lastMod=1577985397000" />
+                                </div>
+                            </td>
+                            <td style="width: 25%;">
+                                <div style="color: #4ab6c4;font-size: 30px;font-weight: 600;">
+                                    {!noOfInProgressOpp}
+                                </div>
+                                <div>
+                                    In Progress
+                                </div>
+                            </td>
+                            <td style="border-left: 1px solid #e2dbdb;width: 25%;padding-left: 10px;">
+                                <div style="color: #4ab6c4;font-size: 30px;font-weight: 600;">
+                                    {!noOfApprovedOpp}
+                                </div>
+                                <div>
+                                    Approved
+                                </div>
+                            </td>
+                            <td style="border-left: 1px solid #e2dbdb;width: 25%;padding-left: 10px;">
+                                <div style="color: #4ab6c4;font-size: 30px;font-weight: 600;">
+                                    {!noOfCompletedOpp}
+                                </div>
+                                <div>
+                                    Completed
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-top: 10px;">
+                    <table style="background-color: #fff;padding: 5px;width: 100%;">
+                        <tr>
+                            <td style="background-image: url(https://lanecorp--teamindi--c.documentforce.com/servlet/servlet.ImageServer?id=0159D0000006CkC&oid=00D9D0000008cJz&lastMod=1584299313000);height:40px;width: 100%;background-repeat: round;background-size: contain;color: #fff;font-size: 25px;text-align: center;padding-bottom: 20px;">
+                                Today’s Activities
+                            </td>
+                        </tr>
+                        
+                        <apex:repeat value="{!referrer.FinServ__OpportunityContactReferrals__r}" var="opp">
+                            <apex:outputText rendered="{!oppTodayActivityMap[opp.Id]}">
+                                <tr>
+                                    <td style="padding: 10px 30px;">
+                                        <table style="width: 100%;padding-top: 10px;">
+                                            <tr>
+                                                <td style="border: 1px solid #aaa;padding:10px 5px">
+                                                    <table style="width:100%;color: #696868;">
+                                                        <tr>
+                                                            <td>
+                                                                <table style="width:100%;font-size: 18px;color: #696868;padding: 10px 0px;">
+                                                                    <tr>
+                                                                        <td style="width:10%;">
+                                                                            <div style="background-color: #0a73d0;padding: 10px;border-radius: 26px;height: 25px;width: 25px;font-size: 20px;color: #fff;font-weight: 600;">
+                                                                                {!nameAbbrMap[opp.Id]}
+                                                                            </div>
+                                                                        </td>
+                                                                        <td style="width:45%;">
+                                                                            <div style="font-weight: 600;">
+                                                                                {!opp.Name}
+                                                                            </div>
+                                                                            <div style="font-size: 12px;">
+                                                                                <apex:outputText rendered="{!opp.Loan_Amount__c !=NULL}">
+                                                                                    ${!opp.Loan_Amount__c}
+                                                                                </apex:outputText>
+                                                                                {!opp.RecordType.Name}
+                                                                                
+                                                                            </div>
+                                                                        </td>
+                                                                        <td style="width:45%;">
+                                                                            <div style="text-align:right;">
+                                                                                <div >
+                                                                                    STATUS
+                                                                                </div>
+                                                                                <div style="color: #0a73d0;font-weight: 600;">
+                                                                                    {!opp.StageName}
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        <apex:outputText rendered="{!IF(oppStageChangedMap[opp.Id] == 'nochange', false, true)}">
+                                                            <tr>
+                                                                <td style="width:100%;font-size: 18px;color: #696868;padding: 10px 0px;">
+                                                                    <div style="font-size: 12px;background-color: green;width: fit-content;color: #fff;padding: 5px 15px;">
+                                                                        CHANGE
+                                                                    </div>
+                                                                    <div style="padding: 10px 0px;border-bottom: 1px solid #e2dbdb;">
+                                                                        {!oppStageChangedMap[opp.Id]}
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </apex:outputText>
+                                                        
+                                                        <tr>
+                                                            <td style="border-bottom: 1px solid #e2dbdb;">
+                                                                <table style="width:100%;color: #696868;">
+                                                                    <tr>
+                                                                        <td style="font-size: 12px;">
+                                                                            Today’s activity:
+                                                                        </td>
+                                                                    </tr>
+                                                                    <apex:repeat value="{!oppStatusBlankCheckMap}" var="oppKey">
+                                                                        <apex:outputText rendered="{!oppKey==opp.Id}">
+                                                                            <apex:outputText rendered="{!oppStatusBlankCheckMap[oppKey]['Today']}">
+                                                                                <tr>
+                                                                                    <td style="font-size: 14px;color: #FF9800;">
+                                                                                        No Today’s activity Found
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </apex:outputText>
+                                                                        </apex:outputText>
+                                                                    </apex:repeat>
+                                                                    <apex:repeat value="{!oppTasksMap}" var="oppTskKey">
+                                                                        <apex:outputText rendered="{!oppTskKey==opp.Id}">
+                                                                            <apex:repeat value="{!oppTasksMap[oppTskKey]}" var="tdyNxt">
+                                                                                <apex:outputText rendered="{!tdyNxt=='Today'}">
+                                                                                    <apex:repeat value="{!oppTasksMap[oppTskKey][tdyNxt]}" var="tdy">
+                                                                                        <apex:repeat value="{!oppTasksMap[oppTskKey][tdyNxt][tdy]}" var="tsk">
+                                                                                            
+                                                                                            <tr>
+                                                                                                <td >
+                                                                                                    <table style="width:100%;font-size: 18px;color: #696868;padding: 10px 0px;">
+                                                                                                        <tr>
+                                                                                                            <td style="width:10%;vertical-align: top;padding-top: 10px;">
+                                                                                                                <div style="background-color: #0a73d0;padding: 10px;height: 20px;width: 20px;font-size: 18px;color: #fff;font-weight: 600;">
+                                                                                                                    {!nameAbbrMap[opp.OwnerId]}
+                                                                                                                </div>
+                                                                                                            </td>
+                                                                                                            <td style="width:90%;">
+                                                                                                                <div style="font-size: 12px;padding: 5px;">
+                                                                                                                    <span style="color: #0a73d0;font-weight: 600;">{!opp.Owner.Name}</span> {!tsk.Call_Purpose__c} <span style="color: #0a73d0;font-weight: 600;">{!tsk.Who.Name}</span>&nbsp;
+                                                                                                                    <apex:outputText rendered="{!AND(tsk.CompletedDateTime!=NULL, TODAY() > DATEVALUE(tsk.CompletedDateTime))}">
+                                                                                                                        Yesterday&nbsp;
+                                                                                                                    </apex:outputText>
+                                                                                                                    <c:DateTimeFormat dateTimeValue="{!tsk.CompletedDateTime}" dateTimeFormat="h:mm a"/>
+                                                                                                                </div>
+                                                                                                                <div style="font-size: 18px;color: #353535;padding: 5px;">
+                                                                                                                    {!tsk.subject}
+                                                                                                                </div>
+                                                                                                                <apex:outputText rendered="{!tsk.Make_Comments_Public__c}">
+                                                                                                                    <div style="font-size: 12px;padding: 5px;">
+                                                                                                                        {!tsk.Description}
+                                                                                                                    </div>
+                                                                                                                </apex:outputText>
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                    </table>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </apex:repeat>
+                                                                                        
+                                                                                    </apex:repeat>
+                                                                                </apex:outputText>
+                                                                            </apex:repeat>
+                                                                        </apex:outputText>
+                                                                    </apex:repeat>
+                                                                    <apex:repeat value="{!oppEventsMap}" var="oppTskKey">
+                                                                        <apex:outputText rendered="{!oppTskKey==opp.Id}">
+                                                                            <apex:repeat value="{!oppEventsMap[oppTskKey]}" var="tdyNxt">
+                                                                                <apex:outputText rendered="{!tdyNxt=='Today'}">
+                                                                                    <apex:repeat value="{!oppEventsMap[oppTskKey][tdyNxt]}" var="tdy">
+                                                                                        <apex:repeat value="{!oppEventsMap[oppTskKey][tdyNxt][tdy]}" var="tsk">
+                                                                                            
+                                                                                            <tr>
+                                                                                                <td >
+                                                                                                    <table style="width:100%;font-size: 18px;color: #696868;padding: 10px 0px;">
+                                                                                                        <tr>
+                                                                                                            <td style="width:10%;vertical-align: top;padding-top: 10px;">
+                                                                                                                <div style="background-color: #0a73d0;padding: 10px;height: 20px;width: 20px;font-size: 18px;color: #fff;font-weight: 600;">
+                                                                                                                    {!nameAbbrMap[opp.OwnerId]}
+                                                                                                                </div>
+                                                                                                            </td>
+                                                                                                            <td style="width:90%;">
+                                                                                                                <div style="font-size: 12px;padding: 5px;">
+                                                                                                                    <span style="color: #0a73d0;font-weight: 600;">{!opp.Owner.Name}</span> {!tsk.Call_Purpose__c} <span style="color: #0a73d0;font-weight: 600;">{!tsk.Who.Name}</span>&nbsp;
+                                                                                                                    <apex:outputText rendered="{!TODAY()> tsk.EndDate}">
+                                                                                                                        Yesterday&nbsp;
+                                                                                                                    </apex:outputText>
+                                                                                                                    <c:DateTimeFormat dateTimeValue="{!tsk.EndDateTime}" dateTimeFormat="h:mm a"/>
+                                                                                                                </div>
+                                                                                                                <div style="font-size: 18px;color: #353535;padding: 5px;">
+                                                                                                                    {!tsk.subject}
+                                                                                                                </div>
+                                                                                                                <apex:outputText rendered="{!tsk.Make_Comments_Public__c}">
+                                                                                                                    <div style="font-size: 12px;padding: 5px;">
+                                                                                                                        {!tsk.Description}
+                                                                                                                    </div>
+                                                                                                                </apex:outputText>
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                    </table>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </apex:repeat>
+                                                                                    </apex:repeat>
+                                                                                </apex:outputText>
+                                                                            </apex:repeat>
+                                                                        </apex:outputText>
+                                                                    </apex:repeat>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        
+                                                        <tr>
+                                                            <td style="">
+                                                                <table style="width:100%;color: #696868;">
+                                                                    <tr>
+                                                                        <td style="font-size: 12px;">
+                                                                            Next Action:
+                                                                        </td>
+                                                                    </tr>
+                                                                    <apex:repeat value="{!oppStatusBlankCheckMap}" var="oppKey">
+                                                                        <apex:outputText rendered="{!oppKey==opp.Id}">
+                                                                            <apex:outputText rendered="{!oppStatusBlankCheckMap[oppKey]['Next']}">
+                                                                                <tr>
+                                                                                    <td style="font-size: 14px;color: #FF9800;">
+                                                                                        No next action required at this stage
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </apex:outputText>
+                                                                        </apex:outputText>
+                                                                    </apex:repeat>
+                                                                    <apex:repeat value="{!oppTasksMap}" var="oppTskKey">
+                                                                        <apex:outputText rendered="{!oppTskKey==opp.Id}">
+                                                                            <apex:repeat value="{!oppTasksMap[oppTskKey]}" var="tdyNxt">
+                                                                                <apex:outputText rendered="{!tdyNxt!='Today'}">
+                                                                                    <apex:repeat value="{!oppTasksMap[oppTskKey][tdyNxt]}" var="days">
+                                                                                        
+                                                                                        <apex:repeat value="{!oppTasksMap[oppTskKey][tdyNxt][days]}" var="tsk">
+                                                                                            
+                                                                                            <tr>
+                                                                                                <td >
+                                                                                                    <table style="width:100%;font-size: 18px;color: #696868;padding: 10px 0px;">
+                                                                                                        <tr>
+                                                                                                            <td style="width:10%;vertical-align: top;padding-top: 10px;">
+                                                                                                                <div style="background-color: #0a73d0;padding: 10px;height: 20px;width: 20px;font-size: 18px;color: #fff;font-weight: 600;">
+                                                                                                                    {!nameAbbrMap[opp.OwnerId]}
+                                                                                                                </div>
+                                                                                                            </td>
+                                                                                                            <td style="width:90%;">
+                                                                                                                <div style="font-size: 12px;padding: 5px;">
+                                                                                                                    <span style="color: #0a73d0;font-weight: 600;">{!opp.Owner.Name}</span> {!tsk.Call_Purpose__c} <span style="color: #0a73d0;font-weight: 600;">{!tsk.Who.Name}</span> Due in {!days}
+                                                                                                                </div>
+                                                                                                                <div style="font-size: 18px;color: #353535;padding: 5px;">
+                                                                                                                    {!tsk.subject}
+                                                                                                                </div>
+                                                                                                                <apex:outputText rendered="{!tsk.Make_Comments_Public__c}">
+                                                                                                                    <div style="font-size: 12px;padding: 5px;">
+                                                                                                                        {!tsk.Description}
+                                                                                                                    </div>
+                                                                                                                </apex:outputText>
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                    </table>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </apex:repeat>
+                                                                                        
+                                                                                    </apex:repeat>
+                                                                                </apex:outputText>
+                                                                            </apex:repeat>
+                                                                        </apex:outputText>
+                                                                    </apex:repeat>
+                                                                    <apex:repeat value="{!oppEventsMap}" var="oppTskKey">
+                                                                        <apex:outputText rendered="{!oppTskKey==opp.Id}">
+                                                                            <apex:repeat value="{!oppEventsMap[oppTskKey]}" var="tdyNxt">
+                                                                                <apex:outputText rendered="{!tdyNxt!='Today'}">
+                                                                                    <apex:repeat value="{!oppEventsMap[oppTskKey][tdyNxt]}" var="days">
+                                                                                        <apex:repeat value="{!oppEventsMap[oppTskKey][tdyNxt][days]}" var="tsk">
+                                                                                            
+                                                                                            <tr>
+                                                                                                <td >
+                                                                                                    <table style="width:100%;font-size: 18px;color: #696868;padding: 10px 0px;">
+                                                                                                        <tr>
+                                                                                                            <td style="width:10%;vertical-align: top;padding-top: 10px;">
+                                                                                                                <div style="background-color: #0a73d0;padding: 10px;height: 20px;width: 20px;font-size: 18px;color: #fff;font-weight: 600;">
+                                                                                                                    {!nameAbbrMap[opp.OwnerId]}
+                                                                                                                </div>
+                                                                                                            </td>
+                                                                                                            <td style="width:90%;">
+                                                                                                                <div style="font-size: 12px;padding: 5px;">
+                                                                                                                    <span style="color: #0a73d0;font-weight: 600;">{!opp.Owner.Name}</span> {!tsk.Call_Purpose__c} <span style="color: #0a73d0;font-weight: 600;">{!tsk.Who.Name}</span> Due in {!days}
+                                                                                                                </div>
+                                                                                                                <div style="font-size: 18px;color: #353535;padding: 5px;">
+                                                                                                                    {!tsk.subject}
+                                                                                                                </div>
+                                                                                                                <apex:outputText rendered="{!tsk.Make_Comments_Public__c}">
+                                                                                                                    <div style="font-size: 12px;padding: 5px;">
+                                                                                                                        {!tsk.Description}
+                                                                                                                    </div>
+                                                                                                                </apex:outputText>
+                                                                                                            </td>
+                                                                                                        </tr>
+                                                                                                    </table>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </apex:repeat>
+                                                                                    </apex:repeat>
+                                                                                </apex:outputText>
+                                                                            </apex:repeat>
+                                                                        </apex:outputText>
+                                                                    </apex:repeat>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        
+                                                    </table>
+                                                    
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="color: #fff;background-color: #aaa;text-align: center;padding: 10px;font-size: 18px;">
+                                                    <a style="color: #fff;text-decoration: none;" href="mailto:personalapplications@parkerlane.com.au?subject=Referrer Reply: {!opp.Name}">
+                                                        <span>
+                                                            <apex:image style="width: 15px;height: 14px;padding: 0px;" value="https://lanecorp--uat--c.documentforce.com/servlet/servlet.ImageServer?id=0159D000000EXjL&oid=00D9D0000008bHa&lastMod=1585173055000" />
+                                                        </span>
+                                                        <span>Reply to this card</span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </apex:outputText>
+                        </apex:repeat>
+                        
+                        <tr>
+                            <td style="font-size: 30px;;text-align: center;padding: 10px;">
+                                <span style="color: #0a73d0;font-weight: 600;">All Files</span> Status
+                            </td>
+                        </tr>
+                        
+                        
+                        <tr>
+                            <td >
+                                <table style="width:100%;font-size: 18px;color: #696868;padding: 0px 30px;">
+                                    
+                                    <apex:repeat value="{!allOppList}" var="opp">
+                                        <apex:outputText rendered="{! !oppTodayActivityMap[opp.Id]}">
+                                            <tr>
+                                                <td style="padding: 10px 15px;">
+                                                    <table style="width:100%;font-size: 18px;color: #696868;padding: 10px 0px;border-bottom: 1px solid #e2dbdb;">
+                                                        <tr>
+                                                            <td style="width:10%;">
+                                                                <div style="background-color: #0a73d0;padding: 10px;border-radius: 26px;height: 25px;width: 25px;font-size: 20px;color: #fff;font-weight: 600;">
+                                                                    {!nameAbbrMap[opp.Id]}
+                                                                </div>
+                                                            </td>
+                                                            <td style="width:55%;">
+                                                                <div style="font-weight: 600;">
+                                                                    {!opp.Name}
+                                                                </div>
+                                                                <div style="font-size: 12px;">
+                                                                    <apex:outputText rendered="{!opp['Loan_Amount__c'] !=NULL}">
+                                                                        ${!opp['Loan_Amount__c']}
+                                                                    </apex:outputText>
+                                                                    {!opp.RecordType.Name}
+                                                                </div>
+                                                            </td>
+                                                            <td style="width:35%;">
+                                                                <div style="text-align:right;">
+                                                                    <div style="font-size: 16px;background-color: green;color: #fff;padding: 8px 15px;border-radius: 20px;text-align: center;">
+                                                                        {!opp.StageName}
+                                                                    </div>
+                                                                    <div style="color: #696868;font-size: 10px;text-align: center;padding: 5px;">
+                                                                        <a style="color: #696868;text-decoration: none;" href="mailto:personalapplications@parkerlane.com.au?subject=Referrer Reply: {!opp.Name}">
+                                                                            <span>
+                                                                                <apex:image style="width: 11px;height: 9px;" value="https://lanecorp--teamindi--c.documentforce.com/servlet/servlet.ImageServer?id=0159D0000006Ck7&oid=00D9D0000008cJz&lastMod=1577990984000" />
+                                                                            </span>
+                                                                            <span>Reply to this card</span>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </apex:outputText>
+                                    </apex:repeat>
+                                </table>
+                            </td>
+                        </tr>
+                        
+                    </table>
+                </td>
+            </tr>
+            
+            <tr>
+                <td style="padding-top: 10px;">
+                    <div style="display: inline-flex;background-color: #fff;padding: 10px;border: 1px solid #4bb1c5;">
+                        <apex:image style="width: 100%;" value="{!footerImageLink}" />
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-top: 10px;">
+                    <div style="padding: 10px;text-align: center;">
+                        <div>
+                            <div style="font-size: 24px;font-weight: 600;">
+                                We're here for you
+                            </div>
+                            <div style="font-size: 18px;color: #696868;">
+                                Have questions or just want to give us your feedback?<br/>
+                                Call us on 1300 131 711 or email<br/>
+                                hello@parkerlane.com.au
+                            </div>
+                        </div>
+                        <div style="padding: 10px;">
+                            <apex:image style="width: 110px;" value="https://lanecorp--teamindi--c.documentforce.com/servlet/servlet.ImageServer?id=0159D0000006DQG&oid=00D9D0000008cJz&lastMod=1578601913000" />
+                        </div>
+                        <div  style="font-size: 12px;color: #696868;padding-top: 10px;">
+                            <a href="mailto:chris.white@parkerlane.com.au?subject=Unsubscribe">Unsubscribe</a> | <a href="mailto:personalapplications@parkerlane.com.au"> Help</a><br/>
+                            You are receiving Messages from Parker Lane introducer digest emails.<br/>
+                            This email was intended for Alyssa Surry from Slurry Solar Installers Pty Ltd<br/><br/>
+                            Parker Lane is a trading name of Upside Downside Pty Ltd<br/>
+                            Australian Credit License Number 482276<br/>
+                            © 2019 Parker Lane, Australia. Parker Lane and the parker Lane logo are registered trademarks of LinkedIn.
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table>
+                        <tr>
+                            <td>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+</apex:component>

@@ -1,0 +1,9 @@
+.THIS .set_number_size{
+    font-size:16px !important;
+}
+@media screen and (max-width: 770px){
+    .THIS .set_number_size{
+        font-size:10px !important;
+    }
+    
+}

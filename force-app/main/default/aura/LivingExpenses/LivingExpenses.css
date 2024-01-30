@@ -1,0 +1,17 @@
+.THIS.living-expenses  .slds-scope .slds-form-element_horizontal .slds-form-element__label {
+    max-width: calc(50% - 1.25rem);
+    flex-basis: calc(50% - 1.25rem);
+}
+.THIS .total{
+    font-size: 1.25rem !important;
+    font-weight: 600;
+    color: black !important;
+}
+.THIS .slds-form_areYouSure  ul {
+
+    color: rgb(107, 109, 112);
+    padding-left: 40px;
+}
+.THIS .no-abbr label.slds-form-element__label abbr {
+    display: none;
+}

@@ -1,0 +1,199 @@
+<aura:component controller="ParkerLaneLoanController" implements="force:hasRecordId">
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="masterQuote" type="String" />
+    <aura:attribute name="applicationSection" type="String" default=""/>
+    <aura:attribute name="appSectionPath" type="List" default="[]"/>
+    <aura:attribute name="myPriority" type="String" default=""/>
+    <aura:attribute name="customerAmount" type="Integer" default=""/>
+    <aura:attribute name="applicantFName" type="String" default=""/>
+    <aura:attribute name="applicantLName" type="String" default=""/>
+    <aura:attribute name="applicantEmail" type="String" default=""/>
+    <aura:attribute name="isShowPreFor" type="Boolean" default="false"/>
+    <aura:attribute name="isShowEmail" type="Boolean" default="false"/>
+    <aura:attribute name="isMortgage" type="Boolean" default="false"/>
+    <aura:attribute name="email" type="String" default=""/>
+    <aura:attribute name="emailDetail" type="String" default=""/>
+    <aura:attribute name="purpose" type="String" default=""/>
+    <aura:attribute name="selectedPerson" type="String" />
+    <aura:attribute name="selectedQuote" type="sObject" />
+    <aura:attribute name="redirectURL" type="String" default=""/>
+    
+    <aura:handler name="PathChangeEvent" event="c:PathChangeEvent" action="{!c.changePath}"/>
+    <aura:handler action="{!c.doInit}" name="init" value="{!this}"/>
+
+    <div class="company-logo slds-grid slds-wrap" style="align-items: center;"> 
+        <div class=" slds-text-align_left slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 slds-order_3  slds-medium-order_1 slds-large-order_1">
+            <span class="slds-p-horizontal--medium">
+                Need Help? Call 1300 13 17 11
+            </span>
+        </div>
+        <div class="slds-text-align_center slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 slds-order_2 slds-medium-order_2 slds-large-order_2">
+            <span ><img src="{!$Resource.SolarLoan + '/img/logowhite.png'}"/></span>
+        </div>
+        <div class="slds-text-align_right slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 slds-order_1 slds-medium-order_3 slds-large-order_3 slds-grid slds-wrap">
+            <aura:if isTrue="{!v.applicationSection != 'Priorities' &amp;&amp; v.applicationSection != 'Loan Recommendation' &amp;&amp; v.applicationSection != 'Getting Started' &amp;&amp; v.applicationSection != 'Summary' &amp;&amp; v.applicationSection != 'All Done'}">   
+                <aura:if isTrue="{!v.selectedPerson=='joint'}">
+                    <div class="slds-size_1-of-2">                                               
+                        <a class="no-anchor-share" onclick="{!c.SendEmailPopup}">Share with Applicant 2</a>                                    
+                    </div>
+                </aura:if>
+                <div class="slds-size_1-of-2">
+                    <a class="no-anchor-save" onclick="{!c.SaveApplication}">Save Application</a>
+                </div>
+                
+            </aura:if>
+        </div>
+    </div>
+    <aura:if isTrue="{!v.isMortgage}">
+        <c:ServiceAnnouncement pageType ="{!v.applicationSection}" serviceName="HLHC Service Message"/>
+        <aura:set attribute="else">
+            <c:ServiceAnnouncement pageType ="{!v.applicationSection}" serviceName="PL Service Message"/>
+        </aura:set>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.applicationSection != 'Priorities' &amp;&amp; v.applicationSection != 'Loan Recommendation'  &amp;&amp; v.applicationSection != 'Summary' &amp;&amp; v.applicationSection != 'All Done'}">
+        
+        <c:TotalLoanAmountSection_PL customerAmount="{!v.customerAmount}"
+                                          applicantFName="{!v.applicantFName}"
+                                          applicantLName="{!v.applicantLName}"
+                                          applicantEmail="{!v.applicantEmail}"
+                                          headerName="Your Loan Details"
+                                          selectedQuote ="{!v.selectedQuote}"
+                                          recordId ="{!v.recordId}"
+                                          isGettingStarted ="{!v.applicationSection == 'Getting Started'}"/>
+        <aura:if isTrue="{!v.applicationSection != 'Getting Started'}">
+            <c:CustomLightningPath_PL pathList = "{!v.appSectionPath}"/>
+        </aura:if>
+    </aura:if>
+    
+    <div class="slds-docked-composer__body1 section-content1" >
+        <div class="bg-lightest1 ">
+            <aura:if isTrue="{!v.applicationSection == 'Priorities'}">
+                <c:Priorities applicationSection="{!v.applicationSection}"
+                              appSectionPath="{!v.appSectionPath}"
+                              myPriority="{!v.myPriority}"
+                              customerAmount="{!v.customerAmount}"
+                              applicantFName="{!v.applicantFName}"
+                              applicantLName="{!v.applicantLName}"
+                              applicantEmail="{!v.applicantEmail}"
+                              purpose = "{!v.purpose}"
+                              recordId ="{!v.recordId}"
+                              masterQuote = "{!v.masterQuote}"/>
+            </aura:if>
+            <aura:if isTrue="{!v.applicationSection == 'Loan Recommendation'}">
+                <c:LoanRecommendation recordId ="{!v.recordId}"
+                                      masterQuote = "{!v.masterQuote}"
+                                      customerAmount="{!v.customerAmount}"
+                                      applicantFName="{!v.applicantFName}"
+                                      applicantLName="{!v.applicantLName}"
+                                      applicantEmail="{!v.applicantEmail}"
+                                      applicationSection="{!v.applicationSection}"
+                                      appSectionPath="{!v.appSectionPath}"
+                                      purpose = "{!v.purpose}"
+                                      selectedQuote ="{!v.selectedQuote}"/>
+            </aura:if>
+            <aura:if isTrue="{!v.applicationSection == 'Getting Started'}">
+                <c:GettingStarted aura:id="gettingStarted" 
+                                  recordId ="{!v.recordId}"
+                                  quote ="{!v.selectedQuote}"
+                                  appSectionPath="{!v.appSectionPath}"
+                                  applicationSection="{!v.applicationSection}"/>
+            </aura:if>
+            <aura:if isTrue="{!v.applicationSection == 'Who is applying'}">
+                <c:LoanApplicationForms_PL aura:id="whoIsApplying"
+                                        recordId ="{!v.recordId}"
+                                        appSectionPath="{!v.appSectionPath}"
+                                        applicationSection="{!v.applicationSection}"
+                                        selectedPerson="{!v.selectedPerson}"/>
+                
+            </aura:if>           
+            <aura:if isTrue="{!v.applicationSection == 'Own and Owe'}">
+                <c:OwnAndOwe_PL aura:id="ownAndOwe"
+                             title="{!v.applicationSection}" 
+                             recordId ="{!v.recordId}"
+                             appSectionPath="{!v.appSectionPath}"
+                             applicationSection="{!v.applicationSection}"/>
+            </aura:if>
+            <aura:if isTrue="{!v.applicationSection == 'Earn'}">
+                <c:ApplicantEanrings_PL aura:id="ApplicantEanrings"
+                                     recordId ="{!v.recordId}"
+                                     appSectionPath="{!v.appSectionPath}"
+                                     applicationSection="{!v.applicationSection}"/>
+            </aura:if>
+            <aura:if isTrue="{!v.applicationSection == 'Living Expenses'}">
+                <c:LivingExpenses_PL aura:id="LivingExpenses"
+                                  recordId ="{!v.recordId}"
+                                  appSectionPath="{!v.appSectionPath}"
+                                  applicationSection="{!v.applicationSection}"/>
+            </aura:if>           
+            <aura:if isTrue="{!v.applicationSection == 'Goals &amp; Objectives'}">
+                <c:GoalsObjectives_PL aura:id="GoalsObjectives"
+                                      title="{!v.applicationSection}" 
+                                      recordId ="{!v.recordId}"
+                                      appSectionPath="{!v.appSectionPath}"
+                                      redirectURL = "{!v.redirectURL}"
+                                      applicationSection="{!v.applicationSection}"
+                                      isMortgage ="{!v.isMortgage}"/>
+            </aura:if>
+            <aura:if isTrue="{!v.applicationSection == 'Summary'}">
+                <c:Summary_PL aura:id="SummaryPage"
+                              redirectURL = "{!v.redirectURL}"
+                              recordId ="{!v.recordId}"
+                              selectedQuote ="{!v.selectedQuote}"/>
+            </aura:if>
+            <aura:if isTrue="{!v.applicationSection == 'All Done'}">
+                <c:FinalSubmitted_PL aura:id="Submitted"/>
+            </aura:if>
+        </div>
+        
+    </div>
+    <c:ParkerLaneFooter/>
+    
+    <aura:if isTrue="{!v.isShowEmail}">
+        <div class="send-email" style="height: 640px;">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header header">
+                        <h2 class="slds-text-heading_medium slds-hyphenate">Send Application to Applicant 2</h2>
+                        <!--<p>Confirm the email address of the contact you wish to send the form to. The contact will recievean email with instructions on how to access the form</p>-->
+                    </header>
+                    
+                    <div class="slds-modal__content slds-p-around_medium" >
+                        <div class="slds-form" role="list">
+                            <div class="slds-form__row">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                        <lightning:input aura:id="emailfieldcheck" required="true"
+                                                         type="Email" 
+                                                         label="Contact Email Address" 
+                                                         placeholder="" value="{!v.email}"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-form__row">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                        <lightning:textarea aura:id="emailfieldcheck" required="true"
+                                                            label="Please provide details"  
+                                                            value="{!v.emailDetail}" rows="3"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <lightning:button label="Send" iconName="utility:send" 
+                                          iconPosition="left"  variant="brand" 
+                                          onclick="{!c.SendEmail}"/>
+                        
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning:button class="slds-m1-vertical_medium slds-floa1t_right"  
+                                          label="Close" title="Close" 
+                                          onclick="{!c.closeEmailPopup }" />
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </aura:if>
+
+</aura:component>

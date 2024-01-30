@@ -1,0 +1,8 @@
+<aura:component controller="EzeeAPIController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+	<div class="slds-page-header" role="banner">
+		<p class="slds-text-heading--label">Submitting Application to ZEAL</p>
+		<h1 class="slds-page-header__title slds-m-right--small slds-truncate slds-align-left">Please Wait...</h1>
+	</div>
+</aura:component>

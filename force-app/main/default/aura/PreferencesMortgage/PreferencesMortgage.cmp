@@ -1,0 +1,481 @@
+<aura:component controller="ParkerLaneLoanController">
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="applicationSection" type="String" default=""/>
+    <aura:attribute name="appSectionPath" type="List" default="[]"/>
+    <aura:attribute name="YesNoOptions" type="List" default="[{'label': 'Yes', 'value': 'Yes'},{'label': 'No', 'value': 'No'}]"/>
+    <aura:attribute name="YesMaybeNoOptions" type="List" default="[{'label': 'Yes', 'value': 'Yes'},{'label': 'MayBe', 'value': 'MayBe'},{'label': 'No', 'value': 'No'}]"/>
+    <aura:attribute name="jobSecurityOptions" type="List" default="[{'label': '1', 'value': '1'},{'label': '2', 'value': '2'},{'label': '3', 'value': '3'},{'label': '4', 'value': '4'},{'label': '5', 'value': '5'},{'label': '6', 'value': '6'},{'label': '7', 'value': '7'},{'label': '8', 'value': '8'},{'label': '9', 'value': '9'},{'label': '10', 'value': '10'}]"/>
+    <aura:attribute name="fixedTermOptions" type="List" default="[{'label': '1 Year', 'value': '1 Year'},{'label': '2 Years', 'value': '2 Years'},{'label': '3 Years', 'value': '3 Years'},{'label': '4 Years', 'value': '4 Years'},{'label': '5 Years', 'value': '5 Years'}]"/>
+    <aura:attribute name="primaryReasonOptions" type="List" default="[{'label': 'Save money', 'value': 'Save money'},{'label': 'Reduce expenditure', 'value': 'Reduce expenditure'},{'label': 'Improve lifestyle', 'value': 'Improve lifestyle'},{'label': 'Improve property value', 'value': 'Improve property value'},{'label': 'Build wealth', 'value': 'Build wealth'},{'label': 'Home ownership', 'value': 'Home ownership'},{'label': 'Benefit environment', 'value': 'Benefit environment'}]"/>
+    <aura:attribute name="interestTypeOptions" type="List" default="[{'label': 'Fixed', 'value': 'Fixed'},{'label': 'Variable', 'value': 'Variable'},{'label': 'Either', 'value': 'Either'}]"/>
+    <aura:attribute name="creditContractOptions" type="List" default="[{'label': 'Under 2 years', 'value': 'Under 2 years'},{'label': '2 to 5 years', 'value': '2 to 5 years'},{'label': '5 to 10 years', 'value': '5 to 10 years'},{'label': '10 years +', 'value': '10 years +'}]"/>
+    <aura:attribute name="repaymentFrequencyOptions" type="List" default="[{'label': 'Weekly', 'value': 'Weekly'},{'label': 'Fortnightly', 'value': 'Fortnightly'},{'label': 'Monthly', 'value': 'Monthly'}]"/>
+    <aura:attribute name="yesNoOtherOptions" type="List" default="[{'label': 'Yes', 'value': 'Yes'},{'label': 'No', 'value': 'No'},{'label': 'Unsure', 'value': 'Unsure'}]"/>
+    <aura:attribute name="fundsOptions" type="List" default="[{'label': 'Owner Occupied', 'value': 'Owner Occupied'},{'label': 'Residential Investment', 'value': 'Residential Investment'},{'label': 'Commercial', 'value': 'Commercial'}]"/>
+    <aura:attribute name="lenderTypeOptions" type="List" default="[{'label': 'Major bank', 'value': 'Major bank'},{'label': 'Credit Union (customer owned bank)', 'value': 'Credit Union (customer owned bank)'},{'label': 'Challenger bank', 'value': 'Challenger bank'},{'label': 'Don’t mind', 'value': 'Don’t mind'}]"/>
+    <aura:attribute name="productTypeOptions" type="List" default="[{'label': 'Basic Loan', 'value': 'Basic Loan'},{'label': 'Professional Package', 'value': 'Professional Package'},{'label': 'Line of Credit', 'value': 'Line of Credit'},{'label': 'Fixed Rate', 'value': 'Fixed Rate'},{'label': 'Low Doc','value':'Low Doc'},{'label': 'Don’t know', 'value': 'Don’t know'}]"/>
+    <aura:attribute name="yearsOptions" type="List" default="[]"/>
+    <aura:attribute name="fixedTermYearOptions" type="List" default="[]"/>
+    <aura:attribute name="isMortgage" type="Boolean" default="false"/>
+    
+    <aura:attribute name="showError" type="Boolean" default="false"/>
+    <aura:attribute name="errorMsg" type="String" default="Please update the form entries highlighted in red and try again"/>
+    
+    <aura:attribute name="title" type="String" />
+    <aura:attribute name="selectedPerson" type="String" />
+    <aura:attribute name="opportunity" type="Opportunity" default="{'sobjectType': 'Opportunity'}"/>
+    <aura:attribute name="applicant1" type="Contact" default="{'sobjectType': 'Contact'}"/>
+    <aura:attribute name="applicant2" type="Contact" default="{'sobjectType': 'Contact'}"/>
+    <aura:attribute name="totalPurposeAmount" type="Decimal" default="0"/>
+    <aura:attribute name="isOpenModal" type="Boolean" default="false"/>
+    <aura:attribute name="isOpenAlertModal" type="Boolean" default="false"/>
+    <aura:attribute name="selectedLoanPurpose" type="Loan_Purpose__c" />
+    <aura:attribute name="loanPurposesList" type="Loan_Purpose__c[]" />
+    <aura:attribute name="deleteIndex" type="Integer" default="0"/>
+    <aura:attribute name="isEdit" type="Boolean" default="false"/>
+    <aura:attribute name="anyProductTypes" type="List" default=""/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:method name="savePreferensesDetails" action="{!c.saveApplication}" access="PUBLIC" >
+        <aura:attribute name="isShare" type="Boolean" />
+        <aura:attribute name="isNext" type="Boolean" />
+    </aura:method>
+    
+    <div class="preferences">
+        <aura:if isTrue="{!v.showError}">
+            <div class="slds-notify slds-notify_toast slds-theme_error slds-align_absolute-center slds-m-vertical--medium">
+                <span class="slds-assistive-text">error</span>
+                <div class="slds-notify__content">
+                    <p class="slds-align_absolute-center">{!v.errorMsg}.</p>                
+                </div>
+            </div>
+        </aura:if>
+        <header class="checkout-page-banner--gradient">
+            <div class="slds-align_absolute-center">
+                <div class="page-banner__content-text">
+                    <h1 class="slds-p-vertical--medium heading--page">{!v.title}</h1>
+                    
+                </div>
+            </div>
+        </header>
+        <lightning:spinner aura:id="mySpinner" variant="brand" size="large" class="" />
+        <section class="bg-lightest slds-p-horizontal--medium slds-p-vertical--large">
+            <div class="slds-form max-700">
+                
+                
+                <div class="slds-form " role="list">
+                    <h1 class="header-text txt-blue">Loan Purposes</h1>
+                    <p style="text-align: justify;font-weight: 100;font-size: 15px;">
+                        Please select the borrowing purpose from the list below and indicate the amount you expect to borrow.<br/> 
+                        <i>You can select more than one option, for example if you are refinancing a home loan and consolidating debts, select both and include your outstanding home loan balance under refinance, and the total amount of your car loans, personal loans or credits cards under debt consolidation.</i>
+                    </p>  
+                    
+                    <div class="slds-scrollable_x">
+                        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-m-vertical--small" style="min-width: 475px;">
+                            <thead>
+                                
+                                <tr class="slds-line-height_reset">
+                                    <th class="col-size" scope="col">
+                                        <div class="slds-truncate" title="List the loan purposes">List the loan purpose</div>
+                                    </th>
+                                    <th class="col-amount-width" scope="col">
+                                        <div class=" slds-text-align_right" title="Amount">
+                                            Amount
+                                        </div>
+                                    </th>
+                                     <th class="col-desc-width" scope="col">
+                                        <div class="" title="Description">
+                                            Description
+                                        </div>
+                                    </th>
+                                    <th class="col-delete-width" scope="col"></th>
+                                    <th class="col-edit-width" scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <aura:iteration items="{!v.loanPurposesList}" var="loanPurpose" indexVar="index">
+                                    <tr class="slds-hint-parent">
+                                        <td data-label="Asset Name"  class="col-size">
+                                            <div class="slds-truncate" title="{!loanPurpose.Name}">
+                                                {!loanPurpose.Name}
+                                            </div>
+                                        </td>
+                                        <td data-label="Amount">
+                                            <div class="slds-truncate slds-text-align_right" title="{!loanPurpose.Amount__c}">
+                                                <lightning:formattedNumber value="{!loanPurpose.Amount__c}" maximumFractionDigits="2"/>
+                                            </div>
+                                        </td>
+                                        <td data-label="Description"  class="col-size">
+                                            <div class="slds-truncate" >
+                                                {!loanPurpose.Description__c} 
+                                            </div>
+                                        </td>
+                                        <td role="gridcell" class="slds-text-align_center">
+                                            <div class="slds-text-link_reset" id="{!index}" onclick="{!c.deleteAlertModel}">
+                                                <lightning:icon iconName="utility:delete" size="x-small"/>
+                                            </div>
+                                        </td>
+                                        <td role="gridcell" class="slds-text-align_center">
+                                            <div class="slds-text-link_reset" id="{!index}" onclick="{!c.openLoanPurposeModel}">
+                                                <span class="txt-blue">Edit</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </aura:iteration>
+                                <tr class="slds-hint-parent">
+                                    <td data-label="Total Purpose amount" class="col-size">
+                                        <div class="slds-truncate" title="Purchase property">
+                                            <b>Total Purpose amount</b>
+                                        </div>
+                                    </td>
+                                    <td data-label="Amount">
+                                        <div class="slds-truncate slds-text-align_right" >
+                                            <b> $<lightning:formattedNumber value="{!v.totalPurposeAmount}" maximumFractionDigits="2"/></b>
+                                        </div>
+                                    </td>
+                                    <td role="gridcell" class="slds-text-align_center"></td>
+                                    <td role="gridcell" class="slds-text-align_center"></td>
+                                    <td role="gridcell" class="slds-text-align_center"></td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="slds-p-vertical_small">
+                        <lightning:button label="Add Purpose Type"
+                                          iconName="utility:add" 
+                                          iconPosition="right"                                   
+                                          variant="brand" 
+                                          onclick="{! c.addNewLoanPurpose }" />
+                    </div>
+                </div>
+                
+                
+                <div class="slds-form slds-p-top--large" role="list">
+                    <h1 class="header-text txt-blue">Loan Preferences</h1>
+                    <div class="slds-form__row">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <lightning:radioGroup label="What is the primary intended use of the funds?" aura:id="fieldcheck" required="true"
+                                                      options="{! v.fundsOptions }"
+                                                      value="{! v.opportunity.What_is_the_intended_use_of_the_funds__c }"
+                                                      type="button"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-form__row">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <lightning:combobox aura:id="fieldcheck" required="true"
+                                                    label="What is the primary benefit of taking out the loan?" 
+                                                    value="{!v.opportunity.Primary_reason_for_installing_solar__c}"                                                 
+                                                    options="{! v.primaryReasonOptions }"
+                                                    placeholder="Select Primary reason"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-form__row">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <lightning:combobox aura:id="fieldcheck" required="true"
+                                                    label="What is the term you wish to apply for (in years)?" 
+                                                    value="{!v.opportunity.Term_you_wish_to_apply_for_in_years__c }"                                                 
+                                                    options="{! v.yearsOptions }"
+                                                    placeholder="Select the term you wish to apply"/>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <lightning:combobox aura:id="fieldcheck" required="true"
+                                                    label="Preferred repayment frequency" 
+                                                    value="{!v.opportunity.Preferred_repayment_frequency__c}"                                                 
+                                                    options="{! v.repaymentFrequencyOptions }"
+                                                    placeholder="Select Preferred repayment frequency"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-form__row">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <lightning:combobox aura:id="fieldcheck" required="true"
+                                                    label="How long do you expect to remain in the property" 
+                                                    value="{!v.opportunity.Expect_to_remain_in_the_credit_contract__c}"                                                 
+                                                    options="{! v.yearsOptions }"
+                                                    placeholder="Select the how long do you expect to remain"/>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <lightning:combobox aura:id="fieldcheck" required="true"
+                                                    label="Do you have a preference for the type of lender?" 
+                                                    value="{!v.opportunity.preference_for_the_type_of_lender__c }"                                                 
+                                                    options="{! v.lenderTypeOptions }"
+                                                    placeholder="Select preference for the type of lender"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-form__row">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <lightning:combobox aura:id="fieldcheck" required="true"
+                                                    label="The type of interest rate you are interested in" 
+                                                    value="{!v.opportunity.Type_of_interest_rate__c}"                                                 
+                                                    options="{! v.interestTypeOptions }"
+                                                    placeholder="Select type of interest rate"/>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem"></div>
+                    </div>
+                    <aura:If isTrue="{!v.opportunity.Type_of_interest_rate__c == 'Fixed' ||
+                                     v.opportunity.Type_of_interest_rate__c == 'Either'}">
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <lightning:radioGroup class="slds-p-around_x-small" name="fixedTermRG"
+                                                          label="Do you have a fixed term in mind?"    
+                                                          options="{! v.YesNoOptions }"
+                                                          value="{!v.opportunity.Do_you_have_a_fixed_term_in_mind__c}"
+                                                          type="button"
+                                                          aura:id="fieldcheck"
+                                                          required="true"/>
+                                </div>
+                            </div>
+                            <div class="slds-form__item" role="listitem">
+                                <aura:If isTrue="{!v.opportunity.Do_you_have_a_fixed_term_in_mind__c == 'Yes'}">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                        <lightning:combobox aura:id="fieldcheck" required="true"
+                                                            label="Fixed Term Preference" 
+                                                            value="{!v.opportunity.Fixed_Term_Preference__c}"                                                 
+                                                            options="{! v.fixedTermOptions }"
+                                                            placeholder="Select fixed term preference"/>
+                                    </div>
+                                    
+                                </aura:If>
+                            </div>
+                        </div>
+                    </aura:If>
+                    <div class="slds-form__row">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <lightning:input label="Please list any lenders you don’t wish to deal with" 
+                                                 value="{!v.opportunity.Any_lenders_you_don_t_wish_to_deal_with__c}"
+                                                 maxlength="250" placeholder=""/>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem"></div>
+                    </div>
+                    
+                    <div class="slds-form__row slds-p-top--medium slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_10-of-12">
+                            <div class="slds-form__item " role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <p><abbr title="required" class="slds-required">*</abbr>Fixed rates can move between the time of application and settlement. Are you interested in locking in the rate at the time of application (a fee may apply)</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_2-of-12">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing no-abbr">
+                                    <lightning:radioGroup name="legalProceedingRadioGroup"
+                                                          label="" aura:id="fieldcheck" required="true"
+                                                          options="{! v.YesNoOptions }"
+                                                          value="{!v.opportunity.locking_rate_at_the_time_of_application__c}"
+                                                          type="button"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              
+                <div class="slds-form__row">
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element cg-style-horizontal">
+                            <lightning:checkboxGroup name="productTypeCG"
+                                                     aura:id="fieldcheckLifeEvent" 
+                                                     label="Are there any product types that you are interested in?"
+                                                     options="{! v.productTypeOptions }"
+                                                     value="{!v.anyProductTypes }"
+                                                     onchange="{! c.handleProductTypes }"/>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slds-form" role="list">
+                    <h2 class="header slds-p-top--medium txt-blue">Please list the features you are interested in</h2>
+                    <div class="slds-form__row">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <lightning:radioGroup class="slds-p-around_x-small" name="FixedRateRG"
+                                                      label="Fixed rate"    
+                                                      options="{! v.YesMaybeNoOptions }"
+                                                      value="{!v.opportunity.Interested_in_Fixed_rate__c}"
+                                                      type="button"
+                                                      aura:id="fieldcheck"
+                                                      required="true"/>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <lightning:radioGroup class="slds-p-around_x-small" name="VariableRateRG"
+                                                  label="Variable rate"    
+                                                  options="{! v.YesMaybeNoOptions }"
+                                                  value="{!v.opportunity.Interested_in_Variable_rate__c}"
+                                                  type="button"
+                                                  aura:id="fieldcheck"
+                                                  required="true"/>
+                        </div>
+                    </div>
+                    <div class="slds-form__row">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <lightning:radioGroup class="slds-p-around_x-small" name="PartFixedVariableRG"
+                                                      label="Part fixed and part variable"    
+                                                      options="{! v.YesMaybeNoOptions }"
+                                                      value="{!v.opportunity.Interested_in_Part_fixed_and_variable__c}"
+                                                      type="button"
+                                                      aura:id="fieldcheck"
+                                                      required="true"/>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <lightning:radioGroup class="slds-p-around_x-small" name="InterestRepaymentsRG"
+                                                  label="Interest only repayments"    
+                                                  options="{! v.YesMaybeNoOptions }"
+                                                  value="{!v.opportunity.Interest_only_repayments__c}"
+                                                  type="button"
+                                                  aura:id="fieldcheck"
+                                                  required="true"/>
+                        </div>
+                    </div>
+                    <div class="slds-form__row">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <lightning:radioGroup class="slds-p-around_x-small" name="InterestAdvanceRG"
+                                                      label="Interest in advance"    
+                                                      options="{! v.YesMaybeNoOptions }"
+                                                      value="{!v.opportunity.Interest_in_advance__c}"
+                                                      type="button"
+                                                      aura:id="fieldcheck"
+                                                      required="true"/>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <lightning:radioGroup class="slds-p-around_x-small" name="OffsetAccountRG"
+                                                  label="Offset account"    
+                                                  options="{! v.YesMaybeNoOptions }"
+                                                  value="{!v.opportunity.Interested_in_Offset_account__c}"
+                                                  type="button"
+                                                  aura:id="fieldcheck"
+                                                  required="true"/>
+                        </div>
+                    </div>
+                    <div class="slds-form__row">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <lightning:radioGroup class="slds-p-around_x-small" name="RedrawRG"
+                                                      label="Redraw"    
+                                                      options="{! v.YesMaybeNoOptions }"
+                                                      value="{!v.opportunity.Interested_in_Redraw__c}"
+                                                      type="button"
+                                                      aura:id="fieldcheck"
+                                                      required="true"/>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <lightning:radioGroup class="slds-p-around_x-small" name="AccessBranchNetworkRG"
+                                                  label="Access to a branch network"    
+                                                  options="{! v.YesMaybeNoOptions }"
+                                                  value="{!v.opportunity.Interested_in_Access_to_a_branch_network__c}"
+                                                  type="button"
+                                                  aura:id="fieldcheck"
+                                                  required="true"/>
+                        </div>
+                    </div>
+                    <div class="slds-form__row">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <lightning:input label="Are there any other features you are interested in?" 
+                                                 value="{!v.opportunity.Other_features_you_are_interested_in__c}" aura:id="fieldcheck" required="true"
+                                                 maxlength="50" placeholder=""/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <aura:if isTrue="{!v.isOpenAlertModal}">
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        
+                        <header class="slds-modal__header">
+                            <lightning:buttonIcon iconName="utility:close"
+                                                  onclick="{! c.closeAlertModel }"
+                                                  alternativeText="close"
+                                                  variant="bare-inverse"
+                                                  class="slds-modal__close"/>
+                            <lightning:icon iconName="utility:clear" alternativeText="error !" 
+                                            size ="large" variant="error "/>
+                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate text-err">Are You Sure?</h2>
+                        </header>
+                        
+                        <div class="slds-modal__content slds-p-around_medium slds-text-align_center" >
+                            Do you really want to delete this Loan Purpose? 
+                        </div>
+                        
+                        <footer class="slds-modal__footer slds-text-align_center">
+                            <lightning:button variant="neutral" 
+                                              label="GO BACK"
+                                              title="GO BACK"
+                                              onclick="{! c.closeAlertModel }"/>
+                            <lightning:button variant="brand" 
+                                              label="DELETE"
+                                              title="DELETE"
+                                              onclick="{! c.deleteLoanPurpose }"/>
+                            
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </aura:if>
+            <aura:if isTrue="{!v.isOpenModal}">
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        
+                        <header class="slds-modal__header">
+                            <lightning:buttonIcon iconName="utility:close"
+                                                  onclick="{! c.closeModel }"
+                                                  alternativeText="close"
+                                                  variant="bare-inverse"
+                                                  class="slds-modal__close"/>
+                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Loan Purpose Details</h2>
+                        </header>
+                        
+                        <div class="slds-modal__content slds-p-around_medium" style="min-height: 20rem;">
+                            <c:LoanPurpose aura:id="preferenceLoanPurpose" 
+                                           loanPurpose = "{!v.selectedLoanPurpose}"/>
+                        </div>
+                        
+                        <footer class="slds-modal__footer">
+                            <lightning:button variant="neutral" 
+                                              label="Cancel"
+                                              title="Cancel"
+                                              onclick="{! c.closeModel }"/>
+                            <lightning:button variant="brand" 
+                                              label="Add and Close"
+                                              title="Add and Close"
+                                              onclick="{! c.AddCloseLoanPurpose}"/>
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+                
+            </aura:if>
+        </section>
+        <div class="max-700 preNxtBtn ">
+            <lightning:button class="slds-m-vertical_medium slds-float_left" variant="brand" 
+                              label="Previous" title="Previous" 
+                              onclick="{! c.prevSave }" />
+            <lightning:button class="slds-m-vertical_medium slds-float_right" variant="success" 
+                              label="Save &amp; Next" title="Save &amp; Next" 
+                              onclick="{! c.saveNext }" />
+        </div>
+    </div>
+</aura:component>

@@ -1,0 +1,66 @@
+<aura:component >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="pathList" type="List" default="[{ status: ' slds-is-complete', label: 'Priorities' },{ status: ' slds-is-complete', label: 'Loan Recommendation' },{ status: ' slds-is-complete', label: 'Who is applying' },{ status: ' slds-is-complete', label: 'Own and Owe' },{ status: ' slds-is-active slds-is-current', label: 'Earn' },{ status: ' slds-is-incomplete', label: 'Living Expenses' },{ status: ' slds-is-incomplete', label: 'Risk Profile' }]"/>
+    <aura:html tag="style">
+        .slds-path__item {
+        	width: {!(99/v.pathList.length)}% !important;
+        	min-width: 100px !important;
+        }
+        @media (max-width: 1024px){
+            .slds-path__nav {
+                width:calc(100% - 70px);
+            }
+        }
+        @media (min-width: 1024px){
+            .slds-path__nav {
+                width:100%;
+            }
+        }
+    </aura:html>
+
+    <article class="slds-card ">
+        <div class="slds-path">
+            <div class="slds-grid slds-path__track slds-has-overflow">
+                <div class="slds-grid slds-path__scroller-container">
+                    <div class="slds-path__scroller" role="application">
+                        <div class="slds-path__scroller_inner">
+                            <ul id="path__scroller_inner" style="margin-left: 0; " class="slds-path__nav" role="listbox" aria-orientation="horizontal">
+                                
+                                <aura:iteration items="{!v.pathList}" var="option">
+
+                                    <li class="{!'slds-path__item' + option.status}" title = "{!option.label}" role="presentation">
+                                        <aura:if isTrue="{!option.isClickable}">
+                                            <c:PathElement label="{!option.label}"/>
+                                            <aura:set attribute="else">
+                                                <a class="slds-path__link" style="cursor: text;">
+                                                    <span class="slds-path__stage">
+                                                        <lightning:icon iconName="utility:check" size="xx-small" variant="inverse"/>
+                                                    </span>
+                                                    <span class="slds-path__title">{!option.label}</span>
+                                                </a>
+                                            </aura:set>
+                                        </aura:if>
+                                </li>
+                                </aura:iteration>
+                                
+                                
+                            </ul>
+                            <div class="slds-path__scroll-controls slds-hide_large arrow">
+                                <button onclick="{!c.moveLeft}" class="slds-button slds-button_icon slds-button_icon-border-filled" title="Scroll left" tabindex="-1">
+                                    <lightning:icon iconName="utility:left" size="xx-small"/>
+                                    
+                                    <span class="slds-assistive-text">Scroll left</span>
+                                </button>
+                                <button onclick="{!c.moveRight}" class="slds-button slds-button_icon slds-button_icon-border-filled" title="Scroll right" tabindex="-1">
+                                    <lightning:icon iconName="utility:right" size="xx-small"/>
+                                   
+                                    <span class="slds-assistive-text">Scroll right</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+</aura:component>

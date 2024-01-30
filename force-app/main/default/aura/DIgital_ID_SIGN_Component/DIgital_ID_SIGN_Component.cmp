@@ -1,0 +1,187 @@
+<aura:component controller="Digital_ID_Sign" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="ImageData" type="string" default=""/>
+    <aura:attribute name="ImageDataSec" type="string" default=""/>
+    <aura:attribute name="Con" type="Contact" default=""/>
+    <aura:handler name="init" value="{!this}" action="{!c.myAction}"/>
+    <aura:attribute name="isModalOpen" type="boolean" default="false"/>
+    <aura:attribute name="isModalOpenBack" type="boolean" default="false"/>
+    <aura:attribute name="accept" type="List" default="['.jpg', '.jpeg', '.png']"/>  
+    <lightning:navigation aura:id="navService"/>
+    <div>
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col">
+                <div class="fileCard">
+                    <label class="idText">Driver’s Licence Front</label>
+                    <lightning:fileCard fileId="{!v.ImageData}" description="DL Front"/>
+                </div><br/>
+                <div>
+                    <lightning:button variant="brand" label="Upload Front DL" title="Upload Front DL" onclick="{!c.openModal}"/>
+                    <aura:if isTrue="{!v.isModalOpen}">
+                        
+                        <!-- Modal/Popup Box starts here-->
+                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                            <div class="slds-modal__container">
+                                <!-- Modal/Popup Box Header Starts here-->
+                                <header class="slds-modal__header">
+                                    <lightning:buttonIcon iconName="utility:close"
+                                                          onclick="{! c.closeModel }"
+                                                          alternativeText="close"
+                                                          variant="bare-inverse"
+                                                          class="slds-modal__close"/>
+                                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Upload Front DL</h2>
+                                </header>
+                                <!--Modal/Popup Box Body Starts here-->
+                                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                    <div class="slds-align_absolute-center">
+                                        <lightning:fileUpload  name="fileUploader" label= "Upload Front DL" accept="{!v.accept}" multiple="false" 
+                                                              recordId="{!v.recordId}" onuploadfinished="{!c.handleDocUploadFinished}"/>
+                                    </div>
+                                </div>
+                                <!--Modal/Popup Box Footer Starts here-->
+                                <footer class="slds-modal__footer">
+                                    <lightning:button variant="neutral"
+                                                      label="Cancel"
+                                                      title="Cancel"
+                                                      onclick="{! c.closeModel }"/>
+                                </footer>
+                            </div>
+                        </section>
+                        <div class="slds-backdrop slds-backdrop_open"></div>
+                    </aura:if>
+                </div>
+            </div>
+            <div class="slds-col">
+                <div class="fileCard">
+                    <label class="idText">Driver’s Licence Back</label>
+                    <lightning:fileCard fileId="{!v.ImageDataSec}" description="DL Back"/>
+                </div><br/>
+                <div>
+                    <lightning:button variant="brand" label="Upload Back DL" title="Upload Back DL" onclick="{!c.openModalBack}"/>
+                    <aura:if isTrue="{!v.isModalOpenBack}">
+                        
+                        <!-- Modal/Popup Box starts here-->
+                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                            <div class="slds-modal__container">
+                                <!-- Modal/Popup Box Header Starts here-->
+                                <header class="slds-modal__header">
+                                    <lightning:buttonIcon iconName="utility:close"
+                                                          onclick="{! c.closeModel }"
+                                                          alternativeText="close"
+                                                          variant="bare-inverse"
+                                                          class="slds-modal__close"/>
+                                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Upload Back DL</h2>
+                                </header>
+                                <!--Modal/Popup Box Body Starts here-->
+                                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                    <div class="slds-align_absolute-center">
+                                        <lightning:fileUpload  name="fileUploader" label= "Upload Front DL" accept="{!v.accept}" multiple="false" 
+                                                              recordId="{!v.recordId}" onuploadfinished="{!c.handleDocUploadFinishedForBack}"/>
+                                    </div>
+                                </div>
+                                <!--Modal/Popup Box Footer Starts here-->
+                                <footer class="slds-modal__footer">
+                                    <lightning:button variant="neutral"
+                                                      label="Cancel"
+                                                      title="Cancel"
+                                                      onclick="{! c.closeModel }"/>
+                                </footer>
+                            </div>
+                        </section>
+                        <div class="slds-backdrop slds-backdrop_open"></div>
+                    </aura:if>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br/><br/><br/>
+    
+    <div class="slds-m-around_x-small">
+        <div class="slds-page-header ">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__figure">
+                            <span class="slds-icon_container_small slds-icon-standard-custom" title="Document Requested">
+                                <lightning:icon iconName="standard:custom" size="small" />
+                            </span>
+                        </div>
+                        <div class="slds-media__body slds-align-middle">
+                            <div class="slds-page-header__name slds-align-middle">
+                                <div class="slds-page-header__name-title">
+                                    <h1 class="slds-page-header__title slds-hyphenate">Identity Information (Contact)</h1>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        </div><br/>
+        <div class="slds-m-around-small">
+            <div>
+                <div class="slds-grid slds-gutters slds-wrap NameBox">                    
+                    <div class="slds-col slds-size_6-of-12">
+                        <label>&nbsp;Contact 1</label>
+                        <div class="slds-box">
+                            <a href="javascript:void(0);" onclick="{!c.navigateToRecord}" data-record-id="{!v.Con.Id}">{!v.Con.Name}</a>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning:select name="select1" label="Salutation" value="{!v.Con.Salutation}">
+                            <option value="">--Select--</option>
+                            <option value="Mr.">Mr.</option>
+                            <option value="Ms.">Ms.</option>
+                            <option value="Mrs.">Mrs.</option>
+                            <option value="Dr.">Dr.</option>
+                            <option value="Prof.">Prof.</option>
+                        </lightning:select>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning:input type="date" name="input1" label="Birthdate" value="{!v.Con.Birthdate}"/><br/>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning:select name="select1" label="Government ID" value="{!v.Con.Government_ID__c}">
+                            <option value="">--Select--</option>
+                            <option value="Passport">Passport</option>
+                            <option value="Card">Card</option>
+                            <option value="driving licence">driving licence</option>
+                        </lightning:select>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning:select name="select1" label="Driver's licence state &amp; Territory" value="{!v.Con.Driver_s_licence_state_Territory__c}">
+                            <option value="">--Select--</option>
+                            <option value="Queensland">Queensland</option>
+                            <option value="New South Wales">New South Wales</option>
+                            <option value="Australian Capital Territory">Australian Capital Territory</option>
+                            <option value="Victoria">Victoria</option>
+                            <option value="South Australia">South Australia</option>
+                            <option value="Western Australia">Western Australia</option>
+                            <option value="Tasmania">Tasmania</option>
+                            <option value="Northern Territory">Northern Territory</option>
+                        </lightning:select>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning:input name="input1" label="Govt Id Number" value="{!v.Con.Govt_Id_Number__c}"/><br/>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning:select name="select1" label="Gender" value="{!v.Con.FinServ__Gender__c}">
+                            <option value="">choose one...</option>
+                            <option value="Female">Female</option>
+                            <option value="Male">Male</option>
+                            <option value="Decline to Specify">Decline to Specify</option>
+                            <option value="Other">Other</option>
+                        </lightning:select>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning:input name="input1" label="Residential Address" value="{!v.Con.Residential_Address__c + ' ' + v.Con.Postal_Code__c}" disabled="true"/><br/>
+                    </div>
+                    <div class="slds-col slds-size_12-of-12" align="center">
+                        <lightning:button variant="brand" label="Submit" title="Submit"  onclick="{!c.UpdateContact}"/>
+                    </div>
+                </div>
+            </div>
+        </div>    
+    </div>
+    
+</aura:component>

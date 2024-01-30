@@ -1,0 +1,659 @@
+<aura:component >
+    
+    <aura:attribute name="applicant" type="Contact" />
+    <aura:attribute name="applicantChildren" type="Contact[]" />
+    <aura:attribute name="applicant1" type="Contact" />
+    <aura:attribute name="isFindPostalAdd" type="Boolean" default="false"/>
+    <aura:attribute name="postalAddressString" type="String" default=""/>
+    <aura:attribute name="POGPOBox" type="Boolean" default="false"/>
+    <aura:attribute name="applicantNo" type="Integer"/>
+    <aura:attribute name="isShowDependents" type="Boolean" default="true"/>
+    <aura:attribute name="relationship" type="String" />
+    <aura:attribute name="selectedPerson" type="String" />
+	<aura:attribute name="managedVia" type="String" default=""/>
+    
+    <aura:attribute name="citizenshipStatusOptions" type="List" default="[{'label': 'Australian Citizen', 'value': 'Australian Citizen'},{'label': 'Permanent Resident', 'value': 'Permanent Resident'},{'label': 'NZ Citizen', 'value': 'NZ Citizen'},{'label': 'Other', 'value': 'Other'}]"/>
+    <aura:attribute name="frequencyOptions" type="List" default="[{'label': 'Weekly', 'value': 'Weekly'},{'label': 'Fortnightly', 'value': 'Fortnightly'},{'label': 'Monthly', 'value': 'Monthly'},{'label': 'Annually', 'value': 'Annually'}]"/>
+    <aura:attribute name="managedViaOptions" type="List" default="[{'label': 'Real estate agent', 'value': 'Real estate agent'},{'label': 'Privately', 'value': 'Privately'}]"/>
+    <aura:attribute name="boxTypeOptions" type="List" default="[{'label': 'PO Box', 'value': 'PO Box'},{'label': 'GPO Box', 'value': 'GPO Box'}]"/>
+    <aura:attribute name="genderOptions" type="List" default="[{'label': 'Male', 'value': 'Male'},{'label': 'Female', 'value': 'Female'}]"/>
+	<aura:attribute name="MediExpYearOptions" type="List" default="[]"/>
+    <aura:attribute name="yesNoOptions" type="List" default="[{'label': 'Yes', 'value': 'Yes'},{'label': 'No', 'value': 'No'}]"/>
+    <aura:attribute name="birthDayOptions" type="List" default="[]"/>
+    <aura:attribute name="birthMonthOptions" type="List" default="[{'value' : '01' , 'label': 'January'},{'value' : '02' , 'label': 'February'},{'value' : '03' , 'label': 'March'},{'value' : '04' , 'label': 'April'},{'value' : '05' , 'label': 'May'},{'value' : '06' , 'label': 'June'},{'value' : '07' , 'label': 'July'},{'value' : '08' , 'label': 'August'},{'value' : '09' , 'label': 'September'},{'value' : '10' , 'label': 'October'},{'value' : '11' , 'label': 'November'},{'value' : '12' , 'label': 'December'}]"/>
+    <aura:attribute name="birthYearOptions" type="List" default="[]"/>
+    <aura:attribute name="livingSituationOptions" type="List" default="[{'label': 'Own home outright', 'value': 'Own home outright'},{'label': 'Own home with mortgage', 'value': 'Own home with mortgage'},{'label': 'Renting', 'value': 'Renting'},{'label': 'Boarding with parents', 'value': 'Boarding with parents'},{'label': 'Boarding with other', 'value': 'Boarding with other'},{'label': 'Supplied by employer', 'value': 'Supplied by employer'}]"/>
+    <aura:attribute name="titleOptions" type="List" default="[{'label': 'Mr.', 'value': 'Mr'},{'label': 'Mrs.', 'value': 'Mrs'},{'label': 'Ms.', 'value': 'Ms'},{'label': 'Dr.', 'value': 'Dr'}]"/>
+	<aura:attribute name="cardReferenceOptions" type="List" default="[{'label': '1', 'value': '1'},{'label': '2', 'value': '2'},{'label': '3', 'value': '3'},{'label': '4', 'value': '4'},{'label': '5', 'value': '5'},{'label': '6', 'value': '6'},{'label': '7', 'value': '7'},{'label': '8', 'value': '8'},{'label': '9', 'value': '9'}]"/>
+    <aura:attribute name="cardColourOptions" type="List" default="[{'label': 'Green', 'value': 'Green'},{'label': 'Blue', 'value': 'Blue'},{'label': 'Yellow', 'value': 'Yellow'}]"/>
+
+    <aura:attribute name="maritalStatusOptions" type="List" default="[]"/>
+    <aura:attribute name="CountriesOptions" type="List" default="[{'label': 'Australian', 'value': 'Australian'}]"/>
+    <aura:attribute name="govtIdOptions" type="List" default="[{'label': 'Passport', 'value': 'Passport'},{'label': 'Card', 'value': 'Card'}]"/>
+    <aura:attribute name="noChildrenOptions" type="List" default="[{'label': '0', 'value': '0'},{'label': '1', 'value': '1'},{'label': '2', 'value': '2'},{'label': '3', 'value': '3'},{'label': '4', 'value': '4'},{'label': '5+', 'value': '5'}]"/>
+    <aura:attribute name="securityQuestionOptions" type="List" default="[{'label': 'Mothers maiden name', 'value': 'Mothers maiden name'},{'label': 'First street you lived in', 'value': 'First street you lived in'},{'label': 'First pet’s name', 'value': 'First pet’s name'},{'label': 'Occupation you wanted to be when you were a child', 'value': 'Occupation you wanted to be when you were a child'}]"/>
+    <aura:attribute name="statesTerritoriesOptions" type="List" default="[{'label': 'Queensland', 'value': 'Queensland'},{'label': 'New South Wales', 'value': 'New South Wales'},{'label': 'Australian Capital Territory', 'value': 'Australian Capital Territory'},{'label': 'Victoria', 'value': 'Victoria'},{'label': 'South Australia', 'value': 'South Australia'},{'label': 'Western Australia', 'value': 'Western Australia'},{'label': 'Tasmania', 'value': 'Tasmania'},{'label': 'Northern Territory', 'value': 'Northern Territory'}]"/>
+    <aura:attribute name="monthsOptions" type="List" default="[{'label': '0', 'value': '0'},{'label': '1', 'value': '1'},{'label': '2', 'value': '2'},{'label': '3', 'value': '3'},{'label': '4', 'value': '4'},{'label': '5', 'value': '5'},{'label': '6', 'value': '6'},{'label': '7', 'value': '7'},{'label': '8', 'value': '8'},{'label': '9', 'value': '9'},{'label': '10', 'value': '10'},{'label': '11', 'value': '11'}]"/>
+    <aura:attribute name="yearsOptions" type="List" default="[{'label': '0', 'value': '0'},{'label': '1', 'value': '1'},{'label': '2', 'value': '2'},{'label': '3', 'value': '3'},{'label': '4', 'value': '4'},{'label': '5', 'value': '5'},{'label': '6', 'value': '6'},{'label': '7', 'value': '7'},{'label': '8', 'value': '8'},{'label': '9', 'value': '9'},{'label': '10+', 'value': '10+'}]"/>
+    <aura:attribute name="ageYearsOptions" type="List" default="[{'label': '0 Year', 'value': '0 Year'},{'label': '1 Year', 'value': '1 Year'},{'label': '2 Years', 'value': '2 Years'},{'label': '3 Years', 'value': '3 Years'},{'label': '4 Years', 'value': '4 Years'},{'label': '5 Years', 'value': '5 Years'},{'label': '6 Years', 'value': '6 Years'},{'label': '7 Years', 'value': '7 Years'},{'label': '8 Years', 'value': '8 Years'},{'label': '9 Years', 'value': '9 Years'},{'label': '10 Years', 'value': '10 Years'},{'label': '11 Years', 'value': '11 Years'},{'label': '12 Years', 'value': '12 Years'},{'label': '13 Years', 'value': '13 Years'},{'label': '14 Years', 'value': '14 Years'},{'label': '15 Years', 'value': '15 Years'},{'label': '16 Years', 'value': '16 Years'},{'label': '17 Years', 'value': '17 Years'},{'label': '18 Years', 'value': '18 Years'}]"/>
+    <aura:attribute name="streetTypeOptions" type="List" default="[{'label': 'Alley', 'value': 'Alley'},{'label': 'Ambl', 'value': 'Ambl'},{'label': 'Arcade', 'value': 'Arcade'},{'label': 'Avenue', 'value': 'Avenue'},{'label': 'Bend', 'value': 'Bend'},{'label': 'Boulevard', 'value': 'Boulevard'},{'label': 'Brace', 'value': 'Brace'},{'label': 'Centre', 'value': 'Centre'},{'label': 'Chase', 'value': 'Chase'},{'label': 'Circle', 'value': 'Circle'},{'label': 'Circuit', 'value': 'Circuit'},{'label': 'Circus', 'value': 'Circus'},{'label': 'Close', 'value': 'Close'},{'label': 'Concourse', 'value': 'Concourse'},{'label': 'Corner', 'value': 'Corner'},{'label': 'Corso', 'value': 'Corso'},{'label': 'Court', 'value': 'Court'},{'label': 'Crescent', 'value': 'Crescent'},{'label': 'Crossing', 'value': 'Crossing'},{'label': 'Drive', 'value': 'Drive'},{'label': 'Entrance', 'value': 'Entrance'},{'label': 'Esplanade', 'value': 'Esplanade'},{'label': 'Freeway', 'value': 'Freeway'},{'label': 'Frontage', 'value': 'Frontage'},{'label': 'Gate', 'value': 'Gate'},{'label': 'Glade', 'value': 'Glade'},{'label': 'Glen', 'value': 'Glen'},{'label': 'Grange', 'value': 'Grange'},{'label': 'Green', 'value': 'Green'},{'label': 'Ground', 'value': 'Ground'},{'label': 'Grove', 'value': 'Grove'},{'label': 'Heights', 'value': 'Heights'},{'label': 'Highway', 'value': 'Highway'},{'label': 'Junction', 'value': 'Junction'},{'label': 'Lane', 'value': 'Lane'},{'label': 'Link', 'value': 'Link'},{'label': 'Loop', 'value': 'Loop'},{'label': 'Mews', 'value': 'Mews'},{'label': 'Mount', 'value': 'Mount'},{'label': 'Nook', 'value': 'Nook'},{'label': 'Outlook', 'value': 'Outlook'},{'label': 'Parade', 'value': 'Parade'},{'label': 'Parkway', 'value': 'Parkway'},{'label': 'Pass', 'value': 'Pass'},{'label': 'Place', 'value': 'Place'},{'label': 'Plaza', 'value': 'Plaza'},{'label': 'Point', 'value': 'Point'},{'label': 'Port', 'value': 'Port'},{'label': 'Promenade', 'value': 'Promenade'},{'label': 'Quadrangle', 'value': 'Quadrangle'},{'label': 'Quadrant', 'value': 'Quadrant'},{'label': 'Quay', 'value': 'Quay'},{'label': 'Reserve', 'value': 'Reserve'},{'label': 'Rest', 'value': 'Rest'},{'label': 'Retreat', 'value': 'Retreat'},{'label': 'Ridge', 'value': 'Ridge'},{'label': 'Right of Way', 'value': 'Right of Way'},{'label': 'Rise', 'value': 'Rise'},{'label': 'Road', 'value': 'Road'},{'label': 'Roadway', 'value': 'Roadway'},{'label': 'Round', 'value': 'Round'},{'label': 'Row', 'value': 'Row'},{'label': 'Siding', 'value': 'Siding'},{'label': 'Square', 'value': 'Square'},{'label': 'Street', 'value': 'Street'},{'label': 'Terrace', 'value': 'Terrace'},{'label': 'Tollway', 'value': 'Tollway'},{'label': 'Track', 'value': 'Track'},{'label': 'View', 'value': 'View'},{'label': 'Walk', 'value': 'Walk'},{'label': 'Walkway', 'value': 'Walkway'},{'label': 'Way', 'value': 'Way'},{'label': 'Wynd', 'value': 'Wynd'}]"/>
+
+    <aura:attribute name="citizenshipStatus" type="String" default=""/>
+    <aura:attribute name="birthDay" type="String" default=""/>
+    <aura:attribute name="birthMonth" type="String" default=""/>
+    <aura:attribute name="birthYear" type="String" default=""/>
+    <aura:attribute name="boxType" type="String" default=""/>
+    <aura:attribute name="showPreviousAdd" type="Boolean" default="false"/>
+    <aura:attribute name="addressList" type="String[]" />
+    <!--<aura:attribute name="haveNotDriverLicenceNumber" type="Boolean" default="false"/>-->
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="monthYearChangeEvent" event="c:monthYearChangeEvent" action="{!c.changeMonthYear}"/>
+    <aura:handler name="SolarDeleteRowEvent" event="c:SolarDeleteRowEvent" action="{!c.deleteRow}"/>
+    <aura:method name="checkAboutDetails" action="{!c.checkAboutDetails}" access="PUBLIC" />
+    
+    <div class="slds-clearfix slds-form max-700">
+        
+        <div class="slds-form" role="list">
+            <h2 class="header">Your Details</h2>
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                        <lightning:combobox label="Title" aura:id="fieldcheck" required="true"
+                                            value="{!v.applicant.Title}" 
+                                            options="{! v.titleOptions }" 
+                                            placeholder="Title"/>
+                        
+                    </div>
+                </div>
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                        <lightning:input label="First Name" aura:id="fieldcheck" required="true" 
+                                         placeholder="First Name" value="{!v.applicant.FirstName}"
+                                         maxlength="40"/>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                        <lightning:input label="Middle Names (Important for verifying your ID)"
+                                         value="{!v.applicant.MiddleName}"
+                                         maxlength="40"/>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                        <lightning:input label="Last Name" aura:id="fieldcheck" required="true" placeholder="Last Name" 
+                                         value="{!v.applicant.LastName}"
+                                         maxlength="40"/>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element1 slds-form-element1_stacked slds-is-editing1">
+                        <lightning:radioGroup class="slds-p-around_x-small" name="{!'GenderRG' + v.applicant.Id}"
+                                              label="Gender" required="true" aura:id="fieldcheck"
+                                              options="{! v.genderOptions }"
+                                              value="{!v.applicant.FinServ__Gender__c}"
+                                              type="button"/>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-form__row">
+                <div class="slds-form__item dob" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col" style="display: inline-flex;">
+                        <lightning:combobox aura:id="fieldcheck" required="true" label="Date of birth" 
+                                            value="{!v.birthDay}" class="slds-m-right--small" 
+                                            options="{! v.birthDayOptions }" placeholder="Day"
+                                            onchange="{!c.setBirthday}"/>
+                        <lightning:combobox aura:id="fieldcheck" required="true" label="&nbsp;" 
+                                            value="{!v.birthMonth}" class="slds-m-right--small no-abbr" 
+                                            options="{! v.birthMonthOptions }" placeholder="Month"
+                                            onchange="{!c.setBirthday}"/>
+                        <lightning:combobox aura:id="fieldcheck" required="true" label="&nbsp;" 
+                                            value="{!v.birthYear}" class="slds-m-right--small no-abbr" 
+                                            options="{! v.birthYearOptions }" placeholder="Year"
+                                            onchange="{!c.setBirthday}"/>
+
+                    </div>
+                </div>
+                <div class="slds-form__item" role="listitem"></div>
+            </div>
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:combobox aura:id="fieldcheck" required="true"
+                                            label="Citizenship Status" 
+                                            value="{!v.applicant.Citizenship_Status__c}" 
+                                            options="{! v.citizenshipStatusOptions }" 
+                                            placeholder="Citizenship Status"/> 
+                    </div>
+                </div>
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <aura:if isTrue="{!v.applicant.Citizenship_Status__c == 'Other'}">
+                            <lightning:input aura:id="fieldcheck" required="true"
+                                             value="{!v.applicant.Visa_Details__c}"
+                                             label="Visa details" placeholder="Visa details"
+                                             maxlength="250"/>    
+                        </aura:if>
+                    </div>
+                </div>
+            </div>
+            <aura:if isTrue="{!!v.applicant.Dont_have_drivers_licence__c}">
+                <div class="slds-form__row">
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                            <lightning:combobox aura:id="fieldcheck" required="true"
+                                                label="Driver's licence state &amp; Territory" 
+                                                value="{!v.applicant.Driver_s_licence_state_Territory__c}" 
+                                                options="{! v.statesTerritoriesOptions }" 
+                                                placeholder="Driver's licence state &amp; Territory"/>
+                        </div>
+                    </div>
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                            <lightning:input aura:id="fieldcheck" required="true"
+                                             label="Driver's licence number" 
+                                             value="{!v.applicant.Govt_Id_Number__c}"
+                                             placeholder="Driver's licence number"
+                                             maxlength="25"/>
+                        </div>
+                    </div>
+                </div>
+            </aura:if>
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                        <lightning:input type="checkbox" 
+                                         checked="{!v.applicant.Dont_have_drivers_licence__c}" 
+                                         label="I don't have a driver's licence"/>
+                    </div>
+                </div>
+            </div>
+            <aura:if isTrue="{!v.applicant.Dont_have_drivers_licence__c}">
+                <div class="slds-form__row">
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                            <lightning:combobox aura:id="fieldcheck" required="true"
+                                                label="Government ID" 
+                                                value="{!v.applicant.Government_ID__c}"
+                                                options="{! v.govtIdOptions }" 
+                                                placeholder="Government ID"/>
+                            
+                        </div>
+                    </div>
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                            <lightning:input aura:id="fieldcheck" required="true"
+                                             label="Government ID number" 
+                                             value="{!v.applicant.Govt_Id_Number__c}"
+                                             placeholder="Government ID number"
+                                             maxlength="25"/>
+                        </div>
+                    </div>
+                </div>
+            </aura:if>
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                        <lightning:input aura:id="fieldcheck" required="true" label="Medicare Number" 
+                                         value="{!v.applicant.Medicare_Number__c}" placeholder="Medicare Number" 
+                                         maxlength="30"/>
+                        
+                    </div>
+                </div>
+                <div class="slds-form__item" role="listitem">
+                	<div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col" style="display: inline-flex;">
+                        <lightning:combobox label="Reference Nubmer" aura:id="fieldcheck" required="true"
+                                            value="{!v.applicant.Medicare_Reference__c}" class="slds-m-right--small" 
+                                            options="{! v.cardReferenceOptions }" placeholder="Reference"/>
+                        <lightning:combobox aura:id="fieldcheck" required="true" label="Color" 
+                                            value="{!v.applicant.Medicare_Card_Colour__c}" 
+                                            options="{! v.cardColourOptions }" placeholder="Color"/>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col" style="display: inline-flex;">
+                        <lightning:combobox label="Expiry Month" aura:id="fieldcheck" required="true"
+                                            value="{!v.applicant.Medicare_Expiry_Month__c}" class="slds-m-right--small" 
+                                            options="{! v.birthMonthOptions }" placeholder="Month"/>
+                        <lightning:combobox aura:id="fieldcheck" required="true" label="Expiry Year" 
+                                            value="{!v.applicant.Medicare_Expiry_Year__c}"  
+                                            options="{! v.MediExpYearOptions }" placeholder="Year"/>
+                        
+                    </div>
+                </div>
+                <div class="slds-form__item" role="listitem">
+                	<div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col  no-abbr" style="display: inline-flex;">
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                        <lightning:combobox aura:id="fieldcheck" required="true"
+                                            label="Relationship status" 
+                                            value="{!v.applicant.FinServ__MaritalStatus__c}" 
+                                            options="{! v.maritalStatusOptions }" 
+                                            onchange ="{!c.changeRelationship}"
+                                            readonly="{! v.applicantNo ==2 &amp;&amp; v.applicant.FinServ__MaritalStatus__c =='Married / Defacto (to applicant 1)'}"
+                                            placeholder="Relationship status"/>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+        <div class="slds-form" role="list">
+            <h2 class="header">Your Household</h2>
+            <aura:if isTrue="{!v.applicantNo == 2}">
+                <div class="slds-form__row">
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                            <lightning:input type="checkbox" 
+                                             checked="{!v.applicant.Is_Address_Same__c}" 
+                                             onchange="{!c.setSameAddress}"
+                                             label="Same as Applicant 1"/>
+                        </div>
+                    </div>
+                </div>
+            </aura:if>
+            <aura:if isTrue="{!!v.applicant.Is_Address_Same__c}">
+                <div class="slds-form__row">
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                            <lightning:combobox aura:id="fieldcheck" required="true"
+                                                label="Your living situation" 
+                                                value="{!v.applicant.Living_Situation__c}" 
+                                                options="{! v.livingSituationOptions }" 
+                                                placeholder="Your living situation"/>
+                        </div>
+                    </div> 
+                </div>
+                
+                <aura:if isTrue="{!v.applicant.Living_Situation__c == 'Renting' ||
+                                 v.applicant.Living_Situation__c == 'Boarding with parents' ||
+                                 v.applicant.Living_Situation__c == 'Boarding with other' ||
+                                 v.applicant.Living_Situation__c=='Supplied by employer'}">
+                    <div class="slds-form__row">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <lightning:input aura:id="fieldcheck" required="true"
+                                                 label="How much rent do you pay" formatter="currency"
+                                                 type="number"
+                                                 value="{!v.applicant.Rental_Amount__c}"
+                                                 placeholder="How much rent do you pay"/>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <lightning:combobox aura:id="fieldcheck" required="true"
+                                                    label="Frequency" 
+                                                    value="{!v.applicant.Rental_Frequency__c}"
+                                                    options="{!v.frequencyOptions}"
+                                                    placeholder="Frequency"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-form__row">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <lightning:combobox aura:id="fieldcheck" required="true"
+                                                    label="Managed via" 
+                                                    value="{!v.applicant.Rental_Managed_via__c}" 
+                                                    options="{! v.managedViaOptions }" 
+                                                    placeholder="Managed via"/>
+                            </div>
+                        </div>
+                    </div>
+                </aura:if>
+            </aura:if>
+            
+            <aura:if isTrue="{!v.isShowDependents}">
+                <div class="slds-form__row">
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                            <lightning:combobox aura:id="fieldcheck" required="true"
+                                                label="Number of dependent children in the household?" 
+                                                value="{!v.applicant.FinServ__NumberOfChildren__c}" 
+                                                options="{! v.noChildrenOptions }" 
+                                                placeholder="Select Number"
+                                                onchange = "{!c.changeDependent}"/> 
+                        </div>
+                    </div>
+                </div>
+                <aura:iteration items="{!v.applicantChildren}" var="item" indexVar="index">
+                    
+                    <div class="slds-form__row">
+                        <div class="slds-var-p-horizontal_small" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <legend class="slds-form-element__legend slds-form-element__label">Child {!index +1}</legend>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-form__row">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <lightning:input label="First Name" placeholder="First Name"
+                                                 value="{!item.FirstName}"
+                                                 maxlength="40"/>
+                            </div>
+                        </div>
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <lightning:combobox aura:id="fieldcheck" required="true"
+                                                    label="Age" 
+                                                    value="{!item.Child_Age__c}" 
+                                                    options="{! v.ageYearsOptions }" 
+                                                    placeholder="Age"/> 
+                                
+                            </div>
+                        </div>
+                    </div>
+                </aura:iteration>
+            </aura:if>
+            <aura:if isTrue="{!!v.applicant.Is_Address_Same__c}">
+                <c:ApplicantDetailAddress aura:id="appDetailAddress"
+                                          headerLabel = "Address"
+                                          applicantNo = "{!v.applicantNo}"
+                                          years = "{!v.applicant.Year__c}"
+                                          months = "{!v.applicant.Months__c}"
+                                          isFindAdd ="{!v.applicant.Is_Find_Address__c}"
+                                          searchString ="{!v.applicant.Residential_Address__c}"
+                                          unitNumber = "{!v.applicant.Unit_Number__c}"
+                                          streetNumber = "{!v.applicant.Street_Number__c}"
+                                          street = "{!v.applicant.Street__c}"
+                                          streetType = "{!v.applicant.Street_Type__c}"
+                                          suburb = "{!v.applicant.Suburb__c}"
+                                          state = "{!v.applicant.State__c}"
+                                          postalCode = "{!v.applicant.Postal_Code__c}"
+                                          country = "{!v.applicant.FinServ__CountryOfResidence__c}"/>
+            </aura:if>
+            
+            <aura:if isTrue="{!v.applicantNo == 2 &amp;&amp; lessthan(v.applicant.Year__c, 3) }">
+                <div class="slds-form__row">
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                            <lightning:input type="checkbox" 
+                                             checked="{!v.applicant.Is_Previous_Address_Same__c}" 
+                                             onchange="{!c.setSamePreviosAddress}"
+                                             label="Same Previous Address as Applicant 1"/>
+                        </div>
+                    </div>
+                </div>
+            </aura:if>
+            <aura:if isTrue="{!!v.applicant.Is_Previous_Address_Same__c}">
+                <aura:iteration items="{!v.addressList}" var="item" indexVar="index">
+                    <aura:if isTrue = "{!index == 0}">
+                        <c:ApplicantDetailAddress aura:id="appDetailAddress1"
+                                                  headerLabel = "Previous Address 1"
+                                                  applicantNo = "{!v.applicantNo}"
+                                                  index = "{!index}"
+                                                  years = "{!v.applicant.Year_1__c}"
+                                                  months = "{!v.applicant.Months_1__c}"
+                                                  isFindAdd ="{!v.applicant.Is_Find_Address_1__c}"
+                                                  searchString ="{!v.applicant.Residential_Address_1__c}"
+                                                  unitNumber = "{!v.applicant.Unit_Number_1__c}"
+                                                  streetNumber = "{!v.applicant.Street_Number_1__c}"
+                                                  street = "{!v.applicant.Street_1__c}"
+                                                  streetType = "{!v.applicant.Street_Type_1__c}"
+                                                  suburb = "{!v.applicant.Suburb_1__c}"
+                                                  state = "{!v.applicant.State_1__c}"
+                                                  postalCode = "{!v.applicant.Postal_Code_1__c}"
+                                                  country = "{!v.applicant.Country_1__c}"/>
+                    </aura:if>
+                    <aura:if isTrue = "{!index == 1}">
+                        <c:ApplicantDetailAddress aura:id="appDetailAddress2"
+                                                  headerLabel = "Previous Address 2"
+                                                  applicantNo = "{!v.applicantNo}"
+                                                  index = "{!index}"
+                                                  years = "{!v.applicant.Year_2__c}"
+                                                  months = "{!v.applicant.Months_2__c}"
+                                                  isFindAdd ="{!v.applicant.Is_Find_Address_2__c}"
+                                                  searchString ="{!v.applicant.Residential_Address_2__c}"
+                                                  unitNumber = "{!v.applicant.Unit_Number_2__c}"
+                                                  streetNumber = "{!v.applicant.Street_Number_2__c}"
+                                                  street = "{!v.applicant.Street_2__c}"
+                                                  streetType = "{!v.applicant.Street_Type_2__c}"
+                                                  suburb = "{!v.applicant.Suburb_2__c}"
+                                                  state = "{!v.applicant.State_2__c}"
+                                                  postalCode = "{!v.applicant.Postal_Code_2__c}"
+                                                  country = "{!v.applicant.Country_2__c}"/>
+                    </aura:if>
+                </aura:iteration>
+                
+                <aura:if isTrue = "{!v.showPreviousAdd}">
+                    <div class="slds-p-top_small slds-m-bottom_small">
+                        <div class="slds-text-color_error">You must provide at least 3 years of Residential history. Please add another</div>
+                        <lightning:button label="Add Another Address"
+                                          onclick="{! c.addAddress }" 
+                                          iconName="utility:add" 
+                                          iconPosition="right"                                   
+                                          variant="brand" />
+                    </div>
+                </aura:if>
+            </aura:if>
+            <aura:if isTrue="{!!v.applicant.Is_Address_Same__c}">
+                <div class="slds-form__row">
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                            <lightning:input type="checkbox" 
+                                             checked="{!v.applicant.FinServ__PrimaryAddressIsOther__c}" 
+                                             label="Add Postal Address"/>
+                        </div>
+                    </div>
+                </div>
+                <aura:if isTrue="{!v.applicant.FinServ__PrimaryAddressIsOther__c}">
+                    <div class="slds-form__row">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                <c:AddressAPItool aura:id="postalAddressTool"
+                                                  isFindAdd = "{!v.applicant.isFindPostalAdd__c}"
+                                                  searchString="{!v.applicant.Postal_Address__c}" 
+                                                  streetNumber="{!v.applicant.Postal_Street_Number__c}" 
+                                                  street="{!v.applicant.Postal_Street__c}"
+                                                  state="{!v.applicant.Postal_State__c}" 
+                                                  suburb="{!v.applicant.Postal_Suburb__c}"
+                                                  postalCode="{!v.applicant.Postal_Postal_Code__c}" 
+                                                  country="{!v.applicant.Postal_Country__c}"
+                                                  streetType ="{!v.applicant.Postal_Street_Type__c}"
+                                                  label="Postal address"/>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-form__row">
+                        <div class="slds-form__item" role="listitem">
+                            <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                                <lightning:input type="checkbox" 
+                                                 checked="{!v.applicant.isFindPostalAdd__c}" 
+                                                 label=" Can't find your postal address?"/>
+                            </div>
+                        </div>
+                    </div>
+                    <aura:if isTrue="{!v.applicant.isFindPostalAdd__c}">
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                                    <lightning:input type="checkbox" 
+                                                     checked="{!v.applicant.Postal_address_is_PO_or_GPO_box__c}" 
+                                                     label="My Postal address is a PO Box or GPO box"/>
+                                </div>
+                            </div>
+                        </div>
+                        <aura:if isTrue="{!v.applicant.Postal_address_is_PO_or_GPO_box__c}">
+                            <div class="slds-form__row">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                        <lightning:combobox aura:id="fieldcheck" required="true"
+                                                            label="Box Type" 
+                                                            value="{!v.applicant.Postal_Box_Type__c}" 
+                                                            options="{! v.boxTypeOptions }" 
+                                                            placeholder="Box Type"/>
+                                    </div>
+                                </div>
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                        <lightning:input aura:id="fieldcheck" required="true"
+                                                         value="{!v.applicant.Postal_Number__c}" 
+                                                         label="Number" placeholder="Nubmer"
+                                                         maxlength="10"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </aura:if>
+                        <aura:if isTrue="{!!v.applicant.Postal_address_is_PO_or_GPO_box__c}">
+                            <div class="slds-form__row">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing" style="display: inline-flex;">
+                                        
+                                        <lightning:input aura:id="fieldcheck" value="{!v.applicant.Postal_Unit_Number__c}"
+                                                         label="Unit Number (Optional)" placeholder="Unit Number"
+                                                         maxlength="50"/>
+                                        <lightning:input aura:id="fieldcheck" value="{!v.applicant.Postal_Street_Number__c}" required="true"
+                                                         label="Street Number" placeholder="Street Number"
+                                                         maxlength="25"/>
+                                    </div>
+                                </div>
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing"></div>
+                                </div>
+                            </div>
+                            <div class="slds-form__row">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                        <lightning:input aura:id="fieldcheck" value="{!v.applicant.Postal_Street__c}" required="true"
+                                                         label="Street" placeholder="Street"
+                                                         maxlength="100"/>
+                                    </div>
+                                </div>
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                        <lightning:combobox aura:id="fieldcheck" required="true"
+                                                            label="Street Type" 
+                                                            value="{!v.applicant.Postal_Street_Type__c}" 
+                                                            options="{!v.streetTypeOptions}" 
+                                                            placeholder="Street Type"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </aura:if>
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <lightning:input aura:id="fieldcheck" required="true"
+                                                     value="{!v.applicant.Postal_Suburb__c}" 
+                                                     label="Suburb" placeholder="Suburb"
+                                                     maxlength="100"/>
+                                </div>
+                            </div>
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <lightning:combobox aura:id="fieldcheck" required="true"
+                                                        label="State" 
+                                                        value="{!v.applicant.Postal_State__c}" 
+                                                        options="{! v.statesTerritoriesOptions }" 
+                                                        placeholder="State"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                    <lightning:input aura:id="fieldcheck" required="true"
+                                                     value="{!v.applicant.Postal_Postal_Code__c}" 
+                                                     label="Postal Code" placeholder="Postal Code"
+                                                     maxlength="10" />
+                                </div>
+                            </div>
+                            <div class="slds-form__item" role="listitem">
+                                <aura:if isTrue="{!!v.applicant.Postal_address_is_PO_or_GPO_box__c}">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                                        <lightning:input aura:id="fieldcheck" required="true"
+                                                         label="Country" 
+                                                         value="{!v.applicant.Postal_Country__c}" 
+                                                         placeholder="Country"
+                                                         maxlength="50"/>
+                                    </div>
+                                </aura:if>
+                            </div>
+                        </div>
+                    </aura:if>
+                </aura:if>
+            </aura:if>
+            
+        </div>
+        <div class="slds-form" role="list">
+            <h2 class="header">Contact Details</h2>
+            
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input  required="true"
+                                         type="email" label="Email" readonly="true"
+                                         placeholder="youraddress@company.com"  value="{!v.applicant.Email}"/>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input aura:id="fieldcheck" required="true"
+                                         type="tel" label="Phone" 
+                                         placeholder="Phone"  value="{!v.applicant.Phone}"
+                                         pattern="([0-9]{10}|[0-9]{4} [0-9]{3} [0-9]{3}|[0-9]{2} [0-9]{4} [0-9]{4})"
+                                         messageWhenPatternMismatch="Pattern should be 1234567890 or 1234 567 890 or 12 3456 7890"/>
+                    </div>
+                </div>
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input aura:id="fieldcheck" 
+                                         type="tel" label="Work Phone (optional)" 
+                                         value="{!v.applicant.OtherPhone}" placeholder="Work Phone"
+                                         pattern="([0-9]{10}|[0-9]{4} [0-9]{3} [0-9]{3}|[0-9]{2} [0-9]{4} [0-9]{4})"
+                                         messageWhenPatternMismatch="Pattern should be 1234567890 or 1234 567 890 or 12 3456 7890"/>
+                    </div>
+                </div>
+            </div>
+            
+            
+            
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                        <lightning:combobox aura:id="fieldcheck" required="true"
+                                            label="Security Question" 
+                                            value="{!v.applicant.Security_Question__c}" 
+                                            options="{! v.securityQuestionOptions }" 
+                                            placeholder="Security Question"/>
+                    </div>
+                </div>
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input aura:id="fieldcheck" required="true"
+                                         value="{!v.applicant.Security_Answer__c}" 
+                                         label="Answer" placeholder="Answer"
+                                         maxlength="250"/>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+</aura:component>

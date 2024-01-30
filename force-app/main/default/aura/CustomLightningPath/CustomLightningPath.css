@@ -1,0 +1,15 @@
+.THIS .slds-path__scroller_inner {
+    position: relative;
+    padding-right: 6px;
+}
+.THIS .slds-path__scroll-controls {
+    position: absolute;
+    right: 0;
+}
+.THIS #path__scroller_inner {
+    margin-left: 0;
+}
+.THIS .arrow {
+    z-index: 7;
+    padding: 0px 4px;
+}

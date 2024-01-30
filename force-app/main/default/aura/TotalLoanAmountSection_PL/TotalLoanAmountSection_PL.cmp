@@ -1,0 +1,43 @@
+<aura:component  controller="ParkerLaneLoanController">
+    <aura:attribute name="customerAmount" type="Integer" default=""/>
+    <aura:attribute name="totalCustomerAmount" type="Integer" default=""/>
+    <aura:attribute name="totalAmount" type="Integer" />
+    <aura:attribute name="applicantFName" type="String" default=""/>
+    <aura:attribute name="applicantLName" type="String" default=""/>
+    <aura:attribute name="applicantEmail" type="String" default=""/>
+    <aura:attribute name="headerName" type="String" default=""/>
+    <aura:attribute name="isGettingStarted" type="Boolean" default="true"/>
+    <aura:attribute name="selectedQuote" type="sObject" />
+    <aura:attribute name="recordId" type="Id" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="change" value="{!v.isGettingStarted}" action="{!c.doInit}"/>
+    
+    <div class="loan-recommendation">
+        <section class="bg-light-sky-blue slds-p-around_large slds-text-align_center">
+            <div class="product-selector__choices-container">
+                <h3 style="font-size:2.25rem;font-family:ProximaNovaAlt-Medium;font-weight:bold">{!v.headerName}</h3>
+                <aura:if isTrue="{!v.isGettingStarted}">
+                    <div class="header-input-loan-amount slds-grid slds-wrap slds-align_absolute-center" >
+                        <b>Loan Amount:</b>&nbsp;
+                        <lightning:formattedNumber value="{!v.totalCustomerAmount}"  style="currency" minimumFractionDigits="0"/>&nbsp;
+                        (Over {!v.selectedQuote.Loan_Term__c} Months)
+                    </div>
+                </aura:if>
+                <aura:if isTrue="{!!v.isGettingStarted}">
+                    <div class="slds-grid slds-p-top_small slds-grid_vertical-align-center">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12">
+                            <span class="slds-p1-horizontal_small "><b>Loan: </b></span>
+                            <span class="slds-m-vertical_small slds-col slds-size_1-of-1 slds-medium-size_2-of-12">
+                                <lightning:formattedNumber value="{!v.selectedQuote.Total_loan_amount__c}" style="currency" minimumFractionDigits="0"/>&nbsp;(over {!v.selectedQuote.Loan_Term__c} months)
+                            </span>
+                        </div>
+                    </div>                    
+                </aura:if>
+                <h5 class="slds-p-top_x-small"><b>Purpose:</b>&nbsp;{!v.selectedQuote.Purpose__c} </h5>
+                <h5 class="slds-p-top_x-small"><b>Monthly Repayment:</b>&nbsp; 
+                <lightning:formattedNumber value="{!v.totalAmount}" style="currency" minimumFractionDigits="0"/></h5>
+            </div>
+        </section>
+    </div>
+</aura:component>

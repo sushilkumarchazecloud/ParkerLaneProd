@@ -1,0 +1,7 @@
+.THIS .applicant-compact-form{
+    border: 1px solid rgb(217, 219, 221);
+    border-radius: .25rem;
+    border-color: rgb(243, 243, 243);
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 0 3px #6b6767;
+}

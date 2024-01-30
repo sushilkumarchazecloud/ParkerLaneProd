@@ -1,0 +1,4 @@
+.THIS .slds-table th, .THIS .slds-table td {
+    white-space: break-spaces;
+    padding: 1px 3px!important;
+}

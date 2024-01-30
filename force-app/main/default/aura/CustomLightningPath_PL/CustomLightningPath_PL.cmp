@@ -1,0 +1,74 @@
+<aura:component >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="pathList" type="List" default="[{ status: ' slds-is-complete', label: 'Priorities' },{ status: ' slds-is-complete', label: 'Loan Recommendation' },{ status: ' slds-is-complete', label: 'Who is applying' },{ status: ' slds-is-complete', label: 'Own and Owe' },{ status: ' slds-is-active slds-is-current', label: 'Earn' },{ status: ' slds-is-incomplete', label: 'Living Expenses' },{ status: ' slds-is-incomplete', label: 'Risk Profile' }]"/>
+    <aura:html tag="style">
+        .slds-path__item, .new-li li {
+        	width: {!(99/v.pathList.length)}% !important;
+        	min-width: 100px !important;
+        }
+        @media (max-width: 1024px){
+            .slds-path__nav {
+                width:calc(100% - 70px);
+            }
+        }
+        @media (min-width: 1024px){
+            .slds-path__nav {
+                width:100%;
+            }
+        }
+        @media screen and (max-width: 770px) {
+            .slds-path__item, .new-li li {
+                min-width: 50px !important;
+            }
+        }
+    </aura:html>
+
+    <article class="slds-card " style="border:none">
+        <div class="slds-path" style="background-color: #f5f5f5;">
+            <div class="slds-grid slds-path__track slds-has-overflow">
+                <div class="slds-grid slds-path__scroller-container" style="margin-top:10px">
+                    <div class="slds-path__scroller" role="application">
+                        <div class="slds-path__scroller_inner">
+                            <ul class="new-li" style="display: contents;">
+                                <aura:iteration items="{!v.pathList}" var="option" indexVar ="indx">
+                                    <li class="{!option.status}">
+                                      <aura:if isTrue="{!option.label == 'Own and Owe'}"> 
+                                            <aura:if isTrue="{!option.isClickable}">   
+                                                <c:PathItems_PL label="Commitments" value="{!option.label}" index ="{!indx +1}" status = "{!option.status}"/>
+                                                <aura:set attribute="else">
+                                                    <div class = "list-item-cicle"><p class="set_number_size">{!indx +1}</p></div>
+                                                    <div class="list-item-text">Commitments</div>
+                                                </aura:set>
+                                            </aura:if>
+                                        </aura:if>
+                                        <aura:if isTrue="{!option.label == 'Earn'}"> 
+                                            <aura:if isTrue="{!option.isClickable}">   
+                                                <c:PathItems_PL label="Income" value="{!option.label}"  index ="{!indx +1}" status = "{!option.status}"/>
+                                                <aura:set attribute="else">
+                                                    <div class = "list-item-cicle"><p class="set_number_size">{!indx +1}</p></div>
+                                                    <div class="list-item-text">Income</div>
+                                                </aura:set>
+                                            </aura:if>
+                                        </aura:if>
+                                        <aura:if isTrue="{!option.label != 'Own and Owe' &amp;&amp; option.label != 'Earn'}">  
+                                            <aura:if isTrue="{!option.isClickable}">   
+                                                <c:PathItems_PL label="{!option.label}" value="{!option.label}" index ="{!indx +1}" status = "{!option.status}"/>
+                                                <aura:set attribute="else">
+                                                    <div class = "list-item-cicle"><p class="set_number_size">{!indx +1}</p></div>
+                                                    <div class="list-item-text">{!option.label}</div>
+                                                </aura:set>
+                                            </aura:if>
+                                        </aura:if>
+                                         
+                                    </li>
+                                </aura:iteration>
+                                
+                            </ul>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+</aura:component>

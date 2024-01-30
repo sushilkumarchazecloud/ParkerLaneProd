@@ -1,0 +1,21 @@
+<apex:page showHeader="false" sidebar="false">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0"/>
+    
+    <apex:includeLightning />
+    <style>
+        body {
+        background-color: #f3f3f3;
+        }
+    </style>
+    <div class="slds-scope">
+        <div id="ReferrerOnboardingFormId" class="slds-container_x-large slds-container_center" style="position: relative;"></div> 
+    </div> 
+    
+    <script>
+    $Lightning.use("c:ReferrerOnboardingFormApp", function() {
+        $Lightning.createComponent("c:ReferrerOnboardingForm",{}, "ReferrerOnboardingFormId", function(component) {
+            
+        });
+    });
+    </script>
+</apex:page>

@@ -1,0 +1,341 @@
+<aura:component controller="ParkerLaneLoanController">
+    <aura:attribute name="employmentType" type="String" default=""/>
+    <aura:attribute name="applicant1" type="contact" />
+    <aura:attribute name="applicant2" type="contact"/>
+	<aura:attribute name="empListSize" type="decimal" default = "0"/>
+    <aura:attribute name="employmentsList1" type="FinServ__Employment__c[]" />
+    <aura:attribute name="employmentsList2" type="FinServ__Employment__c[]" />
+	<aura:attribute name="employmentTypeOptions" type="List" default="[{'label': 'Administration', 'value': 'Administration'},{'label': 'Professional', 'value': 'Professional'},{'label': 'Sales', 'value': 'Sales'},{'label': 'Technical', 'value': 'Technical'},{'label': 'Trade', 'value': 'Trade'},{'label': 'Self Employed', 'value': 'Self Employed'},{'label': 'Home Duties', 'value': 'Home Duties'},{'label': 'Retired', 'value': 'Retired'},{'label': 'Self Funded Retired', 'value': 'Self Funded Retired'},{'label': 'Carer', 'value': 'Carer'},{'label': 'Government Benefits', 'value': 'Government Benefits'},{'label': 'Student', 'value': 'Student'},{'label': 'Workcover / Workers Compensation', 'value': 'Workcover / Workers Compensation'},{'label': 'Unemployed', 'value': 'Unemployed'}]"/>    
+    <aura:attribute name="yesNoOptions" type="List" default="[{'label': 'Yes', 'value': 'Yes'},{'label': 'No', 'value': 'No'}]"/>
+    <aura:attribute name="spouseIncomeSourceOptions" type="List" default="[{'label': 'Permanent ongoing employment', 'value': 'Permanent ongoing employment'},{'label': 'Casual or temporary employment', 'value': 'Casual or temporary employment'},{'label': 'Self employed', 'value': 'Self employed'},{'label': 'Centrelink', 'value': 'Centrelink'},{'label': 'Other', 'value': 'Other'}]"/>
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="applicationSection" type="String" default=""/>
+    <aura:attribute name="appSectionPath" type="List" default="[]"/>
+    <aura:attribute name="selectedPerson" type="String" />
+    <aura:attribute name="applicantNameOptions" type="List" default=""/>
+    <aura:attribute name="applicantGrpValue" type="String" default="applicant1"/>
+    <aura:attribute name="preApplicantGrpValue" type="String" default="applicant1"/>
+    <aura:attribute name="showPreviousEmpHistory1" type="Boolean" default="false"/>
+    <aura:attribute name="showPreviousEmpHistory2" type="Boolean" default="false"/>
+    <aura:attribute name="preEmpList1" type="String[]" />
+    <aura:attribute name="showError" type="Boolean" default="false"/>
+    <aura:attribute name="errorMsg" type="String" default="Please update the form entries highlighted in red and try again"/>
+    <aura:attribute name="preEmpList2" type="String[]" />
+    <aura:attribute name="validate" type="boolean" default = "true"/>
+    
+    <aura:handler name="monthYearChangeEvent" event="c:monthYearChangeEvent" action="{!c.changeMonthYear}"/>
+    <aura:handler name="SolarDeleteRowEvent" event="c:SolarDeleteRowEvent" action="{!c.deleteRow}"/>
+    <aura:handler name="validateResultCmpEvent" event="c:ValidateResultCmpEvent" action="{!c.save}"/>
+    <aura:handler action="{!c.doInit}" name="init" value="{!this}"/>
+
+    <aura:method name="saveEmploymentDetails" action="{!c.saveApplication}" access="PUBLIC"  >
+        <aura:attribute name="isShare" type="Boolean" />
+        <aura:attribute name="isNext" type="Boolean" />
+    </aura:method>
+    
+    <div>
+        <aura:if isTrue="{!v.showError}">
+            <div class="slds-notify slds-notify_toast slds-theme_error slds-align_absolute-center slds-m-vertical--medium">
+                <span class="slds-assistive-text">error</span>
+                <div class="slds-notify__content">
+                    <p class="slds-align_absolute-center">{!v.errorMsg}.</p>                
+                </div>
+            </div>
+        </aura:if>
+        <lightning:spinner aura:id="mySpinner" variant="brand" size="large" class="" />
+        <div class="">
+            
+            <header class="checkout-page-banner--gradient">
+                <div class="slds-align_absolute-center">
+                    <div class="page-banner__content-text">
+                        <h1 class="slds-p-vertical--medium heading--page">Employment</h1>
+                        <p class="font-intro">Please list all sources of income separately </p>
+                    </div>
+                </div>
+            </header>
+        </div>
+        
+        <div class="slds-clearfix slds-text-align_center slds-p-top--medium slds-form solar-radio-button">
+            
+            <aura:if isTrue="{!v.selectedPerson=='joint'}">
+                <lightning:radioGroup aura:id="radioGrp" name="radioButtonGroup" 
+                                      options="{! v.applicantNameOptions }"
+                                      value="{! v.applicantGrpValue }"
+                                      type="button" class="max-700 disabled-btn" />
+            </aura:if>
+        </div> 
+        <section class="max-900 slds-col slds-si1ze_1-of-1 bg-lightest txt-blue">
+
+            <aura:if isTrue="{!v.applicantGrpValue=='applicant1'}">
+
+                <div aura:id="applicant1details" class="slds-m-horizontal_xx-small slds-p-around--medium">
+                    <div class="slds-form" role="list">
+                        <h1 class = "header-text">Employment</h1>
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                                    <lightning:combobox aura:id="fieldcheck" required="true"
+                                                        label="What is your primary Occupation" 
+                                                        value="{!v.applicant1.FinServ__Occupation__c}"                                                 
+                                                        options="{! v.employmentTypeOptions }"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h1 class = "header-text">Current Source of Income</h1>
+                    <aura:iteration items="{!v.employmentsList1}" var="item" indexVar="index">
+                        <c:EarningIncome emp = "{!item}" index = "{!index}" applicantNo="1"
+                                         applicant = "{!v.applicant1}" occupation ="{!v.applicant1.FinServ__Occupation__c}"
+                                         selectedPerson = "{!v.selectedPerson}"/>
+                    </aura:iteration>
+                    <aura:if isTrue="{!v.applicant1.FinServ__MaritalStatus__c == 'Married / defacto (non-applicant)' || v.applicant1.FinServ__MaritalStatus__c == 'Married / defacto'}">
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                                    <lightning:radioGroup aura:id="fieldcheck" required="true"
+                                                          class="slds-p-around_x-small" name="{!'spouseRG'+ v.applicant1.Id}"
+                                                          label="Does your spouse earn an income?"
+                                                          options="{! v.yesNoOptions }"
+                                                          value="{!v.applicant1.Does_your_spouse_earn_an_income__c}"
+                                                          type="button"/>
+                                </div>
+                            </div>
+                        </div>
+                        <aura:if isTrue="{!v.applicant1.Does_your_spouse_earn_an_income__c == 'Yes'}">
+                            <div class="slds-form__row">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                                        <lightning:combobox label="What is your spouse's primary source of income" 
+                                                            value="{!v.applicant1.What_is_spouse_s_primary_income_source__c}" 
+                                                            options="{! v.spouseIncomeSourceOptions }" 
+                                                            placeholder="Select Primary Income Source"
+                                                            onchange="{!c.changeMonthYear}"
+                                                            aura:id="fieldcheck"
+                                                            required="true"/>
+                                    </div>
+                                </div>
+                                
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                        <lightning:input aura:id="fieldcheck" formatter="currency"
+                                                         type="number"
+                                                         value="{!v.applicant1.spouse_s_approximate_annual_income__c}"
+                                                         required="true"
+                                                         label="What is your spouse’s approximate annual income after tax?" placeholder="Annual Income"/>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </aura:if>
+                    </aura:if>
+                    <div class="slds-p-top_small">
+                        <lightning:button label="Add Another Income"
+                                          onclick="{! c.addIncome1 }" 
+                                          iconName="utility:add" 
+                                          iconPosition="right"                                   
+                                          variant="brand" />
+                    </div>
+                    
+                    <aura:if isTrue = "{!v.showPreviousEmpHistory1 || v.preEmpList1.length>0}">
+                        <h1 class = "header-text slds-p-top_small">Previous Employment</h1>
+                        <aura:iteration items="{!v.preEmpList1}" var="item" indexVar="index">
+                            <aura:if isTrue = "{!index == 0}">
+                                <c:PreviousEmpHistory aura:id="previousEmp1History1"
+                                                      incomeFrom = "{!v.employmentsList1[0].Employment_Status_1_Previous__c}"
+                                                      empName = "{!v.employmentsList1[0].Employer_Name_1_Previous__c}"
+                                                      years = "{!v.employmentsList1[0].Years_1_Previous__c}"
+                                                      months = "{!v.employmentsList1[0].Months_1_Previous__c}"
+                                                      annualIncome = "{!v.employmentsList1[0].Annual_Income_1_Previous__c}"
+                                                      occupation = "{!v.employmentsList1[0].Occupation_1_Previous__c}"
+                                                      addressStr= "{!v.employmentsList1[0].Address_1_Previous__c}"
+                                                      isFindAddress= "{!v.employmentsList1[0].Is_Find_Address_1__c}"
+                                                      unitNumber= "{!v.employmentsList1[0].Unit_Number_1__c}"
+                                                      streetNumber= "{!v.employmentsList1[0].Street_Number_1__c}"
+                                                      streetType= "{!v.employmentsList1[0].Street_Type_1__c}"
+                                                      street= "{!v.employmentsList1[0].Street_1__c}"
+                                                      suburb= "{!v.employmentsList1[0].Suburb_1__c}"
+                                                      state= "{!v.employmentsList1[0].State_1__c}"
+                                                      postalCode= "{!v.employmentsList1[0].Postal_Code_1__c}"
+                                                      country= "{!v.employmentsList1[0].Country_1__c}"
+                                                      index = "{!index}"
+                                                      applicantNo ="1"/>
+                            </aura:if>
+                            <aura:if isTrue = "{!index == 1}">
+                                <c:PreviousEmpHistory aura:id="previousEmp1History2"
+                                                      incomeFrom = "{!v.employmentsList1[0].Employment_Status_2_Previous__c}"
+                                                      empName = "{!v.employmentsList1[0].Employer_Name_2_Previous__c}"
+                                                      years = "{!v.employmentsList1[0].Years_2_Previous__c}"
+                                                      months = "{!v.employmentsList1[0].Months_2_Previous__c}"
+                                                      annualIncome = "{!v.employmentsList1[0].Annual_Income_2_Previous__c}"
+                                                      occupation = "{!v.employmentsList1[0].Occupation_2_Previous__c}"
+                                                      addressStr= "{!v.employmentsList1[0].Address_2_Previous__c}"
+                                                      isFindAddress= "{!v.employmentsList1[0].Is_Find_Address_2__c}"
+                                                      unitNumber= "{!v.employmentsList1[0].Unit_Number_2__c}"
+                                                      streetNumber= "{!v.employmentsList1[0].Street_Number_2__c}"
+                                                      streetType= "{!v.employmentsList1[0].Street_Type_2__c}"
+                                                      street= "{!v.employmentsList1[0].Street_2__c}"
+                                                      suburb= "{!v.employmentsList1[0].Suburb_2__c}"
+                                                      state= "{!v.employmentsList1[0].State_2__c}"
+                                                      postalCode= "{!v.employmentsList1[0].Postal_Code_2__c}"
+                                                      country= "{!v.employmentsList1[0].Country_2__c}"
+                                                      index = "{!index}"
+                                                      applicantNo ="1"/>
+                            </aura:if>
+                        </aura:iteration>
+                        <aura:if isTrue = "{!v.showPreviousEmpHistory1}">
+                            <div class="slds-p-top_small slds-m-bottom_small">
+                                <div class="slds-text-color_error">You must provide at least 3 years of Employment history. Please add another</div>
+                                <lightning:button label="Add a Previous Employment"
+                                                  onclick="{! c.addPreEmployment }" 
+                                                  iconName="utility:add" 
+                                                  iconPosition="right"                                   
+                                                  variant="brand" />
+                            </div>
+                        </aura:if>
+                    </aura:if>
+                </div> 
+            </aura:if>
+            <aura:if isTrue="{!v.selectedPerson=='joint'}">
+                
+                <aura:if isTrue="{!v.applicantGrpValue=='applicant2'}">
+                    <div aura:id="applicant2details" class="applicant2-BG-color slds-m-horizontal_xx-small slds-p-around--medium">
+                        <div class="slds-form" role="list">
+                            <h1 class = "header-text">Employment</h1>
+                            <div class="slds-form__row">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                                        <lightning:combobox aura:id="fieldcheck" required="true"
+                                                            label="What is your primary Occupation" 
+                                                            value="{!v.applicant2.FinServ__Occupation__c}"                                                 
+                                                            options="{! v.employmentTypeOptions }"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h1 class = "header-text">Current Source of Income</h1>
+                        <aura:iteration items="{!v.employmentsList2}" var="item" indexVar="index">
+                            <c:EarningIncome emp = "{!item}" index = "{!index}" applicantNo="2"
+                                             applicant = "{!v.applicant2}" occupation ="{!v.applicant2.FinServ__Occupation__c}"
+                                             selectedPerson = "{!v.selectedPerson}"/>
+                        </aura:iteration>
+                        <aura:if isTrue="{!v.applicant2.FinServ__MaritalStatus__c == 'Married / defacto (non-applicant)' || v.applicant2.FinServ__MaritalStatus__c == 'Married / defacto'}">
+                            <div class="slds-form__row">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                                        <lightning:radioGroup aura:id="fieldcheck" required="true"
+                                                              class="slds-p-around_x-small" name="{!'spouseRG'+ v.applicant2.Id}"
+                                                              label="Does your spouse earn an income?"
+                                                              options="{! v.yesNoOptions }"
+                                                              value="{!v.applicant2.Does_your_spouse_earn_an_income__c}"
+                                                              type="button"/>
+                                    </div>
+                                </div>
+                                <aura:if isTrue="{!v.applicant2.Does_your_spouse_earn_an_income__c == 'Yes'}">
+                                    <div class="slds-form__row">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                                        <lightning:combobox label="What is your spouse's primary source of income" 
+                                                            value="{!v.applicant2.What_is_spouse_s_primary_income_source__c}" 
+                                                            options="{! v.spouseIncomeSourceOptions }" 
+                                                            placeholder="Select Primary Income Source"
+                                                            onchange="{!c.changeMonthYear}"
+                                                            aura:id="fieldcheck"
+                                                            required="true"/>
+                                    </div>
+                                </div>
+                                
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                        <lightning:input aura:id="fieldcheck" formatter="currency"
+                                                         type="number"
+                                                         value="{!v.applicant2.spouse_s_approximate_annual_income__c}"
+                                                         required="true"
+                                                         label="What is your spouse’s approximate annual income after tax?" placeholder="Annual Income"/>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                                </aura:if>
+                            </div>
+                        </aura:if>
+                        <div class="slds-p-top_small">
+                            <lightning:button label="Add Another Income"
+                                              onclick="{! c.addIncome2 }" 
+                                              iconName="utility:add" 
+                                              iconPosition="right"                                   
+                                              variant="brand" />
+                        </div>
+                        <aura:if isTrue = "{!v.showPreviousEmpHistory2 || v.preEmpList2.length>0}">
+                            <h1 class = "header-text slds-p-top_small">Previous Employment</h1>
+                            <aura:iteration items="{!v.preEmpList2}" var="item" indexVar="index">
+                                <aura:if isTrue = "{!index == 0}">
+                                    <c:PreviousEmpHistory aura:id="previousEmp2History1"
+                                                          incomeFrom = "{!v.employmentsList2[0].Employment_Status_1_Previous__c}"
+                                                          empName = "{!v.employmentsList2[0].Employer_Name_1_Previous__c}"
+                                                          years = "{!v.employmentsList2[0].Years_1_Previous__c}"
+                                                          months = "{!v.employmentsList2[0].Months_1_Previous__c}"
+                                                          annualIncome = "{!v.employmentsList2[0].Annual_Income_1_Previous__c}"
+                                                          occupation = "{!v.employmentsList2[0].Occupation_1_Previous__c}"
+                                                          addressStr= "{!v.employmentsList2[0].Address_1_Previous__c}"
+                                                          isFindAddress= "{!v.employmentsList2[0].Is_Find_Address_1__c}"
+                                                          unitNumber= "{!v.employmentsList2[0].Unit_Number_1__c}"
+                                                          streetNumber= "{!v.employmentsList2[0].Street_Number_1__c}"
+                                                          streetType= "{!v.employmentsList2[0].Street_Type_1__c}"
+                                                          street= "{!v.employmentsList2[0].Street_1__c}"
+                                                          suburb= "{!v.employmentsList2[0].Suburb_1__c}"
+                                                          state= "{!v.employmentsList2[0].State_1__c}"
+                                                          postalCode= "{!v.employmentsList2[0].Postal_Code_1__c}"
+                                                          country= "{!v.employmentsList2[0].Country_1__c}"
+                                                          index = "{!index}"
+                                                          applicantNo ="2"/>
+                                </aura:if>
+                                <aura:if isTrue = "{!index == 1}">
+                                    <c:PreviousEmpHistory aura:id="previousEmp2History2"
+                                                          incomeFrom = "{!v.employmentsList2[0].Employment_Status_2_Previous__c}"
+                                                          empName = "{!v.employmentsList2[0].Employer_Name_2_Previous__c}"
+                                                          years = "{!v.employmentsList2[0].Years_2_Previous__c}"
+                                                          months = "{!v.employmentsList2[0].Months_2_Previous__c}"
+                                                          annualIncome = "{!v.employmentsList2[0].Annual_Income_2_Previous__c}"
+                                                          occupation = "{!v.employmentsList2[0].Occupation_2_Previous__c}"
+                                                          addressStr= "{!v.employmentsList2[0].Address_2_Previous__c}"
+                                                          isFindAddress= "{!v.employmentsList2[0].Is_Find_Address_2__c}"
+                                                          unitNumber= "{!v.employmentsList2[0].Unit_Number_2__c}"
+                                                          streetNumber= "{!v.employmentsList2[0].Street_Number_2__c}"
+                                                          streetType= "{!v.employmentsList2[0].Street_Type_2__c}"
+                                                          street= "{!v.employmentsList2[0].Street_2__c}"
+                                                          suburb= "{!v.employmentsList2[0].Suburb_2__c}"
+                                                          state= "{!v.employmentsList2[0].State_2__c}"
+                                                          postalCode= "{!v.employmentsList2[0].Postal_Code_2__c}"
+                                                          country= "{!v.employmentsList2[0].Country_2__c}"
+                                                          index = "{!index}"
+                                                          applicantNo ="2"/>
+                                </aura:if>
+                            </aura:iteration>
+                            <aura:if isTrue = "{!v.showPreviousEmpHistory2}">
+                                <div class="slds-p-top_small slds-m-bottom_small">
+                                    <div class="slds-text-color_error">You must provide at least 3 years of Employment history. Please add another</div>
+                                    <lightning:button label="Add Another Employment"
+                                                      onclick="{! c.addPreEmployment2 }" 
+                                                      iconName="utility:add" 
+                                                      iconPosition="right"                                   
+                                                      variant="brand" />
+                                </div>
+                            </aura:if>
+                        </aura:if>
+                    </div>
+                </aura:if>
+            </aura:if>
+            
+        </section>
+        <div class="max-900 preNxtBtn">
+            <lightning:button class="slds-m-vertical_medium slds-float_left" variant="brand" 
+                              label="Previous" title="Previous" 
+                              onclick="{! c.prevSave }" />
+            <lightning:button class="slds-m-vertical_medium slds-float_right" variant="success" 
+                              label="Save &amp; Next" title="Save &amp; Next" 
+                              onclick="{! c.validateFields }" />
+        </div>
+    </div>
+</aura:component>

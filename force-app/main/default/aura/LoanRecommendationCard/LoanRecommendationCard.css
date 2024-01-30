@@ -1,0 +1,213 @@
+.THIS.loan-recommendation-card .rate {
+    /*border: 1px solid #1a2745;*/
+}
+.THIS.loan-recommendation-card .rate strong {
+    font-size: .700rem;
+}
+.THIS.loan-recommendation-card .rate em {
+    font-size: 1.75rem;
+    font-style: unset;
+}
+.THIS.loan-recommendation-card .rate .rate-header {
+    background-color: #1a2745;
+    /*padding: 10px;*/
+    color: #fff;
+    font-family: ProximaNova-AltBold !important;
+}
+.THIS.loan-recommendation-card .rate .rate-body {
+    color: #1a2745;
+    /*padding: 10px;*/
+    font-family: ProximaNova-AltBold!important;
+
+}
+
+.THIS.loan-recommendation-card .card_header{
+    background-color: #1a2745;
+    color: #fff;
+}
+.THIS.loan-recommendation-card .card_header-option{
+    background-color: #91DADC;
+}
+.THIS.loan-recommendation-card .width100{
+    width:100%;
+}
+.THIS.loan-recommendation-card .percentage {
+    top: 0;
+    left: 0;
+    font-size: 1.1rem;
+    line-height: 1.1rem;
+    margin-top: inherit;
+}
+.THIS.loan-recommendation-card .percentage-container {
+    margin-top: 1px;
+    margin-left: 2px;
+    height: 40px;
+    text-align: left;
+}
+.THIS.loan-recommendation-card .rate-value {
+    font-size: 2rem;
+    line-height: 2rem;
+    font-weight: 800;
+}
+.THIS.loan-recommendation-card .rate-container {
+    display: inline-flex;
+}
+.THIS.loan-recommendation-card .pa {
+    top: 15px;
+    left: 1px;
+    font-size: .6rem;
+    line-height: 0.1rem;
+    margin-top: inherit;
+}
+.THIS.loan-recommendation-card .interval .month-interval{
+    color: #1a2745;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: -webkit-center;
+    font-family: ProximaNova-AltBold !important;
+    
+    
+}
+.THIS.loan-recommendation-card .interval .rate-interval{
+    color: #1a2745;
+    font-size: 2.5rem;
+    font-weight: 800;
+    overflow: hidden;
+    font-family: ProximaNova-AltBold !important;
+}
+.THIS.loan-recommendation-card .btn {
+    padding: 5px 15px;
+    min-width: 120px;
+    border-radius: 0;
+    font-size: 1rem;
+    font-weight: 500;
+    justify-content: center;
+}
+.THIS.loan-recommendation-card .btn.btn-green {
+    background-color: #218732;
+    color: #fff;
+    border-color: #319b42;
+    /*width: 14rem;*/
+    width:100%;
+    margin-right:auto;
+    margin-left:auto;
+    max-width:200px;
+    font-weight: 500;
+    padding: 10px;
+    border-radius: 5px;
+    font-family: ProximaNova-AltBold;
+}
+.THIS.loan-recommendation-card .btn.btn-dark-blue-border {
+    background-color: #FFF;
+    color: #1a2745;
+    background: none;
+    border:none;
+}
+
+.THIS.loan-recommendation-card .btn-green:hover {
+    background-color: #319b42;
+    color: #fff;
+    border-color: #218732;
+}
+.THIS h4 {
+
+}
+.THIS .product-desc-style{
+    padding: 0.75rem 1.5rem;
+    font-size: 15px;
+    text-align: center;
+    line-height: 20px;
+}
+.THIS h3.h3 {
+    color: #1a2745;
+    font-size: 1.5rem;
+}
+.THIS .card-footer{
+    padding: 0.75rem 1rem;
+    font-size: 12px;
+    text-align: justify;
+}
+.THIS .select-style select{
+    height:auto;
+}
+.THIS .setupfees{
+    color: #75787b;
+    font-size: 10px;
+   
+}
+.THIS .fees-style{
+    font-size: 20px;
+    font-weight: 600;
+    white-space:nowrap;
+}
+.THIS .fees-title-style{
+    font-size: 14px;
+    white-space:nowrap;
+}
+.THIS .non-clickable-checkbox .slds-checkbox_faux:after {
+    border-color: #1a2745 !important;
+}
+.THIS .non-clickable-checkbox .slds-checkbox_faux{
+    background-color: #fff !important;
+    border-color: #1a2745 !important;
+    width: 10px !important;
+    height: 10px !important;
+}
+.THIS .non-clickable-checkbox-isfeature .slds-checkbox_faux{
+    background-color: #d2edee !important;
+}
+.THIS .non-clickable-checkbox .slds-form-element__label{
+    color: #032D60!important;
+}
+
+.THIS .drp-dwn .slds-scope .slds-select_container .slds-select {
+    cursor: pointer;
+    background: #fff;
+    border: 1px solid;
+    border-color : #1a2745;
+    height: 40px;
+}
+
+.THIS .slds-scope .slds-select_container:after {
+    border-top: 6px solid currentColor;
+    bottom: calc((var(--lwc-lineHeightButtonSmall,1.75rem) / 2) - 1px);
+}
+
+.THIS .slds-scope .slds-select_container:before {
+    border-bottom: 6px solid currentColor;
+    top: calc((var(--lwc-lineHeightButtonSmall,1.75rem) / 2) - 1px);
+}
+
+.THIS .drp-dwn .slds-form-element__control {
+    
+}
+.THIS .card_border_color{
+    border: 2px solid #91dadc !important;
+   
+}
+.THIS .card_border_color1{
+     background-color: #d2edee !important;
+}
+.THIS .month-interval button{
+    border:1px solid #1a2745!important;
+}
+.THIS span.slds-truncate.closeOrmorebutton{
+    font-size: 14px !important;
+    color: #1a2745;
+}
+.THIS .iconsize svg.slds-icon.slds-icon-text-default.slds-icon_small{
+    height:18px;
+}
+.THIS .esp-mark{
+    border: 1px solid;
+    border-radius: 40px;
+    height: 18px;
+    width: 18px;
+    text-align: center;
+    border-color: #0176D3;
+    background-color: #0176D3;                        
+}
+
+.THIS .testCls .slds-form-element__label{
+    display : contents !important;
+}

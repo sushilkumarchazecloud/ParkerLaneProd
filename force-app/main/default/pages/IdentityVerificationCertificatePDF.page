@@ -1,0 +1,259 @@
+<apex:page renderAs="PDF"  controller="IdentityCertificateController" applyHtmlTag="false" applyBodyTag="false" standardStylesheets="false"  showHeader="false"  sidebar="false">
+    
+    <html>
+        <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+            <style TYPE="text/css">
+                @page {
+                margin-left: 0cm;
+                margin-right: 0cm;
+                margin-top: 0cm;
+                margin-bottom: 0cm;
+                @top-left {
+                content: element(header);
+                } 
+                
+                @bottom-left {
+                content: element(footer);
+                }
+                }
+                .main{
+                
+                height : auto;
+                padding : 0px;
+                margin  :0px;
+                font-family : Dialog;
+                }
+                .hedr{
+                background : #1a2745;
+                }
+                .hedr img{
+                width : 22%;
+                padding : 22px; 
+                }
+                .hedr span{
+                color : White;
+                float : right;
+                font-size : 24px;
+                padding : 25px; 
+                }
+                .bodyData{
+                background : white;
+                height : auto;
+                width : 100%;
+                }
+                .content{
+                padding-top : 15px !important;
+                padding-bottom : 15px !important;
+                padding-left : 20px !important;
+                padding-right : 20px !important;
+                }
+                .tab{
+                width : 100%;
+                }
+                .tab tr td{
+                font-size : 14px;
+                }
+                .bodysecnd{
+                margin-left : 20px;
+                margin-right : 20px;
+                background-color : #d1edee;
+                height :  auto;
+                width : 95%;
+                }
+                .personName{
+                font-size : 16px;
+                line-height : 1.5;
+                }
+                .verificationPanel{
+                margin-top : 20px;
+                margin-left : 20px;
+                margin-right : 20px;
+                background-color : #f4f4f4;
+                height : auto;
+                width : 95%;
+                }
+                .contenImg img{
+                width : 20px;
+                height : 10px;
+                }
+                .contenImg b{
+                font-size : 16px;
+                position : relative;
+                bottom : 5px;
+                }
+                .tabmainlogo img{
+                width : 38px;
+                height : 38px;
+                }
+                .mainImg img{
+                margin-top : 20px;
+                height : 55px;
+                width : 55px;
+                }
+                .bodyThird{
+                margin-top : 20px;
+                margin-left : 20px;
+                margin-right : 20px;
+                background-color : #d1edee;
+                height :  auto;
+                width : 95%;
+                }
+                .bodyThird span{
+                font-size : 16px;
+                }
+                .bodyThirdInside{
+                padding : 10px;			
+                }
+                .bodyFourth{
+                margin-top : 10px;
+                margin-left : 20px;
+                margin-right : 20px;
+                background-color : #f4f4f4;
+                height : auto;
+                width : 95%;
+                }
+                .imageSec{
+                margin-top : 10px;
+                margin-left : 20px;
+                margin-right : 20px;
+                height : auto;
+                width : 95%;
+                }
+                .imageCaption{
+                background-color : #f4f4f4;
+                font-size : 14px;
+                padding : 9px;
+                }
+                .imagesdata img{
+                height : 300px;
+                width : 255px;
+                }
+                .pagenumber:before {
+                content: counter(page);
+                }
+                
+                .pagecount:before {
+                content: counter(pages);
+                }
+                div.footer{
+                margin-top : 10px;
+                background-color : #f4f4f4;
+                width : 95%;	
+                margin-left : 20px;
+                margin-right : 20px;
+                }
+                .subfooter{
+                text-align : center;
+                font-size : 14px;
+                padding : 17px;
+                }
+            </style>
+        </head>
+        <body class="main">
+            <div class="hedr">
+                <apex:image url="{!$Resource.SolarLoan + '/img/logowhite.png'}"/> 
+                <span>CERTIFICATE OF IDENTITY VERIFICATION</span>
+            </div>
+            <div class="bodyData">
+                <div class="content">
+                    <table class="tab">
+                        <tr>
+                            <td style="width: 280px;">ID# <b>{!voi.Name}</b></td>
+                            <td style="text-align : center; width: 360px;">Verified For: <b>{!opp.Purpose__c}</b></td>
+                            <td style="text-align : right; width: 269px;">Type: <b>Video (Secure Code)</b></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="bodysecnd">
+                    <center class="mainImg"><img src="{!$Resource.SolarLoan + '/img/final.png'}"/> </center><br/>
+                    <center><span class="personName"><span style="text-transform: uppercase; font-size : 16px;">{!voi.contact__r.name}</span><br/>is <b>verified </b>as the person applying for finance <br/> <span style="font-size : 14px;">Verified on {!verifyDate}</span></span></center><br/>
+                </div>
+                <div class="verificationPanel">
+                    <table style="font-size : 14px; width : 100%; padding-top : 5px; padding-bottom : 5px;">
+                        <tr>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td rowspan="2" class="tabmainlogo"><img src="{!$Resource.SolarLoan + '/img/selfiblack.png'}"/></td>
+                                        <td colspan="2">Identity document</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="contenImg"><apex:image url="{!$Resource.VOI_Fron_Icons+'/final.png'}" height="20px;"/> <b style="font-size : 14px;">Clear and correct</b></td>
+                                    </tr>
+                                </table>
+                            </td> 
+                            <td>
+                                <table align="center">
+                                    <tr>
+                                        <td rowspan="2" class="tabmainlogo"><img src="{!$Resource.SolarLoan + '/img/signature.png'}" /></td>
+                                        <td colspan="2">&nbsp;Facial Match</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="contenImg"><apex:image url="{!$Resource.VOI_Fron_Icons+'/final.png'}" height="20px;" /> <b style="font-size : 14px;">Confirmed by a human</b></td>
+                                    </tr>
+                                </table>
+                            </td> 
+                            <td>
+                                <table align="right">
+                                    <tr>
+                                        <td rowspan="2" class="tabmainlogo"><img src="{!$Resource.SolarLoan + '/img/security2.png'}" /></td>
+                                        <td colspan="2">Secure Code</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="contenImg"> <apex:image url="{!$Resource.VOI_Fron_Icons+'/final.png'}" height="20px;"/> <b style="font-size : 14px;">{!IF(voi.Code_Not_Required__c == false, 'Verified', 'Not required')}</b></td>
+                                    </tr>
+                                </table>
+                            </td> 
+                        </tr>    
+                    </table>
+                </div>
+                <div class="bodyThird">
+                    <div class="bodyThirdInside">
+                        <span><span style="text-transform: uppercase;">{!voi.contact__r.name}</span> provided the following details on <b>{!paksBackDate} at {!paksBacktime}:</b></span>    
+                    </div>
+                </div>
+                <div class="bodyFourth">
+                    <div class="bodyThirdInside">
+                        <table style="font-size : 14px;">
+                            <tr>
+                                <td style="width : 170px;">Current Address: </td>
+                                <td>{!contact.Residential_Address__c} (time there : {!contact.Year__c}years)</td>
+                            </tr>
+                            <tr>
+                                <td style="width : 170px;">Previous Address: </td>
+                                <td>{!contact.Residential_Address_1__c}</td>
+                            </tr>
+                            <tr>
+                                <td style="width : 170px;">Employer: </td>
+                                <td>{!contact.Primary_Employer_Name__c}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="bodyThird">
+                    <div class="bodyThirdInside">
+                        <span><span style="text-transform: uppercase;">{!voi.contact__r.name}</span> recorded the following information on <b>{!videoCreateDate} at {!videoCreatetime}:</b></span>    
+                    </div>
+                </div>
+                <div class="imageSec">
+                    <table>
+                        <tr>
+                            <td class="imageCaption">Photo ID(FRONT): <b>Match</b></td>
+                            <td class="imageCaption">Photo ID(Back): <b>Match</b></td>
+                            <td class="imageCaption">Video Recording: <b>Match</b></td>
+                        </tr>
+                        <tr>
+                            <td class="imagesdata"><apex:image url="{!frontDLURL}"/> </td>
+                            <td class="imagesdata"><apex:image url="{!BackDLURL}"/> </td>
+                            <td class="imagesdata"><apex:image url="{!SnapURL}" alt="Image Not Found!"/> </td>    
+                        </tr>
+                    </table>
+                </div>
+                <div class="footer">
+                    <div class="subfooter">Page <span class="pagenumber"/> of <span class="pagecount"/></div>
+                </div>
+            </div>	     
+        </body>
+    </html>
+</apex:page>

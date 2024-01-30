@@ -1,0 +1,267 @@
+<aura:component controller="ParkerLaneLoanController" >
+    
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="applicationSection" type="String" default=""/>
+    <aura:attribute name="appSectionPath" type="List" default="[]"/>
+    <aura:attribute name="title" type="String" default=""/>      
+
+    <aura:attribute name="lifeEventsOptions" type="List" default="[{ label: 'Buying a home', value: 'Buying a home' },{ label: 'Buying a car', value: 'Buying a car' },{ label: 'Buying an investment property', value: 'Buying an investment property' },{ label: 'Renovating / DIY', value: 'Renovating / DIY' },{ label: 'Refinancing', value: 'Refinancing' },{ label: 'Get married', value: 'Get married' }]"/>
+    <aura:attribute name="lifeEventsOptions2" type="List" default="[{ label: 'Downsizing', value: 'Downsizing' },{ label: 'Planning a holiday', value: 'Planning a holiday' },{ label: 'Changing jobs', value: 'Changing jobs' },{ label: 'Starting a business', value: 'Starting a business' },{ label: 'Expanding business', value: 'Expanding business' },{'label': 'Planning for Retirement', 'value': 'Planning for Retirement'}]"/>  
+    <aura:attribute name="stageInLifeOptions" type="List" default="[{'label': 'Establishing yourself', 'value': 'Establishing yourself'},{'label': 'Building wealth', 'value': 'Building wealth'},{'label': 'Consolidating wealth', 'value': 'Consolidating wealth'},{'label': 'Planning for Retirement', 'value': 'Planning for Retirement'}]"/>
+    <aura:attribute name="parkerLaneOptions" type="List" default="[{'label': 'Product / rate', 'value': 'Product / rate'},{'label': 'Recommended', 'value': 'Recommended'},{'label': 'Easiest process', 'value': 'Easiest process'},{'label': 'Customer service', 'value': 'Customer service'}]"/>
+    <aura:attribute name="financialPrioritiesOptions1" type="List" default="[{ label: 'Save for a house', value: 'Save for a house' },{ label: 'Manage my finances', value: 'Manage my finances' },{ label: 'Repay mortgage early', value: 'Repay mortgage early' },{ label: 'Lower household expenditure', value: 'Lower household expenditure' },{ label: 'Lower cost of interest', value: 'Lower cost of interest' },{ label: 'Save for an event or purchase', value: 'Save for an event or purchase' }]"/>
+    <aura:attribute name="financialPrioritiesOptions2" type="List" default="[{ label: 'Be debt free sooner', value: 'Be debt free sooner' },{ label: 'Track and improve cash flow', value: 'Track and improve cash flow' },{ label: 'Consolidate debt', value: 'Consolidate debt' },{ label: 'Build wealth through investment', value: 'Build wealth through investment' },{ label: 'Lower loan repayments', value: 'Lower loan repayments' }]"/>
+    <aura:attribute name="lifeEvents" type="List" default=""/>
+    <aura:attribute name="lifeEvents2" type="List" default=""/>
+    <aura:attribute name="financialPriorities" type="List" default=""/>
+    <aura:attribute name="financialPriorities2" type="List" default=""/>
+    <aura:attribute name="isLifeEventRequired" type="Boolean" default="false"/>
+    <aura:attribute name="isFinPriorityRequired" type="Boolean" default="false"/>
+    <aura:attribute name="isMortgage" type="Boolean" default="false"/>
+    <aura:attribute name="showError" type="Boolean" default="false"/>
+    <aura:attribute name="redirectURL" type="String" default=""/>
+    <aura:attribute name="errorMsg" type="String" default="Please update the form entries highlighted in red and try again"/>
+    <aura:attribute name="goal" type="FinServ__FinancialGoal__c" default="{'sobjectType': 'FinServ__FinancialGoal__c'}"/>
+    
+    <!--start -->
+    <aura:attribute name="rateingOptions" type="List" default="[{'label': '1', 'value': '1'},{'label': '2', 'value': '2'},{'label': '3', 'value': '3'},{'label': '4', 'value': '4'},{'label': '5', 'value': '5'}]"/>
+    <aura:attribute name="amountOptions" type="List" default="[{'label': '$5', 'value': '5'},{'label': '$10', 'value': '10'},{'label': '$20', 'value': '20'},{'label': '$50', 'value': '50'},{'label': '$100', 'value': '100'}]"/>
+    <aura:attribute name="YesOrNoOption" type="List" default="[{'label': 'Yes', 'value': 'Yes'},{'label': 'No', 'value': 'No'}]"/>
+    <aura:attribute name="lifeEventsOptions1" type="List" default="[{ label: 'Consolidate debt', value: 'Consolidate debt' },{ label: 'Pay mortage off', value: 'Pay mortage off'},{ label: 'Reduce cost of interest', value: 'Reduce cost of interest'},{ label: 'Reduce loan Repayments', value: 'Reduce loan Repayments'},{ label: 'Lower Hosehold expenses', value: 'Lower Hosehold expenses'},{ label: 'Save for an event or Purchase', value: 'Save for an event or purchase'},{ label:'Build wealth through investment' , value: 'Build wealth through investment'}]"/>
+    
+    <aura:attribute name="opportunity" type="Opportunity" default="{'sobjectType': 'Opportunity'}"/>
+    <aura:attribute name="selectedPerson" type="String" />
+    <aura:attribute name="applicant1" type="Contact" default="{'sobjectType': 'Contact'}"/>
+    <aura:attribute name="applicant2" type="Contact" default="{'sobjectType': 'Contact'}"/>
+    <!--  <aura:attribute name="rateSecurityQuesion" type="String" default = "How would you rate the security of your income?"/> -->
+    <!--end -->
+    <aura:attribute name="frequencyOptions" type="List" default="[{'label': 'Weekly', 'value': 'Weekly'},{'label': 'Fortnightly', 'value': 'Fortnightly'},{'label': 'Monthly', 'value': 'Monthly'},{'label': 'Annually', 'value': 'Annually'}]"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:method name="saveGoalsDetails" action="{!c.saveApplication}" access="PUBLIC" >
+        <aura:attribute name="isShare" type="Boolean" />
+        <aura:attribute name="isNext" type="Boolean" />
+    </aura:method>
+    
+    <div class="goals-objectives">
+        <aura:if isTrue="{!v.showError}">
+            <div class="slds-notify slds-notify_toast slds-theme_error slds-align_absolute-center slds-m-vertical--medium error-section">
+                <span class="slds-assistive-text">error</span>
+                <div class="slds-notify__content">
+                    <p class="slds-align_absolute-center">{!v.errorMsg}.</p>                
+                </div>
+            </div>
+        </aura:if>
+        <lightning:spinner aura:id="mySpinner" variant="brand" size="large" class="" />
+        <div class="GoodCredit">
+            <section class="max-700 slds-p-around_medium slds-col  bg-lightest txt-blue slds-clearfix">
+                <div class="slds-grid slds-wrap" style="padding-left:0.4rem;padding-right:0.4rem;">
+                    <div class="slds-size_2-of-2 slds-m-vertical_medium">
+                        <h1 class = "heading_edit">'Good credit' enquiries</h1>
+                    </div>
+                    <div class="slds-size_2-of-2">
+                        <div class="slds-text-link_reset" >
+                            <p class="pargraph_edit">'Good credit' is only good if it's lent to those that can afford it. Please help us to ensure the products we recommend are a good fit for your circumstances.</p>
+                        </div> 
+                    </div>
+                    <div class="slds-size_2-of-2 slds-m-vertical_medium rg-split radio_button_size">
+                        
+                        <lightning:radioGroup name ="rateing"
+                                              label="How would you rate the security of your income? (1 being poor, 5 being excellent)" aura:id="fieldcheck" required="true"
+                                              value="{!v.applicant1.Rate_current_Job_Security__c}" type="button"
+                                              options="{! v.rateingOptions }" 
+                                              placeholder="Rate"
+                                              class="{!' no-abbr ' + (v.applicant1.Rate_current_Job_Security__c  != NULL ? ' colored-rg': ' colored-fixed-rg' ) }"/>
+                    </div>
+                    <aura:if isTrue="{!v.opportunity.Number_of_applicants__c ==2}">
+                        <div class="slds-size_2-of-2 slds-m-vertical_medium rg-split radio_button_size">
+                            <legend style="margin-bottom:0px !important" class="slds-form-element__legend slds-form-element__label">
+                                How would <b>{! v.applicant2.FirstName}</b> rate the security of his/her income? (1 being poor, 5 being excellent)
+                            </legend>
+                            <lightning:radioGroup name ="rateingApp2"
+                                                  aura:id="fieldcheck" required="true"
+                                                  value="{!v.applicant2.Rate_current_Job_Security__c}" type="button"
+                                                  options="{! v.rateingOptions }" 
+                                                  placeholder="Rate"
+                                                  class="{!' no-abbr ' + (v.applicant2.Rate_current_Job_Security__c != NULL ? ' colored-rg': ' colored-fixed-rg' ) }"/>
+                        </div>
+                    </aura:if>
+                </div>
+                
+                
+                <div class="QuesionForExperience slds-m-top_medium " >
+                    <div class="{!v.goal.household_expense_in_the_next_6_12_month__c=='Yes' ? 'highlightOnselect1':''}">
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_12-of-12">
+                                <p class="heading-edit">
+                                    Do you anticipate any substantial increase to your household expenses in the next 6-12 month?
+                                </p>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_12-of-12 rg-split">
+                                <lightning:radioGroup name="anticipateExpensesRadioGroup"
+                                                      aura:id="fieldcheck" required="true" 
+                                                      label=""
+                                                      value="{!v.goal.household_expense_in_the_next_6_12_month__c}"
+                                                      options="{! v.YesOrNoOption }"
+                                                      type="button"
+                                                      class="set_alignmentOf-rg no-abbr"/>
+                            </div>
+                            <aura:if isTrue="{!v.goal.household_expense_in_the_next_6_12_month__c =='Yes'}">
+                                <div class="slds-col slds-size_2-of-2">
+                                    <label class="slds-form-element__label slds-m-bottom_medium" for="textarea-id-01">
+                                        Please provide details
+                                    </label>
+                                    <lightning:textarea aura:id="fieldcheck" 
+                                                        required="true" 
+                                                        value="{!v.goal.Description_exp_in_the_next_6_12_month__c}" 
+                                                        name="provideDetails"
+                                                        maxlength ="250"
+                                                        class="no-abbr"/>
+                                </div>                            
+                            </aura:if>
+                            
+                        </div>
+                    </div>
+                    <div class="{!v.goal.Do_you_struggle_to_meet_your_household__c=='Yes' ? 'highlightOnselect1':''}">
+                        <div class="slds-grid slds-m-vertical_medium slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_12-of-12">
+                                <p class="heading-edit">
+                                    Do you ever struggle to meet your current household debts and expenses?
+                                </p>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_12-of-12 rg-split">
+                                <lightning:radioGroup name="debtsAndExpense"
+                                                      aura:id="fieldcheck" required="true" 
+                                                      label=""
+                                                      value="{!v.goal.Do_you_struggle_to_meet_your_household__c}"
+                                                      options="{! v.YesOrNoOption }"
+                                                      type="button"
+                                                      class="set_alignmentOf-rg no-abbr"/>
+                            </div>
+                          <aura:if isTrue="{!v.goal.Do_you_struggle_to_meet_your_household__c=='Yes'}">  
+                            <div class="slds-col slds-size_2-of-2">
+                                <label class="slds-form-element__label slds-m-bottom_medium" for="textarea-id-01">
+                                    Please provide details
+                                </label>
+                                <lightning:textarea aura:id="fieldcheck" 
+                                                    required="true" 
+                                                    value="{!v.goal.Description_struggle_to_meet_houshold__c}"
+                                                    name="provideDetails"
+                                                    maxlength ="250"
+                                                    class="no-abbr"/>
+                            </div>                            
+                          </aura:if>   
+                        </div>
+                    </div>
+                    <div >
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-1">
+                                <p class="heading-edit">
+                                    Do you have an a adequate plan to repay this loan in case you lose your income?
+                                </p>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1  rg-split">
+                                <lightning:radioGroup name="adequate"
+                                                      aura:id="fieldcheck" required="true" 
+                                                      label=""
+                                                      options="{! v.YesOrNoOption }"
+                                                      value="{!v.goal.Do_you_have_an_adequate_plan__c}"
+                                                      type="button"
+                                                      class="set_alignmentOf-rg no-abbr"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="Goals Priorities">
+                    <div class="slds-grid slds-wrap" style="padding-left:0.4rem;padding-right:0.4rem;">
+                        <div class="slds-col slds-size_2-of-2 slds-m-top_xx-large slds-m-bottom_medium">
+                            <h6 class="heading_edit">
+                                Goals &amp; Priorities
+                            </h6>
+                        </div>
+                    </div>
+                    <!--<div >  
+                        <div class="slds-grid slds-wrap"> 
+                            <div class="slds-col slds-size_1-of-1 ">
+                                <p class="heading-edit">
+                                    Would you describe yourself as a Person who takes action to avoid wasting money?
+                                </p>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_12-of-12 rg-split">
+                                <lightning:radioGroup name="DescibeYourSelf"
+                                                      aura:id="fieldcheck" required="true" 
+                                                      label=""
+                                                      value="{!v.goal.Would_you_describe_yourself__c}"
+                                                      options="{!v.YesOrNoOption }"
+                                                      type="button"
+                                                      class="set_alignmentOf-rg no-abbr"/>
+                            </div>  
+                        </div>
+                        
+                    </div>-->
+                    <div class="slds-grid slds-wrap" style="padding-left:0.4rem;padding-right:0.4rem;">
+                        <div class="slds-col slds-size_2-of-2">
+                            <lightning:checkboxGroup name="lifeEventsCG"
+                                                     aura:id="fieldcheckLifeEvent" 
+                                                     required="true"
+                                                     label="What are your current financial goals? (multi-select)"
+                                                     options="{! v.lifeEventsOptions1 }"
+                                                     value="{! v.financialPriorities2 }"
+                                                     onchange="{! c.handleFinancialPriorities }"/>
+                        </div>     
+                    </div>
+                    <!--<div class="slds-grid slds-wrap" style="padding-left:0.4rem;padding-right:0.4rem;">
+                        <div class="slds-size_2-of-2 slds-m-vertical_medium rg-split radio_button_size1 set_alignmentOf-rg">
+                            <lightning:radioGroup label="Finish this sentance: &quot;i get annoyed when i lose...&quot;" aura:id="fieldcheck" required="true"
+                                                  value="{!v.goal.Finish_this_sentance_i_get_annoyed__c }" type="button"
+                                                  options="{! v.amountOptions }" 
+                                                  placeholder="Rate"
+                                                  class="no-abbr"
+                                                  />
+                        </div>
+                    </div>-->
+                    <div class="slds-grid slds-wrap slds-m-top_medium" style="padding-left:0.4rem;padding-right:0.4rem;">
+                        <div class="slds-col slds-size_2-of-2"> <!-- How will taking out of this loan make your world better(multi-select)-->
+                            <lightning:select aura:id="fieldcheck" name="select" onchange="" label="What is your preferred repayment frequency"
+                                              required="true" class="no-abbr slds-m-around_xx1-small slds-p-around_xx1-small"
+                                              value="{!v.goal.preferred_repayment_frequency__c}">
+                                <option value="">Select  value</option>
+                                <aura:iteration items="{!v.frequencyOptions}" var="options">
+                                    <option value="{!options.value}" text="{!options.value}"></option>
+                                </aura:iteration>
+                            </lightning:select>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-wrap slds-m-top_medium" style="padding-left:0.4rem;padding-right:0.4rem;">
+                        <div class="slds-col slds-size_2-of-2">
+                            <lightning:select aura:id="fieldcheck" name="select" onchange="" label="Why did you choose Parker Lane"
+                                              required="true" class="no-abbr slds-m-around_xx1-small slds-p-around_xx1-small"	
+                                              value="{!v.goal.Why_did_you_chose_Parker_Lane__c}" >
+                                <option value="">Select  value</option>
+                                
+                                <aura:iteration items="{!v.parkerLaneOptions}" var="options">
+                                    <option value="{!options.value}" text="{!options.value}"></option>
+                                </aura:iteration>
+                                
+                            </lightning:select>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="max-700 preNxtBtn slds-p-around_medium" style="margin-bottom: 40px;">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-size_1-of-2">
+                    <lightning:button class="slds-m-vertical_medium slds-m-left_xx-small  slds-float_left privious-button_style1" variant="brand" 
+                              label="Go Back" title="Go Back" 
+                              onclick="{! c.prevSave }" />
+                </div>
+                <div class="slds-size_1-of-2 custom">
+                    <lightning:button class="slds-m-vertical_medium slds-float_right save-button_style1 slds-m-right_x-small" variant="success" 
+                              label="Submit Application" title="Submit Application" 
+                              onclick="{!c.save}"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</aura:component>

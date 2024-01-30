@@ -1,0 +1,7 @@
+.THIS .input-dollar1 .slds-input{
+	padding-left:2rem !important;
+}
+.THIS .dollarField label.slds-form-element__label.slds-no-flex {
+    display: block;
+    text-overflow: ellipsis;
+}

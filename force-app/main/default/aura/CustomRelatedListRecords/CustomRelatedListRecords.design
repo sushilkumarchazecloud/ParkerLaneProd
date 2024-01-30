@@ -1,0 +1,8 @@
+<design:component>
+    <design:attribute name="title" label="Title" />
+	<design:attribute name="parentFieldName" label="Parent Field API Name" />
+    <design:attribute name="sobjectName" label="sobject Name" />
+    <design:attribute name="childRelName" label="Child Relationship Name" />
+    <design:attribute name="fieldSetName" label="FieldSet Name" />
+    <design:attribute name="iconName" label="Icon Name" />
+</design:component>

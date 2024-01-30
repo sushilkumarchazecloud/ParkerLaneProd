@@ -1,0 +1,33 @@
+.THIS .set_radiobutton .slds-radio_button-group .slds-button label.slds-radio_button__label {
+    padding: 0.62rem;
+    border-radius: 0;
+    width:100%;
+    text-align: center;
+    height: 100%;
+    font-size: 16px;
+    font-family: Proxima Nova Alt Regular;
+    text-transform: uppercase;
+   
+}
+.THIS .set_radiobutton .slds-radio_button-group {
+    width:100%;
+    border-radius: 0;
+    border: none;
+}
+.THIS .set_radiobutton .slds-radio_button-group .slds-button  {
+    width: 50%;
+    padding-bottom: 0px;
+    border: 2px solid #91DADC ;
+
+}
+
+
+@media screen and (max-width: 770px) {
+    .THIS .dot_when_size_small .slds-radio_button-group .slds-button label.slds-radio_button__label span.slds-radio_faux{
+        width: 145px;
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}

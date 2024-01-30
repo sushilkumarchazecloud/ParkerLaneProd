@@ -1,0 +1,25 @@
+<apex:page standardStylesheets="true" lightningStylesheets="true" showHeader="false" >
+    <div style="width:100%; height:100%; ">
+        <div style="margin:auto;">
+            Dear {!$CurrentPage.parameters.RFN},<br/> <br/>   
+            <b>We need some documents from you in order to help further.</b>     <br/> 
+            <p>To upload some or all of this information from your phone or PC now please follow this link below. It’s incredibly easy to use - no scanning required. You can even:<br/><br/>
+                
+                * Point and shoot from your phone<br/>
+                * Link bank accounts online<br/><br/>
+                
+                Please click the button below to get started.<br/>
+                
+                <a href="https://apply-parkerlane.secure.force.com/supportingDocument?oppId={!$CurrentPage.parameters.oppId}" >START UPLOADING NOW</a><br/><br/>
+                
+                If you have any questions about this document request please don't hesitate to call {!$CurrentPage.parameters.UN}  on {!$CurrentPage.parameters.UMN}, or simply reply to this email. <br/><br/>
+                
+                Thank you in advance for your prompt attention to this email.<br/><br/>
+                
+                Kind regards, <br/>    
+                The Parker Lane team
+            </p>
+        </div>
+        
+</div>
+</apex:page>

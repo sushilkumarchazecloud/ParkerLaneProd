@@ -1,0 +1,42 @@
+<aura:component controller="productSearch" implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    <aura:attribute name="QuoteName" type="String" />
+    <aura:attribute name="selectedProduct" type="List" />
+    <aura:attribute name="FeeList" type="List" />
+    <aura:attribute name="isCompare" type="boolean" />
+    <aura:attribute name="Type" type="String" />
+    <aura:attribute name="oppStage" type="Boolean" />
+    <div class="slds-theme_shade slds-theme_alert-texture slds-text-align_center slds-text-color_inverse" style="background-color:rgb(22, 50, 92)">
+        <div class="slds-text-heading_large" 
+             style="font-weight:bold;padding-top: 1%;font-size: xx-large;padding-bottom: 1%;">
+            <h1>Product Comparison Summary</h1>
+        </div>
+        
+    </div>
+    <div class="slds-p-around_x-small">
+        <div class="slds-grid slds-wrap" style="margin: auto;max-width: 95%;background-color: #70767f;border: 1px solid darkbule;border-radius: 5px;color: white">
+            <div class="slds-col slds-size_1-of-1">
+                <p class="slds-p-around_x-small" 
+                   style="text-align: center;font-size: large;font-weight: 600;"> Quote Name: {!v.QuoteName} </p>
+                <hr style="margin: 1px;border-top: 2px solid"/>
+            </div>
+                <div class="slds-col slds-size_1-of-4">
+                    <c:productDetailsName FeeList="{!v.FeeList}" />
+                </div>
+            <aura:iteration items="{!v.selectedProduct}" var="op" >
+                <div class="slds-col slds-size_1-of-4">
+                    <c:productDetailsRecord product="{!op}" />
+                </div>
+            </aura:iteration>
+            <div class="slds-col slds-size_1-of-1">
+                <div class="slds-p-around_x-small">
+                 <lightning:button variant="success" label="Go Back" title="Go Back" onclick="{!c.backTosearch}"/>
+                </div>
+                <div class="slds-p-around_x-small">
+                 <lightning:button disabled="{!v.oppStage}" variant="success" label="Create Quote" title="Create Quote" onclick="{!c.createQuote}"/>
+                </div>
+            </div>
+        </div>
+       
+        
+    </div>
+</aura:component>

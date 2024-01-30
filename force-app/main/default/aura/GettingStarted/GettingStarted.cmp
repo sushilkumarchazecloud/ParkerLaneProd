@@ -1,0 +1,195 @@
+<aura:component controller="ParkerLaneLoanController">
+    <aura:attribute name="mostImportant" type="String" default="Lowest rate"/>
+    <aura:attribute name="myPriority" type="String" default="Install"/>
+    <aura:attribute name="customerAmount" type="Integer" default=""/>
+    <aura:attribute name="gettingCustomerAmount" type="Integer" default=""/>
+    <aura:attribute name="isPrivacyCreditGuide" type="String" default=""/>
+    <aura:attribute name="timeInfo" type="String" default=""/>      
+    <aura:attribute name="productDisclosure" type="String" default=""/>
+    <aura:attribute name="whatYouNeed" type="List" default="[]"/>
+    <aura:attribute name="whatYouGet" type="List" default="[]"/>
+    <aura:attribute name="quote" type="Quote" default="{'sobjectType':'Quote'}"/>    
+    <aura:attribute name="masterQuote" type="string" default="Website-1"/>
+    <aura:attribute name="opportunity" type="Opportunity"  default="{'sobjectType':'Opportunity'}"/>
+    <aura:attribute name="isDisabled" type="Boolean" default="true"/>
+    <aura:attribute name="YesNo" type="List" default="[{'label': 'Yes', 'value': 'Yes'},{'label': 'No', 'value': 'No'}]"/>
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="master" type="String" />
+    <aura:attribute name="applicationSection" type="String" default=""/> 
+    <aura:attribute name="appSectionPath" type="List" default="[]"/>
+    <aura:attribute name="showError" type="Boolean" default="false"/>
+    <aura:attribute name="errorMsg" type="String"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>       
+    
+    <div class = "getting-started">
+        <lightning:spinner aura:id="mySpinner" variant="brand" size="large" class="slds-hide" />
+        
+        <section class="bg-lightest slds-p-horizontal--medium slds-p-bottom--large slds-m-top_medium" style="padding-bottom: 60px">
+            <aura:if isTrue="{!v.showError}">
+                <div class="slds-notify slds-notify_toast slds-theme_error slds-align_absolute-center slds-m-vertical--medium">
+                    <span class="slds-assistive-text">error</span>
+                    <div class="slds-notify__content">
+                        <p class="slds-align_absolute-center">{!v.errorMsg}.</p>                
+                    </div>
+                </div>
+            </aura:if>
+            <div class="slds-form max-700">
+                <div>
+                    <h1 class="subheaderFont slds-m-bottom_small" style="font-size: 30px;">Before you begin</h1>
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col" style="display: flex;">
+                            <div class="begin-img">
+                                <img src="{!$Resource.SolarLoan + '/img/stopwatch.PNG'}" />
+                            </div>
+                            <div class="slds-m-left_medium" style="font-size:16px;font-weight: bold;">
+                                It takes on average 14 minutes to complete an application. Let's take a minute to recap before you get started.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-wrap slds-m-top_x-large">
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_5-of-12">
+                            <h2 class="slds-float_left subheaderFont">The important details</h2>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_7-of-12" style="background-color:lightgrey; border-left : 5px solid #1a2745; font-size :16px;">    
+                            <div class="slds-p-around_medium">
+                                <table>
+                                    <tr>
+                                        <td>Interest Rate</td>
+                                        <td><b>{!v.quote.Interest_Rate__c}% p.a.</b></td>   
+                                    </tr>
+                                    <tr>
+                                        <td>Loan Purpose</td>
+                                        <td><b>{!v.quote.Purpose__c}</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Loan Amount</td>
+                                        <td><b><lightning:formattedNumber value="{!v.gettingCustomerAmount}" 
+                                                       style="currency" minimumFractionDigits="0"/></b></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <p style="font-size : 12px;">Loan amount includes setup fees</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Loan Term</td>
+                                        <td><b>{!v.quote.Loan_Term__c} months</b></td>
+                                    </tr>                                    
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="background : white;border-radius: 8px" class="slds-m-top_xx-large">
+                        <div class="slds-grid slds-wrap slds-p-horizontal_medium ">
+                            <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-p-vertical_medium ">
+                                <div class="subheaderFont">What you'll get</div>
+                                <div class="slds-grid slds-grid_vertical slds-m-top_small" style="font-size: 15px;">
+                                    <aura:iteration items="{!v.whatYouGet}" var="item">
+                                        <div class="slds-col">
+                                            <p class="display">
+                                                <img src="{!$Resource.SolarLoan + '/img/tick.PNG'}" class="tick"/> {!item}
+                                            </p>
+                                        </div>
+                                    </aura:iteration>               
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-p-vertical_medium">
+                                <div class="subheaderFont">What you need</div>
+                                <div class="slds-grid slds-grid_vertical slds-m-top_small" style="font-size:15px">                                    
+                                    <aura:iteration items="{!v.whatYouNeed}" var="item">
+                                        <div class="slds-col">
+                                            <p class="display">
+                                                <img src="{!$Resource.SolarLoan + '/img/block.PNG'}" class="block"/> {!item}
+                                            </p>
+                                        </div>
+                                    </aura:iteration>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="blue-line"></div>
+                    
+                    <div class="awarded-style">
+                        <div class="slds-grid slds-grid_vertical slds-m-top_x-large"> 
+                            <div class="slds-col">
+                                <h1 class="subheaderFont">Awarded best in Australia for Personal Loans &#38; Home Loans</h1>
+                            </div>
+                            <div class="slds-col slds-m-top_xx-small">
+                                <div style="font-size:16px;">Parker Lane has earned <b>4.92 stars</b> on ProductReview.com.au by helping <b>3,700+</b> homeowners save money and get ahead.</div>
+                            </div>
+                            <div class="slds-m-top_large">
+                                <img src="{!$Resource.SolarLoan + '/img/5star.PNG'}" height= "40" width= "170"/>
+                            </div>
+                            <div class="slds-m-top_medium">
+                                <div class="subheaderFont" style="font-size :18px">"super easy... great team"</div>
+                                <div style="font-size: 12px">Greg, Green Loan, Summer Hill NSW</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class=" gray-line"></div>
+                    
+                    <div class="slds-grid slds-grid_vertical">
+                        <div class="slds-m-top_x-large slds-col">
+                            <h1 class="slds-float_left subheaderFont">Confirm to begin</h1>
+                        </div>
+                    </div>
+                    
+                    <div class="slds-form radio_button">
+                        <div class="slds-p-top_medium slds-grid slds-wrap">
+                            <div class="slds-col slds-size_8-of-12 slds-medium-size_8-of-12 slds-large-size_10-of-12">
+                                <p>I have 15 minutes and the information handy to apply now.</p>         
+                            </div>
+                            <div class="slds-col slds-size_4-of-12 slds-medium-size_4-of-12 slds-large-size_2-of-12 ">                            
+                                <lightning:radioGroup name="timeInfoRG"
+                                                      label=""
+                                                      onchange ="{!c.onChange}"
+                                                      options="{!v.YesNo}"
+                                                      value="{!v.timeInfo}"
+                                                      type="button"/>
+                            </div>
+                        </div>                    
+                        <div class="slds-p-top_small slds-grid slds-wrap">
+                            <div class="slds-col slds-size_8-of-12 slds-medium-size_8-of-12 slds-large-size_10-of-12">
+                                <p>This loan meets my personal needs and I can comfortably afford the repayments.</p>
+                            </div>
+                            <div class="slds-col slds-size_4-of-12 slds-medium-size_4-of-12 slds-large-size_2-of-12">    
+                                <lightning:radioGroup name="productDisclosureRG"
+                                                      label=""
+                                                      onchange ="{!c.onChange}"
+                                                      options="{!v.YesNo}"
+                                                      value="{!v.quote.Up_Front_Costs_Applicable__c}"
+                                                      type="button"/>
+                            </div>
+                        </div>
+                        <div class="slds-p-top_small slds-grid slds-wrap">
+                            <div class="slds-col slds-size_8-of-12 slds-medium-size_8-of-12 slds-large-size_10-of-12">
+                                <p>I accept Parker Lane's <a href="https://www.parkerlane.com.au/privacy" target="_blank"><u>Privacy Policy</u></a> and <a href="https://www.parkerlane.com.au/credit-guide" target="_blank"><u>Credit Guide</u></a> and I consent to receiving my documents electronically.</p>
+                            </div>
+                            <div class="slds-col slds-size_4-of-12 slds-medium-size_4-of-12 slds-large-size_2-of-12">    
+                                <lightning:radioGroup name="isPrivacyCreditGuideRG"
+                                                      label=""
+                                                      onchange ="{!c.onChange}"
+                                                      value="{!v.isPrivacyCreditGuide}"
+                                                      options="{!v.YesNo}"
+                                                      type="button"/>
+                            </div>
+                        </div>                                                                 
+                    </div>
+                    <div class="max-700 preNxtBtn">
+                        <lightning:button label="Confirm"   
+                                          class="slds-m-vertical_large continue-btn-style"
+                                          title="Confirm" 
+                                          disabled = "{!v.isDisabled}"
+                                          variant="success"
+                                          onclick="{!c.SaveNext}"/>
+                    </div>
+                    <div class="slds-align_absolute-center">
+                        <lightning:button variant="base" label="Back to quotes" onclick="{! c.updateSec }"/>
+                    </div>
+                </div>
+            </div>
+        </section>        
+    </div>
+</aura:component>

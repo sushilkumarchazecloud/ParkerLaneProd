@@ -1,0 +1,60 @@
+.THIS .save {
+    float:right;
+}
+.THIS .stsbmt {
+    float:left;
+    width:14px;
+    height:14px;
+    border-radius: 100px;
+    border: 10px solid lightgreen;
+    margin-top: 12px;
+}
+.THIS .rqstd {
+    float:left;
+    width:14px;
+    height:14px;
+    border-radius: 100px;
+    border: 10px solid red;
+    margin-top: 12px;
+}
+.THIS .aplcbl{   
+    float:left;
+    width:14px;
+    height:14px;
+    border-radius: 100px;
+    border: 10px solid;
+    margin-top: 12px;
+}
+.THIS .slds-button_icon-border{
+    border: 1px solid rgba(217, 219, 221, 0) !important;
+}
+.THIS .buttonIconClass svg {
+    width: 1.4rem;
+    height: 1.4rem;
+}
+.THIS .save-btn{
+    background-color: #45C65A;
+    color: #FFF;
+    padding: 6px;
+}
+.THIS .save-btn:hover {
+    background-color: #3a844a;
+    border-color: #3a844a;
+}
+.THIS .doc-box{
+    border: 1px solid lightgrey;
+    padding: 3px;
+    border-radius: 5px;
+    background-color: #0665EA;
+}
+.THIS .doc-box-green{
+    border: 1px solid lightgrey;
+    padding: 3px;
+    border-radius: 5px;
+    background-color: #45C65A;
+}
+@media screen and (max-width: 770px) {
+    .THIS .doc-box{
+        width: fit-content;
+    }
+}

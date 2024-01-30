@@ -1,0 +1,80 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+     <aura:attribute name="feeFrequencyList" type="List" default="[{'label': 'Weekly', 'value': 'Weekly'},{'label': 'Fortnightly', 'value': 'Fortnightly'},{'label': 'Monthly', 'value': 'Monthly'},{'label': 'Annually', 'value': 'Annually'}]"/>
+     <aura:attribute name="LoanTerm" type="Integer" default="24"/>
+    <aura:attribute name="product" type="Object" />
+	<div class="slds-p-around_x-small">
+        <table>
+            <tr>
+                <td>
+                    <lightning:input name="input4" readonly="true" value="{!v.product.Lender}"/>
+                </td>
+            </tr>
+            <tr><td><lightning:input name="input4" readonly="true" value="{!v.product.ProductName}"/></td></tr>
+            <tr><td><lightning:input name="input4" readonly="true" formatter="currency" value="{!v.product.LoanAmount}"/></td></tr>
+            <tr Style="color:black">
+                <lightning:select name="select" label="" value="{!v.product.LoanTerm}">
+                    <option text=""></option>
+                    <aura:iteration items="{!v.product.termList}" var="opt">
+                        <option text="{!opt}"></option>
+                    </aura:iteration>
+                </lightning:select>
+            </tr>
+            <tr>
+                <td style="{!v.product.isInterestRate? 'color:black':''}">
+                    <lightning:input name="input4" readonly="{!!v.product.isInterestRate}"  value="{!v.product.InterestRate}"/>
+                </td>
+            </tr>
+            <tr>
+                <td><lightning:input name="input4" readonly="true" value="{!v.product.InterestRateType}"/></td>
+            </tr>
+            <tr>
+                <td><lightning:input name="input4" readonly="true" value="{!v.product.ComparisonRate}"/></td>
+            </tr>
+            <tr>
+                <td style="{!v.product.BrokerageOverrideAllowed? 'color:black':''}">
+                    <lightning:input name="input4" readonly="{!!v.product.BrokerageOverrideAllowed}" value="{!v.product.BrokerageAmount}"/></td>
+            </tr>
+            <tr>
+                <td style="{!v.product.CommissionOverrideAllowed? 'color:black':''}">
+                    <lightning:input name="input4" readonly="{!!v.product.CommissionOverrideAllowed}" value="{!v.product.CommissionAmount}"/></td>
+            </tr>
+        </table>        
+    </div>
+    <hr style="margin: 0px;"/>
+    <div class="slds-p-around_x-small">
+        <table>
+            <aura:iteration items="{!v.product.feesList}" var="op" >
+                <tr>
+                    <td style="{!op.Override_allowed__c? 'padding-right: 5px;color:black':'padding-right: 5px;'}" colspan="{!op.Fee_Type__c == 'Account Keeping' ? '1' : '2'}">
+                        <lightning:input title="{!op.Fee_Type__c+' Fees'}" readonly="{!!op.Override_allowed__c}" value="{!op.Amount__c}"/>
+                    </td>
+                    <aura:If isTrue="{!op.Fee_Type__c == 'Account Keeping'}">
+                        <td style="{!op.Override_allowed__c? 'color:black':''}">
+                            
+                            <lightning:combobox label="" readonly="{!!op.Override_allowed__c}"
+                                                value="{!op.Frequency__c}" 
+                                                options="{! v.feeFrequencyList }" 
+                                                placeholder="Frequency"/>
+                            
+                        </td>
+                    </aura:If>
+                </tr>
+            </aura:iteration>
+        </table>        
+    </div>
+     <hr style="margin: 0px;"/>
+    <div class="slds-p-around_x-small">
+        <table>
+            <tr>
+                <td Style="height:150px">
+                    <div>{!v.product.Description}</div>                    
+                </td>
+            </tr>
+            <tr>
+                <td Style="height:150px">
+                    <div>{!v.product.Features}</div>
+                </td>
+            </tr>
+        </table>        
+    </div>
+</aura:component>

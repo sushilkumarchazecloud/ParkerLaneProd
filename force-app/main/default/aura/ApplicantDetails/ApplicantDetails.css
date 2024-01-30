@@ -1,0 +1,17 @@
+.THIS .uiInput--textarea .textarea, .THIS .uiInput--textarea.textarea {
+    background-color: rgb(255, 255, 255);
+    color: rgb(8, 7, 7);
+    border: 1px solid rgb(221, 219, 218);
+    border-radius: .25rem;
+    width: 100%;
+    transition: border .1s linear,background-color .1s linear;
+    resize: vertical;
+    padding: .75rem;
+}
+
+.THIS .dob .slds-input {
+    width: 110px;
+}
+.THIS .dob .slds-form-element {
+     min-width: unset !important;
+}

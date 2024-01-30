@@ -1,0 +1,71 @@
+.THIS .max-700, .THIS.max-700 {
+    max-width: 700px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.THIS .bg-white,.THIS.bg-white{
+    background-color: #fff;
+}
+.THIS .company-logo, .THIS.company-logo{
+    padding: 10px;
+    background-color: #fff;
+    min-height: 50px;
+}
+.THIS .company-banner, .THIS.company-banner{
+    padding: 10px;
+    background-color: #006ac6;
+    color: #fff;
+    min-height: 50px;
+    font-size: 16px;
+}
+.THIS .company-logo img, .THIS.company-logo img{
+    width: 200px;
+    padding: 10px;
+    height: 43px;
+    
+}
+.THIS .txt-h4{
+    font-size: 2rem;
+}
+
+.THIS .rg-style {
+    width: 100%;
+}
+.THIS .rg-style .slds-radio_button-group, .THIS .rg-style .slds-radio--button-group {
+    border : 0;
+    text-align: center;
+    width: 100%;
+}
+.THIS .rg-style label.slds-radio_button__label {
+    margin: 0px 5px;
+    padding: 1px 5px;
+    border-radius: .25rem !important;
+    border: 1px solid rgb(217, 219, 221);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+.THIS .rg-style .slds-radio_faux{
+    padding: 5px !important;
+    line-height: 1.4;
+}
+
+.THIS .rg-style .slds-radio_button, .THIS .rg-style .slds-radio--button {
+    border: 0 !important;
+    width: 50%;
+}
+.THIS .header{
+    font-weight: 600;
+}
+.THIS .checkout-page-banner--gradient{
+    font-size: 2rem;
+    line-height: 1;
+    letter-spacing: 1px;
+    font-weight: 900;
+    text-align: center;
+    font-family: Lexia Ad,Lexia,Trebuchet MS,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Tahoma,sans-serif;
+    color: #006ac6;
+}

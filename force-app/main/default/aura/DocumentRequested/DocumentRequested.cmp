@@ -1,0 +1,293 @@
+<aura:component controller="DocumentRequestedController" implements="forceCommunity:availableForAllPageTypes,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="accept" type="List" default="['.jpg', '.jpeg','.pdf','.csv','.xlsx','.png','.html','.docx','.doc','.xls']"/>  
+    <aura:attribute name="multiple" type="Boolean" default="true"/>
+    <aura:attribute access="public" name="recordId" type="String"/>
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    <aura:attribute name="rdList" type="list" />   
+    <aura:attribute name="disabled" type="Boolean" default="false"/>
+    <aura:attribute name="isEditOpen" type="boolean" default="false"/>
+    <aura:attribute name="docId" type="String" />
+    <aura:attribute name="docName" type="String" />
+    
+    
+    <aura:handler event="force:refreshView" action="{!c.doInit}" />
+    <aura:attribute name="docDeleteError" type="String" access="private"/>
+    <aura:attribute name="deleteDocId" type="String" />
+    
+    <lightning:spinner aura:id="mySpinner" alternativeText="Processing.." title="Processing.." variant="brand" size="large" class="slds-hide"/>
+    <force:recordData aura:id="docDeleter"
+                      recordId="{!v.deleteDocId}"
+                      fields="Id"
+                      targetError="{!v.docDeleteError}"
+                      recordUpdated="{!c.handleDocUpdated}" />
+    <aura:if isTrue="{!empty(v.rdList)}">
+        <div class="slds-m-around_x-small">
+            <div class="slds-page-header ">
+                <div class="slds-page-header__row">
+                    <div class="slds-page-header__col-title">
+                        <div class="slds-media">
+                            <div class="slds-media__figure">
+                                <span class="slds-icon_container_small slds-icon-standard-custom" title="Document Requested">
+                                    <lightning:icon iconName="standard:custom" size="small" />
+                                </span>
+                            </div>
+                            <div class="slds-media__body slds-align-middle">
+                                <div class="slds-page-header__name slds-align-middle">
+                                    <div class="slds-page-header__name-title">
+                                        <h1 class="slds-page-header__title slds-hyphenate">Document Requested ({!v.rdList.length})</h1>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="slds-page-header__col-actions">
+                        <div class="slds-page-header__controls">
+                            <div class="slds-page-header__control">
+                                <ul class="slds-button-group-list">
+                                    <li>
+                                        <lightning:button label="Request Documents" class="slds-button_brand" onclick="{!c.requestDocument}"  />
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-page-header__col-actions">
+                        <div class="slds-page-header__controls">
+                            <div class="slds-page-header__control">
+                                <ul class="slds-button-group-list">
+                                    <li>
+                                        <lightning:button label="Re-Sent Document Request Email" class="slds-button_neutral greyBTN" onclick="{!c.sendEmail}"/>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+        	<p class="slds-text-align--center">No Documents Requested</p>
+        </div>
+        <aura:set attribute="else">
+            <div class="slds-m-around_x-small">
+                <div class="slds-page-header ">
+                    <div class="slds-page-header__row">
+                        <div class="slds-page-header__col-title">
+                            <div class="slds-media">
+                                <div class="slds-media__figure">
+                                    <span class="slds-icon_container_small slds-icon-standard-custom" title="Document Requested">
+                                        <lightning:icon iconName="standard:custom" size="small" />
+                                    </span>
+                                </div>
+                                <div class="slds-media__body slds-align-middle">
+                                    <div class="slds-page-header__name slds-align-middle">
+                                        <div class="slds-page-header__name-title">
+                                            <h1 class="slds-page-header__title slds-hyphenate">Document Requested ({!v.rdList.length})</h1>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-page-header__col-actions">
+                            <div class="slds-page-header__controls">
+                                <div class="slds-page-header__control">
+                                    <ul class="slds-button-group-list">
+                                        <li>
+                                            <lightning:button label="Request Documents" class="slds-button_brand" onclick="{!c.requestDocument}"  />
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-page-header__col-actions">
+                            <div class="slds-page-header__controls">
+                                <div class="slds-page-header__control">
+                                    <ul class="slds-button-group-list">
+                                        <li>
+                                            <lightning:button label="Re-Sent Document Request Email" class="slds-button_neutral greyBTN" onclick="{!c.sendEmail}"/>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="height:300px;">
+                <div class="slds-scrollable" style="height:100%;">
+                    <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-table_fixed-layout">
+                        <thead >
+                            <tr class="slds-text-title_caps">
+                                 <th class="" scope="col" style="width:150px;">
+                                    <div class="slds-truncate" title="Date Requested">Date Requested</div>
+                                </th>
+                                <th class="" scope="col" style="width:200px;">
+                                    <div class="slds-truncate" title="Document">Document</div>
+                                </th>
+                                <th class="" scope="col" style="width:100px;">
+                                    <div class="slds-truncate" title="Category">Category</div>
+                                </th>
+                                 <th class="" scope="col" style="width:100px;">
+                                    <div class="slds-truncate" title="Related To">Related To</div>
+                                </th>
+                                <th class="" scope="col" style="width:120px;">
+                                    <div class="slds-truncate" title="Status">Status</div>
+                                </th>
+                                <th class="" scope="col" style="width:200px;">
+                                    <div class="slds-truncate" title="Customer Note">Customer Note</div>
+                                </th>
+                                <th class="" scope="col" style="width:160px;">
+                                    <div class="slds-truncate" title="Upload">Upload Files</div>
+                                </th>
+                                <th class="" scope="col" style="width:90px;">
+                                    <div class="slds-truncate" title="Action">Action</div>
+                                </th>
+                                <th class="" scope="col" style="width:160px;">
+                                    <div class="slds-truncate" title="Id">Document Id</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody>    
+                            <aura:iteration items="{!v.rdList}" var="rd">
+                                <tr>
+                                    <td>
+                                        <lightning:formattedDateTime aura:id="dt"
+                                                                     value="{!rd.CreatedDate}"
+                                                                     month="numeric"
+                                                                     day="numeric"
+                                                                     year="numeric"
+                                                                    />
+                                    </td>
+                                    <td>
+                                        <div class="" title="{!rd.Document__c}">{!rd.Document__c}</div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate" title="{!rd.Category__c}">{!rd.Category__c}</div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate" title="{!rd.Related_To__c}">{!rd.Related_To__c}</div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate"><ui:outputRichText value="{!rd.Status__c}"/></div>
+                                    </td>
+                                    
+                                     <td>
+                                        <div class="" title="{!rd.Details__c}">{!rd.Details__c}</div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate">
+                                            <lightning:fileUpload name="{!rd.Id}" label="" multiple="{!v.multiple}" 
+                                                                  accept="{!v.accept}" recordId="{!v.recordId}" 
+                                                                  onuploadfinished="{!c.handleUploadFinished}" class="nolabel"/>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate">
+                                            <lightning:buttonIcon name="{!rd.Id}" value="{!rd.Name}" iconName="utility:edit" 
+                                                                  variant="bare" onclick="{! c.editController }" alternativeText="Edit" />      
+                                            <lightning:buttonIcon name="{!rd.Id}" value="{!rd.Name}" 
+                                                                  onclick="{!c.handleDeleteDocument}" iconName="utility:delete" variant="bare" alternativeText="Delete" />
+                                            
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate" title="{!rd.Name}">
+                                            <a href="{!'/one/one.app?#/sObject/'+ rd.Id + '/view'}" target="_blank">{!rd.Name}</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </aura:iteration>
+                            
+                        </tbody>
+                        
+                    </table>
+                </div>
+            </div>
+        </aura:set>
+    </aura:if>
+    <aura:if isTrue="{!v.isEditOpen}">
+        <lightning:recordEditForm  aura:id="editDocument"
+                                  recordId="{!v.docId}"
+                                  objectApiName="Document_Requested__c"
+                                  onsubmit="{!c.handleSubmit}"
+                                  onsuccess="{!c.handleSuccess}">  
+            
+            <div role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{! c.closeEditModel }"
+                                              alternativeText="close"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close"/>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Edit {!v.docName}</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-p-horizontal_medium">
+                                <lightning:inputField  fieldName="Category__c"/>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-p-horizontal_medium">
+                                <lightning:inputField fieldName="Opportunity__c"/>
+                            </div>
+                        </div>
+                        
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-p-horizontal_medium">
+                                <lightning:inputField fieldName="Description__c"/>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-p-horizontal_medium">
+                                <lightning:inputField fieldName="isComplete__c"/>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-p-horizontal_medium">
+                                <lightning:inputField fieldName="Contact__c"/>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-p-horizontal_medium">
+                                <lightning:inputField fieldName="IsJoint__c"/>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-p-horizontal_medium">
+                                <lightning:inputField fieldName="Details__c"/>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-p-horizontal_medium">
+                                <lightning:inputField fieldName="reason__c"/>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-p-horizontal_medium">
+                                <lightning:inputField fieldName="Document__c"/>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-p-horizontal_medium">
+                                <lightning:inputField fieldName="isAlready_provided__c"/>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-p-horizontal_medium">
+                                <lightning:inputField fieldName="Person_Account__c"/>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12 slds-p-horizontal_medium">
+                                <lightning:inputField fieldName="isBankStatement__c"/>
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning:button variant="neutral" 
+                                          label="Cancel"
+                                          title="Cancel"
+                                          onclick="{! c.closeEditModel }"/>
+                        <lightning:button variant="brand"
+                                          label="Save"
+                                          type="submit" />
+                    </footer>
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </lightning:recordEditForm>
+    </aura:if>
+    
+</aura:component>

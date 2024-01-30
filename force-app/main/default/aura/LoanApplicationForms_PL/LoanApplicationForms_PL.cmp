@@ -1,0 +1,333 @@
+<aura:component controller="ParkerLaneLoanController">
+    <aura:attribute name="YesNoOptions" type="List" default="[{'label': 'Yes', 'value': 'Yes'},
+                                                             {'label': 'No', 'value': 'No'}]"/>
+    <aura:attribute name="applicant1" type="Contact" default="{'sobjectType': 'Contact', 'FirstName': '', 'LastName': '',
+                                                              'Email': '', 'Phone': '', 'FinServ__MaritalStatus__c':''}"/>
+    <aura:attribute name="applicant2" type="Contact" default="{'sobjectType': 'Contact', 'FirstName': '', 'LastName': '',
+                                                              'Email': '', 'Phone': '', 'FinServ__MaritalStatus__c':''}"/>
+    <aura:attribute name="app1Children" type="Contact[]" />
+    <aura:attribute name="app2Children" type="Contact[]" />
+    <aura:attribute name="NoOfapplicantsOptions" type="List" default="[{'label': 'One', 'value': 'single'},{'label': 'Two', 'value':  'joint'}]"/>
+    <aura:attribute name="relationshipsOptions" type="List" default="[{'label': 'Spouse', 'value': 'Spouse'},{'label': 'Ex-spouse', 'value': 'Ex-spouse'},{'label': 'Parent', 'value': 'Parent'},{'label': 'Child', 'value': 'Child'},{'label': 'Sibling', 'value': 'Sibling'},{'label': 'Relative', 'value': 'Relative'},{'label': 'Friend', 'value': 'Friend'},{'label': 'Other', 'value': 'Other'}]"/>
+    <aura:attribute name="opportunity" type="Opportunity" />
+    <aura:attribute name="selectedPerson" type="String" />
+    <aura:attribute name="relationship" type="String" />
+    <aura:attribute name="sameHousehold" type="String" />
+    <aura:attribute name="selectedTab" type="String" default="beginingTab"/>
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="applicationSection" type="String" default=""/>
+    <aura:attribute name="appSectionPath" type="List" default="[]"/>
+    <aura:attribute name="applicantGrpValue" type="String" default="applicant1"/>
+    <aura:attribute name="showError" type="Boolean" default="false"/>
+    <aura:attribute name="errorMsg" type="String" default="Please update the form entries highlighted in red and try again"/>
+    <aura:attribute name="applicantNoForVerification" type="String" default="1"/>
+    <aura:attribute name="applicantIdForVerification" type="String" default=""/>
+    <aura:attribute name="applicantEmailForVerification" type="String" default=""/>
+    <aura:attribute name="NoOfapplicants2Options" type="List" default="[{'label': 'Two Person', 'value':  'joint'}]"/>
+    <aura:attribute name="NoOfapplicants1Options" type="List" default="[{'label': 'One Person', 'value': 'single'}]"/>
+    <aura:attribute name="allAssetsList" type="FinServ__AssetsAndLiabilities__c[]" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <aura:method name="upsertOppContacts" action="{!c.saveApplications}" access="PUBLIC" >
+        <aura:attribute name="isShare" type="Boolean" />
+        <aura:attribute name="isNext" type="Boolean" />
+    </aura:method>
+    
+    
+    <aura:attribute name="maritalOption" type="List" default="[{'label': 'Single', 'value': 'Single'},{'label': 'Married / defacto', 'value': 'Married / defacto'},{'label': 'Separated', 'value': 'Separated'},{'label': 'Divorced', 'value': 'Divorced'}]"/>
+    <aura:attribute name="citizenShipStatus" type="List" default="[{'label': 'Australian Citizen', 'value': 'Australian Citizen'},{'label': 'Permanent Resident', 'value': 'Permanent Resident'},{'label': 'NZ Citizen', 'value': 'NZ Citizen'},{'label': 'Other', 'value': 'Other'}]"/>
+
+    <aura:if isTrue="{!v.opportunity.Do_you_both_live_at_the_same_address__c == 'No'}">
+        <aura:html tag="style">       
+             .cLoanApplicationForms .errorRed input[type="radio"]:checked + label{
+            		border:2px solid red !important;
+            }
+        </aura:html>
+    </aura:if>
+    
+    <div >
+       
+        <aura:if isTrue="{!v.showError}">
+            <div class="slds-notify slds-notify_toast slds-theme_error slds-align_absolute-center slds-m-vertical--medium error-section">
+                <span class="slds-assistive-text">error</span>
+                <div class="slds-notify__content">
+                    <p class="slds-align_absolute-center">{!v.errorMsg}.</p>                
+                </div>
+            </div>
+        </aura:if>
+        <lightning:spinner aura:id="mySpinner" variant="brand" size="large" class="" />
+        <aura:if isTrue="{!v.selectedTab == 'beginingTab'}">
+            <section class="slds-p-around_medium slds-col slds-si1ze_1-of-1 bg-lightest txt-blue" style="margin-bottom: 40px;">
+                <div class="max-700 getting-started ">
+                    <header class="checkout-page-banner--gradient">
+                        <div class="">
+                            <h1 class="slds-p-vertical_medium heading--page slds-m-top_medium">{!v.applicationSection}</h1>
+                        </div>
+                    </header>
+                    <div style="text-transform:none;text-align:left;">
+                        <p style="color: #1e8ffd!important;font-weight: bold;">We suggest begininning with a one-person application. You can add a 
+                            co-applicant later if required.
+                        </p>
+                    </div>
+                    <div class="number_of_applicant">
+                        <p class="number_of_app">Number of applicants?</p>
+                    </div> 
+                    <div class="rg-split radio_buttonWidth  radio_width">
+                        <lightning:radioGroup  label="" type="button"
+                                              value="{!v.selectedPerson}"                                                 
+                                              options="{! v.NoOfapplicantsOptions }"
+                                              placeholder="Number of applicants"/>
+                    </div>
+                    
+                    
+                    <aura:if isTrue="{!v.selectedPerson=='joint'}">      
+                        <div style="margin-top: 2rem;">
+                            <p class="number_of_app" style="">What is your relationship to Applicant 2</p>                                
+
+                            <lightning:select name="Relationship" aura:id="fieldcheck"
+                                              class="no-abbr" required="true"
+                                              value="{!v.opportunity.Relationship_to_Applicant_2__c}" onchange="" label="">
+                                
+                                <option value="">Select</option>
+                                <aura:iteration items="{!v.relationshipsOptions}" var="option">
+                                    <option value="{!option.value}" text="{!option.value}"></option>
+                                </aura:iteration>
+                            </lightning:select>
+                            
+                            <aura:if isTrue="{!v.opportunity.Relationship_to_Applicant_2__c != 'Spouse'}">
+                                <div class="rg-split radio_width">
+                                    <lightning:radioGroup class="slds-p-around_x-small errorRed no-abbr" name="sameHouseholdRadioGroup"
+                                                          label="Do you both live at the  same address?"
+                                                          options="{! v.YesNoOptions }"
+                                                          value="{!v.opportunity.Do_you_both_live_at_the_same_address__c}"
+                                                          type="button"
+                                                          aura:id="fieldcheck"
+                                                          required="true"/>
+                                </div>
+                                <aura:if isTrue="{!v.opportunity.Do_you_both_live_at_the_same_address__c == 'No'}">
+                                    <div style="color: red;">
+                                        <p style="font-weight: 600;">
+                                        Joint applicants must live at the same address.
+                                        Please continue as a  one-person application. 
+                                        </p>
+                                    </div> 
+                                </aura:if>
+                            </aura:if>
+                        </div>      
+                    </aura:if>
+                    
+                    <div class="slds-form-element " onclick="{!c.removeEfect}">
+                        <div class="slds-form-element__control">
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-p-around_x-small1 slds-m-top_medium slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                                    
+                                    <div class="slds-form applicant-compact-form" aura:id="changeIt">
+                                        <div class="applicant-header slds-border_bottom1 slds-p-around_xx-small">
+                                            <div class="set_header">First Applicant (You)</div>
+                                        </div>
+                                        <div class="">
+                                            <div class="slds-form-element slds-form-element_stacked ">
+                                                <lightning:input label="First Name" aura:id="fieldcheck"
+                                                                 required="true" placeholder="First Name" 
+                                                                 value="{!v.applicant1.FirstName}"
+                                                                 maxlength="40"
+                                                                 class="no-abbr firstLatterCapital"
+                                                                 />
+                                            </div>
+                                            <div class="slds-form-element slds-form-element_stacked">
+                                                <lightning:input label="Middle Name (if you have one)" aura:id="fieldcheck"
+                                                                 placeholder="Middle Name" 
+                                                                 value="{!v.applicant1.MiddleName}"
+                                                                 maxlength="40"
+                                                                 class="no-abbr firstLatterCapital"/>
+                                            </div>
+                                            <div class="slds-form-element slds-form-element_stacked">
+                                                <lightning:input label="Last Name" aura:id="fieldcheck"
+                                                                 required="true" placeholder="Last Name" 
+                                                                 value="{!v.applicant1.LastName}"
+                                                                 maxlength="40"
+                                                                 class="no-abbr firstLatterCapital"/>
+                                            </div>
+                                            <div class="slds-form-element slds-form-element_stacked">
+                                                <lightning:input type="tel" label="Mobile Phone" aura:id="fieldcheck"
+                                                                 required="true" placeholder="Phone" 
+                                                                 value="{!v.applicant1.Phone}"
+                                                                 pattern="([04]{2}[0-9]{8}|[04]{2}[0-9]{2} [0-9]{3} [0-9]{3}|[04]{2} [0-9]{4} [0-9]{4})"
+                                                                 messageWhenPatternMismatch="Pattern should be 0412345678 or 0412 345 678 or 04 1234 5678"
+                                                                 class="no-abbr"/>
+                                            </div>
+                                            <div class="slds-form-element slds-form-element_stacked">
+                                                <lightning:input type="email" label="Email Address"  aura:id="fieldcheck"
+                                                                 required="true" placeholder="Email" 
+                                                                 pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{1,5})$"
+                                                                 messageWhenPatternMismatch = "Please enter valid Email Id"
+                                                                 value="{!v.applicant1.Email}"
+                                                                 class="no-abbr"/>
+                                                <!-- readonly="{!v.applicant1.Id != Null}"-->
+                                                
+                                            </div>
+                                            
+                                            <div class="slds-form-element slds-form-element_stacked editSelect">
+                                                <lightning:select name="citizenship1" aura:id="fieldcheck" required="true"
+                                                                  class="no-abbr"
+                                                                  value="{!v.applicant1.Citizenship_Status__c}" onchange="" label="Citizenship Status">
+                                                    
+                                                    <option value="">Select</option>
+                                                    <aura:iteration items="{!v.citizenShipStatus}" var="option">
+                                                        <option value="{!option.value}" text="{!option.value}"></option>
+                                                    </aura:iteration>
+                                                    
+                                                </lightning:select>
+                                            </div>
+                                           
+                                            <aura:if isTrue="{! v.selectedPerson=='joint' &amp;&amp; v.opportunity.Relationship_to_Applicant_2__c != 'Spouse'}">    
+                                                <div class="slds-form-element slds-form-element_stacked editSelect">
+                                                    <lightning:select name="MaritalStatus11" aura:id="fieldcheck"
+                                                                      class="no-abbr" required="true"
+                                                                      value="{!v.applicant1.FinServ__MaritalStatus__c}" onchange="" label="Marital Status">
+                                                        
+                                                        <option value="">Select</option>
+                                                        <aura:iteration items="{!v.maritalOption}" var="option">
+                                                            <option value="{!option.value}" text="{!option.value}"></option>
+                                                        </aura:iteration>
+                                                    </lightning:select>
+                                                </div>
+                                            </aura:if>   
+                                            <aura:if isTrue="{! v.selectedPerson!='joint'}">
+                                                    <div class="slds-form-element slds-form-element_stacked editSelect">
+                                                        <lightning:select name="MaritalStatus1" aura:id="fieldcheck"
+                                                                          class="no-abbr" required="true"
+                                                                          value="{!v.applicant1.FinServ__MaritalStatus__c}" onchange="" label="Marital Status">
+                                                            
+                                                            <option value="">Select</option>
+                                                            <aura:iteration items="{!v.maritalOption}" var="option">
+                                                                <option value="{!option.value}" text="{!option.value}"></option>
+                                                            </aura:iteration>
+                                                        </lightning:select>
+                                                    </div>
+                                              
+                                            </aura:if>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <aura:if isTrue="{!v.selectedPerson=='joint'}">
+                                    <div class="slds-p-left_x-small1 slds-m-top_medium slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 customPaddingOndesktopview">
+                                        <div class="slds-form applicant-compact-form">
+                                            <div class="applicant-header slds-border_bottom1 slds-p-around_xx-small">
+                                                <div class="set_header">Second Applicant</div>
+                                            </div>
+                                            <div class="slds-p-top1_x-small">
+                                                <div class="slds-form-element slds-form-element_stacked">
+                                                    <lightning:input label="First Name" aura:id="fieldcheck"
+                                                                     required="true" placeholder="First Name" 
+                                                                     value="{!v.applicant2.FirstName}"
+                                                                     maxlength="40"
+                                                                     class="no-abbr firstLatterCapital"/>
+                                                </div>
+                                                <div class="slds-form-element slds-form-element_stacked">
+                                                    <lightning:input label="Middle Name (if you have one)" aura:id="fieldcheck"
+                                                                     placeholder="Middle Name (if you have one)" 
+                                                                     value="{!v.applicant2.MiddleName}"
+                                                                     maxlength="40"
+                                                                     class="no-abbr firstLatterCapital"/>
+                                                </div>
+                                                <div class="slds-form-element slds-form-element_stacked">
+                                                    <lightning:input label="Last Name" aura:id="fieldcheck"
+                                                                     required="true" placeholder="Last Name" 
+                                                                     value="{!v.applicant2.LastName}"
+                                                                     maxlength="40"
+                                                                     class="no-abbr firstLatterCapital"/>
+                                                </div>
+                                                <div class="slds-form-element slds-form-element_stacked">
+                                                    <lightning:input type="tel" label="Mobile Phone" aura:id="fieldcheck"
+                                                                     required="true" placeholder="Phone" 
+                                                                     value="{!v.applicant2.Phone}"
+                                                                     pattern="([04]{2}[0-9]{8}|[04]{2}[0-9]{2} [0-9]{3} [0-9]{3}|[04]{2} [0-9]{4} [0-9]{4})"
+                                                                 messageWhenPatternMismatch="Pattern should be 0412345678 or 0412 345 678 or 04 1234 5678"
+                                                                     class="no-abbr"/>
+                                                </div>
+                                                <div class="slds-form-element slds-form-element_stacked lowerCase_email">
+                                                    <lightning:input type="email" label="Email Address" aura:id="fieldcheckemail"
+                                                                     required="true" placeholder="Email" 
+                                                                     value="{!v.applicant2.Email}"
+                                                                     pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{1,5})$"
+                                                                     messageWhenPatternMismatch = "Please enter valid Email Id"
+                                                                     
+                                                                     class="no-abbr"/>
+                                                     <!-- readonly="{!v.applicant2.Id != Null}"-->
+                                                </div>
+                                                <div class="slds-form-element slds-form-element_stacked editSelect">
+                                                    <lightning:select name="citizenship2" aura:id="fieldcheck" required="true"
+                                                                      value="{!v.applicant2.Citizenship_Status__c}" onchange="" label="Citizenship Status"
+                                                                      class="no-abbr">
+                                                        			  
+                                                        <option value="">Select</option>
+                                                        <aura:iteration items="{!v.citizenShipStatus}" var="option">
+                                                            <option value="{!option.value}" text="{!option.value}"></option>
+                                                        </aura:iteration>
+                                                        
+                                                    </lightning:select>
+                                                </div>
+                                                <aura:if isTrue="{!v.opportunity.Relationship_to_Applicant_2__c != 'Spouse'}">
+                                                    <div class="slds-form-element slds-form-element_stacked editSelect">
+                                                        <lightning:select name="MaritalStatus2" aura:id="fieldcheck" required="true"
+                                                                          class="no-abbr"
+                                                                          value="{!v.applicant2.FinServ__MaritalStatus__c}" onchange="" label="Marital Status">
+                                                            
+                                                            <option value="">Select</option>
+                                                            <aura:iteration items="{!v.maritalOption}" var="option">
+                                                                <option value="{!option.value}" text="{!option.value}"></option>
+                                                            </aura:iteration>
+                                                        </lightning:select>
+                                                    </div>
+                                                </aura:if>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </aura:if>
+                            </div>
+                            <div style="display: flow-root">
+                                <lightning:button class="slds-m-vertical_x-large continue-btn-style " variant="brand" 
+                                                  label="Let's Begin" title="Let's Begin" 
+                                                  onclick="{! c.letsBegin }" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </aura:if>
+        
+        <aura:if isTrue="{!v.selectedTab == 'AboutFormTab'}">
+            <c:AboutApplicantForm_PL aura:id="AboutApplicantForm"
+                                     applicant1="{!v.applicant1}" applicant2="{!v.applicant2}"
+                                     relationship="{!v.opportunity.Relationship_to_Applicant_2__c}" selectedPerson="{!v.selectedPerson}"
+                                     applicant1Name="{!v.applicant1.FirstName}" 
+                                     applicant2Name="{! v.applicant2.FirstName}" 
+                                     app1Children = "{!v.app1Children}"
+                                     app2Children = "{!v.app2Children}"
+                                     applicantGrpValue="{!v.applicantGrpValue}"
+                                     recordId = "{!v.recordId}"
+                                     opportunity ="{!v.opportunity}"
+                                     allAssetsList = "{!v.allAssetsList}"
+                                  />
+            
+            <div class="max-700 preNxtBtn slds-p-around_medium" style="margin-bottom: 40px;">
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-size_1-of-2"></div>
+                    <div class="slds-size_1-of-2 customsave">
+                        <lightning:button class="slds-m-vertical_medium slds-float_right save-button_style" variant="success" 
+                                  label="Save &amp; Next" title="Save &amp; Next"
+                                  disabled=""
+                                  onclick="{! c.save }" />
+                    </div>
+                </div>
+            </div>
+        </aura:if>
+        
+    </div>
+    
+</aura:component>

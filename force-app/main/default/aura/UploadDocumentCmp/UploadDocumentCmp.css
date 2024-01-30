@@ -1,0 +1,199 @@
+.THIS .textarea{
+    max-width: 238px !important;
+    margin-left: .5rem;
+}
+.THIS .slds-accordion__summary-action{
+    font-size: large !important;
+    font-weight: 600 !important;
+}
+
+.THIS .doc-style{
+    padding: 2px;
+}
+
+.THIS .btnC {
+    width: 100%;
+    padding: 15px!important;
+    border-color: green;
+    color: #fff!important;
+    font-size: 1.25rem;
+    border: 0;
+}
+.THIS .buttonIconClass svg {
+    width: 1.4rem;
+    height: 1.4rem;
+}/*
+.THIS .company-logo, .THIS.company-logo{
+    padding: 10px;
+    background-color: #fff;
+    color: #1a2645;
+    min-height: 50px;
+}*/
+.THIS .company-logo img, .THIS.company-logo img{
+    width: 200px;
+    padding: 10px;
+    height: 43px;
+}
+.THIS .bg-blue {
+    background-color: #006ac6;
+}
+.THIS .max-700, .THIS.max-700{
+    max-width: 700px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.THIS .txt-white {
+    color: #fff;
+}
+.THIS .checkout-page-banner--gradient .heading--page {
+    font-size: 2.5rem;
+    line-height: 1;
+    letter-spacing: 1px;
+    font-weight: 900;
+    text-align: center;
+    font-family: Lexia Ad,Lexia,Trebuchet MS,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Tahoma,sans-serif;
+}
+.THIS .checkout-page-banner--gradient {
+    color: #006ac6;
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+}
+.THIS h4 {
+    color: #006ac6;
+    font-size: 2rem;
+}
+.THIS .company-logo, .THIS.company-logo{
+    padding: 10px;
+    background-color: #1a2745;
+    color: #fff;
+    min-height: 70px;
+    align-items: center;
+}
+.THIS .max-700, .THIS.max-700 {
+    max-width: 700px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.THIS .bg-light-sky-blue, .THIS.bg-light-sky-blue {
+    background-color: #d2edee;
+}
+.THIS .company-logo img, .THIS.company-logo img{
+    width: 200px;
+    padding: 10px;
+    height: 43px;
+    
+}
+.THIS .show-up{
+    display:none;
+}
+.THIS .show-down{
+    display:block;
+}
+.THIS .statement-img img{
+    width: 12px;
+}
+.THIS .statement-img {
+    padding: 6px;
+    width: 2rem;
+    vertical-align: top;
+}
+.THIS .security-img img {
+    width: 5rem;
+}
+.THIS .mobView{    
+    font-size:14px;
+    margin-top: -6px;
+    font-weight:bold;
+    font-family: ProximaNova-AltBold;
+    line-height: initial;
+}
+
+@media screen and (max-width: 770px) {
+  .THIS .company-logo div, .THIS.company-logo div{
+        text-align: center;
+        padding: 7px;
+        font-size: 12px;
+    }
+    .THIS .checkout-page-banner--gradient .heading--page {
+        text-align: left;
+        text-transform: initial;
+        font-size: 1.75rem;
+        padding-left: 15px;
+    }
+    .THIS .mobView{
+        margin-top: 0px;
+        margin-left: 31px;
+        font-size:14px;
+        font-weight:bold;
+        font-family: ProximaNova-AltBold;
+        line-height: initial;
+    }
+        
+    .THIS .show-up{
+        display:block;
+    }
+    .THIS .show-down{
+        display:none;
+    }
+}
+.THIS .header--section,.THIS.header--section{
+    background-color: #d2edee;
+    text-align: center;
+    padding: 15px;
+}
+.THIS .header-logo{
+    border-radius: 72px;
+    border: 2px solid #5bc65b;
+    width: 90px;
+    padding: 10px;
+    height: 90px;
+    background-color: #FFF;
+}
+.THIS .heading-style{
+    font-size: 1.85rem;
+    font-family: ProximaNova-AltBold;
+    line-height: normal;
+}
+.THIS .pargraph-style{
+    font-size: 1rem;
+    font-family: ProximaNovaAlt-Medium;
+    font-weight: bold;
+}
+.THIS .pargraph-bold-style{
+    font-size: .75rem;
+    font-family: ProximaNova-AltBold;
+    text-align: justify;
+    line-height: normal;
+    text-transform: uppercase;
+}
+
+.THIS .upload-text-container{    
+    margin: 15px;
+    padding: 15px;
+    border-radius: 15px;
+}
+.THIS .upload-text-container li {
+    list-style: auto;
+    padding-left: 10px;
+    margin-left: 20px;
+    line-height: normal;
+}
+
+.THIS .ProximaNova-AltBold{
+    font-family: ProximaNova-AltBold;
+}
+@font-face {
+    font-family: ProximaNova-AltBold;
+    src: url('/resource/customfonts/ProximaNova-AltBold.otf') format('OpenType');
+}
+.THIS .ProximaNovaAlt-Medium {
+    font-family: ProximaNovaAlt-Medium !important;
+}
+
+@font-face {
+    font-family: ProximaNovaAlt-Medium;
+    src: url('/resource/customfonts/ProximaNovaAlt-Medium.otf') format('OpenType');
+}

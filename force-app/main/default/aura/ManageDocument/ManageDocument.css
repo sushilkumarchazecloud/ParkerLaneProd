@@ -1,0 +1,18 @@
+.THIS .slds-card {
+    border : 0px;
+    background-color:white;
+}
+.THIS .slds-page-header{
+    background-color:#ecebea;
+}
+.THIS .box {
+        width: 100%;
+    	
+}
+.THIS .container {
+        width:50%;
+    	float:left;
+}
+.THIS .Right{
+    float:right;
+}

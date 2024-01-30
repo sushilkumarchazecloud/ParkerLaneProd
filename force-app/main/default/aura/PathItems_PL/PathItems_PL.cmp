@@ -1,0 +1,20 @@
+<aura:component >
+    <aura:attribute name="label" type="String" /> 
+    <aura:attribute name="value" type="String" /> 
+    <aura:attribute name="index" type="String" /> 
+    <aura:attribute name="status" type="String" /> 
+    
+    <aura:registerEvent name="PathChangeEvent" type="c:PathChangeEvent"/>
+    
+    <div style="cursor: pointer;" onclick="{!c.SelectPath}">
+        <div class = "list-item-cicle">
+            <aura:if isTrue="{!v.status == ' slds-is-complete '}"> 
+                   <!-- &#x2713;-->
+                <p class="set_number_size">{!v.index}</p>
+                    <aura:set attribute="else"><p class="set_number_size">{!v.index}</p></aura:set>
+                </aura:if>
+            
+        </div>
+        <div class="list-item-text">{!v.label}</div>
+    </div>
+</aura:component>

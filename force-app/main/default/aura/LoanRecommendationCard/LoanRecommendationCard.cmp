@@ -1,0 +1,235 @@
+<aura:component >
+    <aura:attribute name = "cardName" type="string"/>
+     <aura:attribute name = "index" type="Integer" />
+    <aura:attribute name = "isexpanded" type="boolean" default="false"/>
+    <aura:attribute name = "isFeature" type="boolean" default="false"/>
+    <aura:attribute name = "termOptions" type="List" default="[]"/>
+    <aura:attribute name = "customerAmount" type="Integer" default=""/>
+    <aura:attribute name = "totalAmount" type="Decimal" />
+    <aura:attribute name = "quote" type="sObject" />
+    <aura:attribute name = "loanRates" type="Loan_Rate__c[]" />
+    <aura:attribute name = "purpose" type="String" default="Install Solar Panels"/>
+    <aura:attribute name = "features" type="List" default="[]"/>
+    <aura:attribute name = "eligibilities" type="List" default="[]"/>
+    <aura:attribute name = "documentsNeeded" type="List" default="[]"/>
+    <ltng:require afterScriptsLoaded="{!c.doInit}" />
+    
+    <aura:registerEvent name="ApplyNowEvent" type="c:ApplyNowEvent"/>
+    <aura:handler name="change" value="{!v.customerAmount}" action="{!c.changeCustomerAmount}"/>
+    <aura:handler name="change" value="{!v.purpose}" action="{!c.changePurpose}"/>
+    
+    <article id="{!'index-'+v.index}" class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 slds-p-around--medium loan-recommendation-card">
+        <div class="slds-grid slds-align_absolute-center">
+            <div class="slds-p-vertical_xx-small">
+                
+                <div style="padding:1px 8px 1px 0px;">
+                    <b style="font-family:ProximaNova-AltBold">{!v.cardName}</b>
+                    ({!v.quote.Product__r.Min_Loan_Term__c/12} - {!v.quote.Product__r.Max_Loan_Term__c/12} Years)
+                </div>
+            </div>
+            <div class="slds-col_bump-left">
+                <div class="slds-p-horizontal_small1 slds-p-vertical_xx-small">
+                    <aura:if isTrue="{!v.isFeature}">
+                        <div style="background-color: #91dadc; border-radius: 25px;padding:2px 20px;margin-bottom:2px">
+                            <b style="font-size: 12px;">FEATURED</b>
+                        </div>
+                    </aura:if> 
+                    
+                </div>
+            </div>
+        </div>
+        
+        <div class="{!'card_border_color slds-card slds-text-align_center' + (v.isFeature ? ' card_border_color1' : '')}">
+            <div class="interval slds-m-top_medium">
+                <div  class="slds-grid slds-wrap ">
+                    <div class="slds-col slds-size_1-of-1" >
+                        <div  class="slds-grid slds-wrap">
+                            <div  class="slds-col slds-size_1-of-2" style="padding: 0;padding-left: 5px;">
+                                <div class="" style="text-align:left; font-size: .700rem;"><strong>Repayments</strong></div> 
+                            </div>
+                            <div  class="slds-col slds-size_1-of-2" style="">
+                                <div class="" style="text-align:left;font-size: .700rem;" ><strong>Paid Over</strong></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1">
+                        <div  class="slds-grid slds-wrap">
+                            <div  class="slds-col slds-size_1-of-2" style="padding: 0;padding-left: 5px;">
+                                <div class="rate-interval" style="text-align:left;" >${!v.totalAmount}</div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2" style="padding-right:5px;">
+                                <div class="month-interval drp-dwn" > 
+                                    <lightning:select label="" class="no-abbr slds-scope"
+                                                      value="{!v.quote.Loan_Term__c}"
+                                                      onchange="{!c.changeTerm}">
+                                        <aura:iteration items="{!v.termOptions}" var="term">
+                                            <option value="{!term.value}" text="{!term.label}" selected="{!term.selected}"></option>
+                                        </aura:iteration>
+                                    </lightning:select>
+                               </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1" style="margin-top:-8px">
+                        <div class="slds-grid slds-wrap">
+                            <div  class="slds-col slds-size_1-of-2" style="padding: 0;padding-left: 5px;">
+                                <div class="" style="font-size:.5rem;text-align:left;"><b>/ month for {!v.quote.Loan_Term__c} months</b></div> 
+                            </div>
+                            <div  class="slds-col slds-size_1-of-2" style="">
+                                <div class="" style="text-align:left;font-size: 0.5rem;"><b>(CLICK TO CHANGE)</b></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-card__body slds-card__body_inner slds-m-around- -medium">
+                <div class="rate slds-p-horizontal_none" style="border-left:#1a2745">
+                    <div class="slds-grid slds-wrap">
+                        <div  class="slds-col slds-size_1-of-1 slds-p-horizontal_none">
+                            <div  class="slds-grid slds-wrap slds-align_absolute-center" style="background:#e2e2e2">
+                                <div  class="slds-col slds-size_1-of-2 rate-header slds-p-horizontal_none">
+                                    <strong class="slds-align_absolute-center" style="padding: 8px;">Interest rate 
+                                        <aura:if isTrue="{!v.quote.Product__r.Interest_Rate_From__c}"> From </aura:if>
+                                    </strong>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2 rate-body slds-p-horizontal_none">
+                                    <strong class="slds-align_absolute-center">Comparison rate<aura:if isTrue="{!v.quote.Product__r.Interest_Rate_From__c}"> From</aura:if>*</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-p-horizontal_none">
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-2 rate-header slds-p-horizontal_none">
+                                    <div class="rate-container">
+                                        <div class="rate-value">
+                                            <lightning:formattedNumber value="{!v.quote.Interest_Rate__c}"  style="decimal" 
+                                                                       minimumFractionDigits="2" maximumFractionDigits="2"/>
+                                        </div>
+                                        <div class="percentage-container">
+                                            <div class="percentage">%</div>
+                                            <div class="pa">p.a.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2 rate-body slds-p-horizontal_none" style="background:#e2e2e2">
+                                    <div class="rate-container">
+                                        <div class="rate-value">
+                                            <lightning:formattedNumber value="{!v.quote.Actual_Comparison_Rate__c}"  style="decimal" 
+                                                                       minimumFractionDigits="2" maximumFractionDigits="2"/>
+                                        </div>
+                                        <div class="percentage-container">
+                                            <div class="percentage">%</div>
+                                            <div class="pa">p.a.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="product-desc-style">
+                {!v.quote.Product_Description__c}
+            </div>
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_12-of-12 slds-m-vertical_x-small">
+                    <span >
+                        <lightning:button variant="base" label="Apply Now" class="btn btn-green width100" onclick="{! c.applyNow }"/>
+                    </span>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_12-of-12 slds-m-vertical_x-small iconsize">
+                    <span >
+                        <button aria-controls="divContent" aria-expanded="{!v.isexpanded}" onclick="{!c.changeState}"  class="slds-button slds-button_brand btn btn-dark-blue-border width100 more_detail_btn slds-scope" style="box-shadow:none;">
+                            <aura:if isTrue="{!v.isexpanded}">
+                                <span class="slds-truncate closeOrmorebutton" title="Details"> Close <lightning:icon iconName="utility:up" size="small"/></span>
+                                <aura:set attribute="else">
+                                    <span class="slds-truncate closeOrmorebutton" title="Details">More Details <lightning:icon iconName="utility:down" size="small"/></span>
+                                </aura:set>
+                            </aura:if>
+                        </button>
+                    </span>
+                </div>
+                <aura:if isTrue="{!v.isexpanded}">
+                    <div class="{! 'slds-section' + (v.isexpanded ? ' slds-is-open' : '')}" style=" text-align: left;padding:6px;max-width: 100% !important;">
+                        <div class="slds-section__content" aria-hidden="{!!v.isexpanded}" id="divContent">
+                            <div  class="slds-grid slds-wrap">
+                                <div  class="slds-col slds-size_2-of-2" style="padding: 0;">
+                                    <div   class="slds-grid slds-wrap">
+                                        <div  class="slds-col slds-size_1-of-3">
+                                            <div class="fees-title-style"> Setup</div>
+                                        </div>
+                                        <div  class="slds-col slds-size_1-of-3">
+                                            <div class="fees-title-style"> Monthly</div>
+                                        </div>
+                                        <div  class="slds-col slds-size_1-of-3">
+                                            <div class="fees-title-style"> Decision in</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_2-of-2" style="padding: 0;">
+                                    <div  class="slds-grid slds-wrap">
+                                        <div  class="slds-col slds-size_1-of-3">
+                                            <div class="fees-style">${!v.quote.Total_Setup_Fees__c} </div>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-3">
+                                            <div class="fees-style">
+                                                <aura:if isTrue="{!v.quote.Monthly_Account_Keeping_Fees__c}">
+                                                    ${!v.quote.Monthly_Account_Keeping_Fees__c}
+                                                    <aura:set attribute="else">
+                                                        $0
+                                                    </aura:set>
+                                                </aura:if>
+                                            </div>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-3">
+                                            <div class="fees-style">
+                                                <aura:if isTrue="{!v.quote.Product__r.Decision_in_Hours__c}">
+                                                    {!v.quote.Product__r.Decision_in_Hours__c} hrs
+                                                    <aura:set attribute="else">
+                                                        0 hrs
+                                                    </aura:set>
+                                                </aura:if>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_2-of-2" style="padding-left: 12px;font-size: 13px;">
+                                    <aura:if isTrue="{!v.documentsNeeded.length != 0}">
+                                        <h2 style="text-align: left;font-weight: 600;font-family:ProximaNova-AltBold;" class="slds-m-top--large">What you'll need to apply</h2>
+                                        <div class="slds-p-around_x-small testCls" style="" >
+                                            <aura:iteration items="{!v.documentsNeeded}" var="doc">
+                                                <div style="display: flex;">
+                                                    <span style="padding-top: 4px;"><lightning:input type="checkbox" class="{! 'non-clickable-checkbox' + (v.isFeature ? ' non-clickable-checkbox-isfeature':'')}" label="" checked="false" disabled="true"/></span>
+                                                    <span>{!doc}</span>
+                                                </div>
+                                            </aura:iteration>
+                                        </div>
+                                    </aura:if>
+                                    <h2 style="text-align: left;font-weight: 600;font-family:ProximaNova-AltBold" class="slds-m-top--large">Loan Details</h2>
+                                    <ul class="slds-list--dotted slds-p-around_x-small" style="text-align: left;padding-inline: initial;">
+                                        <aura:iteration items="{!v.features}" var="feature">
+                                            <li>{!feature}</li>
+                                        </aura:iteration>
+                                    </ul>
+                                    
+                                    <h2 class="slds-m-top--large" style="text-align: left;font-weight: 600;font-family:ProximaNova-AltBold">Eligibility Requirements</h2>
+                                    <div class="slds-form slds-form_compound" >
+                                        <ul class="slds-list--dotted slds-p-around_x-small" style="text-align: left;padding-inline: initial;">
+                                            <aura:iteration items="{!v.eligibilities}" var="eligibility">
+                                                <li>{!eligibility}</li>
+                                            </aura:iteration>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </aura:if> 
+            </div>
+        </div>
+
+    </article>
+    
+</aura:component>

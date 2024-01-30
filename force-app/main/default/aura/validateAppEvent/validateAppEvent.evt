@@ -1,0 +1,3 @@
+<aura:event type="APPLICATION" description="Event template" >
+	<aura:attribute name="applicantNo" type="Integer" description="Use For applicant No" />
+</aura:event>

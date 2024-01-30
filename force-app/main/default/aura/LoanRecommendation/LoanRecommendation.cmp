@@ -1,0 +1,90 @@
+<aura:component controller="ParkerLaneLoanController">
+    <aura:attribute name="purposeOptions" type="List" default="[{'label': 'Solar', 'value': 'Solar'},{'label': 'Home Improvement', 'value': 'Home Improvement'},{'label': 'Debt Consolidation', 'value': 'Debt Consolidation'}]"/>	
+    <aura:attribute name="purpose" type="String" default=""/>
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="masterQuote" type="String"/>
+    <aura:attribute name="customerAmount" type="Integer"/>
+    <aura:attribute name="totalAmount" type="Decimal" />
+    <aura:attribute name="applicantFName" type="String" default=""/>
+    <aura:attribute name="applicantLName" type="String" default=""/>
+    <aura:attribute name="applicantEmail" type="String" default=""/>
+    <aura:attribute name="applicationSection" type="String" default=""/>
+    <aura:attribute name="appSectionPath" type="List" default="[]"/>
+    <aura:attribute name="quotesWpr" type="ParkerLaneLoanController.WrapperLoanRate[]" />
+    <aura:attribute name="selectedQuote" type="sObject" />
+    <aura:attribute name="showError" type="Boolean" default="false"/>
+    <aura:attribute name="errorMsg" type="String"/>
+    
+    <aura:handler name="ApplyNowEvent" event="c:ApplyNowEvent" action="{!c.Apply}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <div class="loan-recommendation">
+        <aura:if isTrue="{!v.showError}">
+            <div class="slds-notify slds-notify_toast slds-theme_error slds-align_absolute-center slds-m-vertical--medium">
+                <span class="slds-assistive-text">error</span>
+                <div class="slds-notify__content">
+                    <p class="slds-align_absolute-center">{!v.errorMsg}.</p>                
+                </div>
+            </div>
+        </aura:if>
+        <lightning:spinner aura:id="mySpinner" variant="brand" size="large" class="slds-hide" />
+        
+        <section class="bg-light-sky-blue slds-p-around_large slds-text-align_center">
+            <div class="product-selector__choices-container">
+                <h3 style="font-size:1.75rem;font-family: Bely-Bold;">Your Personalised Quote</h3>
+                <div class="slds-grid slds-p-vertical_x-small slds-grid_vertical-align-center">
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12">
+                        <span class="slds-p-horizontal_small "><b>Prepared for:</b></span>
+                        <span class="slds-m-vertical_small slds-col slds-size_1-of-1 slds-medium-size_2-of-12">
+                            {!v.applicantFName}&nbsp;{!v.applicantLName}
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="header-input-loan-amount">
+                        <span class="slds-align_absolute-center" style="padding-top:8px"><b>Loan Amount:</b>&nbsp;</span>
+                        <span class="input-dollar">
+                            <lightning:input aura:id="howMuchFieldcheck" required="true"
+                                                 min="0" type="number" 
+                                                 class="txt-left no-abbr input-style"  
+                                                 step="1" 
+                                                 value = "{!v.customerAmount}" 
+                                                 placeholder="How much do you need?"/>
+                        </span>
+                    </div>
+                <h5 class="slds-p-top_medium"><b>Purpose:</b>&nbsp;{!v.purpose} </h5>
+            </div>
+        </section>
+        <section class="our-loans bg-lightest slds-p-around--large max-1000">
+            <h1 class="slds-m-top_medium slds-text-align_center txt-dark-blue" style="font-size: 1.75rem;font-weight: 900; font-family:ProximaNova-AltBold"> Your loan options</h1>
+            <div class="slds-align_absolute-center">
+                <div class="slds-text-align_center" style="display: inline-flex; font-size: 12px !important;">
+                    <div class="esp-mark" style="color:white; font-size: 10px">!</div>
+                    <h2 style="color:#0176D3;padding-left: 5px;">Select the loan term that suits best</h2>
+                </div>
+            </div>
+            <aura:if isTrue="{!v.quotesWpr.length > 0}">
+                <div class="product-selector__choices slds-grid slds-wrap slds-grid slds-gutters"> 
+                    <aura:iteration items="{!v.quotesWpr}" var="quotesWpr" indexVar = "indx">
+                        <c:LoanRecommendationCard quote ="{!quotesWpr.quote}" 
+                                                  loanRates = "{!quotesWpr.loanRatelist}"
+                                                  customerAmount="{!v.customerAmount}"
+                                                  purpose="{!v.purpose}"
+                                                  index = "{!indx}"/>
+                    </aura:iteration> 
+                </div>
+                <div class="warning-msg bg-lightest slds-p-bottom_small">
+                    <div class=""> 
+                        *WARNING: This comparison rate applies only to the example or examples given and assumes a borrower with an excellent credit history. Different amounts and terms will result in different comparison rates. Costs such as redraw fees or early repayment fees, and cost savings such as fee waivers, are not included in the comparison rate but may influence the cost of the loan. Comparison rate has been calculated based upon the nominal interest rate and any one-off and/or ongoing fees which apply to your loan and is based on monthly repayments. Rates subject to change, or may be withdrawn at any time.  All applications for credit are subject to normal credit approval criteria. Parker Lane specifically disclaims any responsibility or liability for any losses or damages arising from any use of or reliance upon any calculations or conclusions reached using this loan options tool. See our credit guide for further detail: https://www.parkerlane.com.au/credit-guide. Conditions Apply. Parker Lane is the registered
+                    </div>
+                    <div class=""> 
+                        Trading name of Upside Downside Pty Ltd. Australian Credit Licence number 482276
+                    </div>
+                    <div class=""> 
+                        Disclaimer: This report is for informational purposes only and is provided as a guide only. The information contained in this report may not be current or complete, or may not remain current or complete, and therefore under no circumstances should be relied upon. The information is based upon the data provided by you and others which changes regularly. It is your responsibility to assess and verify the accuracy, currency, completeness and reliability of the information and whether it applies in your individual circumstances. No warranty or representations as to its accuracy or completeness is provided. We are not liable to your or any other person for loss, damage or injury arising from the use of, or reliance on, this information, including but not limited to loss suffered in connection with incorrect or out of date information.
+                    </div>
+                </div>
+            </aura:if>
+        </section>	
+    </div>
+</aura:component>

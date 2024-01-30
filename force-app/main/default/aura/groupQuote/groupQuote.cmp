@@ -1,0 +1,10 @@
+<aura:component controller="groupQuoteController" implements="forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler event="force:refreshView" action="{!c.doInit}" />
+	<aura:handler name="groupEventC" event="c:groupAppLicationEvent" action="{!c.groupEventAction}"/>
+    <aura:attribute name="quoteMainList" type="List" />
+    <aura:iteration items="{!v.quoteMainList}" var="op" >
+        <c:groupQuoteDetails masterQuote="{#op.label}" quoteList="{#op.value}" recordId="{#v.recordId}" />
+        <hr style="margin: 1rem 0;"/>
+    </aura:iteration>
+</aura:component>

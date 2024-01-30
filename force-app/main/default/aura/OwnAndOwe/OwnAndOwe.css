@@ -1,0 +1,71 @@
+.THIS.own-and-owe .uiInput--textarea .textarea, .THIS .uiInput--textarea.textarea {
+    background-color: rgb(255, 255, 255);
+    color: rgb(8, 7, 7);
+    border: 1px solid rgb(221, 219, 218);
+    border-radius: .25rem;
+    width: 100%;
+    transition: border .1s linear,background-color .1s linear;
+    resize: vertical;
+    padding: .75rem;
+}
+.THIS.own-and-owe h1.header-text {
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.THIS .slds-form_areYouSure  ul {
+    list-style: unset;
+    padding-left: 40px;
+}
+.THIS .slds-form_areYouSure  h2 {
+    color: #000;
+}
+.THIS .net-wealth{
+    font-size: 22px;
+    padding: .5rem;
+    font-weight: 700;
+    border-top: 1px solid rgb(217, 219, 221);
+    border-bottom: 1px solid rgb(217, 219, 221);
+}
+.THIS .col-size,.THIS .col-detail-width {
+    min-width: 15rem;
+    width: 15rem;
+    max-width: 15rem;
+}
+.THIS .col-amount-width{
+    min-width: 4.5rem;
+    width: 4.5rem;
+    max-width: 4.5rem
+}
+.THIS .col-delete-width{
+    min-width: 2.5rem;
+    width: 2.5rem;
+    max-width: 2.5rem
+}
+.THIS .col-edit-width{
+    min-width: 3.5rem;
+    width: 3.5rem;
+    max-width: 3.5rem
+}
+.THIS .col-ownership-width{
+    min-width: 7.5rem;
+    width: 7.5rem;
+    max-width: 7.5rem
+}
+
+.THIS .txt-darkgrey {
+    color: #8b8888;
+}
+.THIS .errMoreThan50{
+    border-color: rgb(194, 57, 52);
+    box-shadow: rgb(194, 57, 52) 0 0 0 2px inset;
+    border: 1px solid rgb(217, 219, 221);
+    border-radius: .25rem;
+    margin: 0px !important;
+}
+.THIS .text-err{
+    color: rgb(194, 57, 52);
+}
+.THIS .text-warning{
+    color:rgb(255, 183, 93);
+}

@@ -1,0 +1,111 @@
+.THIS .slds-path__scroller_inner {
+    position: relative;
+    padding-right: 6px;
+}
+.THIS .slds-path__scroll-controls {
+    position: absolute;
+    right: 0;
+}
+.THIS #path__scroller_inner {
+    margin-left: 0;
+}
+.THIS .arrow {
+    z-index: 7;
+    padding: 0px 4px;
+}
+
+.THIS .new-li li .list-item-cicle{
+  width: 4em;
+  height: 4em;
+  text-align: center;
+  line-height: 4em;
+  border-radius: 3em;
+  background: #459A45;
+  margin: 0 1em;
+  display: inline-block;
+  color: white;
+  position: relative;
+}
+.THIS .new-li li .list-item-cicle::before{
+  /*content: '';*/
+  position: absolute;
+  top: .9em;
+  left: -4em;
+  width: 4em;
+  height: .2em;
+  background: #459A45;
+  z-index: -1;
+}
+
+
+.THIS .new-li li .list-item-cicle:first-child::before {
+  display: none;
+}
+
+.THIS .new-li .slds-is-active .list-item-cicle{
+    background-color: #fff !important;
+    color: #1e8ffd !important;
+    /*border: 1px solid #1e8ffd !important;*/
+}
+
+.THIS .new-li .slds-is-active ~ li .list-item-cicle, 
+.THIS .new-li .slds-is-active ~ li .list-item-cicle::before {
+  	background: #c3c3c3;
+    color:#000;
+}
+
+.THIS .new-li .slds-is-active .list-item-text{
+    color:#1e8ffd !important;
+}
+
+.THIS .new-li .slds-is-active ~ li .list-item-text,
+.THIS .new-li .slds-is-active ~ li .list-item-text::before {
+    color:#000;
+}
+.THIS .new-li .list-item-text{
+    color:#459A45;
+}
+
+.THIS .list-item-text{
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-family: ProximaNovaAlt-Medium;
+}
+
+.THIS .new-li li{
+    padding: 7px;
+    align-items: center;
+    text-align: center;
+}
+
+.THIS .new-li .slds-is-current .list-item-cicle {
+    background-color: #fff;
+    color: #459A45 ;
+    /*border: 1px solid #459A45;*/
+}
+
+.THIS .new-li .slds-is-current .list-item-text {
+    color: #459A45;
+}
+
+@media screen and (max-width: 770px) {
+    .THIS .new-li li .list-item-cicle{
+        width: 2.15em;
+        height: 2.15em;
+        line-height: 2.15em;
+    }
+    .THIS .list-item-text{
+        display: none;
+    }
+}
+.THIS .set_number_size{
+    font-size:16px !important;
+}
+@media screen and (max-width: 770px){
+    .THIS .set_number_size{
+        font-size:10px !important;
+    }
+    
+}

@@ -1,0 +1,199 @@
+.THIS .text-white {
+    color:#fff;
+}
+
+.THIS .product-selector img {
+    max-width: 40%;
+    height: auto;
+}
+.THIS .product-selector legend {
+    font-size: 1.125rem;
+    color: #fff;
+    width: 100%;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+.THIS .product-selector {
+    text-align: center;
+    font-family: Roboto Slab,sans-serif;
+    font-weight: 700;
+}
+.THIS .product-selector .slds-radio_button-group {
+    border: none !important;
+    border-radius: 0;
+}
+.THIS .product-selector .slds-button {
+    border: none !important;
+    justify-content: center;
+}
+.THIS .product-selector .slds-button label {
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #0b4688;
+    text-align: center;
+    margin: 5px;
+    border-radius: 4px;
+    display: block;
+    min-width: 200px;
+}
+.THIS .product-selector .slds-radio {
+    margin-bottom: 6px
+}
+.THIS .product-selector .slds-form-element__label {
+    color: #1a2745;
+    font-size: 1rem !important;
+}
+.THIS .product-selector .slds-button span {
+    font-size: 1rem;
+    display: inline-block;
+    color: #1a2745;
+}
+.THIS .product-selector .slds-button strong {
+    display: block;
+    color: #1a2745;
+    font-size: 1.75rem;
+}
+.THIS .product-selector .text-number input[type=text],
+.THIS .product-selector input[type=number] {
+    color: #1a2745!important;
+    font-size: 1.25rem;
+    padding: 0.75rem;
+    text-align: center;
+    font-weight: 500;
+    border: 1.5px solid #91dadc;
+    width: 12rem;
+    margin: 1rem;
+}
+.THIS .product-selector input[type=text],
+.THIS .product-selector input[type=email] {
+    color: #1a2745 !important;
+    padding: 10px;
+    font-weight: 400;
+    /*border: 1px solid;*/
+}
+.THIS .product-selector .slds-radio_button [type=radio]:checked+.slds-radio_button__label span,
+.THIS .product-selector .slds-radio_button [type=radio]:checked+.slds-radio_button__label strong {
+	color: #fff;   
+}
+.THIS .product-selector .text-number input::-webkit-input-placeholder {
+    color: #1a2745;
+    font-size: 1rem;
+}
+.THIS .product-selector .text-number input::-moz-placeholder { 
+    color: #1a2745;
+    font-size: 1rem;
+}
+.THIS .product-selector .text-number input:-ms-input-placeholder { 
+    color: #1a2745;
+    font-size: 1rem;
+}
+.THIS .product-selector h3 {
+    font-size: 2.5rem;
+    line-height: 3rem;
+    color: #fff;
+}
+
+.THIS.solar-loan-get-qoute .btn-green {
+    background-color: #218732;
+    color: #fff;
+    border-color: #319b42;
+    padding: 5px 15px;
+    min-width: 120px;
+    border-radius: 0;
+    font-size: 1.125rem;
+    font-weight: 700;
+}
+.THIS.solar-loan-get-qoute .btn-green:hover {
+    background-color: #057f1a;
+}
+.THIS .txt-left{
+    text-align: left;
+}
+.THIS .repay-radio span.slds-radio{
+    padding: 15px;
+    color: #1a2745;
+    border: 1px solid;
+    border-radius: 5px;
+    margin: 15px;
+}
+
+.THIS .input-style input {
+    text-align: right;
+    color: #1a2745 !important;
+    /*border: 1px solid;*/
+    width: 7rem;
+}
+
+
+.THIS .slds-radio [type=radio]:checked+.slds-radio_faux:after, 
+.THIS .slds-radio [type=radio]:checked+.slds-radio--faux:after, 
+.THIS .slds-radio [type=radio]:checked~.slds-radio_faux:after, 
+.THIS .slds-radio [type=radio]:checked~.slds-radio--faux:after, 
+.THIS .slds-radio [type=radio]:checked+.slds-radio__label .slds-radio_faux:after, 
+.THIS .slds-radio [type=radio]:checked+.slds-radio__label .slds-radio--faux:after {
+    width: 1rem !important;
+    height: 1rem !important;
+}
+
+@media (max-width: 768px) {   
+    .THIS .product-selector .slds-radio_button-group {
+        display: block;
+    }
+    .THIS .text-alignment-mobile {
+        text-align: center;
+    }
+    
+}
+
+
+.THIS .btn-light-sky-blue1 {
+    /*background-color: #91DADC;*/
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+    color: black !important;
+    width:100% !important;
+    font-weight:100;
+    max-width: 215px;
+    margin-left:auto;
+    margin-right:auto;
+    font-family: Proxima Nova Alt Regular;
+    
+}
+.THIS .btn-light-sky-blue1:focus{
+    background-color: #91dadc;
+    color: #1a2745!important;
+    font-weight: 600;
+    font-family: Proxima Nova Alt Regular;
+}
+.THIS .button_editing button.slds-button.slds-button_outline-brand.btn-light-sky-blue1 {
+    border: 1px solid #91DADC !important; 
+}
+.THIS .button_editing button.slds-button.slds-button_outline-brand.btn-light-sky-blue1:hover {
+    background-color: #91dadc !important; 
+    font-weight: 600;
+    font-family: Proxima Nova Alt Regular;
+}
+.THIS .inputbox{
+    margin-left: auto;
+    width: 100%;
+    max-width: 270px;
+    margin-right: auto;
+}
+
+.THIS .input-dollar1 lightning-input{
+    position: relative;
+    width: 14rem;
+}
+.THIS .input-dollar1 lightning-input:before {
+    position: absolute;
+    top: 0;
+    content: "$";
+    z-index: 1;
+    font-size: 1.25rem;
+    font-weight: bold;
+    padding: 2.4rem 0!important;
+    left: 24px;
+    display: flex;
+    
+
+}

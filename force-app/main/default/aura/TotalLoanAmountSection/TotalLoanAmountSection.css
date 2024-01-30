@@ -1,0 +1,23 @@
+.THIS .select-opt-inline-block{
+    display: inline-block;
+}
+.THIS .loan-rec-panel .slds-combobox__input.slds-input, .THIS .loan-rec-panel .slds-combobox__input.slds-input:focus {
+    background-color: #006ac6;
+    border: #006ac6;
+    border-radius: 0;
+    width: 100%;
+    transition: border .1s linear,background-color .1s linear;
+    height: calc(1.875rem + (1px * 2));
+    color: #fff !important;
+    border-bottom: 1px solid;
+    font-size: 20px;
+}
+.THIS .loan-rec-panel .slds-dropdown{
+    background: #006ac6;
+    text-align: left;
+    
+}
+ .THIS .loan-rec-panel .slds-listbox__option.slds-has-focus, .THIS .loan-rec-panel .slds-listbox__option:hover{
+    background-color: #006ac6;
+    color: #000;
+}

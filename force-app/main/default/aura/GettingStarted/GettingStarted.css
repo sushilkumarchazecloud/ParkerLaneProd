@@ -1,0 +1,88 @@
+.THIS .tick{
+    color: #45C65A;
+    height: 22px;
+    width: 24px;
+    margin-left: -5px;
+}
+
+.THIS td{
+    color: #1a2745;
+}
+.THIS .block{
+    height: 20px;
+    width: 22px;
+    margin-left: -3px;
+}
+
+.THIS .display{
+    display: flex;
+}
+
+.THIS.getting-started .p-header {
+    font-size: 18px;
+    font-weight: 800;
+    color: #1a2745;
+	font-family: ProximaNova-AltBold;
+    
+}
+.THIS.getting-started .headerFont {
+    font-size: 3rem;
+    line-height: 3rem;
+    color: #0070d2;
+    font-weight: 800;
+}
+.THIS .subheaderFont{
+    font-weight: bold;
+    font-size :1.5rem;
+    font-family: ProximaNova-AltBold;
+}
+
+.THIS.getting-started .text-justify {
+    text-align: justify;
+}
+
+.THIS .radio_button .slds-radio_button__label {
+  padding-top: 5px;
+  padding-bottom: 5px;  
+}
+
+.THIS .radio_button .slds-form-element__legend.slds-form-element__label{
+    margin-bottom:0;
+}
+
+.THIS p{
+    width: 95%;
+}
+
+.THIS .radio_button .slds-radio_button-group{
+    border:1px solid #91dadc;
+    border-radius:3px;    
+}
+
+.THIS .awarded-style{
+    text-align:center;
+}
+
+.THIS .begin-img{
+    width: 3rem;
+}
+
+@media screen and (max-width: 770px) {    
+    .THIS .awarded-style{
+        text-align:left;
+    }
+    .THIS .begin-img{
+        width: 6rem;
+    }
+    .THIS .blue-line {
+        height: 4px;
+        width: 50%;
+        background-color: #91dadd;
+        margin-top: 2.5rem;
+    }
+    .THIS .gray-line {
+        height: 4px;
+        background-color: #d5d5d5;
+        margin-top: 2.5rem;
+    }
+}

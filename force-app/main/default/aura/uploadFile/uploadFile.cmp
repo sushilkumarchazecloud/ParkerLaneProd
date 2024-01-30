@@ -1,0 +1,122 @@
+<aura:component controller="UploadDocuments">
+    <aura:attribute name="sessionId" type="String" />
+    <aura:attribute name="label" type="String" />
+    <aura:attribute name="Name" type="String" />
+    <aura:attribute name="files" type="Blob" />
+    <aura:attribute name="parentId" type="String" />
+    <aura:attribute name="error" type="boolean" />
+    <aura:attribute name="isAddNote" type="boolean" default="false"/>
+    <aura:attribute name="isComplete" type="boolean" default="false"/>
+    <aura:attribute name="message" type="String" />
+    <aura:attribute name="isUploading" type="boolean" default="false"/>
+    <aura:attribute name="upload" type="boolean" default="false"/>
+    <aura:attribute name="AddMore" type="boolean" default="false"/>
+    <aura:attribute name="percent" type="integer" default="0" />
+    <aura:attribute name="AttachId" type="String" />
+    <aura:attribute name="contentBodyId" type="string" />
+    <aura:attribute name="requestId" type="String" />
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="docDescription" type="String" />
+    <aura:attribute name="Description" type="String" />
+    <aura:attribute name="PersonName" type="String" />
+    <aura:attribute name="CategryName" type="String" />
+    <aura:attribute name="plusImageURL" type="String" />
+    <aura:attribute name="checkImageURL" type="String" />
+    <aura:attribute name="itemNo" type="integer" default="0" />
+    <aura:attribute name="already" type="boolean" default="true"/>
+    <aura:attribute name="ishide" type="boolean" default="false"/>
+    <aura:attribute name="isDelete" type="boolean" default="false"/>
+    <aura:attribute name="count" type="integer" default="0"/>
+    <aura:attribute name="isAttachUpdated" type="boolean" default="false"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>   
+    <aura:handler name="change" value="{!v.AttachId}" action="{!c.updateName}"/>
+    <aura:handler name="change" value="{!v.requestId}" action="{!c.updateName}"/>
+    
+    <aura:if isTrue="{!v.already}">
+        <div class="slds-grid slds-wrap slds-p-around_x-small" style ="position: relative;color: #FFF;">
+            <div class="slds-col slds-size_10-of-12 slds-align_absolute-center" >
+                <div class="" Style="padding-top: 5px;padding-bottom: 5px;">
+                    <div class="file-upload-container">
+                        <lightning:input  onchange="{!c.handleFilesChange}" 
+                                         class="file-upload" type="file" multiple="false" 
+                                         style="{!'background-image:url('+ (v.isComplete ? v.checkImageURL: v.plusImageURL) + '), linear-gradient(to bottom, #FFF 50%, '+ (v.isComplete ? '#45C65A 50%);border-color: #45C65A;': '#0665EA 50%);border-color: #0665EA;')}" />
+                    </div>
+                </div>
+            </div>
+            <div style="right: 0;position: absolute;" class="slds-p-around_x-small">
+                <lightning:icon iconName="utility:multi_picklist" variant="inverse" size="medium" />
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-text-align_center" style="font-size: 1.25rem;font-weight: 700;">
+                {!v.CategryName}
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-text-align_center" style="font-size: 1rem;font-weight: 100;">
+                {!v.docDescription}
+            </div>
+        </div>
+        <!--td Style="max-width:290px"-->
+        
+        <!--/td-->
+        <aura:set attribute="else">
+            <c:uploadFile PersonName="{!v.PersonName}" CategryName="{!v.CategryName}" label="Attachment" ishide="{!v.ishide}" recordId ="{!v.recordId}" isComplete="{!v.isComplete}" parentId="{!v.parentId}" sessionId="{!v.sessionId}" count="{!v.count}" />
+            
+            <aura:if isTrue="{!!v.isDelete}">
+                <aura:if isTrue="{!v.isComplete}">
+                    <div class="slds-grid slds-wrap slds-p-horizontal_small" style ="color: #FFF;">
+                        <div class="slds-col slds-size_10-of-12 " >
+                            {!v.Name}
+                        </div>
+                        <div class="slds-col slds-size_2-of-12 " style="justify-content: end;display: flex;">
+                            <div class="completedcheck">
+                                <lightning:icon iconName="utility:check" variant="inverse" size="xx-small"/> 
+                            </div>
+                        </div>
+                    </div>
+                </aura:if>
+                <div class="slds-col slds-size_1-of-1" style="{!v.ishide? '':'display:none'}">
+                    <div class="slds-p-around_x-small slds-m-around_x-small" style="background: #0555cb;border-color: #0346a7;border-radius: 5px;">
+                        <div style="position: relative;">
+                            <lightning:input name="input2" class="inputSize slds-p-top_x-small" label="Document Name" placeholder="Document Name" value="{!v.Name}" onblur="{!c.updateName}" />
+                            <div class="processing-icon-style">
+                                <aura:if isTrue="{!v.isUploading}">
+                                        <img src="{!$Resource.SolarLoan + '/img/dualring.gif'}" class="spinner-img" alt="Loading"/>
+                                    <aura:set attribute="else">
+                                        <div class="completedcheck greenicon">
+                                            <lightning:icon iconName="utility:check" variant="inverse" size="xx-small"/> 
+                                        </div>
+                                    </aura:set>
+                                </aura:if>
+
+                            </div>
+                        </div> 
+                        <div class="slds-p-vertical_xx-small" >
+                            <aura:if isTrue="{!v.isUploading}">
+                                <div class="slds-text-body_small slds-text-color_error">
+                                    <meter style="width: 100%;" value="{!v.percent / 100}"/>
+                                </div>
+                                <aura:set attribute="else">
+                                    <aura:if isTrue="{!v.upload}">
+                                        <meter style="width: 100%;" value="{!v.percent/100}"/>
+                                    </aura:if>
+                                </aura:set>
+                            </aura:if>
+                        </div>
+                        
+                        <div class="slds-text-align_right">
+                            <lightning:button value="{!v.AttachId}" variant="natural" label="Add note" disabled="{!!v.upload}" iconName="utility:note" onclick="{!c.addNote}" title="Add Note"/>
+                            <lightning:button value="{!v.AttachId}" variant="natural" label="Delete" disabled="{!!v.upload}" iconName="utility:delete" onclick="{!c.onDelete}" title="Remove File"/>
+                            <c:priviewCmp id="{!v.AttachId}" isDisabled="{!v.upload}" contentBodyId="{!v.contentBodyId}" />
+                        </div>
+                        <aura:if isTrue="{!v.isAddNote}">
+                            <div>
+                                <lightning:textarea name="myTextArea" placeholder="Add a note(optional)"
+                                                    value="{!v.Description}"
+                                                    maxlength="300" onblur="{!c.updateName}" />
+                            </div>
+                        </aura:if>
+                    </div>
+                </div>
+            </aura:if>
+        </aura:set>
+    </aura:if>
+</aura:component>

@@ -1,0 +1,428 @@
+<aura:component >
+    <aura:attribute name="liabilityTypeOptions" type="List" default="[{'label': 'Home Loan/Mortgage', 'value': 'Home Loan/Mortgage'},{'label': 'Investment Home Loan', 'value': 'Investment Home Loan'},{'label': 'HECS/HELP', 'value': 'HECS/HELP'},{'label': 'Credit Card / Store Card', 'value': 'Credit Card / Store Card'},{'label': 'Child Maintenance', 'value': 'Child Maintenance'},{'label': 'Car Loan', 'value': 'Car Loan'},{'label': 'Car Lease', 'value': 'Car Lease'},{'label': 'Personal Loan', 'value': 'Personal Loan'},{'label': 'Tax liability', 'value': 'Tax liability'},{'label': 'Merchant Credit (zip pay / afterpay / certigy)', 'value': 'Merchant Credit (zip pay / afterpay / certigy)'},{'label': 'Margin Loan', 'value': 'Margin Loan'},{'label': 'Overdraft', 'value': 'Overdraft'},{'label': 'Payday Loan', 'value': 'Payday Loan'},{'label': 'Commercial Mortgage', 'value': 'Commercial Mortgage'}]"/>
+    <aura:attribute name="repaymentTypeOptions" type="List" default="[{'label': 'Interest only', 'value': 'Interest only'},{'label': 'Principal and interest', 'value': 'Principal and interest'}]"/>
+    <aura:attribute name="rateTypeOptions" type="List" default="[{'label': 'Fixed', 'value': 'Fixed'},{'label': 'Variable', 'value': 'Variable'}]"/>
+    <aura:attribute name="OwnershipOptions" type="List" default="[{'label': 'Applicant 1', 'value': 'Applicant 1'},{'label': 'Applicant 2', 'value': 'Applicant 2'},{'label': 'Joint', 'value': 'Joint'},{'label': 'Joint (non-applicant)', 'value': 'Joint (non-applicant)'}]"/>
+    <aura:attribute name="OwnershipSingleOptions" type="List" default="[{'label': 'Applicant 1', 'value': 'Applicant 1'},{'label': 'Joint with Spouse', 'value': 'Joint with Spouse'},{'label': 'Joint (non-applicant)', 'value': 'Joint (non-applicant)'}]"/>
+    <aura:attribute name="paymentFrequencyOptions" type="List" default="[{'label': 'Weekly', 'value': 'Weekly'},{'label': 'Fortnightly', 'value': 'Fortnightly'},{'label': 'Monthly', 'value': 'Monthly'},{'label': 'Annually', 'value': 'Annually'}]"/>
+    <aura:attribute name="yesNoOptions" type="List" default="[{'label': 'Yes', 'value': 'Yes'},{'label': 'No', 'value': 'No'}]"/>
+    <aura:attribute name="remainingTermsOptions" type="List" default=""/>
+    <aura:attribute name="monthsOptions" type="List" default="[]"/>
+    <aura:attribute name="yearsOptions" type="List" default="[]"/>
+    <aura:attribute name="jointYesNoOptions" type="List" default="[{'label': 'Joint (other applicant)', 'value': 'Yes'},{'label': 'Joint (other)', 'value': 'No'}]"/>
+    <aura:attribute name="JointApplicant" type="String" default=""/>
+    <aura:attribute name="selectedPerson" type="String" default="single"/>
+	<aura:attribute name="app1Ownership" type="String" default="Applicant 1 Ownership Share (%)"/>
+    <aura:attribute name="app2Ownership" type="String" default="Applicant 2 Ownership Share (%)"/>
+    <aura:attribute name="liabilityType" type="String" default=""/>
+    <aura:attribute name="liability" type="FinServ__AssetsAndLiabilities__c" />
+    <aura:attribute name="index" type="Integer" />
+    <aura:attribute name="showError" type="Boolean" default="false"/>
+    <aura:attribute name="errorMsg" type="String" default="Please update the form entries highlighted in red and try again"/>
+    
+    <aura:registerEvent name="SolarDeleteRowEvent" type="c:SolarDeleteRowEvent"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+	<aura:method name="validateCommitment" action="{!c.validateCommitment}" access="PUBLIC" />
+    
+    <aura:if isTrue="{!v.showError}">
+        <div class="slds-notify slds-notify_toast slds-theme_error slds-align_absolute-center slds-m-vertical--medium">
+            <span class="slds-assistive-text">error</span>
+            <div class="slds-notify__content">
+                <p class="slds-align_absolute-center">Error: {!v.errorMsg}.</p>                
+            </div>
+        </div>
+    </aura:if>
+    
+    <div class="slds-form slds-p-top_small" role="list">
+        <div class="slds-form__row">
+            <div class="slds-form__item" role="listitem">
+                <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                    <lightning:combobox label="Liability Type" aura:id="fieldcheckType" required="true"
+                                        value="{!v.liability.FinServ__AssetsAndLiabilitiesType__c}" 
+                                        options="{! v.liabilityTypeOptions }" 
+                                        placeholder="Liability Type"/>
+                </div>
+            </div>
+            <div class="slds-form__item" role="listitem">
+                <div class="slds-form-element slds-form-element_stacked slds-is-editing ">
+                    <aura:if isTrue="{!v.liability.FinServ__AssetsAndLiabilitiesType__c != null &amp;&amp; v.liability.FinServ__AssetsAndLiabilitiesType__c != ''}">
+                        <aura:if isTrue="{!v.selectedPerson == 'joint'}">
+                            <lightning:combobox label="Ownership" aura:id="fieldcheck" required="true"
+                                                value="{!v.liability.FinServ__Ownership__c}" 
+                                                options="{! v.OwnershipOptions }" 
+                                                placeholder="Ownership"
+                                                onchange="{!c.handleOwnership}"/>
+                            <aura:set attribute="else">
+                                <lightning:combobox label="Ownership" aura:id="fieldcheck" required="true"
+                                                    value="{!v.liability.FinServ__Ownership__c}" 
+                                                    options="{! v.OwnershipSingleOptions }" 
+                                                    placeholder="Ownership"
+                                                    onchange="{!c.handleOwnership}"/>
+                            </aura:set>
+                        </aura:if>
+                        
+                    </aura:if>
+                </div>
+            </div>
+        </div> 
+         <aura:if isTrue="{!v.liability.FinServ__Ownership__c == 'Joint' || 
+                         v.liability.FinServ__Ownership__c == 'Joint (non-applicant)' ||
+                         v.liability.FinServ__Ownership__c == 'Joint with Spouse'}">
+             <div aura:id = "ownShare" class="slds-form__row">
+                 <div class="slds-form__item" role="listitem">
+                     <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                         <lightning:input type="number" label="{!v.app1Ownership}" 
+                                          aura:id="fieldcheck" required="true"
+                                          value="{!v.liability.Ownership_Share__c}"
+                                          formatter="percent-fixed"
+                                          placeholder="Ownership Share" max ="100" min="0" 
+                                          messageWhenRangeOverflow ="Share (%) shouldn't more than 100"
+                                          messageWhenRangeUnderflow ="Share (%) shouldn't less than 0"/>
+                     </div>
+                 </div>
+                 <div class="slds-form__item" role="listitem">
+                     <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                         <lightning:input type="number" label="{!v.app2Ownership}" 
+                                          aura:id="fieldcheck" required="true"
+                                          value="{!v.liability.Other_Ownership_Share__c}"
+                                          formatter="percent-fixed"
+                                          placeholder="Ownership Share" max ="100" min="0" 
+                                          messageWhenRangeOverflow ="Share (%) shouldn't more than 100"
+                                          messageWhenRangeUnderflow ="Share (%) shouldn't less than 0"/>
+                     </div>
+                 </div>
+             </div> 
+        </aura:if>
+        <aura:if isTrue="{!v.liability.FinServ__AssetsAndLiabilitiesType__c == 'Child Maintenance'}">
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input label="Minimum repayment" 
+                                         formatter="currency"
+                                         type="number" aura:id="fieldcheck" required="true"
+                                         value="{!v.liability.Monthly_Repayment__c}" 
+                                         placeholder="Minimum repayment"/>
+                        
+                    </div>
+                </div>
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:combobox label="Payment Frequency" 
+                                            value="{!v.liability.Payment_Frequency__c}" 
+                                            aura:id="fieldcheck" required="true"
+                                            options="{!v.paymentFrequencyOptions}"
+                                            placeholder="Payment Frequency"/>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-form__row">
+            </div>
+        </aura:if>
+        
+        <aura:if isTrue="{!v.liability.FinServ__AssetsAndLiabilitiesType__c != null &amp;&amp; 
+                         v.liability.FinServ__AssetsAndLiabilitiesType__c != '' &amp;&amp; 
+                         v.liability.FinServ__AssetsAndLiabilitiesType__c != 'HECS/HELP' &amp;&amp; 
+                         v.liability.FinServ__AssetsAndLiabilitiesType__c != 'Tax liability' &amp;&amp; 
+                         v.liability.FinServ__AssetsAndLiabilitiesType__c != 'Child Maintenance' &amp;&amp; 
+                         v.liability.FinServ__AssetsAndLiabilitiesType__c != 'Credit Card / Store Card' &amp;&amp; 
+                         v.liability.FinServ__AssetsAndLiabilitiesType__c != 'Car Lease' }">
+            
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input label="Institution" value="{!v.liability.Institution__c}" 
+                                         aura:id="fieldcheck" required="true" placeholder="Institution"
+                                         maxlength="250"/>
+                        
+                    </div>
+                </div>
+                <div class="slds-form__item" role="listitem">
+                </div>
+                
+            </div>
+            
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input label="Balance (what is currently outstanding)" formatter="currency"
+                                         type="number" aura:id="fieldcheck" required="true"
+                                         value="{!v.liability.Value__c}" 
+                                         placeholder="Balance"/>
+                    </div>
+                </div>
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input label="Maximum Limit" 
+                                         type="number" formatter="currency"
+                                         aura:id="fieldcheck" required="true" 
+                                         min="{!v.liability.Value__c}"
+                                         messageWhenRangeUnderflow="This amount cannot be less than the Balance"
+                                         value="{!v.liability.Limit__c}" 
+                                         placeholder="Limit"/>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input label="Minimum repayment" 
+                                         formatter="currency"
+                                         type="number" aura:id="fieldcheck" required="true"
+                                         value="{!v.liability.Monthly_Repayment__c}" 
+                                         placeholder="Minimum repayment"/>
+                        
+                    </div>
+                </div>
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:combobox label="Repayment Frequency" aura:id="fieldcheck" required="true"
+                                            value="{!v.liability.Repayment_Frequency__c}" 
+                                            options="{!v.paymentFrequencyOptions}"
+                                            placeholder="Repayment Frequency"/>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:radioGroup class="slds-p-around_x-small rgbtn" name="{!'RepaymentTypeRG'+ v.index}"
+                                               label="Repayment Type" aura:id="fieldcheck" required="true"
+                                               options="{! v.repaymentTypeOptions }"
+                                               value="{! v.liability.Repayment_Type__c}"
+                                               type="button"/>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input label="Interest Rate" step="0.01"
+                                         type="number" aura:id="fieldcheck" required="true"
+                                         value="{!v.liability.Interest_Rate__c}" 
+                                         placeholder="Interest Rate"/>
+                    </div>
+                </div>
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <aura:if isTrue="{! v.liability.FinServ__AssetsAndLiabilitiesType__c == 'Home Loan/Mortgage' || 
+                                         v.liability.FinServ__AssetsAndLiabilitiesType__c == 'Investment Home Loan' || 
+                                         v.liability.FinServ__AssetsAndLiabilitiesType__c == 'Commercial Mortgage'}">
+                            <lightning:radioGroup class="slds-p-around_x-small rgbtn" name="{!'RateTypeRG'+ v.index}"
+                                                  label="Rate Type" aura:id="fieldcheck" required="true"  
+                                                  options="{! v.rateTypeOptions }"
+                                                  value="{! v.liability.Rate_Type__c}"
+                                                  type="button"/>
+                        </aura:if>
+                    </div>
+                </div>
+            </div>
+            
+            <aura:if isTrue="{!v.liability.Rate_Type__c == 'Fixed'}">
+                <div class="slds-form__row">
+                    <div class="slds-form__item" role="listitem">
+                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                            <lightning:combobox label="Approximate fixed term remaining (years and months)" 
+                                            value="{!v.liability.Rate_Expires_in_Years__c}" 
+                                            options="{! v.yearsOptions }" 
+                                            placeholder="Years"/>
+                        </div>
+                    </div>
+                    <div class="slds-form__item no-abbr" role="listitem">
+                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                            <lightning:combobox label="&nbsp;" 
+                                            value="{!v.liability.Rate_Expires_in_Months__c}" 
+                                            options="{! v.monthsOptions }" 
+                                            placeholder="Months"/>
+                        </div>
+                    </div>
+                </div>
+            </aura:if>
+        </aura:if>
+        
+         <aura:if isTrue="{!v.liability.FinServ__AssetsAndLiabilitiesType__c == 'Car Lease' }">
+            
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input label="Institution" value="{!v.liability.Institution__c}" 
+                                         aura:id="fieldcheck" required="true"
+                                         placeholder="Institution" maxlength="250"/>
+                        
+                    </div>
+                </div>
+                <div class="slds-form__item" role="listitem">
+                </div>
+            </div>
+             
+             <div class="slds-form__row">
+                 <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input label="Balance (what is currently outstanding)" formatter="currency"
+                                         type="number" aura:id="fieldcheck" required="true"
+                                         value="{!v.liability.Value__c}" 
+                                         placeholder="Balance"/>
+                    </div>
+                </div>
+                 <div class="slds-form__item" role="listitem">
+                     <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                         <lightning:radioGroup class="slds-p-around_x-small rgbtn" name="{!'salarySacrificeRG'+ v.index}"
+                                               label="Do you salary sacrifice any of the payments?"    
+                                               options="{! v.yesNoOptions }" aura:id="fieldcheck" required="true"
+                                               value="{! v.liability.Salary_sacrifice_any_of_the_payments__c}"
+                                               type="button"/>
+                     </div>
+                 </div>
+             </div>
+             <aura:if isTrue="{!v.liability.Salary_sacrifice_any_of_the_payments__c=='Yes'}">
+                 <div class="slds-form__row">
+                     <div class="slds-form__item" role="listitem">
+                         <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                             <lightning:input label="Pre tax lease payment" 
+                                              formatter="currency"
+                                              type="number" aura:id="fieldcheck" required="true"
+                                              value="{!v.liability.Pre_tax_lease_Payment__c}" 
+                                              placeholder="Pre tax lease payment"/>
+                             
+                         </div>
+                     </div>
+                     <div class="slds-form__item" role="listitem">
+                         <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                             <lightning:combobox label="Payment Frequency" aura:id="fieldcheck" required="true"
+                                                 value="{!v.liability.Payment_Frequency__c}" 
+                                                 options="{!v.paymentFrequencyOptions}"
+                                                 placeholder="Payment Frequency"/>
+                         </div>
+                     </div>
+                 </div>
+             </aura:if>
+             
+             <div class="slds-form__row">
+                 <div class="slds-form__item" role="listitem">
+                     <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                         <lightning:input label="Post tax lease Payment" 
+                                          formatter="currency"
+                                          type="number" aura:id="fieldcheck" required="true"
+                                          value="{!v.liability.Post_tax_lease_Payment__c}" 
+                                          placeholder="Post tax lease Payment"/>
+                         
+                     </div>
+                 </div>
+             </div>
+        </aura:if>
+        
+        
+        <aura:if isTrue="{!v.liability.FinServ__AssetsAndLiabilitiesType__c == 'Credit Card / Store Card' }">
+            
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input label="Institution" value="{!v.liability.Institution__c}" 
+                                         aura:id="fieldcheck" required="true"
+                                         placeholder="Institution" maxlength="250"/>
+                        
+                    </div>
+                </div>
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input label="Interest Rate" step="0.01"
+                                         type="number" aura:id="fieldcheck" required="true"
+                                         value="{!v.liability.Interest_Rate__c}" 
+                                         placeholder="Interest Rate"/>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input label="Balance (what is currently outstanding)" formatter="currency"
+                                         type="number" aura:id="fieldcheck" required="true"
+                                         value="{!v.liability.Value__c}" 
+                                         placeholder="Balance"/>
+                    </div>
+                </div>
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input label="Maximum Limit" 
+                                         type="number" formatter="currency" aura:id="fieldcheck" required="true"
+                                         min="{!v.liability.Value__c}"
+                                         messageWhenRangeUnderflow="This amount cannot be less than the Balance"
+                                         value="{!v.liability.Limit__c}" 
+                                         placeholder="Limit"/>
+                        
+                    </div>
+                </div>
+                
+            </div>
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input label="Minimum repayment" 
+                                         formatter="currency"
+                                         type="number" aura:id="fieldcheck" required="true"
+                                         value="{!v.liability.Monthly_Repayment__c}" 
+                                         placeholder="Minimum repayment"/>
+                        
+                    </div>
+                </div>
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:combobox label="Repayment Frequency" aura:id="fieldcheck" required="true"
+                                            value="{!v.liability.Repayment_Frequency__c}" 
+                                            options="{!v.paymentFrequencyOptions}"
+                                            placeholder="Repayment Frequency"/>
+                    </div>
+                </div>
+            </div>
+            
+        </aura:if>
+        
+        <aura:if isTrue="{!v.liability.FinServ__AssetsAndLiabilitiesType__c == 'HECS/HELP' || v.liability.FinServ__AssetsAndLiabilitiesType__c == 'Tax liability'}">          
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input label="Outstanding Balance" formatter="currency"
+                                         type="number" aura:id="fieldcheck" required="true"
+                                         value="{!v.liability.Value__c}" 
+                                         placeholder="Outstanding Balance"/>
+                    </div>
+                </div>
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input label="Repayments" formatter="currency"
+                                         value="{!v.liability.Monthly_Repayment__c}" 
+                                         type="number" aura:id="fieldcheck" required="true"
+                                         placeholder="Repayments"/>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:combobox label="Repayment Frequency" aura:id="fieldcheck" required="true"
+                                            value="{!v.liability.Repayment_Frequency__c}"
+                                            options="{!v.paymentFrequencyOptions}"
+                                            placeholder="Repayment Frequency"/>
+                    </div>
+                </div>
+            </div>
+        </aura:if>
+        
+        <aura:if isTrue="{!v.liability.FinServ__AssetsAndLiabilitiesType__c != null &amp;&amp; v.liability.FinServ__AssetsAndLiabilitiesType__c != ''}">
+            <div class="slds-form__row">
+                <div class="slds-form__item" role="listitem">
+                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                        <lightning:input label="Description (optional)" maxlength="255" 
+                                         value="{!v.liability.FinServ__Description__c}" placeholder="Description" />
+                        
+                    </div>
+                </div>
+            </div>
+        </aura:if>
+        
+    </div>
+</aura:component>
