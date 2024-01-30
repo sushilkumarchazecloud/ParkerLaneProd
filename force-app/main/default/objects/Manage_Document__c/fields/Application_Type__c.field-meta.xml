@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Application_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Application Type</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Standard Application</fullName>
+                <default>false</default>
+                <label>Standard Application</label>
+            </value>
+            <value>
+                <fullName>Solar Application</fullName>
+                <default>false</default>
+                <label>Solar Application</label>
+            </value>
+            <value>
+                <fullName>Debit Consolidation</fullName>
+                <default>false</default>
+                <label>Debit Consolidation</label>
+            </value>
+            <value>
+                <fullName>Home Loan Refinance</fullName>
+                <default>false</default>
+                <label>Home Loan Refinance</label>
+            </value>
+            <value>
+                <fullName>Home Purchase</fullName>
+                <default>false</default>
+                <label>Home Purchase</label>
+            </value>
+            <value>
+                <fullName>Generic Unknown</fullName>
+                <default>false</default>
+                <label>Generic Unknown</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>6</visibleLines>
+</CustomField>

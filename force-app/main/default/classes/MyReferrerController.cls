@@ -357,13 +357,13 @@ public without sharing class MyReferrerController {
             acr.Opportunity__c = Opp;
             acr.Opportunity_Stage__c = OppStage;
             acr.Referrer_Contact__c = Con;
-            Contact refconn = [SELECT Id,Name,AccountId FROM CONTACT WHERE Id=: Con LIMIT 1];
+            Contact refconn = [SELECT Id,Name,AccountId,Referrer_Rating__c FROM CONTACT WHERE Id=: Con LIMIT 1];
             if(refconn.AccountId != Null){
                 acr.Referrer_Account__c = refconn.AccountId;
             }
             insert acr;
             
-            EmailTemplate emailTemp = [SELECT id, Name  FROM EmailTemplate WHERE Name =: 'Action Centre Request'];
+         /*  EmailTemplate emailTemp = [SELECT id, Name  FROM EmailTemplate WHERE Name =: 'Action Centre Request'];
             OrgWideEmailAddress[] owea = [SELECT Id from OrgWideEmailAddress WHERE Address =: UtilityClass.adminEmail]; 
             
             Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
@@ -376,17 +376,47 @@ public without sharing class MyReferrerController {
                 mail.setorgWideEmailAddressId(Owea.get(0).Id);
             }
             
-            String[] toAddress = new String[] {'personalapplications@parkerlane.com.au'};
+            String[] toAddress = new String[] {'personalapplications@parkerlane.com.au''};
                 mail.setToAddresses(toAddress);
-            mail.setReplyTo('personalapplications@parkerlane.com.au');
+            //mail.setReplyTo('personalapplications@parkerlane.com.au');
             
             if(mail != Null){
                 Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
             }  
-            List<Action_Centre_Request__c> acrList = [SELECT Id,Action_DateTime__c,Quick_Action__c,Request_Body__c,
-                                                      Opportunity__c,Referrer_Contact__c FROM Action_Centre_Request__c
+            */
+            List<Action_Centre_Request__c> acrList = [SELECT Id,Action_DateTime__c,Quick_Action__c,Request_Body__c,Referrer_Account__r.Name,Related_to__c,
+                                                      Opportunity__c,Referrer_Contact__c,Opportunity__r.Name,Urgency__c,Referrer_Contact__r.Name,
+                                                      Referrer_Contact__r.Referrer_Rating__c FROM Action_Centre_Request__c
                                                       WHERE Referrer_Contact__c =: Con AND Opportunity__c =: Opp
-                                                      Order by Action_DateTime__c DESC]; 
+                                                      Order by Action_DateTime__c DESC];
+            Case cs = new Case();
+            for(Action_Centre_Request__c ar : acrList){
+                cs.ContactId = refconn.Id;
+                cs.Opportunity__c = Opp;
+                String ratingTime;
+                if(ar.Referrer_Contact__r.Referrer_Rating__c == 'Platinum'){
+                    ratingTime = '15 minutes';
+                }  
+                else{
+                    ratingTime = '60 minutes'; 
+                }
+                cs.Subject = QA+' '+refconn.Referrer_Rating__c+' for '+ar.Opportunity__r.Name;
+                String text = 'Hi team,\n';
+                text += ar.Referrer_Contact__r.Name+' from '+ar.Referrer_Account__r.Name+' has raised a request. Please action the request within SLA’s '+ratingTime+'\n';
+                text += 'Request: '+ar.Quick_Action__c+'\n';
+                text += 'Opportunity: '+ar.Opportunity__r.Name+'\n';
+                text += 'urgency: '+ar.Urgency__c+'\n';
+                if(ar.Quick_Action__c == 'Request assistance'){
+                    text += 'Related to: '+ar.Related_to__c+'\n';
+                } 
+                text += 'Request: '+ar.Request_Body__c+'\n';
+                cs.Description = text;
+                
+                break;
+            }
+            if(cs != null){
+                insert cs;
+            } 
             return acrList;
         }
         catch(exception e){
@@ -1393,7 +1423,7 @@ quote.Quote_Group_Label__c = quoteDetailWrpList[i].masterQuote;
         
         
         List<Funding_Request__c> frList = [SELECT Id,Request_Type__c,Request_Date__c,Request_Amount__c,Request_Status__c,Invoice_Amount__c,
-                                           Date_Last_Request_Status_Changes__c,Net_Funds_after_Request__c,Funding_On_Hold__c,
+                                           Date_Last_Request_Status_Changes__c,Net_Funds_after_Request__c,Funding_On_Hold__c,Funding_escalation__c,
                                            Net_Funds_Available__c,Funding_On_Hold_Reason__c FROM Funding_Request__c WHERE Opportunity__c =: OppId  
                                            Order by Request_Date__c DESC]; 
         return frList;
@@ -1402,7 +1432,7 @@ quote.Quote_Group_Label__c = quoteDetailWrpList[i].masterQuote;
     @AuraEnabled
     public static List<Funding_Request__c> getPreviousFundingRequests(String OppId){
         List<Funding_Request__c> frList = [SELECT Id,Request_Type__c,Request_Date__c,Request_Amount__c,Request_Status__c,Invoice_Amount__c,
-                                           Date_Last_Request_Status_Changes__c,Net_Funds_after_Request__c,Funding_On_Hold__c,
+                                           Date_Last_Request_Status_Changes__c,Net_Funds_after_Request__c,Funding_On_Hold__c,Funding_escalation__c,
                                            Net_Funds_Available__c,Funding_On_Hold_Reason__c FROM Funding_Request__c WHERE Opportunity__c =: OppId
                                            Order by Request_Date__c DESC]; 
         return frList;

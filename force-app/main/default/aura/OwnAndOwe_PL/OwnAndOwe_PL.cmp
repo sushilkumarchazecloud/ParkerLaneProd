@@ -82,7 +82,10 @@
         
         
         <section class="max-700 slds-p-around--medium slds-col  bg-lightest txt-blue">
-        	<div class="listYourCommitments">
+            <div class="slds-align_absolute-center slds-m-top_medium">
+                <img src="{!$Resource.headersLogo + '/headersLogo/Liabilities.png'}" class="trackercls"/>
+            </div>
+        	<div class="listYourCommitments slds-m-top_medium slds-p-vertical_medium">
                 <h1 style="font-size: 1.75rem;font-weight: 900;font-family:ProximaNova-AltBold;">List <u>all</u> your financial commitments</h1>
             </div>
             <div class="HomeInvestment">
@@ -139,7 +142,7 @@
                                 </div>
                                 <div class="slds-size_1-of-2 ">
                                     <div class="input-dollar2">
-                                        <lightning:input label="Min.Repayment" 
+                                        <lightning:input label="Minimum Repayment" 
                                                          type="number" aura:id="fieldcheck" required="true"
                                                          value="{!liability.Monthly_Repayment__c}"
                                                          class="no-abbr slds-m-around1_xx-small slds-p-around_xx-small"/>  
@@ -208,7 +211,7 @@
                                 </div>
                                 <div class="slds-size_1-of-2 ">
                                     <div class="input-dollar2">
-                                        <lightning:input label="Min.Repayment" 
+                                        <lightning:input label="Minimum Repayment" 
                                                          type="number" aura:id="fieldcheck" required="true"
                                                          value="{!liability.Monthly_Repayment__c}"
                                                          class="no-abbr slds-m-around1_xx-small slds-p-around_xx-small"/>  
@@ -385,7 +388,7 @@
                                 </div>
                                 <div class="slds-size_1-of-2 ">
                                     <div class="input-dollar2">
-                                        <lightning:input label="Min.Repayment" 
+                                        <lightning:input label="Minimum Repayment" 
                                                          type="number" aura:id="fieldcheck" required="true"
                                                          value="{!liability.Monthly_Repayment__c}"
                                                          class="no-abbr slds-m-around1_xx-small slds-p-around_xx-small"/> 
@@ -423,7 +426,7 @@
                         <h6 class="heading-edit">
                             <!--Any Other commitments?-->
                             Do you have any other commitments?<br/>
-                            <p style="font-weight: normal;font-size: 16px;font-family: 'Proxima Nova Alt Regular';">(eg child maintenance, HECS, tax, deb etc)?</p>
+                            <p style="font-weight: normal;font-size: 16px;font-family: 'Proxima Nova Alt Regular';">(eg child maintenance, HECS, tax etc)?</p>
                         </h6>
                     </div>
                     <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_2-of-12 rg-split">
@@ -481,7 +484,7 @@
                                 </div>
                                 <div class="slds-size_1-of-2 ">
                                     <div class="input-dollar2">
-                                        <lightning:input label="Min.Repayment" 
+                                        <lightning:input label="Minimum Repayment" 
                                                          type="number" aura:id="fieldcheck" required="true"
                                                          value="{!liability.Monthly_Repayment__c}"
                                                          class="no-abbr slds-m-around1_xx-small slds-p-around_xx-small"/>   

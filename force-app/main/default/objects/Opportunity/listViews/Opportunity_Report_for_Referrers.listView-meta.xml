@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Opportunity_Report_for_Referrers</fullName>
+    <columns>Referred_by_Company__c</columns>
+    <columns>OPPORTUNITY.LAST_UPDATE</columns>
+    <columns>Time_at_current_stage__c</columns>
+    <columns>OPPORTUNITY.STAGE_NAME</columns>
+    <columns>OPPORTUNITY.CLOSE_DATE</columns>
+    <columns>OPPORTUNITY.NAME</columns>
+    <columns>FinServ__ReferredByContact__c</columns>
+    <columns>Lender__c</columns>
+    <columns>Loan_Amount__c</columns>
+    <columns>Application_Pending_Notes__c</columns>
+    <columns>Application_Pending_Status__c</columns>
+    <columns>Escalation__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Referred_by_Company__c</field>
+        <operation>equals</operation>
+        <value>RESINC Solar</value>
+    </filters>
+    <filters>
+        <field>OPPORTUNITY.STAGE_NAME</field>
+        <operation>equals</operation>
+        <value>Approved</value>
+    </filters>
+    <label>Opportunity Report for Referrers</label>
+</ListView>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Original_Opportunity_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Original Opportunity Type</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Green Loan</fullName>
+                <default>false</default>
+                <label>Green Loan</label>
+            </value>
+            <value>
+                <fullName>Asset Finance</fullName>
+                <default>false</default>
+                <label>Asset Finance</label>
+            </value>
+            <value>
+                <fullName>Commercial Asset Finance</fullName>
+                <default>false</default>
+                <label>Commercial Asset Finance</label>
+            </value>
+            <value>
+                <fullName>Commercial Mortgage</fullName>
+                <default>false</default>
+                <label>Commercial Mortgage</label>
+            </value>
+            <value>
+                <fullName>Commercial Property Purchase</fullName>
+                <default>false</default>
+                <label>Commercial Property Purchase</label>
+            </value>
+            <value>
+                <fullName>Commercial Solar Purchase</fullName>
+                <default>false</default>
+                <label>Commercial Solar Purchase</label>
+            </value>
+            <value>
+                <fullName>Debt Consolidation</fullName>
+                <default>false</default>
+                <label>Debt Consolidation</label>
+            </value>
+            <value>
+                <fullName>First Home Purchase</fullName>
+                <default>false</default>
+                <label>First Home Purchase</label>
+            </value>
+            <value>
+                <fullName>Home Improvement</fullName>
+                <default>false</default>
+                <label>Home Improvement</label>
+            </value>
+            <value>
+                <fullName>Home Loan Construction</fullName>
+                <default>false</default>
+                <label>Home Loan Construction</label>
+            </value>
+            <value>
+                <fullName>Home Loan Purchase</fullName>
+                <default>false</default>
+                <label>Home Loan Purchase</label>
+            </value>
+            <value>
+                <fullName>Home Loan Refinance</fullName>
+                <default>false</default>
+                <label>Home Loan Refinance</label>
+            </value>
+            <value>
+                <fullName>House</fullName>
+                <default>false</default>
+                <label>House</label>
+            </value>
+            <value>
+                <fullName>House and Land</fullName>
+                <default>false</default>
+                <label>House and Land</label>
+            </value>
+            <value>
+                <fullName>Investment Property Purchase</fullName>
+                <default>false</default>
+                <label>Investment Property Purchase</label>
+            </value>
+            <value>
+                <fullName>Land</fullName>
+                <default>false</default>
+                <label>Land</label>
+            </value>
+            <value>
+                <fullName>Next Home Purchase</fullName>
+                <default>false</default>
+                <label>Next Home Purchase</label>
+            </value>
+            <value>
+                <fullName>Opportunity (Wallet Share)</fullName>
+                <default>false</default>
+                <label>Opportunity (Wallet Share)</label>
+            </value>
+            <value>
+                <fullName>Personal Loan</fullName>
+                <default>false</default>
+                <label>Personal Loan</label>
+            </value>
+            <value>
+                <fullName>Refinance</fullName>
+                <default>false</default>
+                <label>Refinance</label>
+            </value>
+            <value>
+                <fullName>Retirement Planning</fullName>
+                <default>false</default>
+                <label>Retirement Planning</label>
+            </value>
+            <value>
+                <fullName>Vehicle Purchase</fullName>
+                <default>false</default>
+                <label>Vehicle Purchase</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

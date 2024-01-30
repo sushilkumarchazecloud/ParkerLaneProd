@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>APPLICATION_COMMENCED_AND_NOT_COMPLETED_WITHIN_60_MINUTES</fullName>
+        <ccEmails>personalapplications@parkerlane.com.au</ccEmails>
+        <description>APPLICATION COMMENCED AND NOT COMPLETED WITHIN 60 MINUTES</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderAddress>chris.white@parkerlane.com.au</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Activity_On_Application_Process/APPLICATION_COMMENCED_AND_NOT_COMPLETED</template>
+    </alerts>
+    <alerts>
+        <fullName>APPLICATION_COMPLETED</fullName>
+        <ccEmails>personalapplications@parkerlane.com.au</ccEmails>
+        <description>APPLICATION COMPLETED</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Activity_On_Application_Process/APPLICATION_COMPLETED</template>
+    </alerts>
+    <alerts>
+        <fullName>Customer_Information_Required_Email</fullName>
+        <description>Customer Information Required Email 1: All Lenders for all Personal Loans</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Contact_1__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <recipients>
+            <field>Contact_2__c</field>
+            <type>contactLookup</type>
+        </recipients>
+        <senderAddress>personalapplications@parkerlane.com.au</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>unfiled$public/CustomerInfoRequired</template>
+    </alerts>
+    <alerts>
+        <fullName>DOCUMENTS_UPLOADED_STATUS_REMAINS_PACKS_OUT</fullName>
+        <ccEmails>personalapplications@parkerlane.com.au</ccEmails>
+        <description>DOCUMENTS UPLOADED (STATUS REMAINS PACKS OUT)</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderAddress>chris.white@parkerlane.com.au</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>Activity_On_Application_Process/DOCUMENTS_UPLOADED_STATUS_REMAINS_PACKS_OUT</template>
+    </alerts>
+    <alerts>
+        <fullName>Send_Email_when_stage_is_CPA_start_or_CPA_Done</fullName>
+        <description>Send Email when stage is CPA start or CPA Done</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Quotation_Template/Send_Email_when_stage_is_CPA_start_or_CPA_Done</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Remove_Hyphen</fullName>
+        <field>Name</field>
+        <formula>SUBSTITUTE( Name , &apos;-&apos;, &apos;&apos;)</formula>
+        <name>Remove Hyphen</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <rules>
+        <fullName>APPLICATION COMMENCED AND NOT COMPLETED WITHIN 60 MINUTES</fullName>
+        <active>false</active>
+        <criteriaItems>
+            <field>Opportunity.StageName</field>
+            <operation>equals</operation>
+            <value>CPA Started</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.RecordTypeId</field>
+            <operation>notContain</operation>
+            <value>Commercial Asset Finance,Commercial Property Purchase,Debt Consolidation,First Home Purchase,Investment Property Purchase,Next Home Purchase,Home Loan Construction,Home Loan Purchase,Home Loan Refinance</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>APPLICATION_COMMENCED_AND_NOT_COMPLETED_WITHIN_60_MINUTES</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Opportunity.Last_Stage_Change_Date__c</offsetFromField>
+            <timeLength>1</timeLength>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>APPLICATION COMPLETED</fullName>
+        <active>false</active>
+        <criteriaItems>
+            <field>Opportunity.StageName</field>
+            <operation>contains</operation>
+            <value>CPA Done,Packs Out</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.RecordTypeId</field>
+            <operation>notContain</operation>
+            <value>Commercial Asset Finance,Commercial Property Purchase,Debt Consolidation,First Home Purchase,Investment Property Purchase,Next Home Purchase,Home Loan Construction,Home Loan Purchase,Home Loan Refinance</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>APPLICATION_COMPLETED</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Opportunity.Last_Stage_Change_Date__c</offsetFromField>
+            <timeLength>1</timeLength>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>DOCUMENTS UPLOADED %28STATUS REMAINS PACKS OUT%29</fullName>
+        <active>false</active>
+        <criteriaItems>
+            <field>Opportunity.StageName</field>
+            <operation>equals</operation>
+            <value>Packs Out</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Opportunity.RecordTypeId</field>
+            <operation>notContain</operation>
+            <value>Commercial Asset Finance,Commercial Property Purchase,Debt Consolidation,First Home Purchase,Investment Property Purchase,Next Home Purchase,Home Loan Construction,Home Loan Purchase,Home Loan Refinance</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>DOCUMENTS_UPLOADED_STATUS_REMAINS_PACKS_OUT</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Opportunity.Last_Stage_Change_Date__c</offsetFromField>
+            <timeLength>24</timeLength>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>Remove Hyphen</fullName>
+        <actions>
+            <name>Remove_Hyphen</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>IF 
+( 
+CONTAINS(Name,&apos;-&apos;),true,false 
+)</formula>
+        <triggerType>onCreateOnly</triggerType>
+    </rules>
+</Workflow>

@@ -1,0 +1,8 @@
+.THIS .slds-backdrop {
+    background-color: #192744 !important;
+    opacity : 0.86 !important;  
+}
+
+.THIS .no-abbr label.slds-form-element__label abbr, .THIS .no-abbr legend.slds-form-element__label abbr {
+    display: none;
+}

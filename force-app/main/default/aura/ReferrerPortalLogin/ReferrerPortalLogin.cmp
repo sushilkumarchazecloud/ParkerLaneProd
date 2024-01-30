@@ -1,0 +1,127 @@
+<aura:component controller="ReferrerPortalController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="navSection" type="String"/>
+    <aura:attribute name="isLoggedIn" type="Boolean" />
+    
+    <aura:attribute name="mobileNumber" type="Integer" default=""/> 
+    <aura:attribute name="otp" type="Integer" default=""/>
+    <aura:attribute name="emptyOtp1" type="Integer" default=""/> 
+    <aura:attribute name="emptyOtp2" type="Integer" default=""/>
+    <aura:attribute name="emptyOtp3" type="Integer" default=""/>
+    <aura:attribute name="emptyOtp4" type="Integer" default=""/>
+    <aura:attribute name="saveOtp" type="Integer" default=""/> 
+    <aura:attribute name="setTime" type="Integer" default=""/> 
+    <aura:attribute name="conWrp" type="Object" default=""/> 
+    <aura:attribute name="AccountId" type="id" default=""/> 
+    <aura:attribute name="path" type="String" default="loginNumber"/>
+    <aura:attribute name="isButtonActive" type="Boolean" default="false"/>
+    <aura:attribute name="isResendButtonActive" type="Boolean" default="true"/>
+    <aura:attribute name="WelcomeNote" type="String" />
+    <aura:attribute name="checkSize" type="Boolean" default="false"/>
+    <aura:attribute name="showspinner" type="Boolean" default="false"/>
+    <aura:attribute name="showmessage" type="Boolean" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <lightning:spinner aura:id="mySpinner" variant="brand" size="large" class="slds-hide slds-is-fixed" />
+    <div class="max-700" style="background-color: #f8fafd">
+        <aura:if isTrue="{!v.path == 'loginNumber'}">        
+            <div class="slds-grid slds-wrap">
+                <aura:if isTrue="{!v.WelcomeNote != 'test'}">
+                    <div class="slds-col slds-p-around_xx-small" style="background: #1a2745;; line-height: initial; color: white">
+                        <p style="text-align: center;">{!v.WelcomeNote}</p>
+                    </div>
+                </aura:if>
+                <div class="slds-col slds-size_12-of-12" align="center">
+                    <img src="{!$Resource.SolarLoan + '/img/parkerlanecropped.png'}" style="width: 18rem;padding-top: 10rem;"/>            
+                </div>
+                <div class="slds-align_absolute-center slds-col slds-size_12-of-12 slds-p-top_large" style="font-size:20px; font-weight:bold; color: #1a2745;">Referrer Portal</div>
+                <div class="slds-col slds-size_12-of-12" align="center">
+                    <p class="slds-align_absolute-center slds-p-top_xx-large" style="font-size:12px; color: #1a2745; width:55%">Enter your mobile number to receive a 4-digit verification code.</p>                
+                    
+                    <div class="inputCls slds-p-top_small" onkeypress="{!c.handleKeyPress}">
+                        <lightning:input aura:id="inputLength" type="tel" maxlength="12" value = "{!v.mobileNumber}" placeholder="0400 000 000" pattern="([04]{2}[0-9]{8}|[04]{2}[0-9]{2} [0-9]{3} [0-9]{3}|[04]{2} [0-9]{4} [0-9]{4})"
+                                         messageWhenPatternMismatch="Pattern should be 0412345678 or 0412 345 678 or 04 1234 5678" formatter="number"/>
+                    </div>
+                    <div class="buttonCls slds-p-top_large">
+                        <lightning:button label="Send" variant="brand" onclick="{!c.checkMobile}" disabled="{!v.isButtonActive}"/>
+                    </div><br/><br/>
+                </div>
+            </div>
+        </aura:if>
+        
+        <aura:if isTrue="{!v.path == 'enterOtp'}">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_12-of-12" align="center">
+                    <img src="{!$Resource.SolarLoan + '/img/parkerlanecropped.png'}" style="width: 18rem;padding-top: 10rem;"/>            
+                </div>
+                <div class="slds-align_absolute-center slds-col slds-size_12-of-12 slds-p-top_large" style="font-size:20px; font-weight:bold; color: #1a2745;">Referrer Portal</div>
+                <div class="slds-col slds-size_12-of-12" align="center">
+                    <p class="slds-align_absolute-center slds-p-top_xx-large" style="font-size:12px; color: #1a2745; width:55%">Enter the 4-digit verification code we just sent to your mobile.</p>
+                    
+                    <div class="slds-grid slds-wrap slds-p-top_medium">
+                        <div class="slds-align_absolute-center slds-col slds-size_4-of-12">
+                            <div align="center" class="box-sz slds-col">
+                                <lightning:input aura:id="otp_verified1" maxlength="1" value="{!v.emptyOtp1}" onkeyup="{!c.moveNext}"/>
+                            </div>
+                            <div align="center" class="box-sz slds-col">
+                                <lightning:input aura:id="otp_verified2" maxlength="1" value="{!v.emptyOtp2}" onkeyup="{!c.moveNext2}" />
+                            </div>
+                            <div align="center" class="box-sz slds-col">
+                                <lightning:input aura:id="otp_verified3" maxlength="1" value="{!v.emptyOtp3}" onkeyup="{!c.moveNext3}" />
+                            </div>
+                            <div align="center" class="box-sz slds-col" onkeypress="{!c.handleOTP}">
+                                <lightning:input aura:id="otp_verified4" maxlength="1" value="{!v.emptyOtp4}" onkeyup="{!c.moveNext4}" />
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!--<div class="buttonCls slds-p-top_large">
+                        <lightning:button label="Submit" variant="brand" onclick="{!c.checkOtp}"/>
+                    </div>
+                    <div class="baseButtonCls slds-m-top_xx-small">
+                        <lightning:button label="Resend" variant="base" onclick="{!c.resend}" disabled="{!v.isResendButtonActive}"/>
+                    </div><br/><br/>-->
+                    <div class="slds-m-top_x-large" style="line-height: 5px;">
+                        <p class="sendEmailCss">Didn't get it?</p>                        
+                        <div class="sendEmailCss">
+                            <lightning:button class="mailBtn" variant="base" onclick="{!c.sendMail}"><u class="sendEmailCss">Click here</u></lightning:button> to receive an email instead.
+                        </div>
+                        <aura:if isTrue="{!v.showspinner}">
+                            <div>
+                                <lightning:spinner aura:id="" variant="brand" size="small" class="slds-is-fixed mailSpinner" />
+                            </div>
+                        </aura:if>
+                        <aura:if isTrue="{!v.showmessage}">
+                            <div class="slds-align_absolute-center" style="color: #15cd15;font-weight: bold;margin-top: 7px;">
+                                VERIFICATION CODE SENT 
+                            </div>
+                        </aura:if>
+                    </div>
+                </div>
+            </div>
+        </aura:if>
+        <aura:if isTrue="{!v.path == 'notRegistered'}">
+            <div class="slds-align_absolute-center">
+                <img src="{!$Resource.SolarLoan + '/img/parkerlanecropped.png'}" style="width: 18rem;padding-top: 10rem;"/>
+            </div>
+            <div class="slds-align_absolute-center slds-p-top_large" style="font-size: 20px;font-weight: bold;">
+                Referrer Portal
+            </div>
+            <div class="slds-align_absolute-center slds-m-top_x-large loginMessage">
+                <aura:if isTrue="{!v.conWrp == null}">
+                    You are not currently registered to access this portal.
+                </aura:if>
+                <aura:if isTrue="{!v.checkSize}">
+                    You have more that 1 active account with Parker Lane.
+                </aura:if>
+            </div>
+            <div class="slds-align_absolute-center slds-m-top_medium loginMessage">
+                <aura:if isTrue="{!v.conWrp == null}">
+                    To register as a referrer, go to parkerlane.com.au/affiliates or call 1300 13 17 11
+                </aura:if>
+                <aura:if isTrue="{!v.checkSize}">
+                    To resolve this issue email personalapplications@parkerlane.com.au or call 1300 13 17 11.
+                </aura:if>
+            </div>        
+        </aura:if>
+    </div>
+</aura:component>

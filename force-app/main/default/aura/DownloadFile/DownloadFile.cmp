@@ -1,11 +1,12 @@
 <aura:component controller="DownloadFileController" implements="forceCommunity:availableForAllPageTypes,force:appHostable,force:hasSObjectName,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
-	<ltng:require scripts="{!$Resource.jszip}"></ltng:require>
+    <ltng:require scripts="{!$Resource.jszip}"></ltng:require>
     <aura:attribute access="public" name="recordId" type="String"/>
     <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
     <aura:attribute name="cvList" type="list" />   
     <aura:attribute name="isSelectAll" type="boolean" default="false"/>
+    <aura:attribute name="showHeader" type="boolean" default="false"/>
     <aura:attribute access="public" name="sobjecttype" type="String" default="{!v.sObjectName}"/>
-    
+    <aura:attribute name="currentAppName" type="String"/>
     <aura:attribute name="arrowDirection" type="string" default="arrowup" description="Use for change arrow sign direction on header based on click"/>
     <aura:attribute name="isAsc" type="boolean" default="true" description="boolean flag for pass sorting condition to apex class"/> 
     <aura:attribute name="selectedTabsoft" type="string" default="" description="Use for show/hide arraow sign on header based on conditions"/>    
@@ -13,7 +14,7 @@
     <aura:attribute name="isCopyTo" type="boolean"/>
     <aura:attribute name="viewRecordId" type="id"/>
     <aura:attribute name="isEdit" type="boolean"/>
-	<aura:attribute name="isView" type="boolean"/>
+    <aura:attribute name="isView" type="boolean"/>
     
     <aura:dependency resource="markup://force:editRecord" type="EVENT" />
     <aura:handler event="force:refreshView" action="{!c.doInit}" />
@@ -49,6 +50,7 @@
     <aura:attribute name="Applicant1" type="boolean" />
     <aura:attribute name="Applicant2" type="boolean" />
     <aura:attribute name="isSelected" type="boolean" />
+    <aura:attribute name="disableUploadDocs" type="boolean" default="true"/>
     
     <aura:attribute name="isUpload" type="boolean" />
     <aura:attribute name="accept" type="List" default="['.jpg', '.jpeg','.pdf','.csv','.xlsx','.png','.html','.doc','.docx','.xls','.xlsm']"/>  
@@ -59,590 +61,613 @@
     <aura:attribute name="filesUploaded" type="list" />
     <aura:attribute name="finalUpload" type="list" />
     <aura:attribute name="categoryOptions" type="List" default="[{'label': 'Identification', 'value': 'Identification'},
-    {'label': 'Income', 'value': 'Income'},{'label': 'Assets', 'value': 'Assets'},
-    {'label': 'Loan Purpose', 'value': 'Loan Purpose'},{'label': 'General', 'value': 'General'},
-    {'label': 'Rental Income', 'value': 'Rental Income'},{'label': 'Living Expenses', 'value': 'Living Expenses'},
-    {'label': 'Liabilities Being Refinanced', 'value': 'Liabilities Being Refinanced'},{'label': 'Standard If Documents', 'value': 'Standard If Documents'},
-    {'label': 'Proof Of Ownership', 'value': 'Proof Of Ownership'},{'label': 'Liabilities Remaining', 'value': 'Liabilities Remaining'},
-    {'label': 'Business Income', 'value': 'Business Income'},{'label': 'Commercial Applications', 'value': 'Commercial Applications'}]" />
+                                                                {'label': 'Income', 'value': 'Income'},{'label': 'Assets', 'value': 'Assets'},
+                                                                {'label': 'Loan Purpose', 'value': 'Loan Purpose'},{'label': 'General', 'value': 'General'},
+                                                                {'label': 'Rental Income', 'value': 'Rental Income'},{'label': 'Living Expenses', 'value': 'Living Expenses'},
+                                                                {'label': 'Liabilities Being Refinanced', 'value': 'Liabilities Being Refinanced'},{'label': 'Standard If Documents', 'value': 'Standard If Documents'},
+                                                                {'label': 'Proof Of Ownership', 'value': 'Proof Of Ownership'},{'label': 'Liabilities Remaining', 'value': 'Liabilities Remaining'},
+                                                                {'label': 'Business Income', 'value': 'Business Income'},{'label': 'Commercial Applications', 'value': 'Commercial Applications'},
+                                                                {'label': 'Bank Statements', 'value': 'Bank Statements'},{'label': 'Credit Report', 'value': 'Credit Report'},
+                                                                {'label': 'Purchase Invoice', 'value': 'Purchase Invoice'},{'label': 'Lender Membership', 'value': 'Lender Membership'},
+                                                                {'label': 'Credit Proposal', 'value': 'Credit Proposal'},{'label': 'Lender Credit Contract', 'value': 'Lender Credit Contract'},{'label':'Direct Debit Form','value': 'Direct Debit Form'}]" />
     <aura:attribute name="relatedOptions" type="List" />
+    <aura:attribute name="oldDocExist" type="boolean" default="false"/>
+    <aura:attribute name="docExistError" type="boolean" default="false"/>
+    
     <lightning:navigation aura:id="navService"/>
     
     <lightning:spinner aura:id="mySpinner" alternativeText="Processing.." title="Processing.." variant="brand" size="large" class="slds-hide"/>
     <aura:if isTrue="{!empty(v.cvList)}">
-        <div class="slds-m-around_x-small">
-            <div class="slds-page-header">
-                <div class="slds-page-header__row">
-                    <div class="slds-page-header__col-title">
-                        <div class="slds-media">
-                            <div class="slds-media__body">
-                                <div class="slds-page-header__name">
-                                    <div class="slds-page-header__name-title">
-                                        <h1 class="slds-text-heading--medium">
-                                            Files
-                                        </h1>
+        <aura:if isTrue="{!!v.showHeader}">
+            <div class="slds-m-around_x-small">
+                <div class="slds-page-header">
+                    <div class="slds-page-header__row">
+                        <div class="slds-page-header__col-title">
+                            <div class="slds-media">
+                                <div class="slds-media__body">
+                                    <div class="slds-page-header__name">
+                                        <div class="slds-page-header__name-title">
+                                            <h1 class="slds-text-heading--medium">
+                                                Files
+                                            </h1>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="slds-page-header__col-actions">
-                        <div class="slds-page-header__controls">
-                            <div class="slds-page-header__control">
-                                <ul class="slds-button-group-list">
-                                    <li>
-                                        <lightning:button label="Upload Docs" class="slds-button_brand" onclick="{!c.openModalUpload}"  />
-                                    </li>
-                                </ul>
+                        <div class="slds-page-header__col-actions">
+                            <div class="slds-page-header__controls">
+                                <div class="slds-page-header__control">
+                                    <ul class="slds-button-group-list">
+                                        <li>
+                                            <lightning:button label="Upload Docs" class="slds-button_brand" onclick="{!c.openModalUpload}"  />
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="slds-page-header__col-actions">
-                        <div class="slds-page-header__controls">
-                            <div class="slds-page-header__control">
-                                <ul class="slds-button-group-list">
-                                    <li>
-                                        <lightning:button label="Copy To" class="slds-button_brand" onclick="{!c.copyTo}"  />
-                                    </li>
-                                </ul>
+                        <div class="slds-page-header__col-actions">
+                            <div class="slds-page-header__controls">
+                                <div class="slds-page-header__control">
+                                    <ul class="slds-button-group-list">
+                                        <li>
+                                            <lightning:button label="Copy To" class="slds-button_brand" onclick="{!c.copyTo}"  />
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="slds-page-header__col-actions">
-                        <div class="slds-page-header__controls">
-                            <div class="slds-page-header__control">
-                                <ul class="slds-button-group-list">
-                                    <li>
-                                        <lightning:button label="Open Upload Docs" class="slds-button_brand" onclick="{!c.openUploadDocs}"  />
-                                    </li>
-                                </ul>
+                        <div class="slds-page-header__col-actions">
+                            <div class="slds-page-header__controls">
+                                <div class="slds-page-header__control">
+                                    <ul class="slds-button-group-list">
+                                        <li>
+                                            <lightning:button label="Open Upload Docs" class="slds-button_brand" disabled="{!v.disableUploadDocs}" onclick="{!c.openUploadDocs}"  />
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="slds-page-header__col-actions">
-                        <div class="slds-page-header__controls">
-                            <div class="slds-page-header__control">
-                                <ul class="slds-button-group-list">
-                                    <li>
-                                        <lightning:button label="Download" class="slds-button_brand" onclick="{!c.handleSelectedContacts }"  />
-                                    </li>
-                                </ul>
+                        <div class="slds-page-header__col-actions">
+                            <div class="slds-page-header__controls">
+                                <div class="slds-page-header__control">
+                                    <ul class="slds-button-group-list">
+                                        <li>
+                                            <lightning:button label="Download" class="slds-button_brand" onclick="{!c.handleSelectedContacts }"  />
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="unique-id-of-input"><b>Category</b></label>
+                    <label class="slds-checkbox">
+                        <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkIdentification}" text="Identification" change="{!c.filterCategory}"/>
+                        <span class="slds-checkbox--faux" />
+                        <span class="slds-form-element__label">Identification</span>
+                    </label>
+                    <label class="slds-checkbox">
+                        <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkIncome}" text="Income" change="{!c.filterCategory}"/>
+                        <span class="slds-checkbox--faux" />
+                        <span class="slds-form-element__label">Income</span>
+                    </label>
+                    <label class="slds-checkbox">
+                        <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkAssets}" text="Assets" change="{!c.filterCategory}"/>
+                        <span class="slds-checkbox--faux" />
+                        <span class="slds-form-element__label">Assets</span>
+                    </label>
+                    <label class="slds-checkbox">
+                        <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkLoan}" text="Loan Purpose" change="{!c.filterCategory}"/>
+                        <span class="slds-checkbox--faux" />
+                        <span class="slds-form-element__label">Loan Purpose</span>
+                    </label>
+                    <label class="slds-checkbox">
+                        <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkProof}" text="Proof of Ownership" change="{!c.filterCategory}"/>
+                        <span class="slds-checkbox--faux" />
+                        <span class="slds-form-element__label">Proof Of Ownership</span>
+                    </label>
+                    <label class="slds-checkbox">
+                        <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkLiving}" text="Living Expenses" change="{!c.filterCategory}"/>
+                        <span class="slds-checkbox--faux" />
+                        <span class="slds-form-element__label">Living Expenses</span>
+                    </label>
+                    <label class="slds-checkbox">
+                        <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkGeneralCateg}" text="General" change="{!c.filterCategory}"/>
+                        <span class="slds-checkbox--faux" />
+                        <span class="slds-form-element__label">General</span>
+                    </label>
+                    <label class="slds-checkbox">
+                        <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkRental}" text="Rental Income" change="{!c.filterCategory}"/>
+                        <span class="slds-checkbox--faux" />
+                        <span class="slds-form-element__label">Rental Income</span>
+                    </label>
+                    <label class="slds-checkbox">
+                        <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkStandard}" text="Standard If Documents" change="{!c.filterCategory}"/>
+                        <span class="slds-checkbox--faux" />
+                        <span class="slds-form-element__label">Standard If Documents</span>
+                    </label>
+                    <label class="slds-checkbox">
+                        <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkBusiness}" text="Business Income" change="{!c.filterCategory}"/>
+                        <span class="slds-checkbox--faux" />
+                        <span class="slds-form-element__label">Business Income</span>
+                    </label>
+                    <label class="slds-checkbox">
+                        <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkLiabilities}" text="Liabilities Remaining" change="{!c.filterCategory}"/>
+                        <span class="slds-checkbox--faux" />
+                        <span class="slds-form-element__label">Liabilities Remaining</span>
+                    </label>
+                    <label class="slds-checkbox">
+                        <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkCommercial}" text="Commercial Applications" change="{!c.filterCategory}"/>
+                        <span class="slds-checkbox--faux" />
+                        <span class="slds-form-element__label">Commercial Applications</span>
+                    </label>
+                    <label class="slds-checkbox">
+                        <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkLiabilitiesBeing}" text="Liabilities Being Refinanced" change="{!c.filterCategory}"/>
+                        <span class="slds-checkbox--faux" />
+                        <span class="slds-form-element__label">Liabilities Being Refinanced</span>
+                    </label>
+                </div>
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="unique-id-of-input"><b>Related To</b></label>
+                    <label class="slds-checkbox">
+                        <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkApplicant1}" text="Applicant 1" change="{!c.filterCategory}"/>
+                        <span class="slds-checkbox--faux" />
+                        <span class="slds-form-element__label">Applicant 1</span>
+                    </label>
+                    <label class="slds-checkbox">
+                        <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkApplicant2}" text="Applicant 2" change="{!c.filterCategory}"/>
+                        <span class="slds-checkbox--faux" />
+                        <span class="slds-form-element__label">Applicant 2</span>
+                    </label>
+                    <label class="slds-checkbox">
+                        <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkGeneral}" text="GeneralRel" change="{!c.filterCategory}"/>
+                        <span class="slds-checkbox--faux" />
+                        <span class="slds-form-element__label">General</span>
+                    </label>
+                </div>
             </div>
-            <div class="slds-form-element">
-                <label class="slds-form-element__label" for="unique-id-of-input"><b>Category</b></label>
-                <label class="slds-checkbox">
-                    <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkIdentification}" text="Identification" change="{!c.filterCategory}"/>
-                    <span class="slds-checkbox--faux" />
-                    <span class="slds-form-element__label">Identification</span>
-                </label>
-                <label class="slds-checkbox">
-                    <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkIncome}" text="Income" change="{!c.filterCategory}"/>
-                    <span class="slds-checkbox--faux" />
-                    <span class="slds-form-element__label">Income</span>
-                </label>
-                <label class="slds-checkbox">
-                    <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkAssets}" text="Assets" change="{!c.filterCategory}"/>
-                    <span class="slds-checkbox--faux" />
-                    <span class="slds-form-element__label">Assets</span>
-                </label>
-                <label class="slds-checkbox">
-                    <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkLoan}" text="Loan Purpose" change="{!c.filterCategory}"/>
-                    <span class="slds-checkbox--faux" />
-                    <span class="slds-form-element__label">Loan Purpose</span>
-                </label>
-                <label class="slds-checkbox">
-                    <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkProof}" text="Proof of Ownership" change="{!c.filterCategory}"/>
-                    <span class="slds-checkbox--faux" />
-                    <span class="slds-form-element__label">Proof Of Ownership</span>
-                </label>
-                <label class="slds-checkbox">
-                    <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkLiving}" text="Living Expenses" change="{!c.filterCategory}"/>
-                    <span class="slds-checkbox--faux" />
-                    <span class="slds-form-element__label">Living Expenses</span>
-                </label>
-                <label class="slds-checkbox">
-                    <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkGeneralCateg}" text="General" change="{!c.filterCategory}"/>
-                    <span class="slds-checkbox--faux" />
-                    <span class="slds-form-element__label">General</span>
-                </label>
-                <label class="slds-checkbox">
-                    <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkRental}" text="Rental Income" change="{!c.filterCategory}"/>
-                    <span class="slds-checkbox--faux" />
-                    <span class="slds-form-element__label">Rental Income</span>
-                </label>
-                <label class="slds-checkbox">
-                    <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkStandard}" text="Standard If Documents" change="{!c.filterCategory}"/>
-                    <span class="slds-checkbox--faux" />
-                    <span class="slds-form-element__label">Standard If Documents</span>
-                </label>
-                <label class="slds-checkbox">
-                    <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkBusiness}" text="Business Income" change="{!c.filterCategory}"/>
-                    <span class="slds-checkbox--faux" />
-                    <span class="slds-form-element__label">Business Income</span>
-                </label>
-                <label class="slds-checkbox">
-                    <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkLiabilities}" text="Liabilities Remaining" change="{!c.filterCategory}"/>
-                    <span class="slds-checkbox--faux" />
-                    <span class="slds-form-element__label">Liabilities Remaining</span>
-                </label>
-                <label class="slds-checkbox">
-                    <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkCommercial}" text="Commercial Applications" change="{!c.filterCategory}"/>
-                    <span class="slds-checkbox--faux" />
-                    <span class="slds-form-element__label">Commercial Applications</span>
-                </label>
-                <label class="slds-checkbox">
-                    <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkLiabilitiesBeing}" text="Liabilities Being Refinanced" change="{!c.filterCategory}"/>
-                    <span class="slds-checkbox--faux" />
-                    <span class="slds-form-element__label">Liabilities Being Refinanced</span>
-                </label>
-            </div>
-            <div class="slds-form-element">
-                <label class="slds-form-element__label" for="unique-id-of-input"><b>Related To</b></label>
-                <label class="slds-checkbox">
-                    <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkApplicant1}" text="Applicant 1" change="{!c.filterCategory}"/>
-                    <span class="slds-checkbox--faux" />
-                    <span class="slds-form-element__label">Applicant 1</span>
-                </label>
-                <label class="slds-checkbox">
-                    <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkApplicant2}" text="Applicant 2" change="{!c.filterCategory}"/>
-                    <span class="slds-checkbox--faux" />
-                    <span class="slds-form-element__label">Applicant 2</span>
-                </label>
-                <label class="slds-checkbox">
-                    <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkGeneral}" text="GeneralRel" change="{!c.filterCategory}"/>
-                    <span class="slds-checkbox--faux" />
-                    <span class="slds-form-element__label">General</span>
-                </label>
-            </div>
-        </div>
+        </aura:if>
         <div>
             <p class="slds-text-align--center"><b>No Files Found......</b></p>
         </div>
         <aura:set attribute="else">
-        <div class="slds-m-around_x-small">
-            <div class="slds-page-header">
-                <div class="slds-page-header__row">
-                    <div class="slds-page-header__col-title">
-                        <div class="slds-media">
-                            <div class="slds-media__body">
-                                <div class="slds-page-header__name">
-                                    <div class="slds-page-header__name-title">
-                                    <h1 class="slds-text-heading--medium">
-                                        Files
-                                    </h1>
+            <div class="slds-m-around_x-small">
+                <aura:if isTrue="{!!v.showHeader}">
+                    <div class="slds-page-header">
+                        <div class="slds-page-header__row">
+                            <div class="slds-page-header__col-title">
+                                <div class="slds-media">
+                                    <div class="slds-media__body">
+                                        <div class="slds-page-header__name">
+                                            <div class="slds-page-header__name-title">
+                                                <h1 class="slds-text-heading--medium">
+                                                    Files
+                                                </h1>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-page-header__col-actions">
+                                <div class="slds-page-header__controls">
+                                    <div class="slds-page-header__control">
+                                        <ul class="slds-button-group-list">
+                                            <li>
+                                                <lightning:button label="" title="Neutral action">Selected Files Size&nbsp; 
+                                                    <aura:if isTrue="{!v.selectedSize/1024 > 1024}">
+                                                        <aura:if isTrue="{!v.selectedSize/(1024*1024) > 1024}">
+                                                            <p><lightning:formattedNumber value="{!v.selectedSize/(1024*1024*1024)}" maximumFractionDigits="2" />GB</p>
+                                                            <aura:set attribute="else">
+                                                                <p><lightning:formattedNumber value="{!v.selectedSize/(1024*1024)}" maximumFractionDigits="1" />MB</p>
+                                                            </aura:set>
+                                                        </aura:if>
+                                                        <aura:set attribute="else">
+                                                            <aura:if isTrue="{!v.selectedSize/1024 > 0.50}">
+                                                                <p><lightning:formattedNumber value="{!v.selectedSize/1024}" maximumFractionDigits="0" />KB</p>
+                                                                <aura:set attribute="else">
+                                                                    <p><lightning:formattedNumber value="{!v.selectedSize}" maximumFractionDigits="0" />B</p>
+                                                                </aura:set>
+                                                            </aura:if>
+                                                        </aura:set>
+                                                    </aura:if>
+                                                </lightning:button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-page-header__col-actions">
+                                <div class="slds-page-header__controls">
+                                    <div class="slds-page-header__control">
+                                        <ul class="slds-button-group-list">
+                                            <li>
+                                                <lightning:button label="Merge PDF" class="slds-button_brand" onclick="{!c.openDocsPdf}"  />
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-page-header__col-actions">
+                                <div class="slds-page-header__controls">
+                                    <div class="slds-page-header__control">
+                                        <ul class="slds-button-group-list">
+                                            <li>
+                                                <lightning:button label="Upload Docs" class="slds-button_brand" onclick="{!c.openModalUpload}"  />
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-page-header__col-actions">
+                                <div class="slds-page-header__controls">
+                                    <div class="slds-page-header__control">
+                                        <ul class="slds-button-group-list">
+                                            <li>
+                                                <lightning:button label="Copy To" class="slds-button_brand" onclick="{!c.openModelCopyTo}"  />
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-page-header__col-actions">
+                                <div class="slds-page-header__controls">
+                                    <div class="slds-page-header__control">
+                                        <ul class="slds-button-group-list">
+                                            <li>
+                                                <lightning:button label="Open Upload Docs" class="slds-button_brand" disabled="{!v.disableUploadDocs}" onclick="{!c.openUploadDocs}"  />
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-page-header__col-actions">
+                                <div class="slds-page-header__controls">
+                                    <div class="slds-page-header__control">
+                                        <ul class="slds-button-group-list">
+                                            <li>
+                                                <lightning:button label="Download" class="slds-button_brand" onclick="{!c.handleSelectedContacts }"  />
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="slds-page-header__col-actions">
-                        <div class="slds-page-header__controls">
-                            <div class="slds-page-header__control">
-                                <ul class="slds-button-group-list">
-                                    <li>
-                                        <lightning:button label="" title="Neutral action">Selected Files Size&nbsp; 
-                                            <aura:if isTrue="{!v.selectedSize/1024 > 1024}">
-                                                <aura:if isTrue="{!v.selectedSize/(1024*1024) > 1024}">
-                                                    <p><lightning:formattedNumber value="{!v.selectedSize/(1024*1024*1024)}" maximumFractionDigits="2" />GB</p>
+                </aura:if>
+                <aura:if isTrue="{!!v.showHeader}">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="unique-id-of-input"><b>Category</b></label>
+                        <label class="slds-checkbox">
+                            <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkIdentification}" text="Identification" change="{!c.filterCategory}"/>
+                            <span class="slds-checkbox--faux" />
+                            <span class="slds-form-element__label">Identification</span>
+                        </label>
+                        <label class="slds-checkbox">
+                            <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkIncome}" text="Income" change="{!c.filterCategory}"/>
+                            <span class="slds-checkbox--faux" />
+                            <span class="slds-form-element__label">Income</span>
+                        </label>
+                        <label class="slds-checkbox">
+                            <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkAssets}" text="Assets" change="{!c.filterCategory}"/>
+                            <span class="slds-checkbox--faux" />
+                            <span class="slds-form-element__label">Assets</span>
+                        </label>
+                        <label class="slds-checkbox">
+                            <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkLoan}" text="Loan Purpose" change="{!c.filterCategory}"/>
+                            <span class="slds-checkbox--faux" />
+                            <span class="slds-form-element__label">Loan Purpose</span>
+                        </label>
+                        <label class="slds-checkbox">
+                            <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkProof}" text="Proof of Ownership" change="{!c.filterCategory}"/>
+                            <span class="slds-checkbox--faux" />
+                            <span class="slds-form-element__label">Proof Of Ownership</span>
+                        </label>
+                        <label class="slds-checkbox">
+                            <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkLiving}" text="Living Expenses" change="{!c.filterCategory}"/>
+                            <span class="slds-checkbox--faux" />
+                            <span class="slds-form-element__label">Living Expenses</span>
+                        </label>
+                        <label class="slds-checkbox">
+                            <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkGeneralCateg}" text="General" change="{!c.filterCategory}"/>
+                            <span class="slds-checkbox--faux" />
+                            <span class="slds-form-element__label">General</span>
+                        </label>
+                        <label class="slds-checkbox">
+                            <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkRental}" text="Rental Income" change="{!c.filterCategory}"/>
+                            <span class="slds-checkbox--faux" />
+                            <span class="slds-form-element__label">Rental Income</span>
+                        </label>
+                        <label class="slds-checkbox">
+                            <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkStandard}" text="Standard If Documents" change="{!c.filterCategory}"/>
+                            <span class="slds-checkbox--faux" />
+                            <span class="slds-form-element__label">Standard If Documents</span>
+                        </label>
+                        <label class="slds-checkbox">
+                            <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkBusiness}" text="Business Income" change="{!c.filterCategory}"/>
+                            <span class="slds-checkbox--faux" />
+                            <span class="slds-form-element__label">Business Income</span>
+                        </label>
+                        <label class="slds-checkbox">
+                            <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkLiabilities}" text="Liabilities Remaining" change="{!c.filterCategory}"/>
+                            <span class="slds-checkbox--faux" />
+                            <span class="slds-form-element__label">Liabilities Remaining</span>
+                        </label>
+                        <label class="slds-checkbox">
+                            <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkCommercial}" text="Commercial Applications" change="{!c.filterCategory}"/>
+                            <span class="slds-checkbox--faux" />
+                            <span class="slds-form-element__label">Commercial Applications</span>
+                        </label>
+                        <label class="slds-checkbox">
+                            <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkLiabilitiesBeing}" text="Liabilities Being Refinanced" change="{!c.filterCategory}"/>
+                            <span class="slds-checkbox--faux" />
+                            <span class="slds-form-element__label">Liabilities Being Refinanced</span>
+                        </label>
+                    </div>
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="unique-id-of-input"><b>Related To</b></label>
+                        <label class="slds-checkbox">
+                            <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkApplicant1}" text="Applicant 1" change="{!c.filterCategory}"/>
+                            <span class="slds-checkbox--faux" />
+                            <span class="slds-form-element__label">Applicant 1</span>
+                        </label>
+                        <label class="slds-checkbox">
+                            <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkApplicant2}" text="Applicant 2" change="{!c.filterCategory}"/>
+                            <span class="slds-checkbox--faux" />
+                            <span class="slds-form-element__label">Applicant 2</span>
+                        </label>
+                        <label class="slds-checkbox">
+                            <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkGeneral}" text="GeneralRel" change="{!c.filterCategory}"/>
+                            <span class="slds-checkbox--faux" />
+                            <span class="slds-form-element__label">General</span>
+                        </label>
+                    </div>
+                </aura:if>
+                <!-- <h1 class="slds-text-heading medium">Files</h1>
+            <br/> -->
+                <div style="height:300px;">
+                    <div class="slds-scrollable" style="height:100%;">
+                        <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-table_fixed-layout" role="grid">      
+                            <thead>  
+                                <tr class="slds-text-title--caps">
+                                    <aura:if isTrue="{!!v.showHeader}">
+                                        <th style="width:3.25rem">           
+                                            <label class="slds-checkbox">
+                                                <ui:inputCheckbox value="{!v.isSelectAll}" change="{!c.handleSelectAllContact}" aura:id="selectAll"/>
+                                                <span class="slds-checkbox--faux" />
+                                                <span class="slds-form-element__label"></span>
+                                            </label>
+                                        </th>
+                                    </aura:if>
+                                    <th scope="col" style="width:200px" class="slds-is-resizable slds-is-sortable">
+                                        <div class="slds-truncate" title="Title">Title</div>
+                                    </th>
+                                    <th scope="col" style="width:50px">
+                                        <div class="slds-truncate" title="Type">Type</div>
+                                    </th>
+                                    <th class="slds-is-sortable" scope="col" onclick="{!c.sortCreatedDate}" style="width:150px">
+                                        <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset">
+                                            <span class="slds-assistive-text">Sort</span>
+                                            <span class="slds-truncate" title="Created Date">Created Date</span>  
+                                            <aura:if isTrue="{! and(v.arrowDirection == 'arrowdown', v.selectedTabsoft == 'CreatedDate') }">&nbsp;  &#9660; </aura:if>  
+                                            <aura:if isTrue="{! and(v.arrowDirection != 'arrowdown', v.selectedTabsoft == 'CreatedDate') }"> &nbsp;  &#9650; </aura:if>                        
+                                        </a>
+                                    </th>
+                                    <th scope="col" style="width:50px">
+                                        <div class="slds-truncate" title="Size">Size</div>
+                                    </th>
+                                    <th scope="col" style="width:120px">
+                                        <div class="slds-truncate" title="Description">Description</div>
+                                    </th>
+                                    <th class="slds-is-sortable" scope="col" onclick="{!c.sortRelatedTo}" style="width:120px">
+                                        <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset">
+                                            <span class="slds-assistive-text">Sort</span>
+                                            <span class="slds-truncate" title="Related To">Related To</span>  
+                                            <aura:if isTrue="{! and(v.arrowDirection == 'arrowdown', v.selectedTabsoft == 'RelatedTo') }">&nbsp;  &#9660; </aura:if>  
+                                            <aura:if isTrue="{! and(v.arrowDirection != 'arrowdown', v.selectedTabsoft == 'RelatedTo') }"> &nbsp;  &#9650; </aura:if>                        
+                                        </a>
+                                    </th>
+                                    <th class="slds-is-sortable" scope="col" onclick="{!c.sortCategory}" style="width:120px">
+                                        <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset">
+                                            <span class="slds-assistive-text">Sort</span>
+                                            <span class="slds-truncate" title="Category">Category</span>  
+                                            <aura:if isTrue="{! and(v.arrowDirection == 'arrowdown', v.selectedTabsoft == 'Category') }">&nbsp;  &#9660; </aura:if>  
+                                            <aura:if isTrue="{! and(v.arrowDirection != 'arrowdown', v.selectedTabsoft == 'Category') }"> &nbsp;  &#9650; </aura:if>                        
+                                        </a>
+                                    </th>
+                                    <th scope="col" style="width:60px">
+                                        <div class="slds-truncate" title="Current (in use)">Current (in use)</div>
+                                    </th>
+                                    <aura:if isTrue="{!!v.showHeader}">
+                                        <th scope="col" style="width:50px">
+                                            <div class="slds-truncate" title="Lender">Send to Lender</div>
+                                        </th>
+                                        <th scope="col" style="width:150px">
+                                            <div class="slds-truncate" title="Actions">Actions</div>
+                                        </th>
+                                    </aura:if>
+                                </tr>
+                            </thead>
+                            <tbody>        
+                                <aura:iteration items="{!v.cvList}" var="cv">
+                                    <tr>
+                                        <aura:if isTrue="{!!v.showHeader}">
+                                            <th>
+                                                <label class="slds-checkbox">
+                                                    <ui:inputCheckbox aura:id="checkCV" value="" text="{!cv.Id}" change="{!c.handleCheckBox}"/>
+                                                    <span class="slds-checkbox--faux" />
+                                                    <span class="slds-form-element__label"></span>
+                                                </label>
+                                            </th>
+                                        </aura:if>
+                                        <th scope="row">
+                                            <div class="slds-truncate" title="{!cv.Title}">
+                                                <aura:if isTrue="{!!v.showHeader}">
+                                                    <a href="javascript:void(0);" onclick="{!c.navigateToRecord}" data-record-id="{!cv.ContentDocumentId}">{!cv.Title}</a>
+                                                </aura:if>
+                                                <aura:if isTrue="{!v.showHeader}">
+                                                    {!cv.Title}
+                                                </aura:if>
+                                            </div>
+                                        </th>
+                                        <td scope="row">
+                                            <div class="slds-truncate" title="{!cv.FileExtension}">{!cv.FileExtension}</div>
+                                        </td>
+                                        <td scope="row">
+                                            <div class="slds-truncate"><lightning:formattedDateTime value="{!cv.CreatedDate}" /></div>
+                                        </td>
+                                        <th scope="row">
+                                            <aura:if isTrue="{!cv.ContentSize/1024 > 1024}">
+                                                <aura:if isTrue="{!cv.ContentSize/(1024*1024) > 1024}">
+                                                    <p><lightning:formattedNumber value="{!cv.ContentSize/(1024*1024*1024)}" maximumFractionDigits="2" />GB</p>
                                                     <aura:set attribute="else">
-                                                        <p><lightning:formattedNumber value="{!v.selectedSize/(1024*1024)}" maximumFractionDigits="1" />MB</p>
+                                                        <p><lightning:formattedNumber value="{!cv.ContentSize/(1024*1024)}" maximumFractionDigits="1" />MB</p>
                                                     </aura:set>
                                                 </aura:if>
                                                 <aura:set attribute="else">
-                                                    <aura:if isTrue="{!v.selectedSize/1024 > 0.50}">
-                                                        <p><lightning:formattedNumber value="{!v.selectedSize/1024}" maximumFractionDigits="0" />KB</p>
+                                                    <aura:if isTrue="{!cv.ContentSize/1024 > 0.50}">
+                                                        <p><lightning:formattedNumber value="{!cv.ContentSize/1024}" maximumFractionDigits="0" />KB</p>
                                                         <aura:set attribute="else">
-                                                            <p><lightning:formattedNumber value="{!v.selectedSize}" maximumFractionDigits="0" />B</p>
+                                                            <p><lightning:formattedNumber value="{!cv.ContentSize}" maximumFractionDigits="0" />B</p>
                                                         </aura:set>
                                                     </aura:if>
                                                 </aura:set>
                                             </aura:if>
-                                        </lightning:button>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="slds-page-header__col-actions">
-                        <div class="slds-page-header__controls">
-                            <div class="slds-page-header__control">
-                                <ul class="slds-button-group-list">
-                                    <li>
-                                        <lightning:button label="Merge PDF" class="slds-button_brand" onclick="{!c.openDocsPdf}"  />
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="slds-page-header__col-actions">
-                        <div class="slds-page-header__controls">
-                            <div class="slds-page-header__control">
-                                <ul class="slds-button-group-list">
-                                    <li>
-                                        <lightning:button label="Upload Docs" class="slds-button_brand" onclick="{!c.openModalUpload}"  />
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="slds-page-header__col-actions">
-                        <div class="slds-page-header__controls">
-                            <div class="slds-page-header__control">
-                                <ul class="slds-button-group-list">
-                                    <li>
-                                        <lightning:button label="Copy To" class="slds-button_brand" onclick="{!c.openModelCopyTo}"  />
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="slds-page-header__col-actions">
-                        <div class="slds-page-header__controls">
-                            <div class="slds-page-header__control">
-                                <ul class="slds-button-group-list">
-                                    <li>
-                                        <lightning:button label="Open Upload Docs" class="slds-button_brand" onclick="{!c.openUploadDocs}"  />
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="slds-page-header__col-actions">
-                        <div class="slds-page-header__controls">
-                            <div class="slds-page-header__control">
-                                <ul class="slds-button-group-list">
-                                    <li>
-                                        <lightning:button label="Download" class="slds-button_brand" onclick="{!c.handleSelectedContacts }"  />
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="slds-form-element">
-                <label class="slds-form-element__label" for="unique-id-of-input"><b>Category</b></label>
-                <label class="slds-checkbox">
-                    <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkIdentification}" text="Identification" change="{!c.filterCategory}"/>
-                    <span class="slds-checkbox--faux" />
-                    <span class="slds-form-element__label">Identification</span>
-                </label>
-                <label class="slds-checkbox">
-                    <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkIncome}" text="Income" change="{!c.filterCategory}"/>
-                    <span class="slds-checkbox--faux" />
-                    <span class="slds-form-element__label">Income</span>
-                </label>
-                <label class="slds-checkbox">
-                    <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkAssets}" text="Assets" change="{!c.filterCategory}"/>
-                    <span class="slds-checkbox--faux" />
-                    <span class="slds-form-element__label">Assets</span>
-                </label>
-                <label class="slds-checkbox">
-                    <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkLoan}" text="Loan Purpose" change="{!c.filterCategory}"/>
-                    <span class="slds-checkbox--faux" />
-                    <span class="slds-form-element__label">Loan Purpose</span>
-                </label>
-                <label class="slds-checkbox">
-                    <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkProof}" text="Proof of Ownership" change="{!c.filterCategory}"/>
-                    <span class="slds-checkbox--faux" />
-                    <span class="slds-form-element__label">Proof Of Ownership</span>
-                </label>
-                <label class="slds-checkbox">
-                    <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkLiving}" text="Living Expenses" change="{!c.filterCategory}"/>
-                    <span class="slds-checkbox--faux" />
-                    <span class="slds-form-element__label">Living Expenses</span>
-                </label>
-                <label class="slds-checkbox">
-                    <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkGeneralCateg}" text="General" change="{!c.filterCategory}"/>
-                    <span class="slds-checkbox--faux" />
-                    <span class="slds-form-element__label">General</span>
-                </label>
-            	<label class="slds-checkbox">
-                    <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkRental}" text="Rental Income" change="{!c.filterCategory}"/>
-                    <span class="slds-checkbox--faux" />
-                    <span class="slds-form-element__label">Rental Income</span>
-                </label>
-                <label class="slds-checkbox">
-                    <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkStandard}" text="Standard If Documents" change="{!c.filterCategory}"/>
-                    <span class="slds-checkbox--faux" />
-                    <span class="slds-form-element__label">Standard If Documents</span>
-                </label>
-                <label class="slds-checkbox">
-                    <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkBusiness}" text="Business Income" change="{!c.filterCategory}"/>
-                    <span class="slds-checkbox--faux" />
-                    <span class="slds-form-element__label">Business Income</span>
-                </label>
-                <label class="slds-checkbox">
-                    <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkLiabilities}" text="Liabilities Remaining" change="{!c.filterCategory}"/>
-                    <span class="slds-checkbox--faux" />
-                    <span class="slds-form-element__label">Liabilities Remaining</span>
-                </label>
-                <label class="slds-checkbox">
-                    <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkCommercial}" text="Commercial Applications" change="{!c.filterCategory}"/>
-                    <span class="slds-checkbox--faux" />
-                    <span class="slds-form-element__label">Commercial Applications</span>
-                </label>
-                <label class="slds-checkbox">
-                    <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkLiabilitiesBeing}" text="Liabilities Being Refinanced" change="{!c.filterCategory}"/>
-                    <span class="slds-checkbox--faux" />
-                    <span class="slds-form-element__label">Liabilities Being Refinanced</span>
-                </label>
-            </div>
-            <div class="slds-form-element">
-                <label class="slds-form-element__label" for="unique-id-of-input"><b>Related To</b></label>
-                <label class="slds-checkbox">
-                    <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkApplicant1}" text="Applicant 1" change="{!c.filterCategory}"/>
-                    <span class="slds-checkbox--faux" />
-                    <span class="slds-form-element__label">Applicant 1</span>
-                </label>
-                <label class="slds-checkbox">
-                    <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkApplicant2}" text="Applicant 2" change="{!c.filterCategory}"/>
-                    <span class="slds-checkbox--faux" />
-                    <span class="slds-form-element__label">Applicant 2</span>
-                </label>
-                <label class="slds-checkbox">
-                    <ui:inputCheckbox aura:id="checkCategory" value="{!v.checkGeneral}" text="GeneralRel" change="{!c.filterCategory}"/>
-                    <span class="slds-checkbox--faux" />
-                    <span class="slds-form-element__label">General</span>
-                </label>
-            </div>
-            <!-- <h1 class="slds-text-heading medium">Files</h1>
-            <br/> -->
-            <div style="height:300px;">
-                <div class="slds-scrollable" style="height:100%;">
-            <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-table_fixed-layout" role="grid">      
-                <thead>  
-                    <tr class="slds-text-title--caps">
-                        <th style="width:3.25rem">           
-                            <label class="slds-checkbox">
-                                <ui:inputCheckbox value="{!v.isSelectAll}" change="{!c.handleSelectAllContact}" aura:id="selectAll"/>
-                                <span class="slds-checkbox--faux" />
-                                <span class="slds-form-element__label"></span>
-                            </label>
-                        </th>
-                        <th scope="col" style="width:200px" class="slds-is-resizable slds-is-sortable">
-                            <div class="slds-truncate" title="Title">Title</div>
-                        </th>
-                        <th scope="col" style="width:50px">
-                            <div class="slds-truncate" title="Type">Type</div>
-                        </th>
-                        <th class="slds-is-sortable" scope="col" onclick="{!c.sortCreatedDate}" style="width:150px">
-                            <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset">
-                                <span class="slds-assistive-text">Sort</span>
-                                <span class="slds-truncate" title="Created Date">Created Date</span>  
-                                <aura:if isTrue="{! and(v.arrowDirection == 'arrowdown', v.selectedTabsoft == 'CreatedDate') }">&nbsp;  &#9660; </aura:if>  
-                                <aura:if isTrue="{! and(v.arrowDirection != 'arrowdown', v.selectedTabsoft == 'CreatedDate') }"> &nbsp;  &#9650; </aura:if>                        
-                            </a>
-                        </th>
-                        <th scope="col" style="width:50px">
-                            <div class="slds-truncate" title="Size">Size</div>
-                        </th>
-                        <th scope="col" style="width:120px">
-                            <div class="slds-truncate" title="Description">Description</div>
-                        </th>
-                        <th class="slds-is-sortable" scope="col" onclick="{!c.sortRelatedTo}" style="width:120px">
-                            <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset">
-                                <span class="slds-assistive-text">Sort</span>
-                                <span class="slds-truncate" title="Related To">Related To</span>  
-                                <aura:if isTrue="{! and(v.arrowDirection == 'arrowdown', v.selectedTabsoft == 'RelatedTo') }">&nbsp;  &#9660; </aura:if>  
-                                <aura:if isTrue="{! and(v.arrowDirection != 'arrowdown', v.selectedTabsoft == 'RelatedTo') }"> &nbsp;  &#9650; </aura:if>                        
-                            </a>
-                        </th>
-                        <th class="slds-is-sortable" scope="col" onclick="{!c.sortCategory}" style="width:120px">
-                            <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset">
-                                <span class="slds-assistive-text">Sort</span>
-                                <span class="slds-truncate" title="Category">Category</span>  
-                                <aura:if isTrue="{! and(v.arrowDirection == 'arrowdown', v.selectedTabsoft == 'Category') }">&nbsp;  &#9660; </aura:if>  
-                                <aura:if isTrue="{! and(v.arrowDirection != 'arrowdown', v.selectedTabsoft == 'Category') }"> &nbsp;  &#9650; </aura:if>                        
-                            </a>
-                        </th>
-                        <th scope="col" style="width:150px">
-                            <div class="slds-truncate" title="Actions">Actions</div>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>        
-                    <aura:iteration items="{!v.cvList}" var="cv">
-                        <tr>
-                            <th>
-                                <label class="slds-checkbox">
-                                    <ui:inputCheckbox aura:id="checkCV" value="" text="{!cv.Id}" change="{!c.handleCheckBox}"/>
-                                    <span class="slds-checkbox--faux" />
-                                    <span class="slds-form-element__label"></span>
-                                </label>
-                            </th>
-                            <th scope="row">
-                                <div class="slds-truncate" title="{!cv.Title}">
-                                    <a href="javascript:void(0);" onclick="{!c.navigateToRecord}" data-record-id="{!cv.ContentDocumentId}">{!cv.Title}</a>
-                                </div>
-                            </th>
-                            <td scope="row">
-                                <div class="slds-truncate" title="{!cv.FileExtension}">{!cv.FileExtension}</div>
-                            </td>
-                            <td scope="row">
-                                <div class="slds-truncate"><lightning:formattedDateTime value="{!cv.CreatedDate}" /></div>
-                            </td>
-                            <th scope="row">
-                                <aura:if isTrue="{!cv.ContentSize/1024 > 1024}">
-                                    <aura:if isTrue="{!cv.ContentSize/(1024*1024) > 1024}">
-                                        <p><lightning:formattedNumber value="{!cv.ContentSize/(1024*1024*1024)}" maximumFractionDigits="2" />GB</p>
-                                        <aura:set attribute="else">
-                                            <p><lightning:formattedNumber value="{!cv.ContentSize/(1024*1024)}" maximumFractionDigits="1" />MB</p>
-                                        </aura:set>
-                                    </aura:if>
-                                    <aura:set attribute="else">
-                                        <aura:if isTrue="{!cv.ContentSize/1024 > 0.50}">
-                                            <p><lightning:formattedNumber value="{!cv.ContentSize/1024}" maximumFractionDigits="0" />KB</p>
-                                            <aura:set attribute="else">
-                                                <p><lightning:formattedNumber value="{!cv.ContentSize}" maximumFractionDigits="0" />B</p>
-                                            </aura:set>
-                                        </aura:if>
-                                    </aura:set>
-                                </aura:if>
-                                
-                            </th>
-                            <th scope="row">
-                                <div class="slds-truncate" title="{!cv.Description}">{!cv.Description}</div>
-                            </th>
-                            <th scope="row">
-                                <div class="slds-truncate" title="{!cv.Related__c}">{!cv.Related__c}</div>
-                            </th>
-                            <th scope="row">
-                                <div class="slds-truncate" title="{!cv.Category__c}">{!cv.Category__c}</div>
-                            </th>
-                            <th scope="row">
-                                <div class="slds-truncate" title="Actions">
-                                    <lightning:buttonIcon name="{!cv.ContentDocumentId}" iconName="utility:preview" variant="bare" onclick="{!c.preview}" alternativeText="View" />&nbsp;
-                                    <lightning:buttonIcon name="{!cv.Id}" iconName="utility:edit" variant="bare" onclick="{!c.edit}" alternativeText="Edit" />&nbsp;
-                                    <lightning:buttonIcon name="{!cv.ContentDocumentId}" iconName="utility:delete" variant="bare" onclick="{!c.delete}" alternativeText="Delete" />&nbsp;
-                                    <lightning:buttonIcon name="{!cv.Id}" iconName="utility:download" variant="bare" onclick="{!c.download}" alternativeText="Download" />
-                                </div>
-                            </th>
-                        </tr>
-                    </aura:iteration>
-                </tbody>
-            </table>
-                </div>
-            </div>
-        </div>
-			
-        <aura:renderIf isTrue="{!v.isEdit}">
-            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
-                <div class="slds-modal__container">
-                    <!-- Modal/Popup Box Header Starts here-->
-                    <header class="slds-modal__header">
-                        <lightning:buttonIcon iconName="utility:close"
-                                              onclick="{!c.closeModel}"
-                                              alternativeText="close"
-                                              variant="bare-inverse"
-                                              class="slds-modal__close"/>
-                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Edit File</h2>
-                    </header>
-                    <!--Modal/Popup Box Body Starts here-->
-                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                        <force:recordEdit aura:id="edit" recordId="{!v.viewRecordId}"/>
-                    </div>
-                    <!--Modal/Popup Box Footer Starts here-->
-                    <footer class="slds-modal__footer">
-                        <lightning:button variant="neutral"
-                                          label="Cancel"
-                                          title="Cancel"
-                                          onclick="{!c.closeModel}"/>
-                        <lightning:button variant="brand"
-                                          label="Save"
-                                          title="Save"
-                                          onclick="{!c.save}"/>
-                    </footer>
-                </div>
-            </section>
-            <div class="slds-backdrop slds-backdrop_open"></div>
-            
-        </aura:renderIf>
-            
-        <aura:if isTrue="{!v.isCopyTo}">
-            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
-                <div class="slds-modal__container">
-                    <!-- Modal/Popup Box Header Starts here-->
-                    <header class="slds-modal__header">
-                        <lightning:buttonIcon iconName="utility:close"
-                                              onclick="{!c.closeModelCopyTo}"
-                                              alternativeText="close"
-                                              variant="bare-inverse"
-                                              class="slds-modal__close"/>
-                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Copy To Opportunity</h2>
-                    </header>
-                    <!--Modal/Popup Box Body Starts here-->
-                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" Style="min-height:200px;height:200px;">
-                        <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-1 slds-p-horizontal_xx-large">     
-                            <div onmouseleave="{!c.onblur}" aura:id="searchRes" class="slds-form-element slds-form-element_horizontal slds-lookup slds-is-close" data-select="single">
-                                <label class="slds-form-element__label" for="lookup-348">Opportunity</label>
-                                <!--This part is for display search bar for lookup-->  
-                                <div class="slds-form-element__control">  
-                                    <div class="slds-input-has-icon slds-input-has-icon--right">
-                                        <!-- This markup is for when an record is selected -->
-                                        <div aura:id="lookup-pill" class="slds-pill-container slds-hide">
-                                            <lightning:pill class="pillSize" label="{!v.selectedOpp.Name}" name="{!v.selectedOpp.Name}" onremove="{! c.clear }">
-                                                <aura:set attribute="media">
-                                                    <lightning:icon iconName="{!v.IconNameOpp}" size="x-small" alternativeText="{!v.IconNameOpp}"/>
-                                                </aura:set>
-                                            </lightning:pill>
-                                        </div>
-                                        <div aura:id="lookupField" class="slds-show">
-                                            <lightning:icon class="slds-input__icon slds-show" iconName="utility:search" size="x-small" alternativeText="search"/>
-                                            <span class="slds-icon_container  slds-combobox__input-entity-icon" title="record">
-                                                <lightning:icon class="slds-icon slds-icon slds-icon_small slds-icon-text-default" iconName="{!v.IconNameOpp}" size="x-small" alternativeText="icon"/>
-                                                <span class="slds-assistive-text"></span>
-                                            </span>
-                                            <ui:inputText click="{!c.onfocus}" updateOn="keyup" keyup="{!c.keyPressController}" 
-                                                          class="slds-lookup__search-input slds-input leftPaddingClass" value="{!v.SearchKeyWord}" placeholder="search.."/>
-                                            <ul style="min-height:40px;margin-top:0px !important" class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid slds-lookup__menu slds" role="listbox">
-                                                <lightning:spinner class="slds-hide" variant="brand" size="small" aura:id="mySpinnerOpp"/>
-                                                <center> {!v.MessageOpp}</center>
-                                                <aura:iteration items="{!v.listOfSearchOpp}" var="singleRec">
-                                                    <c:opportunityLookupResult oRecord="{!singleRec}" IconName="{!v.IconNameOpp}"/>
-                                                </aura:iteration>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <aura:if isTrue="{!v.isSelected}">
-                            <aura:if isTrue="{! not(or(v.Applicant1, v.Applicant2))}">
-                                <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-1 slds-p-horizontal_xx-large">
-                                    <div class="slds-form-element">
-                                        <label class="slds-form-element__label"><b>There is no match found</b></label>                                
-                                    </div>
-                                </div>
-                            </aura:if>
-                            <aura:if isTrue="{!v.selectedOpp.Applicant_1__c != null}">
-                                <aura:if isTrue="{!v.Applicant1}">
-                                    <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-1 slds-p-horizontal_xx-large">
-                                        <div class="slds-form-element slds-form-element_horizontal slds-lookup">
-                                            <label class="slds-form-element__label">Applicant 1</label>
-                                            <div class=" slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
-                                                <div class="slds-input-has-icon slds-input-has-icon--right">
-                                                    <span class="slds-icon_container  slds-combobox__input-entity-icon" title="record">
-                                                        <lightning:icon class="slds-icon slds-icon slds-icon_small slds-icon-text-default" iconName="{!v.IconNameOpp}" size="x-small" alternativeText="icon"/>
-                                                        <span class="slds-assistive-text"></span>
-                                                    </span>
-                                                    <ui:inputText class="slds-input slds-p-vertical_x-small leftPaddingClass" disabled="true" value="{!v.selectedOpp.Applicant_1__r.Name}"/>
+                                            
+                                        </th>
+                                        <th scope="row">
+                                            <div class="slds-truncate" title="{!cv.Description}">{!cv.Description}</div>
+                                        </th>
+                                        <th scope="row">
+                                            <div class="slds-truncate" title="{!cv.Related__c}">{!cv.Related__c}</div>
+                                        </th>
+                                        <th scope="row">
+                                            <div class="slds-truncate" title="{!cv.Category__c}">{!cv.Category__c}</div>
+                                        </th>
+                                        <th scope="row">
+                                            <div class="custom-checkbox-wrapper" title="{!cv.Current_in_use__c}">
+                                                <lightning:input type="checkbox" label=""  name="{!cv.Id}" checked ="{!cv.Current_in_use__c}" disabled="true" />
+                                            </div>
+                                        </th>
+                                        <aura:if isTrue="{!!v.showHeader}">
+                                            <th scope="row">
+                                                <div class="slds-truncate" title="Lender">
+                                                    <ui:inputCheckbox aura:id="checkboxLender" name="{!cv.Id}" value="{!cv.Send_to_Lender__c}" change="{!c.updateForLender}"/>
                                                 </div>
+                                            </th>
+                                            <th scope="row">
+                                                <div class="slds-truncate" title="Actions">
+                                                    <lightning:buttonIcon name="{!cv.ContentDocumentId}" iconName="utility:preview" variant="bare" onclick="{!c.preview}" alternativeText="View" />&nbsp;
+                                                    <lightning:buttonIcon name="{!cv.Id}" iconName="utility:edit" variant="bare" onclick="{!c.edit}" alternativeText="Edit" />&nbsp;
+                                                    <lightning:buttonIcon name="{!cv.ContentDocumentId}" iconName="utility:delete" variant="bare" onclick="{!c.delete}" alternativeText="Delete" />&nbsp;
+                                                    <lightning:buttonIcon name="{!cv.Id}" iconName="utility:download" variant="bare" onclick="{!c.download}" alternativeText="Download" />
+                                                </div>
+                                            </th>
+                                        </aura:if>
+                                    </tr>
+                                </aura:iteration>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <aura:renderIf isTrue="{!v.isEdit}">
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <!-- Modal/Popup Box Header Starts here-->
+                        <header class="slds-modal__header">
+                            <lightning:buttonIcon iconName="utility:close"
+                                                  onclick="{!c.closeModel}"
+                                                  alternativeText="close"
+                                                  variant="bare-inverse"
+                                                  class="slds-modal__close"/>
+                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Edit File</h2>
+                        </header>
+                        <!--Modal/Popup Box Body Starts here-->
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                            <force:recordEdit aura:id="edit" recordId="{!v.viewRecordId}"/>
+                        </div>
+                        <!--Modal/Popup Box Footer Starts here-->
+                        <footer class="slds-modal__footer">
+                            <lightning:button variant="neutral"
+                                              label="Cancel"
+                                              title="Cancel"
+                                              onclick="{!c.closeModel}"/>
+                            <lightning:button variant="brand"
+                                              label="Save"
+                                              title="Save"
+                                              onclick="{!c.save}"/>
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+                
+            </aura:renderIf>
+            
+            <aura:if isTrue="{!v.isCopyTo}">
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <!-- Modal/Popup Box Header Starts here-->
+                        <header class="slds-modal__header">
+                            <lightning:buttonIcon iconName="utility:close"
+                                                  onclick="{!c.closeModelCopyTo}"
+                                                  alternativeText="close"
+                                                  variant="bare-inverse"
+                                                  class="slds-modal__close"/>
+                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Copy To Opportunity</h2>
+                        </header>
+                        <!--Modal/Popup Box Body Starts here-->
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" Style="min-height:200px;height:200px;">
+                            <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-1 slds-p-horizontal_xx-large">     
+                                <div onmouseleave="{!c.onblur}" aura:id="searchRes" class="slds-form-element slds-form-element_horizontal slds-lookup slds-is-close" data-select="single">
+                                    <label class="slds-form-element__label" for="lookup-348">Opportunity</label>
+                                    <!--This part is for display search bar for lookup-->  
+                                    <div class="slds-form-element__control">  
+                                        <div class="slds-input-has-icon slds-input-has-icon--right">
+                                            <!-- This markup is for when an record is selected -->
+                                            <div aura:id="lookup-pill" class="slds-pill-container slds-hide">
+                                                <lightning:pill class="pillSize" label="{!v.selectedOpp.Name}" name="{!v.selectedOpp.Name}" onremove="{! c.clear }">
+                                                    <aura:set attribute="media">
+                                                        <lightning:icon iconName="{!v.IconNameOpp}" size="x-small" alternativeText="{!v.IconNameOpp}"/>
+                                                    </aura:set>
+                                                </lightning:pill>
                                             </div>
-                                            <div class="slds-form-element__control slds-p-top_xx-small">
-                                                <lightning:icon class="slds-form-element" size="small" iconName="action:approval" alternativeText="Approved" />Match found
+                                            <div aura:id="lookupField" class="slds-show">
+                                                <lightning:icon class="slds-input__icon slds-show" iconName="utility:search" size="x-small" alternativeText="search"/>
+                                                <span class="slds-icon_container  slds-combobox__input-entity-icon" title="record">
+                                                    <lightning:icon class="slds-icon slds-icon slds-icon_small slds-icon-text-default" iconName="{!v.IconNameOpp}" size="x-small" alternativeText="icon"/>
+                                                    <span class="slds-assistive-text"></span>
+                                                </span>
+                                                <ui:inputText click="{!c.onfocus}" updateOn="keyup" keyup="{!c.keyPressController}" 
+                                                              class="slds-lookup__search-input slds-input leftPaddingClass" value="{!v.SearchKeyWord}" placeholder="search.."/>
+                                                <ul style="min-height:40px;margin-top:0px !important" class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid slds-lookup__menu slds" role="listbox">
+                                                    <lightning:spinner class="slds-hide" variant="brand" size="small" aura:id="mySpinnerOpp"/>
+                                                    <center> {!v.MessageOpp}</center>
+                                                    <aura:iteration items="{!v.listOfSearchOpp}" var="singleRec">
+                                                        <c:opportunityLookupResult oRecord="{!singleRec}" IconName="{!v.IconNameOpp}"/>
+                                                    </aura:iteration>
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
-                                    <aura:set attribute="else">
+                                </div>
+                            </div>
+                            <aura:if isTrue="{!v.isSelected}">
+                                <aura:if isTrue="{! not(or(v.Applicant1, v.Applicant2))}">
+                                    <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-1 slds-p-horizontal_xx-large">
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label"><b>There is no match found</b></label>                                
+                                        </div>
+                                    </div>
+                                </aura:if>
+                                <aura:if isTrue="{!v.selectedOpp.Applicant_1__c != null}">
+                                    <aura:if isTrue="{!v.Applicant1}">
                                         <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-1 slds-p-horizontal_xx-large">
                                             <div class="slds-form-element slds-form-element_horizontal slds-lookup">
                                                 <label class="slds-form-element__label">Applicant 1</label>
-                                                <div class="slds-form-element__control">
+                                                <div class=" slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
                                                     <div class="slds-input-has-icon slds-input-has-icon--right">
                                                         <span class="slds-icon_container  slds-combobox__input-entity-icon" title="record">
                                                             <lightning:icon class="slds-icon slds-icon slds-icon_small slds-icon-text-default" iconName="{!v.IconNameOpp}" size="x-small" alternativeText="icon"/>
@@ -652,33 +677,33 @@
                                                     </div>
                                                 </div>
                                                 <div class="slds-form-element__control slds-p-top_xx-small">
-                                                    <lightning:icon class="slds-form-element" size="small" iconName="action:close" alternativeText="Approved" />No Match found
+                                                    <lightning:icon class="slds-form-element" size="small" iconName="action:approval" alternativeText="Approved" />Match found
                                                 </div>
                                             </div>
                                         </div>
-                                    </aura:set>
+                                        <aura:set attribute="else">
+                                            <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-1 slds-p-horizontal_xx-large">
+                                                <div class="slds-form-element slds-form-element_horizontal slds-lookup">
+                                                    <label class="slds-form-element__label">Applicant 1</label>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-input-has-icon slds-input-has-icon--right">
+                                                            <span class="slds-icon_container  slds-combobox__input-entity-icon" title="record">
+                                                                <lightning:icon class="slds-icon slds-icon slds-icon_small slds-icon-text-default" iconName="{!v.IconNameOpp}" size="x-small" alternativeText="icon"/>
+                                                                <span class="slds-assistive-text"></span>
+                                                            </span>
+                                                            <ui:inputText class="slds-input slds-p-vertical_x-small leftPaddingClass" disabled="true" value="{!v.selectedOpp.Applicant_1__r.Name}"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-form-element__control slds-p-top_xx-small">
+                                                        <lightning:icon class="slds-form-element" size="small" iconName="action:close" alternativeText="Approved" />No Match found
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </aura:set>
+                                    </aura:if>
                                 </aura:if>
-                            </aura:if>
-                            <aura:if isTrue="{!v.selectedOpp.Applicant_2__c != null}">
-                                <aura:if isTrue="{!v.Applicant2}">
-                                    <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-1 slds-p-horizontal_xx-large">
-                                        <div class="slds-form-element slds-form-element_horizontal slds-lookup">
-                                            <label class="slds-form-element__label">Applicant 2</label>
-                                            <div class="slds-form-element__control">
-                                                <div class="slds-input-has-icon slds-input-has-icon--right">
-                                                    <span class="slds-icon_container  slds-combobox__input-entity-icon" title="record">
-                                                        <lightning:icon class="slds-icon slds-icon slds-icon_small slds-icon-text-default" iconName="{!v.IconNameOpp}" size="x-small" alternativeText="icon"/>
-                                                        <span class="slds-assistive-text"></span>
-                                                    </span>
-                                                    <ui:inputText class="slds-input slds-p-vertical_x-small leftPaddingClass" disabled="true" value="{!v.selectedOpp.Applicant_2__r.Name}"/>
-                                                </div>
-                                            </div>
-                                            <div class="slds-form-element__control slds-p-top_xx-small">
-                                                <lightning:icon class="slds-form-element" size="small" iconName="action:approval" alternativeText="Approved" />Match Found
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <aura:set attribute="else">
+                                <aura:if isTrue="{!v.selectedOpp.Applicant_2__c != null}">
+                                    <aura:if isTrue="{!v.Applicant2}">
                                         <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-1 slds-p-horizontal_xx-large">
                                             <div class="slds-form-element slds-form-element_horizontal slds-lookup">
                                                 <label class="slds-form-element__label">Applicant 2</label>
@@ -691,52 +716,70 @@
                                                         <ui:inputText class="slds-input slds-p-vertical_x-small leftPaddingClass" disabled="true" value="{!v.selectedOpp.Applicant_2__r.Name}"/>
                                                     </div>
                                                 </div>
-                                                <div class="slds-form-element__control slds-p-top_x-small">
-                                                    <lightning:icon class="slds-form-element slds-p-vertical_xx-small" size="small" iconName="action:close" alternativeText="Approved" />No Match found
+                                                <div class="slds-form-element__control slds-p-top_xx-small">
+                                                    <lightning:icon class="slds-form-element" size="small" iconName="action:approval" alternativeText="Approved" />Match Found
                                                 </div>
                                             </div>
                                         </div>
-                                    </aura:set>
+                                        <aura:set attribute="else">
+                                            <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-1 slds-p-horizontal_xx-large">
+                                                <div class="slds-form-element slds-form-element_horizontal slds-lookup">
+                                                    <label class="slds-form-element__label">Applicant 2</label>
+                                                    <div class="slds-form-element__control">
+                                                        <div class="slds-input-has-icon slds-input-has-icon--right">
+                                                            <span class="slds-icon_container  slds-combobox__input-entity-icon" title="record">
+                                                                <lightning:icon class="slds-icon slds-icon slds-icon_small slds-icon-text-default" iconName="{!v.IconNameOpp}" size="x-small" alternativeText="icon"/>
+                                                                <span class="slds-assistive-text"></span>
+                                                            </span>
+                                                            <ui:inputText class="slds-input slds-p-vertical_x-small leftPaddingClass" disabled="true" value="{!v.selectedOpp.Applicant_2__r.Name}"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-form-element__control slds-p-top_x-small">
+                                                        <lightning:icon class="slds-form-element slds-p-vertical_xx-small" size="small" iconName="action:close" alternativeText="Approved" />No Match found
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </aura:set>
+                                    </aura:if>
                                 </aura:if>
                             </aura:if>
-                        </aura:if>
+                        </div>
+                        <!--Modal/Popup Box Footer Starts here-->
+                        <footer class="slds-modal__footer">
+                            <span class="form-control-static pull-left" style="line-height: 10px;float:left;">
+                                <aura:if isTrue="{!v.isSelected}">
+                                    <aura:if isTrue="{! not(or(v.Applicant1, v.Applicant2))}">
+                                        <p style="width:400px;text-align:left;">Match not found for {!v.selectedOpp.Applicant_1__r.Name}<aura:if isTrue="{!v.selectedOpp.Applicant_2__c != null}">,{!v.selectedOpp.Applicant_2__r.Name}</aura:if>. Files related to this 
+                                            person(s) will be related to General documents instead of their name if you choose to copy now.</p>
+                                    </aura:if>
+                                    <aura:if isTrue="{! and(v.Applicant2,v.Applicant1)}">
+                                        <p style="width:400px;text-align:left;">{!v.selectedOpp.Applicant_1__r.Name}<aura:if isTrue="{!v.selectedOpp.Applicant_2__c != null}">,{!v.selectedOpp.Applicant_2__r.Name}</aura:if> Matched do you want to copy Files?</p>
+                                        <aura:set attribute="else">
+                                            <aura:if isTrue="{!v.Applicant1}">
+                                                <p style="width:400px;text-align:left;">Match not found for {!v.selectedOpp.Applicant_2__r.Name}. Files related to 
+                                                    this person(s) will be related to General documents instead of their name if you choose to copy now.</p>
+                                            </aura:if>
+                                            <aura:if isTrue="{!v.Applicant2}">
+                                                <p style="width:400px;text-align:left;">Match not found for {!v.selectedOpp.Applicant_1__r.Name}. Files related to 
+                                                    this person(s) will be related to General documents instead of their name if you choose to copy now.</p>
+                                            </aura:if>
+                                        </aura:set>
+                                    </aura:if>
+                                </aura:if>
+                            </span>
+                            <lightning:button variant="neutral"
+                                              label="Cancel"
+                                              title="Cancel"
+                                              onclick="{!c.closeModelCopyTo}"/>
+                            <lightning:button variant="brand"
+                                              label="Copy"
+                                              title="Save"
+                                              onclick="{!c.handleSelectedDocuments}"/>
+                        </footer>
                     </div>
-                    <!--Modal/Popup Box Footer Starts here-->
-                    <footer class="slds-modal__footer">
-                        <span class="form-control-static pull-left" style="line-height: 10px;float:left;">
-                            <aura:if isTrue="{!v.isSelected}">
-                                <aura:if isTrue="{! not(or(v.Applicant1, v.Applicant2))}">
-                                    <p style="width:400px;text-align:left;">Match not found for {!v.selectedOpp.Applicant_1__r.Name}<aura:if isTrue="{!v.selectedOpp.Applicant_2__c != null}">,{!v.selectedOpp.Applicant_2__r.Name}</aura:if>. Files related to this 
-                                        person(s) will be related to General documents instead of their name if you choose to copy now.</p>
-                                </aura:if>
-                                <aura:if isTrue="{! and(v.Applicant2,v.Applicant1)}">
-                                    <p style="width:400px;text-align:left;">{!v.selectedOpp.Applicant_1__r.Name}<aura:if isTrue="{!v.selectedOpp.Applicant_2__c != null}">,{!v.selectedOpp.Applicant_2__r.Name}</aura:if> Matched do you want to copy Files?</p>
-                                    <aura:set attribute="else">
-                                        <aura:if isTrue="{!v.Applicant1}">
-                                            <p style="width:400px;text-align:left;">Match not found for {!v.selectedOpp.Applicant_2__r.Name}. Files related to 
-                                                this person(s) will be related to General documents instead of their name if you choose to copy now.</p>
-                                        </aura:if>
-                                        <aura:if isTrue="{!v.Applicant2}">
-                                            <p style="width:400px;text-align:left;">Match not found for {!v.selectedOpp.Applicant_1__r.Name}. Files related to 
-                                                this person(s) will be related to General documents instead of their name if you choose to copy now.</p>
-                                        </aura:if>
-                                    </aura:set>
-                                </aura:if>
-                            </aura:if>
-                        </span>
-                        <lightning:button variant="neutral"
-                                          label="Cancel"
-                                          title="Cancel"
-                                          onclick="{!c.closeModelCopyTo}"/>
-                        <lightning:button variant="brand"
-                                          label="Copy"
-                                          title="Save"
-                                          onclick="{!c.handleSelectedDocuments}"/>
-                    </footer>
-                </div>
-                <lightning:spinner aura:id="mySpinnerCopy" alternativeText="Processing.." title="Processing.." variant="brand" size="large" class="slds-hide"/>
-            </section>
-            <div class="slds-backdrop slds-backdrop_open"></div>
+                    <lightning:spinner aura:id="mySpinnerCopy" alternativeText="Processing.." title="Processing.." variant="brand" size="large" class="slds-hide"/>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
             </aura:if>
         </aura:set>
     </aura:if>
@@ -753,14 +796,14 @@
                     <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Upload Documents</h2>
                 </header>
                 <!--Modal/Popup Box Body Starts here-->
-                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                        <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-1 slds-p-horizontal_xx-large">
-                            <div class="slds-form-element">
-                                <lightning:fileUpload  name="fileUploader" label= "" accept="{!v.accept}" multiple="{!v.multiple}" 
-                                                      recordId="{!v.recordId}" onuploadfinished="{!c.handleDocUploadFinished}"/>
-                            </div>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-1 slds-p-horizontal_xx-large">
+                        <div class="slds-form-element">
+                            <lightning:fileUpload  name="fileUploader" label= "" accept="{!v.accept}" multiple="{!v.multiple}" 
+                                                  recordId="{!v.recordId}" onuploadfinished="{!c.handleDocUploadFinished}"/>
                         </div>
                     </div>
+                </div>
                 <!--Modal/Popup Box Footer Starts here-->
                 <footer class="slds-modal__footer">
                     <lightning:button variant="neutral"
@@ -821,6 +864,11 @@
                             </div>
                         </div>
                     </aura:iteration>
+                    <aura:if isTrue="{!v.docExistError}">
+                        <div class="slds-m-top_medium" style="color:red;">
+                            WARNING! You already have one or more Lender Credit Contract document(s) on file. The Lender Credit Contract document(s) you load now will supersede ALL OTHER previous Lender Credit Contract document(s) which will be marked as out-of-date. Be sure to load ALL current Lender Credit Contract documents at the one time so that they are all marked as current.
+                        </div>
+                    </aura:if>
                 </div>
                 <!--Modal/Popup Box Footer Starts here-->
                 <footer class="slds-modal__footer">
@@ -829,9 +877,9 @@
                                       title="Cancel"
                                       onclick="{!c.closeIsAfter}"/>
                     <lightning:button variant="brand"
-                                          label="Save"
-                                          title="Save"
-                                          onclick="{!c.handleFinalUploadDoc}"/>
+                                      label="Save"
+                                      title="Save"
+                                      onclick="{!c.handleFinalUploadDoc}"/>
                 </footer>
             </div>
         </section>

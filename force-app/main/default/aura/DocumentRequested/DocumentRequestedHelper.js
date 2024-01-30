@@ -22,4 +22,14 @@
         });
         $A.enqueueAction(action);
     },
+    
+    updateActivity: function(component){
+        var recordIds = component.get("v.recordId");
+        var action = component.get("c.updateCustomerActivity");
+        action.setParams({
+            recId : recordIds
+        });
+        action.setCallback(this, function(result){});                           
+        $A.enqueueAction(action);
+    }
 })

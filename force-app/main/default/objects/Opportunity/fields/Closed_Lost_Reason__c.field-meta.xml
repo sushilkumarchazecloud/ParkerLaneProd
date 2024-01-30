@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Closed_Lost_Reason__c</fullName>
+    <externalId>false</externalId>
+    <label>Closed Reason</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>No interest</fullName>
+                <default>false</default>
+                <label>No interest</label>
+            </value>
+            <value>
+                <fullName>No benefit</fullName>
+                <default>false</default>
+                <label>No benefit</label>
+            </value>
+            <value>
+                <fullName>DNQ - Policy</fullName>
+                <default>false</default>
+                <label>DNQ - Policy</label>
+            </value>
+            <value>
+                <fullName>DNQ - contact / credit</fullName>
+                <default>false</default>
+                <label>DNQ - contact / credit</label>
+            </value>
+            <value>
+                <fullName>DNQ - Servicing</fullName>
+                <default>false</default>
+                <label>DNQ - Servicing</label>
+            </value>
+            <value>
+                <fullName>Declined - Policy</fullName>
+                <default>false</default>
+                <label>Declined - Policy</label>
+            </value>
+            <value>
+                <fullName>Declined - conduct / credit</fullName>
+                <default>false</default>
+                <label>Declined - conduct / credit</label>
+            </value>
+            <value>
+                <fullName>Declined - Servicing</fullName>
+                <default>false</default>
+                <label>Declined - Servicing</label>
+            </value>
+            <value>
+                <fullName>Low Valuation</fullName>
+                <default>false</default>
+                <label>Low Valuation</label>
+            </value>
+            <value>
+                <fullName>Fixed Rate Break Cost</fullName>
+                <default>false</default>
+                <label>Fixed Rate Break Cost</label>
+            </value>
+            <value>
+                <fullName>Existing Bank / Broker</fullName>
+                <default>false</default>
+                <label>Existing Bank / Broker</label>
+            </value>
+            <value>
+                <fullName>Retention Team</fullName>
+                <default>false</default>
+                <label>Retention Team</label>
+            </value>
+            <value>
+                <fullName>Uncontactable</fullName>
+                <default>false</default>
+                <label>Uncontactable</label>
+            </value>
+            <value>
+                <fullName>Paid cash</fullName>
+                <default>false</default>
+                <label>Paid cash</label>
+            </value>
+            <value>
+                <fullName>Not proceeding with purchase</fullName>
+                <default>false</default>
+                <label>Not proceeding with purchase</label>
+            </value>
+            <value>
+                <fullName>Frustration - docs required</fullName>
+                <default>false</default>
+                <label>Frustration - docs required</label>
+            </value>
+            <value>
+                <fullName>Frustration - process</fullName>
+                <default>false</default>
+                <label>Frustration - process</label>
+            </value>
+            <value>
+                <fullName>Frustration - VOI</fullName>
+                <default>false</default>
+                <label>Frustration - VOI</label>
+            </value>
+            <value>
+                <fullName>DNQ servicing</fullName>
+                <default>false</default>
+                <label>DNQ servicing</label>
+            </value>
+            <value>
+                <fullName>DNQ credit score</fullName>
+                <default>false</default>
+                <label>DNQ credit score</label>
+            </value>
+            <value>
+                <fullName>DNQ probation</fullName>
+                <default>false</default>
+                <label>DNQ probation</label>
+            </value>
+            <value>
+                <fullName>DNQ non-homeowner</fullName>
+                <default>false</default>
+                <label>DNQ non-homeowner</label>
+            </value>
+            <value>
+                <fullName>DNQ other policy</fullName>
+                <default>false</default>
+                <label>DNQ other policy</label>
+            </value>
+            <value>
+                <fullName>Declined servicing</fullName>
+                <default>false</default>
+                <label>Declined servicing</label>
+            </value>
+            <value>
+                <fullName>Declined credit score</fullName>
+                <default>false</default>
+                <label>Declined credit score</label>
+            </value>
+            <value>
+                <fullName>Declined Probation</fullName>
+                <default>false</default>
+                <label>Declined Probation</label>
+            </value>
+            <value>
+                <fullName>Declined other policy</fullName>
+                <default>false</default>
+                <label>Declined other policy</label>
+            </value>
+            <value>
+                <fullName>Other broker</fullName>
+                <default>false</default>
+                <label>Other broker</label>
+            </value>
+            <value>
+                <fullName>Other lender - interest bearing</fullName>
+                <default>false</default>
+                <label>Other lender - interest bearing</label>
+            </value>
+            <value>
+                <fullName>Other lender - 0% interest</fullName>
+                <default>false</default>
+                <label>Other lender - 0% interest</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

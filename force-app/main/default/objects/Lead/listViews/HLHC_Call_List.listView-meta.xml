@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HLHC_Call_List</fullName>
+    <columns>installationState__c</columns>
+    <columns>Customer_Support__c</columns>
+    <columns>LEAD.CREATED_DATE</columns>
+    <columns>LEAD.STATUS</columns>
+    <columns>LEAD.UNREAD</columns>
+    <columns>FULL_NAME</columns>
+    <columns>LEAD.PHONE</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>LEAD.LEAD_SOURCE</columns>
+    <columns>LEAD.RECORDTYPE</columns>
+    <columns>pi__score__c</columns>
+    <columns>LEAD.LAST_UPDATE</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>HLHC_Offered__c</field>
+        <operation>equals</operation>
+        <value>0</value>
+    </filters>
+    <filters>
+        <field>Do_not_contact__c</field>
+        <operation>equals</operation>
+        <value>0</value>
+    </filters>
+    <filters>
+        <field>LEAD.STATUS</field>
+        <operation>notEqual</operation>
+        <value>Online Quote,PA Commenced,PA Completed,Closed (Do not Contact)</value>
+    </filters>
+    <filters>
+        <field>LEAD.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Lead.Green_Loan</value>
+    </filters>
+    <label>HLHC Call List (Solar)</label>
+</ListView>

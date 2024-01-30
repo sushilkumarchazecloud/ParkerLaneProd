@@ -33,6 +33,8 @@
          $A.enqueueAction(action);
         helper.helperMethod(component);
         helper.FetchDlBack(component);
+        helper.FetchSelfi(component);
+        helper.FetchPassport(component);
     },
     
     navigateToRecord : function(component, event, helper){
@@ -53,8 +55,8 @@
         }));    
     },
     
-   UpdateContact : function(component, event, helper){
-       var action = component.get("c.UpdateOppCon");
+    UpdateContact : function(component, event, helper){
+        var action = component.get("c.UpdateOppCon");
         action.setParams({ cont : component.get("v.Con") });
         action.setCallback(this, function(response) {
             var state = response.getState();
@@ -92,6 +94,9 @@
     openModalBack : function(component, event, helper){
         component.set("v.isModalOpenBack", true);
     },
+    openModaForSelfi : function(component, event, helper){
+        component.set("v.isModalOpenForSelfi", true);
+    },
     
     closeModel : function(component, event, helper){
         if(component.get("v.isModalOpen") == true){
@@ -99,6 +104,9 @@
         }
         if(component.get("v.isModalOpenBack") == true){
              component.set("v.isModalOpenBack", false);
+        }
+        if(component.get("v.isModalOpenForSelfi") == true){
+             component.set("v.isModalOpenForSelfi", false);
         }
     },
     
@@ -108,80 +116,34 @@
         for(var i=0; i<uploadedFiles.length; i++){
             idContent = uploadedFiles[i].documentId;
         }
+        helper.uploadDate(component,event, helper, idContent, 'DlFront');  
         
-        var action = component.get("c.frontUpload");
-        action.setParams({ documentIds : idContent, recordId : component.get("v.recordId"), DocNm : 'DlFront' });
-        action.setCallback(this, function(response) {
-            var state = response.getState();
-            if (state === "SUCCESS") {
-                component.set("v.isModalOpen", false);
-                var toastEvent = $A.get("e.force:showToast");
-                toastEvent.setParams({
-                    "title": "Success!",
-                    "message": "Successfully Uploaded" ,
-                    "type" : "success"
-                });
-                toastEvent.fire();
-            	helper.againGetData(component, 'DlFront');
-            }
-            else if (state === "INCOMPLETE") {
-                // do something
-            }
-                else if (state === "ERROR") {
-                    var errors = response.getError();
-                    if (errors) {
-                        if (errors[0] && errors[0].message) {
-                            alert("Error message: " + 
-                                  errors[0].message);
-                        }
-                    } else {
-                        alert("Unknown error");
-                    }
-                }
-        });
-        
-        $A.enqueueAction(action);
-        
+        component.set("v.isModalOpen", false);
     },
     
-    handleDocUploadFinishedForBack : function(component, event, helper){
-   		var uploadedFiles = event.getParam("files");
+    backDataUpload : function(component, event, helper){
+        var uploadedFiles = event.getParam("files");
+   		// = event.getParam("files");
+        var idContent;
+        for(var i=0; i<uploadedFiles.length; i++){
+            idContent = uploadedFiles[i].documentId;
+        }
+        helper.uploadDate(component,event, helper, idContent, 'BackDL');
+        
+        component.set("v.isModalOpenBack", false);
+    },
+    
+   
+    uploadSelfiData : function(component, event, helper){
+        var uploadedFiles = event.getParam("files");
         var idContent;
         for(var i=0; i<uploadedFiles.length; i++){
             idContent = uploadedFiles[i].documentId;
         }
         
-        var action = component.get("c.frontUpload");
-        action.setParams({ documentIds : idContent, recordId : component.get("v.recordId"), DocNm : 'BackDL' });
-        action.setCallback(this, function(response) {
-            var state = response.getState();
-            if (state === "SUCCESS") {
-                component.set("v.isModalOpenBack", false);
-                var toastEvent = $A.get("e.force:showToast");
-                toastEvent.setParams({
-                    "title": "Success!",
-                    "message": "Successfully Uploaded" ,
-                    "type" : "success"
-                });
-                toastEvent.fire();
-                helper.againGetData(component, 'BackDL');
-            }
-            else if (state === "INCOMPLETE") {
-                // do something
-            }
-                else if (state === "ERROR") {
-                    var errors = response.getError();
-                    if (errors) {
-                        if (errors[0] && errors[0].message) {
-                            alert("Error message: " + 
-                                  errors[0].message);
-                        }
-                    } else {
-                        alert("Unknown error");
-                    }
-                }
-        });
-        $A.enqueueAction(action);
+        helper.uploadDate(component,event, helper, idContent, 'Selfi');
         
-    },
+        component.set("v.isModalOpenForSelfi", false);
+    }
+    
 })

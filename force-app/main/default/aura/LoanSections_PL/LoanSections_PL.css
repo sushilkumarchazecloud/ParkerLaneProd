@@ -4,6 +4,15 @@
 .THIS.section-content{
     margin-top: 75px;
 }
+.THIS .initSpins::after {
+    position: absolute;
+    content: "Fetching today's best rates";
+    width: 100%;
+    text-align: center;
+    top: 21rem;
+    font-weight: bold;
+    color : #1a2745;
+}
 .THIS.path-header{
     width:100%;
     position: fixed;
@@ -188,8 +197,15 @@
     height: 43px;
     
 }
+.THIS .desk_css{
+    margin-left: auto;
+}
 /*mobile view*/
 @media screen and (max-width: 770px) {
+    .THIS .mob_css{
+        margin-top: -15px;
+        margin-inline: auto;
+    }
   .THIS .company-logo div, .THIS.company-logo div{
         text-align: center;
         padding: 7px;
@@ -201,6 +217,9 @@
         font-size: 1.75rem;
         padding-left: 15px;
     }
+    .THIS .boxalign {
+    text-align: -webkit-right;
+}
     /*.THIS .header-input-loan-amount{
     	width: 100%;
         display: inline-flex;
@@ -215,6 +234,9 @@
     border: 1px solid;
     padding: 5px;
      
+}
+.THIS .boxalign {
+    text-align: -webkit-right;
 }
 .THIS .no-anchor-footer, .THIS .no-anchor-footer:hover, .THIS .no-anchor-footer:active{
     text-decoration: none !important;
@@ -422,9 +444,14 @@
     padding-left: 3rem !important;
     padding-right: 3rem !important;
     font-family: ProximaNovaAlt-Medium;
-    color: var(--slds-c-button-color-border, var(--sds-c-button-color-border, transparent)) !important;
-    background: rgb(245 245 245) !important;
+  /*  color: var(--slds-c-button-color-border, var(--sds-c-button-color-border, transparent)) !important;
+   */ background: rgb(245 245 245) !important;
+    color: #0176d3 !important; 
      
+}
+.THIS .privious-button_style:hover{
+    color : #10467a !important;
+    background: #f5f5f5 !important;
 }
 .THIS .save-button_style{
     font-family: ProximaNovaAlt-Medium;
@@ -498,12 +525,10 @@
       color:lightgray;
       opacity: 1;                      
 }
-
 .THIS .slds-scope .slds-select_container:before, .THIS .slds-scope .slds-select_container:after {
     border-left: 5px solid transparent !important;
     border-right: 5px solid transparent !important;
-}                        
-                        
+}
 .THIS .slds-spinner,.THIS.slds-spinner {
     top: 500px;
 }

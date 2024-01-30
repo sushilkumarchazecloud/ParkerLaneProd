@@ -4,3 +4,6 @@
 .THIS .leftPaddingClass {
     padding-left: 2rem;
 }
+.THIS .custom-checkbox-wrapper .slds-checkbox_faux {
+  margin-bottom : 2px;
+}

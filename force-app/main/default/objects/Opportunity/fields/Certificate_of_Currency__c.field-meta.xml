@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Certificate_of_Currency__c</fullName>
+    <description>Certificate of currency updated to list incoming lender as an interested party on the policy</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Certificate of currency updated to list incoming lender as an interested party on the policy</inlineHelpText>
+    <label>Certificate of Currency</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Request sent to client</fullName>
+                <default>false</default>
+                <label>Request sent to client</label>
+            </value>
+            <value>
+                <fullName>Received from client</fullName>
+                <default>false</default>
+                <label>Received from client</label>
+            </value>
+            <value>
+                <fullName>Sent to incoming lender</fullName>
+                <default>false</default>
+                <label>Sent to incoming lender</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

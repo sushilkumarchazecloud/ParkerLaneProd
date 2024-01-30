@@ -1,0 +1,18 @@
+<apex:page standardController="Case" extensions="MassCaseDelete" recordSetVar="Cases">
+    <apex:form id="temp">  
+        <script type="text/javascript">
+        window.onload = popup;
+        function popup()
+        {
+            if (confirm("Are you sure?\nSelecting yes will permanently delete selected records.") == true){
+                deleteRecords();
+            }
+            else{
+                ret();
+            }
+        }
+        </script>
+        <apex:actionFunction action="{!deleteRecords}" name="deleteRecords" reRender="temp"/>
+        <apex:actionFunction action="{!ret}" name="ret" reRender="temp"/>
+    </apex:form>
+</apex:page>

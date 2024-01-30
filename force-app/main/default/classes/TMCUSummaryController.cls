@@ -1,6 +1,6 @@
 public class TMCUSummaryController{
     
-    public Boolean isApplicant2{get;set;}
+    public Boolean isApplicant2{get;set;}  
     
     public FinServ__FinancialGoal__c goals{get;set;}    
     public OpportunityContacts preferences{get;set;}
@@ -19,8 +19,12 @@ public class TMCUSummaryController{
     public Quote selectedQuote{get;set;}
     public Boolean isIncome2{get;set;}
     public Boolean isIncome3{get;set;}
+    public static string dateCreated{get; set;}
     
     public TMCUSummaryController(){
+        Datetime myDatetime = Datetime.now();
+        dateCreated = myDatetime.format('E MMM dd yyyy hh:mm:ss a');
+                
         isApplicant2 = false;
         isIncome2 = false;
         isIncome3 = false;
@@ -85,6 +89,15 @@ public class TMCUSummaryController{
         oppContacts = fetchOppContacts(oppId);
         selectedQuote = fetchSelectedQuote(oppId);
         
+        String oppName = oppContacts.opp.Name;
+        Datetime dt = Datetime.now();
+        List<string> data = string.valueOf(dt).split(' ');
+        dateTime tim =  dt;
+        string timeCorrect = data[0]+ ' '+ tim.format('h:mm a');
+        String encodedOppName = EncodingUtil.urlEncode(oppName, 'UTF-8').replace('+', '%20');
+        string title = 'Parker Lane Customer Application - '+encodedOppName + '(' + timeCorrect + ')';
+        String FName = title+'.pdf';
+        Apexpages.currentPage().getHeaders().put('content-disposition', 'inline; filename='+FName);      
     }
     
     public static Boolean checkApplicant2{get;set;}
@@ -94,7 +107,7 @@ public class TMCUSummaryController{
         try{
             Quote qt = [SELECT Id, Customer_Amount__c, Loan_Term__c, Monthly_Repayment__c, Purpose__c,  Interest_Rate__c,Total_Loan_Cost__c,Total_Fees__c,Brokerage_Amount__c,
                         Lead__c, Lead__r.FirstName, Lead__r.LastName, Lead__r.Email, Shared_Message__c, Monthly_Repayments__c,Product__r.Interest_Rate_Type__c,Credit_Available_after_Setup_Costs__c,
-                        Opportunity.Applicant_1__r.PersonContactId, Product__c, Product__r.Name,Total_loan_amount__c,Total_Setup_Fees__c,Product__r.Ongoing_Fees__c,Commission_Amount__c 
+                        Opportunity.Applicant_1__r.PersonContactId, Product__c, Product__r.Name,Total_loan_amount__c,Total_Setup_Fees__c,Product__r.Ongoing_Fees__c,Commission_Amount__c,Lender__c 
                         FROM Quote WHERE OpportunityId =: recordId AND Application__c = true LIMIT 1];
             
             if(qt.Product__r.Name != null){
@@ -130,7 +143,7 @@ public class TMCUSummaryController{
     
     public FinServ__FinancialGoal__c fetchGoals(Id oppId){
         List<FinServ__FinancialGoal__c> goalList = 
-            [SELECT Id, Control_of_your_finances__c, Find_ways_to_save_money__c, Plan_to_achieve_your_financial_goals__c,Do_you_have_an_adequate_plan__c,
+            [SELECT Id, Control_of_your_finances__c,Description_struggle_to_meet_houshold__c,Description_exp_in_the_next_6_12_month__c, Find_ways_to_save_money__c, Plan_to_achieve_your_financial_goals__c,Do_you_have_an_adequate_plan__c,
              Plan_to_repay_debt_quickly__c, household_expense_in_the_next_6_12_month__c,Rates_of_interest_you_currently_pay__c, Do_you_struggle_to_meet_your_household__c,Take_action_to_save_money__c, Track_and_manage_your_finances__c,
              What_is_your_stage_in_life__c, Which_financial_priorities_relevant_you__c, Which_life_events_are_relevant_to_you__c,
              Why_did_you_chose_Parker_Lane__c, Is_Not_Applicable_For_Life_Event__c, Is_Not_Applicable_For_financial_priority__c
@@ -310,8 +323,8 @@ public class TMCUSummaryController{
         OpportunityContacts oppCons = new OpportunityContacts();
         Opportunity opp = new Opportunity();
         try{
-            opp = [SELECT Id, Number_of_applicants__c,Purpose__c, Application_Sections__c, Current_Application_Sections__c,
-                   Applicant_1__c, Applicant_1__r.PersonContactId, Applicant_2__c, Applicant_2__r.PersonContactId,
+            opp = [SELECT Id,Name,Number_of_applicants__c,Purpose__c, Application_Sections__c, Current_Application_Sections__c,
+                   Applicant_1__c, Applicant_1__r.PersonContactId, Applicant_2__c, Applicant_2__r.PersonContactId,Living_Expense_Group_Type__c,
                    AccountId, Account.RecordType.Name, FinServ__Household__c, Relationship_to_Applicant_2__c,Owner.Name
                    FROM Opportunity WHERE Id =: recordId limit 1];
             oppCons.opp = opp;
@@ -324,7 +337,7 @@ public class TMCUSummaryController{
                 isApplicant2 = true;
             }
             
-            Map<Id, Contact> contactsMap = new Map<Id, Contact>([SELECT Name,FirstName, LastName, MiddleName, Email, Phone, Title, Birthdate, 
+            Map<Id, Contact> contactsMap = new Map<Id, Contact>([SELECT Name,spouse_s_approximate_annual_income__c,What_is_spouse_s_primary_income_source__c,FirstName, LastName, MiddleName, Email, Phone, Title, Birthdate, 
                                                                  OtherPhone, FinServ__Gender__c, FinServ__MaritalStatus__c, Government_ID__c,Medicare_Expiry_Month__c,
                                                                  Govt_Id_Number__c, Living_Situation__c, FinServ__NumberOfChildren__c,Medicare_Reference__c,
                                                                  Security_Answer__c, Security_Question__c, Driver_s_licence_state_Territory__c,Medicare_Expiry_Year__c,

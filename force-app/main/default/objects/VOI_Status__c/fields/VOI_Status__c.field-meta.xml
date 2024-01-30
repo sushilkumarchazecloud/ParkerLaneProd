@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VOI_Status__c</fullName>
+    <externalId>false</externalId>
+    <label>VOI Status</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Sent</fullName>
+                <default>true</default>
+                <label>Sent</label>
+            </value>
+            <value>
+                <fullName>Delivered</fullName>
+                <default>false</default>
+                <label>Delivered</label>
+            </value>
+            <value>
+                <fullName>Submitted</fullName>
+                <default>false</default>
+                <label>Submitted</label>
+            </value>
+            <value>
+                <fullName>Verified</fullName>
+                <default>false</default>
+                <label>Verified</label>
+            </value>
+            <value>
+                <fullName>Rejected</fullName>
+                <default>false</default>
+                <label>Rejected</label>
+            </value>
+            <value>
+                <fullName>eSign Complete</fullName>
+                <default>false</default>
+                <label>eSign Complete</label>
+            </value>
+            <value>
+                <fullName>VOI Failed, eSign Complete</fullName>
+                <default>false</default>
+                <label>VOI Failed, eSign Complete</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

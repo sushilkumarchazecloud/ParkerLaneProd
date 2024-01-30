@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>For_Loan_Amount</fullName>
+    <active>true</active>
+    <errorConditionFormula>IF( ISCHANGED(Loan_Amount__c) , AND(SyncedQuote.Application__c = True, Loan_Amount__c &lt;&gt; SyncedQuote.Total_loan_amount__c ), false)</errorConditionFormula>
+    <errorDisplayField>Loan_Amount__c</errorDisplayField>
+    <errorMessage>Cannot edit this field when there is a quote on the opportunity</errorMessage>
+</ValidationRule>

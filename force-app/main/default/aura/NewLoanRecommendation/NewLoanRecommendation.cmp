@@ -1,0 +1,133 @@
+<aura:component controller="ParkerLaneLoanController">
+    <aura:attribute name="quotesWpr" type="ParkerLaneLoanController.WrapperLoanRate[]" />
+    <aura:attribute name="customerAmount" type="String" />
+     <aura:attribute name="customerAmountnew" type="String" />
+    <aura:attribute name="masterQuote" type="String" />
+    <aura:attribute name="bgImage" type="String" />
+    <aura:attribute name="lgImage" type="String" />
+    <aura:attribute name="brHeading" type="String" />
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="showError" type="Boolean" default="false"/>
+    <aura:attribute name="errorMsg" type="String"/>
+    <aura:attribute name="purpose" type="String" default=""/>
+    <aura:attribute name="applicantFName" type="String" default=""/>
+    <aura:attribute name="applicantLName" type="String" default=""/>
+    <aura:attribute name="applicantEmail" type="String" default=""/>
+    <aura:attribute name="applicationSection" type="String" default=""/>
+    <aura:attribute name="appSectionPath" type="List" default="[]"/>
+    <aura:attribute name="selectedQuote" type="sObject" />
+    <aura:attribute name="timer" type="Integer"/>
+    <aura:attribute name= "isSpinner" type="boolean"/>
+    
+    <aura:handler name="change" value="{!v.isSpinner}" action="{!c.addSpinner}"/>  
+    <aura:handler name="ApplyNowEvent" event="c:ApplyNowEvent" action="{!c.Apply}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <lightning:spinner aura:id="mySpinner" variant="brand" size="large" class="slds-hide" />
+    <lightning:spinner aura:id="inItSpinner" variant="brand" size="large" class="initSpins" />
+    
+    <div style="background: #F5F5F5;">
+        <aura:if isTrue="{!v.showError}">
+            <div class="slds-notify slds-notify_toast slds-theme_error slds-align_absolute-center slds-m-vertical--medium">
+                <span class="slds-assistive-text">error</span>
+                <div class="slds-notify__content">
+                    <p class="slds-align_absolute-center">{!v.errorMsg}.</p>                
+                </div>
+            </div>
+        </aura:if>
+        <div>
+            <div class="slds-align_absolute-center slds-p-around_small" style="background: white;">
+                <img src="{!v.lgImage}" class="brandlogo"/>
+            </div>
+            <div class="" style="text-align: center;">
+                <img src="{!v.bgImage}" class="brandbackg"/>
+            </div>            
+            <div class="slds-grid slds-grid_vertical" style="margin-top: -10rem;">
+                <div class="slds-align_absolute-center slds-col heading_desc slds-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_7-of-12">
+                    <p>{!v.brHeading}</p></div>
+                <div class="slds-col slds-grid slds-wrap slds-align_absolute-center header-input-loan-amount slds-size_12-of-12 slds-medium-size_3-of-12 slds-large-size_3-of-12" style="padding: revert !important;padding-bottom: 5px !important;">
+                    <div class="slds-align_absolute-center slds-p-around_large slds-col"><b style="font-size: 17px;margin-top: 4px;">Amount financed</b>&nbsp;</div>
+                    <div class="slds-col input-dollarr">
+                        <lightning:input aura:id="howMuchFieldcheck" required="false"
+                                         min="0" type="number" 
+                                         class="txt-left no-abbr input-style"  
+                                         step="1" 
+                                         value = "{!v.customerAmount}" 
+                                         placeholder="How much do you need?"
+                                         onchange="{!c.onAmountChange}"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <section class="our-loans bg-lightest slds-p-around--large max-1000" style="margin-top: 5rem;">
+            <div class="slds-m-top_xx-small slds-text-align_center txt-dark-blue">Save more with a personalised payment plan</div>
+            <div class="slds-align_absolute-center slds-m-top_x-small">
+                <div class="slds-text-align_center" style="display: inline-flex; font-size: 12px !important;">
+                    <div class="esp-mark" style="color:white; font-size: 14px">i</div>
+                    <h2 style="color:#0176D3;padding-left: 5px;font-size: 14px;">Select the drop down to change your loan term</h2>
+                </div>
+            </div>
+            <div class="slds-m-top_large">
+                <div class="product-selector__choices slds-grid slds-wrap slds-grid slds-gutters"> 
+                    <aura:iteration items="{!v.quotesWpr}" var="quotesWpr" indexVar = "indx">
+                        <c:LoanRecommendationCard quote ="{!quotesWpr.quote}" 
+                                                  loanRates = "{!quotesWpr.loanRatelist}"
+                                                  customerAmount="{!v.customerAmountnew}"
+                                                  isSpinner="{!v.isSpinner}"
+                                                  purpose="{!v.purpose}"
+                                                  index = "{!indx}"/>
+                    </aura:iteration> 
+                </div>
+            </div>
+        </section>
+        <div class="slds-grid slds-grid_vertical slds-align_absolute-center">
+            <div class="slds-col slds-m-top_x-large small_hd1">Powered by Parker Lane</div>
+            <div class="slds-col slds-m-top_medium">
+                <img src="{!$Resource.SolarLoan + '/img/parkerlanecropped.png'}" style="height: 35px"/>
+            </div>
+            <div class="slds-col slds-m-top_x-large headings_css">Australia's highest rated finance provider</div>
+            <div class="slds-col slds-medium-size_8-of-12 slds-large-size_5-of-12 slds-p-around_x-small rating_css">Parker Lane has earned <b>4.9 </b>out of <b>5 </b>stars on ProductReview.com.au and is recommended by 1,600+ advisors nationwide.</div>
+            <div class="slds-col slds-m-top_xx-large">
+                <img src="{!$Resource.ReferralPortal + '/ReferralPortal/4.9Stars.png'}" class="stars_css"/>
+            </div>
+            <div class="slds-col small_hd2">More for you</div>
+            <div class="slds-col slds-p-around_small headings_css">Fast, flexible and 100% Aussie owned</div>
+        </div>
+        <div class="slds-grid slds-wrap slds-align_absolute-center slds-m-top_xx-large imgStyle">            
+            <div class="slds-col slds-size_12-of-12 slds-medium-size_3-of-12 slds-large-size_3-of-12" style="width: auto;">
+                <div class="slds-grid slds-grid_vertical slds-align_absolute-center">
+                    <div class="slds-col">
+                        <img src="{!$Resource.ReferralPortal + '/ReferralPortal/Fast.png'}" style="height: 7rem;"/>
+                    </div>
+                    <div class="slds-col img_Desc slds-m-top_small">Fast online application</div>
+                    <div class="slds-col Desc_desc slds-m-top_xx-small">Apply in just 15 minutes and get a decision in 24 hours</div>
+                </div>
+            </div>
+            <div class="slds-col slds-size_12-of-12 slds-medium-size_3-of-12 slds-large-size_3-of-12" style="width: auto;">
+                <div class="slds-grid slds-grid_vertical slds-align_absolute-center">
+                    <div class="slds-col">
+                        <img src="{!$Resource.ReferralPortal + '/ReferralPortal/PenaltyFree.png'}" class="img_css"/>
+                    </div>
+                    <div class="slds-col img_Desc slds-m-top_small">Penalty free payments</div>
+                    <div class="slds-col Desc_desc slds-m-top_xx-small">Pay down as fast as often as you like, penalty free</div>
+                </div>
+            </div>
+            <div class="slds-col slds-size_12-of-12 slds-medium-size_3-of-12 slds-large-size_3-of-12" style="width: auto;">
+                <div class="slds-grid slds-grid_vertical slds-align_absolute-center">
+                    <div class="slds-col">
+                        <img src="{!$Resource.ReferralPortal + '/ReferralPortal/PersonalisesService.png'}" class="img_css"/>
+                    </div>
+                    <div class="slds-col img_Desc slds-m-top_small">Personalised service</div>
+                    <div class="slds-col Desc_desc slds-m-top_xx-small">People dedicated to turning your solar dreams into reality</div>
+                </div>
+            </div>            
+        </div>
+        <div class="slds-grid slds-grid_vertical slds-align_absolute-center slds-m-bottom_xx-large">
+            <div class="slds-co small_hd2">More awards</div>           	
+            <div class="slds-col slds-p-around_small slds-medium-size_10-of-12 comp_Desc">Awarded best in Australia for Personal Loans and Home Loans</div>
+            <div class="slds-col slds-m-top_x-large slds-p-around_small">
+                <img src="{!$Resource.ReferralPortal + '/ReferralPortal/ProductReviewLogos.png'}" class="review_css"/>
+            </div>
+        </div>
+    </div>
+</aura:component>

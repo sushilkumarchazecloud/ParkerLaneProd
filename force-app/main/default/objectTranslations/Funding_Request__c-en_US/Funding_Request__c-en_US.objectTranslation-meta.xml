@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Funding Request</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Funding Requests</value>
+    </caseValues>
+    <quickActions>
+        <label></label>
+        <name>Cancel_Variation</name>
+    </quickActions>
+    <quickActions>
+        <label></label>
+        <name>De_Escalate_Funding</name>
+    </quickActions>
+    <quickActions>
+        <label></label>
+        <name>Escalate_Funding</name>
+    </quickActions>
+    <quickActions>
+        <label></label>
+        <name>Place_funding_on_hold</name>
+    </quickActions>
+    <quickActions>
+        <label></label>
+        <name>Take_off_hold</name>
+    </quickActions>
+    <quickActions>
+        <label></label>
+        <name>Update_Request</name>
+    </quickActions>
+    <quickActions>
+        <label></label>
+        <name>Update_funding_handover_call_status</name>
+    </quickActions>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

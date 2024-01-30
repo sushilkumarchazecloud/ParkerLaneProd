@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Key_Accreditations_Summary__c</fullName>
+    <externalId>false</externalId>
+    <formula>&quot;★ &quot;&amp;Key_Accreditations_1__c+BR()+
+&quot;★ &quot;&amp;Key_Accreditations_2__c+BR()+
+&quot;★ &quot;&amp;Key_Accreditations_3__c</formula>
+    <label>Key Accreditations Summary</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

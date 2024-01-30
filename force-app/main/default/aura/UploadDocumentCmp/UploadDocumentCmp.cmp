@@ -6,9 +6,22 @@
     <aura:attribute name="finished" type="boolean" default="false"/>
     <aura:attribute name="sldUploadList" type="List" />
     <aura:attribute name="mgRef" type="String" />
+    <aura:attribute name="status" type="String" />
     <aura:attribute name="isMogoPage" type="Boolean" default="false"/>
+    <aura:attribute name="sendMail" type="Boolean" default="true"/>
     <aura:attribute name="recordId" type="String" />
     <aura:attribute name="activeSections" type="List" />
+    <aura:attribute name="finishLater" type="boolean" default="true"/>
+    <aura:attribute name="showDialog" type="boolean" default="false"/>
+    <aura:attribute name="isDisabled" type="boolean" default="true"/>
+    <aura:attribute name="uploadList" type="List" />
+    <aura:attribute name="appUploadList" type="List" />
+    <aura:attribute name="appInd" type="Integer" default='0' />
+    <aura:attribute name="generalInd" type="Integer" default='0' />
+    <aura:attribute name="PersonNme" type="list" /> 
+    <aura:attribute name="UserId" type="String" />
+    
+    <aura:handler name="UploadFileEvent" event="c:UploadFileEvent" action="{!c.handleComponentEvent}"/>
     
     <div class="company-logo slds-grid slds-wrap" style="align-items: center;"> 
         <div class=" slds-text-align_left slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 slds-order_3  slds-medium-order_1 slds-large-order_1">
@@ -22,7 +35,7 @@
         
     </div>
     
-    <lightning:spinner aura:id="mySpinner" variant="brand" size="large" alternativeText="Loading" class="slds-hide" />
+    <lightning:spinner aura:id="mySpinner" variant="brand" size="large" alternativeText="Loading" class="slds-hide slds-is-fixed" />
     
     <aura:if isTrue="{!!v.finished}">
         <div class="header--section slds-p-bottom_medium">
@@ -35,115 +48,46 @@
                 <h1 class = "heading-style">Supporting Documents</h1>
             </div>
             <div>
-                <p class="slds-m-top_x-small" style="font-size: 0.95rem; font-family: ProximaNovaAlt-Medium;">Please provide the following information
+                <p class="slds-m-top_x-small mobileDesc" style="font-size: 0.95rem; font-family: ProximaNovaAlt-Medium;">Please provide the following information
                 </p>
             </div>
             
         </div>
-        <div style="background-color: #f4f4f4; margin-top: -15px">
-            <div class="max-700">
-                <div class="slds-grid slds-wrap upload-text-container">
-                    <div class="slds-m-top_large">
-                        <div style="display: flex;width: 107%;">
-                            <img src="{!$Resource.SolarLoan + '/img/darkbluei.PNG'}" style="height: -webkit-fill-available;"/>&nbsp;
-                            <p style="color:#0176d3; margin-top: 3px; line-height: initial;">Please read the guide to providing acceptable bank statements</p>
-                        </div>
-                        <div class="slds-m-top_medium slds-grid slds-gutters slds-wrap slds-m-horizontal_none">
-                            <div class="slds-col slds-size_3-of-6 slds-medium-size_2-of-6 slds-large-size_2-of-6" style="padding:2px">
-                                <img src="{!$Resource.SolarLoan + '/img/acceptableDoc.PNG'}" style="width: 100%;margin-top: -6px;"/>
-                            </div>
-                            <div class="slds-col slds-size_3-of-6 slds-medium-size_2-of-6 slds-large-size_2-of-6" style="padding:2px">
-                                <img src="{!$Resource.SolarLoan + '/img/notAcceptableDoc1.PNG'}" style="width: 100%;"/>
-                            </div>
-                            <div class="slds-col slds-size_3-of-6 slds-medium-size_2-of-6 slds-large-size_2-of-6" style="padding:2px">
-                                <img src="{!$Resource.SolarLoan + '/img/notAcceptableDoc2.PNG'}" style="width: 100%;"/>
-                            </div>
-                        </div>
-                    </div> 
-                    
-                    <div class="slds-grid slds-gutters slds-m-top_large">
-                        <div class="slds-col" style="top:2px; position: relative;">
-                            <img src="{!$Resource.SolarLoan + '/img/Warning.PNG'}" style="width: auto;height:30px"/>
-                        </div>
-                        <div class="slds-col" style="font-size: 1rem; color:#489bdc; margin-inline: -22px;font-family: 'ProximaNovaAlt-Medium';line-height: initial;">Is your latest statement older than 6 weeks?</div>
-                    </div>
-                    <div class="slds-m-left_x-large mobView">In addition to your old statement, print a PDF of the last 30 days transactions from your internet banking and upload it with your statement.</div>
-                    
-                    
-                    <div class="slds-size_2-of-2 slds-p-bottom_medium slds-m-top_xx-large">
-                        <h1 class = "heading-style">Upload your documents.</h1>
-                    </div>
-                    
-                    <div class="slds-size_2-of-2">
-                        <div class="slds-text-link_reset" >
-                            <ol class="pargraph-style">
-                                <li>Click + the <b style="color:#0176d3">blue</b> document tiles below or drag-and-drop files and pictures to upload from your phone or computer.</li>
-                                <li class="slds-m-top_x-small">Name the file and add an optional comment</li>
-                                <li class="slds-m-top_x-small">Save &amp; Close</li>
-                            </ol>
-                        </div> 
-                    </div>
-                    
-                    <div class="slds-size_2-of-2">
-                        <aura:if isTrue="{!!v.isMogoPage}">
-                            <div class="">
-                                <div class=" slds-grid slds-wrap slds-p-top_medium">
-                                    <div class="slds-col slds-size_1-of-1 slds-medium-size_9-of-12 slds-large-size_9-of-12">
-                                        <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_-of-12 show-up slds-p-vertical_medium">
-                                            <img src="{!$Resource.SolarLoan + '/img/illionLogo.png'}" style="width:8rem;"/>
-                                        </div>
-                                        <h2 class="pargraph-bold-style slds-p-top_small">Submit your bank statements</h2>
-                                        <div class="pargraph-style">
-                                            <div>Retrieve your bank statements the secure and easy way.</div>
-                                        </div>
-                                    </div>
-                                    <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_-of-12 show-down">
-                                        <img style="height: 3rem;" src="{!$Resource.SolarLoan + '/img/illionLogo.png'}"/>
-                                    </div>
-                                </div>
-                                
-                                <div class=" slds-grid slds-wrap pargraph-style slds-p-vertical_medium">
-                                    <div class="slds-col slds-size_1-of-6 security-img" >
-                                        <img src="{!$Resource.SolarLoan + '/img/security.png'}"/>
-                                    </div>
-                                    <div class="slds-col slds-size_5-of-6 slds-p-left_small">
-                                        <table>
-                                            <tr>
-                                                <td class="statement-img"><img  src="{!$Resource.SolarLoan + '/img/checkmark.png'}"/></td>
-                                                <td>We never store online banking credentials</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="statement-img"><img  src="{!$Resource.SolarLoan + '/img/checkmark.png'}"/></td>
-                                                <td>Data is encrypted with bank level 256-bit encryption</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="statement-img"><img  src="{!$Resource.SolarLoan + '/img/checkmark.png'}"/></td>
-                                                <td>Secured by 2048-bit keys</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="statement-img"><img  src="{!$Resource.SolarLoan + '/img/checkmark.png'}"/></td>
-                                                <td>Independently tested and audited by external security experts</td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="slds-p-around_medium slds-align_absolute-center">
-                                    <lightning:button class="btnC" iconName="action:record" variant="Success" label="Retrieve Statements" title="Retrieve Statements" onclick="{!c.handleBankAccount}" />
-                                </div>
-                                
-                            </div>
-                        </aura:if>
-                        
+        <aura:if isTrue="{!v.showDialog}">
+            <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-align_absolute-center slds-modal slds-fade-in-open">
+                <div class="slds-modal__container modalStyle">
+                    <div style="text-align: center;color: #47c65c;font-weight: bolder;margin-top: 30px;line-height: initial;">
+                        An email has been sent to you successfully!<br/>
+                        You may now close this page.                        
                     </div>
                 </div>
-                <div class="slds-p-around_medium">
+            </section>
+        </aura:if>
+        <div style="background-color: #f4f4f4; margin-top: -15px;font-family: 'ProximaNovaAlt-Medium';">
+            <div class="max-700">
+                <div class="slds-grid slds-wrap upload-text-container">
+                    <div class="slds-align_absolute-center slds-m-top_medium">
+                        <img src="{!$Resource.headersLogo + '/headersLogo/DocumentUpload.png'}" class="trackercls"/>
+                    </div>      
+                    
+                    <div class="slds-size_2-of-2 slds-p-bottom_x-small slds-m-top_x-large">
+                        <h1 class = "heading-style">Upload your documents.</h1>
+                    </div>
+                    <div class="slds-size_2-of-2">
+                        <div class="pargraph-style">We need to see your documents to meet responsible lending obligations.</div>
+                        <ol class="slds-list_dotted pargraph-style" style="margin-left: auto;">
+                            <li class="slds-m-top_x-small">Add one or multiple files per request</li>
+                            <li class="slds-m-top_x-small">PDFs or <u>clear</u> pictures are OK</li>
+                            <li class="slds-m-top_x-small">Don't forget to press Save &amp; Close</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="slds-p-around_medium docMobView">
                     <aura:iteration items="{!v.OrignalRecord}" var="mapKey">
-                        <div ><h1 style="font-family:ProximaNova-AltBold;padding-left: 17px;font-size: x-large;">{!mapKey.label}</h1>
-                            <c:UploadDocumentItems PersonName="{!mapKey.label}" sldUploadList="{!mapKey.value}" sessionId="{!v.sessionId}" recordId ="{!v.recordId}"/>
+                        <div ><h1 class="forDocs">{!if (mapKey.label == 'General Documents' ,'General Documents','Documents for ' + mapKey.label)}</h1>
+                            <c:UploadDocumentItems sendMail="{!v.sendMail}" status="{!v.status}" PersonNme="{!v.PersonNme}" appInd="{!v.appInd}" generalInd="{!v.generalInd}" isDisabled="{!v.isDisabled}" appUploadList="{!v.appUploadList}" uploadList="{!v.uploadList}" PersonName="{!mapKey.label}" sldUploadList="{!mapKey.value}" sessionId="{!v.sessionId}" recordId ="{!v.recordId}" UserId ="{!v.UserId}"/>
                         </div>
-                    </aura:iteration>
-                    
-                    
+                    </aura:iteration>                  
                 </div>
                 <aura:set attribute="else">
                     <div >
@@ -167,9 +111,22 @@
                     </div>
                 </aura:set>
                 
-                <center> 
-                    <div class="slds-p-around_x-large">
-                        <lightning:button class="btnC" variant="Success" label="Save and Finish" title="Save and Finish" onclick="{!c.saveAndfinish}" />
+                <center class="docsBtnView"> 
+                    <div class="slds-p-around_medium mobileStyleTrue" style="margin-bottom: 90px">
+                        <aura:if isTrue="{!v.sendMail}">
+                            <lightning:button class="btnC"  label="" title="" onclick="{!c.finishLaterEmail}" >Finish later <br/> (we'll email you a link to return here)</lightning:button>
+                            <aura:set attribute="else">
+                                <lightning:button class="btnReview" disabled="{!v.isDisabled}" variant="Success" label="" title="" onclick="{!c.saveAndfinish}" >Submit for review</lightning:button>
+                            </aura:set>
+                        </aura:if>
+                    </div>
+                    <div class="slds-p-around_medium mobileStyleFalse" style="margin-bottom: 90px">
+                        <aura:if isTrue="{!v.sendMail}">
+                            <lightning:button class="btnC" label="" title="" onclick="{!c.finishLaterEmail}" >Finish later (we'll email you a link to return here)</lightning:button>
+                            <aura:set attribute="else">
+                                <lightning:button class="btnC2" disabled="{!v.isDisabled}" variant="Success" label="" title="" onclick="{!c.saveAndfinish}" >Submit for review</lightning:button>
+                            </aura:set>
+                        </aura:if>
                     </div>
                 </center>
             </div>

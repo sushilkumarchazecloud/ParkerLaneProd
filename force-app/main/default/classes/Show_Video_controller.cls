@@ -43,7 +43,7 @@ public class Show_Video_controller {
     @AuraEnabled
     public static VOI_Detail__c FetchVoiDetail(Id recId){
         system.debug('recId'+recId);
-        VOI_Detail__c voi = [select Id,Secure_Code__c,contact__c,verified_by_selfie_ID__c,matchVerification__c,contact__r.Name,contact__r.AccountID, Code_Not_Required__c,Code_Match_Status__c,Identity_Certified_By__c,Secure_Code_Orignal__c,Video_and_Photo_ID_of_the_same_person__c,Identity_Verification_Status__c From VOI_Detail__c WHERE Id = : recId];
+        VOI_Detail__c voi = [select Id,verified_by__c,Secure_Code__c,contact__c,verified_by_selfie_ID__c,matchVerification__c,contact__r.Name,contact__r.AccountID, Code_Not_Required__c,Code_Match_Status__c,Identity_Certified_By__c,Secure_Code_Orignal__c,Video_and_Photo_ID_of_the_same_person__c,Identity_Verification_Status__c From VOI_Detail__c WHERE Id = : recId];
         return voi;
     }
     
@@ -52,6 +52,9 @@ public class Show_Video_controller {
         System.debug('video id : '+voiDt.verified_by_selfie_ID__c);
         boolean isWantPDF = false;
         System.debug('Video_and_Photo_ID_of_the_same_person__c----'+voiDt.Video_and_Photo_ID_of_the_same_person__c);
+        if(string.isBlank(voiDt.verified_by__c)){
+         	voiDt.verified_by__c = voiDt.Identity_Certified_By__c;   
+        }        
         if(voiDt.Secure_Code__c == voiDt.Secure_Code_Orignal__c){
             voiDt.Code_Match_Status__c = 'MATCH(Success)';
         }

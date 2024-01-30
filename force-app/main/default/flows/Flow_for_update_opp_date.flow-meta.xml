@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <decisions>
+        <name>check_particular_stages</name>
+        <label>check particular stages</label>
+        <locationX>965</locationX>
+        <locationY>371</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>check_stage</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Packs Out</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Packs Back</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Application</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Approved</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>for_packs_back</targetReference>
+            </connector>
+            <label>check stage</label>
+        </rules>
+        <rules>
+            <name>check_for_CPA_done</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>CPA Done</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>update_for_CPA_Done</targetReference>
+            </connector>
+            <label>check for CPA done</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>for_application</name>
+        <label>for application</label>
+        <locationX>775</locationX>
+        <locationY>695</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>application</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Application</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>update_application</targetReference>
+            </connector>
+            <label>application</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>for_packs_back</name>
+        <label>for packs back</label>
+        <locationX>297</locationX>
+        <locationY>479</locationY>
+        <defaultConnector>
+            <targetReference>for_packs_out</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>packs_back</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Packs Back</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>update_Packs_Back_Date</targetReference>
+            </connector>
+            <label>packs back</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>for_packs_out</name>
+        <label>for packs out</label>
+        <locationX>545</locationX>
+        <locationY>587</locationY>
+        <defaultConnector>
+            <targetReference>for_application</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>packs_out</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Packs Out</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>update_packs_out</targetReference>
+            </connector>
+            <label>packs out</label>
+        </rules>
+    </decisions>
+    <description>this flow is for update opportunity fileds according to stages.</description>
+    <interviewLabel>Flow for update opp date {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Flow for update opp date</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>update_application</name>
+        <label>update application</label>
+        <locationX>578</locationX>
+        <locationY>803</locationY>
+        <inputAssignments>
+            <field>Application_Date__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>update_for_CPA_Done</name>
+        <label>update for CPA Done</label>
+        <locationX>1370</locationX>
+        <locationY>479</locationY>
+        <inputAssignments>
+            <field>CPA_Done_Date__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>update_Packs_Back_Date</name>
+        <label>update Packs_Back_Date</label>
+        <locationX>50</locationX>
+        <locationY>587</locationY>
+        <inputAssignments>
+            <field>Packs_Back_Date__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>update_packs_out</name>
+        <label>update packs out</label>
+        <locationX>314</locationX>
+        <locationY>695</locationY>
+        <inputAssignments>
+            <field>Packs_Out_Date__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>839</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>check_particular_stages</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>StageName</field>
+            <operator>IsChanged</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>Opportunity</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

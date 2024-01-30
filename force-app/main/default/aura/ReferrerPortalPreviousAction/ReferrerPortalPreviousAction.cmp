@@ -1,0 +1,21 @@
+<aura:component controller="MyReferrerController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="item" type="Action_Centre_Request__c" /> 
+    <aura:attribute name="Previousrequest" type="String"/>
+    <aura:attribute name="PreviousrequestDate" type="Date"/>
+    <aura:attribute name="PreviousrequestTime" type="Time"/>
+    <aura:attribute name="PreviousrequestNotes" type="String"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInIt}"/> 
+    
+    <div class="slds-p-top_x-small">
+        <div>
+            <b>{!v.item.Quick_Action__c}</b>&nbsp;
+            <span class="slds-m-left_xx-small" style="color:#b0c0e2;">
+                {!v.PreviousrequestDate},&nbsp;
+                {!v.PreviousrequestTime}
+            </span>
+        </div>
+        <div> {!v.PreviousrequestNotes}</div>
+    </div>
+    
+</aura:component>

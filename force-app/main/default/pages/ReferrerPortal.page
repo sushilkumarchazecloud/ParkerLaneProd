@@ -1,0 +1,283 @@
+<apex:page controller="sessionIdclass"  
+           action="{!ReturnAccessToken}" showHeader="false"
+           sidebar="false" applyBodyTag="false" applyHtmlTag="false">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0"/>
+    <head>
+        <title>Parker Lane - Australia's No.1 Rated Finance Service</title>
+        <link REL="icon" HREF="{!URLFOR($Resource.faviconNew)}" type="img/x-icon"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+        <script>
+            (function(h,o,t,j,a,r){
+            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+            h._hjSettings={hjid:3517919,hjsv:6};
+            a=o.getElementsByTagName('head')[0];
+            r=o.createElement('script');r.async=1; 
+            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+            a.appendChild(r);
+            })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv='); 
+        </script>
+        <!-- Google tag (gtag.js) --> 
+        <script src="https://www.googletagmanager.com/gtag/js?id=G-K2K45FK4PR"></script> 
+        <script> 
+            window.dataLayer = window.dataLayer || []; 
+            function gtag(){dataLayer.push(arguments);} 
+            gtag('js', new Date()); 
+            gtag('config', 'G-K2K45FK4PR'); 
+        </script>
+    </head>
+    <style>
+        body {
+        background-color: #f8fafd;
+        }
+        .embeddedServiceHelpButton{
+        font-family: Proxima Nova Alt Regular !important;
+        }
+        .embeddedServiceHelpButton .helpButton{
+        right : 70px !important;
+        }
+        .embeddedServiceHelpButton .helpButton .uiButton {
+        background-color: #005290;
+        font-family: Proxima Nova Alt Regular !important;
+        background: #1a2745 !important;
+        }
+        .embeddedServiceHelpButton .helpButton .uiButton:focus {
+        outline: 1px solid #005290;
+        }
+        .embeddedServiceHelpButton .embeddedServiceIcon::before{
+        font-size: 2.25em !important;
+        }
+        .embeddedServiceHelpButton .uiButton .helpButtonLabel{
+        overflow : inherit !important;
+        max-width: fit-content !important;
+        } 
+        .embeddedServiceSidebarMinimizedDefaultUI.helpButton{
+        background: #1a2745 !important;
+        }
+        .message {
+        font-size: 16px !important; 
+        background-color: #1a2745 !important;
+        border-style: solid;
+        border-width: 0px !important;
+        color: #ffffff !important;
+        padding: 6px 8px 6px 6px;
+        margin: 0px !important
+        <!--  With Box css:-
+background-color: #f8fafd !important;
+border-style: solid;
+border-width: 1px;
+color: #000;
+padding: 6px 8px 6px 6px;
+margin: 0px !important -->
+        }
+        <!-- .embeddedServiceSidebarFormField.inputSplitName {
+display: none !important;
+} -->
+    .headerAnnouncement{
+        color : black !important;
+        background : #dd7a01 !important;
+        }
+    </style>
+    
+    <apex:includeLightning />
+    <apex:slds />
+    <apex:form id="frm">
+    <div id="ref">        
+    </div>
+    <p class="timertext" 
+        style="">
+        <span class="secs"></span>
+    </p>
+    
+    <script type="text/javascript">
+     
+    var accountId = "{!$CurrentPage.parameters.id}";
+    var phone = "{!$CurrentPage.parameters.isPhone}";
+    var sessionId = "{!accessToken}";
+    var time = 2400;
+    $Lightning.use("embeddedService:sidebarApp", function(){
+        $Lightning.createComponent("c:ReferrerPortalContainer", {
+            recordId :'{!$CurrentPage.parameters.oppId}',
+            mgRef :'{!$CurrentPage.parameters.MGREF}',
+            sessionId :'{!accessToken}',
+            "phone" : phone,
+            "accountId" : accountId
+        }, "ref", function(){
+        });
+    });
+
+    function setCookie(cname,cvalue,exdays) {
+        const d = new Date();
+        d.setTime(d.getTime() + (exdays*1000));
+        let expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";        
+    }
+    
+    function getCookie(cname) {
+        let name = cname + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        for(let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+    
+    function checkCookie() {  
+        let user = getCookie("username");
+        if (user != "") {
+            if(user != "{!$CurrentPage.parameters.id}"){
+                //user = "{!$CurrentPage.parameters.id}";
+                setCookie("username", user, time);
+            }
+                
+        } else {
+            user = "{!$CurrentPage.parameters.id}";
+            if (user != "" && user != null) {
+                window.location.replace('https://lanecorp.my.salesforce-sites.com/welcomeReferrerVf?id='+accountId);
+                //setCookie("username", user, 100);
+            }
+        }
+    }  
+    
+    /*function test(){
+        var temp = {!setCon.flag__c};
+        console.log(temp);
+        if(temp == true){
+            setSes();
+            setCookie("username", "{!$CurrentPage.parameters.id}", time);             
+        }
+        else{
+            checkCookie();
+        }
+            
+    }*/
+    let timer, currSeconds = 0;
+    
+        function resetTimer() {
+            let user = getCookie("username");
+            document.querySelector(".timertext")
+                    .style.display = 'none';
+  
+            clearInterval(timer);
+  
+            currSeconds = 0;
+  
+            timer = setInterval(startIdleTimer, 1000);
+            setCookie("username", user, time);
+        }
+        //window.onload = resetTimer;
+        window.onmousemove = resetTimer;
+        window.onmousedown = resetTimer;
+        window.ontouchstart = resetTimer;
+        window.onclick = resetTimer;
+        window.onkeypress = resetTimer;
+  
+        function startIdleTimer() {
+            currSeconds++;
+            //console.log(currSeconds);
+            if(currSeconds == 1){
+                test();
+            }
+            document.querySelector(".secs")
+                .textContent = currSeconds;
+  
+            document.querySelector(".timertext")
+                .style.display = 'none';
+            if(currSeconds == time){
+                window.location.replace('https://lanecorp.my.salesforce-sites.com/welcomeReferrerVf?id='+accountId);
+            } 
+        }
+        window.onload = function() { 
+            checkFlag();
+        }
+    </script>
+    <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
+<script type='text/javascript'>
+if({!Active}){
+    var initESW = function(gslbBaseURL) {
+        embedded_svc.settings.displayHelpButton = true; //Or false
+        embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
+        
+         embedded_svc.settings.prepopulatedPrechatFields = {
+                FirstName: '{!JSENCODE(setCon.FirstName)}',
+                LastName: '{!JSENCODE(setCon.LastName)}',
+                Email: '{!JSENCODE(setCon.Email)}',
+            }; 
+          embedded_svc.settings.defaultMinimizedText = 'CHAT NOW'; //(Defaults to Chat with an Expert)
+          embedded_svc.settings.disabledMinimizedText = 'CHAT NOW'; //(Defaults to Agent Offline)
+          embedded_svc.settings.loadingText = 'Please wait'; //(Defaults to Loading)
+        //embedded_svc.settings.storageDomain = 'yourdomain.com'; //(Sets the domain for your deployment so that visitors can navigate subdomains during a chat session)
+
+        // Settings for Chat
+        //embedded_svc.settings.directToButtonRouting = function(prechatFormData) {
+            // Dynamically changes the button ID based on what the visitor enters in the pre-chat form.
+            // Returns a valid button ID.
+        //};
+        
+        //embedded_svc.settings.fallbackRouting = []; //An array of button IDs, user IDs, or userId_buttonId
+        embedded_svc.settings.offlineSupportMinimizedText = 'CHAT NOW'; //(Defaults to Contact Us)
+
+        embedded_svc.settings.enabledFeatures = ['LiveAgent'];
+        embedded_svc.settings.entryFeature = 'LiveAgent';
+
+        embedded_svc.init(
+            'https://lanecorp.my.salesforce.com',
+            'https://lanecorp.my.salesforce-sites.com/',
+            gslbBaseURL,
+            '00D0o000001AAhI',
+            'Referrer_Portal_Chat_Support',
+            {
+                baseLiveAgentContentURL: 'https://c.la1-core1.sfdc-vwfla6.salesforceliveagent.com/content',
+                deploymentId: '572Ol0000000kcL',
+                buttonId: '573Ol0000000B9x',
+                baseLiveAgentURL: 'https://d.la1-core1.sfdc-vwfla6.salesforceliveagent.com/chat',
+                eswLiveAgentDevName: 'Referrer_Portal_Chat_Support',
+                isOfflineSupportEnabled: false
+            }
+        );
+    };
+
+    if (!window.embedded_svc) {
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://lanecorp.my.salesforce.com/embeddedservice/5.0/esw.min.js');
+        s.onload = function() {
+            initESW(null);
+        };
+        document.body.appendChild(s);
+    } else {
+        initESW('https://service.force.com');
+    }
+    }
+</script>
+    <apex:outputPanel id="panelToRerender">
+            <script>
+                function test(){
+                    var temp = {!sessionCheck};
+                    //alert('++++'+temp);
+                    console.log('temp'+temp);
+                    //console.log(temp);
+                    if(temp == true){
+                        setSes();
+                        temp = {!sessionCheck};
+                        console.log('sessionCheck'+temp);
+                        setCookie("username", "{!$CurrentPage.parameters.id}", time);             
+                    }
+                    else{
+                        console.log('check'+temp);
+                        checkCookie();
+                    }
+                        
+                }
+            </script>
+        </apex:outputPanel>
+
+        <apex:actionFunction action="{!checkFlag}" name="checkFlag" reRender="panelToRerender"/>
+        <apex:actionFunction action="{!setSes}" name="setSes" reRender="none"/>
+    </apex:form>            
+</apex:page>

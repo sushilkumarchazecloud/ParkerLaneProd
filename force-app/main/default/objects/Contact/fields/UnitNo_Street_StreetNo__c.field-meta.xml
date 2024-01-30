@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>UnitNo_Street_StreetNo__c</fullName>
+    <externalId>false</externalId>
+    <formula>Unit_Number__c +&apos; &apos;+ Street_Number__c +&apos; &apos;+ Street__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>UnitNo Street StreetNo</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

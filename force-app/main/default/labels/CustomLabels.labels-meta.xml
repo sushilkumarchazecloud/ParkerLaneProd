@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>Admin_User_Name</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Admin User Name</shortDescription>
+        <value>chris.white@lanecorp.com.au</value>
+    </labels>
+    <labels>
+        <fullName>Already_Customer_Exist</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Already Customer Exist</shortDescription>
+        <value>We already have an application in our system with the details you have entered. Please call us on 1300 131 711 or email us with details instead to PersonalApplications@parkerlane.com.au</value>
+    </labels>
+    <labels>
+        <fullName>Bank_Statement_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Bank Statement URL</shortDescription>
+        <value>https://www.bankstatements.com.au/r/b/BZPK</value>
+    </labels>
+    <labels>
+        <fullName>ClientId</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ClientId</shortDescription>
+        <value>3MVG9pe2TCoA1Pf4EXQRC4Dxb7uluWxR4QEDutFQUyldtIQZjQUcQgn6enL3ApeWDc6aOb1sLH6ZDiqlBbG0D</value>
+    </labels>
+    <labels>
+        <fullName>ClientSecret</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ClientSecret</shortDescription>
+        <value>9BF118AB95EBA2B05FF09AA322824C0BA1AB141FCF7AF37498F2BB2CC7422A43</value>
+    </labels>
+    <labels>
+        <fullName>Consent_and_Identification_Description</fullName>
+        <categories>Customer Acknowledgments</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Consent and Identification Description</shortDescription>
+        <value>I confirm that all applicants consent to this application. I understand that all applicants must be identified and provide their consent via video call prior to receiving any offer for finance
+Customer Response:</value>
+    </labels>
+    <labels>
+        <fullName>Credit_Check_Description</fullName>
+        <categories>Customer Acknowledgments</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Credit Check Description</shortDescription>
+        <value>I consenting to Parker Lane conducting a ‘soft’ credit file look up and I understand that this will not affect my credit rating.
+Customer Response:</value>
+    </labels>
+    <labels>
+        <fullName>Credit_analyst</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Credit analyst</shortDescription>
+        <value>priya.saxena@parkerlane.com.au</value>
+    </labels>
+    <labels>
+        <fullName>Electronic_Communication_Description</fullName>
+        <categories>Customer Acknowledgments</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Electronic Communication Description</shortDescription>
+        <value>I consent to receiving a copy of my credit quote and proposal, credit guide, loan contract, and settlement documents electronically.
+Customer Response:</value>
+    </labels>
+    <labels>
+        <fullName>Email_Subject</fullName>
+        <categories>Offers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Daily Digest Email Subject</shortDescription>
+        <value>(4.99% special offer this month!)</value>
+    </labels>
+    <labels>
+        <fullName>EndpointURL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>EndpointURL</shortDescription>
+        <value>https://login.salesforce.com/services/oauth2/token?grant_type=password</value>
+    </labels>
+    <labels>
+        <fullName>Error_Message</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error Message</shortDescription>
+        <value>The system has encountered an error. Please refresh this page and in the problem persists call us on 1300 131 711</value>
+    </labels>
+    <labels>
+        <fullName>LA_Chat_CloseConfirmation_ChatStateBody_04IOl0000000q3R_5570784</fullName>
+        <categories>Snap-ins</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LA_Chat_CloseConfirmation_ChatStateBody_04IOl0000000q3R_5570784</shortDescription>
+        <value>Don&apos;t worry, If you have to leave this page don’t sweat it! You’ll receive a response via email.</value>
+    </labels>
+    <labels>
+        <fullName>LA_Chat_CloseConfirmation_ChatStateBody_04IOl0000001JtR_4409598</fullName>
+        <categories>Snap-ins</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LA_Chat_CloseConfirmation_ChatStateBody_04IOl0000001JtR_4409598</shortDescription>
+        <value>Don&apos;t worry, If you have to leave this page don’t sweat it! You’ll receive a response via email.</value>
+    </labels>
+    <labels>
+        <fullName>LA_Chat_CloseConfirmation_ChatStateBody_04IOl0000001hpJ_1260608</fullName>
+        <categories>Snap-ins</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LA_Chat_CloseConfirmation_ChatStateBody_04IOl0000001hpJ_1260608</shortDescription>
+        <value>Don&apos;t worry, If you have to leave this page don’t sweat it! You’ll receive a response via email.</value>
+    </labels>
+    <labels>
+        <fullName>LA_Container_Base_Minimize_04IOl0000000q3R_5091654</fullName>
+        <categories>Snap-ins</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LA_Container_Base_Minimize_04IOl0000000q3R_5091654</shortDescription>
+        <value>CHAT NOW</value>
+    </labels>
+    <labels>
+        <fullName>LA_Container_Base_Minimize_04IOl0000001JtR_9293674</fullName>
+        <categories>Snap-ins</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LA_Container_Base_Minimize_04IOl0000001JtR_9293674</shortDescription>
+        <value>Chat with us</value>
+    </labels>
+    <labels>
+        <fullName>LA_OfflineSupport_CloseConfirmation_ConfirmationDialogBo_04IOl0000001JtR_3421733</fullName>
+        <categories>Snap-ins</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LA_OfflineSupport_CloseConfirmation_ConfirmationDialogBo_04IOl0000001JtR_3421733</shortDescription>
+        <value>You’ll receive a response ASAP. Feel free to click ‘Done’ and keep browsing.</value>
+    </labels>
+    <labels>
+        <fullName>LA_OfflineSupport_CloseConfirmation_ConfirmationDialogTi_04IOl0000001JtR_5954634</fullName>
+        <categories>Snap-ins</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LA_OfflineSupport_CloseConfirmation_ConfirmationDialogTi_04IOl0000001JtR_5954634</shortDescription>
+        <value>Request received!</value>
+    </labels>
+    <labels>
+        <fullName>LA_OfflineSupport_SupportForm_HeaderText_04IOl0000001JtR_8868524</fullName>
+        <categories>Snap-ins</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LA_OfflineSupport_SupportForm_HeaderText_04IOl0000001JtR_8868524</shortDescription>
+        <value>Contact Us</value>
+    </labels>
+    <labels>
+        <fullName>LA_PreChat_Base_LiveChat_04IOl0000000q3R_9699436</fullName>
+        <categories>Snap-ins</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LA_PreChat_Base_LiveChat_04IOl0000000q3R_9699436</shortDescription>
+        <value>Start Chatting</value>
+    </labels>
+    <labels>
+        <fullName>LA_PreChat_Base_LiveChat_04IOl0000001JtR_2277141</fullName>
+        <categories>Snap-ins</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LA_PreChat_Base_LiveChat_04IOl0000001JtR_2277141</shortDescription>
+        <value>Start Chatting</value>
+    </labels>
+    <labels>
+        <fullName>LA_PreChat_Base_LiveChat_04IOl0000001hpJ_1516772</fullName>
+        <categories>Snap-ins</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LA_PreChat_Base_LiveChat_04IOl0000001hpJ_1516772</shortDescription>
+        <value>Start Chatting</value>
+    </labels>
+    <labels>
+        <fullName>LA_Waiting_Base_BannerAssistiveText_04IOl0000000q3R_4151767</fullName>
+        <categories>Snap-ins</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LA_Waiting_Base_BannerAssistiveText_04IOl0000000q3R_4151767</shortDescription>
+        <value>If you have to leave this page don’t sweat it! You’ll receive a response via email.</value>
+    </labels>
+    <labels>
+        <fullName>LA_Waiting_Base_BannerAssistiveText_04IOl0000001JtR_7713409</fullName>
+        <categories>Snap-ins</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LA_Waiting_Base_BannerAssistiveText_04IOl0000001JtR_7713409</shortDescription>
+        <value>If you have to leave this page don’t sweat it! You’ll receive a response via email.</value>
+    </labels>
+    <labels>
+        <fullName>LA_Waiting_Base_BannerAssistiveText_04IOl0000001hpJ_3851389</fullName>
+        <categories>Snap-ins</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LA_Waiting_Base_BannerAssistiveText_04IOl0000001hpJ_3851389</shortDescription>
+        <value>If you have to leave this page don’t sweat it! You’ll receive a response via email.</value>
+    </labels>
+    <labels>
+        <fullName>LA_Waiting_CloseConfirmation_WaitingStateBodyWarning_04IOl0000000q3R_6016305</fullName>
+        <categories>Snap-ins</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LA_Waiting_CloseConfirmation_WaitingStateBodyWarning_04IOl0000000q3R_6016305</shortDescription>
+        <value>If you have to leave this page don’t sweat it! You’ll receive a response via email.</value>
+    </labels>
+    <labels>
+        <fullName>LA_Waiting_CloseConfirmation_WaitingStateBodyWarning_04IOl0000001JtR_1435338</fullName>
+        <categories>Snap-ins</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LA_Waiting_CloseConfirmation_WaitingStateBodyWarning_04IOl0000001JtR_1435338</shortDescription>
+        <value>If you have to leave this page don’t sweat it! You’ll receive a response via email.</value>
+    </labels>
+    <labels>
+        <fullName>LA_Waiting_CloseConfirmation_WaitingStateBodyWarning_04IOl0000001hpJ_8971575</fullName>
+        <categories>Snap-ins</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LA_Waiting_CloseConfirmation_WaitingStateBodyWarning_04IOl0000001hpJ_8971575</shortDescription>
+        <value>If you have to leave this page don’t sweat it! You’ll receive a response via email.</value>
+    </labels>
+    <labels>
+        <fullName>LA_Waiting_WithoutQueuePos_WaitingGreeting_04IOl0000000q3R_8145311</fullName>
+        <categories>Snap-ins</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LA_Waiting_WithoutQueuePos_WaitingGreeting_04IOl0000000q3R_8145311</shortDescription>
+        <value>Thanks,</value>
+    </labels>
+    <labels>
+        <fullName>LA_Waiting_WithoutQueuePos_WaitingGreeting_04IOl0000001JtR_7591902</fullName>
+        <categories>Snap-ins</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LA_Waiting_WithoutQueuePos_WaitingGreeting_04IOl0000001JtR_7591902</shortDescription>
+        <value>Thanks!</value>
+    </labels>
+    <labels>
+        <fullName>LA_Waiting_WithoutQueuePos_WaitingGreeting_04IOl0000001hpJ_9293495</fullName>
+        <categories>Snap-ins</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LA_Waiting_WithoutQueuePos_WaitingGreeting_04IOl0000001hpJ_9293495</shortDescription>
+        <value>Thanks!</value>
+    </labels>
+    <labels>
+        <fullName>LA_Waiting_WithoutQueuePos_WaitingMessage_04IOl0000000q3R_6140451</fullName>
+        <categories>Snap-ins</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LA_Waiting_WithoutQueuePos_WaitingMessage_04IOl0000000q3R_6140451</shortDescription>
+        <value>Sit tight, a Parker Lane expert is on the way.</value>
+    </labels>
+    <labels>
+        <fullName>LA_Waiting_WithoutQueuePos_WaitingMessage_04IOl0000001JtR_9375253</fullName>
+        <categories>Snap-ins</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LA_Waiting_WithoutQueuePos_WaitingMessage_04IOl0000001JtR_9375253</shortDescription>
+        <value>Sit tight, a Parker Lane expert is on the way.</value>
+    </labels>
+    <labels>
+        <fullName>LA_Waiting_WithoutQueuePos_WaitingMessage_04IOl0000001hpJ_6866287</fullName>
+        <categories>Snap-ins</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LA_Waiting_WithoutQueuePos_WaitingMessage_04IOl0000001hpJ_6866287</shortDescription>
+        <value>Sit tight, a Parker Lane expert is on the way.</value>
+    </labels>
+    <labels>
+        <fullName>PasswordSupportingDoc</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PasswordSupportingDoc</shortDescription>
+        <value>ParkerWh!te300!8o7YcybXeRZyhX2uelguhuDFIZ</value>
+    </labels>
+    <labels>
+        <fullName>Personal_App_Email</fullName>
+        <categories>Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Personal App Email</shortDescription>
+        <value>personalapplications@parkerlane.com.au</value>
+    </labels>
+    <labels>
+        <fullName>Privacy_and_Credit_Guide_Description</fullName>
+        <categories>Customer Acknowledgments</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Privacy and Credit Guide Description</shortDescription>
+        <value>I have read and agree to the Parker Lane’s Important Privacy Policy and Credit Guide.
+Customer Response:</value>
+    </labels>
+    <labels>
+        <fullName>Product_Disclosure_Description</fullName>
+        <categories>Customer Acknowledgments</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Product Disclosure Description</shortDescription>
+        <value>I confirm that the loan and amount I am applying for meets my personal needs and I am comfortably able to meet the loan repayments. I consent to adding the upfront fees to the loan amount requested.
+Customer Response:</value>
+    </labels>
+    <labels>
+        <fullName>Pyloan_Agg_Id</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Pyloan Agg Id</shortDescription>
+        <value>001Ol000002KI4TIAW</value>
+    </labels>
+    <labels>
+        <fullName>QuotationReferralName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Quotation Referral Name</shortDescription>
+        <value>Shrishti</value>
+    </labels>
+    <labels>
+        <fullName>Referral_Fees_Description</fullName>
+        <categories>Customer Acknowledgments</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Referral Fees Description</shortDescription>
+        <value>I acknowledge that Parker Lane may pay a referral fee and that amount may be up to 20% of the remuneration Parker Lane receives from the lender for assisting me with my loan. This amount is not payable by me and all remuneration will be fully disclosed to me be prior to accepting any loan offer.
+Customer Response:</value>
+    </labels>
+    <labels>
+        <fullName>SMS_Sender_Id</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SMS Repliable Phone Number</shortDescription>
+        <value>0480 049 081</value>
+    </labels>
+    <labels>
+        <fullName>SiteUrl</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SiteUrl</shortDescription>
+        <value>&apos;&apos;</value>
+    </labels>
+    <labels>
+        <fullName>Solar_Plus_Agg_Id</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Solar Plus Agg Id</shortDescription>
+        <value>001Ol000002KI9JIAW</value>
+    </labels>
+    <labels>
+        <fullName>Solar_Proof_Id</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Solar Proof Id</shortDescription>
+        <value>001Ol000002FeYiIAK</value>
+    </labels>
+    <labels>
+        <fullName>Solar_Quotes_Id</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Solar Quotes Id</shortDescription>
+        <value>001Ol000001GY3ZIAW</value>
+    </labels>
+    <labels>
+        <fullName>Username</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Username</shortDescription>
+        <value>chris.white@lanecorp.com.au</value>
+    </labels>
+    <labels>
+        <fullName>Ways_to_Save_Description</fullName>
+        <categories>Customer Acknowledgments</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Ways to Save Description</shortDescription>
+        <value>I would like to know about other areas I may be eligible to save money, based on the information I will be providing here.
+Customer Response:</value>
+    </labels>
+    <labels>
+        <fullName>WelcomeNote</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>WelcomeNote</shortDescription>
+        <value>Please enjoy this advanced &apos;beta testing&apos; access. We&apos;ve designed the portal with maximum control and transparency in mind, so if you find bugs or have suggestions please email us at hello@parkerlane.com.au.</value>
+    </labels>
+    <labels>
+        <fullName>bankStatementRedirectURL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>bankStatementRedirectURL</shortDescription>
+        <value>https://www.bankstatements.com.au/r/b/BZPK-</value>
+    </labels>
+    <labels>
+        <fullName>baseUrl</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>baseUrl</shortDescription>
+        <value>https://apply-parkerlane.secure.force.com/</value>
+    </labels>
+    <labels>
+        <fullName>customerSite</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>customerSite</shortDescription>
+        <value>lanecorp@apply-parkerlane.force.com</value>
+    </labels>
+    <labels>
+        <fullName>instanceURL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>instanceURL</shortDescription>
+        <value>http://findev-lanecorpfindev.cs74.force.com</value>
+    </labels>
+    <labels>
+        <fullName>loginMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>loginMessage</shortDescription>
+        <value>test</value>
+    </labels>
+    <labels>
+        <fullName>open_Solar_Acc_Id</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>open Solar Acc Id</shortDescription>
+        <value>001Ol000001rSwuIAE</value>
+    </labels>
+</CustomLabels>

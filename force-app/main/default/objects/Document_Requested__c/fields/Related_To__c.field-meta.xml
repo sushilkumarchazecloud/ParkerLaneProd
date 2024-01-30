@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Related_To__c</fullName>
+    <description>IF(  IsJoint__c  = true , &quot;General&quot; , IF(Person_Account__c  = Opportunity__r.Applicant_1__c, &quot;Applicant 1&quot; ,  IF( Person_Account__c  =  Opportunity__r.Applicant_2__c  , &quot;Applicant 2&quot; , &quot;&quot; ) ) )</description>
+    <externalId>false</externalId>
+    <formula>IF(  IsJoint__c  = true , &quot;General&quot; ,IF(NOT(ISBLANK(Person_Account__c)), IF(Person_Account__c  = Opportunity__r.Applicant_1__c, &quot;Applicant 1&quot; ,  IF( Person_Account__c  =  Opportunity__r.Applicant_2__c  , &quot;Applicant 2&quot; , &quot;&quot; ) ),&quot;&quot; ))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Related To</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,6 +1,10 @@
-<aura:component >
-    <aura:attribute name = "cardName" type="string"/>
-     <aura:attribute name = "index" type="Integer" />
+<aura:component controller="ParkerLaneLoanController">
+    <aura:attribute name = "cardName" type="string"/>   
+    <aura:attribute name = "index" type="Integer" />
+    <aura:attribute name = "show" type="boolean" default="false"/>
+    <aura:attribute name = "availableUnder" type="boolean" default="false"/>
+    <aura:attribute name = "availableOver" type="boolean" default="false"/>
+    <aura:attribute name = "showbtn" type="boolean" default="true"/>
     <aura:attribute name = "isexpanded" type="boolean" default="false"/>
     <aura:attribute name = "isFeature" type="boolean" default="false"/>
     <aura:attribute name = "termOptions" type="List" default="[]"/>
@@ -12,6 +16,8 @@
     <aura:attribute name = "features" type="List" default="[]"/>
     <aura:attribute name = "eligibilities" type="List" default="[]"/>
     <aura:attribute name = "documentsNeeded" type="List" default="[]"/>
+    <aura:attribute name = "isSpinner" type="boolean"/>
+    <aura:attribute name = "totalCost" type="Integer" default=""/>
     <ltng:require afterScriptsLoaded="{!c.doInit}" />
     
     <aura:registerEvent name="ApplyNowEvent" type="c:ApplyNowEvent"/>
@@ -40,22 +46,34 @@
         </div>
         
         <div class="{!'card_border_color slds-card slds-text-align_center' + (v.isFeature ? ' card_border_color1' : '')}">
-            <div class="interval slds-m-top_medium">
+            <div class="interval slds-m-top_small">
                 <div  class="slds-grid slds-wrap ">
-                    <div class="slds-col slds-size_1-of-1" >
+                    <aura:if isTrue="{!v.availableUnder}">
+                        <div class="alertInfo slds-align_absolute-center">Not available for loans under $<lightning:formattedNumber value="{!v.quote.Product__r.Minimum_Loan_Amount__c}"/></div>
+                    </aura:if>
+                    <aura:if isTrue="{!v.availableOver}">
+                        <div class="alertInfo slds-align_absolute-center">Not available for loans over $<lightning:formattedNumber value="{!v.quote.Product__r.Maximum_Loan_Amount__c}"/></div>
+                    </aura:if>
+                    <div class="slds-col slds-size_1-of-1 slds-m-top_x-small" >
                         <div  class="slds-grid slds-wrap">
                             <div  class="slds-col slds-size_1-of-2" style="padding: 0;padding-left: 5px;">
-                                <div class="" style="text-align:left; font-size: .700rem;"><strong>Repayments</strong></div> 
+                                <div class="" style="text-align:left; font-size: .700rem;"><strong>Payments (inc fees)</strong></div> 
                             </div>
                             <div  class="slds-col slds-size_1-of-2" style="">
-                                <div class="" style="text-align:left;font-size: .700rem;" ><strong>Paid Over</strong></div>
+                                <div class="" style="text-align:left;font-size: .700rem;" ><strong>Paid in just</strong></div>
                             </div>
                         </div>
                     </div>
                     <div class="slds-col slds-size_1-of-1">
                         <div  class="slds-grid slds-wrap">
                             <div  class="slds-col slds-size_1-of-2" style="padding: 0;padding-left: 5px;">
-                                <div class="rate-interval" style="text-align:left;" >${!v.totalAmount}</div>
+                                <div class="rate-interval" style="text-align:left;" >
+                                    <aura:if isTrue="{!v.show}">$-
+                                        <aura:set attribute="else">
+                                            <lightning:formattedNumber value="{!v.totalAmount}" style="currency" currencyCode="AUD"  minimumFractionDigits="0" />
+                                        </aura:set>
+                                    </aura:if>
+                                </div>
                             </div>
                             <div class="slds-col slds-size_1-of-2" style="padding-right:5px;">
                                 <div class="month-interval drp-dwn" > 
@@ -66,7 +84,7 @@
                                             <option value="{!term.value}" text="{!term.label}" selected="{!term.selected}"></option>
                                         </aura:iteration>
                                     </lightning:select>
-                               </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -102,8 +120,12 @@
                                 <div class="slds-col slds-size_1-of-2 rate-header slds-p-horizontal_none">
                                     <div class="rate-container">
                                         <div class="rate-value">
-                                            <lightning:formattedNumber value="{!v.quote.Interest_Rate__c}"  style="decimal" 
-                                                                       minimumFractionDigits="2" maximumFractionDigits="2"/>
+                                            <aura:if isTrue="{!v.show}"><div style="position: relative; bottom: 5px; right: 10px;">-.--</div>
+                                                <aura:set attribute="else">
+                                                    <lightning:formattedNumber value="{!v.quote.Interest_Rate__c}"  style="decimal" 
+                                                                               minimumFractionDigits="2" maximumFractionDigits="2"/>
+                                                </aura:set>
+                                            </aura:if>
                                         </div>
                                         <div class="percentage-container">
                                             <div class="percentage">%</div>
@@ -114,8 +136,12 @@
                                 <div class="slds-col slds-size_1-of-2 rate-body slds-p-horizontal_none" style="background:#e2e2e2">
                                     <div class="rate-container">
                                         <div class="rate-value">
-                                            <lightning:formattedNumber value="{!v.quote.Actual_Comparison_Rate__c}"  style="decimal" 
-                                                                       minimumFractionDigits="2" maximumFractionDigits="2"/>
+                                            <aura:if isTrue="{!v.show}"><div style="position: relative; bottom: 5px; right: 10px;">-.--</div>
+                                                <aura:set attribute="else">
+                                                    <lightning:formattedNumber value="{!v.quote.Actual_Comparison_Rate__c}"  style="decimal" 
+                                                                               minimumFractionDigits="2" maximumFractionDigits="2"/>
+                                                </aura:set>
+                                            </aura:if>
                                         </div>
                                         <div class="percentage-container">
                                             <div class="percentage">%</div>
@@ -135,12 +161,12 @@
             <div class="slds-grid slds-wrap">
                 <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_12-of-12 slds-m-vertical_x-small">
                     <span >
-                        <lightning:button variant="base" label="Apply Now" class="btn btn-green width100" onclick="{! c.applyNow }"/>
+                        <lightning:button aura:id="styleChange" variant="base" label="Apply Now" class="btn btn-green width100" onclick="{! c.applyNow }" disabled="{!v.showbtn}"/>
                     </span>
                 </div>
                 <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_12-of-12 slds-m-vertical_x-small iconsize">
                     <span >
-                        <button aria-controls="divContent" aria-expanded="{!v.isexpanded}" onclick="{!c.changeState}"  class="slds-button slds-button_brand btn btn-dark-blue-border width100 more_detail_btn slds-scope" style="box-shadow:none;">
+                        <button aria-controls="divContent" aria-expanded="{!v.isexpanded}" onclick="{!c.changeState}" disabled="{!v.showbtn}" class="slds-button slds-button_brand btn btn-dark-blue-border width100 more_detail_btn slds-scope" style="box-shadow:none;">
                             <aura:if isTrue="{!v.isexpanded}">
                                 <span class="slds-truncate closeOrmorebutton" title="Details"> Close <lightning:icon iconName="utility:up" size="small"/></span>
                                 <aura:set attribute="else">
@@ -156,38 +182,29 @@
                             <div  class="slds-grid slds-wrap">
                                 <div  class="slds-col slds-size_2-of-2" style="padding: 0;">
                                     <div   class="slds-grid slds-wrap">
-                                        <div  class="slds-col slds-size_1-of-3">
-                                            <div class="fees-title-style"> Setup</div>
+                                        <div  class="slds-col slds-size_3-of-6">
+                                            <div class="fees-title-style"> Amount (inc. fees)</div>
                                         </div>
-                                        <div  class="slds-col slds-size_1-of-3">
-                                            <div class="fees-title-style"> Monthly</div>
-                                        </div>
-                                        <div  class="slds-col slds-size_1-of-3">
-                                            <div class="fees-title-style"> Decision in</div>
+                                        <div  class="slds-col slds-size_3-of-6">
+                                            <div class="fees-title-style"> Monthly fee</div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="slds-col slds-size_2-of-2" style="padding: 0;">
                                     <div  class="slds-grid slds-wrap">
-                                        <div  class="slds-col slds-size_1-of-3">
-                                            <div class="fees-style">${!v.quote.Total_Setup_Fees__c} </div>
-                                        </div>
-                                        <div class="slds-col slds-size_1-of-3">
+                                        <div  class="slds-col slds-size_3-of-6">
                                             <div class="fees-style">
-                                                <aura:if isTrue="{!v.quote.Monthly_Account_Keeping_Fees__c}">
-                                                    ${!v.quote.Monthly_Account_Keeping_Fees__c}
-                                                    <aura:set attribute="else">
-                                                        $0
-                                                    </aura:set>
-                                                </aura:if>
+                                                <lightning:formattedNumber value="{!v.totalCost}"  style="currency" 
+                                                                           minimumFractionDigits="2" maximumFractionDigits="2"/>
                                             </div>
                                         </div>
-                                        <div class="slds-col slds-size_1-of-3">
+                                        <div class="slds-col slds-size_3-of-6">
                                             <div class="fees-style">
-                                                <aura:if isTrue="{!v.quote.Product__r.Decision_in_Hours__c}">
-                                                    {!v.quote.Product__r.Decision_in_Hours__c} hrs
+                                                <aura:if isTrue="{!v.quote.Monthly_Account_Keeping_Fees__c}">
+                                                    <lightning:formattedNumber value="{!v.quote.Monthly_Account_Keeping_Fees__c}"  style="currency" 
+                                                                               minimumFractionDigits="2" maximumFractionDigits="2"/>
                                                     <aura:set attribute="else">
-                                                        0 hrs
+                                                        $0.00
                                                     </aura:set>
                                                 </aura:if>
                                             </div>
@@ -229,7 +246,7 @@
                 </aura:if> 
             </div>
         </div>
-
+        
     </article>
     
 </aura:component>

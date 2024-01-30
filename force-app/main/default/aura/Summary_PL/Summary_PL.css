@@ -30,8 +30,24 @@
 .THIS .per-box-container:nth-child(2) .percentage-box {
     margin-left: 10px;
 }
+.THIS .trackercls{
+    width: 50%;
+}
+.THIS .blueBox{
+    background: #d2edee;
+    width: 90%;
+    border-radius: 2px;
+}
 
 @media screen and (max-width: 768px) {
+    .THIS .blueBox{
+        width: auto;
+    }
+
+    .THIS .trackercls{
+        width: 85%;
+    }
+    
     .THIS .verify-col:nth-child(2) .identity-col{
         margin-left: 0px;
     }
@@ -69,15 +85,16 @@
     font-size: 1.85rem;
     font-family: ProximaNova-AltBold;
     line-height: normal;
-    padding-bottom: 10px;
+    padding-top: 10px;
+    padding-bottom: 5px;
 }
 .THIS .pargraph_edit{
     font-size: 1rem;
-    font-family: ProximaNovaAlt-Medium;
+    font-family: Proxima Nova Alt Regular;
 }
 .THIS .pargraph-bold-style{
     font-size: 1rem;
-    font-family: ProximaNova-AltBold;
+    font-family: Proxima Nova Alt Regular;
     line-height: normal;
     display: contents;
 }

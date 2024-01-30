@@ -6,6 +6,7 @@
     <aura:attribute name="rdList" type="list" />   
     <aura:attribute name="disabled" type="Boolean" default="false"/>
     <aura:attribute name="isEditOpen" type="boolean" default="false"/>
+    <aura:attribute name="showHeader" type="boolean" default="false"/>
     <aura:attribute name="docId" type="String" />
     <aura:attribute name="docName" type="String" />
     
@@ -21,55 +22,7 @@
                       targetError="{!v.docDeleteError}"
                       recordUpdated="{!c.handleDocUpdated}" />
     <aura:if isTrue="{!empty(v.rdList)}">
-        <div class="slds-m-around_x-small">
-            <div class="slds-page-header ">
-                <div class="slds-page-header__row">
-                    <div class="slds-page-header__col-title">
-                        <div class="slds-media">
-                            <div class="slds-media__figure">
-                                <span class="slds-icon_container_small slds-icon-standard-custom" title="Document Requested">
-                                    <lightning:icon iconName="standard:custom" size="small" />
-                                </span>
-                            </div>
-                            <div class="slds-media__body slds-align-middle">
-                                <div class="slds-page-header__name slds-align-middle">
-                                    <div class="slds-page-header__name-title">
-                                        <h1 class="slds-page-header__title slds-hyphenate">Document Requested ({!v.rdList.length})</h1>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                        </div>
-                    </div>
-                    <div class="slds-page-header__col-actions">
-                        <div class="slds-page-header__controls">
-                            <div class="slds-page-header__control">
-                                <ul class="slds-button-group-list">
-                                    <li>
-                                        <lightning:button label="Request Documents" class="slds-button_brand" onclick="{!c.requestDocument}"  />
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="slds-page-header__col-actions">
-                        <div class="slds-page-header__controls">
-                            <div class="slds-page-header__control">
-                                <ul class="slds-button-group-list">
-                                    <li>
-                                        <lightning:button label="Re-Sent Document Request Email" class="slds-button_neutral greyBTN" onclick="{!c.sendEmail}"/>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div>
-        	<p class="slds-text-align--center">No Documents Requested</p>
-        </div>
-        <aura:set attribute="else">
+        <aura:if isTrue="{!!v.showHeader}">
             <div class="slds-m-around_x-small">
                 <div class="slds-page-header ">
                     <div class="slds-page-header__row">
@@ -87,6 +40,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                
                             </div>
                         </div>
                         <div class="slds-page-header__col-actions">
@@ -114,38 +68,115 @@
                     </div>
                 </div>
             </div>
-            <div style="height:300px;">
+        </aura:if>
+        <div>
+        	<p class="slds-text-align--center">No Documents Requested</p>
+        </div>
+        <aura:set attribute="else">
+            <aura:if isTrue="{!!v.showHeader}">
+                <div class="slds-m-around_x-small">
+                    <div class="slds-page-header ">
+                        <div class="slds-page-header__row">
+                            <div class="slds-page-header__col-title">
+                                <div class="slds-media">
+                                    <div class="slds-media__figure">
+                                        <span class="slds-icon_container_small slds-icon-standard-custom" title="Document Requested">
+                                            <lightning:icon iconName="standard:custom" size="small" />
+                                        </span>
+                                    </div>
+                                    <div class="slds-media__body slds-align-middle">
+                                        <div class="slds-page-header__name slds-align-middle">
+                                            <div class="slds-page-header__name-title">
+                                                <h1 class="slds-page-header__title slds-hyphenate">Document Requested ({!v.rdList.length})</h1>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-page-header__col-actions">
+                                <div class="slds-page-header__controls">
+                                    <div class="slds-page-header__control">
+                                        <ul class="slds-button-group-list">
+                                            <li>
+                                                <lightning:button label="Request Documents" class="slds-button_brand" onclick="{!c.requestDocument}"  />
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-page-header__col-actions">
+                                <div class="slds-page-header__controls">
+                                    <div class="slds-page-header__control">
+                                        <ul class="slds-button-group-list">
+                                            <li>
+                                                <lightning:button label="Re-Sent Document Request Email" class="slds-button_neutral greyBTN" onclick="{!c.sendEmail}"/>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aura:if>
+            <div style="{!!v.showHeader ? 'height:300px' : 'height:250px'}">
                 <div class="slds-scrollable" style="height:100%;">
                     <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-table_fixed-layout">
                         <thead >
                             <tr class="slds-text-title_caps">
-                                 <th class="" scope="col" style="width:150px;">
-                                    <div class="slds-truncate" title="Date Requested">Date Requested</div>
-                                </th>
+                                <aura:if isTrue="{!!v.showHeader}">
+                                    <th class="" scope="col" style="width:150px;">
+                                        <div class="slds-truncate" title="Date Requested">Date Requested</div>
+                                    </th>
+                                </aura:if>
+                                <aura:if isTrue="{!v.showHeader}">
+                                    <th class="" scope="col" style="width:120px;">
+                                        <div class="slds-truncate" title="Date Requested">Date Requested</div>
+                                    </th>
+                                </aura:if>
                                 <th class="" scope="col" style="width:200px;">
                                     <div class="slds-truncate" title="Document">Document</div>
                                 </th>
-                                <th class="" scope="col" style="width:100px;">
-                                    <div class="slds-truncate" title="Category">Category</div>
-                                </th>
-                                 <th class="" scope="col" style="width:100px;">
-                                    <div class="slds-truncate" title="Related To">Related To</div>
-                                </th>
-                                <th class="" scope="col" style="width:120px;">
-                                    <div class="slds-truncate" title="Status">Status</div>
-                                </th>
-                                <th class="" scope="col" style="width:200px;">
-                                    <div class="slds-truncate" title="Customer Note">Customer Note</div>
-                                </th>
-                                <th class="" scope="col" style="width:160px;">
-                                    <div class="slds-truncate" title="Upload">Upload Files</div>
-                                </th>
-                                <th class="" scope="col" style="width:90px;">
-                                    <div class="slds-truncate" title="Action">Action</div>
-                                </th>
-                                <th class="" scope="col" style="width:160px;">
-                                    <div class="slds-truncate" title="Id">Document Id</div>
-                                </th>
+                                <aura:if isTrue="{!!v.showHeader}">
+                                    <th class="" scope="col" style="width:100px;">
+                                        <div class="slds-truncate" title="Category">Category</div>
+                                    </th>
+                                </aura:if>
+                                <aura:if isTrue="{!v.showHeader}">
+                                    <th class="" scope="col" style="width:170px;">
+                                        <div class="slds-truncate" title="Description">Description</div>
+                                    </th>
+                                </aura:if>
+                                <aura:if isTrue="{!v.showHeader}">
+                                    <th class="" scope="col" style="width:80px;">
+                                        <div class="slds-truncate" title="Related To">Related To</div>
+                                    </th>
+                                    <th class="" scope="col" style="width:100px;">
+                                        <div class="slds-truncate" title="Status">Status</div>
+                                    </th>
+                                </aura:if>
+                                <aura:if isTrue="{!!v.showHeader}">
+                                    <th class="" scope="col" style="width:100px;">
+                                        <div class="slds-truncate" title="Related To">Related To</div>
+                                    </th>
+                                    <th class="" scope="col" style="width:120px;">
+                                        <div class="slds-truncate" title="Status">Status</div>
+                                    </th>
+                                </aura:if>
+                                <aura:if isTrue="{!!v.showHeader}">
+                                    <th class="" scope="col" style="width:200px;">
+                                        <div class="slds-truncate" title="Description">Description</div>
+                                    </th>
+                                    <th class="" scope="col" style="width:160px;">
+                                        <div class="slds-truncate" title="Upload">Upload Files</div>
+                                    </th>                                
+                                    <th class="" scope="col" style="width:90px;">
+                                        <div class="slds-truncate" title="Action">Action</div>
+                                    </th>                                
+                                    <th class="" scope="col" style="width:160px;">
+                                        <div class="slds-truncate" title="Id">Document Id</div>
+                                    </th>
+                                </aura:if>
                             </tr>
                         </thead>
                         
@@ -161,42 +192,50 @@
                                                                     />
                                     </td>
                                     <td>
-                                        <div class="" title="{!rd.Document__c}">{!rd.Document__c}</div>
+                                        <div class="" style="white-space: break-spaces;" title="{!rd.Document__c}">{!rd.Document__c}</div>
                                     </td>
-                                    <td>
-                                        <div class="slds-truncate" title="{!rd.Category__c}">{!rd.Category__c}</div>
-                                    </td>
+                                    <aura:if isTrue="{!!v.showHeader}">
+                                        <td>
+                                            <div class="slds-truncate" title="{!rd.Category__c}">{!rd.Category__c}</div>
+                                        </td>
+                                    </aura:if>
+                                    <aura:if isTrue="{!v.showHeader}">
+                                        <td>
+                                            <div class="" style="white-space: break-spaces;" title="{!rd.Description__c}">{!rd.Description__c}</div>
+                                        </td>
+                                    </aura:if>
                                     <td>
                                         <div class="slds-truncate" title="{!rd.Related_To__c}">{!rd.Related_To__c}</div>
-                                    </td>
-                                    <td>
-                                        <div class="slds-truncate"><ui:outputRichText value="{!rd.Status__c}"/></div>
-                                    </td>
-                                    
-                                     <td>
-                                        <div class="" title="{!rd.Details__c}">{!rd.Details__c}</div>
-                                    </td>
-                                    <td>
-                                        <div class="slds-truncate">
-                                            <lightning:fileUpload name="{!rd.Id}" label="" multiple="{!v.multiple}" 
-                                                                  accept="{!v.accept}" recordId="{!v.recordId}" 
-                                                                  onuploadfinished="{!c.handleUploadFinished}" class="nolabel"/>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="slds-truncate">
-                                            <lightning:buttonIcon name="{!rd.Id}" value="{!rd.Name}" iconName="utility:edit" 
-                                                                  variant="bare" onclick="{! c.editController }" alternativeText="Edit" />      
-                                            <lightning:buttonIcon name="{!rd.Id}" value="{!rd.Name}" 
-                                                                  onclick="{!c.handleDeleteDocument}" iconName="utility:delete" variant="bare" alternativeText="Delete" />
-                                            
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="slds-truncate" title="{!rd.Name}">
-                                            <a href="{!'/one/one.app?#/sObject/'+ rd.Id + '/view'}" target="_blank">{!rd.Name}</a>
-                                        </div>
-                                    </td>
+                                    </td>                                    
+                                        <td>
+                                            <div class="slds-truncate"><ui:outputRichText value="{!rd.Status__c}"/></div>
+                                        </td>
+                                    <aura:if isTrue="{!!v.showHeader}">
+                                        <td>
+                                            <div class="" style="white-space: break-spaces;" title="{!rd.Description__c}">{!rd.Description__c}</div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate">
+                                                <lightning:fileUpload name="{!rd.Id}" label="" multiple="{!v.multiple}" 
+                                                                      accept="{!v.accept}" recordId="{!v.recordId}" 
+                                                                      onuploadfinished="{!c.handleUploadFinished}" class="nolabel"/>
+                                            </div>
+                                        </td>                                    
+                                        <td>
+                                            <div class="slds-truncate">
+                                                <lightning:buttonIcon name="{!rd.Id}" value="{!rd.Name}" iconName="utility:edit" 
+                                                                      variant="bare" onclick="{! c.editController }" alternativeText="Edit" />      
+                                                <lightning:buttonIcon name="{!rd.Id}" value="{!rd.Name}" 
+                                                                      onclick="{!c.handleDeleteDocument}" iconName="utility:delete" variant="bare" alternativeText="Delete" />
+                                                
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="slds-truncate" title="{!rd.Name}">
+                                                <a href="{!'/one/one.app?#/sObject/'+ rd.Id + '/view'}" target="_blank">{!rd.Name}</a>
+                                            </div>
+                                        </td>
+                                    </aura:if>
                                 </tr>
                             </aura:iteration>
                             

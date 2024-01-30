@@ -637,8 +637,9 @@ public without sharing Class FundingRequest {
     @AuraEnabled
     Public static void createReqest(Funding_Request__c fundRequest){
         if(fundRequest != null){
+            FundingRequestTriggerHandler.isByPassAuthFromSite = true;
             upsert fundRequest;
-            system.debug('oppp'+fundRequest.Opportunity__c);
+            FundingRequestTriggerHandler.isByPassAuthFromSite = false;
             Opportunity opp = [SELECT Id,Name,StageName FROM Opportunity WHERE Id=: fundRequest.Opportunity__c LIMIT 1];
             if(opp.StageName != 'Funding'){
                 opp.StageName = 'Funding';
@@ -646,6 +647,7 @@ public without sharing Class FundingRequest {
             }
         }
     }
+    
     @AuraEnabled
     Public static String createVariation(Funding_Request__c fundRequest){
         if(fundRequest != null){
@@ -843,7 +845,26 @@ public without sharing Class FundingRequest {
             }
         }
     }
+        
+    @AuraEnabled
+    public static void escalateFunding(String recordId){
+        Funding_Request__c fr = [SELECT Id,Funding_escalation__c,Funding_escalation_date__c FROM Funding_Request__c WHERE id=: recordId LIMIT 1];
+        if(fr != null){
+            fr.Funding_escalation__c = true;
+            fr.Funding_escalation_date__c = Date.today();
+            update fr;
+        }                                                  
+    } 
     
+    @AuraEnabled
+    public static void DeEscalateFunding(String recordId){
+        Funding_Request__c fr = [SELECT Id,Funding_escalation__c,Funding_escalation_date__c FROM Funding_Request__c WHERE id=: recordId LIMIT 1];
+        if(fr != null){
+            fr.Funding_escalation__c = false;
+            fr.Funding_escalation_date__c = null;
+            update fr;
+        }                                                  
+    }    
     
     public class QuoteDetailWrapper{
         @auraEnabled public String masterQuote {get;set;}
@@ -899,4 +920,50 @@ hasPurchaseInvoiceCurrent = true;
 }
 return hasLenderCreditContractCurrent && hasPurchaseInvoiceCurrent;
 } */
+    @AuraEnabled
+    public static void insertAuthorisationCertificate(String oppId){
+        Funding_Request__c  fr = [select id,Opportunity__c,Opportunity__r.name,CREATEDDATE from Funding_Request__c where Opportunity__c =:oppId ORDER BY CREATEDDATE DESC LIMIT 1];
+        String[] oppName = fr.Opportunity__r.name.split(',');
+        string name = 'Funding Autorisation Certificate for '+oppName;
+        
+        Document_Requested__c dc = new Document_Requested__c();
+        dc.Category__c = 'Funding Authorisation Certificate';
+        dc.Opportunity__c = oppId;
+        insert dc;
+        
+        PageReference pdf = Page.FundingAuthorisationCertificatePDF;
+        pdf.getParameters().put('id',fr.Id);
+        pdf.setRedirect(true);
+        Blob bPDF;
+        
+        if (Test.IsRunningTest()){
+            bPDF=Blob.valueOf('UNIT.TEST');
+        }
+        else{
+            bPDF = pdf.getContent();
+        }
+        
+        ContentVersion ContVerFile = new ContentVersion();
+        ContVerFile.VersionData = bPDF;
+        ContVerFile.Title = name; 
+        ContVerFile.PathOnClient= name+'.pdf'; 
+        ContVerFile.Document_Requested__c = dc.Id;
+        ContVerFile.FirstPublishLocationId = oppId;
+        insert ContVerFile;
+        /*list<ContentVersion> conDocId = new list<ContentVersion>();
+        
+        conDocId = [SELECT ContentDocumentId FROM ContentVersion WHERE Id = :ContVerFile.Id];
+        ContentDocumentLink cdl = New ContentDocumentLink();
+        cdl.LinkedEntityId = oppId;
+        cdl.ContentDocumentId = conDocId[0].ContentDocumentId;
+        cdl.shareType = 'V';
+        Insert cdl;*/
+        
+        if(ContVerFile != null){
+            Document_Requested__c doc = new Document_Requested__c();
+            doc.id = dc.Id;
+            doc.isComplete__c = true;
+            update doc;
+        }
+    }  
 }

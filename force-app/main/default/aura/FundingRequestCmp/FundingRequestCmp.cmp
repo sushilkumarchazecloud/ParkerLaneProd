@@ -1,0 +1,129 @@
+<aura:component controller="FundingRequest" implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader" access="global">
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="opp" type="Object"/>
+    <aura:attribute name="openModal" type="Boolean" default="false" />
+    <aura:attribute name="remainderRequest" type="Boolean" default="false" />
+    <aura:attribute name="comboOBoxptions" type="List" default="[{'label': 'Payment in full before installation', 'value': 'Payment in full before installation'}, {'label': 'Payment in full after installation', 'value': 'Payment in full after installation'},
+                                                                {'label': 'Part payment before installation', 'value': 'Part payment before installation'}]"/>
+    <aura:attribute name="options" type="List" default="[{'label': 'Yes', 'value': 'Yes'}, {'label': 'No / not sure', 'value': 'No'}]"/>
+    <aura:attribute name="reqByOptions" type="List" default="[{'label': 'Supplier', 'value': 'Supplier'}, {'label': 'Customer', 'value': 'Customer'}]"/> 
+    <aura:attribute name="reqOriginOptions" type="List" default="[{'label': 'Referrer Portal', 'value': 'Referrer Portal'}, {'label': 'Call', 'value': 'Call'},
+                                                                 {'label': 'Email', 'value': 'Email'},  {'label': 'SMS', 'value': 'SMS'}]"/>  
+    <aura:attribute name="remaindercomboOption" type="List" default="[{'label' : 'Remainder of payment after installation', 'value' : 'Remainder of payment after installation'}]"/>
+    <aura:attribute name="PersonRquestingOptions" type="List" default="[{'label' : 'Applicant 1', 'value' : 'Applicant 1'}]"/> 
+    <aura:attribute name="PersonRquestingValue" type="String"/>
+    <aura:attribute name="remainderComboValue" type="String" default="Remainder of payment after installation"/>
+    <aura:attribute name="CheckBoxLabel" type="String" default="I have ensured there is both a current version of the supplier’s quote/invoice and the lender’s credit contract attached to the opportunity." />  
+    <aura:attribute name="comboBoxValue" type="String"/>
+    <aura:attribute name="invoiceAmount" type="currency"/>
+    <aura:attribute name="partPaymentAmt" type="currency"/>
+    <aura:attribute name="AnticipatedInstDate" type="date" />
+    <aura:attribute name="requestBy" type="String"/>
+    <aura:attribute name="reqOrigin" type="String"/>
+    <aura:attribute name="CustomerAgreedOrNot" type="String"/>
+    <aura:attribute name="fundsPaidToDate" type="currency"/>
+    <aura:attribute name="partPmtError" type="Boolean" default = "false" />
+    <aura:attribute name="fundsRemaining" type="currency" default=""/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <aura:html tag="style">
+        .cuf-content {
+        padding: 0 0rem !important;
+        }
+        .slds-p-around--medium {
+        padding: 0rem !important;
+        }
+    </aura:html>
+    
+    
+    <lightning:spinner aura:id="mySpinner" variant="brand" size="medium" class="slds-is-fixed slds-hide " />
+    <aura:if isTrue="{!v.openModal}" >
+        <div class="modal-container">
+            <div class="modal-header slds-modal__header slds-size_1-of-1">
+                <h4 class="title slds-text-heading--medium" >
+                    <aura:if isTrue="{!v.remainderRequest}">
+                         Request final payment after installation
+                        <aura:set attribute="else">
+                         New Funding Request
+                        </aura:set>   
+                    </aura:if> 
+                </h4>
+            </div>
+            <div class="slds-modal__content slds-size_1-of-1" aura:id="modalbody" style="max-height: 333px;">
+                <form class="slds-form--stacked  slds-p-around_large">
+                    <aura:if isTrue="{!v.remainderRequest}"> 
+                        <div class="RemainderRequest">
+                            <div>Funds paid to date</div>
+                            <div class="slds-m-top_xx-small">
+                                <lightning:formattedNumber value="{!v.fundsPaidToDate}" style="currency" currencyCode="AUD" />
+                            </div>
+                            <div class="slds-m-top_x-small">
+                                <div>Remaining funds available</div>
+                                <div class="slds-m-top_xx-small">
+                                    <lightning:formattedNumber  value="{!v.fundsRemaining}" style="currency" currencyCode="AUD" />
+                                </div>
+                            </div>
+                            <div Class="slds-m-top_x-small">
+                                <lightning:input aura:id="fieldcheck" required="true" class="no-abbr" label="Final Payment Amount" value="{!v.partPaymentAmt}" type="number" onchange="{!c.Errors}"/> 
+                            </div>
+                            <aura:if isTrue="{!v.partPmtError}">
+                                <div class="slds-m-top_xx-small" style="color:red;">Error! You can’t request payment which exceeds funds available in the loan account.</div>
+                            </aura:if>
+                            <div Class="slds-m-top_x-small">
+                                <lightning:combobox aura:id="fieldcheck" required="true" class="slds-combobox no-abbr" label="Timing of payment" placeholder="Select" value="{!v.remainderComboValue}"
+                                                    options="{!v.remaindercomboOption}" /> 
+                            </div>
+                        </div>  
+                        <aura:set attribute="else">
+                            <div>Funds available</div>
+                            <div class="slds-m-top_xx-small">
+                                <lightning:formattedNumber value="{!v.opp.SyncedQuote.Customer_Amount__c}" style="currency" currencyCode="AUD" />
+                            </div>
+                            <div Class="slds-m-top_x-small">
+                                <lightning:input aura:id="fieldcheck" required="true" class="no-abbr" label="Total invoice amount" value="{!v.invoiceAmount}" type="number" onchange="{!c.invoiceOnchange}"/> 
+                            </div>
+                            <div Class="slds-m-top_x-small">
+                                <lightning:combobox aura:id="fieldcheck" required="true" class="slds-combobox no-abbr" label="Timing of payment" placeholder="Select" value="{!v.comboBoxValue}" 
+                                                    options="{!v.comboOBoxptions}" /> 
+                            </div>
+                            <aura:if isTrue="{!v.comboBoxValue == 'Part payment before installation'}">
+                                <div Class="slds-m-top_x-small">
+                                    <lightning:input aura:id="fieldcheck" required="true" class="no-abbr" label="Part Payment Amount" value="{!v.partPaymentAmt}" type="number" /> 
+                                </div>
+                            </aura:if>  
+                        </aura:set>
+                    </aura:if>
+                    <div Class="slds-m-top_x-small">
+                        <lightning:input  class="no-abbr" aura:id="fieldcheck" required="true" label="Anticipated installation date" value="{!v.AnticipatedInstDate}" type="date" />
+                    </div>
+                    <div Class="slds-m-top_x-small">
+                        <lightning:combobox aura:id="fieldcheck" required="true" class="slds-combobox no-abbr" label="Requested by " placeholder="Select" value="{!v.requestBy}" 
+                                            options="{!v.reqByOptions}" onchange="{!c.reqByOnChange}"/>
+                    </div>
+                    <div Class="slds-m-top_x-small">
+                        <lightning:combobox aura:id="fieldcheck" required="true" class="slds-combobox no-abbr" label="Person Requesting" placeholder="Select" value="{!v.PersonRquestingValue}" 
+                                            options="{!v.PersonRquestingOptions}" />
+                    </div>
+                    <div Class="slds-m-top_x-small">
+                        <lightning:combobox aura:id="fieldcheck" required="true" class="slds-combobox no-abbr" label="Request Origin " placeholder="Select" value="{!v.reqOrigin}" 
+                                            options="{!v.reqOriginOptions}" />
+                    </div>
+                    <div Class="slds-m-top_x-small">
+                        <lightning:combobox aura:id="fieldcheck" required="true" class="slds-combobox no-abbr" label="Has the customer agreed to this timing?" placeholder="Select" value="{!v.CustomerAgreedOrNot}" 
+                                            options="{!v.options}" />
+                    </div>
+                    <div Class="slds-m-top_medium ">
+                        <lightning:input aura:id="fieldcheck" class="chckbox" required="true" type="checkbox" label="{!v.CheckBoxLabel}" value="" />
+                    </div>
+                </form>        
+            </div>
+            <div class="modal-footer slds-modal__footer slds-size_1-of-1" >
+                <div class="forceChangeRecordTypeFooter">
+                    <lightning:button variant="neutral" label="Cancel" onclick="{!c.Cancel}" /> 
+                    <lightning:button variant="brand" label="Save" onclick="{!c.handleSave}" />   
+                </div>
+            </div>
+        </div>
+    </aura:if>
+</aura:component>

@@ -2,6 +2,7 @@
 	doInit : function(component, event, helper) {
         var quote = component.get("v.selectedQuote");
         if(!$A.util.isUndefinedOrNull(quote) && quote != null){
+            console.log('Monthly repayment '+quote.Monthly_Repayment__c);
             component.set("v.totalAmount", quote.Monthly_Repayment__c);
             component.set("v.totalCustomerAmount", parseFloat(quote.Customer_Amount__c) + parseFloat(quote.Total_Setup_Fees__c));
         }

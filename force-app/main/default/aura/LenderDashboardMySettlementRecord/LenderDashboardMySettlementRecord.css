@@ -1,0 +1,94 @@
+.THIS .req-btn{
+    background-color: #1a2746 !important;
+    border-color: #1a2746 !important;
+    padding : 4px 12px !important;
+}
+.THIS .btnList{  
+    margin-left: 10rem;
+    margin-top: -3px;
+}
+.THIS .btnList .slds-button_neutral{
+    background: #d1d1d1 !important;
+    color: #1a2746 !important;
+    font-weight: bold !important;
+}
+.THIS .req-btn:hover{
+    background-color: #26448c!important;
+    border-color: #1a2746 !important;
+}
+.THIS .status-style{
+    border-radius: 20px;
+    text-align: center;
+    padding: 7px;
+    max-width: 8rem;
+}
+.THIS .status-styleBox{
+    border-radius: 20px;
+    text-align: center;
+    padding: 7px;
+    float: right;
+    margin-right: 40px;
+    width: 28%;
+}
+
+.THIS .box-style {
+    padding: 10px;
+    border: 1px solid #c2c2c2;
+    border-radius: 7px;
+    margin: 7px;
+}
+.THIS .tab-btn button{
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 14px;
+}
+
+.THIS .slds-modal__content{
+    overflow-y: hidden !important;    
+}
+
+.THIS .no-abbr label.slds-form-element__label abbr, .THIS .no-abbr legend.slds-form-element__label abbr {
+    display: none;
+}
+
+.THIS .slds-form-element_stacked .slds-form-element__label{
+    font-weight : bold !important;
+     color : #222222 !important;
+}
+
+.THIS .spin{
+    margin-top: 4rem;
+    position : absolute !important;
+}
+
+.THIS .spinner {
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.THIS .assign-grey-button{
+    width:80%; 
+    background-color: grey !important;
+    border-color: grey !important;
+}
+
+.THIS .assign-dark-button{
+    width:80%; 
+    background-color: #1a2746 !important;
+    border-color: #1a2746 !important;
+}
+
+.THIS .assign_modal_yes_btn{
+    background-color:#1a2745 !important;
+}
+
+.THIS .assignCmb .slds-input_faux{
+    background: white;
+    padding-block: 6px !important;
+    border: 2px solid #ebecec !important;
+    font-size: 14px;
+}
+
+.THIS .onSpin{
+    opacity :35% !important;
+}

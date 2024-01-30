@@ -1,0 +1,71 @@
+.THIS .max-700,
+.THIS.max-700{
+    max-width: 700px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.THIS .sendEmailCss{
+    color: #bababb;
+    font-weight: 500;
+}
+.THIS .mailBtn{
+    box-shadow: none !important;
+}
+.THIS .mailSpinner{
+    position: relative;
+    top: 10px;  
+}
+.THIS .sendSMS{
+    background: #1a1a39;
+    width: 20%;
+    padding: 5px;
+}
+.THIS .loginMessage{
+    font-weight: 400;
+    width: 31%;
+    line-height: initial;
+    text-align: center;
+}
+.THIS .squareBox{
+    width: 7%;
+    height: 30px;
+    margin: 14px;
+    padding: 18px;
+}
+.THIS .buttonCls button{
+    height: 35px;
+    background-color: #91dadc;
+    border-color: #91dadc;
+    color: #1a2745;
+}
+
+.THIS .baseButtonCls button{
+	width: 15%;
+    height: 35px;
+    display: block;    
+    color: #1a2745;
+}
+
+.THIS .inputCls input{
+    width: 55%;
+    height: 40px;
+}
+
+.THIS .box-sz input{
+    width : 38px;
+    margin-right : 7px;
+    height: 45px;
+}
+@media screen and (max-width: 770px) {
+    .THIS .sendSMS{
+        width: 36%;
+        padding: 5px;
+    }
+    .THIS .loginMessage{
+        font-weight: 400;
+        width: 57%;
+        line-height: initial;
+        text-align: center;
+    }
+}

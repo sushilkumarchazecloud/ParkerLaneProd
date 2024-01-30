@@ -11,3 +11,7 @@
 .THIS{
     font-size: 16px;
 }
+.THIS .footerStyle{
+    text-decoration: underline;
+    color: white;
+}

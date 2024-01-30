@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>mercury__New_SMS</fullName>
+        <description>New SMS</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>mercury__Mercury_Email_Templates/mercury__New_SMS</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>Make_Task_Public</fullName>
+        <field>IsVisibleInSelfService</field>
+        <literalValue>1</literalValue>
+        <name>Make Task Public</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <rules>
+        <fullName>Make Task Public</fullName>
+        <actions>
+            <name>Make_Task_Public</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Task.IsVisibleInSelfService</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+</Workflow>

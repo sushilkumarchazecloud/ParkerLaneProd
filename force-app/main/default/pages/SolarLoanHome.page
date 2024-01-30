@@ -1,48 +1,172 @@
-<apex:page showHeader="false" sidebar="false" applyBodyTag="false" applyHtmlTag="false">
-    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0"/>
-    <head>
-        <title>Parker Lane - Australia's No.1 Rated Finance Service</title>
-        <link REL="icon" HREF="{!URLFOR($Resource.faviconNew)}" type="img/x-icon"/>
-        <script>
-        (function(h,o,t,j,a,r){
-            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-            h._hjSettings={hjid:3089317,hjsv:6};
-            a=o.getElementsByTagName('head')[0];
-            r=o.createElement('script');r.async=1;
-            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-            a.appendChild(r);
-        })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-        </script>
-        <script src="https://www.googletagmanager.com/gtag/js?id=G-M5N6HHSD45"></script> 
-        <script> 
-            window.dataLayer = window.dataLayer || []; 
-            function gtag(){dataLayer.push(arguments);} 
-            gtag('js', new Date()); 
-            gtag('config', 'G-M5N6HHSD45'); 
-        </script>
-    </head>
-    <apex:includeLightning />
-    <style>
-        body {
-        background-color: #f3f3f3;
-        }
-    </style>
-    <div class="slds-scope">
-        <div id="SolarLoanHomeId" class="slds-container_x-larg1e slds-container_center" style="position: relative;"></div> 
-    </div> 
-    
-    <script type="text/javascript">
-        piAId = '724353';
-        piCId = '14147';
-        piHostname = 'pi.pardot.com';
-    </script>
+<apex:page controller="SolarLoanHomeController" showHeader="false" sidebar="false" applyBodyTag="false" applyHtmlTag="false">
+<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0"/>
+<head>
+    <title>Parker Lane - Australia's No.1 Rated Finance Service</title>
+    <link REL="icon" HREF="{!URLFOR($Resource.faviconNew)}" type="img/x-icon"/> <!---->
+    <!-- Hotjar Tracking Code for https://lanecorp--uat.sandbox.my.salesforce-sites.com/ -->
     <script>
-    var recordId = "{!$CurrentPage.parameters.Id}";
-    var masterQuote = "{!$CurrentPage.parameters.master}";
-    $Lightning.use("c:SolarLoanHomeApp", function() {
-        $Lightning.createComponent("c:SolarLoanHome",{recordId:recordId, masterQuote:masterQuote}, "SolarLoanHomeId", function(component) {
-            
-        });
-    });
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:3095000,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
     </script>
+    <!-- Google tag (gtag.js) --> 
+    <script src="https://www.googletagmanager.com/gtag/js?id=G-K2K45FK4PR"></script> 
+    <script> 
+        window.dataLayer = window.dataLayer || []; 
+        function gtag(){dataLayer.push(arguments);} 
+        gtag('js', new Date()); 
+        gtag('config', 'G-K2K45FK4PR'); 
+    </script>
+</head>
+<apex:includeLightning />
+<apex:slds />
+<style>
+    body {
+    background-color: #f3f3f3 !important;
+    }
+    .embeddedServiceHelpButton{
+    font-family: Proxima Nova Alt Regular !important;
+    }
+    .embeddedServiceHelpButton .helpButton{
+    right : 70px !important;
+    }
+    .embeddedServiceHelpButton .helpButton .uiButton {
+    background-color: #005290;
+    font-family: Proxima Nova Alt Regular !important;
+    background: #1a2745 !important;
+    }
+    .embeddedServiceHelpButton .helpButton .uiButton:focus {
+    outline: 1px solid #005290;
+    }
+    .embeddedServiceHelpButton .embeddedServiceIcon::before{
+    font-size: 2.25em !important;
+    }
+    .embeddedServiceHelpButton .uiButton .helpButtonLabel{
+    overflow : inherit !important;
+    max-width: fit-content !important;
+    } 
+    .embeddedServiceSidebarMinimizedDefaultUI.helpButton{
+    background: #1a2745 !important;
+    }
+    .message {
+    font-size: 16px !important; 
+    background-color: #1a2745 !important;
+    border-style: solid;
+    border-width: 0px !important;
+    color: #ffffff !important;
+    padding: 6px 8px 6px 0px;
+    margin: 0px !important
+    }
+    .headerAnnouncement{
+    color : black !important;
+    background : #dd7a01 !important;
+    } 
+ <!--   .slds-scope:not(html), .slds-scope body {
+        font-size: .8125rem;
+        background: #f5f5f5 !important; 
+    }  -->
+</style>
+<div class="slds-scope">
+    <div id="SolarLoanHomeId" class="slds-container_x-larg1e slds-container_center" style="position: relative;"></div> 
+</div> 
+<script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
+<script type="text/javascript">
+    piAId = '724353';
+    piCId = '14147';
+    piHostname = 'pi.pardot.com';
+</script>
+<script>
+var recordId = "{!$CurrentPage.parameters.Id}";
+var masterQuote = "{!$CurrentPage.parameters.master}";
+var app2 = "{!$CurrentPage.parameters.AppTwo}"; 
+var linkEx = "{!$CurrentPage.parameters.LinkExpired}"; 
+
+if(app2 != 'true'){
+    app2 = 'false';
+}
+$Lightning.use("embeddedService:sidebarApp", function() { //c:SolarLoanHomeApp
+    $Lightning.createComponent("c:SolarLoanHome",{recordId:recordId, masterQuote:masterQuote, IsApplicantTwo:app2,vfMsgMethod : getMessage}, "SolarLoanHomeId", function(component) {
+        
+    });
+});
+
+function getMessage(message){
+    SolarLoanHomeController.getOpponPriorties(message, function(result, event) {
+        if (event.status) {
+            // Handle the result returned by the Apex method
+            if(result != null){
+                var appFirstName = result.Applicant_1__r.FirstName;
+                var appLastName = result.Applicant_1__r.LastName;
+                var appEmail = result.Applicant_1__r.PersonEmail;
+                initializeChat(appFirstName, appLastName, appEmail);
+            }
+        } else {
+            // Handle any errors that occurred during the Apex method call
+            console.log('Error: ' + event.message);
+        }
+    });
+}
+
+if(recordId != null){
+    var appFirstName = '{!JSENCODE(opp.Applicant_1__r.FirstName)}';
+    var appLastName = '{!JSENCODE(opp.Applicant_1__r.LastName)}';
+    var appEmail = '{!JSENCODE(opp.Applicant_1__r.PersonEmail)}';
+    initializeChat(appFirstName, appLastName, appEmail);
+}
+
+function initializeChat(conFirstName, conLastName,conEmail) {
+    if({!Active}){
+        var initESW = function(gslbBaseURL) {
+            embedded_svc.settings.displayHelpButton = true; //Or false
+            embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
+            if(recordId != null){
+                embedded_svc.settings.prepopulatedPrechatFields = {
+                    FirstName: conFirstName,
+                    LastName: conLastName,
+                    Email: conEmail,
+                }; 
+            }
+            embedded_svc.settings.defaultMinimizedText = 'Chat with us'; //(Defaults to Chat with an Expert)
+            embedded_svc.settings.disabledMinimizedText = 'Chat with us'; //(Defaults to Agent Offline)
+            embedded_svc.settings.loadingText = 'Please wait'; //(Defaults to Loading)
+            embedded_svc.settings.offlineSupportMinimizedText = 'Chat with us'; //(Defaults to Contact Us)
+            
+            embedded_svc.settings.enabledFeatures = ['LiveAgent'];
+            embedded_svc.settings.entryFeature = 'LiveAgent';
+            
+           embedded_svc.init(
+            'https://lanecorp.my.salesforce.com',
+            'https://lanecorp.my.site.com/',
+            gslbBaseURL,
+            '00D0o000001AAhI',
+            'Application_Form_Chat_Support',
+            {
+                baseLiveAgentContentURL: 'https://c.la1-core1.sfdc-vwfla6.salesforceliveagent.com/content',
+                deploymentId: '572Ol0000000kcL',
+                buttonId: '573Ol0000000DdB',
+                baseLiveAgentURL: 'https://d.la1-core1.sfdc-vwfla6.salesforceliveagent.com/chat',
+                eswLiveAgentDevName: 'Application_Form_Chat_Support',
+                isOfflineSupportEnabled: false
+            }
+        );
+    };
+
+    if (!window.embedded_svc) {
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://lanecorp.my.salesforce.com/embeddedservice/5.0/esw.min.js');
+        s.onload = function() {
+            initESW(null);
+        };
+        document.body.appendChild(s);
+    } else {
+        initESW('https://service.force.com');
+    }
+    }
+} 
+</script>
 </apex:page>

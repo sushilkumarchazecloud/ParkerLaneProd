@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>What_is_spouse_s_primary_income_source__c</fullName>
+    <description>What is your spouse&apos;s primary source of income</description>
+    <externalId>false</externalId>
+    <label>What is spouse&apos;s primary income source</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Permanent ongoing employment</fullName>
+                <default>false</default>
+                <label>Permanent ongoing employment</label>
+            </value>
+            <value>
+                <fullName>Casual or temporary employment</fullName>
+                <default>false</default>
+                <label>Casual or temporary employment</label>
+            </value>
+            <value>
+                <fullName>Self employed</fullName>
+                <default>false</default>
+                <label>Self employed</label>
+            </value>
+            <value>
+                <fullName>Centrelink</fullName>
+                <default>false</default>
+                <label>Centrelink</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

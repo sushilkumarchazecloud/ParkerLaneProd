@@ -1,0 +1,12 @@
+.THIS .viewBtn {
+    background-color:#1a2745 !important;
+    height: 32px !important;
+    color:white !important;
+}
+
+.THIS .viewBtn .slds-button_icon{
+    background: none !important;
+    color: white !important;
+    border: none !important;
+    margin-left : -15px;
+}

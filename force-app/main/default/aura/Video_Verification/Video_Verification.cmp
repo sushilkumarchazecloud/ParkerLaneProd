@@ -13,7 +13,10 @@
                     <lightning:input name="input1" label="Code Match Status" value="{!v.VOI.Code_Match_Status__c}" disabled="true"/><br/>
                 </div>
                 <div class="slds-col slds-size_12-of-12">
-                    <ui:inputCheckbox aura:id="checkbx" label="Code not required." value="{!v.VOI.Code_Not_Required__c}" change="{!c.VerifyWithoutCode}"/>
+                    <ui:inputCheckbox aura:id="checkbxForCode" label="Code not required." value="{!v.VOI.Code_Not_Required__c}"/>
+                </div>
+                <div class="slds-col slds-size_12-of-12">
+                    <ui:inputCheckbox aura:id="checkbxForSelfi" label="verified by selfie with ID" value="{!v.VOI.verified_by_selfie_ID__c}"/>
                 </div>
                 <div class="slds-col slds-size_12-of-12">
                     <lightning:select name="select1" label="Video and Photo ID of the same person" value="{!v.VOI.Video_and_Photo_ID_of_the_same_person__c}">

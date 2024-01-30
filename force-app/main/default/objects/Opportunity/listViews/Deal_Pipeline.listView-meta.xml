@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Deal_Pipeline</fullName>
+    <columns>Unread__c</columns>
+    <columns>INACTIVE_DAYS</columns>
+    <columns>Time_at_current_stage__c</columns>
+    <columns>OPPORTUNITY.STAGE_NAME</columns>
+    <columns>installationState__c</columns>
+    <columns>OPPORTUNITY.NAME</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>OPPORTUNITY.RECORDTYPE</columns>
+    <columns>Lender__c</columns>
+    <columns>Loan_Amount__c</columns>
+    <columns>FinServ__ReferredByContact__c</columns>
+    <columns>Application_Pending_Status__c</columns>
+    <columns>Application_Pending_Notes__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>OPPORTUNITY.STAGE_NAME</field>
+        <operation>equals</operation>
+        <value>CPA Started,CPA Done,Packs Out,Packs Back,Application,Submitted,Conditionally Approved,Conditional,Unconditional,Approved</value>
+    </filters>
+    <label>Deal Pipeline</label>
+</ListView>

@@ -1,0 +1,208 @@
+<aura:component controller="LenderdashboardController"  implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    <aura:attribute name="navSection" type="String" />
+    <aura:attribute name="sessionId" type="String" />
+    <aura:attribute name="accountId" type="String"/>
+    <aura:attribute name="cont" type="contact" />
+    <aura:attribute name="tabOptions" type="List" default="[
+                                                           {'label': 'All', 'value': 'All'}, 
+                                                           {'label': 'Approved', 'value': 'Approved'},
+                                                           {'label': 'Funding Requested', 'value': 'Funding Requested'},
+                                                           {'label': 'Part Funded', 'value': 'Part Funded'},
+                                                           {'label': 'Funded', 'value': 'Funded'}                                                           
+                                                           ]"/>
+    <aura:attribute name="selectedTab" type="String" default="All"/>
+    <aura:attribute name="dataList" type="List" default=""/>
+    <aura:attribute name="No_of_Action_Required" type="Integer"/>
+    <aura:attribute name="No_Of_My_Assigned" type="Integer"/>
+    <aura:attribute name="No_Of_Funded" type="Integer"/>
+    <aura:attribute name="PaginationList" type="List"/>
+    <aura:attribute name="startPage" type="Integer" />
+    <aura:attribute name="endPage" type="Integer"/>
+    <aura:attribute name="totalRecords" type="Integer"/>
+    <aura:attribute name="totalpages" type="Integer" default="0"/>
+    <aura:attribute name="pageSize" type="Integer" default="10"/>
+    <aura:attribute name="pageNumber" type="Integer" default="1" />
+    <aura:attribute name="pages" type="List" />
+    <aura:attribute name="chkboxvalue" type="boolean" default="FALSE"/>
+    <aura:attribute name="searchKeyword" type="String" description="use for store user search input"/>
+    <aura:handler name ="init" value="{!this}" action ="{!c.doInit}"/>
+    <aura:handler name="change" value="{!v.totalpages}" action="{!c.handleTotalPagesChanged}" />
+    <aura:attribute name="spinner" type="boolean" default="FALSE"/>
+    <aura:attribute name="OppWrapper" type="Object" />
+    <aura:attribute name="Sorting" type="String"  default="CreatedDate DESC"/>
+    <aura:attribute name="CrDateDownBtn" type="boolean" default="false"/>
+    <aura:attribute name="NameDownBtn" type="boolean" default="true"/>
+    <aura:attribute name="StatusDownBtn" type="boolean" default="true"/>
+    
+ <!--   <aura:registerEvent name="callInitEvent" type="c:LenderDashBoardMySettlementEvent" /> -->
+    <aura:handler name="callInitEvent" event="c:LenderDashBoardMySettlementEvent" action="{!c.handleFunding}" /> 
+    
+    <div class="ReferrerPortalMyReferrals">
+        <div>
+            <div class="slds-grid slds-wrap slds-grid slds-wrap slds-p-top_large slds-p-left_large slds-p-right_large">
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_8-of-12">
+                    <div>
+                        <div style="padding-top: 7px;padding-left: 11px;"><h1 style="font-size: 20px;" class="heading1">My Settlements</h1></div>
+                    </div>
+                </div>
+            </div>
+            <lightning:spinner aura:id="mySpinner" variant="brand" size="large" class="slds-is-fixed " /> 
+            <div class="slds-m-top_small1 slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-1 slds-p-around_large">
+                    <div style="display: inline-flex;width: 35rem;">
+                        <div class="slds-grid  slds-m-top_x-large slds-m-horizontal_small slds-p-around_medium light-grey-box">                            
+                            <div class="slds-col slds-size_4-of-6">
+                                <div class="heading4" style="line-height: initial;">
+                                    Action Required
+                                </div>
+                                <div class="heading1">
+                                    {!v.No_of_Action_Required}
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_2-of-6" style="margin-left: inherit;">
+                                <span><img class="BoxLogo" src="{!$Resource.ReferralPortal + '/ReferralPortal/Quotes.png'}"/></span>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-m-top_x-large slds-m-horizontal_small slds-p-around_medium light-grey-box">
+                            <div class="slds-col slds-size_4-of-6">
+                                <div class="heading4" style="line-height: initial;">
+                                    My Assigned
+                                </div>
+                                <div class="heading1">
+                                    {!v.No_Of_My_Assigned}
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_2-of-6" style="margin-left: inherit;">
+                                <span><img class="BoxLogo" src="{!$Resource.ReferralPortal + '/ReferralPortal/Approved.png'}"/></span>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-m-top_x-large slds-m-horizontal_small slds-p-around_medium light-grey-box" >
+                            <div class="slds-col slds-size_4-of-6">
+                                <div class="heading4" style="line-height: initial;">
+                                    <p>My</p>
+                                    <p>Funded</p>
+                                </div>
+                                <div class="heading1">
+                                    {!v.No_Of_Funded}
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_2-of-6" style="margin-left: inherit;">
+                                <span><img class="BoxLogo" src="{!$Resource.ReferralPortal + '/ReferralPortal/Funded.png'}"/></span>
+                            </div>
+                        </div>                        
+                    </div>
+                    <div class="slds-m-top_medium slds-m-horizontal_small slds-grid slds-wrap">
+                        <div class="slds-col slds-size_4-of-12">
+                            <lightning:input aura:id="enter-search" class = "search-name"
+                                             value="{!v.searchKeyword}"
+                                             onchange="{!c.onChangeSearch}"
+                                             name="enter-search"
+                                             placeholder ="Search by name"
+                                             type="search"
+                                             />
+                        </div>
+                        <div class="slds-col slds-size_8-of-12 slds-col slds-size_5-of-12 tabOptionRGB" style="text-align: right;">
+                            <lightning:radioGroup name="tabOptionRGB"
+                                                  aura:id="radioGrp"
+                                                  label=""
+                                                  options="{! v.tabOptions }"
+                                                  value="{! v.selectedTab }"
+                                                  type="button" onchange="{!c.updateRowswithStage}"/>
+                        </div> 
+                        <div class="slds-grid slds-p-top_xx-small" style="align-items: end;margin-left: auto;margin-top: -100px;">
+                            <div class="slds-col" style="margin-block: 6px">
+                                <lightning:input class="toggle-btn" type="toggle" name="toggleButton" aura:id="tglbtn" label="My To Do's" 
+                                                 onchange="{!c.getToggleButtonValue}" />
+                            </div>
+                        </div>
+                    </div>                    
+                    <div>
+                        <div class=" slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-p-around_small ">
+                                <div class="heading4 slds-p-vertical_small">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 11%;padding-left:10px;">Updated  
+                                                <!--    <aura:if isTrue="{!v.CrDateDownBtn}">
+                                                        <lightning:buttonIcon class="downButton" iconName="utility:down" size="small" variant="bare" onclick="{!c.SortByCrDate}"/>
+                                                    </aura:if>
+                                                    <aura:if isTrue="{!v.Sorting == 'CreatedDate DESC'}">
+                                                        <lightning:buttonIcon class="downButtonBordered" iconName="utility:up" size="small" variant="bare" onclick="{!c.sortCrDateASC}"/>
+                                                    </aura:if>
+                                                    <aura:if isTrue="{!v.Sorting == 'CreatedDate ASC'}">
+                                                        <lightning:buttonIcon class="downButtonBordered" iconName="utility:down" size="small" variant="bare" onclick="{!c.SortByCrDate}"/>
+                                                    </aura:if>  -->
+                                                </th>
+                                                <th style="width: 13%;">Name 
+                                                    <aura:if isTrue="{!v.NameDownBtn}">
+                                                        <lightning:buttonIcon class="downButton" iconName="utility:down" size="small" variant="bare" onclick="{!c.SortByName}"/>
+                                                    </aura:if>
+                                                    <aura:if isTrue="{!v.Sorting == 'Name ASC'}">
+                                                        <lightning:buttonIcon class="downButtonBordered" iconName="utility:up" size="small" variant="bare" onclick="{!c.SortByNameDESC}"/>
+                                                    </aura:if>
+                                                    <aura:if isTrue="{!v.Sorting == 'Name DESC'}">
+                                                        <lightning:buttonIcon class="downButtonBordered" iconName="utility:down" size="small" variant="bare" onclick="{!c.SortByName}"/>
+                                                    </aura:if>                                                    
+                                                </th>
+                                                <th style="width: 10%;">Loan Amount</th>
+                                                <th style="width: 15%;">Disbursement Type</th>
+                                                <th style="width: 12%;">Status
+                                                    <aura:if isTrue="{!v.StatusDownBtn}">
+                                                        <lightning:buttonIcon class="downButton" iconName="utility:down" size="small" variant="bare" onclick="{!c.SortByStatus}"/>
+                                                    </aura:if>
+                                                    <aura:if isTrue="{!v.Sorting == 'StageName ASC'}">
+                                                        <lightning:buttonIcon class="downButtonBordered" iconName="utility:up" size="small" variant="bare" onclick="{!c.SortByStatusDESC}"/>
+                                                    </aura:if>
+                                                    <aura:if isTrue="{!v.Sorting == 'StageName DESC'}">
+                                                        <lightning:buttonIcon class="downButtonBordered" iconName="utility:down" size="small" variant="bare" onclick="{!c.SortByStatus}"/>
+                                                    </aura:if>
+                                                </th>
+                                                <th style="width: 15%;">Next Steps</th>
+                                                <th style="width: 10%;">Priority</th>
+                                                <th style="width: 10%;">Assigned</th>
+                                                <th style="width: 5%;"></th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                    <aura:iteration items="{!v.PaginationList}" var="data">
+                                        <c:LenderDashboardMySettlementRecord cont="{!v.cont}" oppWrapper="{!data}" chkboxvalue="{!v.chkboxvalue}" accountId="{!v.accountId}" sessionId = "{!v.sessionId}" 
+                                                                             selectedTab="{!v.selectedTab}" Sorting="{!v.Sorting}" searchKeyword="{!v.searchKeyword}" No_of_Action_Required="{!v.No_of_Action_Required}"
+                                                                             No_Of_My_Assigned="{!v.No_Of_My_Assigned}" No_Of_Funded="{!v.No_Of_Funded}"/>
+                                    </aura:iteration>                                    
+                                </div>
+                                <div class="slds-float_right">
+                                    <div class="slds-grid slds-grid_vertical-align-start">
+                                        <div class="">
+                                            <ui:inputSelect aura:id="pageSize" label=" Records Per Page " class="pageNum" change="{!c.onPerPageChange}">
+                                                <ui:inputSelectOption text="10" label="10"/>
+                                                <ui:inputSelectOption text="20" label="20"/>
+                                                <ui:inputSelectOption text="50" label="50"/>
+                                                <ui:inputSelectOption text="100" label="100"/>
+                                            </ui:inputSelect>
+                                        </div>
+                                        <div class="slds-m-left_large">
+                                            <ui:inputSelect aura:id="pageNumber" label=" Page " class="pageNum" change="{!c.onPageNumberChange}"/> 
+                                        </div>
+                                        <div Class=" slds-m-left_xx-small">of {!v.totalpages}</div>
+                                        <div Class=" slds-m-left_large">
+                                            <lightning:buttonIcon class="rlArrow" iconName="utility:back" disabled="{!v.startPage==0}" variant="bare" onclick="{!c.handlePrev }"  />
+                                        </div>  
+                                        <div Class="slds-m-left_xx-small">
+                                            <lightning:buttonIcon class="rlArrow" iconName="utility:forward" disabled="{!v.endPage >= v.totalRecords-1}" variant="bare" onclick="{!c.handleNext }" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    
+                    <div>                        
+                    </div>
+                    <div>                        
+                    </div>
+                </div>                
+            </div>            
+        </div>        
+    </div>    
+    
+</aura:component>

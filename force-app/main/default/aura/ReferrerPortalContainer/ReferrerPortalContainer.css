@@ -1,0 +1,122 @@
+.THIS .max-700,
+.THIS.max-700{
+    max-width: 700px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.THIS .referrer-portal-container,.THIS.referrer-portal-container{
+    position: absolute;
+    width: 100%;
+    height: -webkit-fill-available;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.THIS.solarloanfont, .THIS .solarloanfont, .THIS h1, .THIS h2, .THIS h3, .THIS h4, .THIS h5{
+    font-family: Proxima Nova Alt Regular;
+}
+
+.THIS .boldBelyFont {
+ font-family: Bely-Bold;
+}
+
+@font-face {
+    font-family: Bely-Bold;
+    src: url('/resource/customfonts/Bely-Bold.otf') format('OpenType');
+}
+
+.THIS .proximaNovaReg {
+    font-family: ProximaNovaAlt-Medium;
+}
+
+@font-face {
+    font-family: ProximaNovaAlt-Medium;
+    src: url('/resource/customfonts/ProximaNovaAlt-Medium.otf') format('OpenType');
+}
+
+.THIS .proximaNovafont{
+    font-family: Proxima Nova Alt Regular;
+}
+@font-face {
+    font-family: Proxima Nova Alt Regular;
+    src: url('/resource/ProximaNovaRegularFont') format('TrueType'); 
+}
+.THIS .ProximaNova-AltBold{
+    font-family: ProximaNova-AltBold;
+}
+@font-face {
+    font-family: ProximaNova-AltBold;
+    src: url('/resource/customfonts/ProximaNova-AltBold.otf') format('OpenType');
+}
+
+.THIS .heading1{
+    font-family: ProximaNovaAlt-Medium;
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.THIS .heading2{
+    font-family: ProximaNovaAlt-Medium;
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.THIS .heading5{
+    font-family: ProximaNovaAlt-Medium;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.THIS .heading3{
+    font-family: Proxima Nova Alt Regular;
+    font-size: 15px;
+}
+.THIS .heading4{
+    font-family: Proxima Nova Alt Regular;
+    font-size: 13px;
+}
+.THIS .nav-menu-container {
+    padding-left: 16px;
+}
+.THIS .information{
+    background-color: #2076D3;
+    width: 35px;
+    font-size: 24px;
+    height: 35px;
+    text-align: center;
+    border-radius: 20px;
+    color: #FFF;
+    font-family: serif;
+}
+
+.THIS .dark-btn-color{
+    background-color: #192744;
+    border-color: #192744;
+}
+
+.THIS .Green-btn-color{
+    background-color: #45c65a !important;
+    border-color: #45c65a !important;
+    color: white !important;
+}
+
+.THIS .light-grey-box{
+    background-color: #edf1f8;
+    border-radius: 10px;
+    padding-left: 20px;
+    padding-top: 14px;
+    min-height: 100px;
+}
+
+.THIS .slds-backdrop{
+    background-color: #192744 !important;
+    opacity : 0.86 !important;  
+}
+
+.THIS .spinnnner{
+    margin : 48px 0px 80px;
+    position : absolute;
+}

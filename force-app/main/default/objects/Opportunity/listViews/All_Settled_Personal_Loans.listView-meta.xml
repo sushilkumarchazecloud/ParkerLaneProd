@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_Settled_Personal_Loans</fullName>
+    <columns>OPPORTUNITY.CLOSE_DATE</columns>
+    <columns>Lender__c</columns>
+    <columns>OPPORTUNITY.NAME</columns>
+    <columns>Brokerage_Service_Fee_inc_GST__c</columns>
+    <columns>BSF_Rate_inc_GST__c</columns>
+    <columns>BSF_Paid_Confirmed__c</columns>
+    <columns>BSF_Date_Due_Paid__c</columns>
+    <columns>Up_Front_Commission_inc_GST__c</columns>
+    <columns>UFC_Rate_inc_GST__c</columns>
+    <columns>UFC_Paid_Confirmed__c</columns>
+    <columns>UFC_Date_Due_Paid__c</columns>
+    <columns>Customer_Support_Person_Name__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>OPPORTUNITY.STAGE_NAME</field>
+        <operation>equals</operation>
+        <value>Settled (closed won)</value>
+    </filters>
+    <filters>
+        <field>OPPORTUNITY.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Opportunity.Asset_Finance,Opportunity.Commercial_Asset_purchase,Opportunity.Commercial_Solar_Purchase,Opportunity.Debt_Consolidation,Opportunity.Green_Loan,Opportunity.Home_Improvement,Opportunity.Home_Loan_Construction,Opportunity.Personal_Loan,Opportunity.Solar,Opportunity.Vehicle_Purchase</value>
+    </filters>
+    <label>All Settled Personal Loans</label>
+</ListView>

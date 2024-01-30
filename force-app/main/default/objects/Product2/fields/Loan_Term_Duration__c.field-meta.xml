@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Loan_Term_Duration__c</fullName>
+    <externalId>false</externalId>
+    <formula>TEXT(Minimum_Loan_Term_Years__c) &amp; &apos; to &apos; &amp;  TEXT(Maximum_Loan_Term_Years__c) &amp; &apos; Years&apos;</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Loan Term Duration</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

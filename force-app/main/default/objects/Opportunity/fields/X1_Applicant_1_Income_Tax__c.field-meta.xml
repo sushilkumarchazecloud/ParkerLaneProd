@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>X1_Applicant_1_Income_Tax__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( Applicant_1_Taxable_Income__c  &gt; 180000, (37395+(Applicant_1_Taxable_Income__c-180000)*0.45),  IF(Applicant_1_Taxable_Income__c  &gt; 90000, (20835+(Applicant_1_Taxable_Income__c-90000)*0.37),  IF(Applicant_1_Taxable_Income__c  &gt; 37000, (3610+(Applicant_1_Taxable_Income__c-37000)*0.325),  IF(Applicant_1_Taxable_Income__c  &gt; 18000, (0+(Applicant_1_Taxable_Income__c-18000)*0.19), 0) ) ) )+IF( Applicant_1_Taxable_Income__c &gt; 23000, Applicant_1_Taxable_Income__c*0.02, 0)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>1-Applicant 1 Income Tax</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

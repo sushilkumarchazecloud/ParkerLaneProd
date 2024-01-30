@@ -1,6 +1,8 @@
-({
+({    
     handleComplete : function(cmp, event, helper) {
         var index = event.getSource().get("v.name");
+        helper.toggleSpinner(cmp, event);
+        cmp.set("v.changeCss",'yes');
         console.log('===> '+index);
         helper.handleComplete(cmp, event, index, true);
     },

@@ -123,11 +123,11 @@ public without sharing class ParkerLaneLoanController {
             Quote quote = (Quote) selectedQuote;
             List<Quote> toUpdateQuoteList = new List<Quote>();
 
-            Map<Id, Quote> quotesMap = New Map<Id,Quote> ([SELECT Id, Up_Front_Costs_Applicable__c, Total_loan_amount__c, Application__c
+            Map<Id, Quote> quotesMap = New Map<Id,Quote> ([SELECT Id, Up_Front_Costs_Applicable__c,Affordability_Confirmation__c,Total_loan_amount__c, Application__c
                                             FROM Quote WHERE OpportunityId =: opp.Id]);
             for(Id qtId : quotesMap.keySet()){
                 Quote qt = quotesMap.get(qtId);
-                qt.Up_Front_Costs_Applicable__c = quote.Up_Front_Costs_Applicable__c;
+                qt.Affordability_Confirmation__c = quote.Affordability_Confirmation__c;
                 if(quote.Id.equals(qt.Id)){
                     qt.Application__c = true;
                 }                    
@@ -251,7 +251,7 @@ public without sharing class ParkerLaneLoanController {
         try{
             List<Quote> qtList = [SELECT Id, Customer_Amount__c, Loan_Term__c, Monthly_Repayment__c, Purpose__c,  Interest_Rate__c,
                         Lead__c, Lead__r.FirstName, Lead__r.LastName, Lead__r.Email, Shared_Message__c, Product__r.Summary_Page_What_You_ll_Get__c, Product__r.What_document_needs_to_apply__c, 
-                        Opportunity.Applicant_1__r.PersonContactId, Total_loan_amount__c, Up_Front_Costs_Applicable__c, Total_Setup_Fees__c
+                        Opportunity.Applicant_1__r.PersonContactId, Total_loan_amount__c, Up_Front_Costs_Applicable__c, Total_Setup_Fees__c,Affordability_Confirmation__c
                         FROM Quote WHERE OpportunityId =: recordId AND Application__c = true LIMIT 1];
             if(!qtList.isEmpty()){
                return qtList[0];
@@ -1063,8 +1063,7 @@ public without sharing class ParkerLaneLoanController {
     
     @auraEnabled
     public static ContactWithOpp getLivingExpensesDetails(Id recordId){
-        ContactWithOpp cwithopp = new ContactWithOpp();
-        
+        ContactWithOpp cwithopp = new ContactWithOpp();  
         Opportunity opp = [SELECT Applicant_1__r.PersonContactId,RecordTypeid,Living_Expense_Group_Type__c,Lender__c FROM Opportunity WHERE Id =: recordId];
         if(opp.Living_Expense_Group_Type__c == 'Limited personal'){
             cwithopp.isLimited = true;
@@ -1081,7 +1080,7 @@ public without sharing class ParkerLaneLoanController {
              Gambling_Betting_and_Lottery__c, Other_Regular_Expenditure__c, Total_Living_Expenses__c, Email, Investment_property_utilities__c,
              Education_public_and_private__c, Maintenance_If_pay_child_maintenance__c, HECS_HELP_debt__c, Clothing_and_personal_care__c,
              Personal_Insurances_life_and_income_pro__c, FirstName, LastName, Groceries_transport__c, Clothing_and_entertainment__c,
-             Insurance_and_medical__c, Education_and_childcare__c
+             Insurance_and_medical__c, Education_and_childcare__c,FinServ__MaritalStatus__c,FinServ__NumberOfChildren__c,(select id,Is_Primary__c,FinServ__EmploymentStatus__c from FinServ__Employment__r WHERE Is_Primary__c = true LIMIT 1)
              FROM Contact 
              WHERE Id =: opp.Applicant_1__r.PersonContactId];
         
@@ -1090,7 +1089,7 @@ public without sharing class ParkerLaneLoanController {
         if(conList.isEmpty()){
             return NULL;
         }
- 
+        
         return cwithopp;
     }
     
@@ -1666,76 +1665,81 @@ public without sharing class ParkerLaneLoanController {
         }
     }
     
-	@future @auraEnabled
+    @future @auraEnabled
     public static void inertPDF(id oppId){
-        Opportunity oppUpdate = [SELECT Id, Name,Applicant_2__c,Application_Sections__c, Current_Application_Sections__c, AccountId, Applicant_1__c,
-                                 Applicant_1__r.PersonContactId, Applicant_1__r.PersonContact.Email, StageName, RecordTypeId,
-                                 Number_of_applicants__c,
-                                 (SELECT Id, Lead__c, Lender__c, Purpose__c  FROM Quotes WHERE Application__c = TRUE)
-                                 FROM Opportunity WHERE Id =: oppId];
-        PageReference pdf1 = Page.PreliminaryAssessmentPDF;
-        pdf1.getParameters().put('id',oppUpdate.id);
-        pdf1.setRedirect(true);
-        
-        Datetime dt = System.now();
-        List<string> data = string.valueOf(dt).split(' ');
-        dateTime tim =  dt;
-        string timeCorrect = data[0]+ ' '+ tim.format('h:mm a');
-        system.debug('--'+timeCorrect);
-        string title = 'Preliminary Assessment: ' + oppUpdate.Name + '(' + timeCorrect + ')';
-        Blob bPDF;
-        
-        
-        Document_Requested__c dc = new Document_Requested__c();
-        dc.Category__c = 'Preliminary Assessment';
-        dc.Opportunity__c = oppUpdate.id;
-        insert dc;
-        
-        if (Test.IsRunningTest()){
-            bPDF = Blob.valueOf('UNIT.TEST');
-        }else{
-            System.debug('pdf.getContent()'+pdf1.getContent());
-            bPDF = pdf1.getContent();                
-        }               
-        
-        set<id> oldcontIDs = new Set<id>();
-        for(ContentDocumentLink link : [SELECT Id, LinkedEntityId, ContentDocumentId, ShareType, Visibility FROM ContentDocumentLink WHERE LinkedEntityId =: oppUpdate.id]){
-            oldcontIDs.add(link.ContentDocumentId);
-        }  
-        List<ContentVersion> oldcntList = new List<ContentVersion>();
-        if(oldcontIDs.Size() > 0){
-            for(ContentVersion cv : [SELECT Id,contentDocumentId,Category__c,Current_in_use__c from contentVersion where contentDocumentId IN:oldcontIDs AND Current_in_use__c=True AND Category__c = 'Preliminary Assessment']){
-              cv.Current_in_use__c = false;
-               oldcntList.add(cv); 
+        try{
+            Opportunity oppUpdate = [SELECT Id, Name,Applicant_2__c,Application_Sections__c, Current_Application_Sections__c, AccountId, Applicant_1__c,
+                                     Applicant_1__r.PersonContactId, Applicant_1__r.PersonContact.Email, StageName, RecordTypeId,
+                                     Number_of_applicants__c,
+                                     (SELECT Id, Lead__c, Lender__c, Purpose__c  FROM Quotes WHERE Application__c = TRUE)
+                                     FROM Opportunity WHERE Id =: oppId];
+            PageReference pdf1 = Page.PreliminaryAssessmentPDF;
+            pdf1.getParameters().put('id',oppUpdate.id);
+            pdf1.setRedirect(true);
+            
+            Datetime dt = System.now();
+            List<string> data = string.valueOf(dt).split(' ');
+            dateTime tim =  dt;
+            string timeCorrect = data[0]+ ' '+ tim.format('h:mm a');
+            system.debug('--'+timeCorrect);
+            string title = 'Preliminary Assessment: ' + oppUpdate.Name + '(' + timeCorrect + ')';
+            Blob bPDF;
+            
+            
+            Document_Requested__c dc = new Document_Requested__c();
+            dc.Category__c = 'Preliminary Assessment';
+            dc.Opportunity__c = oppUpdate.id;
+            insert dc;
+            
+            if (Test.IsRunningTest()){
+                bPDF = Blob.valueOf('UNIT.TEST');
+            }else{
+                System.debug('pdf.getContent()'+pdf1.getContent());
+                bPDF = pdf1.getContent();                
+            }               
+            
+            set<id> oldcontIDs = new Set<id>();
+            for(ContentDocumentLink link : [SELECT Id, LinkedEntityId, ContentDocumentId, ShareType, Visibility FROM ContentDocumentLink WHERE LinkedEntityId =: oppUpdate.id]){
+                oldcontIDs.add(link.ContentDocumentId);
+            }  
+            List<ContentVersion> oldcntList = new List<ContentVersion>();
+            if(oldcontIDs.Size() > 0){
+                for(ContentVersion cv : [SELECT Id,contentDocumentId,Category__c,Current_in_use__c from contentVersion where contentDocumentId IN:oldcontIDs AND Current_in_use__c=True AND Category__c = 'Preliminary Assessment']){
+                    cv.Current_in_use__c = false;
+                    oldcntList.add(cv); 
+                }
             }
-        }
-        
-        update oldcntList;
-        
-        ContentVersion ContVerFile = new ContentVersion();
-        ContVerFile.VersionData = bPDF;
-        ContVerFile.Title = title; 
-        ContVerFile.PathOnClient= title+'.Pdf';
-        ContVerFile.Document_Requested__c = dc.id;
-        ContVerFile.Current_in_use__c = true;
-        insert ContVerFile;
-        
-        ContentVersion cdlListId = [select Id, ContentDocumentId From ContentVersion WHERE Id =: ContVerFile.id LIMIT 1];
-        
-        ContentDocumentLink cdl = New ContentDocumentLink();
-        cdl.LinkedEntityId = oppUpdate.Id;
-        cdl.ContentDocumentId = cdlListId.ContentDocumentId;
-        cdl.shareType = 'V';
-        insert cdl;
-        
-        List<Document_Requested__c> updateDc = new List<Document_Requested__c>();
-        for(Document_Requested__c d : [SELECT Id, OwnerId, Name, LastModifiedDate, LastModifiedById, LastActivityDate, Contact__c, Category__c, Description__c, Details__c, Document__c, Opportunity__c, isComplete__c FROM Document_Requested__c WHERE Id =: dc.id]){
-            d.isComplete__c = true;
-            updateDc.add(d);
-        }
-        
-        if(updateDc != null && updateDc.size() > 0){
-            update updateDc;
+            
+            update oldcntList;
+            
+            ContentVersion ContVerFile = new ContentVersion();
+            ContVerFile.VersionData = bPDF;
+            ContVerFile.Title = title; 
+            ContVerFile.PathOnClient= title+'.Pdf';
+            ContVerFile.Document_Requested__c = dc.id;
+            ContVerFile.Current_in_use__c = true;
+            insert ContVerFile;
+            
+            ContentVersion cdlListId = [select Id, ContentDocumentId From ContentVersion WHERE Id =: ContVerFile.id LIMIT 1];
+            
+            ContentDocumentLink cdl = New ContentDocumentLink();
+            cdl.LinkedEntityId = oppUpdate.Id;
+            cdl.ContentDocumentId = cdlListId.ContentDocumentId;
+            cdl.shareType = 'V';
+            insert cdl;
+            
+            List<Document_Requested__c> updateDc = new List<Document_Requested__c>();
+            for(Document_Requested__c d : [SELECT Id, OwnerId, Name, LastModifiedDate, LastModifiedById, LastActivityDate, Contact__c, Category__c, Description__c, Details__c, Document__c, Opportunity__c, isComplete__c FROM Document_Requested__c WHERE Id =: dc.id]){
+                d.isComplete__c = true;
+                updateDc.add(d);
+            }
+            
+            if(updateDc != null && updateDc.size() > 0){
+                update updateDc;
+            }
+        }catch(Exception e){
+            UtilityClass.createException('', 'ParkerLaneLoanController', 'inertPDF', e.getMessage(), e.getStackTraceString(), ''+e.getLineNumber(),
+                                         e.getTypeName(), ''+e.getCause()); 
         }
     }    
     
@@ -1801,6 +1805,8 @@ public without sharing class ParkerLaneLoanController {
             String alreadyCust = 'You already have a quote or application under way. Please call 1300 131 711 or email personalapplications@parkerlane.com.au';
             String ownerId = '';
             String nextSection = 'Loan Recommendation';
+            boolean isAlreadyLead = false;            
+            List<opportunity> convertedLeadOpp = new List<opportunity>();
             Map<Id,Product2> productsMap = New Map<Id,Product2>([SELECT Id, IsActive, Actual_Comparison_Rate__c, Commission_Amount__c,Brokerage_Amount__c,
                                                                  Comparison_Rate_Disclaimer__c, Comparison_Rate_Warning__c, Eligibility__c, Acceptable_Loan_Purpose__c,
                                                                  Features__c, Interest_Rate__c, Interest_Rate_Type__c, Lender__c, Loan_Amount__c, Is_Feature_Product__c,
@@ -1812,33 +1818,53 @@ public without sharing class ParkerLaneLoanController {
                                                                  FROM Product2 WHERE isActive = TRUE AND Acceptable_Loan_Purpose__c INCLUDES (:productType) AND Maximum_Loan_Amount__c >=: cAmount 
                                                                  AND Minimum_Loan_Amount__c <=: cAmount ORDER BY Product_Order__c ASC limit 3]);
             
-            List<Lead> leadList = [SELECT Id, FirstName, LastName, Email, Status, FinServ__ReferredByContact__c, FinServ__RelatedAccount__c, OwnerId, 
+            List<Lead> leadList = [SELECT Id, FirstName,Referred_by_Aggregator_Acc__c, LastName, Email, Status, FinServ__ReferredByContact__c, FinServ__RelatedAccount__c, OwnerId, 
                                    Point_of_Origin__c, Phone, Referred_by_Company__c, LeadSource, FinServ__ReferredByContact__r.Name,
                                    FinServ__ReferredByContact__r.Account.Referrer_Business_Type__c, leadAddress__c, installationSuburb__c,
                                    installationCountry__c, installationPostcode__c, installationState__c 
-                                   FROM Lead WHERE Email =: cEmail LIMIT 1];
+                                   FROM Lead WHERE Email =: cEmail LIMIT 1]; 
             Lead lead = New Lead();
-            if(leadList.isEmpty()){
+            if(leadList.isEmpty()){ 
                 lead = New Lead(FirstName = cFName, LastName = cLName, Email = cEmail, Customer_Amount__c = cAmount, 
                                 Purpose__c = productType, RecordTypeId = leadRecordTypeMap.get(productType), LeadSource='Website', 
                                 Lead_Type__c = 'New Customer', Point_of_Origin__c = 'Website Quote / Application');
-                
-            }else{
+                lead.Status = 'Online Quote';
+                upsert lead;                
+            }else{ 
                 lead = leadList.get(0);
                 ownerId = leadList.get(0).OwnerId;
                 List<Quote> existingQuotesList = [SELECT Id FROM Quote WHERE Lead__c =: lead.Id AND Opportunity.Purpose__c =:productType AND 
                                                   Opportunity.StageName != 'Settled (closed won)' AND Opportunity.StageName != 'Closed Lost'];
-                if(!existingQuotesList.isEmpty()){
+                if(existingQuotesList == null || existingQuotesList.size() == 0){                                        
+                    // Added by tazeem for 1202
+                    isAlreadyLead = true;
+                    Database.LeadConvert lc = new database.LeadConvert();
+                    lc.setLeadId(lead.id);
+                    LeadStatus convertStatus = [SELECT Id, MasterLabel FROM LeadStatus WHERE IsConverted=true LIMIT 1];
+                    lc.setConvertedStatus(convertStatus.MasterLabel);
+                    Database.LeadConvertResult lcr = Database.convertLead(lc);                     
+                    for(opportunity op : [select id, name, AccountId,applicant_1__r.id from opportunity where id = : lcr.getOpportunityId()]){
+                       convertedLeadOpp.add(op); 
+                    }                    
+                    for(lead ld : [SELECT Id, FirstName,Referred_by_Aggregator_Acc__c, LastName, Email, Status, FinServ__ReferredByContact__c, FinServ__RelatedAccount__c, OwnerId, 
+                                   Point_of_Origin__c, Phone, Referred_by_Company__c, LeadSource, FinServ__ReferredByContact__r.Name,
+                                   FinServ__ReferredByContact__r.Account.Referrer_Business_Type__c, leadAddress__c, installationSuburb__c,
+                                   installationCountry__c, installationPostcode__c, installationState__c 
+                                   FROM Lead WHERE id = : lcr.getLeadId() ]){
+                      lead = ld;  
+                    }
+                    
+                }
+                else{
                     return '{\"status\":\"Error\","message\":\"'+ alreadyCust +'\"}';
                 }
             }
-            lead.Status = 'Online Quote';
-            upsert lead;
             
-            List<Account> existingPAccList = [SELECT Id FROM Account WHERE PersonContact.Email =: lead.Email];
+            
+           /* List<Account> existingPAccList = [SELECT Id FROM Account WHERE PersonContact.Email =: lead.Email];
             if(!existingPAccList.isEmpty()){
                 return '{\"status\":\"Error\","message\":\"'+ alreadyCust +'\"}';
-            }
+            }*/
             
 
             List<Account> solarQuoteAcc  = [SELECT Id FROM Account WHERE Name = 'SolarQuotes.com.au' LIMIT 1];
@@ -1859,10 +1885,19 @@ public without sharing class ParkerLaneLoanController {
                 leadSource = 'Real Estate Agent';
             }
             
+
+            
             Account householdAccount = new Account(Name = lead.FirstName + ' ' + lead.LastName +' Household', RecordTypeId = householdAccRTId,
                                                   Referred_by_Company__c = refCompanyId, Account_Lead_Source__c = leadSource,
                                                   FinServ__ReferredByContact__c = lead.FinServ__ReferredByContact__c);
-            insert householdAccount;
+            
+            if(isAlreadyLead){
+                householdAccount.id = convertedLeadOpp[0].AccountId;
+                update householdAccount;
+            }
+            else{
+                insert householdAccount;   
+            }                       
             
             Account personAccount = new Account(FirstName = lead.FirstName, LastName = lead.LastName, PersonEmail = lead.Email,
                                                 Relationship_with_Applicant_1__c='Client', RecordTypeId = personAccRTId,
@@ -1871,7 +1906,15 @@ public without sharing class ParkerLaneLoanController {
                                                 Residential_Address__pc = lead.leadAddress__c, Suburb__pc  = lead.installationSuburb__c,
                                                 FinServ__CountryOfResidence__pc = lead.installationCountry__c, Postal_Code__pc = lead.installationPostcode__c,
                                                 State__pc = lead.installationState__c );
-            insert personAccount;
+            
+            if(isAlreadyLead){
+                personAccount.id = convertedLeadOpp[0].applicant_1__r.id;
+                update personAccount; 
+            }
+            else{
+                insert personAccount;
+            }
+            
             
             Id pConId = [SELECT Id, PersonContactId FROM Account WHERE Id =: personAccount.Id].PersonContactId;
 
@@ -1886,16 +1929,24 @@ public without sharing class ParkerLaneLoanController {
                                               StageName='Quote', 
                                               FinServ__ReferredByContact__c = lead.FinServ__ReferredByContact__c,
                                               Referred_by_Company__c = refCompanyId,
+                                              referred_by_aggregator__c = lead.Referred_by_Aggregator_Acc__c,
                                               Point_of_Origin__c = lead.Point_of_Origin__c,
                                               CloseDate = Date.today(),
                                               Priority_is__c = myPriority,
-                                              Prefer_to_repay_over_a_term__c = repayOverTerm,
+                                              //Prefer_to_repay_over_a_term__c = repayOverTerm,
                                               Home_Owner__c = homeOwner,
                                               LeadSource = leadSource,
                                               RecordTypeId = oppRecordTypeMap.get(productType));
             if(String.isNotBlank(ownerId))
                 opp.OwnerId = ownerId;
-            insert opp;
+            
+            if(isAlreadyLead){
+                opp.id = convertedLeadOpp[0].id;
+                update opp;
+            }
+            else{
+                insert opp; 
+            }            
 
             String quoteGrpName = 'Website-';
             AggregateResult[] quoteGruop = [Select Gruop_Name__c from quote where Gruop_Name__c like 'Website-%' AND  Lead__c =: lead.Id 
@@ -1967,16 +2018,20 @@ public without sharing class ParkerLaneLoanController {
                     loanFees.add(fee);
                 }
             }
-            insert loanFees;
+            insert loanFees;                                    
             
             String path = '{\"status\":\"Success\",\"recordId\":\"'+ opp.Id +'\","leadId\":\"'+ pConId +'\","quoteId\":\"'+ featuredQuoteId +'\","quoteGrpName\":\"'+ quoteGrpName +'\",\"CurrentSection\":\"'+ nextSection +'\", \"path\": '+getPath(nextSection,nextSection, opp.RecordTypeId)+ '}';
             return path;
         }catch(exception e){
+            system.debug('-->>createLeadAndQuotes-->>'+e.getMessage());
             UtilityClass.createException('New','ParkerLaneLoanController', 'createLeadAndQuotes', e.getMessage(), e.getStackTraceString(), ''+e.getLineNumber(),
                                        e.getTypeName(), ''+e.getCause());
             return '[]';
         }
     }
+    
+    
+    
     @auraEnabled
     public static List<WrapperLoanRate> getQuotaions(Id oppId, String masterQuote){
         List<WrapperLoanRate> wprLoanRateList = New List<WrapperLoanRate>();
@@ -1989,11 +2044,11 @@ public without sharing class ParkerLaneLoanController {
              Product__c, Product__r.Comparison_Rate_Display__c, Product__r.Security__c, Product__r.Interest_Rate_Type__c,
              Product__r.Interest_Rate_From__c, Product__r.Product_Order__c, Product__r.Is_Feature_Product__c, Total_Setup_Fees__c,
              Product__r.Total_Setup_Fees__c, Product__r.Decision_in_Hours__c, Product__r.Interest_Rate_Based_On__c,Application__c, Product_Description__c,
-             Total_loan_amount__c, Up_Front_Costs_Applicable__c,Product__r.Interest_Rate__c, OpportunityId, Product__r.Default_Loan_Term_Months__c,
-             Product__r.What_document_needs_to_apply__c, Product__r.Summary_Page_What_You_ll_Get__c, Monthly_Account_Keeping_Fees__c, Lender__c, Product_Type__c
+             Total_loan_amount__c, Up_Front_Costs_Applicable__c,Product__r.Interest_Rate__c, OpportunityId, Product__r.Default_Loan_Term_Months__c,Affordability_Confirmation__c,
+             Product__r.What_document_needs_to_apply__c, Product__r.Summary_Page_What_You_ll_Get__c, Monthly_Account_Keeping_Fees__c, Lender__c, Product_Type__c,Not_Applicable__c
              FROM Quote WHERE Gruop_Name__c =: masterQuote AND  OpportunityId =: oppId ORDER BY Product__r.Product_Order__c ASC limit 3]);
         
-        Opportunity oppDetails = [Select id, Referred_by_Company__r.CustomLoanOptionsPageMessage__c, Referred_by_Company__r.BackgroundImage__c, Referred_by_Company__r.LogoImage__c from opportunity where id =: oppId];
+        Opportunity oppDetails = [Select id, Referred_by_Company__r.Supplier_Logo_URL_For_Site__c,Referred_by_Company__r.CustomLoanOptionsPageMessage__c, Referred_by_Company__r.BackgroundImage__c, Referred_by_Company__r.LogoImage__c from opportunity where id =: oppId];
         
         system.debug('quotesMap'+quotesMap);
         for(Quote qt: quotesMap.values()){
@@ -2021,6 +2076,46 @@ public without sharing class ParkerLaneLoanController {
         
     }
     
+    @auraEnabled
+    public static WrapperLoanRate getFreshQuotes(sObject qtUpdate){
+        try{
+            WrapperLoanRate wl = new WrapperLoanRate();
+            Quote qt = (Quote)qtUpdate;
+            List<Loan_Rate__c> loanRateList = [Select id,From_amount__c,Interest_rate__c,To_amount__c,Comparison_rate__c,Product__c from Loan_Rate__c WHERE Product__c =: qt.Product__c];
+            if(qt.Product__r.Interest_Rate_Based_On__c =='Tiered Rate' && !loanRateList.isEmpty() ){
+                for(Loan_Rate__c lr : loanRateList){
+                    if(lr.From_amount__c <= qt.Customer_Amount__c && lr.From_amount__c >= qt.Customer_Amount__c ){
+                        qt.Actual_Comparison_Rate__c = lr.Comparison_rate__c;
+                        qt.Interest_Rate__c = lr.Interest_rate__c;
+                        break;
+                    }
+                }
+            }
+            update qt;
+            wl.loanRatelist = loanRateList;
+            wl.quote = qt;
+            return wl;
+        }catch(exception e){
+            UtilityClass.createException(qtUpdate.id, 'ParkerLaneLoanController', 'getFreshQuotes', e.getMessage(), e.getStackTraceString(), ''+e.getLineNumber(),
+                                         e.getTypeName(), ''+e.getCause());
+            return null;
+        }
+    }
+    
+    @auraEnabled
+    public static void updateNotApplicableQuote(sObject qtUpdate){
+        try{
+            Quote qt = (Quote)qtUpdate;
+            if(qt.Not_Applicable__c != true){
+                qt.Not_Applicable__c = true; 
+                update qt;
+            }
+        }
+        catch(exception e){
+            UtilityClass.createException(qtUpdate.id, 'ParkerLaneLoanController', 'updateNotApplicableQuote', e.getMessage(), e.getStackTraceString(), ''+e.getLineNumber(),
+                                         e.getTypeName(), ''+e.getCause());
+        }
+    }
         
     @auraEnabled
     public static sObject getLead(Id oppId){
@@ -2181,6 +2276,6 @@ public without sharing class ParkerLaneLoanController {
     
     public class ContactWithOpp{
         @AuraEnabled public Contact con;
-        @AuraEnabled public Boolean isLimited;
+        @AuraEnabled public Boolean isLimited; 
     } 
 }

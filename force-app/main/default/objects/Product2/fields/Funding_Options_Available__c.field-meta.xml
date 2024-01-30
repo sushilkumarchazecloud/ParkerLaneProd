@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Funding_Options_Available__c</fullName>
+    <externalId>false</externalId>
+    <label>Funding Options Available</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>In full before installation</fullName>
+                <default>false</default>
+                <label>In full before installation</label>
+            </value>
+            <value>
+                <fullName>In full after installation</fullName>
+                <default>false</default>
+                <label>In full after installation</label>
+            </value>
+            <value>
+                <fullName>Part payment before (and remainder after) installation</fullName>
+                <default>false</default>
+                <label>Part payment before (and remainder after) installation</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

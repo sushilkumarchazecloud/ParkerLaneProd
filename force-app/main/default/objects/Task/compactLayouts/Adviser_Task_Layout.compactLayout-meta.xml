@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Adviser_Task_Layout</fullName>
+    <fields>Subject</fields>
+    <fields>User_Activity__c</fields>
+    <fields>Call_Purpose__c</fields>
+    <fields>Customer_Res__c</fields>
+    <fields>Call_Origin__c</fields>
+    <fields>Outcome__c</fields>
+    <fields>Make_Activity_Private__c</fields>
+    <fields>Make_Comments_Public__c</fields>
+    <fields>CreatedById</fields>
+    <label>Adviser Task Layout</label>
+</CompactLayout>

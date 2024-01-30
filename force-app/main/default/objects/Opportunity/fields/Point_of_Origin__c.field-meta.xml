@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Point_of_Origin__c</fullName>
+    <externalId>false</externalId>
+    <label>Point of Origin</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>SolarQuotes API</fullName>
+                <default>false</default>
+                <label>SolarQuotes API</label>
+            </value>
+            <value>
+                <fullName>Referral Page</fullName>
+                <default>false</default>
+                <label>Referral Page</label>
+            </value>
+            <value>
+                <fullName>Website Contact Form</fullName>
+                <default>false</default>
+                <label>Website Contact Form</label>
+            </value>
+            <value>
+                <fullName>Website Quote / Application</fullName>
+                <default>false</default>
+                <label>Website Quote / Application</label>
+            </value>
+            <value>
+                <fullName>Calendly</fullName>
+                <default>false</default>
+                <label>Calendly</label>
+            </value>
+            <value>
+                <fullName>Facebook</fullName>
+                <default>false</default>
+                <label>Facebook</label>
+            </value>
+            <value>
+                <fullName>1300 number</fullName>
+                <default>false</default>
+                <label>1300 number</label>
+            </value>
+            <value>
+                <fullName>Direct Adviser Call</fullName>
+                <default>false</default>
+                <label>Direct Adviser Call</label>
+            </value>
+            <value>
+                <fullName>Direct Email</fullName>
+                <default>false</default>
+                <label>Direct Email</label>
+            </value>
+            <value>
+                <fullName>Solar@parkerlane</fullName>
+                <default>false</default>
+                <label>Solar@parkerlane</label>
+            </value>
+            <value>
+                <fullName>Hello@parkerlane</fullName>
+                <default>false</default>
+                <label>Hello@parkerlane</label>
+            </value>
+            <value>
+                <fullName>90% No LMI Everyday Heroes</fullName>
+                <default>false</default>
+                <label>90% No LMI Everyday Heroes</label>
+            </value>
+            <value>
+                <fullName>98% Loan for First Home Buyers</fullName>
+                <default>false</default>
+                <label>98% Loan for First Home Buyers</label>
+            </value>
+            <value>
+                <fullName>Screw Waiting General</fullName>
+                <default>false</default>
+                <label>Screw Waiting General</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

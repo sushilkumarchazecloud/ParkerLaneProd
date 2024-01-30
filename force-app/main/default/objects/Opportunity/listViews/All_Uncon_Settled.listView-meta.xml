@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_Uncon_Settled</fullName>
+    <columns>INACTIVE_DAYS</columns>
+    <columns>OPPORTUNITY.NAME</columns>
+    <columns>OPPORTUNITY.AMOUNT</columns>
+    <columns>CORE.USERS.FULL_NAME</columns>
+    <columns>OPPORTUNITY.CREATED_DATE</columns>
+    <columns>OPPORTUNITY.LEAD_SOURCE</columns>
+    <columns>OPPORTUNITY.RECORDTYPE</columns>
+    <columns>OPPORTUNITY.STAGE_NAME</columns>
+    <columns>Application_Sections__c</columns>
+    <columns>FinServ__ReferredByContact__c</columns>
+    <columns>Referred_by_Company__c</columns>
+    <columns>Point_of_Origin__c</columns>
+    <columns>How_would_you_like_us_to_support_you__c</columns>
+    <columns>Send_the_quote_to__c</columns>
+    <columns>OPPORTUNITY.EXP_AMOUNT</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>OPPORTUNITY.STAGE_NAME</field>
+        <operation>equals</operation>
+        <value>Submitted,Conditionally Approved,Conditional,Unconditional,Approved,Funding,Docs Signed,Settlement Booked,Settled (closed won)</value>
+    </filters>
+    <filters>
+        <field>OPPORTUNITY.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Opportunity.Home_Loan_Construction,Opportunity.Home_Loan_Purchase,Opportunity.Home_Loan_Refinance</value>
+    </filters>
+    <label>All Uncon &amp; Settled</label>
+</ListView>

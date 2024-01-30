@@ -1,4 +1,14 @@
 ({
+    doInit : function(component, event, helper) {
+        var tempList = [];
+        tempList = component.get("v.quoteList");
+        for(var i in tempList){
+            if(tempList[i].application == true){
+                component.set("v.appCheck",true);
+            }
+        }
+    },
+    
     navigateToRecord : function(component , event, helper){
         var recordId = event.currentTarget.dataset.recordId;
         var navService = component.find("navService");

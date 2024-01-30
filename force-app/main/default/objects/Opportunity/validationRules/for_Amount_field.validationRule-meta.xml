@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>for_Amount_field</fullName>
+    <active>true</active>
+    <description>Amount field equals Total Revenue if Total Revenue is blank or zero Amount Field Editable</description>
+    <errorConditionFormula>IF( ISCHANGED(Amount) ,  AND (ROUND(Amount,2) &lt;&gt; Round(Total_Revenue__c, 2) ,  Total_Revenue__c &gt; 0), false)</errorConditionFormula>
+    <errorDisplayField>Amount</errorDisplayField>
+    <errorMessage>Cannot edit this fiend when there is Revenue recorded in the Revenue Section. Please update Revenue Section instead.</errorMessage>
+</ValidationRule>

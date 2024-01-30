@@ -54,8 +54,11 @@
         <lightning:spinner aura:id="mySpinner" variant="brand" size="large" class="" />
         <div class="GoodCredit">
             <section class="max-700 slds-p-around_medium slds-col  bg-lightest txt-blue slds-clearfix">
+                <div class="slds-align_absolute-center slds-m-top_medium">
+                    <img src="{!$Resource.headersLogo + '/headersLogo/goals&amp;objectives.png'}" class="trackercls"/>
+                </div>
                 <div class="slds-grid slds-wrap" style="padding-left:0.4rem;padding-right:0.4rem;">
-                    <div class="slds-size_2-of-2 slds-m-vertical_medium">
+                    <div class="slds-size_2-of-2 slds-m-top_large">
                         <h1 class = "heading_edit">'Good credit' enquiries</h1>
                     </div>
                     <div class="slds-size_2-of-2">
@@ -201,7 +204,8 @@
                     </div>-->
                     <div class="slds-grid slds-wrap" style="padding-left:0.4rem;padding-right:0.4rem;">
                         <div class="slds-col slds-size_2-of-2">
-                            <lightning:checkboxGroup name="lifeEventsCG"
+                            <lightning:checkboxGroup class="no-abbr slds-m-around_xx1-small slds-p-around_xx1-small"
+                                                     name="lifeEventsCG"
                                                      aura:id="fieldcheckLifeEvent" 
                                                      required="true"
                                                      label="What are your current financial goals? (multi-select)"

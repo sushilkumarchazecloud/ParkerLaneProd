@@ -1,0 +1,157 @@
+<apex:page controller="sessionIdclass"  
+           action="{!ReturnAccessToken}" showHeader="false"
+           sidebar="false" applyBodyTag="false" applyHtmlTag="false">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0"/>
+    <head>
+        <title>Parker Lane - Australia's No.1 Rated Finance Service</title>
+        <link REL="icon" HREF="{!URLFOR($Resource.faviconNew)}" type="img/x-icon"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+        <script>
+            (function(h,o,t,j,a,r){
+            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+            h._hjSettings={hjid:3517919,hjsv:6};
+            a=o.getElementsByTagName('head')[0];
+            r=o.createElement('script');r.async=1; 
+            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+            a.appendChild(r);
+            })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv='); 
+        </script>
+        <!-- Google tag (gtag.js) --> 
+        <script src="https://www.googletagmanager.com/gtag/js?id=G-K2K45FK4PR"></script> 
+        <script> 
+            window.dataLayer = window.dataLayer || []; 
+            function gtag(){dataLayer.push(arguments);} 
+            gtag('js', new Date()); 
+            gtag('config', 'G-K2K45FK4PR'); 
+        </script>
+    </head>
+    <style>
+        body {
+        background-color: #f8fafd;
+        }
+    </style>
+    
+    <apex:includeLightning />
+    
+    <div id="ref">        
+    </div>
+    <p class="timertext" 
+        style="">
+        <span class="secs"></span>
+    </p>
+    
+    <script type="text/javascript">
+     
+    var accountId = "{!$CurrentPage.parameters.id}";
+    if(accountId == ''){
+        window.location.href = 'https://lanecorp.my.salesforce-sites.com/LenderdashboardLogin';
+    }
+    else{
+    var phone = "{!$CurrentPage.parameters.isPhone}";
+    var sessionId = "{!accessToken}";
+    var time = 2400;
+    $Lightning.use("c:LenderDashboardApp", function(){
+        $Lightning.createComponent("c:LenderDashboardContainer", {
+            recordId :'{!$CurrentPage.parameters.oppId}',
+            mgRef :'{!$CurrentPage.parameters.MGREF}',
+            sessionId :'{!accessToken}',
+            "phone" : phone,
+            "accountId" : accountId
+        }, "ref", function(){
+        });
+    });
+
+    function setCookie(cname,cvalue,exdays) {
+        const d = new Date();
+        d.setTime(d.getTime() + (exdays*1000));
+        let expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";        
+    }
+    
+    function getCookie(cname) {
+        let name = cname + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        for(let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+    
+    function checkCookie() {  
+        let user = getCookie("username");
+        if (user != "") {
+            if(user != "{!$CurrentPage.parameters.id}"){
+                //user = "{!$CurrentPage.parameters.id}";
+                setCookie("username", user, time);
+            }
+                
+        } else {
+            user = "{!$CurrentPage.parameters.id}";
+            if (user != "" && user != null) {
+                //window.location.replace('https://lanecorp.my.salesforce-sites.com/lenderdashboard?id='+accountId);
+                //setCookie("username", user, 100);
+            }
+        }
+    }  
+    
+    function test(){
+        var temp = {!setCon.flag__c};
+       // console.log(temp);
+        if(temp == true){
+            setSes();
+            setCookie("username", "{!$CurrentPage.parameters.id}", time);             
+        }
+        else{
+            checkCookie();
+        }
+            
+    }
+    let timer, currSeconds = 0;
+    
+        function resetTimer() {
+            let user = getCookie("username");
+            document.querySelector(".timertext")
+                    .style.display = 'none';
+  
+            clearInterval(timer);
+  
+            currSeconds = 0;
+  
+            timer = setInterval(startIdleTimer, 1000);
+            setCookie("username", user, time);
+        }
+        window.onload = resetTimer;
+        window.onmousemove = resetTimer;
+        window.onmousedown = resetTimer;
+        window.ontouchstart = resetTimer;
+        window.onclick = resetTimer;
+        window.onkeypress = resetTimer;
+  
+        function startIdleTimer() {
+            currSeconds++;
+           // console.log(currSeconds);
+            if(currSeconds == 1){
+                test();
+            }
+            document.querySelector(".secs")
+                .textContent = currSeconds;
+  
+            document.querySelector(".timertext")
+                .style.display = 'none';
+            if(currSeconds == time){
+                //window.location.replace('https://lanecorp.my.salesforce-sites.com/lenderdashboard?id='+accountId);
+            }
+        }
+    }
+    </script>
+    <apex:form >
+        <apex:actionFunction action="{!setSes}" name="setSes" reRender="none"/>
+    </apex:form>            
+</apex:page>

@@ -54,3 +54,17 @@
     border-color: #0176D3;
     background-color: #0176D3;                        
 }
+
+.THIS .slds-spinner{
+    top: 50% !important;
+}
+
+.THIS .spins::after {
+    position: absolute;
+    content: "Fetching today's best rates";
+    width: 100%;
+    text-align: center;
+    top: calc(50% + 3em);
+    font-weight: bold;
+    color : #1a2745;
+}

@@ -1,0 +1,22 @@
+.THIS .nolabel .slds-form-element__label{
+   	display: none; 
+    visibility: hidden;
+} 
+
+.THIS .slds-file-selector_files .slds-file-selector__text{
+    display : none;
+    visibility: hidden;
+}
+
+.THIS .upload_txt{
+    text-align: end;
+    font-size: 15px;
+    font-weight: 500;
+    text-wrap: nowrap;
+}
+
+.THIS .img_style{
+    margin-bottom: 20px;
+    margin-top: 20px;
+    width: 60%;
+}

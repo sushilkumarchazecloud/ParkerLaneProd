@@ -3,7 +3,6 @@
         var action = component.get('c.getOpportunityId');
         console.log(component.get('v.mgRef'));
         var pageUrl = window.location.href;
-        console.log('====> '+pageUrl);
         action.setParams({
             apId : component.get('v.mgRef'),
             pgUrl : pageUrl
@@ -11,7 +10,7 @@
         action.setCallback(this, function(result){
             var state = result.getState();
             if(component.isValid() && state === "SUCCESS"){
-            	console.log(result.getReturnValue());
+            	console.log('result'+result.getReturnValue());
                 component.set('v.recordId',result.getReturnValue());
                 this.getContact(component);
             }
@@ -74,10 +73,24 @@
                     window.open('/?Id='+component.get("v.recordId"),'_top');
                 } 
                 component.set("v.OrignalRecord", arrayMapKeys);
+                console.log('docs'+JSON.stringify(arrayMapKeys));
             }
             this.toggleSpinner(component, event);
         });
         
+        $A.enqueueAction(action);
+        
+    },
+    getUserId : function(component){
+        var action = component.get('c.getUserId');
+        action.setCallback(this, function(result){
+            var state = result.getState();
+            if(state === "SUCCESS"){
+                //alert(result.getReturnValue());
+                console.log(result.getReturnValue());
+                component.set('v.UserId',result.getReturnValue());
+            }   
+        });
         $A.enqueueAction(action);
         
     },
@@ -142,4 +155,22 @@
         window.scrollTo(scrollOptions);
         console.log('in scroll');
     },
+    
+    DocumentStatusUpdate: function (component, event){
+        var status = component.get("v.status");
+        if(status != '' && status != 'COMPLETE'){
+            var action = component.get("c.generateerrorTypeDoc");
+            action.setParams({
+                recId : component.get("v.recordId")                
+            });
+            action.setCallback(this, function(response){
+                var state = response.getState();
+                if (state === "SUCCESS"){
+                	//alert('success');
+                }
+            });
+            
+            $A.enqueueAction(action); 
+        }
+    }
 })

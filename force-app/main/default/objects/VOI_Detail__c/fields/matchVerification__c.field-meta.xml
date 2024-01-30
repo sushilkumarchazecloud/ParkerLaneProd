@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>matchVerification__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(ISPICKVAL(Code_Match_Status__c, &apos;Not-Match(Failed)&apos;), &apos;Not required&apos;, &apos;Verified&apos; )</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>matchVerification</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

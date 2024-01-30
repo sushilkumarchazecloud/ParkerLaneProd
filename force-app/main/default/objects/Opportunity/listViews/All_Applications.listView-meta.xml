@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_Applications</fullName>
+    <columns>OPPORTUNITY.CREATED_DATE</columns>
+    <columns>Time_at_current_stage__c</columns>
+    <columns>OPPORTUNITY.STAGE_NAME</columns>
+    <columns>OPPORTUNITY.NAME</columns>
+    <columns>OPPORTUNITY.LEAD_SOURCE</columns>
+    <columns>FinServ__ReferredByContact__c</columns>
+    <columns>Lender__c</columns>
+    <columns>Loan_Amount__c</columns>
+    <columns>OPPORTUNITY.RECORDTYPE</columns>
+    <columns>Application_Pending_Notes__c</columns>
+    <columns>Application_Pending_Status__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>OPPORTUNITY.STAGE_NAME</field>
+        <operation>equals</operation>
+        <value>Conditional,Approved,Settled (closed won)</value>
+    </filters>
+    <filters>
+        <field>Credit_Analyst__c</field>
+        <operation>contains</operation>
+        <value>Clara</value>
+    </filters>
+    <label>All Applications</label>
+</ListView>

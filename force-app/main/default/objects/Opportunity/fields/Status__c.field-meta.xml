@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Status__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( AND( OR( ISPICKVAL( StageName , &apos;Quote&apos;) , ISPICKVAL( StageName , &apos;CPA Started&apos;))  , OR( ISPICKVAL( Current_Application_Sections__c ,&apos;Priorities&apos;), ISPICKVAL( Current_Application_Sections__c  ,&apos;Loan Recommendation&apos;), ISPICKVAL( Current_Application_Sections__c  ,&apos;Getting Started&apos;) ) )  ,&apos;Quote-#fd636b&apos;,
+ 
+IF(ISPICKVAL( StageName , &apos;CPA Started&apos;),&apos;Applying-#ffb902&apos;,
+    
+IF( AND( OR( ISPICKVAL(StageName,  &apos;Packs Out&apos;),ISPICKVAL( StageName, &apos;Packs Back&apos;),ISPICKVAL( StageName , &apos;CPA Done&apos;)), NOT(Funding_Variation_Request__c)), &apos;Verifying-#FFDF8F&apos;,
+
+IF( AND( OR( ISPICKVAL(StageName, &apos;Application&apos;) ,ISPICKVAL(StageName, &apos;Conditional&apos;)), NOT(Funding_Variation_Request__c)), &apos;Credit-#b4f6e0&apos;, 
+
+IF(  AND(ISPICKVAL(StageName, &apos;Approved&apos;), TODAY()- DATEVALUE( Approved_Date__c )&lt; 90 )   , &apos;Approved-#3be8b0&apos;,
+IF(  OR(AND (ISPICKVAL(StageName, &apos;Funding&apos;), (TODAY()- DATEVALUE( Approved_Date__c )&lt; 90)),(AND (OR(ISPICKVAL(StageName,  &apos;CPA Done&apos;),ISPICKVAL( StageName, &apos;Packs Out&apos;),ISPICKVAL( StageName , &apos;Packs Back&apos;),ISPICKVAL( StageName , &apos;Application&apos;),
+ISPICKVAL( StageName , &apos;Conditional&apos;)) ,Funding_Variation_Request__c ))), &apos;Funding-#d063d3&apos;,
+IF( ISPICKVAL(StageName, &apos;Settled (closed won)&apos;) , &apos;Funded-#4a154b&apos;,
+IF( AND( OR(ISPICKVAL(StageName, &apos;Approved&apos;),ISPICKVAL(StageName, &apos;Funding&apos;)) ,TODAY()- DATEVALUE( Approved_Date__c )&gt; 90) , &apos;Expired-#FFFF00&apos;, 
+IF( OR( ISPICKVAL(StageName, &apos;Closed Lost&apos;) ,ISPICKVAL(StageName, &apos;Nurturing&apos;),ISPICKVAL(StageName, &apos;Working&apos;)) , &apos;Closed-#f2f2f2&apos;, &apos;&apos;) ) ) ) ) ) ) ) )</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Status</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

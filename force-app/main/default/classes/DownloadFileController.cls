@@ -1,4 +1,10 @@
 public without sharing class DownloadFileController{
+    @AuraEnabled
+    public static String getAppName() {
+        UserAppInfo userAppInfo = [SELECT Id, AppDefinitionId FROM UserAppInfo WHERE UserId = :UserInfo.getUserId() LIMIT 1];
+        AppDefinition appDefinition = [SELECT DurableId, Label FROM AppDefinition Where DurableId = :userAppInfo.AppDefinitionId LIMIT 1];
+        return appDefinition.Label;
+    }
     
     @AuraEnabled
     public static void updateLender(Boolean chkbx, id CVID){
@@ -587,7 +593,7 @@ public without sharing class DownloadFileController{
             }
             if(!cntVersionIds.isEmpty()){
                 cvList  = [SELECT Id,related__c, Category__c,Current_in_use__c, Title, FileExtension, Description, ContentModifiedDate, CreatedDate, ContentSize, ContentDocumentId 
-                           FROM ContentVersion WHERE Id IN :cntVersionIds AND (Category__c = 'Purchase Invoice' OR Category__c  = 'Lender Credit Contract')];
+                           FROM ContentVersion WHERE Id IN :cntVersionIds AND (Category__c = 'Purchase Invoice' OR Category__c  = 'Lender Credit Contract' OR Category__c = 'Funding Authorisation Certificate')];
             }
         }
         getDocsWrapper ret = new getDocsWrapper();

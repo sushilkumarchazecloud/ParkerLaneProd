@@ -14,9 +14,14 @@ public class contactTriggerHelperTest {
         con.recordTypeId  = recordTypeId;
         con.lastName = 'Test';
         con.Email ='rdxrakesh345@gmail.com';
+        con.Referrer_Status__c = 'Active';
+        con.Referrer_Rating__c = 'Gold';
         test.startTest();
         insert con;
         test.stopTest();
-        
+        Contact cont = [select id,Referrer_Status__c,Referrer_Rating__c from contact LIMIT 1];
+        cont.Referrer_Rating__c = 'Silver';
+        cont.Referrer_Status__c = 'Current';
+        update cont;
     }
 }

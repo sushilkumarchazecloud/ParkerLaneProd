@@ -1,8 +1,8 @@
 @isTest
 public class Generate_PDF_VOI_COntroller_Test {
     
-    @isTest
-    public static void PdfTestMethodFirst(){
+    @testSetup
+    public static void setup(){
         String recordTypeId  = Schema.getGlobalDescribe().get('Account').getDescribe().getRecordTypeInfosByName().get('Person Account').getRecordTypeId();
         String recordHTypeId  = Schema.getGlobalDescribe().get('Account').getDescribe().getRecordTypeInfosByName().get('Household').getRecordTypeId();
         List<Account> accList= new List<Account>();
@@ -75,7 +75,7 @@ public class Generate_PDF_VOI_COntroller_Test {
         System.debug('qwerty--'+op1.Applicant_1__r.personContactId);
         
         Opportunity oppUpdate = [SELECT Applicant_1__c, Applicant_2__c, Applicant_1__r.PersonContactId, Applicant_2__r.PersonContactId
-                                 FROM Opportunity WHERE Id = : op1.id limit 1];
+                                 FROM Opportunity WHERE id = : op1.id limit 1];
         
         System.debug('---oppUpdate.Applicant_2__r.PersonContactId--'+ oppUpdate.Applicant_2__r.PersonContactId);
         FinServ__Employment__c emp1 =New FinServ__Employment__c();
@@ -96,7 +96,7 @@ public class Generate_PDF_VOI_COntroller_Test {
         emp1.FinServ__EndDate__c = system.today();
         emp1.Is_Primary__c = true;
         insert emp1;
-       	
+        
         contact con = new contact();
         con.firstname = 'qwert';
         con.lastName = 'testing';
@@ -133,17 +133,53 @@ public class Generate_PDF_VOI_COntroller_Test {
         contentlink.contentdocumentid = contentVersion_2.contentdocumentid;
         contentlink.ShareType = 'V';
         insert contentlink;
+    }
+    
+    @isTest
+    public static void PdfTestMethodFirst(){
+        Opportunity oppUpdate = [SELECT Applicant_1__c, Applicant_2__c, Applicant_1__r.PersonContactId, Applicant_2__r.PersonContactId
+                                 FROM Opportunity WHERE name = 'testing' limit 1];
+        Contact con = [Select id, name from Contact where firstname = 'qwert' LIMIT 1];
+        
         
         Test.setCurrentPageReference(new PageReference('Page.Generate_PDF_FOR_Application_Doc')); 
-        System.currentPageReference().getParameters().put('oppId', op1.id);
+        System.currentPageReference().getParameters().put('oppId', oppUpdate.id);
         System.currentPageReference().getParameters().put('conId', con.id);
-		
         
-		Genrate_PDF_For_VOI_Controller.getOpportunity();
+        
+        Genrate_PDF_For_VOI_Controller.getOpportunity();
         Genrate_PDF_For_VOI_Controller.generateImageURL();
         Genrate_PDF_For_VOI_Controller.getQuote();
         Genrate_PDF_For_VOI_Controller.getcontact();
         Genrate_PDF_For_VOI_Controller.Employementdata(oppUpdate.Applicant_1__r.PersonContactId);
         Genrate_PDF_For_VOI_Controller.getfinancialGoal();
     }
+    
+    @isTest
+    public static void PdfTestMethodSecond(){
+        Opportunity oppUpdate = [SELECT Applicant_1__c, Applicant_2__c, Applicant_1__r.PersonContactId, Applicant_2__r.PersonContactId
+                                 FROM Opportunity WHERE name = 'testing' limit 1];
+        Contact con = [Select id, name from Contact where firstname = 'qwert' LIMIT 1];
+       
+        ContentVersion contentVersion_2 = [SELECT Id, Title, ContentDocumentId 
+                                           FROM ContentVersion WHERE title = 'Sign1' LIMIT 1];
+        
+        ContentDistribution tmp = new ContentDistribution();
+        tmp.Name = 'test';
+        tmp.ContentVersionId = contentVersion_2.id;
+        insert tmp;
+        
+        Test.setCurrentPageReference(new PageReference('Page.Generate_PDF_FOR_Application_Doc')); 
+        System.currentPageReference().getParameters().put('oppId', oppUpdate.id);
+        System.currentPageReference().getParameters().put('conId', con.id);
+        
+        
+        Genrate_PDF_For_VOI_Controller.getOpportunity();
+        Genrate_PDF_For_VOI_Controller.generateImageURL();
+        Genrate_PDF_For_VOI_Controller.getQuote();
+        Genrate_PDF_For_VOI_Controller.getcontact();
+        Genrate_PDF_For_VOI_Controller.Employementdata(oppUpdate.Applicant_1__r.PersonContactId);
+        Genrate_PDF_For_VOI_Controller.getfinancialGoal();
+    }
+    
 }

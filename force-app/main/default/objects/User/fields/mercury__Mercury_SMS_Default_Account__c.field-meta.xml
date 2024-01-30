@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>mercury__Mercury_SMS_Default_Account__c</fullName>
+    <deprecated>false</deprecated>
+    <description>Enables individual Users to specify which MessageMedia account they send from.</description>
+    <externalId>false</externalId>
+    <label>Mercury SMS Default Account</label>
+    <length>255</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

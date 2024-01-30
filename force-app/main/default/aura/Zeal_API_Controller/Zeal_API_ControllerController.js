@@ -3,13 +3,17 @@
 		var action = component.get("c.makeCallout");
         
 		console.log('opportunity Id========='+component.get("v.recordId"));
-       	action.setParams({"OppId": component.get("v.recordId")});
+       	action.setParams(
+            {
+                "OppId": component.get("v.recordId"),
+                "SubType" : 'partial'
+            }
+        );
 		action.setCallback(this, function(response) {
 			var state = response.getReturnValue();
 			var getCurrentElementIndex = state.indexOf("Error");
             var resultsToast = $A.get("e.force:showToast");
-            console.log('State======'+state);
-			if(state == "success") {                               
+            if(state == "success") {                               
 				resultsToast.setParams({
 					"title": "Success!",
                     "type": "success",

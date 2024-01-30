@@ -1,0 +1,23 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <div>
+        <section class="slds-p-around_large">  
+            <div class="max-360 slds-p-bottom_x-large">
+                <div class="slds-align_absolute-center">
+                    <img src="{!$Resource.SolarLoan + '/img/checkgreen.png'}" style="border-radius: 72px; border: 2px solid #5bc65b;" />
+                </div>
+                <div clASS="slds-align_absolute-center">
+                    <p class="Success_Message">Success!</p>
+                </div>
+                <br/>
+                <div class="slds-align_absolute-center">
+                    <p class="Info"> Your information has been securely received and we’ll be in touch with you shortly.</p>
+                </div>
+                <br/>
+                <div class="slds-align_absolute-center">
+                    <p class="Link"> Click here to return to <br/>
+                        <a class="LinkDesign" href="https://www.parkerlane.com.au/"> parkerlane.com.au</a> </p>
+                </div>
+            </div>
+        </section>
+    </div>   
+</aura:component>

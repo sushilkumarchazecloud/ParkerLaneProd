@@ -2,7 +2,9 @@
 	<aura:attribute name="quoteList" type="List" />
     <aura:attribute name="masterQuote" type="String" />
     <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="appCheck" type="boolean" default="false" />
     <aura:registerEvent name="groupEventC" type="c:groupAppLicationEvent" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <lightning:navigation aura:id="navService"/>
     
     <lightning:card>
@@ -21,7 +23,7 @@
             <lightning:button label="Send Quote" onclick="{!c.sendQuote}" />
             <lightning:button label="Send Application" onclick="{!c.sendAppToCustomer}" />
             <lightning:button label="Open Form" onclick="{!c.viewApplication}"/>
-            <lightning:button label="Delete" onclick="{!c.deleteMasterQuote}"/>            
+            <lightning:button label="Delete" onclick="{!c.deleteMasterQuote}" disabled="{!v.appCheck}"/>            
         </aura:set>
         <p class="slds-p-horizontal_small">
             <table class="slds-table slds-table_bordered slds-table_fixed-layout slds-table_resizable-cols" role="grid">
@@ -34,7 +36,7 @@
                             <div title="Quote Name">Quote Name</div>
                         </th>
                         <th class="" scope="col">
-                            <div title="Loan Amount">Loan Amount</div>
+                            <div title="Customer Amount (excl setup fees)">Customer Amount (excl setup fees)</div>
                         </th>
                         <th class="" scope="col">
                             <div title="Interest Rate">Interest Rate</div>

@@ -8,6 +8,7 @@
         var index = event.getSource().get("v.name");
         var action = component.get("c.updateDocRequested");
         var uploadedFiles = event.getParam("files");
+        var recordIds = component.get("v.recordId");
         var idContent = [];
         for(var i=0; i < uploadedFiles.length; i++){
             idContent.push(uploadedFiles[i].documentId);
@@ -26,7 +27,8 @@
                     "type": "success",
                     "message": "Document uploaded successfully."
                 });
-                toastEvent.fire();                 
+                toastEvent.fire(); 
+				helper.updateActivity(component);                
             }
             var recordIds = component.get("v.recordId");
             helper.callDoInit(component, recordIds);

@@ -1,0 +1,65 @@
+.THIS .inp .slds-form-element__label{
+    font: small-caption;
+    font-size: 16px;
+}
+
+.THIS .inp .slds-input {
+    padding : 5px;
+}
+.THIS .startButton{
+    width: 100% !important;
+    height: 50px !important;
+}
+.THIS .no-abbr label.slds-form-element__label abbr, .THIS .no-abbr legend.slds-form-element__label abbr {
+    display: none;
+}
+.THIS .no-abbr input::-webkit-input-placeholder {
+    color: #c4c4c4 !important;
+}
+.THIS .startButtondisabled {
+    width: 90%!important;
+    height: 50px!important;
+    background: grey;
+    border-radius: 4px;
+    color: white;
+    margin-top : -10px;
+}
+
+.THIS .startButton {
+    width: 90%!important;
+    height: 50px!important;
+    background: #0176d3;
+    border-radius: 4px;
+    color: white;
+    margin-top : -10px;
+}
+
+.THIS .inp .slds-textarea{
+    border-radius: 5px;
+    border: 2px solid #ebecec !important;
+    height: 7rem;
+    width: 100%;
+    margin-top: 10px;
+}
+@media (max-width: 700px){
+    .THIS .slds-form-element{
+        margin-top : 0px !important;
+    }  
+    .THIS .startButtondisabled {
+        width: 90%!important;
+        height: 50px!important;
+        background: grey;
+        border-radius: 4px;
+        color: white;
+        margin-top : 0px !important;
+    }
+    
+    .THIS .startButton {
+        width: 90%!important;
+        height: 50px!important;
+        background: #0176d3;
+        border-radius: 4px;
+        color: white;
+        margin-top : 0px !important;
+    }
+}

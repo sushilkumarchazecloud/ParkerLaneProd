@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Video_and_Photo_ID_of_the_same_person__c</fullName>
+    <externalId>false</externalId>
+    <label>Video and Photo ID of the same person</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Facial match (success)</fullName>
+                <default>false</default>
+                <label>Facial match (success)</label>
+            </value>
+            <value>
+                <fullName>Not facial match (failed)</fullName>
+                <default>false</default>
+                <label>Not facial match (failed)</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

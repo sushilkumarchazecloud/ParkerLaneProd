@@ -12,6 +12,14 @@
     padding: .75rem;
     
 }
+.THIS .trackercls{
+    width: 50%;
+}
+@media screen and (max-width: 770px) {
+    .THIS .trackercls{
+        width: 85%;
+    }
+}
 .THIS.own-and-owe h1.header-text {
     font-size: 22px;
     font-weight: 800;
@@ -195,18 +203,20 @@
     right:0px;
 }
 .THIS .privious-button_style{
-    padding: 0.8rem !important;
+     /* Commented by Pawan due css issue by adding live chat */  
+   /* padding: 0.8rem !important;
     border: 2px solid !important;
     padding-left: 2.8rem !important;
     padding-right: 2.8rem !important;
     color: var(--slds-c-button-color-border, var(--sds-c-button-color-border, transparent)) !important;
-    background: rgb(245 245 245) !important;
+    background: rgb(245 245 245) !important; */
 }
 .THIS .save-button_style{
-    padding: 0.8rem !important;
+   /* Commented by Pawan due css issue by adding live chat */                 
+  /*  padding: 0.8rem !important;
     border: 2px solid !important;
     padding-left: 2.8rem !important;
-    padding-right: 2.8rem !important;
+    padding-right: 2.8rem !important; */  
     color:white !important;
 }
 .THIS .slds-modal__header,.THIS .slds-modal__content,.THIS .slds-modal__footer{

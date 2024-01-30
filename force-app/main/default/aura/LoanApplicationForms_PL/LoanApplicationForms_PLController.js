@@ -64,6 +64,9 @@
                 }
                 helper.toggleSpinner(component, event);	
                 helper.checkExistingCustomer(component, event);
+                //Added By Pawan.
+                helper.getUpdatedQuote(component, event, helper);
+                //Pawan Code End.
             }
             
         } else{

@@ -26,7 +26,8 @@
     <aura:attribute name="NoOfapplicants2Options" type="List" default="[{'label': 'Two Person', 'value':  'joint'}]"/>
     <aura:attribute name="NoOfapplicants1Options" type="List" default="[{'label': 'One Person', 'value': 'single'}]"/>
     <aura:attribute name="allAssetsList" type="FinServ__AssetsAndLiabilities__c[]" />
-    
+    <aura:attribute name="isCFCU" type="Boolean" default="false"/>
+    <aura:attribute name="selectedQuote" type="sObject" />
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     
     <aura:method name="upsertOppContacts" action="{!c.saveApplications}" access="PUBLIC" >
@@ -35,7 +36,7 @@
     </aura:method>
     
     
-    <aura:attribute name="maritalOption" type="List" default="[{'label': 'Single', 'value': 'Single'},{'label': 'Married / defacto', 'value': 'Married / defacto'},{'label': 'Separated', 'value': 'Separated'},{'label': 'Divorced', 'value': 'Divorced'}]"/>
+    <aura:attribute name="maritalOption" type="List" default="[{'label': 'Single', 'value': 'Single'},{'label': 'Married / defacto', 'value': 'Married / defacto'},{'label': 'Separated', 'value': 'Separated'},{'label': 'Divorced', 'value': 'Divorced'},{'label': 'Widowed', 'value': 'Widowed'}]"/>
     <aura:attribute name="citizenShipStatus" type="List" default="[{'label': 'Australian Citizen', 'value': 'Australian Citizen'},{'label': 'Permanent Resident', 'value': 'Permanent Resident'},{'label': 'NZ Citizen', 'value': 'NZ Citizen'},{'label': 'Other', 'value': 'Other'}]"/>
 
     <aura:if isTrue="{!v.opportunity.Do_you_both_live_at_the_same_address__c == 'No'}">
@@ -60,16 +61,30 @@
         <aura:if isTrue="{!v.selectedTab == 'beginingTab'}">
             <section class="slds-p-around_medium slds-col slds-si1ze_1-of-1 bg-lightest txt-blue" style="margin-bottom: 40px;">
                 <div class="max-700 getting-started ">
+                    <div class="slds-align_absolute-center slds-m-top_medium">
+                        <img src="{!$Resource.headersLogo + '/headersLogo/Whoisapplying.png'}" class="trackercls"/>
+                    </div>
                     <header class="checkout-page-banner--gradient">
                         <div class="">
                             <h1 class="slds-p-vertical_medium heading--page slds-m-top_medium">{!v.applicationSection}</h1>
                         </div>
                     </header>
                     <div style="text-transform:none;text-align:left;">
-                        <p style="color: #1e8ffd!important;font-weight: bold;">We suggest begininning with a one-person application. You can add a 
+                        <aura:if isTrue="{!v.isCFCU}">
+                            <p style="color: #0176D3!important;line-height: normal;"><span style="font-weight:bold;">Are you a couple?</span> Follow this guide to determine if <b>one</b> or <b>both</b> should apply.
+                                <br/>
+                                <ul class="slds-list--dotted">
+                                    <li style="margin-top: 10px;"><span style="font-weight:bold;">Select Two Applicants if you have:</span>&nbsp;income below $30,000 pa / investment properties / above average debts / good but not great disposable income.</li>
+                                    <li style="margin-top: 10px;"><span style="font-weight:bold;">Select One Applicant if you:</span>&nbsp;are the predominant income earner / have significant disposable income.<i>We may ask you to add your partner later.</i></li>
+                                </ul>
+                            </p>
+                            <aura:set attribute="else">
+                                <p style="color: #0176D3!important;font-weight: bold;">We suggest begininning with a one-person application. You can add a 
                             co-applicant later if required.
-                        </p>
-                    </div>
+                                </p>           
+                            </aura:set>
+                        </aura:if>
+                   </div>
                     <div class="number_of_applicant">
                         <p class="number_of_app">Number of applicants?</p>
                     </div> 

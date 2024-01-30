@@ -1,7 +1,7 @@
 @isTest
 public class CaseAssignmentHandlerTest {
-	@testsetup
-    static void setUpData(){     
+    
+    static testMethod void testCase(){
         String recordTypeRefId = Schema.getGlobalDescribe().get('Account').getDescribe().getRecordTypeInfosByName().get('Referrer (Business)').getRecordTypeId();
         String recordTypePId= Schema.getGlobalDescribe().get('Account').getDescribe().getRecordTypeInfosByName().get('Person Account').getRecordTypeId();
         String recordTypeConId = Schema.getGlobalDescribe().get('Contact').getDescribe().getRecordTypeInfosByName().get('Referrer').getRecordTypeId();
@@ -31,37 +31,54 @@ public class CaseAssignmentHandlerTest {
         testCon.Portal_View__c = 'Admin View';
         testCon.Phone = '1234567890';
         testCon.RecordTypeId = recordTypeConId;
-        insert testCon;        
+        testCon.Email = 'test@testt.com';
+        insert testCon; 
         
-    }
-    static testMethod void testupdateViewofPortal(){
-        Contact Con = [SELECT Id,AccountId,Name,Phone,RecordType.Name FROM Contact WHERE Name = 'TestRef Con' LIMIT 1];
-        Account acc = [SELECT Id,Phone, On_Board_Referral__c FROM Account WHERE id =: Con.accountId LIMIT 1];
+        
         Opportunity opp1 = new Opportunity();
-        opp1.Name = 'Test opp1';
-        opp1.FinServ__ReferredByContact__c = Con.Id;
+        opp1.Name = 'Test opp';
         opp1.StageName ='Approved';
         opp1.CloseDate = System.Today();
-        opp1.Applicant_1__c = acc.Id;
-        opp1.Contact_1__c = Con.Id;
         opp1.Loan_Amount__c = 5000;
         opp1.Approved_Date__c = system.today().addDays(-1);
-        insert opp1;
+        insert opp1;   
         
         Case cs = new Case();
-        cs.AccountId = acc.Id;
-        cs.Opportunity__c = opp1.Id;
-        cs.ContactId = Con.Id;
+        cs.Opportunity__c = opp1.id;
+        cs.Origin = 'Email';
+        cs.SuppliedEmail = 'test@testt.com';
         insert cs;
     }
     
-    static testMethod void testCase(){
-        Contact Con = [SELECT Id,AccountId,Name,Phone,RecordType.Name FROM Contact WHERE Name = 'TestRef Con' LIMIT 1];
-        Account acc = [SELECT Id,Phone, On_Board_Referral__c FROM Account WHERE id =: Con.accountId LIMIT 1];      
+    static testMethod void testCaseOpp(){
+        String recordTypePId= Schema.getGlobalDescribe().get('Account').getDescribe().getRecordTypeInfosByName().get('Person Account').getRecordTypeId();
+        Account testAcc1 = new Account();
+        testAcc1.RecordTypeId  = recordTypePId;
+        testAcc1.FirstName = 'test';
+        testAcc1.LastName = 'oppp';
+        testAcc1.Phone = '1234567890';
+        testAcc1.On_Board_Referral__c  = true;
+        testAcc1.PersonEmail = 'testopp11@test.com';
+        insert testAcc1;
+        
+        Opportunity opp1 = new Opportunity();
+        opp1.Name = 'Test opp';
+        opp1.StageName ='Approved';
+        opp1.CloseDate = System.Today();
+        opp1.Loan_Amount__c = 5000;
+        opp1.Approved_Date__c = system.today().addDays(-1);
+        opp1.Applicant_1__c = testAcc1.Id;
+        insert opp1;        
         
         Case cs = new Case();
-        cs.AccountId = acc.Id;
-        cs.ContactId = Con.Id;
+        cs.Opportunity__c = opp1.id;
+        cs.Origin = 'Email';
+        cs.SuppliedEmail = 'testopp11@test.com';
+        insert cs;
+    }
+    
+     static testMethod void testElseCase(){        
+        Case cs = new Case();
         insert cs;
     }
 }

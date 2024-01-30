@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>mercury__SMS_Delivery_Time__c</fullName>
+    <deprecated>false</deprecated>
+    <description>Time the Message was Received by the Handset, if available.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Time the Message was Received by the Handset, if available.</inlineHelpText>
+    <label>SMS Delivery Time</label>
+    <required>false</required>
+    <type>DateTime</type>
+</CustomField>

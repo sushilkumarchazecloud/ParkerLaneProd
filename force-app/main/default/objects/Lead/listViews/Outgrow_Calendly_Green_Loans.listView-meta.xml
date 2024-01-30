@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Outgrow_Calendly_Green_Loans</fullName>
+    <columns>LEAD.STATUS</columns>
+    <columns>LEAD.CREATED_DATE</columns>
+    <columns>LEAD.UNREAD</columns>
+    <columns>LEAD.RECORDTYPE</columns>
+    <columns>FULL_NAME</columns>
+    <columns>Point_of_Origin__c</columns>
+    <columns>LEAD.LEAD_SOURCE</columns>
+    <columns>LEAD.PHONE</columns>
+    <columns>LEAD.EMAIL</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>LEAD.STATUS</field>
+        <operation>notEqual</operation>
+        <value>Closed (Do not Contact)</value>
+    </filters>
+    <filters>
+        <field>LEAD.LEAD_SOURCE</field>
+        <operation>contains</operation>
+        <value>First Home Centre,Outgrow,Calendly</value>
+    </filters>
+    <label>Outgrow &amp; Calendly (Facebook Ads)</label>
+</ListView>

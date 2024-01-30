@@ -1,0 +1,169 @@
+<aura:component controller="MyReferrerController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<aura:attribute name="WrapperData" type="Object"/>
+    <aura:attribute name="accountId" type="String"/>
+    <aura:attribute name="OpportunityName" type="String"/>
+    <aura:attribute name="options" type="List" default="[{'label': 'Escalation request', 'value': 'Escalation request'}, {'label': 'Request assistance', 'value': 'Request assistance'}]"/>
+    <aura:attribute name="Urgencyoptions" type="List" default="[{'label': 'Standard', 'value': 'Standard'},{'label': 'High', 'value': 'High'},{'label': 'Extreme', 'value': 'Extreme'}]" />
+    <aura:attribute name="relatedToOptions" type="List" default="[{'label': 'Quote', 'value': 'Quote'}, {'label': 'Approval', 'value': 'Approval'}, {'label': 'Funding', 'value': 'Funding'}, {'label': 'Customer query', 'value': 'Customer query'}, {'label': 'My query', 'value': 'My query'},{'label': 'Other', 'value': 'Other'}]"/>
+    <aura:attribute name="EscalationInput" type="String"/>
+    <aura:attribute name="RequestInput" type="String"/>
+    <aura:attribute name="Escalation" type="boolean" default="false"/>
+    <aura:attribute name="Request" type="boolean" default="false"/>
+    <aura:attribute name="isSubmitBtnDisabled" type="Boolean" default = "true" />
+    <aura:attribute name="SubmitbuttonShow" type="boolean" default="false"/>
+    <aura:attribute name="SuccessShow" type="boolean" default="false" />
+    <aura:attribute name="QuickActionValue" type="String" />
+    <aura:attribute name="RequestBody" type="String" />
+    <aura:attribute name="RelatedtoValue" type="String" />
+    <aura:attribute name="UrgencyValue" type="String" />
+    <aura:attribute name="SuccessQAValue" type="String"/>
+    <aura:attribute name="PreviousData" type="List" default=""/>
+    <aura:attribute name="spinner2" type="boolean" default="false" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInIt}"/>
+    
+    <lightning:spinner aura:id="mySpinner" variant="brand" size="large" style="margin-top : 48px;margin-bottom : 80px;position : absolute;" />
+    <div class="slds-grid slds-wrap"> 
+        <div class=" slds-size_8-of-12" >
+            <div class="slds-m-top_x-small slds-m-bottom_medium" style="border-bottom: 1px solid #c2c2c2"></div>
+            <div class="heading3"><b>Action Centre </b></div><br/>
+            <div style="margin-top:-15px;">
+                Take control of your referral with the action centre.
+            </div>
+               
+                    <div class="slds-grid slds-gutters"> 
+                    <div class="slds-col slds-p-top_large slds-size_1-of-2" >
+                        <div class="notification-box" style="background-color: #F2F2FD">
+                            <div class="heading3"><b>1. Request assistance</b></div>
+                            <div  class="heading4"> You can request assistance as required.</div>
+                            <div  class="heading4"> Standard SLA's apply according to your referrer status:</div>
+                            <div class="slds-text-longform">
+                                <ul>
+                                    <li> 4 Business hours- Blue &#38; Silver</li>
+                                    <li> 2 Business hours- Gold</li>
+                                    <li> 30 minutes- Platinum</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="slds-col slds-p-top_large slds-size_1-of-2" >
+                        <div class="notification-box" style="background-color: #FFF5DC">
+                            <div class="heading3"><b>2. Request an escalation</b></div>
+                            <div  class="heading4"> Escalations may be requested where the file is
+                                outside standard service level agreement timeframes <b>OR</b> you
+                                require special assistance.
+                            </div>
+                         
+                        </div>
+                    </div> 
+                </div>  
+               
+            </div>
+        
+        <div class=" slds-size_4-of-12 "> 
+           <div class ="spinner">
+                <lightning:spinner aura:id="mySpinner2" variant="brand" size="medium" class="slds-hide spinner2" />
+            </div> 
+           <div class="{!v.spinner2 ? 'slds-scrollable_y onSpin' : 'slds-scrollable_y'}" style="height:435px;">
+           <div class="slds-p-around_small" style="margin-top:-10px;" >
+               <div class="box-style" >
+                   <div class="heading2"><b>Previous Requests</b></div>
+                   <div class="Border" style="border-bottom: 1px solid #c2c2c2;margin-left:-10px;margin-right:-10px"></div>
+                   <div class="slds-p-around_small">
+                   <aura:iteration items="{!v.PreviousData}" var="Data">
+                       <c:ReferrerPortalPreviousAction item="{!Data}" />
+                   </aura:iteration>
+                   </div>
+               </div>
+               <div class="box-style " style="margin-top:22px;">
+                   <div class="heading2"><b>Action Centre</b></div>
+                   <div>Select your action, complete the form and press send. </div>
+                   <div class="Border" style="border-bottom: 1px solid #c2c2c2;margin-left:-10px;margin-right:-10px"></div>
+                   <div class="slds-p-around_small">
+                        <div> 
+                            <lightning:combobox class="slds-combobox" aura:id="fieldcheck" label="Quick Action"
+                                                placeholder="Select your action"
+                                                value="{!v.QuickActionValue}"
+                                                onchange="{!c.handleChange}"
+                                                options="{! v.options }"/>
+                       </div>
+                       <aura:if isTrue="{!v.Escalation}">  
+                           <div class="slds-m-vertical_medium">
+        
+                               <lightning:textarea aura:id="EscInp" label="Nature of escalation" value="{!v.RequestBody}" onchange="{!c.fieldvaluecheck}" />                                                  
+                           </div>
+                           <div>
+                               <lightning:radioGroup aura:id="rGroup"
+                                                     name="radioGroup"
+                                                     label="Urgency"
+                                                     options="{!v.Urgencyoptions}"
+                                                     value="{!v.UrgencyValue}"
+                                                     type="radio"
+                                                     onchange="{!c.fieldvaluecheck}"/>
+                           </div>
+                           <aura:if isTrue="{!v.SubmitbuttonShow}">
+                           <div class="slds-p-around_small"> 
+                                <lightning:button variant="brand" class="{!v.isSubmitBtnDisabled? 'SubmitBtnDisable':'SumbmitRequestButton'}"
+                                          label="Submit Request"
+                                          title="Submit Request"
+                                          disabled="{!v.isSubmitBtnDisabled}"
+                                          onclick="{!c.submitRequest}"/>
+                           </div>
+                        </aura:if>
+                      </aura:if> 
+                      <aura:if isTrue="{!v.Request}">
+                       <div class="slds-m-vertical_medium"> 
+                            <lightning:combobox class="slds-combobox" aura:id="ReqCombo" label="Related to"
+                                                placeholder="Select Option"
+                                                value="{!v.RelatedtoValue}"
+                                                onchange="{!c.fieldvaluecheck}"
+                                                options="{!v.relatedToOptions}"/>
+                       </div>
+                       <div class="slds-m-vertical_medium">
+                        <lightning:textarea aura:id="ReqInp" label="Request" value="{!v.RequestBody}" onchange="{!c.fieldvaluecheck}" />
+                                                                    
+                           </div>
+                           <div>
+                               <lightning:radioGroup aura:id="rGroups"
+                                                     name="radioGroup"
+                                                     label="Urgency"
+                                                     options="{!v.Urgencyoptions}"
+                                                     value="{!v.UrgencyValue}"
+                                                     type="radio"
+                                                     onchange="{!c.fieldvaluecheck}"/>
+                           </div> 
+                           <aura:if isTrue="{!v.SubmitbuttonShow}">
+                           <div class="slds-p-around_small"> 
+                                <lightning:button variant="brand" class="{!v.isSubmitBtnDisabled? 'SubmitBtnDisable':'SumbmitRequestButton'}"
+                                          label="Submit Request"
+                                          title="Submit Request"
+                                          disabled="{!v.isSubmitBtnDisabled}"
+                                          onclick="{!c.submitRequest}"/>
+                           </div>
+                        </aura:if>
+                    </aura:if>
+                    <aura:if isTrue="{!v.SuccessShow}">
+                    <div class="slds-p-around_small"> 
+                        <div class="slds-align_absolute-center">
+                            <button class="slds-button slds-button_success SuccessBtn">
+                                <span class="slds-m-left_x-large">Submitted</span>
+                                <span class="slds-m-left_large">
+                                    <img style="width:25px;" src="{!$Resource.SolarLoan + '/img/final.png'}"/>
+                                </span>
+                                
+                            </button>
+                        </div>
+                    <div style="color:#45c65a">
+                    <div class=" slds-align_absolute-center slds-m-top_large"><b>Success!</b> </div>
+                    <div class=" slds-align_absolute-center slds-m-top_x-small"> Your {!v.SuccessQAValue} has been receive.</div>
+                    <div class="slds-align_absolute-center"> You may now leave the page or perform </div>
+                    <div class="slds-align_absolute-center">  another quick action.</div>
+                    </div>
+                 </div> 
+                </aura:if>   
+                   </div>
+               </div>
+            </div> 
+        </div>
+        </div>
+    </div>  
+</aura:component>

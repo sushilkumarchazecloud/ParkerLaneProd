@@ -240,6 +240,9 @@ public class OpportunityTriggerHandler {
                     }
                 }
             }
+            if(!String.isBlank(opp.Review_message__c) && opp.Review_message__c != oldOpportunityMap.get(opp.Id).Review_message__c){
+                opp.Review_updated__c = system.today(); //code for updating reviewUpdated field by rakesh
+            }
         }
         list<id> recTypeId = new list<id>{'0120o000001lPSGAA2','0120o000001lOfBAAU','0120o000001lPS9AAM','0120o000001lPS7AAM','0120o000001lOfDAAU','0120o000001lOfIAAU'};
             for(Opportunity opp: newOpportunity){
@@ -363,7 +366,8 @@ public class OpportunityTriggerHandler {
             oppIds.add(opp.Id);
             num=opp.Id;
         }
-        Map<Id,Opportunity> oppMap = New Map<Id,Opportunity> ([SELECT Id,
+        Map<Id,Opportunity> oppMap = New Map<Id,Opportunity> ([SELECT Id,SyncedQuote.Product__r.Lender_Account__r.Funding_Email_Notifications__c,
+                                                               SyncedQuote.Product__r.Lender_Account__r.Funding_Notification_Email_Address__c,StageName,Applicant_1__r.PersonContactId,
                                                                (SELECT Id, New_Stage__c, New_Stage_End_Date__c, Stage_Count__c
                                                                 FROM Stage_Tracking__r ORDER BY name DESC, New_Stage_End_Date__c DESC NULLS FIRST),
                                                                (SELECT Id, Application_Section__c, Start_Date__c, End_Date__c, Page_Count__c
@@ -417,6 +421,7 @@ public class OpportunityTriggerHandler {
         CreateStageTrackingRecords(newOpportunity, oldOpportunityMap, oppStageCount, oppMap);
         CreateAppSectionTrackingRecords(newOpportunity, oldOpportunityMap, oppAppSecCount, oppMap);
         CreateAppPendingTrackingRecords(newOpportunity, oldOpportunityMap, oppAppPenCount, oppMap);
+        SendApplicationStageEmail(newOpportunity, oppMap, oldOpportunityMap);
         //Added by tazeem for update linechart
         boolean flag = false;
         for(opportunity op : newOpportunity){
@@ -450,6 +455,34 @@ public class OpportunityTriggerHandler {
         createTasksForCsUser(newOpportunity, oldOpportunityMap);
         /*this is for CS user Taks*/
         //Added by tazeem for update linechart
+    }
+    public static void SendApplicationStageEmail(List<Opportunity> newOpportunity, Map<Id,Opportunity> oppMap, Map<ID, Opportunity> oldOpportunityMap){
+        List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
+        for(Opportunity opp : oppMap.values()){
+            if(opp.SyncedQuote.Product__r.Lender_Account__r.Funding_Email_Notifications__c &&
+               opp.SyncedQuote.Product__r.Lender_Account__r.Funding_Notification_Email_Address__c != null
+               && opp.StageName == 'Application' && oldOpportunityMap.get(opp.Id).StageName != 'Application'){
+                   OrgWideEmailAddress[] owea = [SELECT Id from OrgWideEmailAddress WHERE Address =:UtilityClass.adminEmail];                   
+                   Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+                   List<string> sendTo = new List<string>();
+                   sendTo.add(opp.SyncedQuote.Product__r.Lender_Account__r.Funding_Notification_Email_Address__c);
+                   mail.setToAddresses(sendTo);
+                   if(owea.size() > 0){
+                       mail.setorgWideEmailAddressId(Owea.get(0).Id);
+                   }
+                   mail.setUseSignature(false);
+                   mail.setTargetObjectId(opp.Applicant_1__r.PersonContactId);
+                   mail.Setwhatid(opp.id); 
+                   mail.setSaveAsActivity(false);
+                   mail.setTreatTargetObjectAsRecipient(false);
+                   EmailTemplate et=[Select id, Subject, Body from EmailTemplate where Name = 'StageChangedToApplication']; 
+                   mail.setTemplateId(et.id);
+                   mails.add(mail);
+               }
+            if(!test.isRunningTest()){
+                Messaging.sendEmail(mails);   
+            }
+        }                                                     
     }
     public static void createTasksForCsUser(List<opportunity> newOpportunity, map<id, opportunity> oldOpportunityMap){
         List<string> recordTypes = new List<string>{'Solar','Green Loan','Home Improvement','Debt Consolidation','Personal Loan','Vehicle Purchase'};
@@ -765,10 +798,13 @@ public class OpportunityTriggerHandler {
                         }
                     }
                 }
+            updateReferralFee(oppList, oldMap);
     }
     public void OnAfterUpdate2(List<opportunity> oppList, map<id,opportunity> oldoppmap){
         List<opportunity> oppListToUpdate= new List<opportunity>();
         List<Id> oppIdList= new List<Id>();
+        Set<Id> applicant2 = new Set<Id>();
+        Set<Id> applicant2Removed = new Set<Id>();
         for(Opportunity opp: oppList){
             if(opp.Applicant_1__c != oldoppmap.get(opp.Id).Applicant_1__c || opp.Applicant_2__c != oldoppmap.get(opp.Id).Applicant_2__c || opp.RecordTypeId != oldoppmap.get(opp.Id).RecordTypeId){
                 oppIdList.add(opp.Id);
@@ -1212,4 +1248,121 @@ oppids.add(opp.id);
             }
         }
     }
+    public void updateMembershipFee(List<Opportunity> oppList,map<Id,Opportunity> oldoppmap){
+        Set<Id> oppIds = new Set<Id>();
+        List<Loan_Fees__c> loanFeesList = new List<Loan_Fees__c>();
+        Set<Id> applicant2 = new Set<Id>();
+        Set<Id> applicant2Removed = new Set<Id>();
+        
+        if(!oppList.isEmpty()){
+            for(opportunity opp : oppList){
+                system.debug('oppName'+opp.Name);
+                system.debug('OlddNamee'+oldoppmap.get(opp.id).Name);
+                if(opp.Number_of_applicants__c == 2 && oldoppmap.get(opp.id).Number_of_applicants__c == 1){
+                    applicant2.add(opp.Id);
+                }
+                else if(opp.Number_of_applicants__c == 1){
+                    applicant2Removed.add(opp.Id);
+                }
+            }
+        }
+        if(!applicant2.isEmpty() || !applicant2Removed.isEmpty()){
+            List<Quote> qtList = [SELECT Id,OpportunityId,(SELECT ID,Active__c, Amount__c,Description__c,
+                                                           Fee_From__c, Fee_Type__c, Frequency__c,Notes__c,
+                                                           Override_allowed__c, Product__c, Product_Loan_Fees__c,
+                                                           Quote__c,Product_Loan_Fees__r.Per_person_twice_for_2_person_apps__c,Product_Loan_Fees__r.Amount__c FROM Loan_Fees__r WHERE Fee_Type__c = 'Refundable Lender Membership Fee')
+                                  FROM Quote WHERE OpportunityId IN: applicant2 OR OpportunityId IN: applicant2Removed];
+            if(!qtList.isEmpty()){
+                for(Quote qt : qtList){
+                    if(qt.Loan_Fees__r != null){
+                        for(Loan_Fees__c fee: qt.Loan_Fees__r){
+                            if(fee.Product_Loan_Fees__r.Per_person_twice_for_2_person_apps__c){
+                                if(applicant2.Contains(qt.OpportunityId)){
+                                    fee.Amount__c = fee.Product_Loan_Fees__r.Amount__c * 2 ;
+                                    loanFeesList.add(fee);
+                                }
+                                else if(applicant2Removed.Contains(qt.OpportunityId)){
+                                    fee.Amount__c = fee.Product_Loan_Fees__r.Amount__c;
+                                    loanFeesList.add(fee);
+                                }
+                            }
+                        }
+                    }
+                }
+            } 
+        }      
+        if(!loanFeesList.isEmpty()){
+            Update loanFeesList;
+        }
+    } 
+    
+    public void updateReferralFee(List<Opportunity> oppList,map<Id,Opportunity> oldoppmap){
+        List<Opportunity> OppListToUpdate = new List<Opportunity>();
+        Set<Id> refCompanyIds = new Set<Id>();
+        Map<Id,Account> accIdAccMap = new Map<Id,Account>();
+        if(!oppList.isEmpty()){
+            for(Opportunity oppp : oppList){
+                if(oppp.Referred_by_Company__c != null && oppp.Referred_by_aggregator__c != null){
+                    system.debug('both');
+                    refCompanyIds.add(oppp.Referred_by_Company__c);
+                    refCompanyIds.add(oppp.Referred_by_aggregator__c);
+                }
+                else if(oppp.Referred_by_aggregator__c != null){
+                    system.debug('agggg');
+                    refCompanyIds.add(oppp.Referred_by_aggregator__c); 
+                }
+                else if(oppp.Referred_by_Company__c != null){
+                    system.debug('reffComp');
+                    refCompanyIds.add(oppp.Referred_by_Company__c); 
+                }
+            }
+            system.debug('refCompanyIds'+refCompanyIds);
+            if(!refCompanyIds.isEmpty()){
+                List<Account> refCompanyList = [SELECT Id,Referral_Fee_Applicable__c,RF_Rate_inc_GST__c,RF_Type__c FROM Account WHERE Id IN: refCompanyIds];
+                for(Account acc : refCompanyList){
+                    accIdAccMap.put(acc.Id,acc);
+                }
+                for(Opportunity opp : oppList){
+                    if((opp.RF_Rate_inc_GST__c == null || opp.RF_Rate_inc_GST__c <= 0) && (opp.Referred_by_Company__c != null || opp.Referred_by_aggregator__c != null)){
+                        system.debug('oldoppmappppp'+oldoppmap);
+                        if(accIdAccMap.containsKey(opp.Referred_by_Company__c) && accIdAccMap.containsKey(opp.Referred_by_aggregator__c)){
+                            if(accIdAccMap.get(opp.Referred_by_Company__c).Referral_Fee_Applicable__c && accIdAccMap.get(opp.Referred_by_aggregator__c).Referral_Fee_Applicable__c){
+                                system.debug('BothhAggregator');
+                                opp.RF_Rate_inc_GST__c = accIdAccMap.get(opp.Referred_by_aggregator__c).RF_Rate_inc_GST__c;
+                                opp.RF_Type__c = accIdAccMap.get(opp.Referred_by_aggregator__c).RF_Type__c;
+                                opp.Referral_Fee_Recipient__c = accIdAccMap.get(opp.Referred_by_aggregator__c).Id;
+                            }
+                            else if(accIdAccMap.get(opp.Referred_by_aggregator__c).Referral_Fee_Applicable__c){
+                                opp.RF_Rate_inc_GST__c = accIdAccMap.get(opp.Referred_by_aggregator__c).RF_Rate_inc_GST__c;
+                                opp.RF_Type__c = accIdAccMap.get(opp.Referred_by_aggregator__c).RF_Type__c;
+                                opp.Referral_Fee_Recipient__c = accIdAccMap.get(opp.Referred_by_aggregator__c).Id;
+                            }
+                            else if(accIdAccMap.get(opp.Referred_by_Company__c).Referral_Fee_Applicable__c){
+                            opp.RF_Rate_inc_GST__c = accIdAccMap.get(opp.Referred_by_Company__c).RF_Rate_inc_GST__c;
+                            opp.RF_Type__c = accIdAccMap.get(opp.Referred_by_Company__c).RF_Type__c;
+                            opp.Referral_Fee_Recipient__c = accIdAccMap.get(opp.Referred_by_Company__c).Id;
+                            } 
+                        }
+                        else if(accIdAccMap.containsKey(opp.Referred_by_aggregator__c)){
+                             if(accIdAccMap.get(opp.Referred_by_aggregator__c).Referral_Fee_Applicable__c){
+                                system.debug('AggreGatorrrr');
+                                opp.RF_Rate_inc_GST__c = accIdAccMap.get(opp.Referred_by_aggregator__c).RF_Rate_inc_GST__c;
+                                opp.RF_Type__c = accIdAccMap.get(opp.Referred_by_aggregator__c).RF_Type__c;
+                                opp.Referral_Fee_Recipient__c = accIdAccMap.get(opp.Referred_by_aggregator__c).Id;
+                            }
+                        }
+                        else if(accIdAccMap.containsKey(opp.Referred_by_Company__c)){
+                            if(accIdAccMap.get(opp.Referred_by_Company__c).Referral_Fee_Applicable__c){
+                            system.debug('RefCompanyInsIdee');
+                            opp.RF_Rate_inc_GST__c = accIdAccMap.get(opp.Referred_by_Company__c).RF_Rate_inc_GST__c;
+                            opp.RF_Type__c = accIdAccMap.get(opp.Referred_by_Company__c).RF_Type__c;
+                            opp.Referral_Fee_Recipient__c = accIdAccMap.get(opp.Referred_by_Company__c).Id;
+                            } 
+                        }
+                        system.debug('opppnewww+1+'+opp);
+                    }
+                }
+            }
+        }
+    } 
 }

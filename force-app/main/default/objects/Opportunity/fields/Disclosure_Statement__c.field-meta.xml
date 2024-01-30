@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Disclosure_Statement__c</fullName>
+    <externalId>false</externalId>
+    <formula>&quot;Before we proceed I would like to tell you about our services. We need to collect and use your information to assess whether you are eligible to apply for loans. We will exchange your personal information with credit providers and credit reporting bodies so we can assist you in obtaining finance. From time to time we will also contact you with relevant finance offers. &quot; &amp; IF( ISPICKVAL( LeadSource, &quot;SolarQuotes&quot;), &quot;If you proceed we may pay up to 20% of the revenue we receive for helping you to SolarQuotes. This amount is not payable by you. &quot;, &quot;&quot;) &amp; &quot;We publish a credit guide with information about us and our services. The credit guide and privacy policy are accessible from emails we send you and our website. Do you consent to these matters?&quot;</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Disclosure Statement</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

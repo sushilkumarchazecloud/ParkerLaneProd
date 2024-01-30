@@ -1,5 +1,5 @@
 <aura:component implements="flexipage:availableForAllPageTypes,force:appHostable" access="global" controller="AddresApiController">
-
+    
     <aura:attribute name="selectedOption" type="String"/>
     <aura:attribute name="predictions" type="String[]"/>
     <aura:attribute name="searchString" type="String"/>
@@ -10,11 +10,13 @@
     <aura:attribute name="state" type="String" />
     <aura:attribute name="streetNumber" type="String" />
     <aura:attribute name="streetType" type="String" />
-	<aura:attribute name="label" type="String" default="Address"/>
+    <aura:attribute name="label" type="String" default="Address"/>
     <aura:attribute name="isFindAdd" type="Boolean"/>
     <aura:attribute name="isShowErr" type="Boolean" default="false"/>
-	<aura:attribute name="isShowRequired" type="Boolean" default="true"/>   
+    <aura:attribute name="isShowRequired" type="Boolean" default="true"/>   
     <aura:attribute name="isAddressLabelPresent" type="Boolean" default="true"/>
+    <aura:attribute name="addressplaceholder" type="String" default="Start typing your address"/>
+    
     
     <aura:method name="checkAddress" action="{!c.checkAddress}" access="PUBLIC" />
     
@@ -22,20 +24,31 @@
         <div class="slds-form-element__control">
             <aura:if isTrue="{!v.isAddressLabelPresent}">
                 <label lightning-combobox_combobox="" class="slds-form-element__label">
-                  <!--  <aura:if isTrue="{! !v.isFindAdd &amp;&amp; v.isShowRequired}">
+                    <!--  <aura:if isTrue="{! !v.isFindAdd &amp;&amp; v.isShowRequired}">
                         <abbr lightning-combobox_combobox="" title="required" class="slds-required">*</abbr>
                     </aura:if>-->
                     {!v.label}</label>
             </aura:if>
-            <div class="slds-combobox_container slds-has-inline-listbox">
+            
+            <div class="{!v.addressplaceholder == 'Installation address'? 'slds-combobox_container':'slds-combobox_container slds-has-inline-listbox'}">
                 <div class="slds-combobox slds-combobox-lookup slds-dropdown-trigger slds-dropdown-trigger_click " aura:id="searchLookup"
                      aria-expanded="false" aria-haspopup="listbox" role="combobox">
                     <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_left" aura:id="iconPosition">
-                        <ui:inputText aura:id="inputAdd" required="true"
-                                      updateOn="keyup" keyup="{!c.KeyUpHandler}"
-                                      class="slds-input slds-combobox__input"
-                                      value="{!v.searchString}"
-                                      placeholder="Enter a location"/>
+                        
+                        <aura:if isTrue="{!v.addressplaceholder == 'Installation address'}">
+                            <lightning:input aura:id="inputAdd" class="inpAdd"
+                                             value="{!v.searchString}" onchange="{!c.KeyUpHandler}" updateOn="onchange"
+                                             placeholder="{!v.addressplaceholder}"/> 
+                            <aura:set attribute="else">                        
+                                
+                                <ui:inputText aura:id="inputAdd" required="true"
+                                              updateOn="keyup" keyup="{!c.KeyUpHandler}"
+                                              class="slds-input slds-combobox__input"
+                                              value="{!v.searchString}"
+                                              placeholder="{!v.addressplaceholder}"/> 
+                            </aura:set>
+                        </aura:if>
+                        
                         <aura:if isTrue="{!empty(v.selectedOption)}">
                             <span class="slds-icon_container slds-input__icon">
                                 <div class="slds-icon slds-icon slds-icon_x-small slds-icon-text-default icon" >
@@ -51,7 +64,7 @@
                             </aura:set>
                         </aura:if>
                     </div>
-					
+                    
                     <div role="listbox">                   
                         <ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid">
                             <aura:iteration items="{!v.predictions}" var="option">
@@ -66,7 +79,7 @@
                         </ul>
                     </div>
                 </div>
-            </div>
+            </div>                
             <aura:if isTrue="{!v.isShowErr}">
                 <div style="color: rgb(194, 57, 52);" class="slds-form-element__help">
                     Complete this field.</div>

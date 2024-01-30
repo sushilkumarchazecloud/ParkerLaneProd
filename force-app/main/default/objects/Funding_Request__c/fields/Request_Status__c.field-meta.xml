@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Request_Status__c</fullName>
+    <externalId>false</externalId>
+    <label>Request Status</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Payment requested by supplier</fullName>
+                <default>false</default>
+                <label>Payment requested by supplier</label>
+            </value>
+            <value>
+                <fullName>Payment requested by supplier (pending contract)</fullName>
+                <default>false</default>
+                <label>Payment requested by supplier (pending contract)</label>
+            </value>
+            <value>
+                <fullName>Variation requested by customer</fullName>
+                <default>false</default>
+                <label>Variation requested by customer</label>
+            </value>
+            <value>
+                <fullName>Payment requested by customer (pending contract)</fullName>
+                <default>false</default>
+                <label>Payment requested by customer (pending contract)</label>
+            </value>
+            <value>
+                <fullName>Payment authorised by customer</fullName>
+                <default>false</default>
+                <label>Payment authorised by customer</label>
+            </value>
+            <value>
+                <fullName>Funding handover call completed</fullName>
+                <default>false</default>
+                <label>Funding handover call completed</label>
+            </value>
+            <value>
+                <fullName>Payment funded</fullName>
+                <default>false</default>
+                <label>Payment funded</label>
+            </value>
+            <value>
+                <fullName>Payment requested by customer</fullName>
+                <default>false</default>
+                <label>Payment requested by customer</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -17,21 +17,39 @@
     <aura:attribute name="selectedPerson" type="String" />
     <aura:attribute name="selectedQuote" type="sObject" />
     <aura:attribute name="redirectURL" type="String" default=""/>
+    <aura:attribute name="loanOptionCheckbox" type="String" default=""/>
+    <aura:attribute name="pageType" type="String" default=""/>
+    <aura:attribute name="vfMsgMethod" type="object" description=""/>
+    <aura:attribute name="IsApplicantTwo" type="String" />
     
     <aura:handler name="PathChangeEvent" event="c:PathChangeEvent" action="{!c.changePath}"/>
     <aura:handler action="{!c.doInit}" name="init" value="{!this}"/>
-
+    
     <div class="company-logo slds-grid slds-wrap" style="align-items: center;"> 
         <div class=" slds-text-align_left slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 slds-order_3  slds-medium-order_1 slds-large-order_1">
             <span class="slds-p-horizontal--medium">
                 Need Help? Call 1300 13 17 11
             </span>
-        </div>
+        </div>        
         <div class="slds-text-align_center slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 slds-order_2 slds-medium-order_2 slds-large-order_2">
             <span ><img src="{!$Resource.SolarLoan + '/img/logowhite.png'}"/></span>
-        </div>
-        <div class="slds-text-align_right slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 slds-order_1 slds-medium-order_3 slds-large-order_3 slds-grid slds-wrap">
-            <aura:if isTrue="{!v.applicationSection != 'Priorities' &amp;&amp; v.applicationSection != 'Loan Recommendation' &amp;&amp; v.applicationSection != 'Getting Started' &amp;&amp; v.applicationSection != 'Summary' &amp;&amp; v.applicationSection != 'All Done'}">   
+        </div>        
+        <aura:if isTrue="{!AND(v.applicationSection == 'Loan Recommendation', v.loanOptionCheckbox)}">
+            <div class="slds-text-align_right slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 slds-order_3 slds-medium-order_3 slds-large-order_3 slds-grid slds-wrap">
+                <span class="slds-p-horizontal--medium mob_css desk_css">
+                    Or text us 0480 049 081
+                </span>
+            </div>
+        </aura:if>
+        <aura:if isTrue="{!v.applicationSection == 'All Done'}">  
+            <div class="boxalign slds-text-align_right slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 slds-order_1 slds-medium-order_3 slds-large-order_3" style="padding-inline: inherit;">
+                <div class="slds-p-horizontal--medium slds-box slds-box_xx-small" style="width: fit-content; color: #e3afa2; border-color: #e3afa2;">
+                    <p style="font-size: 12px;padding: 5px 10px 5px 10px;">SPEAK TO SOMEONE</p> 
+                </div>
+            </div>
+        </aura:if>
+        <aura:if isTrue="{!v.applicationSection != 'Priorities' &amp;&amp; v.applicationSection != 'Loan Recommendation' &amp;&amp; v.applicationSection != 'Getting Started' &amp;&amp; v.applicationSection != 'Summary' &amp;&amp; v.applicationSection != 'All Done'}">   
+            <div class="slds-text-align_right slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 slds-order_1 slds-medium-order_3 slds-large-order_3 slds-grid slds-wrap">
                 <aura:if isTrue="{!v.selectedPerson=='joint'}">
                     <div class="slds-size_1-of-2">                                               
                         <a class="no-anchor-share" onclick="{!c.SendEmailPopup}">Share with Applicant 2</a>                                    
@@ -40,9 +58,8 @@
                 <div class="slds-size_1-of-2">
                     <a class="no-anchor-save" onclick="{!c.SaveApplication}">Save Application</a>
                 </div>
-                
-            </aura:if>
-        </div>
+            </div>
+        </aura:if>        
     </div>
     <aura:if isTrue="{!v.isMortgage}">
         <c:ServiceAnnouncement pageType ="{!v.applicationSection}" serviceName="HLHC Service Message"/>
@@ -53,7 +70,13 @@
     
     <aura:if isTrue="{!v.applicationSection != 'Priorities' &amp;&amp; v.applicationSection != 'Loan Recommendation'  &amp;&amp; v.applicationSection != 'Summary' &amp;&amp; v.applicationSection != 'All Done'}">
         
-        <c:TotalLoanAmountSection_PL customerAmount="{!v.customerAmount}"
+        <aura:if isTrue="{!v.isMortgage}">
+            <section class="slds-p-around--large slds-text-align_center bg-blue txt-white">
+                <h4 class="txt-white">Customer Fact Find</h4>
+            </section>
+            
+            <aura:set attribute="else">
+                <c:TotalLoanAmountSection_PL customerAmount="{!v.customerAmount}"
                                           applicantFName="{!v.applicantFName}"
                                           applicantLName="{!v.applicantLName}"
                                           applicantEmail="{!v.applicantEmail}"
@@ -61,13 +84,19 @@
                                           selectedQuote ="{!v.selectedQuote}"
                                           recordId ="{!v.recordId}"
                                           isGettingStarted ="{!v.applicationSection == 'Getting Started'}"/>
-        <aura:if isTrue="{!v.applicationSection != 'Getting Started'}">
-            <c:CustomLightningPath_PL pathList = "{!v.appSectionPath}"/>
+                
+            </aura:set>
         </aura:if>
+        <!--<aura:if isTrue="{!v.applicationSection != 'Getting Started'}">
+            <c:CustomLightningPath_PL pathList = "{!v.appSectionPath}"/>
+        </aura:if>-->
     </aura:if>
     
     <div class="slds-docked-composer__body1 section-content1" >
         <div class="bg-lightest1 ">
+            <aura:if isTrue="{!v.applicationSection == 'VOI'}">
+                <lightning:spinner aura:id="mySpinner" variant="brand" size="large" class="" />
+            </aura:if>
             <aura:if isTrue="{!v.applicationSection == 'Priorities'}">
                 <c:Priorities applicationSection="{!v.applicationSection}"
                               appSectionPath="{!v.appSectionPath}"
@@ -78,19 +107,36 @@
                               applicantEmail="{!v.applicantEmail}"
                               purpose = "{!v.purpose}"
                               recordId ="{!v.recordId}"
-                              masterQuote = "{!v.masterQuote}"/>
+                              masterQuote = "{!v.masterQuote}"
+                              vfMsgMethod = "{!v.vfMsgMethod}"/>
             </aura:if>
             <aura:if isTrue="{!v.applicationSection == 'Loan Recommendation'}">
-                <c:LoanRecommendation recordId ="{!v.recordId}"
-                                      masterQuote = "{!v.masterQuote}"
-                                      customerAmount="{!v.customerAmount}"
-                                      applicantFName="{!v.applicantFName}"
-                                      applicantLName="{!v.applicantLName}"
-                                      applicantEmail="{!v.applicantEmail}"
-                                      applicationSection="{!v.applicationSection}"
-                                      appSectionPath="{!v.appSectionPath}"
-                                      purpose = "{!v.purpose}"
-                                      selectedQuote ="{!v.selectedQuote}"/>
+                <aura:if isTrue="{!AND(v.loanOptionCheckbox, v.pageType == 'Co-branded standard solar page')}">
+                    <c:NewLoanRecommendation recordId ="{!v.recordId}"
+                                             masterQuote = "{!v.masterQuote}"
+                                             customerAmount="{!v.customerAmount}"
+                                             applicantFName="{!v.applicantFName}"
+                                             applicantLName="{!v.applicantLName}" 
+                                             applicantEmail="{!v.applicantEmail}"
+                                             applicationSection="{!v.applicationSection}"
+                                             appSectionPath="{!v.appSectionPath}"
+                                             purpose = "{!v.purpose}"
+                                             selectedQuote ="{!v.selectedQuote}"/>
+                </aura:if>
+            </aura:if>
+            <aura:if isTrue="{!v.applicationSection == 'Loan Recommendation'}">
+                <aura:if isTrue="{!OR(!v.loanOptionCheckbox, v.pageType != 'Co-branded standard solar page')}">
+                    <c:LoanRecommendation recordId ="{!v.recordId}"
+                                          masterQuote = "{!v.masterQuote}"
+                                          customerAmount="{!v.customerAmount}"
+                                          applicantFName="{!v.applicantFName}"
+                                          applicantLName="{!v.applicantLName}"
+                                          applicantEmail="{!v.applicantEmail}"
+                                          applicationSection="{!v.applicationSection}"
+                                          appSectionPath="{!v.appSectionPath}"
+                                          purpose = "{!v.purpose}"
+                                          selectedQuote ="{!v.selectedQuote}"/>
+                </aura:if>
             </aura:if>
             <aura:if isTrue="{!v.applicationSection == 'Getting Started'}">
                 <c:GettingStarted aura:id="gettingStarted" 
@@ -104,9 +150,11 @@
                                         recordId ="{!v.recordId}"
                                         appSectionPath="{!v.appSectionPath}"
                                         applicationSection="{!v.applicationSection}"
-                                        selectedPerson="{!v.selectedPerson}"/>
+                                        selectedPerson="{!v.selectedPerson}"
+                                        selectedQuote ="{!v.selectedQuote}"/>
                 
-            </aura:if>           
+            </aura:if>
+            
             <aura:if isTrue="{!v.applicationSection == 'Own and Owe'}">
                 <c:OwnAndOwe_PL aura:id="ownAndOwe"
                              title="{!v.applicationSection}" 
@@ -125,7 +173,8 @@
                                   recordId ="{!v.recordId}"
                                   appSectionPath="{!v.appSectionPath}"
                                   applicationSection="{!v.applicationSection}"/>
-            </aura:if>           
+            </aura:if>
+            
             <aura:if isTrue="{!v.applicationSection == 'Goals &amp; Objectives'}">
                 <c:GoalsObjectives_PL aura:id="GoalsObjectives"
                                       title="{!v.applicationSection}" 
@@ -139,10 +188,14 @@
                 <c:Summary_PL aura:id="SummaryPage"
                               redirectURL = "{!v.redirectURL}"
                               recordId ="{!v.recordId}"
-                              selectedQuote ="{!v.selectedQuote}"/>
+                              selectedQuote ="{!v.selectedQuote}"
+                              IsApplicantTwo ="{!v.IsApplicantTwo}"/>
             </aura:if>
-            <aura:if isTrue="{!v.applicationSection == 'All Done'}">
+            <!--<aura:if isTrue="{!v.applicationSection == 'All Done'}">
                 <c:FinalSubmitted_PL aura:id="Submitted"/>
+            </aura:if>-->
+            <aura:if isTrue="{!v.applicationSection == 'All Done'}">
+                <c:allDone recordId="{!v.recordId}"/>
             </aura:if>
         </div>
         
@@ -195,5 +248,4 @@
             <div class="slds-backdrop slds-backdrop_open"></div>
         </div>
     </aura:if>
-
 </aura:component>

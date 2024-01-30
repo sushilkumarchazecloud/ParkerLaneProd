@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>THIS_WEEK</fullName>
+    <columns>NAME</columns>
+    <columns>Category__c</columns>
+    <columns>reason__c</columns>
+    <columns>Opportunity__c</columns>
+    <columns>isComplete__c</columns>
+    <columns>isAlready_provided__c</columns>
+    <columns>Document__c</columns>
+    <columns>Description__c</columns>
+    <columns>Details__c</columns>
+    <columns>Contact__c</columns>
+    <filterScope>Mine</filterScope>
+    <filters>
+        <field>LAST_UPDATE</field>
+        <operation>equals</operation>
+        <value>THIS_WEEK</value>
+    </filters>
+    <label>THIS WEEK</label>
+</ListView>

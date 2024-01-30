@@ -1,0 +1,157 @@
+<aura:component controller="MyReferrerController">
+    <aura:attribute name="typesOptions" type="List" default="[{'label': 'Solar', 'value': 'Solar'},{'label': 'Home Improvement', 'value': 'Home Improvement'},{'label': 'Debt Consolidation', 'value': 'Debt Consolidation'}]"/>
+    <aura:attribute name="sendQuoteOptions" type="List" default="[{'label': 'Send to me and my customer', 'value': 'Me and my customer'},{'label': 'Send to me only', 'value': 'Me only'}]"/>
+    <aura:attribute name="supportOptions" type="List" default="[{'label': 'Please contact the customer', 'value': 'Please contact the customer'},{'label': 'The customer will contact you', 'value': 'The customer will contact you'}]"/>
+    <aura:attribute name="sessionId" type="String" />
+    <aura:attribute name="isReferralAgreement" type="Boolean" default="false"/>
+    <aura:attribute name="isObtainedTheCustomer" type="Boolean" default="false"/>
+    <aura:attribute name="showMessage" type="Boolean" default="false"/>
+    <aura:attribute name="submitDisable" type="Boolean" default="true"/>
+    <aura:attribute name="maxQuote" type="Boolean" default="false"/>
+    <aura:attribute name="ret" type="Boolean" default="true"/>
+    <aura:attribute name="status" type="String"/>
+    <aura:attribute name="message" type="String"/>
+    <aura:attribute name="support" type="String"/>
+    <aura:attribute name="sendQuote" type="String"/>
+    <aura:attribute name="referrerEmail" type="String"/>
+    <aura:attribute name="leadId" type="String"/>
+    <aura:attribute name="oppId" type="String"/>
+    <aura:attribute name="quoteType" type="String"/>
+    <aura:attribute name="quoteAmount" type="Integer"/>
+    <aura:attribute name="custName" type="String"/>  
+    <aura:attribute name="custEmail" type="String"/>
+    <aura:attribute name="accountId" type="String"/>
+    <aura:attribute name="custPhone" type="String"/>
+    <aura:attribute name="Name" type="String"/>    
+    <aura:attribute name="files" type="Blob" />
+    <aura:attribute name="percent" type="integer" default="0" />
+    <aura:attribute name="custInstallationAddress" type="String"/>
+    <aura:attribute name="show" type="Boolean" default="false"/>
+    <aura:attribute name="showCustomer" type="Boolean" default="false"/>
+    <aura:attribute name="isUploading" type="boolean" default="false"/>
+    <aura:attribute name="upload" type="boolean" default="false"/>
+    <aura:attribute name="NmList" type="list"/>
+    <aura:attribute name="AttachId" type="String" />
+    <aura:attribute name="contentBodyId" type="string" />
+    <aura:attribute name="requestId" type="String" />
+    <aura:attribute name="quotesize" type="Integer"/>
+    <aura:attribute name="quoteList" type="List"/>
+    <aura:attribute name="recordId" type="String" />
+    <ltng:require scripts="{!$Resource.Jquery}"/>
+    <aura:attribute name="quoteDetailWrpList" type="ReferralPageController.QuoteDetailWrapper[]"/>
+    <aura:attribute name="spinner2" type="boolean" default="false" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>    
+    
+    <div class ="spinner">
+        <lightning:spinner aura:id="mySpinner2" variant="brand" size="medium" class="slds-hide spinner2" />
+    </div>
+    <div class="{!v.spinner2 ? 'bg-whiteOnSpin' : 'bg-white'}" style="">
+        <aura:if isTrue="{!v.maxQuote}">  
+            <div class="slds-align_absolute-center slds-m-top_small" style="line-height:initial">
+                <p style="color:red">You have already created the maximum 4 finance options. Update and resend existing quotes instead.</p>
+            </div>
+            <aura:set attribute="else">
+                <div class="slds-clearfix slds-form">
+                    <div class="slds-form" role="list">
+                        <div class="">                    
+                            <aura:iteration items="{!v.quoteDetailWrpList}" var="item" indexVar="index">
+                                
+                                
+                                <div class="slds-grid slds-gutters slds-m-top_small" style="width:110%">
+                                    <div class="slds-col slds-size_10-of-12"><b>Quote {!index + 1}</b></div>
+                                    <aura:if isTrue="{!index >= 1 }">
+                                        <div class="slds-col slds-size_2-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col" style="display: grid;padding-inline: 22px;">
+                                            <lightning:buttonIcon class="deleteBtn" name="{!index}" variant="bare" size="medium" iconName="utility:delete" onclick="{!c.deleteProperty}"/>                                    
+                                        </div>
+                                    </aura:if>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="amtInput slds-col slds-size_4-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col" style="padding-right: 0px;">
+                                        <lightning:input aura:id="fieldcheck" onchange="{!c.submitable}" min="0" step="1" value="{!item.Amount}" label="" class="{!item.checkError == true ? 'no-abbr qtAmountErr': 'qtAmount no-abbr'}" type="number" required="true"/>
+                                        <aura:if isTrue="{!item.checkError}">
+                                            <br/><p style="margin-top: -20px; color: red; font-size: smaller;">No loans for this amount</p>
+                                        </aura:if>
+                                    </div>
+                                    <div class="slds-col slds-size_8-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col" style="margin-top: 2px">
+                                        <lightning:input aura:id="" label="" onchange="{!c.submitable}" value="{!item.masterQuote}" placeholder="Name (optional)" class="{!item.nameError == true ? 'no-abbr qtAmountErr editName': 'qtAmount no-abbr editName'}" type="text" />
+                                        <aura:if isTrue="{!item.nameError}">
+                                            <br/><p style="margin-top: -20px; color: red; font-size: smaller;">There is already a quote with this name</p>
+                                        </aura:if>
+                                    </div>                            
+                                </div> 
+                                <div class="slds-form-element__control slds-grid_vertical" >
+                                    <div class="slds-col slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col" style="margin-left: -9rem;">
+                                        <c:UploadDocumentGen cdlId="{!item.cdlId}" NmList="{!item.NmList}" accountId="{!v.accountId}" financeQt="true" sessionId="{!v.sessionId}" NameOfUploadFile="Upload quote (optional)"/>
+                                    </div>
+                                </div>                             
+                            </aura:iteration>                            
+                        </div>
+                        <div class="slds-grid_vertical">
+                            <div class="slds-col slds-m-top_xx-large slds-align_absolute-center" style="width: 100%">
+                                <aura:if isTrue="{!v.quotesize != 4}">                                        
+                                    <lightning:button label="" class="addQuote" variant="base" onclick="{!c.addProperty}"><img src="{!$Resource.SolarLoan + '/img/plusicon.png'}" style="height:23px;"/><p>Add another quote</p></lightning:button>                        
+                                </aura:if>
+                            </div>
+                        </div>
+                        
+                        <div class="slds-form__row slds-m-top_large">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element rg-style">
+                                    <div class="slds-grid slds">
+                                        <lightning:radioGroup name="sendQuoteRG"
+                                                              aura:id="fieldcheck" 
+                                                              required="true"
+                                                              onchange="{!c.submitable}"
+                                                              class="no-abbr"
+                                                              options="{!v.sendQuoteOptions }"
+                                                              value="{!v.sendQuote }"
+                                                              type="button"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-form__row">
+                            <div class="slds-form__item" role="listitem">
+                                <div class="slds-form-element">
+                                    <lightning:input type="checkbox" aura:id="fieldcheck" 
+                                                     required="true" class="no-abbr"
+                                                     onchange="{!c.submitable}"
+                                                     checked="{!v.isObtainedTheCustomer}"
+                                                     label="Within the last 5 days I have obtained the customer’s consent to pass their details to Parker Lane." />
+                                </div>
+                            </div>                    
+                        </div>
+                        <br/>                
+                    </div>
+                    <aura:if isTrue="{!v.ret}"> 
+                        <div class="{!v.status == 'Success!'? 'successMsg slds-m-vertical_small slds-size_6-of-12 slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_11-of-12':'oopsMsg slds-m-vertical_small slds-size_6-of-12 slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_11-of-12'}">
+                            <div class=""><b>{!v.status}</b> </div>
+                            <div class="slds-m-top_x-small">{!v.message}</div>
+                        </div>
+                        <div class="">
+                            <lightning:button class="{!v.submitDisable? 'submitQtBtnDisable slds-button slds-button_brand slds-float_left':'submitQtBtn slds-button slds-button_brand slds-float_left'}" variant="brand" 
+                                              label="Submit Quote" disabled="{!v.submitDisable}"
+                                              onclick="{!c.submit }" />
+                        </div>
+                        <aura:set attribute="else">
+                            <div class="">
+                                <button class="slds-button slds-button_success SuccessBtn">
+                                    <span class="slds-m-left_medium">Submitted</span>
+                                    <span class="slds-m-left_medium">
+                                        <img style="width:25px;" src="{!$Resource.SolarLoan + '/img/final.png'}"/>
+                                    </span>                            
+                                </button>
+                            </div>
+                            <div class="{!v.status == 'Success!'? 'successMsg slds-m-vertical_small slds-size_6-of-12 slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_11-of-12':'oopsMsg slds-m-vertical_small slds-size_6-of-12 slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_11-of-12'}">
+                                <!--<div class=""><b>{!v.status}</b> </div>
+                                <div class="slds-m-top_x-small">{!v.message}</div>-->
+                            </div>
+                        </aura:set>
+                    </aura:if>
+                </div>
+            </aura:set>
+        </aura:if>
+    </div>
+</aura:component>

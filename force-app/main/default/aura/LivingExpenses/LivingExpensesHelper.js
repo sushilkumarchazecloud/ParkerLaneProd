@@ -13,7 +13,7 @@
                     component.set("v.showError", true);
                     component.set("v.errorMsg", $A.get("$Label.c.Error_Message"));
                 }else{
-                    component.set('v.applicant', ret);
+                    component.set('v.applicant', ret.con);
                     this.doTotal(component,event);
                 }
             }

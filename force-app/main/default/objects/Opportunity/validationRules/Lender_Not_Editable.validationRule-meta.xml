@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lender_Not_Editable</fullName>
+    <active>true</active>
+    <description>If application checked then you cannot edit this field because there is already a quote marked application</description>
+    <errorConditionFormula>IF( ISCHANGED(Lender__c  ) , AND( Lender__c  &lt;&gt;  SyncedQuote.Lender__c,  SyncedQuote.Application__c = True ), false)</errorConditionFormula>
+    <errorDisplayField>Lender__c</errorDisplayField>
+    <errorMessage>You cannot edit this field because there is already a quote marked application</errorMessage>
+</ValidationRule>

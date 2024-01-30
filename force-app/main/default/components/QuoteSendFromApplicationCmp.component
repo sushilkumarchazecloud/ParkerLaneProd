@@ -1,0 +1,65 @@
+<apex:component controller="QuotesEmailController" access="global" >
+    <apex:attribute name="oppId" assignTo="{!opportunityId}" description="This is the Id of Referrer." type="String"/>   
+    <head></head>
+    <apex:outputText rendered="{!init}" />
+    
+    <div>Dear {!leadName},</div>
+    <br />
+    <div>
+        <b>Congratulations! We think your {!purpose} objectives and Parker Lane could be a good match. </b>
+    </div>
+    <br />
+    <div>
+        We have found three (3) excellent options to help you achieve your objectives:
+        <br />
+        
+        <apex:outputPanel rendered="{!NOT(CONTAINS(qtWrapper[0].GroupName,'Website'))}">
+            <div><b>{!qtWrapper[0].GroupName}</b></div>
+        </apex:outputPanel>
+        <div><b>Amount:</b><apex:outputText value="{0, Number, '$'#,##0}">
+            <apex:param value="{!qtWrapper[0].Amount}" />
+            </apex:outputText>
+        </div>
+        <div><b>Lowest Repayment:</b> ${!ROUND(qtWrapper[0].Repayment, 0)} ({!qtWrapper[0].Loanterm} months)</div>
+        <div><b>Lowest Rate:</b> {!qtWrapper[0].InterestRate}% ({!qtWrapper[0].ComparsionRate}% comp rate*)</div>
+    </div>
+    <br />
+    
+    <div style="font-size:9px;">{!qtWrapper[0].compRateDisplay} 
+        <b>WARNING: </b> 
+        These comparison rates apply only to the example or examples given and may not include all fees and charges. Different terms, fees or other loan amounts might result in a different comparison rate.
+    </div>
+    <br/>
+    <div>
+        <div>
+            We think this is likely to be the most competitive unsecured {!purpose} loan rate around. To proceed and apply for your loan, please visit the website and retrieve your quote.
+        </div>
+        <br/>
+        <div><b><a href="https://apply-parkerlane.secure.force.com/?id={!opportunityId}&master={!qtWrapper[0].masterQuoteForURL}">Click here to retrieve your Three (3) Loan Options and complete an online loan application in minutes</a></b></div>
+        <br/>
+        <div>Completing our online application will take around 5-10 minutes, and if you're approved there's absolutely no obligation to take out the loan.</div>
+        <br/>
+        <div><b>Why not apply now? </b></div>
+        <div>
+            <ul style="list-style: none;">
+                <li>&#10003; &nbsp; Super flexible low rate loans </li>
+                <li>&#10003; &nbsp; Fast and simple application process</li>
+                <li>&#10003; &nbsp; No commitment to settle if you are approved</li>
+            </ul>
+        </div>
+        <div>
+            <b>Why let us help you?</b><br />
+            Parker Lane specialise in the kinds of lending that helps people save money. If you’re the kind of person who prefers to keep your hard earned for yourself instead of wasting it on things like energy bills and high interest rates, then we’ve already got a lot in common.</div>
+        <br/>
+        <div>We’ve also been awarded Australia’s Personal Loan + Home Loan Providers of the Year, with hundreds of 5-Star reviews on leading review website ProductReview.com.au. Read our reviews <a href="https://www.productreview.com.au/listings/parker-lane">here</a>.</div>
+        <br/>
+        <div><a href="https://apply-parkerlane.secure.force.com/?id={!opportunityId}&master={!qtWrapper[0].masterQuoteForURL}">Apply for your loan now</a> </div>
+        <br/>
+        <div>If you have any questions about borrowing with the help of Parker Lane please don't hesitate to call us on 1300 131 711, or simply reply to this email. </div>
+        <br/>
+        <div>We thank you again for your interest in Parker Lane, and look forward to hearing from you soon. </div>
+        <br/>
+    </div>
+    Kind regards, <br />
+    The Parker Lane team
+</apex:component>

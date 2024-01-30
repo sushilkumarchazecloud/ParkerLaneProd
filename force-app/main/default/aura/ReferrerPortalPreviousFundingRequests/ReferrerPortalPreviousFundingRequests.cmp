@@ -1,0 +1,31 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="item" type="Funding_Request__c" />
+    <aura:attribute name="RequestStatus" type="String"/>
+    <aura:attribute name="Previousrequest" type="String"/>
+    <aura:attribute name="PreviousrequestDate" type="Date"/>
+    <aura:attribute name="PreviousrequestTime" type="Time"/>
+    <aura:attribute name="DateLastStatus" type="Date" default=""/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInIt}"/> 
+    
+    <div class="slds-p-top_x-small">
+        <div>
+            <b>{!v.item.Request_Type__c}</b>
+            <span class="slds-m-left_xx-small" style="color:#b0c0e2;">
+                {!v.PreviousrequestDate},
+            </span>
+            <span class="slds-m-left_xxx-small" style="color:#b0c0e2;">
+                {!v.PreviousrequestTime}
+            </span>&nbsp;
+            <span><lightning:formattedNumber value="{!v.item.Request_Amount__c}" style="currency" currencyCode="AUD" maximumFractionDigits="0"/>.</span>&nbsp;
+            <span>{!v.RequestStatus}</span>&nbsp;
+            <span>{!v.DateLastStatus}.</span>&nbsp;
+            <aura:if isTrue="{!v.item.Funding_On_Hold__c}">
+                <span> **ON HOLD**&nbsp;
+                {!v.item.Funding_On_Hold_Reason__c}
+                </span>
+            </aura:if>
+        </div>
+    </div>  
+    
+</aura:component>

@@ -11,7 +11,288 @@
     justify-content: center;
     align-items: center;
 }
+.THIS .modalClose{
+    color: black !important;
+}
+.THIS .para-style{
+    margin-top: 15px;
+    font-size: 16px;
+    width: 100%;
+    line-height: initial;
+}
+.THIS .bankbutton{
+    background: #b7418c !important;
+    border: 2px solid #aa327e !important;
+    color: white !important;
+    height: 50px;
+    font-size: 16px !important;
+    font-weight: initial;
+    width: 85%;
+    margin-right: 16px;
+    margin-top: 3px; 
+    margin-bottom: 2px;
+}
+.THIS .bankSuccess{
+    background: #e2f6e5 !important;
+    color: black !important;
+    border: 2px solid #45c65a !important;
+    height: 50px;
+    width: 85%;
+    margin-right: 16px;
+    margin-top: 3px; 
+    margin-bottom: 2px;
+    font-size: 15px !important;
+    font-weight: initial;
+}
+.THIS .bankbutton:hover{
+    background: #9e2872!important;
+    border: 2px solid #97216c!important;   
+}
+.THIS .categoryName{
+    font-size: 18px;
+    margin-right: auto;
+}
+.THIS .descriptionName{
+    font-size: 16px;
+    margin-right: auto;
+}
+.THIS .reqButtonMob{
+    margin-left: 22.5rem;
+}
+.THIS .txtArea{
+    margin-left: 5px !important;
+}
+.THIS .modalStyle{
+    background: white; 
+    height: 32rem !important; 
+    padding: 22px !important; 
+    box-shadow: 0px 0px 5px 3px grey !important;
+}
+.THIS .securityImg{
+    height: 95px !important;
+}
 
+@media screen and (max-width: 770px) {
+    .THIS .securityImg{
+        height: 70px !important;
+    }
+    .THIS .modalStyle{
+        background: white;
+        height: 36rem !important;
+        padding: 18px !important;
+    } 
+    .THIS .txtArea{
+        margin-left: inherit !important;
+        margin-inline: 10px !important;
+    }    
+    .THIS .categoryName{
+        font-size: 18px;
+    }
+    .THIS .descriptionName{
+        font-size: 16px;
+    }
+    .THIS .bankSuccess{
+        background: #e2f6e5 !important;
+        color: black !important;
+        border: 3px solid #45c65a !important;
+        height: 50px;
+        margin-right: 16px;
+        margin-top: 22px;
+        font-size: 16px !important;
+        font-weight: initial;
+        width: 109%;
+    }
+    .THIS .bankbutton{
+        background: #b7418c !important;
+        border: 3px solid #aa327e !important;
+        color: white !important;
+        height: 50px;
+        margin-right: 16px;
+        margin-top: 22px;
+        font-size: 16px !important;
+        font-weight: initial;
+        width: 109%;
+    }
+    .THIS .uploaderCpy .slds-file-selector__dropzone{
+        border: white;
+        margin-right: 15px;
+        margin-top: 15px;
+    }
+    .THIS .uploader .slds-file-selector__dropzone{
+        border: white;
+        margin-right: 15px;
+        margin-top: 15px;
+    }
+    .THIS .uploaderAdd .slds-file-selector__dropzone .slds-file-selector__text{
+        display: none !important;
+    }
+    
+    .THIS .uploaderAdd .slds-file-selector__dropzone .slds-file-selector__button{
+        font-size: 0px !important;
+        background: #e0e7f4 !important;
+        border: 2px solid #c8d5eb !important;
+        color: black !important;
+        height: 55px !important;
+        min-width: 115% !important;
+        padding-right: 38px !important;
+        padding-left: 38px !important;
+    }
+    .THIS .uploaderAdd .slds-file-selector__dropzone .slds-file-selector__button:after{
+        content: 'Add another file or image' !important;
+        line-height: initial !important;
+        font-size: 17px !important;
+        color: #1a2745 !important;
+    }
+    .THIS .uploaderAdd .slds-file-selector__button{
+        height: 55px !important;
+    } 
+    
+    .THIS .uploaderAdd .slds-file-selector__dropzone{
+        border: white !important;
+        margin-right: 15px !important;
+        margin-top: 15px !important;
+    }
+    .THIS .crossBtnDisabled{
+        margin-top: -17px;
+        margin-left: -2px;
+        border: 1px solid grey !important;
+        border-radius: 15px!important;
+        color: grey !important;
+    }    
+}
+.THIS .uploaderCpy .slds-file-selector__dropzone .slds-file-selector__text{
+    display: none;
+}
+
+/*.THIS .uploaderCpy .slds-file-selector.slds-file-selector_files{
+    height: 52px;
+}*/
+.THIS .descCss{
+    color: #1a2745 !important;
+}
+.THIS .uploaderCpy .slds-file-selector__dropzone .slds-file-selector__button{
+    font-size: 0px;
+    background: #e0e7f4;
+    border: 2px solid #c8d5eb;
+    color: black;
+    height: 55px;
+    min-width: 115%;
+    padding-right: 38px;
+    padding-left: 38px;
+}
+.THIS .uploaderCpy .slds-file-selector__dropzone .slds-file-selector__button:after{
+    content: 'Tap to add a file or image';
+    line-height: initial !important;
+    font-size: 17px;
+    color: #1a2745;
+}
+.THIS .uploaderCpy .slds-file-selector__button{
+    height: 55px;
+} 
+
+.THIS .uploaderCpy .slds-file-selector__dropzone{
+    border: white;
+    margin-right: 15px;
+}
+
+.THIS .uploaderCpy:hover{
+    background-position: 0 -100%;
+    color: #2590EB;
+}
+
+.THIS .showUploadCss {
+    display:block;
+}
+
+/*.THIS .uploader .slds-file-selector.slds-file-selector_files{
+    height: 52px;
+}*/
+
+.THIS .uploader .slds-file-selector__dropzone .slds-file-selector__button{
+    font-size: 0px;
+    background: #e0e7f4;
+    border: 2px solid #c8d5eb;
+    padding: 0 24px 0 22px;
+    margin-top: -3px;
+    margin-bottom: 1px;
+    color: #1a2745;    
+}
+.THIS .uploader .slds-file-selector__dropzone .slds-file-selector__button:after{
+    content: 'Upload or drag and drop';
+    line-height: initial !important;
+    font-size: 15px;
+    color: #1a2745;
+}
+.THIS .crossBtn{
+    margin-left: 13px;
+    border: 1px solid grey !important;
+    border-radius: 15px !important;
+    color: grey !important;
+}
+.THIS .crossBtnDisabled{
+    margin-left: 13px;
+    border: 1px solid grey !important;
+    border-radius: 15px !important;
+    color: grey !important;
+}
+.THIS .crossBtnCpy{
+    margin-top: -17px;
+    margin-left: -2px;
+    border: 1px solid grey !important;
+    border-radius: 15px!important;
+    color: grey !important;
+}
+
+.THIS .uploader .slds-file-selector__button{
+    height: 50px;
+} 
+
+.THIS .uploader .slds-file-selector__dropzone .slds-file-selector__button:hover{
+ 	background: #cbd3e1;
+    border: 2px solid #bbc8de;  
+    cursor: pointer !important;
+}
+
+.THIS .uploader .slds-file-selector__dropzone{
+    border: white;
+    margin-right: 15px;
+}
+
+.THIS .uploader .slds-file-selector__dropzone .slds-file-selector__text{
+    display: none;
+}
+.THIS .uploaderAdd .slds-file-selector__dropzone .slds-file-selector__button{
+    font-size: 0px;
+    background: #e0e7f4;
+    border: 2px solid #c8d5eb;
+    padding: 0 20px 0 22px;
+    margin-top: -3px;
+    margin-bottom: 1px;
+    color: #1a2745;    
+}
+.THIS .uploaderAdd .slds-file-selector__dropzone .slds-file-selector__button:hover{
+ 	background: #cbd3e1;
+    border: 2px solid #bbc8de;  
+    cursor: pointer !important;
+}
+.THIS .uploaderAdd .slds-file-selector__dropzone .slds-file-selector__button:after{
+    content: 'Add another file or image';
+    line-height: initial !important;
+    font-size: 15px;
+    color: #1a2745;
+}
+.THIS .uploaderAdd .slds-file-selector__button{
+    height: 50px;
+} 
+
+.THIS .uploaderAdd .slds-file-selector__dropzone{
+    border: white;
+    margin-right: 15px;
+}
+
+.THIS .uploaderAdd .slds-file-selector__dropzone .slds-file-selector__text{
+    display: none;
+}
 .THIS .file-upload {
     height: 70px;
     width: 70px;
@@ -51,10 +332,15 @@
     color: #ffffff !important;
 }
 .THIS button.slds-button {
-    color: #ffffff!important;
+    /*color: #ffffff!important;*/
     font-size: .75rem;
     font-weight: 100;
 }
+.THIS .saveCloseBtn{
+    width: 50%; 
+    height: 50px;
+}
+
 .THIS .processing-icon-style{
     position: absolute;
     top: 0;
@@ -65,13 +351,24 @@
     height: auto;
 }
 .THIS meter::-webkit-meter-optimum-value {
-    background: #45C65A;
+    background: #45c65a;   
+    border-color: #45c65a;
+}
+.THIS meter::-webkit-meter-bar {
+    border-color:#45c65a;
 }
 .THIS .completedcheck {
     border: 1px solid;
     border-radius: 100px;
     padding: 2px;
     width: fit-content;
+}
+.THIS .closeWindowBtn{
+    height: 55px;
+    line-height: normal !important;
+    padding: 0px 107px !important;
+    font-size: 15px !important;
+    margin-top: 20px;
 }
 
 .THIS .greenicon {

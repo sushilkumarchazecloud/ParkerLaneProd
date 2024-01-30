@@ -1,0 +1,61 @@
+<aura:component Controller="ReferrerPortalController">
+    <aura:attribute name="accountId" type="String"/>
+    <aura:attribute name="opt1" type="Boolean" default = "false" />
+    <aura:attribute name="opt2" type="Boolean" default = "false" />
+    <aura:attribute name="opt3" type="Boolean" default = "false" />
+    <aura:attribute name="navSection" type="String"/>
+    <aura:attribute name="conData" type="Contact"/>
+    <aura:attribute name="conName" type="String"/>
+    <aura:attribute name="storeImg" type="String"/>
+    <aura:attribute name="ShowAccount" type="Boolean" default = "false" />
+    <aura:attribute name="isDeclarationBtnDisabled" type="Boolean" default = "true" />
+    <aura:attribute name="isDeclarationModalOpen" type="Boolean" default = "true" />
+    <aura:attribute name="spinner" type="Boolean" default = "false" />
+    <aura:attribute name="canvasSpinner" type="Boolean" default = "false" />
+    
+    <aura:if isTrue="{!v.spinner}">
+        <lightning:spinner aura:id="mySpinner" variant="brand" size="large" class="" style="position:initial;" />
+    </aura:if>
+    <div class="{!v.spinner ? 'spinBlur' : ''}">
+        <div class="heading2"><b>My Declaration</b></div>
+        <div class="heading4 slds-m-vertical_small"><b>Please read and sign the declaration below before proceeding to access your portal.</b></div>
+        <div style ="display: inline-flex;" class="slds-m-top_small">
+            <lightning:input type="checkbox" label="" style="width: 20px;" name="opt1" checked ="{!v.opt1}" onchange="{!c.tncChange}" />
+            <span class="slds-p-left_small">I have read and agree to be bound by the <a href="https://www.parkerlane.com.au/referral-terms" target="_main" style="font-weight: bold;color:#032d60"><u>terms of the referral agreement.</u></a></span>
+        </div>
+        <div style ="display: inline-flex;" class="slds-m-top_small">
+            <lightning:input type="checkbox" label="" style="width: 33px;" name="opt2" checked ="{!v.opt2}" onchange="{!c.tncChange}" />
+            <span class="slds-p-left_small">I understand that the National Consumer Credit Protection (NCCP) Act has prohibits a person from engaging in credit activities without an Australian Credit License.</span>
+        </div> 
+        <div style ="display: inline-flex;" class="slds-m-top_small">
+            <lightning:input type="checkbox" label="" style="width: 21px;" name="opt3" checked ="{!v.opt3}" onchange="{!c.tncChange}"/>
+            <span class="slds-p-left_small">I acknowledge than I must only inform the consumer that we are able to arrange loans but</span>
+        </div>
+        <UL class="slds-list_dotted heading4 slds-m-top_xx-small" style="padding-left: 25px;">
+            <LI>Not specify any perticular product; and</LI>
+            <LI>Not provide any recommendations or advise concerning loans or leases; and</LI>
+            <LI>Inform the consumer of any benefits It may recieve as a result of the referral.</LI>
+        </UL>
+        <div class="heading4 slds-m-top_small"><b>By clicking the button below you agree that you are signing the declaration.</b></div>
+        <div class="slds-grid slds-m-top_medium" style="margin-left: -8px;">
+            <span>
+                <lightning:input class="toggle-btn" type="toggle" name="toggleButton" aura:id="tglbtn" label="" 
+                                 onchange="{!c.toggleChange}" />
+            </span>
+            <span class="txt_css">Insert my name as a signature</span>
+        </div><br/>
+        <div>
+            <aura:if isTrue="{!v.canvasSpinner}">
+                <lightning:spinner aura:id="canvasSpinner" variant="brand" size="small" class="canvasSpnr" />
+            </aura:if>
+            <canvas class="{!v.canvasSpinner ? 'spinBlur signature_css' : 'signature_css'}" id="divsign"></canvas>
+        </div>
+        <div class="slds-m-top_large slds-text-align_left">
+            <lightning:button variant="brand" class="dark-btn-color sign_btn"
+                              label="Click to sign the declaration"
+                              title="Click to sign the declaration"
+                              disabled="{!v.isDeclarationBtnDisabled}"
+                              onclick="{!c.submitDeclaration}"/>  
+        </div>
+    </div>
+</aura:component>

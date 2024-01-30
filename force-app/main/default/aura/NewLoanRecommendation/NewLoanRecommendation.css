@@ -1,0 +1,207 @@
+.THIS .heading_desc{
+    margin-top: -8rem!important;
+    color: white;
+    max-height: 8rem;
+    max-width: 53rem !important;
+    font-family: 'ProximaNova-AltBold';
+    font-size: 50px;
+    text-align: center;
+    line-height: initial;
+}
+
+.THIS .slds-spinner,.THIS.slds-spinner {
+    top: 300px !important;
+}
+
+.THIS .slds-rich-text-editor__output img{
+    height: 350px;
+    width: -webkit-fill-available;
+    object-fit: cover;
+    margin-bottom: 0px !important;
+}
+
+.THIS .max-1000,
+.THIS.max-1000{
+    max-width: 1000px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.THIS .header-input-loan-amount{
+    background: #f1ad4f;
+    display: flex;    
+    margin-top: 3rem !important;    
+    width: auto !important;
+    border-radius: 10px;
+    line-height: initial;
+}
+
+.THIS .brandbackg{
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+}
+
+.THIS .brandlogo{
+    width: 200px;
+}
+
+.THIS .input-dollarr {
+    position: relative;
+    text-align: left;
+}
+
+.THIS .input-dollarr:before {
+    position: absolute;
+    top: 0;
+    content: "$";
+    font-family: 'ProximaNovaAlt-Medium';
+    z-index: 1;
+    font-size: 16px;
+    padding: 14px 12px!important;
+}
+
+.THIS .input-style input {
+    color: #1a2745!important;
+    width: 9rem;
+    padding: 9px;
+    margin-right: 22px;
+    padding-left: 32px;
+    font-size: 16px;
+    border-radius: 6px;
+    font-family: 'ProximaNovaAlt-Medium';
+    margin-top: 1px;
+    border: white;
+    line-height: initial;
+}
+
+.THIS .no-abbr label.slds-form-element__label abbr, .THIS .no-abbr legend.slds-form-element__label abbr {
+    display: none;
+}
+
+.THIS .esp-mark{
+    border-radius: 40px;
+    height: 16px;
+    width: 16px;
+    line-height: 17px;
+    text-align: center;
+    border-color: #0176d3;
+    background-color: #0176d3;                        
+}
+
+.THIS .txt-dark-blue,.THIS .txt-dark-blue{
+    color: #1a2745;
+    font-size: 35px;
+    font-weight: bolder;
+    font-family: 'ProximaNova-AltBold';
+    line-height: initial;
+}
+
+.THIS .img_Desc{
+    font-size: 23px;
+    font-family: 'ProximaNova-AltBold';
+}
+
+.THIS .rating_css{
+    width: 37%;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 400;
+    font-family: 'ProximaNovaAlt-Medium';
+    line-height: initial;
+}
+
+.THIS .headings_css{
+	font-size: 35px;
+    font-weight: bolder;
+    text-align: center;
+    line-height: initial;
+    font-family: 'ProximaNova-AltBold';
+}
+
+.THIS .small_hd1{
+    font-size: 18px;
+    font-weight: bold;
+    font-family: 'ProximaNovaAlt-Medium';
+}
+
+.THIS .small_hd2{
+    font-size: 18px;
+    margin-top: 6rem;
+    font-weight: bold;
+    font-family: 'ProximaNovaAlt-Medium';
+}
+
+.THIS .Desc_desc{
+    font-size: 16px;
+    font-family: 'Proxima Nova Alt Regular';
+    width: 62% !important;
+    line-height: initial;
+    text-align: center;
+}
+
+.THIS .comp_Desc{
+    font-size: 35px;
+    font-weight: bolder;
+    font-family: 'ProximaNova-AltBold';
+    width: 61% !important;
+    line-height: initial;
+    text-align: center;
+}
+
+.THIS .img_css{
+    height: 7rem;
+}
+
+.THIS .review_css{
+    height: 7rem;
+}
+
+.THIS .stars_css{
+    height: 65px;
+}
+
+.THIS .imgStyle{
+    margin-left: 1.5rem !important;
+}
+
+@media screen and (max-width: 770px) {    
+    .THIS #index-0 { order: 2 }
+    .THIS #index-1 { order: 1 }
+    .THIS #index-2 { order: 3 }
+    
+    .THIS .imgStyle{
+        margin-left: 0rem !important; 
+    }
+    .THIS .txt-dark-blue{
+        font-size: 31px !important;
+        margin-top: -20px !important;
+    }
+    .THIS .headings_css{
+        font-size: 31px !important;
+    }
+    .THIS .rating_css{
+        margin-top: 30px !important;
+        width: auto !important;
+    }
+    .THIS .img_css{
+        margin-top: 45px;
+    }
+    .THIS .review_css{
+        height: auto !important;
+    }
+    .THIS .small_hd2{
+        margin-top: 4rem !important;
+    }
+    .THIS .comp_Desc{
+        width: auto !important;
+        font-size: 31px !important;
+    }
+    .THIS .stars_css{
+        height: 55px !important;
+    }
+    .THIS .heading_desc{
+        font-size: 37px !important;
+    }
+}

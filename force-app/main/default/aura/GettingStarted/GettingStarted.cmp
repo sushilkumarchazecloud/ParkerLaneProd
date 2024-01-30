@@ -88,7 +88,7 @@
                                     <aura:iteration items="{!v.whatYouGet}" var="item">
                                         <div class="slds-col">
                                             <p class="display">
-                                                <img src="{!$Resource.SolarLoan + '/img/tick.PNG'}" class="tick"/> {!item}
+                                                <img src="{!$Resource.SolarLoan + '/img/tick.png'}" class="tick"/> {!item}
                                             </p>
                                         </div>
                                     </aura:iteration>               
@@ -159,7 +159,7 @@
                                                       label=""
                                                       onchange ="{!c.onChange}"
                                                       options="{!v.YesNo}"
-                                                      value="{!v.quote.Up_Front_Costs_Applicable__c}"
+                                                      value="{!v.quote.Affordability_Confirmation__c}"
                                                       type="button"/>
                             </div>
                         </div>

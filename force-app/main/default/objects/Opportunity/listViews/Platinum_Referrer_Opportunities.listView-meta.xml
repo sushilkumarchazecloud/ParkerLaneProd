@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Platinum_Referrer_Opportunities</fullName>
+    <columns>Referred_by_Company__c</columns>
+    <columns>LAST_ACTIVITY_DATETIME</columns>
+    <columns>OPPORTUNITY.NAME</columns>
+    <columns>FinServ__ReferredByContact__c</columns>
+    <columns>OPPORTUNITY.STAGE_NAME</columns>
+    <columns>Time_at_current_stage__c</columns>
+    <columns>Loan_Amount__c</columns>
+    <columns>Lender__c</columns>
+    <columns>Application_Pending_Status__c</columns>
+    <columns>Application_Pending_Notes__c</columns>
+    <columns>Escalation__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>OPPORTUNITY.STAGE_NAME</field>
+        <operation>notEqual</operation>
+        <value>Nurturing,Working,Closed Lost</value>
+    </filters>
+    <filters>
+        <field>Referrer_Rating__c</field>
+        <operation>equals</operation>
+        <value>Platinum</value>
+    </filters>
+    <filters>
+        <field>Time_at_current_stage__c</field>
+        <operation>lessOrEqual</operation>
+        <value>50</value>
+    </filters>
+    <filters>
+        <field>OPPORTUNITY.STAGE_NAME</field>
+        <operation>equals</operation>
+        <value>Packs Out,Packs Back</value>
+    </filters>
+    <label>Platinum Referrer Opps &lt; 50 at stage</label>
+</ListView>

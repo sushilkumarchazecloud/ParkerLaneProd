@@ -1,0 +1,11 @@
+<aura:component >
+	<aura:attribute name="navSection" type="String" />
+    <aura:attribute name="sessionId" type="String" />
+    <aura:attribute name="removeFooter" type="String" default="false"/>
+    <aura:attribute name="showCustomer" type="Boolean" default="false"/>
+    <aura:attribute name="accountId" type="String"/>
+    
+    <div class="ReferrerPortalRequestQuote" style="padding-left: 11px;display:inherit">
+        <c:ReferralHome sessionId = "{!v.sessionId}" removeFooter="{!v.removeFooter}" showCustomer="{!v.showCustomer}" accountId="{!v.accountId}"/>    
+    </div>
+</aura:component>

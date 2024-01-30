@@ -1,0 +1,52 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<aura:attribute name="activity" type="object" description="to store single activity (task/event) record data"/>   
+    <!--<aura:handler name="init" value="{!this}" action="{!c.myAction}"/>-->
+    <div >
+        <div class="slds-grid slds-wrap line"  style="align-items: baseline;">
+            <div class="slds-col slds-size_2-of-12">
+                <aura:if isTrue="{!OR(v.activity.status == 'Done', v.activity.status == '')}">                      
+                    <div class="lines"> </div>
+                </aura:if>
+                <aura:if isTrue="{!v.activity.status == 'Required Now'}">                      
+                    <div class="linesdt"> </div>
+                </aura:if>
+                <aura:if isTrue="{!v.activity.status == 'Future'}">                      
+                    <div class="linesGry"> </div>
+                </aura:if>
+                <aura:if isTrue="{!v.activity.status == 'Lost'}">
+                	<div style="border-left: 3px solid #cc0000;height: 25px;width : 5px;"> </div>                    
+                </aura:if>
+                <div class="imagesOF">
+                    <aura:if isTrue="{!v.activity.isMajor}">                      
+                        <img src="{!$Resource.SolarLoan + '/img/'+ v.activity.iconName+'.png'}" style="height:28px;"/>
+                        <aura:set attribute="else">
+                            <aura:if isTrue="{!v.activity.status == 'Future'}">        
+                                <img src="{!$Resource.SolarLoan + '/img/'+ v.activity.iconName+'.png'}" style="height:15px;"/>
+                                <aura:set attribute="else">
+                                    <img src="{!$Resource.SolarLoan + '/img/'+ v.activity.iconName+'.png'}" style="height:20px;"/>
+                                </aura:set>
+                            </aura:if>
+                        </aura:set>
+                    </aura:if>
+                </div>                    
+            </div>
+            <div class="slds-col slds-size_10-of-12">
+                <aura:if isTrue="{!v.activity.doneText == 'Applying'}">
+                    <p style="color : #092865; text-align : left;"><b>{!v.activity.doneText}</b></p>                    
+                </aura:if>
+                <aura:if isTrue="{!AND(v.activity.status == 'Done', v.activity.doneText != 'Applying')}">
+                    <p style="color : #649e3c; text-align : left;"><b>{!v.activity.doneText}</b></p>                    
+                </aura:if>
+                <aura:if isTrue="{!v.activity.status == 'Required Now'}">                      
+                    <p style="color : #092865; text-align : left;">{!v.activity.doneText}</p>                    
+                </aura:if>
+                <aura:if isTrue="{!v.activity.status == 'Future'}">                      
+                    <p style="color : #9b9b9b; text-align : left;">{!v.activity.doneText}</p>                    
+                </aura:if>
+                 <aura:if isTrue="{!v.activity.status == 'Lost'}">                      
+                    <p style="color : #cc0000; text-align : left;">{!v.activity.doneText}</p>                    
+                </aura:if>
+            </div>
+        </div>        
+    </div>          
+</aura:component>

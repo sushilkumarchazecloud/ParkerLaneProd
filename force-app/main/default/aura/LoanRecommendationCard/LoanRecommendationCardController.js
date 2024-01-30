@@ -1,6 +1,8 @@
 ({
     doInit : function(component, event, helper) {
+        var cAmount = component.get("v.customerAmount");
         var quote = component.get("v.quote");
+        component.set("v.showbtn",false);
         var loanRates = component.get("v.loanRates");
         var terms = [];
         if(!$A.util.isUndefinedOrNull(quote) && quote != null){
@@ -13,8 +15,10 @@
                 terms.push(term);
             }
             quote.Loan_Term__c = '' + quote.Loan_Term__c;
+            var totalcost = parseFloat(cAmount) + parseFloat(quote.Total_Setup_Fees__c);
             component.set("v.quote", quote);
-            component.set("v.totalAmount", quote.Monthly_Repayment__c);
+            component.set("v.totalCost", totalcost);
+            //component.set("v.totalAmount", quote.Monthly_Repayment__c);
             if(!$A.util.isUndefinedOrNull(quote.Product__r.Features__c) && quote.Product__r.Features__c != null){
                 component.set("v.features", quote.Product__r.Features__c.split(";"));
             }
@@ -33,7 +37,24 @@
                 
             }else if(index == 2){
                 component.set("v.cardName", "Option C");
-            }           
+            }
+            if(quote.Product__r.Minimum_Loan_Amount__c > cAmount || quote.Product__r.Maximum_Loan_Amount__c < cAmount){
+                component.set("v.show",true);
+                component.set("v.showbtn",true);
+                
+                var cmpTarget = component.find('styleChange');
+                $A.util.addClass(cmpTarget, 'changeMe');
+                
+                if(quote.Product__r.Minimum_Loan_Amount__c > cAmount){
+                    component.set("v.availableUnder",true);
+                }
+                else if(quote.Product__r.Maximum_Loan_Amount__c < cAmount){
+                    component.set("v.availableOver",true);
+                }
+            }
+            else{
+                component.set("v.totalAmount", quote.Monthly_Repayment__c);
+            }
         }
         component.set("v.termOptions", terms);
         
@@ -63,31 +84,97 @@
         var cAmount = component.get("v.customerAmount");
         var quote = component.get("v.quote");
         var loanRates = component.get("v.loanRates");
-        if(quote.Product__r.Interest_Rate_Based_On__c =='Tiered Rate' && !$A.util.isUndefinedOrNull(loanRates) ){
-            for(var i=0; i<loanRates.length; i++){
-                if(parseFloat(loanRates[i].From_amount__c) <= cAmount && parseFloat (loanRates[i].To_amount__c) >= cAmount ){
-                    quote.Actual_Comparison_Rate__c = parseFloat(loanRates[i].Comparison_rate__c);
-                    quote.Interest_Rate__c = parseFloat(loanRates[i].Interest_rate__c);
-                    break;
+        
+        if(quote.Product__r.Minimum_Loan_Amount__c > cAmount || quote.Product__r.Maximum_Loan_Amount__c < cAmount){
+            component.set("v.show",true);
+            component.set("v.showbtn",true);
+            
+            var cmpTarget = component.find('styleChange');
+            $A.util.addClass(cmpTarget, 'changeMe');
+            
+            if(quote.Product__r.Minimum_Loan_Amount__c > cAmount){
+                component.set("v.availableUnder",true);
+            }
+            else if(quote.Product__r.Maximum_Loan_Amount__c < cAmount){
+                component.set("v.availableOver",true);
+            }
+            var action = component.get("c.updateNotApplicableQuote");
+            action.setParams({
+                qtUpdate : quote
+            });
+            action.setCallback(this, function(response) { 
+                var state = response.getState();
+                if(state === "SUCCESS") {
+                    console.log('quoteState '+state);
+                }
+            });
+            $A.enqueueAction(action);
+        }            
+        
+        else{
+            component.set("v.isSpinner",false);
+            component.set("v.show",false);
+            component.set("v.showbtn",false);
+            component.set("v.availableUnder",false);
+            component.set("v.availableOver",false);
+            
+            quote.Customer_Amount__c = cAmount;
+            quote.Not_Applicable__c = false;
+            component.set("v.isSpinner",true);
+            var action = component.get("c.getFreshQuotes");
+            action.setParams({
+                qtUpdate : quote
+            });
+            action.setCallback(this, function(response) { 
+                var state = response.getState();
+                if(state === "SUCCESS") {
+                    component.set("v.isSpinner",false);
+                    var ret = response.getReturnValue();
+                    var qtt = ret.quote;
+                    var terms = [];
+                    if($A.util.isUndefinedOrNull(qtt.Monthly_Account_Keeping_Fees__c)){
+                        qtt.Monthly_Account_Keeping_Fees__c = 0;
+                    }
+                    var totalRepayment = parseFloat(qtt.Customer_Amount__c) + parseFloat(qtt.Total_Setup_Fees__c);
+                    var total = Math.ceil((((qtt.Interest_Rate__c/1200 * totalRepayment) * (Math.pow((1 + (qtt.Interest_Rate__c/1200)),qtt.Loan_Term__c ))) / (Math.pow((1 + (qtt.Interest_Rate__c/1200)),qtt.Loan_Term__c) - 1))+ qtt.Monthly_Account_Keeping_Fees__c );
+                    component.set("v.quote", qtt);
+                    component.set("v.totalAmount", total);
+                    component.set("v.loanRates",ret.loanRatelist);
+                    var totalcost = parseFloat(cAmount) + parseFloat(quote.Total_Setup_Fees__c);
+                    console.log('totalamount '+totalcost);
+                    component.set("v.totalCost", totalcost);
+                }
+            });
+            $A.enqueueAction(action);
+            //component.set("v.isSpinner",false);
+           /* if(quote.Product__r.Interest_Rate_Based_On__c =='Tiered Rate' && !$A.util.isUndefinedOrNull(loanRates) ){
+                for(var i=0; i<loanRates.length; i++){
+                    if(parseFloat(loanRates[i].From_amount__c) <= cAmount && parseFloat (loanRates[i].To_amount__c) >= cAmount ){
+                        quote.Actual_Comparison_Rate__c = parseFloat(loanRates[i].Comparison_rate__c);
+                        quote.Interest_Rate__c = parseFloat(loanRates[i].Interest_rate__c);
+                        break;
+                    }
                 }
             }
-        }
-        if($A.util.isUndefinedOrNull(quote.Monthly_Account_Keeping_Fees__c)){
-            quote.Monthly_Account_Keeping_Fees__c = 0;
-        }
-        quote.Customer_Amount__c = cAmount;
-        var total = Math.ceil((((quote.Interest_Rate__c/1200 * quote.Customer_Amount__c) * (Math.pow((1 + (quote.Interest_Rate__c/1200)),quote.Loan_Term__c ))) / (Math.pow((1 + (quote.Interest_Rate__c/1200)),quote.Loan_Term__c) - 1))+ quote.Monthly_Account_Keeping_Fees__c );
-       
-        component.set("v.totalAmount", total);
-        component.set("v.quote", quote);
-    },
+            
+            if($A.util.isUndefinedOrNull(quote.Monthly_Account_Keeping_Fees__c)){
+                quote.Monthly_Account_Keeping_Fees__c = 0;
+            }
+            quote.Customer_Amount__c = cAmount;
+            var total = Math.ceil((((quote.Interest_Rate__c/1200 * quote.Customer_Amount__c) * (Math.pow((1 + (quote.Interest_Rate__c/1200)),quote.Loan_Term__c ))) / (Math.pow((1 + (quote.Interest_Rate__c/1200)),quote.Loan_Term__c) - 1))+ quote.Monthly_Account_Keeping_Fees__c );
+            
+            component.set("v.totalAmount", total);
+            component.set("v.quote", quote); */
+        } 
+    }, 
     
     changeTerm : function (component){ 
         var quote = component.get("v.quote");
         if($A.util.isUndefinedOrNull(quote.Monthly_Account_Keeping_Fees__c)){
-                quote.Monthly_Account_Keeping_Fees__c = 0;            
+            quote.Monthly_Account_Keeping_Fees__c = 0;            
         }
-        var total = Math.ceil((((quote.Interest_Rate__c/1200 * quote.Customer_Amount__c) * (Math.pow((1 + (quote.Interest_Rate__c/1200)),quote.Loan_Term__c ))) / (Math.pow((1 + (quote.Interest_Rate__c/1200)),quote.Loan_Term__c) - 1))+ quote.Monthly_Account_Keeping_Fees__c );
+        var totalRepayment = parseFloat(quote.Customer_Amount__c) + parseFloat(quote.Total_Setup_Fees__c);
+        var total = Math.ceil((((quote.Interest_Rate__c/1200 * totalRepayment) * (Math.pow((1 + (quote.Interest_Rate__c/1200)),quote.Loan_Term__c ))) / (Math.pow((1 + (quote.Interest_Rate__c/1200)),quote.Loan_Term__c) - 1))+ quote.Monthly_Account_Keeping_Fees__c );        
         component.set("v.totalAmount", total);
     }
     

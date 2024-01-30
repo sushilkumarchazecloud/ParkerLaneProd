@@ -5,46 +5,54 @@
     <aura:attribute name="redirectURL" type="String" default=""/>
     <aura:attribute name="selectedQuote" type="sObject"/>
     <aura:attribute name="setAddress" type="String" />
+    <aura:attribute name="bankURL" type="String" />
+    <aura:attribute name="IsApplicantTwo" type="String" />
     
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     
     <div style="color: #1a2745;">
         <section class="header--section slds-p-bottom_medium">
-            <div>
-                <img src="{!$Resource.SolarLoan + '/img/checkgreen.png'}" style="border-radius: 72px; border: 2px solid #5bc65b;" />
+            <div align="center">
+                <div style="border-radius: 72px; border: 2px solid #5bc65b; width : 77px; height : 75px;">
+                    <img src="{!$Resource.SolarLoan + '/img/VerificationIcon.png'}"  style="width : 55px; height : 55px; margin-top : 5px;"/>
+                </div>
             </div>
             <div>
-                <h1 class = "heading_edit">Pre-approved!</h1>
+                <h1 class = "heading_edit">Income Verification</h1>
             </div>
             <div>
-                <p class="pargraph_edit">Verify your income and identity
+                <p class="pargraph_edit">Provide proof of income and required documentation.
                 </p>
             </div>
             
         </section>
         <lightning:spinner aura:id="mySpinner" variant="brand" size="large" class="" />
         <section class="max-700 slds-p-around_medium" style="line-height: normal;">
-            
+            <!--<div class="slds-align_absolute-center slds-m-top_medium">
+                <img src="{!$Resource.SolarLoan + '/img/Step2Docs.png'}" class="trackercls"/>
+            </div>-->
             <div class="">
                 
                 <div class=" applicant-compact-form">
                     <div class="slds-grid slds-wrap slds-p-bottom_medium">
-                        <div class="slds-size_2-of-2 slds-m-top_large">
-                            <h1 class = "heading_edit">Congratulations! You're almost done.</h1>
+                        <div class="slds-size_2-of-2 slds-m-top_medium">
+                            <h1 class = "heading_edit">It's your choice.</h1>
                         </div>
                         <div class="slds-size_2-of-2 slds-m-top_x-small">
                             <div class="slds-text-link_reset" >
-                                <p class="pargraph-bold-style">Your application is pre-approved! All that's left to do now is verify your income and identify so we can satisfy Australian Responsible Lending laws.
+                                <p class="pargraph-bold-style">Responsible Lending Laws require that we obtain proof of income
+                                    before we can issue an approval. Choose 'manual' to upload your documents now or 'online' to use
+                                    secure service BankStatements.com.au.                                    
                                 </p>
                             </div> 
                         </div>
                     </div>
-                    <div style="margin-top:-7px"> 
+                    <!--<div style="margin-top:-7px"> 
                         <div class="slds-grid slds-wrap slds-m-top_large">
                             <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 verify-col">
                                 <div class="identity-col">
                                     <h1 class="steps_heading">STEP 1: VERIFY YOUR INCOME</h1>
-                                    <p class="step_paragraph">Upload a bank statement or send your income details online.</p>
+                                    <p class="step_paragraph">Link your statements online OR provide standard income docs.</p>
                                 </div>
                             </div>
                             <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 verify-col">
@@ -54,14 +62,12 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="slds-m-top_x-large">
-                        <div>
+                    </div>-->
+                    <div class="slds-p-around_small slds-align_absolute-center slds-m-top_large blueBox">
+                        <!--<div>
                             <h1 style="font-size:22px; font-weight:bold;font-family: ProximaNova-AltBold;">STEP 1. Income verification: it's your choice.</h1>
-                        </div>
-                        <div class="slds-m-top_medium" style="width: 101%">
-                            <p>68% of {!v.selectedQuote.Purpose__c} applicants in {!v.setAddress} provide their income information via our online portal because it is faster, safer and 100% secure.</p>
-                        </div>
+                        </div>-->
+                        <p style="text-align: center">68% of {!v.selectedQuote.Purpose__c} applicants in {!v.setAddress} provide their income information via our online portal because it is faster, safer and 100% secure.</p>
                     </div>
                     <div class="slds-m-top_large">
                         <div class="slds-grid slds-wrap">
@@ -86,29 +92,27 @@
                                         </div>
                                     </div>
                                     
-                                    <div class="">
-                                        <div style="display: flow-root;margin-bottom: -25px;">
-                                            <lightning:button class="slds-m-vertical_x-large continue-btn-style1" variant="success" 
-                                                              label="Choose online" onclick="{!c.saveSummary}" />
-                                        </div>
-                                    </div> 
+                                    <div class="slds-p-top_large">
+                                        <lightning:button class="continue-btn-style1" variant="success" 
+                                                          label="Choose online" onclick="{!c.updateSumary}"/>
+                                    </div>
                                 </div>
                             </div>
-
+                            
                             <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 per-box-container" >
                                 <div class="slds-p-around_medium percentage-box">
                                     <img src="{!$Resource.SolarLoan + '/img/32percent.png'}" style="height:45px; width:auto"/>
-                                    <div class="slds-m-top_x-small" style="font-family: ProximaNova-AltBold; font-weight:bold; font-size: 22px;">Upload Statement</div>
-                                    <p class="slds-m-top_x-small">Upload an official bank statement of the account your income goes into (less than 6 weeks old).</p>
+                                    <div class="slds-m-top_x-small" style="font-family: ProximaNova-AltBold; font-weight:bold; font-size: 22px;">Upload Documents</div>
+                                    <p class="slds-m-top_x-small">Upload standard income documents like payslips and/or income statements.</p><br/>
                                     
                                     <div class="slds-m-top_small">  
                                         <div style="display: flex;">
                                             <img src="{!$Resource.SolarLoan + '/img/checkmark.png'}" style="height:12px; width:auto; margin-block: 4px;"/>
-                                            <p class="slds-m-left_small"><b>Official </b>statements only</p>
+                                            <p class="slds-m-left_small">Official documents only</p>
                                         </div>
-                                        <div class="slds-m-top_x-small" style="display: flex;">
+                                        <div class="slds-m-top_x-small" style="display: flex;"> 
                                             <img src="{!$Resource.SolarLoan + '/img/checkmark.png'}" style="height:12px; width:auto; margin-block: 4px;"/>
-                                            <p class="slds-m-left_small">Requires our team to read your statement line-by-line</p>
+                                            <p class="slds-m-left_small">Requires our team to assess your information manually</p>
                                         </div>
                                         <div class="slds-m-top_x-small" style="display: flex;">
                                             <img src="{!$Resource.SolarLoan + '/img/checkmark.png'}" style="height:12px; width:auto; margin-block: 4px;"/>
@@ -116,11 +120,9 @@
                                         </div>
                                     </div>
                                     
-                                    <div class="">
-                                        <div style="display: flow-root;margin-bottom: -25px;">
-                                            <lightning:button class="slds-m-vertical_x-large continue-btn-style2" variant="success" 
-                                                              label="Choose manual" onclick="{!c.uploadManually}" />
-                                        </div>
+                                    <div class="slds-p-top_large">
+                                        <lightning:button class="continue-btn-style2" variant="success" 
+                                                          label="Choose manual" onclick="{!c.uploadManually}" />
                                     </div>
                                 </div>
                             </div>                                                        
@@ -133,7 +135,7 @@
                         <h1 style="font-family: ProximaNova-AltBold;">Frequently Asked Questions</h1>
                     </div>
                     <div>
-                        <div style="{! 'background-color:' + (!v.isexpanded1 ? ' #D9D9D9' : '#d2edee')}" onclick="{!c.changeStateQuesion1}" >
+                        <!--<div style="{! 'background-color:' + (!v.isexpanded1 ? ' #D9D9D9' : '#d2edee')}" onclick="{!c.changeStateQuesion1}" >
                             <h1 class = "faq-heading">Q. What Does Pre-approved mean?</h1>
                         </div>
                         
@@ -147,7 +149,7 @@
                                 <b>You should not make purchase decision
                                     util you have received a final loan approval</b>
                             </p>
-                        </div>
+                        </div>-->
                         
                         
                         <div class="slds-m-top_medium" style="{! 'background-color:' + (!v.isexpanded2 ? ' #D9D9D9' : '#d2edee')}" onclick="{!c.changeStateQuesion2}" >

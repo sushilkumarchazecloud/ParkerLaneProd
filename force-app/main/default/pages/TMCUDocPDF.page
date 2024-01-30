@@ -36,12 +36,16 @@
             <div>
                 <apex:pageBlock >
                     <div class="heading">
-                        <div align="left">
-                            <span>It is a requirement of a credit union that you become a member of the bank when taking out a product or servicewith them. Please read and sign the document below</span><br/>           
-                        </div>
+                        <div style="text-align : left; text-align : justify; font-size : 16px; color : blue;">
+                            <span><img src="{!$Resource.SolarLoan+'/img/darkblueinfo.png'}" style="height : 27px;"/></span><br/>
+                            <span>You become a member of a credit union when taking out a product or service with them. Please read and sign the document below</span>
+                        </div><br/>
                     </div>
                     <div style="font-size : 25px; font-family: sans-serif;">
                         <span><b>Transport Mutual Credit<br/> Union - {!IF(opportunity.Applicant_2__c != null, 'Joint', 'Single')} Membership Application<br/> Form.</b></span>
+                    </div><br/><br/>
+                    <div class="tableData">
+                        <span>Read the following sections carefully.</span>
                     </div><br/>
                     <div class="tableData" >
                         <div>
@@ -118,22 +122,7 @@
                                 </tr>
                             </table><br/>
                         </div>
-                    </div><br/>
-                    <div class="tableData">
-                        <span>I am a tax resident of each of the following countries and am not a tax resident of any other country: {!contact.Tax_Resident_of_countries__c}</span><br/><br/>                   
-                    </div>
-                    <div class="tableData">
-                        <span>My tax file number is (optional): {!contact.Tax_File_Number_TFN__c}</span><br/>
-                        <span style="font-size : 12px; font-family: sans-serif;">Disclosure of your tax File Number [TFN] is optional. declining to quote is not an offence.</span><br/><br/>
-                    </div>
-                    <div class="tableData">
-                        <span>If you are a tax resident of a foreign country, enter your Tax Identification Number (optional): {!contact.Tax_Identification_Number_TIN__c}</span><br/>
-                        <span style="font-size : 12px; font-family: sans-serif;">The TIN is the taxpayer identification number used in the relevant country. If you do not have a TIN for a country you are a tax resident of please explain why in the fieldabove, being either (A) the country does not issue TINs to residents or (B) other reason why you do not have a TIN (with explanation)</span><br/><br/>
-                    </div>
-                    <div class="tableData">
-                        <span>Please read the following sections carefully.</span>
-                    </div><br/><br/>
-                    
+                    </div><br/>                                       
                     <div class="BodyData">
                         <span>Head Office : 
                             Ground Floor 410 Elizabeth Street Surry Hills NSW. 
@@ -178,16 +167,25 @@
                         <span>I can revert to paper statements and notices in the post at any time</span><br/><br/>
                     </div>
                     <div class="BodyData">
-                        <span><b>Select the number of applicants required to sign to operate your Transport Mutual Credit Union  accounts: </b>{!contact.Number_of_applicants_to_operate_account__c}</span><br/><br/>
+                        <span><b>What is your country of residence for tax purposes?</b></span><br/>
+                        <span>{!contact.Tax_Resident_of_countries__c}</span><br/><br/>
                     </div>
                     <div class="BodyData">
-                        <span style="font-size : 16px;"><b>By signing below you confirm that you have read and agreed to the terms and conditions set out in this document and the Annexure Documents accessible via the links above</b></span>
-                    </div><br/><br/>
+                        <span style="font-family: sans-serif;"><b>Select the number of applicants required to sign to operate your Transport Mutual Credit Union  accounts:</b><span>(e.g.  requesting fund, vary the term or closing the account)</span></span><br/>
+                        <span>{!contact.Number_of_applicants_to_operate_account__c}</span><br/><br/><br/><br/>
+                    </div>
+                   <div class="BodyData">
+                       <span>By signing below you confirm that:</span> 
+                       <ul>
+                           <li>You have read and agreed to the terms and conditions set out in this document; and</li>
+                           <li>The information in the application form is true and complete.</li>
+                       </ul>
+                    </div>
                     <div class="BodyData">
                         <span><b>Signed by: </b>{!contact.Name}</span><br/>
-                        <apex:image value="{!ImageSrc}" width="220" height="155" alt="Not Found"/>
-                        
-                    </div><br/>
+                        <apex:image value="{!imgWrap.imageURl}" style="margin-left : -35px;" width="220" height="145" alt="Not Found"/><br/>
+                    	<span >{!imgWrap.DateOfsign}</span>
+                    </div>
                     <!-- <div class="TmcuInfo">
                         <span><u>Completion Certificate</u></span><br/>
                         <span>Document ID #: {Case ID Number}</span><br/>

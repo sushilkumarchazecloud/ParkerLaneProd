@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Personal_Loan_Layout</fullName>
+    <fields>RecordTypeId</fields>
+    <fields>Applicant_1__c</fields>
+    <fields>Applicant_2__c</fields>
+    <fields>Loan_Amount__c</fields>
+    <fields>Lender__c</fields>
+    <fields>Referred_by_Company__c</fields>
+    <fields>Referrer_Rating__c</fields>
+    <label>Personal Loan Layout</label>
+</CompactLayout>

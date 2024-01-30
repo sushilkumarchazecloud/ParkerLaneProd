@@ -208,8 +208,13 @@
     margin-left: -7px;
     margin-right: -7px
 }
-
+.THIS .trackercls{
+        width: 50%;
+    }
  @media screen and (max-width: 770px) {
+    .THIS .trackercls{
+        width: 85%;
+    }
      .THIS .set_widthofChildren {
             width: 60% !important;
       }

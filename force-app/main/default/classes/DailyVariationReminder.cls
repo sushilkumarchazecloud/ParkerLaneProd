@@ -186,7 +186,7 @@ global  class DailyVariationReminder implements Schedulable {
                                            Opportunity__r.Referred_by_Company__c,Applicant_2_A2__c,Applicant_2_A2__r.PersonEmail,Applicant_1_A1__c,Applicant_1_A1__r.PersonEmail,Applicant_1_A1__r.Name,Opportunity__r.Referred_by_Company__r.Name,
                                            Customer_Authorisation_Type__c,Date_Last_Request_Status_Changes__c,Opportunity__r.Contact_2__c,Customer_Authorisation_Status__c,Variation_Requested_By__r.name,Opportunity__c,Applicant_2_A2__r.Name,Applicant_2_A2__r.Phone,Person_Requesting__r.Name,
                                            Funding_On_Hold__c,Person_Requesting__r.id,Applicant_1_A1__r.PersonContactId,Applicant_2_A2__r.PersonContactId,Person_Requesting__c,Request_Status__c,Opportunity__r.FinServ__ReferredByContact__c,
-                                           Opportunity__r.FinServ__ReferredByContact__r.Email from Funding_Request__c];
+                                           Opportunity__r.FinServ__ReferredByContact__r.Email from Funding_Request__c where Opportunity__c != null];
         
         for(Funding_Request__c frR :frRec2){            
             Integer days = integer.valueOf(frR.BusinessDays__c);

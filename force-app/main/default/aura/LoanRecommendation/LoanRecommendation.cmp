@@ -4,6 +4,7 @@
     <aura:attribute name="recordId" type="Id" />
     <aura:attribute name="masterQuote" type="String"/>
     <aura:attribute name="customerAmount" type="Integer"/>
+    <aura:attribute name="customerAmountnew" type="Integer"/>
     <aura:attribute name="totalAmount" type="Decimal" />
     <aura:attribute name="applicantFName" type="String" default=""/>
     <aura:attribute name="applicantLName" type="String" default=""/>
@@ -14,9 +15,14 @@
     <aura:attribute name="selectedQuote" type="sObject" />
     <aura:attribute name="showError" type="Boolean" default="false"/>
     <aura:attribute name="errorMsg" type="String"/>
+    <aura:attribute name="timer" type="Integer"/>
+    <aura:attribute name= "isSpinner" type="boolean"/>
     
+    <aura:handler name="change" value="{!v.isSpinner}" action="{!c.addSpinner}"/>
     <aura:handler name="ApplyNowEvent" event="c:ApplyNowEvent" action="{!c.Apply}"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    
     
     <div class="loan-recommendation">
         <aura:if isTrue="{!v.showError}">
@@ -28,6 +34,7 @@
             </div>
         </aura:if>
         <lightning:spinner aura:id="mySpinner" variant="brand" size="large" class="slds-hide" />
+        <lightning:spinner aura:id="inItSpinner" variant="brand" size="large" class="spins" />
         
         <section class="bg-light-sky-blue slds-p-around_large slds-text-align_center">
             <div class="product-selector__choices-container">
@@ -42,21 +49,22 @@
                 </div>
                 
                 <div class="header-input-loan-amount">
-                        <span class="slds-align_absolute-center" style="padding-top:8px"><b>Loan Amount:</b>&nbsp;</span>
-                        <span class="input-dollar">
-                            <lightning:input aura:id="howMuchFieldcheck" required="true"
-                                                 min="0" type="number" 
-                                                 class="txt-left no-abbr input-style"  
-                                                 step="1" 
-                                                 value = "{!v.customerAmount}" 
-                                                 placeholder="How much do you need?"/>
-                        </span>
-                    </div>
+                    <span class="slds-align_absolute-center" style="padding-top:8px"><b>Loan Amount:</b>&nbsp;</span>
+                    <span class="input-dollar">
+                        <lightning:input aura:id="howMuchFieldcheck" required="true"
+                                         min="0" type="number" 
+                                         class="txt-left no-abbr input-style"  
+                                         step="1" 
+                                         value = "{!v.customerAmount}" 
+                                         placeholder="How much do you need?"
+                                         onchange="{!c.onAmountChange}"/>
+                    </span>
+                </div>
                 <h5 class="slds-p-top_medium"><b>Purpose:</b>&nbsp;{!v.purpose} </h5>
             </div>
         </section>
         <section class="our-loans bg-lightest slds-p-around--large max-1000">
-            <h1 class="slds-m-top_medium slds-text-align_center txt-dark-blue" style="font-size: 1.75rem;font-weight: 900; font-family:ProximaNova-AltBold"> Your loan options</h1>
+            <h1 class="slds-m-top_medium slds-text-align_center txt-dark-blue" style="font-size: 1.75rem;font-weight: 900; font-family:ProximaNova-AltBold"> Your loan options (including all fees)</h1>
             <div class="slds-align_absolute-center">
                 <div class="slds-text-align_center" style="display: inline-flex; font-size: 12px !important;">
                     <div class="esp-mark" style="color:white; font-size: 10px">!</div>
@@ -68,7 +76,8 @@
                     <aura:iteration items="{!v.quotesWpr}" var="quotesWpr" indexVar = "indx">
                         <c:LoanRecommendationCard quote ="{!quotesWpr.quote}" 
                                                   loanRates = "{!quotesWpr.loanRatelist}"
-                                                  customerAmount="{!v.customerAmount}"
+                                                  customerAmount="{!v.customerAmountnew}"
+                                                  isSpinner="{!v.isSpinner}"
                                                   purpose="{!v.purpose}"
                                                   index = "{!indx}"/>
                     </aura:iteration> 

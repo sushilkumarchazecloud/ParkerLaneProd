@@ -1,9 +1,18 @@
 ({
 	uploadDocument: function(cmp, event, file){
+        cmp.set("v.isDisabled",true);
         var ids = [];
         var FileUploading = 0;  
         var FileUploaded = 0;  
         cmp.set("v.Name",file.name);
+        var arr = [];
+        arr = cmp.get("v.Name");
+        if(arr.length > 20){
+            var str =  arr.substr(0, 20);
+            str = str + '...';
+            console.log("arr>>>"+str);
+            cmp.set("v.Name",str);
+        }
         var self = this;
         uploadSelectedFile(file,function(err, res){   
             FileUploading += 1;  
@@ -20,7 +29,8 @@
                     VersionData : content,   
                     PathOnClient : file.name,
                     Title : file.name,                           
-                    FirstPublishLocationId : cmp.get("v.recordId")
+                    FirstPublishLocationId : cmp.get("v.recordId"),
+                    OwnerId : cmp.get("v.UserId")
                 };  
                 $.ajax({  
                     url: $A.get("$Label.c.SiteUrl").split("''").join("")+'/services/data/v39.0/sobjects/ContentVersion',  
@@ -43,12 +53,17 @@
                     success: function(res) {  
                         FileUploaded += 1;
                         cmp.set("v.AttachId",res.id);
-                        //console.log('AttachIdsucces');
-                        //console.log(cmp.get("v.AttachId"));
                         cmp.set("v.upload",true);
+                        self.updateCustomerActivity(cmp, event);
+                        cmp.set("v.showImg",true);
+                        cmp.set("v.isDisabled",false);
                         cmp.set("v.isUploading",false);
                         cmp.set("v.count", cmp.get("v.count")+1);
-                        //console.log('count:'+cmp.get("v.count"));
+                        var compEvent = cmp.getEvent("UploadFileEvent");
+                        compEvent.setParams({
+                            "disable" : false 
+                        });
+                        compEvent.fire();
                         callback(null, true)  
                     },  
                 });  
@@ -67,10 +82,27 @@
             reader.readAsDataURL(file);  
         } 
     },
+    
+    updateCustomerActivity : function(cmp, event){
+        var self = this;
+        var temp = cmp.get("v.upload");
+        var check;
+        if(temp){
+            check = true;
+        }
+        var action = cmp.get("c.updateActivity");
+        action.setParams({
+            updateField : check,
+            recId : cmp.get("v.recordId")
+        });
+        action.setCallback(this, function(response){
+            var state = response.getState();
+        });
+        $A.enqueueAction(action);
+    },
+    
     updateName: function(cmp, event){
         var AttachId =  cmp.get("v.AttachId");
-       // console.log('AttachId');
-       // console.log(AttachId);
         if(!AttachId)
             return;
         var requestId =  cmp.get("v.requestId");
@@ -102,8 +134,6 @@
                     console.log('count:'+cmp.get("v.count"));
                 }, 
                 error: function (res) {  
-                    //console.log('Error in Operation'); 
-                    //console.log(res);
                 }  
             });
         }
@@ -124,8 +154,6 @@
                 
             }, 
             error: function (res) {  
-               // console.log('Error in Operation'); 
-               // console.log(res);
             }  
         }); 
     },
@@ -137,14 +165,11 @@
             contentType: false,  
             headers: {'Authorization': 'Bearer '+cmp.get("v.sessionId"), 'Content-Type': 'application/json'},   
             success: function(res) {
-                //console.log(res);
                 cmp.set("v.requestId",res.ContentDocumentId);
                 cmp.set("v.contentBodyId",res.FileType ==='JPG'? 'ORIGINAL_Jpg':'SVGZ');
                 
             }, 
             error: function (res) {  
-                //console.log('Error in Operation'); 
-               // console.log(res);
             }  
         }); 
     },
@@ -160,14 +185,23 @@
             contentType: false,  
             headers: {'Authorization': 'Bearer '+cmp.get("v.sessionId"), 'Content-Type': 'application/json'},   
             success: function(res) {
-                //console.log('Success in Operation'); 
-                //console.log(res);
             }, 
             error: function (res) {  
                 cmp.set("v.isAttachUpdated",false);
-               // console.log('Error in Operation'); 
-                //console.log(res);
             }  
         }); 
+    },
+    
+    handleSaveClose : function(component) {
+        component.set("v.ishideFake", false);  
+        component.set("v.isComplete",true); 
+        var action = component.get("c.completeBankstatement");
+        action.setParams({
+            recId : component.get("v.recordId")
+        });
+        action.setCallback(this, function(response){
+            var state = response.getState();
+        });
+        $A.enqueueAction(action);
     },
 })

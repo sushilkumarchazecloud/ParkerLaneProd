@@ -1,0 +1,43 @@
+.THIS .slds-icon {
+    height:19px !important; 
+}
+.THIS .box-style-qt{
+    padding: 13px;
+    border: 1px solid #c2c2c2;
+    border-radius: 7px;
+    margin: 12px;
+}
+
+.THIS .resendBtnDisabled{
+    background-color:#c9c7c5 !important;
+}
+
+.THIS .no-abbr label.slds-form-element__label abbr, .THIS .no-abbr legend.slds-form-element__label abbr {
+    display: none !important;
+}
+
+.THIS .resendBtnEnabled{
+    background-color:#1a2745 !important;
+}
+
+.THIS .successBtn{
+    color:white !important;
+}
+
+.THIS .chkbox  .slds-checkbox .slds-checkbox_faux{
+    border-radius: 10px !important;
+}
+
+.THIS .spinner2{
+  position: absolute;
+  margin-top : 10rem !important;
+}
+
+.THIS .spinner {
+  position: relative !important;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.THIS .bg-whiteOnSpin{
+    color: #1a2745;
+    opacity :35% !important;
+}

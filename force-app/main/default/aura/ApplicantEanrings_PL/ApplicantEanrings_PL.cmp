@@ -84,8 +84,10 @@
         </aura:if>
         <lightning:spinner aura:id="mySpinner" variant="brand" size="large" class="" />
         <section class="max-700 slds-col slds-si1ze_1-of-1 bg-lightest txt-blue slds-p-bottom--medium">
-            <div class="">
-                
+            <div class="slds-align_absolute-center  slds-m-top_x-large">
+                <img src="{!$Resource.headersLogo + '/headersLogo/Employment.png'}" class="trackercls"/>
+            </div>
+            <div class="">                
                 <header class="checkout-page-banner--gradient">
                             <h1 class="slds-p-around_medium heading--page slds-m-top_medium">Income &amp; Employment</h1>
                 </header>
@@ -167,7 +169,7 @@
                                 <div class="slds-form__item" role="listitem">
                                     <div class="slds-form-element slds-form-element_stacked slds-is-editing">
                                         <lightning:input aura:id="fieldcheck" formatter="currency"
-                                                         type="number" step="1"
+                                                         type="number" step="1" class="no-abbr"
                                                          value="{!v.applicant1.spouse_s_approximate_annual_income__c}"
                                                          required="true"
                                                          label="Your spouse’s annual income after tax?" placeholder="Annual Income"/>

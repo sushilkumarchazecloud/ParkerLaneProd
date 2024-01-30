@@ -132,7 +132,14 @@
      margin-left:0.5rem;
     
 }
-
+.THIS .trackercls{
+    width: 50%;
+}
+@media screen and (max-width: 770px) {
+    .THIS .trackercls{
+        width: 85%;
+    }
+}
 
 .THIS .radio_button_size .slds-radio_button-group .slds-button label.slds-radio_button__label{
     min-width: 3.5rem;
@@ -183,9 +190,15 @@
     padding-left: 2.7rem!important;
     padding-right: 2.7rem!important;
     font-family: ProximaNovaAlt-Medium;
-    color: var(--slds-c-button-color-border, var(--sds-c-button-color-border, transparent))!important;
-    background: rgb(245 245 245)!important;
+   /* color: var(--slds-c-button-color-border, var(--sds-c-button-color-border, transparent))!important;
+    background: rgb(245 245 245)!important; */
+    color: #0176d3 !important;
+    background: #f5f5f5 !important;
      
+}
+.THIS .privious-button_style1:hover{
+    color : #10467a !important;
+    background: #f5f5f5 !important;
 }
 .THIS .custom button.slds-button.slds-button_success.slds-m-vertical_medium.slds-float_right.save-button_style1.slds-m-right_x-small{
             white-space: nowrap;                    

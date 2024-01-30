@@ -1,0 +1,166 @@
+<aura:component controller="ReferrerPortalController" >
+    <aura:attribute name="ConWrapper" type="object" />
+    <aura:attribute name="Con" type="object"/>
+    <aura:attribute name="referrerContact" type="Contact"/>
+    <aura:attribute name="StatusIcon" type="String"/>
+    <aura:attribute name="modalShow" type="boolean" default="false"/>
+    <aura:attribute name="ishide" type="boolean" default="true"/>
+    <aura:attribute name="isSaveBtnDisabled" type="Boolean" default = "true" />
+    <aura:attribute name="showError" type="Boolean" default="false"/>
+    <aura:attribute name="errorMsg" type="String" default="Please update the form entries highlighted in red and try again"/>
+    <aura:attribute name="options" type="List" default="[
+    {'label': 'Yes', 'value': true},
+    {'label': 'No', 'value': false},
+    ]"/>
+    <aura:attribute name="options2" type="List" default="[
+    {'label': 'Active', 'value': 'Active'},
+    {'label': 'Hold', 'value': 'Hold'},
+    {'label': 'Retired', 'value': 'Retired'},
+    ]"/>
+    <aura:handler name ="init" value="{!this}" action ="{!c.doInit}"/>
+    <div  class="activity-box">
+        <table>
+            <tbody>
+                <tr >
+                    <td style="width: 15%;">{!v.ConWrapper.ReferrerContact.LastName}</td>
+                    <td style="width: 15%;">{!v.ConWrapper.ReferrerContact.FirstName}</td> 
+                    <td style="width: 25%;">{!v.ConWrapper.ReferrerContact.Email} <br/>{!v.ConWrapper.ReferrerContact.MobilePhone}</td>
+                    <td style="width: 20%;">
+                        Referrals: {!v.ConWrapper.TotalReferrals} <br/>
+                        Approved: <ui:outputNumber value="{!v.ConWrapper.TotalLoanAmount_Approved}" format="$#,##0"/> <br/>
+                        Funded: <ui:outputNumber value="{!v.ConWrapper.TotalLoanAmount_Settled}" format="$#,##0"/>
+                    </td>
+                   <td style="width: 10%;">{!v.ConWrapper.Role} <br/> <b>{!v.ConWrapper.ReferrerContact.Referrer_Rating__c}</b></td>
+                    <td style="width: 10%;">
+                        <aura:if isTrue="{!not(empty(v.StatusIcon))}">
+                        <img src="{!$Resource.ReferralPortal + '/ReferralPortal/'+v.StatusIcon+'.png'}" style="height:8px;vertical-align: unset;"/>&nbsp;{!v.ConWrapper.ReferrerContact.Status__c}
+                        </aura:if>
+                        </td>
+                        
+                    <td style="width: 5%;"><lightning:buttonIcon iconName="utility:expand_alt" size="small" variant="bare" onclick="{!c.showModal}"/></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <aura:if isTrue="{!v.modalShow}">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" >
+                    <div class="slds-grid ">
+                        <div class="slds-col slds-grid slds-grid_vertical" style="line-height: initial;">
+                            <div class="heading2 slds-col"><b>{!v.ConWrapper.ReferrerContact.Name}</b></div>
+                            <div class="heading4 slds-col">Referrer status: {!v.ConWrapper.ReferrerContact.Referrer_Rating__c} </div>
+                        </div>
+                        <div class="slds-col slds-text-align_right">
+                            <lightning:buttonIcon class="modalClose" variant="bare" size="small" iconName="utility:close" onclick="{!c.closeModal}"/>                    
+                        </div>
+                    </div>
+                    <div class="slds-m-top_x-small slds-m-bottom_medium" style="border-bottom: 1px solid grey"></div>
+                    <aura:if isTrue="{!v.showError}">
+                        <div class="slds-notify slds-notify_toast slds-theme_error slds-align_absolute-center slds-m-vertical--medium error-section">
+                            <span class="slds-assistive-text">error</span>
+                            <div class="slds-notify__content">
+                                <p class="slds-align_absolute-center">{!v.errorMsg}.</p>                
+                            </div>
+                        </div>
+                    </aura:if>
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2" >
+                            <div class="slds-form slds-p-top_small" role="list">
+                                <div class="slds-form__column">
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-grid">
+                                            <div class="slds-size_4-of-6"><b>Contact Details</b></div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                            <lightning:input class="no-abbr" label="Surname" aura:id="fieldcheck" value="{!v.referrerContact.LastName}"
+                                                             readonly="{!v.ishide}" required="true"/> 
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                            <lightning:input class="no-abbr" label="First Name" aura:id="fieldcheck" required="true" value="{!v.referrerContact.FirstName}"
+                                                             readonly="{!v.ishide}"
+                                                             />                  
+                                        </div>
+                                    </div>
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                            <lightning:input class="no-abbr" label="Email" aura:id="fieldcheck" type="email"  value="{!v.referrerContact.Email}"
+                                                             readonly="{!v.ishide}" required="true"
+                                                             pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{1,5})$"
+                                                             messageWhenPatternMismatch = "Please enter valid Email Id"/>                        
+                                        </div>
+                                    </div>
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                            <lightning:input class="no-abbr" label="Mobile Phone" aura:id="fieldcheck" type="tel" value="{!v.referrerContact.MobilePhone}"
+                                                             pattern="([0-9]{10}|[0-9]{4} [0-9]{3} [0-9]{3}|[0-9]{2} [0-9]{4} [0-9]{4})"
+                                                             messageWhenPatternMismatch="Pattern should be 1234567890 or 1234 567 890 or 12 3456 7890"
+                                                             readonly="{!v.ishide}" required="true"/>                   
+                                        </div>
+                                    </div>
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                            <lightning:button class="saveBtn" variant="base" label="Save" title="" disabled="{!v.isSaveBtnDisabled}" onclick="{! c.saveModal }"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2" >
+                            <div class="slds-form slds-p-top_small" role="list">
+                                <div class="slds-form__column">
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-grid">
+                                            <div class="slds-size_4-of-6"><b>Activity</b></div>
+                                            <div class="slds-size_2-of-6 slds-text-m-right_small">
+                                                <aura:if isTrue="{!v.ishide}">
+                                                    <lightning:buttonIcon class="modalEdit" variant="bare" size="small" iconName="utility:edit" onclick="{!c.editModal}"/>
+                                                    <a style="color: darkgrey;" onclick="{!c.editModal}">Edit</a>  
+                                                </aura:if>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                            <aura:if isTrue="{!v.ishide}">
+                                                <lightning:input  label="Administrator" value="{!v.ConWrapper.AdministratorCheck}"
+                                                readonly="true" />
+                                                <aura:set attribute="else">
+                                                    <lightning:combobox name="" label="Administrator" value="{!v.referrerContact.Admin__c}" readonly="{!v.ishide}"
+                                                    options="{!v.options}" onchange="{!c.handleChange}">
+                                                    
+                                                    </lightning:combobox>
+                                                </aura:set>
+                                            </aura:if> 
+                                        </div>
+                                    </div>
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing ">
+                                            <aura:if isTrue="{!v.ishide}">
+                                                <lightning:input  label="Status" value="{!v.referrerContact.Status__c}"
+                                                readonly="true" />
+                                                <aura:set attribute="else">
+                                                    <lightning:combobox  label="Status" aura:id="fieldcheck" value="{!v.referrerContact.Status__c}" readonly="{!v.ishide}" required="true" class="no-abbr"
+                                                    options="{!v.options2}">
+                                                    </lightning:combobox> 
+                                                </aura:set>
+                                            </aura:if>            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>          
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+    
+</aura:component>

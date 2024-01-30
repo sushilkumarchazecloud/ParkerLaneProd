@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VOI_stages__c</fullName>
+    <externalId>false</externalId>
+    <label>VOI stages</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Front DL</fullName>
+                <default>false</default>
+                <label>Front DL</label>
+            </value>
+            <value>
+                <fullName>Back DL</fullName>
+                <default>false</default>
+                <label>Back DL</label>
+            </value>
+            <value>
+                <fullName>Video Recording</fullName>
+                <default>false</default>
+                <label>Video Recording</label>
+            </value>
+            <value>
+                <fullName>CPQ sign</fullName>
+                <default>false</default>
+                <label>CPQ sign</label>
+            </value>
+            <value>
+                <fullName>TMCU sign</fullName>
+                <default>false</default>
+                <label>TMCU sign</label>
+            </value>
+            <value>
+                <fullName>Error Page</fullName>
+                <default>false</default>
+                <label>Error Page</label>
+            </value>
+            <value>
+                <fullName>Home</fullName>
+                <default>false</default>
+                <label>Home</label>
+            </value>
+            <value>
+                <fullName>Front DL Preview</fullName>
+                <default>false</default>
+                <label>Front DL Preview</label>
+            </value>
+            <value>
+                <fullName>Back DL Preview</fullName>
+                <default>false</default>
+                <label>Back DL Preview</label>
+            </value>
+            <value>
+                <fullName>Video Preview</fullName>
+                <default>false</default>
+                <label>Video Preview</label>
+            </value>
+            <value>
+                <fullName>DL Uploaded</fullName>
+                <default>false</default>
+                <label>DL Uploaded</label>
+            </value>
+            <value>
+                <fullName>video mike Error</fullName>
+                <default>false</default>
+                <label>video mike Error</label>
+            </value>
+            <value>
+                <fullName>Video Uploaded</fullName>
+                <default>false</default>
+                <label>Video Uploaded</label>
+            </value>
+            <value>
+                <fullName>PDF generated</fullName>
+                <default>false</default>
+                <label>PDF generated</label>
+            </value>
+            <value>
+                <fullName>Email Sent To customer</fullName>
+                <default>false</default>
+                <label>Email Sent To customer</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -135,7 +135,7 @@
         if(!$A.util.isUndefinedOrNull(assetListdata)){
             assetListdata.forEach(function(item) {
                 if(item.FinServ__AssetsAndLiabilitiesType__c == 'Motor Vehicle'){
-                    item.Make_Model__c = item.Value__c!=null ? item.Value__c : '0';
+                    item.Make_Model__c = (item.Value__c!=null ? item.Value__c : '0') + '';
                     item.Year__c = new Date().getFullYear();
                     
                 }

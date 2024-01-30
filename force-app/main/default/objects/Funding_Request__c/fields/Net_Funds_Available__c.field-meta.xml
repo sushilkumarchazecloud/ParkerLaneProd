@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Net_Funds_Available__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( ISPICKVAL( Request_Type__c , &apos;Variation&apos;) ,  Opportunity__r.Previous_Loan_Amount_After_Variation__c - Funded_To_Date__c, Opportunity__r.SyncedQuote.Customer_Amount__c - Funded_To_Date__c)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Net Funds Available</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

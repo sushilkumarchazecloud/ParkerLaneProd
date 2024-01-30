@@ -1,0 +1,128 @@
+<aura:component controller="MyReferrerController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="WrapperData" type="Object"/>
+    <aura:attribute name="ishide" type="boolean" default="true"/>
+    <aura:attribute name="EditButtonShow" type="boolean" default="false"/>
+    <aura:attribute name="isSaveBtnDisabled" type="Boolean" default = "true" />
+    <aura:attribute name="ResedDownLoadDefaultBtn" type="Boolean" default = "true" />
+    <aura:attribute name="ResendsuccessMsg" type="Boolean" default = "false" />
+    <aura:attribute name="DownloadsuccessMsg" type="Boolean" default = "false" />
+    <aura:attribute name="sessionId" type="String" />
+    <aura:attribute name="accountId" type="String"/>
+    <aura:attribute name="quoteType" type="String"/>
+    <aura:attribute name="quotesize" type="Integer"/>
+    <aura:attribute name="isValue" type="boolean" default="false"/>
+    <aura:attribute name="isResendBtnDisabled" type="boolean" default="true"/>
+    <aura:attribute name="quoteList" type="List"/>
+    <aura:attribute name="selectedQuotesCount" type="Integer" default="0"/>
+    <aura:attribute name="selectedQuotes" type="MyReferrerController.getQuotesWrapper[]"/>
+    <aura:attribute name="showError" type="Boolean" default = "false" />
+    <aura:attribute name="message" type="String"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
+    
+    <lightning:spinner aura:id="mySpinner" variant="brand" size="large" style="margin-top : 48px;margin-bottom : 80px;position : absolute;" /> 
+    <div class="slds-scrollable_y" style="height:435px;">
+        <div class="slds-grid slds-wrap"> 
+            <div class=" slds-size_8-of-12" >
+                <div class="slds-m-top_x-small slds-m-bottom_medium" style="border-bottom: 1px solid #c2c2c2"></div>
+                <div class="heading3"><b>Quotes</b></div><br/>
+                <div style="margin-top:-15px;"> Select up to 4 quotes to download or send to your customer. This Section will be locked once the customer commences their application.
+                </div>
+                <aura:if isTrue= "{!v.showError}">
+                    <div class="slds-m-top_small" style="color:red;">
+                        {!v.message}
+                    </div>
+                </aura:if>
+                <span class="slds-text-align_right" style="float:right; margin-top:15px; margin-right:50px;">
+                    <aura:if isTrue ="{!v.EditButtonShow}">
+                        <aura:if isTrue="{!v.ishide}">
+                            <lightning:buttonIcon class="modalEdit" variant="bare" size="small" iconName="utility:edit" onclick="{!c.editModal}"/>
+                            <a style="color: darkgrey;" onclick="{!c.editModal}">Edit</a>  
+                        </aura:if>
+                    </aura:if>
+                </span>
+                <div class="slds-grid slds-wrap slds-gutters slds-m-left_small">                
+                    <aura:iteration items="{!v.quoteList}" var="item" indexVar="outindex">
+                        <div class="slds-col slds-size_1-of-2">
+                            <div style="margin-top: 15px;">
+                                <aura:if isTrue="{!v.ishide}">
+                                    <lightning:input class="chkbox" name="{!'option'+outindex}" checked="{!item.isChecked}" auraid="radioGroup" label="{!item.GroupLabel}" type="checkbox" onchange="{!c.handleOnchange}" value="{!item}"
+                                                     />
+                                    <aura:set attribute="else">
+                                        <div class="slds-m-left_x-large">
+                                            <lightning:input variant="label-hidden" aura:id="fieldcheck" value="{!item.GroupLabel}" type="text" required="true" onchange="{!c.submitQuotes}"  
+                                                             readonly="{!v.ishide}" class="no-abbr"/>
+                                        </div>
+                                    </aura:set>
+                                </aura:if>
+                                <div class="slds-m-left_x-large"> 
+                                    <lightning:input  label="Amount" aura:id="fieldcheck" required="true" min="0" step="1" type="number" minimumFractionDigits="0" formatter="currency" value="{!item.Amount}"  
+                                                     readonly="{!v.ishide}"  onchange="{!c.submitQuotes}" class="no-abbr"/>
+                                    <lightning:input  label="Lowest Rate" value="{!item.InterestRate+'% ('+item.ComparsionRate +' comp rate*)'}"
+                                                     readonly="true"/>
+                                    <lightning:input  label="Lowest Monthly Repayments"  value="{!'$'+item.Repayment+' ('+item.Loanterm+' months)'}"
+                                                     readonly="true"/> 
+                                </div>
+                            </div>
+                        </div>
+                    </aura:iteration>            
+                </div>
+                <div class="slds-grid">
+                    <div class=" slds-col slds-size_1-of-2 slds-text-align_right" style="margin-left: -30px;">
+                        <aura:if isTrue="{!(!v.ishide)}">
+                            <lightning:button class="saveBtn" variant="base" label="Save" title="" disabled="{!v.isSaveBtnDisabled}" onclick="{!c.saveModal}"/>
+                        </aura:if>
+                    </div>
+                </div>
+                <aura:if isTrue ="{!v.EditButtonShow}">
+                    <div class="slds-p-left_xx-large" style="margin-top: 12px;">
+                        <aura:if isTrue="{!v.ResedDownLoadDefaultBtn}">
+                            <lightning:button class="{!v.isResendBtnDisabled ? 'resendBtnDisabled':'resendBtnEnabled'}" variant="Brand" label="Resend Quote(s)"  disabled="{!v.isResendBtnDisabled}" onclick="{!c.ResendQuote}"/>
+                            <lightning:button class="{!v.isResendBtnDisabled ? 'resendBtnDisabled':'resendBtnEnabled'}" variant="Brand" label="Download"  disabled="{!v.isResendBtnDisabled}" onclick="{!c.DownloadButton}"/>
+                        </aura:if>
+                        <aura:if isTrue= "{!v.ResendsuccessMsg}">
+                            <lightning:button class="{!v.ResendsuccessMsg ? 'Green-btn-color' : 'Green-btn-color'}" variant="Success"  label="Resend Quote(s)" disabled="{!v.ResendsuccessMsg}"/>
+                            <lightning:button class="resendBtnDisabled" variant="Brand" label="Download" disabled="true" />
+                            <div class="slds-m-top_small" style="color:#45c65a;">
+                                Success! An email has been sent to you and your customer with the quotes you selected.
+                            </div>
+                        </aura:if>
+                        
+                        <aura:if isTrue= "{!v.DownloadsuccessMsg}">
+                            <lightning:button class="resendBtnDisabled" variant="Brand"  label="Resend Quote(s)" disabled="true"/>
+                            <lightning:button class="{!v.DownloadsuccessMsg ? 'Green-btn-color' : 'Green-btn-color'}" variant="Success" label="Download" disabled="{!v.DownloadsuccessMsg}"/>
+                            <div class="slds-m-top_small" style="color:#45c65a;">
+                                Success! An email with the quotes attached has been sent you to only.
+                            </div>
+                        </aura:if>
+                    </div>
+                </aura:if>
+                <div class="slds-m-top_large" style="font-size:11px;">
+                    <!-- <p>*The comparison rate is ASIC's standard for comparing loans of $30K over 5 years. If your loan amount is not $30,000 over 5 years</p>
+                    <p class="slds-p-left_x-small">the comparison rate may not accurately reflect the effective interest rate according to the comparison rate calculation WARNING</p>
+                    <p class="slds-p-left_x-small"> Costs such as redraw fees or early repayment fees, and cost savings such as fee waivers, are not included in the comparison</p>
+                    <p class="slds-p-left_x-small">  rate but may influence the cost of the loan.</p>-->
+                    *The comparison rate is ASIC's standard for comparing loans of $30K over 5 years. If your loan amount is not $30,000 over 5 years the comparison rate may not accurately reflect the effective interest rate according to the comparison rate calculation. WARNING Costs such as redraw fees or early repayment fees, and cost savings such as fee waivers, are not included in the comparison rate but may influence the cost of the loan.
+                </div>
+                
+            </div> 
+            <div class=" slds-size--1-of-1 slds-medium-size--4-of-12 slds-large-size--4-of-12">
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-p-around_small" style="margin-top:-16px;">
+                        <div class="box-style-qt" >
+                            <div class="heading2"><b>Quote Details</b></div>
+                            <div>Send up to 4 Quotes in total.</div>
+                            <div class="Border" style="border-bottom: 1px solid #c2c2c2;margin-left:-14px;margin-right:-14px;"></div>
+                            <aura:if isTrue= "{!v.isValue}">
+                                <div class=""> 
+                                    <c:ReferrerPortalAttachQuotes quoteList="{!v.quoteList}" oppId="{!v.WrapperData.Id}" leadId="{!v.WrapperData.LeadId__c}" quoteType="{!v.quoteType}" quotesize="{!v.quotesize}" accountId="{!v.accountId}" sessionId = "{!v.sessionId}"/>
+                                </div>
+                            </aura:if>
+                        </div>
+                    </div> 
+                </div> 
+            </div>
+        </div> 
+    </div>
+    
+</aura:component>

@@ -7,7 +7,14 @@
     text-align: center;
 
 }
-
+.THIS .trackercls{
+    width: 90%;
+}
+@media screen and (max-width: 600px) {
+    .THIS .trackercls{
+        width: 85%;
+    }
+}
 .THIS .heading_style{
     font-size: 1.85rem;
     font-family: ProximaNova-AltBold;

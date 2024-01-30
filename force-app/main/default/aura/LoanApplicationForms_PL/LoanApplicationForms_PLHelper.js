@@ -15,6 +15,11 @@
                     component.set("v.showError", true);
                     component.set("v.errorMsg", $A.get("$Label.c.Error_Message"));
                 }else{
+                    if(ret.opp.RecordType.DeveloperName == 'Home_Improvement' || ret.opp.RecordType.DeveloperName == 'Green_Loan'){
+                        //if(ret.opp.Loan_Amount__c > 25000 || ret.opp.Lender__c == 'Community First Credit Union'){
+                            component.set("v.isCFCU",true);
+                       //}
+                    }
                     component.set('v.opportunity', ret.opp);
                     if(ret.opp.Applicant_1__c != null || ret.opp.Applicant_2__c != null){
                         component.set('v.applicant1', ret.contact1);
@@ -83,7 +88,7 @@
         var creditCardscheck = '';
         var personalAndAutoLoanscheck ='';
         var OtherCommitmentscheck = '';                                                 
-        if(!$A.util.isUndefinedOrNull(applicant1.CreditCardsCommitments__c)){
+        /*if(!$A.util.isUndefinedOrNull(applicant1.CreditCardsCommitments__c)){
             creditCardscheck = applicant1.CreditCardsCommitments__c;
         }
         if(!$A.util.isUndefinedOrNull(applicant1.PersonalAndAuto__c)){
@@ -91,7 +96,7 @@
         }
         if(!$A.util.isUndefinedOrNull(applicant1.OtherCommitments__c)){
             OtherCommitmentscheck = applicant1.OtherCommitments__c;
-        }
+        }*/
         
         var assetListdata = component.get("v.allAssetsList");
 
@@ -103,7 +108,8 @@
             isShare : isShare,
             creditCardscheck :creditCardscheck,
             personalAndAutoLoanscheck: personalAndAutoLoanscheck,
-            OtherCommitmentscheck: OtherCommitmentscheck
+            OtherCommitmentscheck: OtherCommitmentscheck,
+            skipSave: true
         });
         
         action.setCallback(this, function(response) {
@@ -172,6 +178,24 @@
         });
         $A.enqueueAction(action);
 	},
+    
+    // Pawan Code related to PDO-1124.
+    getUpdatedQuote : function(component, event, emailIds) {
+        let recordId = component.get("v.recordId");
+        var action = component.get("c.getSelectedQuote");
+        action.setParams({
+            recordId : recordId
+        });
+        action.setCallback(this, function(response) {
+            var state = response.getState();
+            if (state === "SUCCESS") {
+                var ret = response.getReturnValue();
+                component.set("v.selectedQuote",ret);
+            }
+        });
+        $A.enqueueAction(action);
+    },
+    // Pawan Code End.
     
     scrollTop: function (component, event, top){
         var isMoile = false;

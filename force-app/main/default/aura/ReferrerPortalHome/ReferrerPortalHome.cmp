@@ -1,0 +1,589 @@
+<aura:component controller="ReferrerPortalController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="navSection" type="String" />
+    <aura:attribute name="isLoginModalOpen" type="Boolean" default = "true" />    
+    <aura:attribute name="phone" type="String"/>
+    <aura:attribute name="selectedVal" type="String"/>
+    <aura:attribute name="funded" type="Object"/>
+    <aura:attribute name="cont" type="contact" />
+    <aura:attribute name="opList" type="list"/>
+    <aura:attribute name="stopItrt" type="Boolean" default = "false" /> 
+    <aura:attribute name="showAdmin" type="Boolean" default="true" /> 
+    <aura:attribute name="showReferrals" type="Boolean" default = "false" />   
+    <aura:attribute name="accountId" type="String"/>
+    <aura:attribute name="sessionId" type="String" />
+    <aura:attribute name="getOppList" type="list" />
+    <aura:attribute name="getOppListTodo" type="list" />
+    <aura:attribute name="descOppList" type="list" />
+    <aura:attribute name="oppList" type="list" />
+    <aura:attribute name="searchKeyword" type="String" description="use for store user search input"/>
+    <aura:attribute name="searchKey" type="String"/>
+    <aura:attribute name="ShowAccount" type="Boolean" default = "false" />
+    <aura:attribute name="typesOptions" type="List" default="[{'label': 'Admin View', 'value': 'Admin View'},{'label': 'Referrer View', 'value': 'Referrer View'}]"/>
+    <aura:attribute name="spinner" type="boolean" default="false"/>
+    <aura:attribute name="todoSpinner" type="boolean" default="false"/>
+   <!-- <aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/> -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
+    <aura:attribute name="SearchOption" type="list" />
+    <aura:attribute name="WelcomeNote" type="String" />
+    <aura:attribute name="SearchPlaceHolder" type="String" />
+    <aura:attribute name="fundedToDate" type="String" />
+    <aura:attribute name="approvedLoans" type="String" />
+    <aura:attribute name="totalRecords" type="Integer" />
+    
+    <lightning:spinner aura:id="mySpinner" variant="brand" size="large" class="slds-is-fixed" />
+    <!--<aura:if isTrue="{!v.spinner}">
+        <div aura:id="spinnerId" class="slds-spinner_container slds-is-fixed">
+            <div class="slds-spinner-brand  slds-spinner slds-spinner-large slds-is-relative slds-text-align-center" role="alert">
+                <span class="slds-assistive-text">Loading...</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if> -->
+  
+    <div>
+        <div class="slds-grid slds-wrap slds-grid slds-wrap slds-p-top_large slds-p-left_large slds-p-right_large">
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_8-of-12">
+                <div>
+                    <div style="padding-top: 7px;padding-left: 11px;"><h1 style="font-size: 20px;color:#1a2745" class="heading1">Referral Portal</h1></div>
+                </div>
+            </div>
+            <aura:if isTrue="{!v.showAdmin}">
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_3-of-12" style="margin-left: auto;">
+                    <div class="slds-p-right_xx-large slds-p-top_medium">
+                        <div class="heading4 viewUpdate">                      
+                            <!--    <lightning:select value="{!v.cont.Portal_View__c}" name="select1" aura:id="selectID" onchange="{!c.updateView}">
+                            <aura:iteration items="{!v.typesOptions}" var="item" indexVar="key">
+                                <option value="{!item.value}" selected="{!v.cont.Portal_View__c == item.value}">{!item.label}</option>
+                            </aura:iteration>
+                        </lightning:select> -->
+                            <lightning:combobox class="slds-combobox cmb1" aura:id="selectID" label=""
+                                                placeholder="{!v.cont.Portal_View__c}"  value="{!v.cont.Portal_View__c}"
+                                                onchange="{!c.updateView}"
+                                                options="{! v.typesOptions }"/>
+                        </div>
+                    </div>
+                </div>
+            </aura:if>
+        </div>
+        <div class="slds-m-top_small1 slds-grid slds-wrap">
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_8-of-12 slds-p-around_large">
+                <div class="slds-m-top_medium slds-m-horizontal_small slds-grid slds-wrap">
+                    <div class="slds-col slds-size_7-of-12" onkeypress="{!c.onEnterSearch}">
+                        <lightning:input aura:id="enter-search" class = "search-name"
+                                         name="enter-search" value="{!v.searchKeyword}"
+                                         onchange="{!c.onChangeSearch}"
+                                         placeholder ="Search by name or address"
+                                         type="search"
+                                         />
+                    </div>                    
+                </div>
+                <aura:if isTrue="{!v.stopItrt}"> 
+                    <div class="" role="listbox" style="position: relative;width: 83.5%;right: 12%;">                   
+                        <ul class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_8-of-12 slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid dropCss" style="">
+                            <aura:iteration items="{!v.SearchOption}" var="option">
+                                <li class="slds-listbox__item" role="presentation" aura:id="cmbId" onclick="{!c.selectOp}" data-value="{!option.value}" data-record="{!option.label}">
+                                    <span class="slds-media slds-listbox__option slds-listbox__option_entity " role="option">
+                                        <span class="slds-media__body">
+                                            <span class="slds-listbox__option-text slds-listbox__option-text_entity">{!option.label}</span>
+                                        </span>
+                                    </span>
+                                </li>
+                            </aura:iteration>
+                        </ul>
+                    </div>
+                </aura:if>
+                <div>
+                    <div class="slds-m-top_x-large slds-m-horizontal_small slds-p-around_medium light-grey-box" >
+                        <div class="heading1">
+                            Welcome back {!v.cont.Name}
+                        </div>
+                        
+                        <div class="heading4" style="width: 60%;line-height: initial">
+                            {!v.WelcomeNote}
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="slds-m-top_medium slds-grid slds-wrap">
+                        <div style="display: inline-flex;">
+                        <div class="slds-col slds-size_1-of-4 slds-p-around_small ">
+                            <div class="status-box">
+                                <div>
+                                    <span><img style="width:25%;" src="{!$Resource.ReferralPortal + '/ReferralPortal/Funded.png'}"/></span>
+                                </div>  
+                                <div class="heading5 slds-p-top_small">$<lightning:formattedNumber value="{!v.fundedToDate}"/></div>  
+                                <div class="heading4" style="line-height: initial;">Funded to Date</div>  
+                            </div>
+                        </div>
+                        
+                        <div class="slds-col slds-size_1-of-4 slds-p-around_small ">
+                            <div class="status-box">
+                                <div>
+                                    <span><img style="width:25%;" src="{!$Resource.ReferralPortal + '/ReferralPortal/Approved.png'}"/></span>
+                                </div>  
+                                <div class="heading5 slds-p-top_small">$<lightning:formattedNumber value="{!v.approvedLoans}"/></div>  
+                                <div class="heading4" style="line-height: initial;">Approved loans ready to fund</div>  
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-4 slds-p-around_small ">
+                            <div class="status-box">
+                                <div>
+                                    <span><img style="width:25%;" src="{!$Resource.ReferralPortal + '/ReferralPortal/Applications.png'}"/></span>
+                                </div>  
+                                <div class="heading5 slds-p-top_small"><lightning:formattedNumber value="{!v.funded.applicationsUnderWay}"/></div>  
+                                <div class="heading4" style="line-height: initial;">Applications under way</div>  
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-4 slds-p-around_small ">
+                            <div class="status-box">
+                                <div>
+                                    <span><img style="width:25%;" src="{!$Resource.ReferralPortal + '/ReferralPortal/Quotes.png'}"/></span>
+                                </div>  
+                                <div class="heading5 slds-p-top_small"><lightning:formattedNumber value="{!v.funded.Quotes}"/></div>  
+                                <div class="heading4" style="line-height: initial;">Quotes in the last 30 days</div>  
+                            </div>
+                        </div>
+                    </div>   
+                    </div>
+                </div>
+                
+                <div>
+                    <div class=" slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-p-around_small">
+                            <div class ="spinner">
+                                <lightning:spinner aura:id="mySpinner2" variant="brand" size="medium" class="slds-hide scrollable-spinner-container" />
+                            </div> 
+                            <div class="recent-activity-box" >
+                                <h1 class="heading2" style="margin-left: 8px">Recent Activity</h1>
+                                <div class="heading4">
+                                    <div class="{!v.spinner ? 'slds-scrollable_y OnScrollSpinner' : 'slds-scrollable_y'}" style="height: 30rem;" onscroll="{!c.loadMoreData}">
+                                        <aura:iteration items="{!v.descOppList}" var="item">
+                                            <c:ReferrerPortalRecentActivity cont="{!v.cont}" getOppList="{!item}" sessionId="{!v.sessionId}" accountId="{!v.accountId}" />
+                                        </aura:iteration>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    
+                </div>
+                <div>
+                    
+                </div>
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 slds-p-around_large">
+                <div class="slds-p-right_xx-large" style="padding-top: 5px;">
+                    <div class="slds-m-top_medium slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 ">
+                            <div class="notification-box" style="background-color: #e7f4f6;">
+                                <div class="heading2">
+                                    My status
+                                </div>
+                                <div  class="heading4">
+                                    {!v.cont.Referrer_Rating__c}
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="slds-m-top_medium slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 ">
+                            <div class="notification-box" style="background-color: #FEF5DC;">
+                                <div class="heading2">
+                                    <b>Call 1300 13 17 11</b>
+                                </div>
+                                <div  class="heading4">
+                                    Weekdays 9.30am - 8pm
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="slds-m-top_medium slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 ">
+                            <div class ="spinner">
+                                <lightning:spinner aura:id="mySpinner3" variant="brand" size="medium" class="slds-hide scrollable-spinner-container" />
+                            </div>
+                            <div class="todobox" style="background-color: #F2F2FD;">
+                                <div class="heading2">
+                                    <b>My To Do's</b>
+                                </div>
+                                <div class="{!v.todoSpinner ? 'slds-scrollable_y OnScrollSpinner' : 'slds-scrollable_y'}"  style="height: 25rem;" onscroll="{!c.loadMoreOpp}">
+                                    <aura:iteration items="{!v.getOppListTodo}" var="item">
+                                        <c:ReferrerPortaalToDo cont="{!v.cont}" sessionId="{!v.sessionId}" opList="{!item.Line_Chart_JSON__c}" oppWrapper="{!item}" accountId="{!v.accountId}"/>
+                                    </aura:iteration> 
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    
+                </div>
+                <div>
+                    
+                </div>
+                <div>
+                    
+                </div>
+            </div>
+            
+        </div>
+        
+        <!--Use aura:if tag to display/hide popup based on isModalOpen value-->  
+        <aura:if isTrue="{!v.phone}">
+            
+            <!-- Modal/Popup Box starts here-->
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!--Modal/Popup Box Body Starts here-->
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <div class="information">i</div>
+                        <div class="heading2 slds-m-vertical_medium"><b>Login faster next time</b></div>
+                        <div class="heading4">Use your unique login link and skip the need to enter your mobile number next time.</div>
+                        <UL class="slds-list_dotted heading4">
+                            <LI>Go to <span class="font-bold">My account</span></LI>
+                            <LI>Save your own <span class="font-bold">Unique Login URL</span> to favourites</LI>
+                            <LI>Use it next time you <span class="font-bold">login</span></LI>
+                        </UL>
+                        <div class="slds-m-top_medium slds-text-align_left">
+                            <lightning:button variant="brand" class="dark-btn-color"
+                                              label="Close"
+                                              title="Close"
+                                              onclick="{!c.submitLoginFaster}"/>
+                        </div>
+                    </div>
+                    
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </aura:if>
+        
+    </div>
+    
+    <!--<div class="referrer-portal-container">
+        <table style="width:100%;height: -webkit-fill-available;">
+            <tr><th style="width:15rem"></th><th style=""></th></tr>
+            <tr>
+                <td style="background-color: #1a2745;vertical-align: top;">
+                    
+                    <div class="slds-p-around_large" style="background-color: #1a2745;color:#FFF;">
+                        <div class="slds-text-align_center ">
+                            <div class="slds-p-bottom_x-large " style="padding-top: 12px;"><img src="{!$Resource.SolarLoan + '/img/logowhite.png'}" style="max-width : 70%;"/></div>
+                            <div class="short-name slds-m-vertical_large ">
+                                <span>CW</span>
+                            </div>
+                            <div  class="heading1">Chris White</div>
+                            <div class="heading4">Sales Manager</div>
+                        </div>
+                        <div class="nav-menu-container slds-m-top_large heading4">
+                            <div class="nav-menu">
+                                <span><img src="{!$Resource.SolarLoan + '/img/dot.png'}"/></span>
+                                <span>Dashboard</span>
+                            </div>
+                            <div class="nav-menu">
+                                <span><img src="{!$Resource.SolarLoan + '/img/dot.png'}"/></span>
+                                <span>Request a quote</span>
+                            </div>
+                            <div class="nav-menu">
+                                <span><img src="{!$Resource.SolarLoan + '/img/dot.png'}"/></span>
+                                <span>My Referrals</span>
+                            </div>
+                            <div class="nav-menu">
+                                <span><img src="{!$Resource.SolarLoan + '/img/dot.png'}"/></span>
+                                <span>To Do's</span>
+                            </div>
+                            <div class="nav-menu">
+                                <span><img src="{!$Resource.SolarLoan + '/img/dot.png'}"/></span>
+                                <span>Account</span>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                </td>
+                <td style="">
+                    <div class="slds-m-top_small1 slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_8-of-12 slds-p-around_large">
+                            <div>
+                                <div style="padding-top: 7px;padding-left: 11px;"><h1 style="font-size: 20px;" class="heading1">Refferal Portal</h1></div>
+                            </div>
+                            <div class="slds-m-top_medium slds-m-horizontal_small slds-grid slds-wrap">
+                                <div class="slds-col slds-size_7-of-12">
+                                    <lightning:input aura:id="enter-search" class = "search-name"
+                                                     name="enter-search"
+                                                     placeholder ="Search by name or address"
+                                                     type="search"
+                                                     />
+                                </div>
+                            </div>
+                            <div>
+                                <div class="slds-m-top_x-large slds-m-horizontal_small slds-p-around_medium " style=" background-color: #edf1f8; border-radius: 10px; padding-left: 20px;padding-top: 14px;min-height: 100px;">
+                                    <div class="heading1">
+                                        Welcome back Paul Chapman
+                                    </div>
+                                    
+                                    <div class="heading4" style="width: 60%;">
+                                        This April give your customers $50 cash-back with every loan
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="slds-m-top_medium slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-4 slds-p-around_small ">
+                                        <div class="status-box">
+                                            <div>
+                                                <span><img src="{!$Resource.SolarLoan + '/img/dot.png'}"/></span>
+                                            </div>  
+                                            <div class="heading5 slds-p-top_small">$123,456</div>  
+                                            <div class="heading4">Funded to Date</div>  
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="slds-col slds-size_1-of-4 slds-p-around_small ">
+                                        <div class="status-box">
+                                            <div>
+                                                <span><img src="{!$Resource.SolarLoan + '/img/dot.png'}"/></span>
+                                            </div>  
+                                            <div class="heading5 slds-p-top_small">$123,456</div>  
+                                            <div class="heading4">Approved loan ready to fund</div>  
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-4 slds-p-around_small ">
+                                        <div class="status-box">
+                                            <div>
+                                                <span><img src="{!$Resource.SolarLoan + '/img/dot.png'}"/></span>
+                                            </div>  
+                                            <div class="heading5 slds-p-top_small">17</div>  
+                                            <div class="heading4">Applications under way</div>  
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-4 slds-p-around_small ">
+                                        <div class="status-box">
+                                            <div>
+                                                <span><img src="{!$Resource.SolarLoan + '/img/dot.png'}"/></span>
+                                            </div>  
+                                            <div class="heading5 slds-p-top_small">11</div>  
+                                            <div class="heading4">Quotes in the last 30 days</div>  
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class=" slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-1 slds-p-around_small ">
+                                        <div class="recent-activity-box">
+                                            <h1 class="heading2">Recent Activity</h1>
+                                            <div class="heading4">
+                                                <div class="slds-m-top_small slds-grid slds-wrap">
+                                                    <div class="slds-col slds-size_1-of-12 slds-p-around_small ">
+                                                        <div class="blank-circle"></div>
+                                                    </div>
+                                                    <div class="slds-col slds-size_4-of-12 slds-p-around_small ">
+                                                        Jassica and Peter
+                                                    </div>
+                                                    <div class="slds-col slds-size_4-of-12 slds-p-around_small ">
+                                                        Jassica and Peter
+                                                    </div>
+                                                    <div class="slds-col slds-size_3-of-12 slds-p-around_small ">
+                                                        11 November
+                                                    </div>
+                                                </div>
+                                                <div class="slds-grid slds-wrap">
+                                                    <div class="slds-col slds-size_1-of-12 slds-p-around_small ">
+                                                        <div class="blank-circle"></div>
+                                                    </div>
+                                                    <div class="slds-col slds-size_4-of-12 slds-p-around_small ">
+                                                        Jassica and Peter
+                                                    </div>
+                                                    <div class="slds-col slds-size_4-of-12 slds-p-around_small ">
+                                                        Jassica and Peter
+                                                    </div>
+                                                    <div class="slds-col slds-size_3-of-12 slds-p-around_small ">
+                                                        11 November
+                                                    </div>
+                                                </div>
+                                                <div class="slds-grid slds-wrap">
+                                                    <div class="slds-col slds-size_1-of-12 slds-p-around_small ">
+                                                        <div class="blank-circle"></div>
+                                                    </div>
+                                                    <div class="slds-col slds-size_4-of-12 slds-p-around_small ">
+                                                        Jassica and Peter
+                                                    </div>
+                                                    <div class="slds-col slds-size_4-of-12 slds-p-around_small ">
+                                                        Jassica and Peter
+                                                    </div>
+                                                    <div class="slds-col slds-size_3-of-12 slds-p-around_small ">
+                                                        11 November
+                                                    </div>
+                                                </div>
+                                                <div class="slds-grid slds-wrap">
+                                                    <div class="slds-col slds-size_1-of-12 slds-p-around_small ">
+                                                        <div class="blank-circle"></div>
+                                                    </div>
+                                                    <div class="slds-col slds-size_4-of-12 slds-p-around_small ">
+                                                        Jassica and Peter
+                                                    </div>
+                                                    <div class="slds-col slds-size_4-of-12 slds-p-around_small ">
+                                                        Jassica and Peter
+                                                    </div>
+                                                    <div class="slds-col slds-size_3-of-12 slds-p-around_small ">
+                                                        11 November
+                                                    </div>
+                                                </div>
+                                                <div class="slds-grid slds-wrap">
+                                                    <div class="slds-col slds-size_1-of-12 slds-p-around_small ">
+                                                        <div class="blank-circle"></div>
+                                                    </div>
+                                                    <div class="slds-col slds-size_4-of-12 slds-p-around_small ">
+                                                        Jassica and Peter
+                                                    </div>
+                                                    <div class="slds-col slds-size_4-of-12 slds-p-around_small ">
+                                                        Jassica and Peter
+                                                    </div>
+                                                    <div class="slds-col slds-size_3-of-12 slds-p-around_small ">
+                                                        11 November
+                                                    </div>
+                                                </div>
+                                                <div class="slds-grid slds-wrap">
+                                                    <div class="slds-col slds-size_1-of-12 slds-p-around_small ">
+                                                        <div class="blank-circle"></div>
+                                                    </div>
+                                                    <div class="slds-col slds-size_4-of-12 slds-p-around_small ">
+                                                        Jassica and Peter
+                                                    </div>
+                                                    <div class="slds-col slds-size_4-of-12 slds-p-around_small ">
+                                                        Jassica and Peter
+                                                    </div>
+                                                    <div class="slds-col slds-size_3-of-12 slds-p-around_small ">
+                                                        11 November
+                                                    </div>
+                                                </div>
+                                                <div class="slds-grid slds-wrap">
+                                                    <div class="slds-col slds-size_1-of-12 slds-p-around_small ">
+                                                        <div class="blank-circle"></div>
+                                                    </div>
+                                                    <div class="slds-col slds-size_4-of-12 slds-p-around_small ">
+                                                        Jassica and Peter
+                                                    </div>
+                                                    <div class="slds-col slds-size_4-of-12 slds-p-around_small ">
+                                                        Jassica and Peter
+                                                    </div>
+                                                    <div class="slds-col slds-size_3-of-12 slds-p-around_small ">
+                                                        11 November
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                
+                            </div>
+                            <div>
+                                
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 slds-p-around_large">
+                            <div class="slds-p-right_xx-large slds-p-top_medium slds-text-align_right">
+                                <div class="heading4">
+                                    Admin View
+                                </div>
+                            </div>
+                            <div class="slds-p-right_xx-large" style="padding-top: 5px;">
+                                <div class="slds-m-top_medium slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-1 ">
+                                        <div class="notification-box" style="background-color: #e7f4f6;">
+                                            <div class="heading2">
+                                                My status
+                                            </div>
+                                            <div  class="heading4">
+                                                GOLD
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="slds-m-top_medium slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-1 ">
+                                        <div class="notification-box" style="background-color: #FEF5DC;">
+                                            <div class="heading2">
+                                                <b>Call 1300 13 17 11</b>
+                                            </div>
+                                            <div  class="heading4">
+                                                Weekdays 10am - 7pm
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="slds-m-top_medium slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-1 ">
+                                        <div class="notification-box" style="background-color: #F2F2FD;">
+                                            <div class="heading2">
+                                                <b>Your To-Do List</b>
+                                            </div>
+                                            <div class="heading4">
+                                                <div class="nav-menu">
+                                                    <span><img src="{!$Resource.SolarLoan + '/img/dot.png'}"/></span>
+                                                    <span>To-Do</span>
+                                                </div>
+                                                <div class="nav-menu">
+                                                    <span><img src="{!$Resource.SolarLoan + '/img/dot.png'}"/></span>
+                                                    <span>To-Do</span>
+                                                </div>
+                                                <div class="nav-menu">
+                                                    <span><img src="{!$Resource.SolarLoan + '/img/dot.png'}"/></span>
+                                                    <span>To-Do</span>
+                                                </div>
+                                                <div class="nav-menu">
+                                                    <span><img src="{!$Resource.SolarLoan + '/img/dot.png'}"/></span>
+                                                    <span>To-Do</span>
+                                                </div>
+                                                <div class="nav-menu">
+                                                    <span><img src="{!$Resource.SolarLoan + '/img/dot.png'}"/></span>
+                                                    <span>To-Do</span>
+                                                </div>
+                                                <div class="nav-menu">
+                                                    <span><img src="{!$Resource.SolarLoan + '/img/dot.png'}"/></span>
+                                                    <span>To-Do</span>
+                                                </div>
+                                                <div class="nav-menu">
+                                                    <span><img src="{!$Resource.SolarLoan + '/img/dot.png'}"/></span>
+                                                    <span>To-Do</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                
+                            </div>
+                            <div>
+                                
+                            </div>
+                            <div>
+                                
+                            </div>
+                        </div>
+                        
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    -->
+</aura:component>

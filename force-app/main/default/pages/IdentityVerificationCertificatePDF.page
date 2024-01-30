@@ -1,8 +1,7 @@
-<apex:page renderAs="PDF"  controller="IdentityCertificateController" applyHtmlTag="false" applyBodyTag="false" standardStylesheets="false"  showHeader="false"  sidebar="false">
+<apex:page renderAs="PDF" controller="IdentityCertificateController" applyHtmlTag="false" applyBodyTag="false" standardStylesheets="false"  showHeader="false"  sidebar="false">
     
     <html>
         <head>
-            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
             <style TYPE="text/css">
                 @page {
                 margin-left: 0cm;
@@ -103,7 +102,7 @@
                 font-size : 16px;
                 }
                 .bodyThirdInside{
-                padding : 10px;			
+                padding : 10px;         
                 }
                 .bodyFourth{
                 margin-top : 10px;
@@ -125,9 +124,25 @@
                 font-size : 14px;
                 padding : 9px;
                 }
-                .imagesdata img{
-                height : 300px;
-                width : 255px;
+                .imagesdata{
+                width: 255px !important;
+                max-height: 300px !important;
+                overflow: hidden !important;
+                }
+                .imagesdata img{              
+                width : 100%;                
+                height : auto;                
+                overflow : hidden;
+                }
+                .imagesdata1 {
+                width: 255px !important;
+                max-height: 300px !important;
+                overflow: hidden !important;
+                }
+                .imagesdata1 img {                
+                width : 100%;
+                height : 100%;                 
+                overflow : hidden;
                 }
                 .pagenumber:before {
                 content: counter(page);
@@ -139,7 +154,7 @@
                 div.footer{
                 margin-top : 10px;
                 background-color : #f4f4f4;
-                width : 95%;	
+                width : 95%;    
                 margin-left : 20px;
                 margin-right : 20px;
                 }
@@ -147,7 +162,25 @@
                 text-align : center;
                 font-size : 14px;
                 padding : 17px;
+                } 
+                .bigImage{
+                width: 100% !important;
+                max-height: 500px !important;
+                overflow: hidden;
+                }                
+                .imagesdataMainIMG {               
+                width: 100% !important;
+                height: 980px !important;
+                overflow: hidden;
                 }
+                .imagesdataMainIMG img {
+                margin : 20px !important;                
+                width : 95%;
+                height : auto;
+                max-height : 970px;
+                overflow : hidden;
+                }
+                
             </style>
         </head>
         <body class="main">
@@ -175,7 +208,7 @@
                             <td>
                                 <table>
                                     <tr>
-                                        <td rowspan="2" class="tabmainlogo"><img src="{!$Resource.SolarLoan + '/img/selfiblack.png'}"/></td>
+                                        <td rowspan="2" class="tabmainlogo"><img src="{!$Resource.SolarLoan + '/img/selfi.png'}"/></td>
                                         <td colspan="2">Identity document</td>
                                     </tr>
                                     <tr>
@@ -201,7 +234,7 @@
                                         <td colspan="2">Secure Code</td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2" class="contenImg"> <apex:image url="{!$Resource.VOI_Fron_Icons+'/final.png'}" height="20px;"/> <b style="font-size : 14px;">{!IF(voi.Code_Not_Required__c == false, 'Verified', 'Not required')}</b></td>
+                                        <td colspan="2" class="contenImg"> <apex:image url="{!$Resource.VOI_Fron_Icons+'/final.png'}" height="20px;"/> <b style="font-size : 14px;">{!voi.matchVerification__c}</b></td>
                                     </tr>
                                 </table>
                             </td> 
@@ -210,7 +243,7 @@
                 </div>
                 <div class="bodyThird">
                     <div class="bodyThirdInside">
-                        <span><span style="text-transform: uppercase;">{!voi.contact__r.name}</span> provided the following details on <b>{!paksBackDate} at {!paksBacktime}:</b></span>    
+                        <span><span style="text-transform: uppercase;">{!voi.contact__r.name}</span> provided the following details on <b>{!videoCreateDate} at {!videoCreatetime}:</b></span>    
                     </div>
                 </div>
                 <div class="bodyFourth">
@@ -233,27 +266,112 @@
                 </div>
                 <div class="bodyThird">
                     <div class="bodyThirdInside">
-                        <span><span style="text-transform: uppercase;">{!voi.contact__r.name}</span> recorded the following information on <b>{!videoCreateDate} at {!videoCreatetime}:</b></span>    
+                        <span><span style="text-transform: uppercase;">{!voi.contact__r.name}</span> recorded the following information on <b>{!paksBackDate} at {!paksBacktime}:</b></span>    
                     </div>
                 </div>
                 <div class="imageSec">
-                    <table>
-                        <tr>
-                            <td class="imageCaption">Photo ID(FRONT): <b>Match</b></td>
-                            <td class="imageCaption">Photo ID(Back): <b>Match</b></td>
-                            <td class="imageCaption">Video Recording: <b>Match</b></td>
-                        </tr>
-                        <tr>
-                            <td class="imagesdata"><apex:image url="{!frontDLURL}"/> </td>
-                            <td class="imagesdata"><apex:image url="{!BackDLURL}"/> </td>
-                            <td class="imagesdata"><apex:image url="{!SnapURL}" alt="Image Not Found!"/> </td>    
-                        </tr>
-                    </table>
+                    <apex:outputPanel rendered="{!Passport != ''}"> 
+                        <table >
+                            <tr>
+                                <td class="imageCaption">Passport: <b>Match</b></td>
+                                <td class="imageCaption">{!IF(voi.verified_by_selfie_ID__c,'Id with selfie:', 'Video Recording:')} <b>Match</b></td>
+                            </tr>
+                            <tr>                                                            
+                                <td class="imagesdata"><apex:image url="{!PassportURL}?ver=1"/> </td>
+                                <td class="imagesdata"><apex:image url="{!SnapURL}?ver1" alt="Image Not Found!"/> </td>    
+                            </tr>
+                        </table>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!Passport == ''}"> 
+                        <table>
+                            <tr>
+                                <td class="imageCaption">Photo ID(FRONT): <b>Match</b></td>
+                                <td class="imageCaption">Photo ID(Back): <b>Match</b></td>
+                                <td class="imageCaption">{!IF(voi.verified_by_selfie_ID__c,'Id with selfie:', 'Video Recording:')} <b>Match</b></td>
+                            </tr>
+                            <tr>                            
+                                <td class="imagesdata1"><apex:image url="{!frontDLURL}?ver=1"/></td>
+                                <td class="imagesdata"><apex:image url="{!BackDLURL}?ver=1"/> </td>
+                                <td class="imagesdata"><apex:image url="{!SnapURL}?ver1" alt="Image Not Found!"/> </td>    
+                            </tr>
+                        </table>
+                    </apex:outputPanel>
                 </div>
                 <div class="footer">
                     <div class="subfooter">Page <span class="pagenumber"/> of <span class="pagecount"/></div>
                 </div>
-            </div>	     
+            </div>
+            <!--<div>
+                <apex:include pageName="identityCertFullDL"/>
+            </div>-->
+            <apex:outputPanel rendered="{!Passport != ''}"> 
+                <table style="table-layout: fixed;">
+                    <tr>
+                        <td class="imagesdataMainIMG" align="center" valign="middle">
+                            <apex:image url="{!PassportURL}?ver=5"/>                        
+                        </td>                                        
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="footer">
+                                <div class="subfooter">Page <span class="pagenumber"/> of <span class="pagecount"/></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="imagesdataMainIMG" align="center" valign="middle">
+                            <apex:image url="{!SnapURL}?ver=5" />                        
+                        </td>                     
+                    </tr>     
+                    <tr>
+                        <td>
+                            <div class="footer">
+                                <div class="subfooter">Page <span class="pagenumber"/> of <span class="pagecount"/></div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!Passport == ''}"> 
+                <table style="table-layout: fixed;">
+                    <tr>
+                        <td class="imagesdataMainIMG" align="center" valign="middle">
+                            <apex:image url="{!frontDLURL}?ver=5"/>                        
+                        </td>                                        
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="footer">
+                                <div class="subfooter">Page <span class="pagenumber"/> of <span class="pagecount"/></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="imagesdataMainIMG" align="center" valign="middle">
+                            <apex:image url="{!BackDLURL}?ver=5" />                        
+                        </td>                     
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="footer">
+                                <div class="subfooter">Page <span class="pagenumber"/> of <span class="pagecount"/></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="imagesdataMainIMG" align="center" valign="middle">
+                            <apex:image url="{!SnapURL}?ver=5" />                        
+                        </td>                     
+                    </tr>     
+                    <tr>
+                        <td>
+                            <div class="footer">
+                                <div class="subfooter">Page <span class="pagenumber"/> of <span class="pagecount"/></div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </apex:outputPanel>
         </body>
-    </html>
+    </html>    
 </apex:page>

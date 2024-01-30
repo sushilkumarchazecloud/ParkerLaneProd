@@ -36,6 +36,7 @@
 
         action.setCallback(this, function(response) {
             var state = response.getState();
+            console.log('@@@@' + JSON.stringify(response));
             if (state === "SUCCESS") {
                 var ret = component.get('v.redirectURL');
                 if(ret !=''){
@@ -52,20 +53,19 @@
         var action = component.get("c.updateSummary");
         var self = this;
         var oppId = component.get('v.recordId');
-
+//alert('component.get("v.IsApplicantTwo")'+component.get("v.IsApplicantTwo"));
      	action.setParams({
-            oppId : oppId
+            oppId : oppId,
+            isApp2 : component.get("v.IsApplicantTwo")
         });
 
         action.setCallback(this, function(response) {
             var state = response.getState();
             console.log('@@@@' + JSON.stringify(response));
             if (state === "SUCCESS") {
-                var ret = component.get('v.redirectURL');
-                if(ret !=''){
-                    ret = ret.replace("/MogoDocument?oppId", "/MogoSupportingDocument?oppId");
-                    window.location = ret;
-                }
+                var label = $A.get("$Label.c.baseUrl");
+                var red = label + "supportingDocument?oppId=" + oppId;
+                window.location = red;
             }
 			self.toggleSpinner(component, event);
         });

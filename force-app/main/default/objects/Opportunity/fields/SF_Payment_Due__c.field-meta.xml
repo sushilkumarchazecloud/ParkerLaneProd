@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SF_Payment_Due__c</fullName>
+    <externalId>false</externalId>
+    <label>SF Payment Due</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Within 7 days of signing the credit quote</fullName>
+                <default>false</default>
+                <label>Within 7 days of signing the credit quote</label>
+            </value>
+            <value>
+                <fullName>Within 7 days of unconditional loan approval</fullName>
+                <default>false</default>
+                <label>Within 7 days of unconditional loan approval</label>
+            </value>
+            <value>
+                <fullName>Within 7 days of loan settlement</fullName>
+                <default>false</default>
+                <label>Within 7 days of loan settlement</label>
+            </value>
+            <value>
+                <fullName>Upon termination of the CQ</fullName>
+                <default>false</default>
+                <label>Upon termination of the CQ</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

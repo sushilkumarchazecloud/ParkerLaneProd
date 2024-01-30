@@ -1,5 +1,5 @@
 global without sharing class newVOIController {
-    
+    public Boolean Active {get;set;}
     public string accessToken {get;set;}
     public static opportunity oppData {get;set;}
     public static contact contct {get;set;}
@@ -17,7 +17,7 @@ global without sharing class newVOIController {
         accessToken = obj.accessToken;
         system.debug('---00000000----'+accessToken);
         oppData = [Select id,Applicant_2__r.personContactId,SyncedQuote.Gruop_Name__c,SyncedQuote.Quote_Group_Label__c,name, Lender__c from opportunity where id =: oppId LIMIT 1];
-        contct = [Select id, is_emal_sent_for_VOI__c,name,Current_VOI_stage__c,voi_Email_Verification_Code__c,is_Email_verified_for_VOI__c,Email,Phone,Number_of_applicants_to_operate_account__c, VOI_type__c from contact WHERE id = : conId limit 1];                
+        contct = [Select id,FirstName,LastName, name,Current_VOI_stage__c,voi_Email_Verification_Code__c,is_Email_verified_for_VOI__c,Email,Phone,Number_of_applicants_to_operate_account__c, VOI_type__c from contact WHERE id = : conId limit 1];                
         
         VOI_Status__c temp = [select Id,VOI_URL__c,VOI_Detail__r.id, Current_VOI_section__c,opportunity__r.Applicant_2__c,opportunity__r.Applicant_2__r.personContactId, Contact__r.id, name,VOI_Detail__c,VOI_stage__c ,VOI_Type_For__c,link_Expire_code__c, contact__c from VOI_Status__c WHERE contact__r.Id =: conId order by createddate DESC LIMIT 1];
         voiS = temp;                
@@ -67,25 +67,64 @@ global without sharing class newVOIController {
         string output = a+'@'+b;
         formatedEmail = 'Send an email to '+output;
         
+        OmniChannelStatusController();
+    }
+    
+    public void OmniChannelStatusController() {
+        // Query Omni-Channel user statuses
+        List<UserServicePresence> userPresences = [SELECT Id,ServicePresenceStatusId,IsCurrentState FROM UserServicePresence];
         
+        system.debug('userPresences'+userPresences.size());
+        // Check user statuses
+        Active = false;
+        for (UserServicePresence userPresence : userPresences) {
+            //  String presenceStatus = userPresence.ServicePresenceStatusId;
+            String presenceStatus = userPresence.ServicePresenceStatusId;
+            // If any user is not online, set Active to false and break out of the loop
+            if(userPresence.IsCurrentState){
+                Active = true;
+                break;
+            }
+            else{
+                Active = false;
+            }
+        }
     }
     
     @AuraEnabled
     public static contact sendEmailAndSMSForCode(contact con){
-        if(!con.is_emal_sent_for_VOI__c){
+        if(!con.is_Email_verified_for_VOI__c){
             contact cont = emailForOtp(con.Id);                       
-            return cont;
-        } else{
+            return cont;   
+        }
+        else{
             return null;
-        }      
+        }
     }
     
+    @AuraEnabled
+    public static string updateContactForBhccu(string conId, string TaxResi, string citizenCountry){
+        try{           
+            Contact con = [SELECT id, name, resident_of_country__c,Tax_Resident_of_countries__c
+                           FROM Contact WHERE Id =: conId];
+            
+            con.resident_of_country__c = citizenCountry;
+            con.Tax_Resident_of_countries__c = TaxResi;
+            update con;
+            
+            return 'success';
+        }catch(Exception ex){
+            UtilityClass.createException('','newVOIController', 'updateContactForBhccu', ex.getMessage(), ex.getStackTraceString(), ''+ex.getLineNumber(),
+                                         ex.getTypeName(), ''+ex.getCause());
+            return 'Error';
+        }
+    }
     
     
     @AuraEnabled
     public static string updateContFromLWC(string conId,string oppId, string numberTosign, string TaxResi, string accountNm, string financial_Inst, string bSBN, string accountNum){
         try{           
-            Contact con = [SELECT Name, Medicare_Reference__c,Number_of_applicants_to_operate_account__c,Tax_Resident_of_countries__c,Tax_File_Number_TFN__c,Tax_Identification_Number_TIN__c, FirstName,AccountId, LastName,Govt_Id_Number__c, MiddleName,Does_your_spouse_earn_an_income__c,spouse_s_approximate_annual_income__c, Email, Phone, Title, Birthdate,FinServ__Occupation__c,Account.Industry,Primary_Employer_Job_Title__c, 
+            Contact con = [SELECT Name,resident_of_country__c,Tax_Resident_of_countries__c, Medicare_Reference__c,Number_of_applicants_to_operate_account__c,Tax_File_Number_TFN__c,Tax_Identification_Number_TIN__c, FirstName,AccountId, LastName,Govt_Id_Number__c, MiddleName,Does_your_spouse_earn_an_income__c,spouse_s_approximate_annual_income__c, Email, Phone, Title, Birthdate,FinServ__Occupation__c,Account.Industry,Primary_Employer_Job_Title__c, 
                            OtherPhone, FinServ__Gender__c,Rental_or_Board_paid__c, FinServ__MaritalStatus__c, Government_ID__c,
                            Rental_Amount__c, Rental_Frequency__c, Rental_Managed_via__c, Citizenship_Status__c, Visa_Details__c,
                            Driver_s_licence_state_Territory__c,First_Name_Child_1__c, Residential_Address__c,First_Name_Child_2__c, First_Name_Child_3__c, First_Name_Child_4__c, First_Name_Child_5__c,
@@ -110,7 +149,7 @@ global without sharing class newVOIController {
             }else{
                 System.debug('null value in numberTosign'+numberTosign);
             }
-            cont.Tax_Resident_of_countries__c = TaxResi;
+            //cont.Tax_Resident_of_countries__c = TaxResi;
             system.debug('Conttttt'+cont);
             update cont;
             
@@ -174,7 +213,7 @@ global without sharing class newVOIController {
     public static FinServ__Employment__c Employementdata(string dataId){
         try{
             system.debug('-=-=--==-recid-=='+dataId);
-            FinServ__Employment__c obj = [select id, Name,FinServ__Occupation__c from FinServ__Employment__c WHERE FinServ__Contact__c =: dataId AND Is_Primary__c = true ];
+            FinServ__Employment__c obj = [select id,Job_Title__c, Name,FinServ__Occupation__c from FinServ__Employment__c WHERE FinServ__Contact__c =: dataId AND Is_Primary__c = true ];
             return obj;
         }catch(exception ex){
             UtilityClass.createException('','newVOIController', 'Employementdata', ex.getMessage(), ex.getStackTraceString(), ''+ex.getLineNumber(),
@@ -187,7 +226,7 @@ global without sharing class newVOIController {
     public static opportunity getOpportunityData(string oppId){
         try{
             System.debug('oppId==='+oppId);
-            opportunity Opp = [select Id,Name,SyncedQuote.Gruop_Name__c,Applicant_2__r.PersonContactId,Applicant_1__r.Number_of_applicants_to_operate_account__pc, Applicant_2__r.Number_of_applicants_to_operate_account__pc,Amount,Number_of_applicants__c, Application_Sections__c,Applicant_2__r.FinServ__Occupation__pc, Applicant_1__r.Tax_Resident_of_countries__pc, Current_Application_Sections__c,FinServ__ReferredByUser__c,Applicant_2__r.FinServ__Gender__pc,Applicant_2__r.Residential_Address__pc,Applicant_2__r.Postal_Address__pc,Applicant_2__r.PersonMobilePhone,Applicant_2__r.PersonEmail,Applicant_2__r.Primary_Employer_Job_Title__pc,Applicant_2__r.FirstName,
+            opportunity Opp = [select Id,Applicant_1__r.resident_of_country__pc,Applicant_2__r.resident_of_country__pc,Applicant_1__r.Tax_Resident_of_countries__pc,Applicant_2__r.Tax_Resident_of_countries__pc,Applicant_1__r.Postal_Code__pc,Applicant_2__r.Postal_Code__pc,Applicant_1__r.Salutation,Applicant_2__r.Salutation,Applicant_1__r.MiddleName,Applicant_2__r.MiddleName,Name,SyncedQuote.Gruop_Name__c,Referral_Fee_Recipient__r.Name,Referral_Fee_inc_GST__c,Applicant_2__r.PersonContactId,Applicant_1__r.Number_of_applicants_to_operate_account__pc, Applicant_2__r.Number_of_applicants_to_operate_account__pc,Amount,Number_of_applicants__c, Application_Sections__c,Applicant_2__r.FinServ__Occupation__pc, Current_Application_Sections__c,FinServ__ReferredByUser__c,Applicant_2__r.FinServ__Gender__pc,Applicant_2__r.Residential_Address__pc,Applicant_2__r.Postal_Address__pc,Applicant_2__r.PersonMobilePhone,Applicant_2__r.PersonEmail,Applicant_2__r.Primary_Employer_Job_Title__pc,Applicant_2__r.FirstName,
                                Applicant_1__c,Applicant_1__r.Residential_Address__pc,Applicant_1__r.Primary_Employer_Job_Title__pc,Applicant_1__r.FinServ__Occupation__pc, Applicant_1__r.Postal_Address__pc, Lender__c,Product_Name__c,Brokerage_Service_Fee_inc_GST__c,Total_Loan_amount__c,Interest_Rate__c, Applicant_1__r.Name,Applicant_1__r.PersonContactId,Loan_Term_months__c, Applicant_2__c,Lead_Source__c,Loan_Amount__c,
                                Account.RecordType.Name,Applicant_1__r.PersonEmail,Applicant_2__r.Name,Customer_Support_Person__c, Applicant_1__r.Tax_File_Number_TFN__pc, Applicant_1__r.PersonMobilePhone, Applicant_2__r.LastName, Applicant_1__r.PersonBirthdate,Applicant_2__r.PersonBirthdate, Applicant_1__r.FinServ__Gender__pc, Applicant_1__r.LastName,Applicant_1__r.FirstName, FinServ__Household__c,Type_of_interest_rate__c,Monthly_Repayments__c, Application_Supporting_Notes__c, Preferred_repayment_frequency__c, Relationship_to_Applicant_2__c,RecordType.Name,
                                Name_s_on_account__c,Financial_Institution__c,BSB_number__c,Account_number__c FROM Opportunity WHERE Id =: oppId limit 1];
@@ -203,7 +242,7 @@ global without sharing class newVOIController {
 
     public static contact getContactData(string conId){
         try{
-            contact personCon = [Select id,is_emal_sent_for_VOI__c, name,Current_VOI_stage__c,voi_Email_Verification_Code__c,is_Email_verified_for_VOI__c,Email,Phone,Number_of_applicants_to_operate_account__c, VOI_type__c from contact WHERE id = : conId limit 1];                            
+            contact personCon = [Select id, name,Current_VOI_stage__c,voi_Email_Verification_Code__c,is_Email_verified_for_VOI__c,Email,Phone,Number_of_applicants_to_operate_account__c, VOI_type__c from contact WHERE id = : conId limit 1];                            
             return personCon;
         }catch(exception ex){
             UtilityClass.createException('','newVOIController', 'getContactData', ex.getMessage(), ex.getStackTraceString(), ''+ex.getLineNumber(),
@@ -248,11 +287,8 @@ global without sharing class newVOIController {
         try{
             Double randomNum = Math.floor(1000 + Math.random() * 9000);
             Integer num = Math.round(randomNum);
-            contact con = [Select id,is_emal_sent_for_VOI__c,Session_Start_Time__c,voi_Email_Verification_Code__c,Email,Count__c, Phone, PhoneForPortal__c from contact where id =: conId LIMIT 1];
+            contact con = [Select id,Session_Start_Time__c,voi_Email_Verification_Code__c,Email,Count__c, Phone, PhoneForPortal__c from contact where id =: conId LIMIT 1];
             con.voi_Email_Verification_Code__c = String.valueOf(num);
-            if(!con.is_emal_sent_for_VOI__c){
-                con.is_emal_sent_for_VOI__c = true;
-            }
             update con;
             OrgWideEmailAddress[] owea = [SELECT Id from OrgWideEmailAddress WHERE Address =:UtilityClass.adminEmail];
             List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
@@ -719,7 +755,7 @@ global without sharing class newVOIController {
         if(conId == oppUpdate.Applicant_1__r.PersonContactId){
             String nextSection = oppUpdate.Current_Application_Sections__c;
 
-            if(qt.Lender__c == 'Transport Mutual Credit Union' && !isAppStatus){
+            if((qt.Lender__c == 'Transport Mutual Credit Union' || qt.Lender__c == 'Broken Hill Community Credit Union') && !isAppStatus){
                 if(oppUpdate.Current_Application_Sections__c == 'VOI'){
                     nextSection = appSectionsList[appSectionsList.indexOf(oppUpdate.Current_Application_Sections__c) + 1];   
                 }                
@@ -756,7 +792,7 @@ global without sharing class newVOIController {
         Boolean Flag;
         try{
             opportunity opp = [select Id,Applicant_1__c,Applicant_1_eSign_Status__c,Applicant_2_eSign_Status__c,Lender__c,Loan_Amount__c,Applicant_2__c,Applicant_1__r.personContactId,Applicant_2__r.personContactId, Loan_Purpose__c,Purpose__c from opportunity WHERE ID =: oppId LIMIT 1];
-            List<Blob> BPDF = new List<Blob>();
+            List<Blob> bPDF = new List<Blob>();
             Set<id> Setid = new SET<Id>();
             VOI_Status__c temp = [select Id, name,link_Expire_code__c, Contact__r.AccountId,contact__c, contact__r.Name from VOI_Status__c WHERE contact__r.Id =: conId order by createddate DESC LIMIT 1];
             
@@ -780,6 +816,13 @@ global without sharing class newVOIController {
                 dc2.Person_Account__c = temp.Contact__r.AccountId;
                 dc2.Opportunity__c = opp.Id;
                 dcList.add(dc2);
+            }
+            if(opp.Lender__c == 'Broken Hill Community Credit Union'){
+                Document_Requested__c dc1 = new Document_Requested__c();
+                dc1.Category__c = 'Lender Membership';
+                dc1.Person_Account__c = temp.Contact__r.AccountId;
+                dc1.Opportunity__c = opp.Id;
+                dcList.add(dc1);
             }
             
             insert dcList;
@@ -807,6 +850,12 @@ global without sharing class newVOIController {
                 pdf3.getParameters().put('ConId',ConId);
                 pdf3.setRedirect(true);
             }
+            if(opp.Lender__c == 'Broken Hill Community Credit Union'){
+                pdf2 = Page.BHCCUDocPDF;
+                pdf2.getParameters().put('OppId',OppId);
+                pdf2.getParameters().put('ConId',ConId);
+                pdf2.setRedirect(true);
+            }
             
             
             if (Test.IsRunningTest())
@@ -820,6 +869,9 @@ global without sharing class newVOIController {
                 if(opp.Lender__c == 'Transport Mutual Credit Union'){
                     bPDF.add(pdf2.getContent());    
                     bPDF.add(pdf3.getContent());    
+                }
+                if(opp.Lender__c == 'Broken Hill Community Credit Union'){
+                    bPDF.add(pdf2.getContent());    
                 }
                 
             }
@@ -836,12 +888,16 @@ global without sharing class newVOIController {
             else if(opp.Lender__c == 'Wisr'){
                 len = 'W';
             }
+            else if(opp.Lender__c == 'Broken Hill Community Credit Union'){
+                len = 'BHCCU';
+            }
             else{
                 len = opp.Lender__c;
             }
             string CPQ = 'Singed CQP - '+ temp.Contact__r.Name + ' $'+ getCents(opp.Loan_Amount__c)+ ' ' + '('+len+') '+ team;
             string TMCU = 'Signed TMCU Membership - '+ temp.Contact__r.Name +  ' ' + team;
             string DirectDbtFrm = 'TMCU Direct Debit Authority - '+ temp.Contact__r.Name +  ' ' + team;
+            string BHCCU = 'Signed BHCCU Membership - ' + temp.Contact__r.Name +  ' ' + team;
             
             List<ContentVersion> cvList = new List<ContentVersion>();
             
@@ -869,6 +925,15 @@ global without sharing class newVOIController {
                 ContVerFile2.PathOnClient= DirectDbtFrm+'.Pdf';
                 ContVerFile2.Document_Requested__c = dcList[2].id;	
                 cvList.add(ContVerFile2);
+            }
+            if(opp.Lender__c == 'Broken Hill Community Credit Union'){
+                ContentVersion ContVerFile1 = new ContentVersion();
+                ContVerFile1.VersionData = bPDF[1];
+                ContVerFile1.Title = BHCCU; 
+                ContVerFile1.FirstPublishLocationId = opp.Id;
+                ContVerFile1.PathOnClient= BHCCU+'.Pdf';
+                ContVerFile1.Document_Requested__c = dcList[1].id;	
+                cvList.add(ContVerFile1);
             }
             
             if(cvList != null && cvList.size() > 0){

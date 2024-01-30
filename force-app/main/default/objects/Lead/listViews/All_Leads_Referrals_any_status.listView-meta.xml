@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All_Leads_Referrals_any_status</fullName>
+    <columns>Unread__c</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>LEAD.CREATED_DATE</columns>
+    <columns>FULL_NAME</columns>
+    <columns>LEAD.RECORDTYPE</columns>
+    <columns>LEAD.STATUS</columns>
+    <columns>Point_of_Origin__c</columns>
+    <columns>LEAD.LEAD_SOURCE</columns>
+    <columns>LEAD.PHONE</columns>
+    <columns>installationState__c</columns>
+    <columns>installationSuburb__c</columns>
+    <columns>HLHC_Offered__c</columns>
+    <columns>LEAD.EMAIL</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Affected_by_C19__c</field>
+        <operation>equals</operation>
+    </filters>
+    <label>All Leads &amp; Referrals (excl closed lost)</label>
+</ListView>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Product_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Product Type</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Solar</fullName>
+                <default>false</default>
+                <label>Solar</label>
+            </value>
+            <value>
+                <fullName>Debt Consolidation</fullName>
+                <default>false</default>
+                <label>Debt Consolidation</label>
+            </value>
+            <value>
+                <fullName>Home Improvement</fullName>
+                <default>false</default>
+                <label>Home Improvement</label>
+            </value>
+            <value>
+                <fullName>Consolidation Loan</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Consolidation Loan</label>
+            </value>
+            <value>
+                <fullName>Green Loan</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Green Loan</label>
+            </value>
+            <value>
+                <fullName>Personal Loan</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Personal Loan</label>
+            </value>
+            <value>
+                <fullName>Solar &amp; Green Products</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Solar &amp; Green Products</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

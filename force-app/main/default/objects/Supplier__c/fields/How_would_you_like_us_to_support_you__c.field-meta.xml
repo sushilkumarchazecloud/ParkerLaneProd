@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>How_would_you_like_us_to_support_you__c</fullName>
+    <externalId>false</externalId>
+    <label>How would you like us to support you?</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Please contact the customer</fullName>
+                <default>false</default>
+                <label>Please contact the customer</label>
+            </value>
+            <value>
+                <fullName>The customer will contact you</fullName>
+                <default>false</default>
+                <label>The customer will contact you</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -36,6 +36,27 @@
         $A.enqueueAction(action);
 	},
     
+    getOppRec : function(component, event, recordId) {
+		var action = component.get("c.getOpportunityRec");
+        var self = this;
+
+     	action.setParams({
+            recordId: recordId
+        });
+        action.setCallback(this, function(response) {
+            var state = response.getState();
+            if (state === "SUCCESS") {
+                var ret = response.getReturnValue();
+                if(ret.Referred_by_Company__c != null && ret.Referred_by_Company__c != ''){
+                    component.set("v.pageType",ret.Referred_by_Company__r.Custom_Loan_Options_Page_Type__c);
+                    component.set("v.loanOptionCheckbox",ret.Referred_by_Company__r.Custom_Loan_Options_Landing_Page__c);
+                }
+                self.toggleSpinner(component, event);
+            }
+        });
+        $A.enqueueAction(action);
+	},
+    
     setSelectedSections : function(component, event, recordId, selectedPath) {
 		var action = component.get("c.setSelectedSection");
         var self = this;
@@ -116,10 +137,10 @@
         
     },
     
-    toggleSpinner: function (component, event) {
+    toggleSpinner: function (component, event) {        
         //var spinner = component.find("mySpinner");
         //$A.util.toggleClass(spinner, "slds-hide");
-    },
+    }
     
     
 })

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Settlement_Date_Confirmation</fullName>
+    <active>true</active>
+    <description>confirm this is the loan settlement date</description>
+    <errorConditionFormula>AND( ISCHANGED(StageName), NOT(Confirm_Settlement_Date__c),  ISPICKVAL(StageName,&apos;Settled (closed won)&apos;) )</errorConditionFormula>
+    <errorDisplayField>Confirm_Settlement_Date__c</errorDisplayField>
+    <errorMessage>&quot;You have not confirmed the settlement date. Update the Close Date then check the confirmation box&quot;</errorMessage>
+</ValidationRule>

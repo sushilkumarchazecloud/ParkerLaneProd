@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Credit_Quote_Executed</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( ISCHANGED(Signed_Credit_Quote_Attached__c),  Signed_Credit_Quote_Attached__c = TRUE, ISBLANK(Credit_Quote_Executed__c),
+(OR (RecordType.DeveloperName  = &quot;Home_Loan_Construction&quot; , RecordType.DeveloperName  = &quot;Home_Loan_Purchase&quot;, RecordType.DeveloperName  = &quot;Home_Loan_Refinance&quot; )))</errorConditionFormula>
+    <errorDisplayField>Credit_Quote_Executed__c</errorDisplayField>
+    <errorMessage>Please enter Credit Quote Executed date.</errorMessage>
+</ValidationRule>

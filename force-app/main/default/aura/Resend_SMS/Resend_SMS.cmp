@@ -3,9 +3,11 @@
     <aura:attribute name="isButtonActive" type="Boolean" default="true"/>
     <aura:attribute name="spinnerShow" type="Boolean" default="false"/>
     <aura:attribute name="getPhone" type="string" default=""/> 
+    <aura:attribute name="vois" type="string"  default=""/>     
     <aura:handler name="init" value="{!this}" action="{!c.myAction}"/>
     <aura:attribute name="opp" type="contact" default="{'sobjectType': 'contact', 'VOI_type__c':''}"/>
     <aura:attribute name="voiType" type="List" default="[{'label': 'FULL', 'value': 'FULL'},{'label': 'VOI', 'value': 'VOI'},{'label': 'E-SIGN', 'value': 'E-SIGN'}]"/>
+    <aura:attribute name="voiVia" type="List" default="[{'label': 'SMS and email', 'value': 'SMS and email'},{'label': 'SMS only', 'value': 'SMS only'},{'label': 'Email only', 'value': 'Email only'}]"/>
     
     <aura:if isTrue="{!v.spinnerShow}">
         <div class="slds-spinner_container slds-is-relative" style="position : fixed;">
@@ -35,8 +37,14 @@
                     <aura:iteration items="{!v.voiType}" var="option">
                         <option value="{!option.value}" text="{!option.value}"></option>
                     </aura:iteration>
-                </lightning:select>
-            </lightning:recordEditForm>  
+                </lightning:select>     
+                <lightning:select label="Send Via" required="true" aura:id="voiVIa" >
+                <option value="">Select</option>
+                <aura:iteration items="{!v.voiVia}" var="option" >
+                    <option value="{!option.value}" text="{!option.value}"></option>
+                </aura:iteration>
+            </lightning:select>
+            </lightning:recordEditForm>             
         </div><br/> 
         <lightning:button variant="brand" label="Submit" onclick="{!c.SendSMS}"/>
     </div>

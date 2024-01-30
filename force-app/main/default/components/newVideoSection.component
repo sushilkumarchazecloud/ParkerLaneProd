@@ -1,0 +1,794 @@
+<apex:component controller="newVOIController" allowDML="true">
+    <head>
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0"/>
+        <apex:stylesheet value="{!$Resource.fontAwsome + '/fontAwsome/css/all.css'}"/>
+        <apex:includeScript value="{!$Resource.fontAwsome + '/fontAwsome/js/all.js'}"/>
+        <apex:includeScript value="{!$Resource.Jquery}"/>
+        <apex:includeScript value="{!$Resource.Jquerymin}"/>
+        <apex:includeLightning />
+        <apex:slds />
+        <style>  
+            @font-face {
+            font-family: ProximaNovaAlt-Medium;
+            src: url('/resource/customfonts/ProximaNovaAlt-Medium.otf') format('OpenType');
+            }
+            @font-face {
+            font-family: Proxima Nova Alt Regular;
+            src: url('/resource/ProximaNovaRegularFont') format('TrueType'); 
+            }
+            .fontFamBold{
+                font-family: ProximaNovaAlt-Medium;
+            }
+            .fontFamreg{
+                font-family: Proxima Nova Alt Regular;
+            }
+            body {
+            margin : 0px !important;
+            padding : 0px !important;
+            background : #f4f4f4 !important;
+            color: #1a2745;
+            }
+            .main_cont{
+            max-width: 700px;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto; 
+            }            
+            @media only screen and (max-width: 600px) {
+            .codeBox{
+                position: relative;
+                top: 0px !important;
+                left: 0px !important;
+            }
+            .slds-box{
+                margin-top : 10% !important;                
+            }
+            .codeSec{
+                min-height: 200px !important;
+                max-height: 220px !important;
+            }
+            .buttonOfAnother button{                            
+            width : 98%;
+            padding: 20px 10px 17px 10px; 
+            border : 1px solid #afc2e3;
+            margin-top: 10px;
+            border-radius : 8px;
+            background : #ffffff;                         
+            }
+            .buttonOfAnother p {
+                color : #afc2e3;
+                font-size: 16px;
+                text-align : left;
+            }            
+            .videoRecDiv{
+            width : 100% !important;
+            height : auto;
+            }
+            #videoElement {
+            width: 100%;
+            max-height : 300px !important;
+            min-height : 270px !important;
+            object-fit: cover;
+            border-radius : 13px;
+            background: #adb9ca;
+            }
+            #preview{
+            width: 100%;
+            max-height : 300px !important;
+            min-height : 270px !important;
+            object-fit: cover;
+            border-radius : 13px;
+            }
+            .main_Container{
+            background : #ffffff;
+            max-width: 700px;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto; 
+            border-radius : 20px;
+            }
+            .SecCodeText{
+            width: 50% !important;
+            }
+            }
+            .videoRecDiv{
+            width : 70%;
+            height : auto;
+            overflow : hidden;
+            }
+            #videoElement {
+            -webkit-transform: scaleX(-1);
+            transform: scaleX(-1);
+            width: 100%;
+            max-height : 300px;
+            min-height : 250px;
+            object-fit: cover;
+            border-radius : 13px;
+            background: #adb9ca;
+            }
+            #preview{
+            <!-- -webkit-transform: scaleX(-1);
+            transform: scaleX(-1);-->
+            width: 100%;
+            max-height : 300px;
+            min-height : 250px;
+            object-fit: cover;
+            border-radius : 13px;
+            }
+            .main_Container{
+            background : #ffffff;
+            max-width: 700px;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto; 
+            border-radius : 20px;
+            }           
+            <!--Circle For Video-->
+            .main{
+            height: 100px;
+            width: 100px;
+            position: relative;
+            margin : 10px auto;
+            }
+            #Circle_button{
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            }
+            .videRecButton {
+            position: inherit;
+            left : 0px;
+            top: 16px;
+            height: 68px;
+            width: 68px;
+            color : white !important;
+            font-weight : 500 !important;
+            font-size: 17px !important;
+            border : none;
+            outline : none;
+            }
+            <!--Circle For Video-->           
+            #random{
+            color : #1a2745;
+            font-size : 35px;
+            font-weight: bold;
+            text-align: center;
+            line-height : 1;
+            }
+            .dicsripction{
+            color : #1a2745;
+            font-size : 14px;
+            text-align : left;
+            }
+            .mainHead{
+            color : #1a2745;
+            font-size: 1.85rem;
+            }
+            .textData{
+            color : #1a2745;
+            font-size: 1rem;            
+            }
+            .startBtn{
+            width: 300px;
+            height: 60px;
+            color: white !important;
+            font-size: 20px !important;
+            font-weight: 700 !important;
+            background: #45c65a;
+            border: none;
+            outline: none;
+            border-radius: 50px;
+            }
+            .orderList{
+            font-size : 16px;
+            margin: 5px 0px 10px 0px;
+            }    
+            .errorText{
+            color: #c00000;
+            font-size: 16px;
+            font-weight: 500;
+            }
+            .buttonOfAnother button{
+            width : 100%;
+            padding: 20px 10px 17px 10px; 
+            border : 1px solid #afc2e3;
+            border-radius : 8px;
+            background : #ffffff;
+            }
+            .buttonOfAnother p {
+            color : #afc2e3;
+            font-size: 16px;
+            text-align : left;            
+            }
+            .submitBtn button{
+            width: 100%;
+            padding: 10px;
+            height: 65px;
+            background-color: #45c65a;
+            border: none;
+            outline : none;
+            font-size: 1.05rem; 
+            font-weight : 700;
+            color: white;
+            border-radius: 5px;
+            }
+            .logo{
+            padding: 9px;
+            background-color: #1a2745;
+            color: #fff;
+            align-items: center;
+            width : 100%;
+            height : auto;
+            }
+            .logo img{
+            width: 200px;
+            padding: 9px 22px;
+            height: 40px;
+            }
+            .speakBtn{
+            background: transparent;
+            border: 2px solid #e7b1a3;
+            padding: 4px 40px;
+            color: #e7b1a3 !important;
+            font-weight: 500 important;
+            border-radius: 4px;
+            }
+            .bodyForPanel{
+            background: #d2edee;
+            height: auto;
+            width: 100%;
+            margin: 0px auto;
+            }
+            .iconCover img{
+            width : 90px;
+            background : #ecf7f8;
+            border: 2px solid #45c65a;
+            padding: 18px 10px;
+            border-radius: 100%;
+            }
+            .identityText p{
+            font-size : 20px;
+            }
+            .textFrmt{
+            color : #308ed9;  
+            font-size : 14px;
+            }
+            .textFrmt:hover{
+                font-weight : bold;
+            }
+            .secureText{
+                font-size: 12px;
+            }
+            .max-700{
+            max-width: 700px;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto; 
+            }
+            .codeBox{
+                position: relative;
+                left: 12px;
+                top: 12px;
+            }
+        </style>
+    </head>
+    <body onload="bodyLoad();" class="slds-scope">
+        <apex:includeLightning />
+        <apex:form >
+            <apex:actionFunction name="sendVideo" action="{!videoDataforClass}" oncomplete="callforOthersec();">
+                <apex:param name="videoData" value=""/>
+            </apex:actionFunction>            
+            <apex:actionFunction name="SendEmailOrSms" action="{!sendAnotherDevice}" oncomplete="stopBtnSpin();">
+                <apex:param name="type" value=""/>
+                <apex:param name="conId" value=""/>
+            </apex:actionFunction>
+            <apex:actionFunction name="updateVoiStage" action="{!updateVOIfromesign}" oncomplete="afterStageUpdate();">
+                <apex:param name="section" value=""/>
+                <apex:param name="conId" value=""/>
+            </apex:actionFunction> 
+            <apex:actionFunction name="sendVideoSS" action="{!videoSS}" reRender="none">
+                <apex:param name="Video_SS" value=""/>
+            </apex:actionFunction>
+        </apex:form>
+        <!--Spinner code Start-->
+        <div id="spin">
+            <div id="spinner" class="slds-spinner_container slds-is-relative" style="position : fixed;background-color:#afc2e3;">
+                <div role="status" class="slds-spinner slds-spinner--large slds-spinner--brand">
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>                    
+                </div>
+            </div>
+        </div>
+        <!--Spinner code End-->
+        <div>
+            <div id="header"></div>
+        </div>
+        <div id="videoSec" class="max-700">            
+            <div class="main_cont bg-lightest slds-p-horizontal--medium slds-m-top_medium">
+                <div class="slds-align_absolute-center slds-m-top_medium">
+                    <img src="{!$Resource.headersLogo + '/headersLogo/3secondclip.png'}" style="width : 50%;"/>
+                </div>
+                <div>
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12">
+                            <div id="beginBtnSec">                            
+                                <p class="mainHead slds-m-top_large fontFamBold" style="font-weight: 700;">3 Second 'liveness' check</p>
+                                <p class="textData slds-m-top_medium fontFamreg">Click BEGIN then select 'Allow' to enable your camera.</p>
+                                <div  class="slds-m-top_large" id="beginBtn">
+                                    <button type="button" class="startBtn fontFamBold" onclick="startVideCam();">BEGIN</button>
+                                </div>
+                                <div  id="retryBtn">
+                                    <div  class="slds-m-top_large" >
+                                        <button type="button" class="startBtn" onclick="startVideCam();">TRY AGAIN</button>
+                                    </div>
+                                    <div class="slds-grid slds-wrap" style="margin: 10px 0px 40px 0px;">
+                                        <div class="slds-col slds-size_1-of-12 slds-medium-size_1-of-12 slds-large-size_1-of-12">
+                                            <span><img src="{!$Resource.SolarLoan + '/img/Oopsicon.png'}" style="width: 2.5rem; margin-top: 5px;"/></span>
+                                        </div>
+                                        <div class="fontFamreg slds-col slds-size_11-of-12 slds-medium-size_11-of-12 slds-large-size_11-of-12 errorText">
+                                            <span>Oops! We've detected your device has denied access tou your camera. Click here to learn how to 
+                                                enable your camera or select below to continue on another device.</span>
+                                        </div>
+                                    </div>                            
+                                </div> 
+                            </div>
+                            <div id="videohelpTxt" class="slds-m-top_x-large">
+                                <p class="textData fontFamreg">We'll now record a 3-second clip of you repeating the secure code into the camera. Click 
+                                    <b style="font-size : 16px; font-weight : 700; color : #45c65a;">START</b> then speak the 4 digit secure code before the recording stops.
+                                </p>
+                                <div class="orderList">
+                                    <ul class="slds-list_dotted textData fontFamBold" style="font-weight : 700;">
+                                        <li>Your face should be clear and visible.</li>
+                                        <li>The camera auto stops after 3 seconds</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>       
+            </div>
+            <div class="">                            
+                <div id="videoRecSec" class="bg-lightest slds-p-horizontal--medium slds-p-bottom--large" >                
+                    <div class="main_Container"  style="position: relative; padding: 1.5rem 1.5rem 5px 1.5rem;">                           
+                        <div id="spinnerBTN">
+                            <div id="spinner" class="slds-spinner_container slds-is-relative"  style="width : 100%;height : 100%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                                <div role="status" class="slds-spinner slds-spinner--large slds-spinner--brand">
+                                    <div class="slds-spinner__dot-a"></div>
+                                    <div class="slds-spinner__dot-b"></div>                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap">                            
+                            <div class="slds-col slds-size_12-of-12 slds-medium-size_7-of-12 slds-large-size_7-of-12 videoRecDiv">                                               
+                                <video id="videoElement" muted="true"></video>
+                                <video id="preview" autoplay="true"></video>
+                                <p class="fontFamreg dicsripction slds-m-top_small">Click <b style="font-size : 14px; font-weight : 700; color : #45c65a;">START</b> then speak the 4 digit code into the camera.</p>
+                            </div>                            
+                            <div class="slds-col slds-size_12-of-12 slds-medium-size_5-of-12 slds-large-size_5-of-12 codeSec" align="center" style="min-height: 300px; max-height: 350px;">
+                                <div class="codeBox">                                                                    
+                                    <div class="slds-box" style="padding : 6px 0px !important; background : #f2f2f2 !important; border : none; width : 88%; margin-top : 20%;">
+                                        <center class="secureText fontFamBold"><b>SPEAK THE SECURE CODE</b></center>
+                                        <center id="random" class="fontFamBold">{!SecureCodeOriginal}</center>
+                                    </div>
+                                    <div class="main" id="startBtn">
+                                        <canvas id="Circle_button" width="100px" height="100px"></canvas>
+                                        <button type="button" class="fontFamBold videRecButton slds-button slds-align_absolute-center" onclick="startRecording();StartRecButton();" id="circlebtn" style="border-radius : 50%; background : #45c65a;">START</button>    
+                                    </div>
+                                    <div class="main" id="recordAgnbtn">
+                                        <button type="button" class="fontFamBold videRecButton slds-button slds-align_absolute-center" onclick="startAgain();" style="border-radius : 50%; background : #45c65a; height : 80px !important;  width : 80px !important; line-height: 17px; font-size: 16px !important;">RECORD AGAIN</button>
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>                           
+                    </div>
+                    <div class="main_cont" >
+                        <div id="mainPgText">
+                            <p style="margin : 20px 0px !important;" class="dicsripction fontFamreg">Can't get the camera working? Check your decvice setting or select to continue on another device below. 
+                                <a href="" class="fontFamBold" style="text-decoration : none; color : #1a2745;"><u><b>Learn how to enable your camera here.</b></u></a>
+                            </p>
+                        </div>
+                        <div id="errorPgText">
+                            <p style="margin : 20px 0px !important;" class="dicsripction">Need help? Access our 
+                                <a href="" style="text-decoration : none; color : #1a2745;"><u>help guide here.</u></a>
+                            </p>
+                        </div>                        
+                    </div>
+                    <div class="main_cont buttonOfAnother slds-m-top_large">   
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                                <div id="anotherDevBtn"  onfocusout="hideListbxwhenfocusout();">
+                                    <button id="anotherDvBtn" onclick="showListbxfun();" >                                    
+                                        <div class="slds-grid slds-wrap">
+                                            <div class="slds-size_3-of-12 slds-medium-size_3-of-12 slds-large-size_3-of-12">
+                                                <img src="{!$Resource.SolarLoan + '/img/ContinueAnotherDevice.png'}" width="70%"/>
+                                            </div> 
+                                            <div class="slds-size_9-of-12 slds-medium-size_9-of-12 slds-large-size_9-of-12 slds-align_absolute-center">
+                                                <p class="textData fontFamBold"> Continue on another device</p>
+                                            </div>                                        
+                                        </div>
+                                    </button>   
+                                    <div id="showListBx">
+                                        <div role="listbox" style="width: 100%; position : relative; top: 2px;" >
+                                            <ul class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_12-of-12 slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid dropCss">
+                                                <li class="slds-listbox__item" role="presentation" data-value="sms" data-record="{!formatedMobile}" onmousedown="checkFofPickVal(this);">
+                                                    <span class="slds-media slds-listbox__option slds-listbox__option_entity " role="option">
+                                                        <span class="slds-media__body">
+                                                            <span class="slds-listbox__option-text slds-listbox__option-text_entity textFrmt fontFamreg">{!formatedMobile}</span>
+                                                        </span>
+                                                    </span>
+                                                </li>
+                                                <li class="slds-listbox__item" role="presentation" data-value="email" data-record="{!formatedEmail}" onmousedown="checkFofPickVal(this);">
+                                                    <span class="slds-media slds-listbox__option slds-listbox__option_entity " role="option">
+                                                        <span class="slds-media__body">
+                                                            <span class="slds-listbox__option-text slds-listbox__option-text_entity textFrmt fontFamreg">{!formatedEmail}</span>
+                                                        </span>
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                        </div>                                   
+                                    </div>                                
+                                </div>
+                            </div>
+                            <div class="slds-size_12-of-12 slds-medium-size_3-of-12 slds-large-size_3-of-12">
+                                <div id="spin_forBtn" align="center">
+                                    <div style="height:4.3rem;width: 4.3rem;position:relative">
+                                        <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+                                            <div class="slds-spinner__dot-a"></div>
+                                            <div class="slds-spinner__dot-b"></div>                    
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div>
+                                    <div id="successMsg" style="padding : 23px 10px 23px 10px;">
+                                        <p id="forSMS" style="text-align: center; color : #45c65a !important; line-height: initial" class="fontFamBold"><b> SMS SENT</b><img src="{!$Resource.SolarLoan + '/img/tick.png'}"/></p>
+                                        <p id="forEmail" style="text-align: center; color : #45c65a !important; line-height: initial" class="fontFamBold"><b> EMAIL SENT</b><img src="{!$Resource.SolarLoan + '/img/tick.png'}"/></p>
+                                    </div>                                
+                                </div>
+                            </div>
+                        </div>                                          
+                    </div>
+                    <div>
+                        <div class="main_cont submitBtn" style="margin-top : 35px;">
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12">
+                                    <button class="slds-m-vertical_large fontFamBold" type="button" id="submitLiveBtn" onclick="sendVideoData();">SUBMIT LIVENESS CHECK</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div><br/><br/><br/><br/><br/><br/><br/><br/> 
+                </div>
+            </div>
+            <div>
+                <canvas id="output" style="overflow:none; width : 100% !important; height : auto; display : none;"></canvas>
+            </div>
+        </div>
+        <div id="eSignShow">
+            <c:new_eSignCmp />
+        </div>
+    </body>
+    <script>
+    var userAgent = navigator.userAgent;
+    var isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
+    var isAndroid = /Android/.test(userAgent);
+    
+    var video1 = document.getElementById("videoElement");
+    
+    video1.setAttribute('autoplay', '');
+    video1.setAttribute('playsinline', '');
+    
+    
+    var constraints ={video: {width: 720, height: 480, facingMode: "user"},
+                      audio: true
+                     };
+    let camera_stream = null;
+    let media_recorder = null;
+    let blobs_recorded = [];
+    let video_local; 
+    let recordedData = [];
+    let recordedDataSecond = [];
+    let Video_Screen_Shot = [];
+    var blobDATA = [];
+    var fileItem;   
+    
+    
+    async function startVideCam(){
+        try {
+            camera_stream = await navigator.mediaDevices.getUserMedia(constraints);
+        }
+        catch(error) {
+            alert('Oops! Your camera or microphone is disabled. Close for NEXT STEPS.');
+            document.getElementById("beginBtn").style.display = 'none';
+            document.getElementById("retryBtn").style.display = 'Block';
+            document.getElementById("mainPgText").style.display = 'none'; 
+            document.getElementById("errorPgText").style.display = 'Block';
+            
+            return;
+        }
+        document.getElementById("videoRecSec").style.display = 'Block';
+        document.getElementById("videohelpTxt").style.display = 'Block';     
+        const scrollV = document.getElementById("beginBtn");
+        scrollV.scrollIntoView({ behavior: 'smooth' });
+        
+        video1.srcObject = camera_stream;
+        document.getElementById("beginBtn").style.display = 'Block';
+        document.getElementById("retryBtn").style.display = 'none';
+        
+    } 
+    
+    async function startRecording() {
+         var videoType = '';
+        function isIOSDevice(){
+            return !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
+        }
+        if(isIOSDevice()){
+            videoType = 'video/MP4';
+        }
+        else{
+            videoType = 'video/webm';
+        }
+        
+        const options = {
+            videoBitsPerSecond : 800000, // important for set the video size..
+            mimeType: videoType
+        }
+        
+        media_recorder = new MediaRecorder(camera_stream, options);
+        
+        media_recorder.addEventListener('dataavailable', function(e) {
+            blobs_recorded.push(e.data);
+            //console.log('record -------------------------'+blobs_recorded);
+            // blobDATA = blobs_recorded;
+        });
+        
+        media_recorder.addEventListener('stop', function() {
+            const userAgent = navigator.userAgent;
+            video_local = URL.createObjectURL(new Blob(blobs_recorded, { type: videoType }));
+            blobDATA = video_local;
+            //console.log('rec link'+video_local);
+            if(video_local != null){   
+                const toDataURL = url => fetch(url)
+                .then(response => response.blob())
+                .then(blob => new Promise((resolve, reject) => {
+                    const reader = new FileReader()
+                    reader.onloadend = () => resolve(reader.result)
+                    reader.onerror = reject
+                    fileItem = blob;
+                    reader.readAsDataURL(blob)
+                }))
+                //alert('toDataURL(video_local)------'+toDataURL(video_local));
+                toDataURL(video_local)
+                .then(dataUrl => {
+                    //alert('RESULT:', dataUrl);
+                    document.getElementById("preview").setAttribute("src", dataUrl);
+                    document.getElementById("preview").setAttribute('playsinline', '');
+                    document.getElementById("preview").setAttribute('controls', 'controls');
+                    console.log('base64 size : '+dataUrl.length);
+                    console.log('base64 size : '+dataUrl);
+                    recordedData = dataUrl;
+                    document.getElementById("videoElement").style.display = 'none';
+                    document.getElementById("preview").style.display = 'Block';
+                    document.getElementById("recordAgnbtn").style.display = 'Block'; 
+                    document.getElementById("startBtn").style.display = 'none';                  
+                    document.getElementById('submitLiveBtn').disabled = false;
+                    document.getElementById('submitLiveBtn').style.background = '#45c65a';
+                    document.getElementById('submitLiveBtn').style.borderColor  = '#45c65a';                    
+                    //alert('recordedData++'+recordedData);
+                    blobs_recorded = [];
+                })
+                }
+                });
+                    
+                    media_recorder.start();
+                    
+                   setTimeout(shoot, 500);
+                    
+                    setTimeout(stopFun, 3500);
+    }
+    
+                    function stopFun(){
+                    //  alert('timeout Video Recorded : ');
+                    media_recorder.stop(); 
+                    var stream = video1.srcObject;
+                    var tracks = stream.getTracks();
+                    for (var i = 0; i < tracks.length; i++) {
+                    var track = tracks[i];
+                    track.stop();
+                }
+                    video1.srcObject = null;
+                }
+                    function shoot() {
+                    var canvas = document.getElementById('output');     
+                    var video = document.getElementById('videoElement');
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    canvas.getContext('2d').drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+                    
+                    Video_Screen_Shot = canvas.toDataURL('image/jpeg');
+                    console.log('image ss = '+Video_Screen_Shot);
+                }
+    
+    function showListbxfun(){
+        document.getElementById("forEmail").style.display = 'none';
+        document.getElementById("forSMS").style.display = 'none';
+        document.getElementById("anotherDvBtn").style.border = '1px solid #0176d3';
+        var x = document.getElementById("showListBx");
+        console.log('-=--',window.getComputedStyle(x).display);
+        if (window.getComputedStyle(x).display === "block") {
+            document.getElementById("showListBx").style.display = 'none'; 
+            document.getElementById("anotherDvBtn").style.border = '1px solid #afc2e3';
+        }else{
+            document.getElementById("showListBx").style.display = 'Block';   
+        }
+            
+    }
+
+    function hideListbxwhenfocusout(){
+        document.getElementById("forEmail").style.display = 'none';
+        document.getElementById("forSMS").style.display = 'none';
+        document.getElementById("anotherDvBtn").style.border = '1px solid #0176d3';
+        var x = document.getElementById("showListBx");
+        console.log('-=--',window.getComputedStyle(x).display);
+        if (window.getComputedStyle(x).display === "block") {
+            document.getElementById("showListBx").style.display = 'none'; 
+            document.getElementById("anotherDvBtn").style.border = '1px solid #afc2e3';
+        }
+    }
+    
+    function stopBtnSpin(){        
+        document.getElementById("spin_forBtn").style.display = 'none';
+        document.getElementById("successMsg").style.display = 'Block';
+        document.getElementById("anotherDvBtn").style.border = '1px solid #afc2e3';
+    }
+    
+    function checkFofPickVal(element){
+        document.getElementById("anotherDvBtn").disabled = true;
+        var selectedValue = element.getAttribute('data-value');
+        console.log('Selected Value:', selectedValue);        
+        document.getElementById("successMsg").style.display = 'none';
+        document.getElementById("showListBx").style.display = 'none';
+        document.getElementById("spin_forBtn").style.display = 'Block';
+        if(selectedValue == 'email'){
+            document.getElementById("forEmail").style.display = 'Block';
+            document.getElementById("anotherDvBtn").disabled = false;
+        }
+        else{
+            document.getElementById("forSMS").style.display = 'Block';
+            document.getElementById("anotherDvBtn").disabled = false;
+        }
+                    var conId = "{!$CurrentPage.parameters.conId}";
+        SendEmailOrSms(selectedValue,conId);        
+    }
+    
+    function isMobileDevice() {
+        return /Mobi/.test(navigator.userAgent);
+    }
+    
+    function StopSpin(){
+        document.getElementById("spin").style.display = 'none';
+    }
+    function bodyLoad(){             
+        document.getElementById("spin").style.display = 'Block';
+                    $Lightning.use("embeddedService:sidebarApp", function(){ //c:eSignApp changed by pawan.
+            $Lightning.createComponent("c:genericHeader", {}, "header", function(){
+            });
+        }); 
+        document.getElementById("successMsg").style.display = 'none';
+        document.getElementById("spinnerBTN").style.display = 'none';
+        document.getElementById("forEmail").style.display = 'none';
+        document.getElementById("forSMS").style.display = 'none';
+        document.getElementById("spin_forBtn").style.display = 'none';
+        document.getElementById("showListBx").style.display = 'none';
+        document.getElementById("videoRecSec").style.display = 'none';
+        document.getElementById("videohelpTxt").style.display = 'none';     
+        document.getElementById("retryBtn").style.display = 'none';
+        document.getElementById('submitLiveBtn').disabled = true;
+        document.getElementById('submitLiveBtn').style.background = '#c9c7c5';
+        document.getElementById('submitLiveBtn').style.borderColor = '#c9c7c5';
+        document.getElementById("preview").style.display = 'none';  
+        document.getElementById("recordAgnbtn").style.display = 'none';
+        document.getElementById("errorPgText").style.display = 'none';
+        document.getElementById("eSignShow").style.display = 'none';
+        StopSpin();
+        if({!If(OR(voiS.Current_VOI_section__c == 'CQP', voiS.Current_VOI_section__c == 'TMCU'), true, false)}){
+            document.getElementById("videoSec").style.display = 'none';
+            document.getElementById("spin").style.display = 'Block';
+            afterStageUpdate();
+        }
+
+    }
+    
+    function startAgain(){
+        document.getElementById("spinnerBTN").style.display = 'block';
+        var vid = document.getElementById("preview");
+        vid.pause();
+        document.getElementById('submitLiveBtn').disabled = true;
+        document.getElementById('submitLiveBtn').style.background = '#c9c7c5';
+        document.getElementById('submitLiveBtn').style.borderColor = '#c9c7c5';
+        document.getElementById("videoElement").style.display = 'Block';
+        document.getElementById("preview").style.display = 'none';
+        document.getElementById("recordAgnbtn").style.display = 'none'; 
+        document.getElementById("startBtn").style.display = 'Block';  
+        startVideCam();
+        $("#startBtn").load(location.href + " #startBtn", stopBodyspin);        
+    } 
+    function stopBodyspin(){
+                    document.getElementById("spinnerBTN").style.display = 'none';
+                }
+                //Record button js start
+    
+    function StartRecButton() {
+        document.getElementById("circlebtn").innerHTML = '3';
+        var ctx = document.getElementById('Circle_button').getContext('2d');
+        var al = 0;
+        var start = 4.72;
+        if ( navigator.platform != "iPad" && navigator.platform != "iPhone" && navigator.platform != "iPod" ) {
+            cw = window.innerWidth; 
+            //I'll use window.innerWidth in production
+        } else {
+            cw = screen.width;
+        }
+        var ch = ctx.canvas.height;  
+        var diff;
+        function progressSim(){
+            diff = ((al / 100) * Math.PI*2*10).toFixed(2);
+            ctx.clearRect(0, 0, cw, ch);
+            ctx.lineWidth = 10;
+            ctx.textAlign = 'center';
+            ctx.strokeStyle = "#45c65a";
+            ctx.beginPath();
+            ctx.arc(50, 50, 40, start, diff/10+start, false);
+            ctx.stroke();
+            if(al >= 100){
+                clearTimeout(sim);
+                // Add scripting here that will run when progress completes
+            }
+            al++;
+        }
+        var sim = setInterval(progressSim, 35);
+        
+        // timer button
+        
+        let timeleft = 2;
+        let downloadTimer = setInterval(function(){
+            //console.log('downloadTimerdownloadTimer : '+downloadTimer);
+            if(timeleft <= 0){
+                clearInterval(downloadTimer);
+                document.getElementById("circlebtn").innerHTML = "start";
+            } else {
+                document.getElementById("circlebtn").innerHTML = timeleft;
+                
+            }
+            timeleft -= 1;
+            //console.log('to9me :: '+timeleft);
+        }, 1350);
+        
+        //  console.log('downloadTimerdownloadTimer : '+downloadTimer);
+        document.getElementById('circlebtn').disabled = true;
+    }
+    //Record button js End
+    
+    function sendVideoData(){
+        sendVideoSS(Video_Screen_Shot);
+        document.getElementById("spin").style.display = 'Block';
+        console.log('--'+recordedData);                 
+        document.getElementById("videoSec").style.display = 'none';
+                    sendVideo(recordedData);                   
+    }
+    
+    
+    function callforOthersec(){    
+        if({!If(voiS.VOI_Type_For__c == 'VOI',true,false)}){
+            var label = '{!$Label.baseUrl}'; 
+            window.location.href = label+'supportingDocument?oppId={!oppData.Id}';
+        }else{   
+                    var conId = "{!$CurrentPage.parameters.conId}";
+            updateVoiStage('CQP',conId);
+        }
+    }                
+    
+    function afterStageUpdate(){                    
+        document.getElementById("spin").style.display = 'none';            
+        document.getElementById("eSignShow").style.display = 'Block';
+    }
+    </script>
+</apex:component>

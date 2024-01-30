@@ -1,0 +1,9 @@
+<aura:component >
+    <aura:attribute name="sessionId" type="String"/>
+    <aura:attribute name="phone" type="String"/>
+    <aura:attribute name="accountId" type="String"/>
+    
+    <div class="referrer-portal-container">        
+        <c:ReferrerPortalSection sessionId = "{!v.sessionId}" phone = "{!v.phone}" accountId = "{!v.accountId}"/>
+    </div>
+</aura:component>

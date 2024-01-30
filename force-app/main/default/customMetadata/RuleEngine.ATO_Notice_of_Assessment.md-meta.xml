@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>ATO Notice of Assessment</label>
+    <protected>false</protected>
+    <values>
+        <field>Category__c</field>
+        <value xsi:type="xsd:string">Income</value>
+    </values>
+    <values>
+        <field>Description__c</field>
+        <value xsi:type="xsd:string">Most recent financial year&apos;s perosnal notice of assessment.</value>
+    </values>
+    <values>
+        <field>Document__c</field>
+        <value xsi:type="xsd:string">ATO Notice of Assessment</value>
+    </values>
+    <values>
+        <field>Fields__c</field>
+        <value xsi:type="xsd:string">FinServ__EmploymentStatus__c</value>
+    </values>
+    <values>
+        <field>Object__c</field>
+        <value xsi:type="xsd:string">FinServ__Employment__c</value>
+    </values>
+    <values>
+        <field>Rules__c</field>
+        <value xsi:type="xsd:string">FinServ__Employment__c.FinServ__EmploymentStatus__c == DividendsorAnnuity || FinServ__Employment__c.FinServ__EmploymentStatus__c == SelfEmployedContractor || FinServ__Employment__c.FinServ__EmploymentStatus__c == Other</value>
+    </values>
+    <values>
+        <field>isGeneral__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+</CustomMetadata>

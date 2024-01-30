@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>preference_for_the_type_of_lender__c</fullName>
+    <externalId>false</externalId>
+    <label>preference for the type of lender?</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Major bank</fullName>
+                <default>false</default>
+                <label>Major bank</label>
+            </value>
+            <value>
+                <fullName>Credit Union (customer owned bank)</fullName>
+                <default>false</default>
+                <label>Credit Union (customer owned bank)</label>
+            </value>
+            <value>
+                <fullName>Challenger bank</fullName>
+                <default>false</default>
+                <label>Challenger bank</label>
+            </value>
+            <value>
+                <fullName>Don’t mind</fullName>
+                <default>false</default>
+                <label>Don’t mind</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

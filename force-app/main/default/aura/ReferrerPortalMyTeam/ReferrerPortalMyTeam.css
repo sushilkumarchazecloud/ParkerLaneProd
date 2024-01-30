@@ -1,0 +1,126 @@
+.THIS .light-grey-box{
+    display: flex;
+    min-height: 75px !important;
+    min-width: 8rem;
+}
+.THIS .slds-select_container .slds-select{
+    height: 24px !important; 
+}
+
+.THIS .activity-box{
+    background-color: #fff;
+    border-radius: 7px;
+    box-shadow: 3px -2px 3px 0px #dfdfdf !important;   
+    margin-top: 10px;
+    border: 1px solid #d8d8d8;
+}
+
+.THIS .showRec{
+    display: block;
+}
+
+.THIS .pageNum{
+    border-radius: 5px !important;
+}
+.THIS .rlArrow{
+    border: 1px solid !important;
+    border-radius: 5px !important;
+    background: white !important;
+    padding: 2px 6px 2px 6px !important;
+}
+
+.THIS .saveBtn{
+    font-weight: 600;
+}
+
+.THIS .hideRec{
+    display: none;
+}
+
+.THIS .headingClass{
+    font-weight: 500 !important;
+    margin-top: 5px !important;
+}
+
+.THIS .modalClose{
+    float: inline-end !important;
+    padding-top: 10px !important;
+}
+
+.THIS .modalEdit{
+    margin-top: 0px !important;
+    color: darkgrey !important;
+}
+
+.THIS .editBtn{
+    line-height: inherit !important;
+}
+
+.THIS .downButton{
+    color: black !important;
+}
+
+.THIS .downButtonBordered{
+   color: black !important;
+   box-shadow : 0px 0px 3px 1px #0070d2 !important;
+}
+
+.THIS .activity-box td{
+    padding: 10px 20px 10px 10px !important;
+    line-height: initial !important;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.THIS .dark-bttn-color{
+    width:110px;
+    height : 45px;
+    background-color: #1a2746 !important;
+    border-color: #1a2746 !important;
+}
+
+.THIS.slds-spinner_container {  
+  z-index: 10000;
+  position: fixed;   
+}
+
+.THIS .no-abbr label.slds-form-element__label abbr, .THIS .no-abbr legend.slds-form-element__label abbr {
+    display: none;
+}
+
+.THIS .AddConbtnSave{
+    background-color:#1a2745 !important;
+    padding: 8px 45px !important;
+    float: right !important;
+    margin-top: 10px !important;
+}
+
+.THIS .AddConbtnSavedisabled{
+    padding: 8px 45px !important;
+    background-color:#c9c7c5 !important;
+    float: right !important;
+    margin-top: 10px !important;
+}
+
+.THIS .slds-backdrop {
+    background-color: #192744 !important;
+    opacity : 0.86 !important;  
+}
+
+.THIS .slds-input_faux{
+    background: white;
+}
+
+.THIS .slds-form-element__label{
+    font-weight: bold;
+    color: #222222 !important;
+}
+
+.THIS .addAnotherBtn {
+    text-decoration: underline !important;
+    font-weight: bold;
+}
+
+.THIS .BoxLogo{
+    width : 25px;
+}

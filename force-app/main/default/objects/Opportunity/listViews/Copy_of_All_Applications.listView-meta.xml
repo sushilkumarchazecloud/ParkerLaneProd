@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Copy_of_All_Applications</fullName>
+    <columns>Credit_Analyst__c</columns>
+    <columns>OPPORTUNITY.LAST_STAGE_CHANGE</columns>
+    <columns>OPPORTUNITY.NAME</columns>
+    <columns>Referred_by_Company__c</columns>
+    <columns>Referrer_Rating__c</columns>
+    <columns>Lender__c</columns>
+    <columns>Loan_Amount__c</columns>
+    <columns>Application_Pending_Status__c</columns>
+    <columns>Application_Pending_Notes__c</columns>
+    <columns>Documents_Outstanding__c</columns>
+    <columns>App_1_VOI_eSign_Complete__c</columns>
+    <columns>App_2_VOI_eSign_Complete__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>OPPORTUNITY.STAGE_NAME</field>
+        <operation>equals</operation>
+        <value>Packs Back</value>
+    </filters>
+    <filters>
+        <field>OPPORTUNITY.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Opportunity.Asset_Finance,Opportunity.Debt_Consolidation,Opportunity.Green_Loan,Opportunity.Home_Improvement,Opportunity.Personal_Loan,Opportunity.Solar,Opportunity.Vehicle_Purchase</value>
+    </filters>
+    <label>PL Packs Back</label>
+</ListView>

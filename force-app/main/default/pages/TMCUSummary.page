@@ -2,11 +2,11 @@
     
     <style>
         .itemColor:{
-            background-color:#006ac6;
+        background-color:#006ac6;
         }
     </style>
     <div class ="box100">
-    
+        
         <table width="100%">
             <tr>
                 <td width="50%">
@@ -36,7 +36,7 @@
                     Date &amp; Time Created:
                 </td>
                 <td width="70%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    {!TODAY()}
+                    {!dateCreated}
                 </td>
             </tr>
         </table>
@@ -48,7 +48,9 @@
                     Loan Amount:
                 </td>
                 <td width="70%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    <apex:outputPanel rendered="{!selectedQuote.Total_loan_amount__c != null}"> $</apex:outputPanel>{!selectedQuote.Total_Loan_Amount__c}
+                    <apex:outputText value="{0, Number, '$'#,##0}">
+                        <apex:param value="{!selectedQuote.Total_loan_amount__c}" />
+                    </apex:outputText>
                 </td>
             </tr>
             <tr></tr>
@@ -70,7 +72,7 @@
             </tr>
         </table>
         <br/>
-        <table width="100%" align="left">
+        <table width="100%" align="left" style="margin-bottom:15px;">
             <tr>
                 <th></th>
                 <th>1st Applicant</th>
@@ -84,7 +86,7 @@
                     {!oppContacts.contact1.Name}
                 </td>
                 <td width="40%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
-                        {!oppContacts.contact2.Name}
+                    {!oppContacts.contact2.Name}
                 </td>
             </tr>
             <tr>
@@ -142,10 +144,10 @@
             <tr>
                 <td width="100%" valign="top" style="padding-top:10px;text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;" colspan="2">
                     <ul style="margin:0px;padding:0px 30px">
-                        <li>They have read and agreed to our privacy policy</li>
-                        <li>They have read and agreed to our Credit Quote and Proposal including the payment of  </li>
-                        <li>We are authorised to submit this application to Transport Mutual Credit Union on their behalf</li>
-                        <li>They have confirmed that
+                        <li>They have read and agreed to our privacy policy.</li>
+                        <li>They have read and agreed to our Credit Quote and Proposal including the payment of brokerage (if applicable). </li>
+                        <li>We are authorised to submit this application to {!selectedQuote.Lender__c} on their behalf.</li>
+                        <li>They have confirmed that:
                             <ul style="list-style-type:circle;">
                                 <li>the loan and the amount are applying for meets their personal needs, and; </li>
                                 <li>they are comfortably able to meet the loan repayments, and;</li>
@@ -162,11 +164,11 @@
             <tr></tr>
             <tr>
                 <td width="100%">
-                    <b style="font-size:15px;font-family:Times New Roman, Times, serif;">Broker Declaration</b>
+                    <b style="font-size:15px;font-family:Times New Roman, Times, serif;">Declaration</b>
                 </td>
             </tr>
         </table>
-        <table width="100%" align="left">
+        <table width="100%" align="left" style="margin-bottom: 15px;">
             <tr></tr>
             <tr></tr>
             <tr>
@@ -189,7 +191,7 @@
             </tr>
         </table>
         
-        <table width="100%" align="left">
+        <table width="100%" align="left" style="margin-bottom: 15px;">
             <tr></tr>
             <tr></tr>
             <tr>
@@ -206,7 +208,9 @@
                     Loan Amount:
                 </td>
                 <td width="70%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    <apex:outputPanel rendered="{!selectedQuote.Total_loan_amount__c != null}"> $</apex:outputPanel>{!selectedQuote.Total_Loan_Amount__c}
+                    <apex:outputText value="{0, Number, '$'#,##0}">
+                        <apex:param value="{!selectedQuote.Total_loan_amount__c}" />
+                    </apex:outputText>
                 </td>
             </tr>
             <tr></tr>
@@ -224,9 +228,9 @@
                     Repayments:
                 </td>
                 <td width="70%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    <apex:outputPanel rendered="{!selectedQuote.Monthly_Repayments__c != null}">$</apex:outputPanel>
-                        {!selectedQuote.Monthly_Repayments__c}
-                    <apex:outputPanel rendered="{!selectedQuote.Monthly_Repayments__c != null}"> per month</apex:outputPanel>
+                    <apex:outputText value="{0, Number, '$'#,##0}">
+                        <apex:param value="{!selectedQuote.Monthly_Repayments__c}" />
+                    </apex:outputText>  per month
                 </td>
             </tr>
             <tr></tr>
@@ -242,9 +246,11 @@
             <tr>
                 <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     Total set-up costs:
-                </td>
+                </td> 
                 <td width="70%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    <apex:outputPanel rendered="{!selectedQuote.Total_Setup_Fees__c != null}">$</apex:outputPanel>{!selectedQuote.Total_Setup_Fees__c}
+                    <apex:outputText value="{0, Number, '$'#,##0}">
+                        <apex:param value="{!selectedQuote.Total_Setup_Fees__c}" />
+                    </apex:outputText>
                 </td>
             </tr>
             <tr></tr>
@@ -253,7 +259,9 @@
                     Ongoing fees:
                 </td>
                 <td width="70%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    {!selectedQuote.Product__r.Ongoing_Fees__c}
+                    <apex:outputText value="{0, Number, '$'#,##0}">
+                        <apex:param value="{!selectedQuote.Product__r.Ongoing_Fees__c}" />
+                    </apex:outputText>
                 </td>
             </tr>
             <tr></tr>
@@ -261,8 +269,10 @@
                 <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     <b>Total cost of loan</b>:
                 </td>
-                <td width="70%" style="text-align:left;font-family:font-size:13px;Arial, Helvetica, sans-serif;">
-                    <b><apex:outputPanel rendered="{!selectedQuote.Total_Loan_Cost__c != null}">$</apex:outputPanel>{!selectedQuote.Total_Loan_Cost__c}</b>        
+                <td width="70%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <b><apex:outputText value="{0, Number, '$'#,##0}">
+                        <apex:param value="{!selectedQuote.Total_Loan_Cost__c}" />
+                        </apex:outputText></b>        
                 </td>
             </tr>
             <tr></tr>
@@ -272,16 +282,20 @@
                 <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     Commission Payable to Parker Lane: 
                 </td>
-                <td width="70%" style="text-align:left;font-family:font-size:13px;Arial, Helvetica, sans-serif;">
-                    <apex:outputPanel rendered="{!selectedQuote.Commission_Amount__c != null}">$</apex:outputPanel>{!selectedQuote.Commission_Amount__c}
+                <td width="70%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <apex:outputText value="{0, Number, '$'#,##0}">
+                        <apex:param value="{!selectedQuote.Commission_Amount__c}" />
+                    </apex:outputText>
                 </td>
             </tr>
             <tr>
                 <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     Brokerage Payable to Parker Lane:
                 </td>
-                <td width="70%" style="text-align:left;font-family:font-size:13px;Arial, Helvetica, sans-serif;">
-                    <apex:outputPanel rendered="{!selectedQuote.Brokerage_Amount__c != null}">$</apex:outputPanel>{!selectedQuote.Brokerage_Amount__c}
+                <td width="70%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <apex:outputText value="{0, Number, '$'#,##0}">
+                        <apex:param value="{!selectedQuote.Brokerage_Amount__c}" />
+                    </apex:outputText>
                 </td>
             </tr>
             
@@ -292,7 +306,7 @@
                 <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     Funding Summary
                 </td>
-                <td width="70%" style="text-align:left;font-family:font-size:13px;Arial, Helvetica, sans-serif;">
+                <td width="70%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                 </td>
             </tr>
             <tr>
@@ -305,8 +319,10 @@
                 <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     Loan Amount Requested:
                 </td>
-                <td width="70%" style="text-align:left;font-family:font-size:13px;Arial, Helvetica, sans-serif;">
-                    <apex:outputPanel rendered="{!selectedQuote.Total_loan_amount__c != null}">$</apex:outputPanel>{!selectedQuote.Total_loan_amount__c}        
+                <td width="70%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;"> 
+                    <apex:outputText value="{0, Number, '$'#,##0}">
+                        <apex:param value="{!selectedQuote.Total_loan_amount__c}" />
+                    </apex:outputText>
                 </td>
             </tr>
             <tr></tr>
@@ -323,7 +339,9 @@
                     Total Setup Fees:
                 </td>
                 <td width="70%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    <apex:outputPanel rendered="{!selectedQuote.Total_Fees__c != null}">$</apex:outputPanel>{!selectedQuote.Total_Fees__c}
+                    <apex:outputText value="{0, Number, '$'#,##0}">
+                        <apex:param value="{!selectedQuote.Total_Fees__c}" />
+                    </apex:outputText>
                 </td>
             </tr>
             <tr></tr>
@@ -332,7 +350,9 @@
                     Brokerage:
                 </td>
                 <td width="70%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    <apex:outputPanel rendered="{!selectedQuote.Brokerage_Amount__c != null}">$</apex:outputPanel>{!selectedQuote.Brokerage_Amount__c}
+                    <apex:outputText value="{0, Number, '$'#,##0}">
+                        <apex:param value="{!selectedQuote.Brokerage_Amount__c}" />
+                    </apex:outputText>
                 </td>
             </tr>
             <tr></tr>
@@ -341,10 +361,13 @@
                     <b>Credit Available After Fees:</b>
                 </td>
                 <td width="70%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    <b><apex:outputPanel rendered="{!selectedQuote.Credit_Available_after_Setup_Costs__c != null}">$</apex:outputPanel>{!selectedQuote.Credit_Available_after_Setup_Costs__c}</b>
+                    <b>
+                    <apex:outputText value="{0, Number, '$'#,##0}">
+                        <apex:param value="{!selectedQuote.Credit_Available_after_Setup_Costs__c}" />
+                    </apex:outputText></b>
                 </td>
             </tr>
-                 
+            
         </table>
         
         <table width="100%" align="left" class="itemColor">
@@ -357,7 +380,7 @@
             </tr>
         </table>
         
-        <table width="100%" align="left">
+        <table width="100%" align="left" style="margin-bottom: 15px;">
             <tr>
                 <th></th>
                 <th>1st Applicant</th>
@@ -367,10 +390,10 @@
                 <td width="30%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     Title
                 </td>
-                <td width="30%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     {!oppContacts.contact1.Title}
                 </td>
-                <td width="40%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                     {!oppContacts.contact2.Title}
                 </td>
             </tr>
@@ -378,10 +401,10 @@
                 <td width="30%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     FirstName:
                 </td>
-                <td width="30%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     {!oppContacts.contact1.FirstName}
                 </td>
-                <td width="40%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                     {!oppContacts.contact2.FirstName}
                 </td>
             </tr>
@@ -389,10 +412,10 @@
                 <td width="30%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     MiddleName:
                 </td>
-                <td width="30%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     {!oppContacts.contact1.MiddleName}
                 </td>
-                <td width="40%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                     {!oppContacts.contact2.MiddleName}
                 </td>
             </tr>
@@ -400,10 +423,10 @@
                 <td width="30%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     LastName:
                 </td>
-                <td width="30%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     {!oppContacts.contact1.LastName}
                 </td>
-                <td width="40%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                     {!oppContacts.contact2.LastName}
                 </td>
             </tr>
@@ -411,10 +434,10 @@
                 <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     Gender:
                 </td>
-                <td width="30%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     {!oppContacts.contact1.FinServ__Gender__c}
                 </td>
-                <td width="40%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                     {!oppContacts.contact2.FinServ__Gender__c}
                 </td>
             </tr>
@@ -422,10 +445,10 @@
                 <td width="30%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     Date of Birth:
                 </td>
-                <td width="30%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     <apex:outputText value="{0,date,dd/MM/yyyy}"> <apex:param value="{!oppContacts.contact1.Birthdate}" /> </apex:outputText>
                 </td>
-                <td width="40%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                     <apex:outputText value="{0,date,dd/MM/yyyy}"> <apex:param value="{!oppContacts.contact2.Birthdate}" /> </apex:outputText>
                 </td>
             </tr>
@@ -433,10 +456,10 @@
                 <td width="30%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     Citizenship:
                 </td>
-                <td width="30%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     {!oppContacts.contact1.Citizenship_Status__c}
                 </td>
-                <td width="40%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                     {!oppContacts.contact2.Citizenship_Status__c}
                 </td>
             </tr>
@@ -452,10 +475,10 @@
                 <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     Email:
                 </td>
-                <td width="30%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     {!oppContacts.contact1.Email}
                 </td>
-                <td width="40%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                     {!oppContacts.contact2.Email}
                 </td>
             </tr>
@@ -463,10 +486,10 @@
                 <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     Phone:
                 </td>
-                <td width="30%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     {!oppContacts.contact1.Phone}
                 </td>
-                <td width="40%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                     {!oppContacts.contact2.Phone}
                 </td>
             </tr>
@@ -474,10 +497,10 @@
                 <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     Security Question:
                 </td>
-                <td width="30%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     {!oppContacts.contact1.Security_Question__c}
                 </td>
-                <td width="40%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                     {!oppContacts.contact2.Security_Question__c}
                 </td>
             </tr>
@@ -485,10 +508,10 @@
                 <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     Answer:
                 </td>
-                <td width="30%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     {!oppContacts.contact1.Security_Answer__c}
                 </td>
-                <td width="40%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                     {!oppContacts.contact2.Security_Answer__c}
                 </td>
             </tr>
@@ -505,10 +528,10 @@
                 <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     Driver License Number:
                 </td>
-                <td width="30%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     {!oppContacts.contact1.Govt_Id_Number__c}
                 </td>
-                <td width="40%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                     {!oppContacts.contact2.Govt_Id_Number__c}
                 </td>
             </tr>
@@ -516,10 +539,10 @@
                 <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     Driver License State:
                 </td>
-                <td width="30%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     {!oppContacts.contact1.Driver_s_licence_state_Territory__c}
                 </td>
-                <td width="40%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                     {!oppContacts.contact2.Driver_s_licence_state_Territory__c}
                 </td>
             </tr>
@@ -527,10 +550,10 @@
                 <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     Government Id:
                 </td>
-                <td width="30%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     {!oppContacts.contact1.Government_ID__c}
                 </td>
-                <td width="40%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                     {!oppContacts.contact2.Government_ID__c}
                 </td>
             </tr>
@@ -538,10 +561,10 @@
                 <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     Government Id Number:
                 </td>
-                <td width="30%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     {!oppContacts.contact1.Govt_Id_Number__c}
                 </td>
-                <td width="40%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                     {!oppContacts.contact2.Govt_Id_Number__c}
                 </td>
             </tr>
@@ -558,10 +581,10 @@
                 <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     Medicare Number:
                 </td>
-                <td width="30%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     {!oppContacts.contact1.Medicare_Number__c}
                 </td>
-                <td width="40%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                     {!oppContacts.contact2.Medicare_Number__c}
                 </td>
             </tr>
@@ -569,10 +592,10 @@
                 <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     Reference:
                 </td>
-                <td width="30%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     {!oppContacts.contact1.Medicare_Reference__c}
                 </td>
-                <td width="40%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                     {!oppContacts.contact2.Medicare_Reference__c}
                 </td>
             </tr>
@@ -580,14 +603,14 @@
                 <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     Expiry:
                 </td>
-                <td width="30%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     <apex:outputText value="{0,date,MMMM}">
-                            <apex:param value="{!oppContacts.contact1.Medicare_Expiry_Date__c}" /> 
+                        <apex:param value="{!oppContacts.contact1.Medicare_Expiry_Date__c}" /> 
                     </apex:outputText>&nbsp;{!oppContacts.contact1.Medicare_Expiry_Year__c}
                 </td>
-                <td width="40%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                     <apex:outputText value="{0,date,MMMM}">
-                            <apex:param value="{!oppContacts.contact2.Medicare_Expiry_Date__c}" /> 
+                        <apex:param value="{!oppContacts.contact2.Medicare_Expiry_Date__c}" /> 
                     </apex:outputText>&nbsp;{!oppContacts.contact2.Medicare_Expiry_Year__c}
                 </td>
             </tr>
@@ -604,10 +627,10 @@
                 <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     Relationship Status:
                 </td>
-                <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     {!oppContacts.contact1.FinServ__MaritalStatus__c}
                 </td>
-                <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                     {!oppContacts.contact2.FinServ__MaritalStatus__c}
                 </td>
             </tr>
@@ -615,10 +638,10 @@
                 <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     Living Situation:
                 </td>
-                <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     {!oppContacts.contact1.Living_Situation__c}
                 </td>
-                <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                     {!oppContacts.contact2.Living_Situation__c}
                 </td>
             </tr>
@@ -626,10 +649,10 @@
                 <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     Number of Children:
                 </td>
-                <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     {!oppContacts.app1Children.size}
                 </td>
-                <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                     {!oppContacts.app2Children.size}
                 </td>
             </tr>
@@ -637,7 +660,7 @@
                 <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     Ages:
                 </td>
-                <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     <apex:variable var="count" value="{!1}"/>
                     <apex:repeat value="{!oppContacts.app1Children}" var="item">    
                         <apex:outputPanel >
@@ -647,7 +670,7 @@
                         <apex:variable value="{!count+1}" var="count"/>
                     </apex:repeat>
                 </td>
-                <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                     <apex:variable var="count" value="{!1}"/>
                     <apex:repeat value="{!oppContacts.app2Children}" var="item">    
                         <apex:outputPanel >
@@ -671,10 +694,10 @@
                 <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     Current Address:
                 </td>
-                <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     {!oppContacts.contact1.Residential_Address__c}&nbsp;{!oppContacts.contact1.Postal_Code__c}
                 </td>
-                <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     {!IF(isApplicant2 == true,oppContacts.contact2.Residential_Address__c+''+oppContacts.contact2.Postal_Code__c,'')}
                 </td>
             </tr>
@@ -682,10 +705,10 @@
                 <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     Tenure:
                 </td>
-                <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     {!oppContacts.contact1.Year__c}&nbsp;Years,&nbsp;{!oppContacts.contact1.Months__c}&nbsp;Months
                 </td>
-                <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                     {!oppContacts.contact2.Year__c}&nbsp;Years,&nbsp;{!oppContacts.contact2.Months__c}&nbsp;Months
                 </td>
             </tr>
@@ -696,10 +719,10 @@
                     <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         Previous Address 1:
                     </td>
-                    <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         {!oppContacts.contact1.Residential_Address_1__c}&nbsp;{!oppContacts.contact1.Postal_Code_1__c}
                     </td>
-                    <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         {!IF(isApplicant2 == true,oppContacts.contact2.Residential_Address_1__c+' '+oppContacts.contact2.Postal_Code_1__c,'')}
                     </td>
                 </tr>
@@ -707,10 +730,10 @@
                     <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         Tenure:
                     </td>
-                    <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         {!oppContacts.contact1.Year_1__c}&nbsp;Years,&nbsp;{!oppContacts.contact1.Months_1__c}&nbsp;Months
                     </td>
-                    <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                         {!oppContacts.contact2.Year_1__c}&nbsp;Years,&nbsp;{!oppContacts.contact2.Months_1__c}&nbsp;Months
                     </td>
                 </tr>
@@ -722,10 +745,10 @@
                     <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         Previous Address 2:
                     </td>
-                    <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         {!oppContacts.contact1.Residential_Address_2__c}&nbsp;{!oppContacts.contact1.Postal_Code_2__c}
                     </td>
-                    <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         {!IF(isApplicant2 == true,oppContacts.contact2.Residential_Address_2__c+' '+oppContacts.contact2.Postal_Code_2__c,'')}
                     </td>
                 </tr>
@@ -733,10 +756,10 @@
                     <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         Tenure:
                     </td>
-                    <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         {!oppContacts.contact1.Year_2__c}&nbsp;Years,&nbsp;{!oppContacts.contact1.Months_2__c}&nbsp;Months
                     </td>
-                    <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                         {!oppContacts.contact2.Year_2__c}&nbsp;Years,&nbsp;{!oppContacts.contact2.Months_2__c}&nbsp;Months
                     </td>
                 </tr>
@@ -775,13 +798,17 @@
                 <tr>
                     <td valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;padding:0 8px 0 8px;">{!asst.FinServ__AssetsAndLiabilitiesType__c}</td>
                     <td valign="top" style="text-align:right;font-size:13px;font-family:Arial, Helvetica, sans-serif;padding:0 8px 0 8px;">
-                        <apex:outputText value="{0, number, $###,###,##0}">
+                        <apex:outputText value="{0, Number, '$'#,##0}">
                             <apex:Param value="{!asst.Value__c}" />
                         </apex:OutputText>
                     </td>
                     <td valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;padding:0 8px 0 8px;">{!IF(asst.FinServ__AssetsAndLiabilitiesType__c == 'Home' || asst.FinServ__AssetsAndLiabilitiesType__c == 'Investment Property' || asst.FinServ__AssetsAndLiabilitiesType__c == 'Commercial Property',asst.Address__c+' '+asst.Postal_Code__c,asst.FinServ__Description__c)}</td>
                     <td valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;padding:0 8px 0 8px;">{!asst.FinServ__Ownership__c}</td>
-                    <td valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;padding:0 8px 0 8px;">{!asst.Rental_Amount__c} &nbsp; {!asst.Rental_Frequency__c}</td>
+                    <td valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;padding:0 8px 0 8px;">
+                        <apex:outputText value="{0, Number, '$'#,##0}">
+                            <apex:param value="{!asst.Rental_Amount__c}" />
+                        </apex:outputText>  {!asst.Rental_Frequency__c}
+                    </td>
                     
                 </tr>
             </apex:repeat>
@@ -796,7 +823,7 @@
                 </td>
             </tr>
         </table>
-        <table width="100%" align="left">
+        <table width="100%" align="left" style="margin-bottom: 15px;">
             <tr></tr>
             <tr></tr>
             <tr>
@@ -811,23 +838,23 @@
                 <tr>
                     <td valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;padding:0 8px 0 8px;">{!lia.FinServ__AssetsAndLiabilitiesType__c}, {!lia.Institution__c}</td>
                     <td valign="top" style="text-align:right;font-size:13px;font-family:Arial, Helvetica, sans-serif;padding:0 8px 0 25px;">
-                        <apex:outputText value="{0, number, $###,###,##0}">
+                        <apex:outputText value="{0, Number, '$'#,##0}">
                             <apex:Param value="{!lia.Value__c}" />
                         </apex:OutputText>
                     </td>
                     <td valign="top" style="text-align:right;font-size:13px;font-family:Arial, Helvetica, sans-serif;padding:0 8px 0 25px;">
-                        <apex:outputText value="{0, number, $###,###,##0}">
+                        <apex:outputText value="{0, Number, '$'#,##0}">
                             <apex:Param value="{!lia.Limit__c}" />
                         </apex:OutputText>
                     </td>
                     <td width="20px" valign="top" style="text-align:right;font-size:13px;font-family:Arial, Helvetica, sans-serif;padding:0 8px 0 8px;">
-                        <apex:outputText value="{0, number, $###,###,##0}">
+                        <apex:outputText value="{0, Number, '$'#,##0.00}">
                             <apex:Param value="{!lia.Monthly_Calculation__c}" />
                         </apex:OutputText>
                     </td>
                     <td valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;padding:0 0px 0 8px;">
                         <apex:outputPanel rendered="{!IF(lia.Interest_Rate__c != null,true,false)}">
-                            <apex:outputText value="{0,number,0}%">
+                            <apex:outputText value="{0,number,0.00}%">
                                 <apex:param value="{!lia.Interest_Rate__c}" />
                             </apex:outputText>
                         </apex:outputPanel>
@@ -847,7 +874,7 @@
             </tr>
         </table>
         
-        <table width="100%" align="left">
+        <table width="100%" align="left" style="margin-bottom:10px;">
             <tr>
                 <th></th>
                 <th>1st Applicant</th>
@@ -864,10 +891,10 @@
                 <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     Primary Occupation:
                 </td>
-                <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     {!applicant1EmpStatus.con.FinServ__Occupation__c}
                 </td>
-                <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                     {!applicant2EmpStatus.con.FinServ__Occupation__c}
                 </td>
             </tr>
@@ -883,32 +910,32 @@
                 <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     Income Source:
                 </td>
-                <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     {!applicant1EmpStatus.emp.FinServ__EmploymentStatus__c}
                 </td>
-                <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                     {!applicant2EmpStatus.emp.FinServ__EmploymentStatus__c}
                 </td>
             </tr>
             <tr>
                 <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    Industry:
+                    Job Title:
                 </td>
-                <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    {!applicant1EmpStatus.emp.FinServ__Occupation__c}
+                <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    {!applicant1EmpStatus.emp.Job_Title__c}
                 </td>
-                <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
-                    {!applicant2EmpStatus.emp.FinServ__Occupation__c}
+                <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                    {!applicant2EmpStatus.emp.Job_Title__c}
                 </td>
             </tr>
             <tr>
                 <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     Employer:
                 </td>
-                <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     {!applicant1EmpStatus.emp.Name}
                 </td>
-                <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                     {!applicant2EmpStatus.emp.Name}
                 </td>
             </tr>
@@ -916,10 +943,10 @@
                 <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     Tennure:
                 </td>
-                <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     {!applicant1EmpStatus.emp.Years__c}&nbsp;<apex:outputText rendered="{!IF(applicant1EmpStatus.emp.Years__c != null,true,false)}">Year(s),&nbsp;</apex:outputText>{!applicant1EmpStatus.emp.Months__c}&nbsp;<apex:outputText rendered="{!IF(applicant1EmpStatus.emp.Months__c != null,true,false)}">Month(s)</apex:outputText>
                 </td>
-                <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                     {!applicant2EmpStatus.emp.Years__c}&nbsp;<apex:outputText rendered="{!IF(applicant2EmpStatus.emp.Years__c != null,true,false)}">Year(s),&nbsp;</apex:outputText>{!applicant2EmpStatus.emp.Months__c}&nbsp;<apex:outputText rendered="{!IF(applicant2EmpStatus.emp.Months__c != null,true,false)}">Month(s)</apex:outputText>
                 </td>
             </tr>
@@ -927,10 +954,10 @@
                 <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     Employer Address:
                 </td>
-                <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     {!applicant1EmpStatus.emp.FinServ__EmployerAddress__c}&nbsp;{!applicant1EmpStatus.emp.Postal_Code__c}
                 </td>
-                <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                     {!applicant2EmpStatus.emp.FinServ__EmployerAddress__c}&nbsp;{!applicant2EmpStatus.emp.Postal_Code__c}
                 </td>
             </tr>
@@ -938,10 +965,10 @@
                 <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     Employer Contact:
                 </td>
-                <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     {!applicant1EmpStatus.emp.FinServ__EmployerPhoneNumber__c}
                 </td>
-                <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                     {!applicant2EmpStatus.emp.FinServ__EmployerPhoneNumber__c}
                 </td>
             </tr>
@@ -949,10 +976,10 @@
                 <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     Description:
                 </td>
-                <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     {!applicant1EmpStatus.emp.Description__c}
                 </td>
-                <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                     {!applicant2EmpStatus.emp.Description__c}
                 </td>
             </tr>
@@ -960,10 +987,10 @@
                 <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     Minimum Hours Per Week:
                 </td>
-                <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     {!applicant2EmpStatus.emp.Minimum_hours_per_week__c}
                 </td>
-                <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                     {!applicant2EmpStatus.emp.Minimum_hours_per_week__c}
                 </td>
             </tr>
@@ -971,44 +998,60 @@
                 <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     Base Amount(Before Tax):
                 </td>
-                <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    {!applicant1EmpStatus.emp.FinServ__AnnualIncome__c}<apex:outputPanel rendered="{!applicant1EmpStatus.emp.Income_Frequency__c != null}">,</apex:outputPanel>{!applicant1EmpStatus.emp.Income_Frequency__c}
+                <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <apex:outputText value="{0, Number, '$'#,##0}">
+                        <apex:param value="{!applicant1EmpStatus.emp.FinServ__AnnualIncome__c}" />
+                    </apex:outputText><apex:outputPanel rendered="{!applicant1EmpStatus.emp.Income_Frequency__c != null}">,</apex:outputPanel>{!applicant1EmpStatus.emp.Income_Frequency__c}
                 </td>
-                <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
-                    {!applicant2EmpStatus.emp.FinServ__AnnualIncome__c}<apex:outputPanel rendered="{!applicant2EmpStatus.emp.Income_Frequency__c != null}">,</apex:outputPanel> {!applicant2EmpStatus.emp.Income_Frequency__c}
+                <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                    <apex:outputText value="{0, Number, '$'#,##0}">
+                        <apex:param value="{!applicant2EmpStatus.emp.FinServ__AnnualIncome__c}" />
+                    </apex:outputText><apex:outputPanel rendered="{!applicant2EmpStatus.emp.Income_Frequency__c != null}">,</apex:outputPanel> {!applicant2EmpStatus.emp.Income_Frequency__c}
                 </td>
             </tr>
             <tr>
                 <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     Regular Overtime:
                 </td>
-                <td width="30%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    {!applicant1EmpStatus.emp.Work_Overtime_amount__c}<apex:outputPanel rendered="{!applicant1EmpStatus.emp.Work_Overtime_Frequency__c != null}">,</apex:outputPanel> {!applicant1EmpStatus.emp.Work_Overtime_Frequency__c}
+                <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <apex:outputText value="{0, Number, '$'#,##0}">
+                        <apex:param value="{!applicant1EmpStatus.emp.Work_Overtime_amount__c}" />
+                    </apex:outputText><apex:outputPanel rendered="{!applicant1EmpStatus.emp.Work_Overtime_Frequency__c != null}">,</apex:outputPanel> {!applicant1EmpStatus.emp.Work_Overtime_Frequency__c}
                 </td>
-                <td width="40%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
-                    {!applicant2EmpStatus.emp.Work_Overtime_amount__c}<apex:outputPanel rendered="{!applicant2EmpStatus.emp.Work_Overtime_Frequency__c != null}">,</apex:outputPanel>{!applicant2EmpStatus.emp.Work_Overtime_Frequency__c}
+                <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                    <apex:outputText value="{0, Number, '$'#,##0}">
+                        <apex:param value="{!applicant2EmpStatus.emp.Work_Overtime_amount__c}" />
+                    </apex:outputText><apex:outputPanel rendered="{!applicant2EmpStatus.emp.Work_Overtime_Frequency__c != null}">,</apex:outputPanel>{!applicant2EmpStatus.emp.Work_Overtime_Frequency__c}
                 </td>
             </tr>
             <tr>
                 <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     Commission Or Bonus:
                 </td>
-                <td width="30%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    {!applicant1EmpStatus.emp.Commission_or_Bonus_amount__c}<apex:outputPanel rendered="{!applicant1EmpStatus.emp.Commission_or_Bonus_Frequency__c != null}">,</apex:outputPanel>{!applicant1EmpStatus.emp.Commission_or_Bonus_Frequency__c}
+                <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                     <apex:outputText value="{0, Number, '$'#,##0}">
+                        <apex:param value="{!applicant1EmpStatus.emp.Commission_or_Bonus_amount__c}" />
+                    </apex:outputText><apex:outputPanel rendered="{!applicant1EmpStatus.emp.Commission_or_Bonus_Frequency__c != null}">,</apex:outputPanel>{!applicant1EmpStatus.emp.Commission_or_Bonus_Frequency__c}
                 </td>
-                <td width="40%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
-                    {!applicant2EmpStatus.emp.Commission_or_Bonus_amount__c}<apex:outputPanel rendered="{!applicant2EmpStatus.emp.Commission_or_Bonus_Frequency__c != null}">,</apex:outputPanel>{!applicant2EmpStatus.emp.Commission_or_Bonus_Frequency__c}
+                <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                    <apex:outputText value="{0, Number, '$'#,##0}">
+                        <apex:param value="{!applicant2EmpStatus.emp.Commission_or_Bonus_amount__c}" />
+                    </apex:outputText><apex:outputPanel rendered="{!applicant2EmpStatus.emp.Commission_or_Bonus_Frequency__c != null}">,</apex:outputPanel>{!applicant2EmpStatus.emp.Commission_or_Bonus_Frequency__c}
                 </td>
             </tr>
             <tr>
                 <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     Allownces:
                 </td>
-                <td width="30%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    {!applicant1EmpStatus.emp.Allowance_Amount__c}<apex:outputPanel rendered="{!applicant1EmpStatus.emp.Allowance_Frequency__c != null}">,</apex:outputPanel>{!applicant1EmpStatus.emp.Allowance_Frequency__c}
+                <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <apex:outputText value="{0, Number, '$'#,##0}">
+                        <apex:param value="{!applicant1EmpStatus.emp.Allowance_Amount__c}" />
+                    </apex:outputText><apex:outputPanel rendered="{!applicant1EmpStatus.emp.Allowance_Frequency__c != null}">,</apex:outputPanel>{!applicant1EmpStatus.emp.Allowance_Frequency__c}
                 </td>
-                <td width="40%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
-                    {!applicant2EmpStatus.emp.Allowance_Amount__c}<apex:outputPanel rendered="{!applicant2EmpStatus.emp.Allowance_Frequency__c != null}">,</apex:outputPanel>{!applicant2EmpStatus.emp.Allowance_Frequency__c}
+                <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                    <apex:outputText value="{0, Number, '$'#,##0}">
+                        <apex:param value="{!applicant2EmpStatus.emp.Allowance_Amount__c}" />
+                    </apex:outputText><apex:outputPanel rendered="{!applicant2EmpStatus.emp.Allowance_Frequency__c != null}">,</apex:outputPanel>{!applicant2EmpStatus.emp.Allowance_Frequency__c}
                 </td>
             </tr>
             
@@ -1032,25 +1075,26 @@
                         {!applicant2Income2.emp.FinServ__EmploymentStatus__c}
                     </td>
                 </tr>
+                <tr></tr>
                 <tr>
                     <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                        Industry:
+                        Job Title:
                     </td>
                     <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                        {!applicant1Income2.emp.FinServ__Occupation__c}
+                        {!applicant1EmpStatus.emp.Job_Title__c}
                     </td>
                     <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
-                        {!applicant2Income2.emp.FinServ__Occupation__c}
+                        {!applicant2EmpStatus.emp.Job_Title__c}
                     </td>
-                </tr>
+                </tr>                
                 <tr>
                     <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         Employer:
                     </td>
-                    <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         {!applicant1Income2.emp.Name}
                     </td>
-                    <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                         {!applicant2Income2.emp.Name}
                     </td>
                 </tr>
@@ -1058,10 +1102,10 @@
                     <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         Tennure:
                     </td>
-                    <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         {!applicant1Income2.emp.Years__c}&nbsp;<apex:outputText rendered="{!IF(applicant1Income2.emp.Years__c != null,true,false)}">Year(s),&nbsp;</apex:outputText>{!applicant1Income2.emp.Months__c}&nbsp;<apex:outputText rendered="{!IF(applicant1Income2.emp.Months__c != null,true,false)}">Month(s)</apex:outputText>
                     </td>
-                    <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                         {!applicant2Income2.emp.Years__c}&nbsp;<apex:outputText rendered="{!IF(applicant2Income2.emp.Years__c != null,true,false)}">Year(s),&nbsp;</apex:outputText>{!applicant2Income2.emp.Months__c}&nbsp;<apex:outputText rendered="{!IF(applicant2Income2.emp.Months__c != null,true,false)}">Month(s)</apex:outputText>
                     </td>
                 </tr>
@@ -1069,10 +1113,10 @@
                     <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         Employer Address:
                     </td>
-                    <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         {!applicant1Income2.emp.FinServ__EmployerAddress__c}
                     </td>
-                    <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                         {!applicant2Income2.emp.FinServ__EmployerAddress__c}
                     </td>
                 </tr>
@@ -1080,10 +1124,10 @@
                     <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         Employer Contact:
                     </td>
-                    <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         {!applicant1Income2.emp.FinServ__EmployerPhoneNumber__c}
                     </td>
-                    <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                         {!applicant2Income2.emp.FinServ__EmployerPhoneNumber__c}
                     </td>
                 </tr>
@@ -1091,10 +1135,10 @@
                     <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         Description:
                     </td>
-                    <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         {!applicant1Income2.emp.Description__c}
                     </td>
-                    <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                         {!applicant2Income2.emp.Description__c}
                     </td>
                 </tr>
@@ -1102,10 +1146,10 @@
                     <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         Minimum Hours Per Week:
                     </td>
-                    <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         {!applicant2Income2.emp.Minimum_hours_per_week__c}
                     </td>
-                    <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                         {!applicant2Income2.emp.Minimum_hours_per_week__c}
                     </td>
                 </tr>
@@ -1113,44 +1157,60 @@
                     <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         Base Amount(Before Tax):
                     </td>
-                    <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                        {!applicant1Income2.emp.FinServ__AnnualIncome__c}<apex:outputPanel rendered="{!applicant1Income2.emp.Income_Frequency__c != null}">,</apex:outputPanel>{!applicant1Income2.emp.Income_Frequency__c}
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        <apex:outputText value="{0, Number, '$'#,##0}">
+                            <apex:param value="{!applicant1Income2.emp.FinServ__AnnualIncome__c}" />
+                        </apex:outputText><apex:outputPanel rendered="{!applicant1Income2.emp.Income_Frequency__c != null}">,</apex:outputPanel>{!applicant1Income2.emp.Income_Frequency__c}
                     </td>
-                    <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
-                        {!applicant2Income2.emp.FinServ__AnnualIncome__c}<apex:outputPanel rendered="{!applicant2Income2.emp.Income_Frequency__c != null}">,</apex:outputPanel> {!applicant2Income2.emp.Income_Frequency__c}
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                        <apex:outputText value="{0, Number, '$'#,##0}">
+                            <apex:param value="{!applicant2Income2.emp.FinServ__AnnualIncome__c}" />
+                        </apex:outputText><apex:outputPanel rendered="{!applicant2Income2.emp.Income_Frequency__c != null}">,</apex:outputPanel> {!applicant2Income2.emp.Income_Frequency__c}
                     </td>
                 </tr>
                 <tr>
                     <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         Regular Overtime:
                     </td>
-                    <td width="30%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                        {!applicant1Income2.emp.Work_Overtime_amount__c}<apex:outputPanel rendered="{!applicant1Income2.emp.Work_Overtime_Frequency__c != null}">,</apex:outputPanel> {!applicant1Income2.emp.Work_Overtime_Frequency__c}
+                    <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        <apex:outputText value="{0, Number, '$'#,##0}">
+                            <apex:param value="{!applicant1Income2.emp.Work_Overtime_amount__c}" />
+                        </apex:outputText><apex:outputPanel rendered="{!applicant1Income2.emp.Work_Overtime_Frequency__c != null}">,</apex:outputPanel> {!applicant1Income2.emp.Work_Overtime_Frequency__c}
                     </td>
-                    <td width="40%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
-                        {!applicant2Income2.emp.Work_Overtime_amount__c}<apex:outputPanel rendered="{!applicant2Income2.emp.Work_Overtime_Frequency__c != null}">,</apex:outputPanel>{!applicant2Income2.emp.Work_Overtime_Frequency__c}
+                    <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                        <apex:outputText value="{0, Number, '$'#,##0}">
+                            <apex:param value="{!applicant2Income2.emp.Work_Overtime_amount__c}" />
+                        </apex:outputText><apex:outputPanel rendered="{!applicant2Income2.emp.Work_Overtime_Frequency__c != null}">,</apex:outputPanel>{!applicant2Income2.emp.Work_Overtime_Frequency__c}
                     </td>
                 </tr>
                 <tr>
                     <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         Commission Or Bonus:
                     </td>
-                    <td width="30%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                        {!applicant1Income2.emp.Commission_or_Bonus_amount__c}<apex:outputPanel rendered="{!applicant1Income2.emp.Commission_or_Bonus_Frequency__c != null}">,</apex:outputPanel>{!applicant1Income2.emp.Commission_or_Bonus_Frequency__c}
+                    <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        <apex:outputText value="{0, Number, '$'#,##0}">
+                            <apex:param value="{!applicant1Income2.emp.Commission_or_Bonus_amount__c}" />
+                        </apex:outputText><apex:outputPanel rendered="{!applicant1Income2.emp.Commission_or_Bonus_Frequency__c != null}">,</apex:outputPanel>{!applicant1Income2.emp.Commission_or_Bonus_Frequency__c}
                     </td>
-                    <td width="40%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
-                        {!applicant2Income2.emp.Commission_or_Bonus_amount__c}<apex:outputPanel rendered="{!applicant2Income2.emp.Commission_or_Bonus_Frequency__c != null}">,</apex:outputPanel>{!applicant2Income2.emp.Commission_or_Bonus_Frequency__c}
+                    <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                        <apex:outputText value="{0, Number, '$'#,##0}">
+                            <apex:param value="{!applicant2Income2.emp.Commission_or_Bonus_amount__c}" />
+                        </apex:outputText><apex:outputPanel rendered="{!applicant2Income2.emp.Commission_or_Bonus_Frequency__c != null}">,</apex:outputPanel>{!applicant2Income2.emp.Commission_or_Bonus_Frequency__c}
                     </td>
                 </tr>
                 <tr>
                     <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         Allownces:
                     </td>
-                    <td width="30%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                        {!applicant1Income2.emp.Allowance_Amount__c}<apex:outputPanel rendered="{!applicant1Income2.emp.Allowance_Frequency__c != null}">,</apex:outputPanel>{!applicant1Income2.emp.Allowance_Frequency__c}
+                    <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        <apex:outputText value="{0, Number, '$'#,##0}">
+                            <apex:param value="{!applicant1Income2.emp.Allowance_Amount__c}" />
+                        </apex:outputText><apex:outputPanel rendered="{!applicant1Income2.emp.Allowance_Frequency__c != null}">,</apex:outputPanel>{!applicant1Income2.emp.Allowance_Frequency__c}
                     </td>
-                    <td width="40%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
-                        {!applicant2Income2.emp.Allowance_Amount__c}<apex:outputPanel rendered="{!applicant2Income2.emp.Allowance_Frequency__c != null}">,</apex:outputPanel>{!applicant2Income2.emp.Allowance_Frequency__c}
+                    <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                        <apex:outputText value="{0, Number, '$'#,##0}">
+                            <apex:param value="{!applicant2Income2.emp.Allowance_Amount__c}" />
+                        </apex:outputText><apex:outputPanel rendered="{!applicant2Income2.emp.Allowance_Frequency__c != null}">,</apex:outputPanel>{!applicant2Income2.emp.Allowance_Frequency__c}
                     </td>
                 </tr>
             </apex:outputText>
@@ -1167,32 +1227,32 @@
                     <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         Income Source:
                     </td>
-                    <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         {!applicant1Income3.emp.FinServ__EmploymentStatus__c}
                     </td>
-                    <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                         {!applicant2Income3.emp.FinServ__EmploymentStatus__c}
                     </td>
                 </tr>
                 <tr>
                     <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                        Industry:
+                         Job Title:
                     </td>
-                    <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                        {!applicant1Income3.emp.FinServ__Occupation__c}
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        {!applicant1Income3.emp.Job_Title__c}
                     </td>
-                    <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
-                        {!applicant2Income3.emp.FinServ__Occupation__c}
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                        {!applicant2Income3.emp.Job_Title__c}
                     </td>
                 </tr>
                 <tr>
                     <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         Employer:
                     </td>
-                    <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         {!applicant1Income3.emp.Name}
                     </td>
-                    <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                         {!applicant2Income3.emp.Name}
                     </td>
                 </tr>
@@ -1200,10 +1260,10 @@
                     <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         Tennure:
                     </td>
-                    <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         {!applicant1Income3.emp.Years__c}&nbsp;<apex:outputText rendered="{!IF(applicant1Income3.emp.Years__c != null,true,false)}">Year(s),&nbsp;</apex:outputText>{!applicant1Income3.emp.Months__c}&nbsp;<apex:outputText rendered="{!IF(applicant1Income3.emp.Months__c != null,true,false)}">Month(s)</apex:outputText>
                     </td>
-                    <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                         {!applicant2Income3.emp.Years__c}&nbsp;<apex:outputText rendered="{!IF(applicant2Income3.emp.Years__c != null,true,false)}">Year(s),&nbsp;</apex:outputText>{!applicant2Income3.emp.Months__c}&nbsp;<apex:outputText rendered="{!IF(applicant2Income3.emp.Months__c != null,true,false)}">Month(s)</apex:outputText>
                     </td>
                 </tr>
@@ -1211,10 +1271,10 @@
                     <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         Employer Address:
                     </td>
-                    <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         {!applicant1Income3.emp.FinServ__EmployerAddress__c}
                     </td>
-                    <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                         {!applicant2Income3.emp.FinServ__EmployerAddress__c}
                     </td>
                 </tr>
@@ -1222,10 +1282,10 @@
                     <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         Employer Contact:
                     </td>
-                    <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         {!applicant1Income3.emp.FinServ__EmployerPhoneNumber__c}
                     </td>
-                    <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                         {!applicant2Income3.emp.FinServ__EmployerPhoneNumber__c}
                     </td>
                 </tr>
@@ -1233,10 +1293,10 @@
                     <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         Description:
                     </td>
-                    <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         {!applicant1Income3.emp.Description__c}
                     </td>
-                    <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                         {!applicant2Income3.emp.Description__c}
                     </td>
                 </tr>
@@ -1244,10 +1304,10 @@
                     <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         Minimum Hours Per Week:
                     </td>
-                    <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         {!applicant2Income3.emp.Minimum_hours_per_week__c}
                     </td>
-                    <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                         {!applicant2Income3.emp.Minimum_hours_per_week__c}
                     </td>
                 </tr>
@@ -1255,44 +1315,60 @@
                     <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         Base Amount(Before Tax):
                     </td>
-                    <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                        {!applicant1Income3.emp.FinServ__AnnualIncome__c}<apex:outputPanel rendered="{!applicant1Income3.emp.Income_Frequency__c != null}">,</apex:outputPanel>{!applicant1Income3.emp.Income_Frequency__c}
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        <apex:outputText value="{0, Number, '$'#,##0}">
+                            <apex:param value="{!applicant1Income3.emp.FinServ__AnnualIncome__c}" />
+                        </apex:outputText><apex:outputPanel rendered="{!applicant1Income3.emp.Income_Frequency__c != null}">,</apex:outputPanel>{!applicant1Income3.emp.Income_Frequency__c}
                     </td>
-                    <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
-                        {!applicant2Income3.emp.FinServ__AnnualIncome__c}<apex:outputPanel rendered="{!applicant2Income3.emp.Income_Frequency__c != null}">,</apex:outputPanel> {!applicant2Income3.emp.Income_Frequency__c}
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                        <apex:outputText value="{0, Number, '$'#,##0}">
+                            <apex:param value="{!applicant2Income3.emp.FinServ__AnnualIncome__c}" />
+                        </apex:outputText><apex:outputPanel rendered="{!applicant2Income3.emp.Income_Frequency__c != null}">,</apex:outputPanel> {!applicant2Income3.emp.Income_Frequency__c}
                     </td>
                 </tr>
                 <tr>
                     <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         Regular Overtime:
                     </td>
-                    <td width="30%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                        {!applicant1Income3.emp.Work_Overtime_amount__c}<apex:outputPanel rendered="{!applicant1Income3.emp.Work_Overtime_Frequency__c != null}">,</apex:outputPanel> {!applicant1Income3.emp.Work_Overtime_Frequency__c}
+                    <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        <apex:outputText value="{0, Number, '$'#,##0}">
+                            <apex:param value="{!applicant1Income3.emp.Work_Overtime_amount__c}" />
+                        </apex:outputText><apex:outputPanel rendered="{!applicant1Income3.emp.Work_Overtime_Frequency__c != null}">,</apex:outputPanel> {!applicant1Income3.emp.Work_Overtime_Frequency__c}
                     </td>
-                    <td width="40%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
-                        {!applicant2Income3.emp.Work_Overtime_amount__c}<apex:outputPanel rendered="{!applicant2Income3.emp.Work_Overtime_Frequency__c != null}">,</apex:outputPanel>{!applicant2Income3.emp.Work_Overtime_Frequency__c}
+                    <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                        <apex:outputText value="{0, Number, '$'#,##0}">
+                            <apex:param value="{!applicant2Income3.emp.Work_Overtime_amount__c}" />
+                        </apex:outputText><apex:outputPanel rendered="{!applicant2Income3.emp.Work_Overtime_Frequency__c != null}">,</apex:outputPanel>{!applicant2Income3.emp.Work_Overtime_Frequency__c}
                     </td>
                 </tr>
                 <tr>
                     <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         Commission Or Bonus:
                     </td>
-                    <td width="30%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                        {!applicant1Income3.emp.Commission_or_Bonus_amount__c}<apex:outputPanel rendered="{!applicant1Income3.emp.Commission_or_Bonus_Frequency__c != null}">,</apex:outputPanel>{!applicant1Income3.emp.Commission_or_Bonus_Frequency__c}
+                    <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        <apex:outputText value="{0, Number, '$'#,##0}">
+                            <apex:param value="{!applicant1Income3.emp.Commission_or_Bonus_amount__c}" />
+                        </apex:outputText><apex:outputPanel rendered="{!applicant1Income3.emp.Commission_or_Bonus_Frequency__c != null}">,</apex:outputPanel>{!applicant1Income3.emp.Commission_or_Bonus_Frequency__c}
                     </td>
-                    <td width="40%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
-                        {!applicant2Income3.emp.Commission_or_Bonus_amount__c}<apex:outputPanel rendered="{!applicant2Income3.emp.Commission_or_Bonus_Frequency__c != null}">,</apex:outputPanel>{!applicant2Income3.emp.Commission_or_Bonus_Frequency__c}
+                    <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                        <apex:outputText value="{0, Number, '$'#,##0}">
+                            <apex:param value="{!applicant2Income3.emp.Commission_or_Bonus_amount__c}" />
+                        </apex:outputText><apex:outputPanel rendered="{!applicant2Income3.emp.Commission_or_Bonus_Frequency__c != null}">,</apex:outputPanel>{!applicant2Income3.emp.Commission_or_Bonus_Frequency__c}
                     </td>
                 </tr>
                 <tr>
                     <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         Allownces:
                     </td>
-                    <td width="30%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                        {!applicant1Income3.emp.Allowance_Amount__c}<apex:outputPanel rendered="{!applicant1Income3.emp.Allowance_Frequency__c != null}">,</apex:outputPanel>{!applicant1Income3.emp.Allowance_Frequency__c}
+                    <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        <apex:outputText value="{0, Number, '$'#,##0}">
+                            <apex:param value="{!applicant1Income3.emp.Allowance_Amount__c}" />
+                        </apex:outputText><apex:outputPanel rendered="{!applicant1Income3.emp.Allowance_Frequency__c != null}">,</apex:outputPanel>{!applicant1Income3.emp.Allowance_Frequency__c}
                     </td>
-                    <td width="40%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
-                        {!applicant2Income3.emp.Allowance_Amount__c}<apex:outputPanel rendered="{!applicant2Income3.emp.Allowance_Frequency__c != null}">,</apex:outputPanel>{!applicant2Income3.emp.Allowance_Frequency__c}
+                    <td width="35%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                        <apex:outputText value="{0, Number, '$'#,##0}">
+                            <apex:param value="{!applicant2Income3.emp.Allowance_Amount__c}" />
+                        </apex:outputText><apex:outputPanel rendered="{!applicant2Income3.emp.Allowance_Frequency__c != null}">,</apex:outputPanel>{!applicant2Income3.emp.Allowance_Frequency__c}
                     </td>
                 </tr>
             </apex:outputText>
@@ -1309,10 +1385,10 @@
                     <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         Occupation:
                     </td>
-                    <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         {!applicant1EmpStatus.emp.Occupation_1_Previous__c}
                     </td>
-                    <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                         {!applicant2EmpStatus.emp.Occupation_1_Previous__c}
                     </td>
                 </tr>
@@ -1320,10 +1396,10 @@
                     <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         Income From:
                     </td>
-                    <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         {!applicant1EmpStatus.emp.Employment_Status_1_Previous__c}
                     </td>
-                    <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                         {!applicant2EmpStatus.emp.Employment_Status_1_Previous__c}
                     </td>
                 </tr>
@@ -1331,10 +1407,10 @@
                     <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         Employer Name:
                     </td>
-                    <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         {!applicant1EmpStatus.emp.Employer_Name_1_Previous__c}
                     </td>
-                    <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                         {!applicant2EmpStatus.emp.Employer_Name_1_Previous__c}
                     </td>
                 </tr>
@@ -1342,21 +1418,25 @@
                     <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         Annual Income:
                     </td>
-                    <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                        {!applicant1EmpStatus.emp.Annual_Income_1_Previous__c}
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        <apex:outputText value="{0, Number, '$'#,##0}">
+                            <apex:param value="{!applicant1EmpStatus.emp.Annual_Income_1_Previous__c}" />
+                        </apex:outputText>
                     </td>
-                    <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
-                        {!applicant2EmpStatus.emp.Annual_Income_1_Previous__c}
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                        <apex:outputText value="{0, Number, '$'#,##0}">
+                            <apex:param value="{!applicant2EmpStatus.emp.Annual_Income_1_Previous__c}" />
+                        </apex:outputText>
                     </td>
                 </tr>
                 <tr>
                     <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         Address:
                     </td>
-                    <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         {!applicant1EmpStatus.emp.Address_1_Previous__c}
                     </td>
-                    <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                         {!applicant2EmpStatus.emp.Address_1_Previous__c}
                     </td>
                 </tr>
@@ -1364,10 +1444,10 @@
                     <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         Tennure:
                     </td>
-                    <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         {!applicant1EmpStatus.emp.Years_1_Previous__c}&nbsp;<apex:outputText rendered="{!IF(applicant1EmpStatus.emp.Years_1_Previous__c != null,true,false)}">Year(s),&nbsp;</apex:outputText>{!applicant1EmpStatus.emp.Months_1_Previous__c}&nbsp;<apex:outputText rendered="{!IF(applicant1EmpStatus.emp.Months_1_Previous__c != null,true,false)}">Month(s)</apex:outputText>
                     </td>
-                    <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                         {!applicant2EmpStatus.emp.Years_1_Previous__c}&nbsp;<apex:outputText rendered="{!IF(applicant2EmpStatus.emp.Years_1_Previous__c != null,true,false)}">Year(s),&nbsp;</apex:outputText>{!applicant2EmpStatus.emp.Months_1_Previous__c}&nbsp;<apex:outputText rendered="{!IF(applicant2EmpStatus.emp.Months_1_Previous__c != null,true,false)}">Month(s)</apex:outputText>
                     </td>
                 </tr>
@@ -1385,10 +1465,10 @@
                     <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         Occupation:
                     </td>
-                    <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         {!applicant1EmpStatus.emp.Occupation_2_Previous__c}
                     </td>
-                    <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                         {!applicant2EmpStatus.emp.Occupation_2_Previous__c}
                     </td>
                 </tr>
@@ -1396,10 +1476,10 @@
                     <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         Income From:
                     </td>
-                    <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         {!applicant1EmpStatus.emp.Employment_Status_2_Previous__c}
                     </td>
-                    <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                         {!applicant2EmpStatus.emp.Employment_Status_2_Previous__c}
                     </td>
                 </tr>
@@ -1407,10 +1487,10 @@
                     <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         Employer Name:
                     </td>
-                    <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         {!applicant1EmpStatus.emp.Employer_Name_2_Previous__c}
                     </td>
-                    <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                         {!applicant2EmpStatus.emp.Employer_Name_2_Previous__c}
                     </td>
                 </tr>
@@ -1418,21 +1498,25 @@
                     <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         Annual Income:
                     </td>
-                    <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                        {!applicant1EmpStatus.emp.Annual_Income_2_Previous__c}
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        <apex:outputText value="{0, Number, '$'#,##0}">
+                            <apex:param value="{!applicant1EmpStatus.emp.Annual_Income_2_Previous__c}" />
+                        </apex:outputText>
                     </td>
-                    <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
-                        {!applicant2EmpStatus.emp.Annual_Income_2_Previous__c}
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                        <apex:outputText value="{0, Number, '$'#,##0}">
+                            <apex:param value="{!applicant2EmpStatus.emp.Annual_Income_2_Previous__c}" />
+                        </apex:outputText>
                     </td>
                 </tr>
                 <tr>
                     <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         Address:
                     </td>
-                    <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         {!applicant1EmpStatus.emp.Address_2_Previous__c}
                     </td>
-                    <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                         {!applicant2EmpStatus.emp.Address_2_Previous__c}
                     </td>
                 </tr>
@@ -1440,10 +1524,10 @@
                     <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         Tennure:
                     </td>
-                    <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                         {!applicant1EmpStatus.emp.Years_2_Previous__c}&nbsp;<apex:outputText rendered="{!IF(applicant1EmpStatus.emp.Years_2_Previous__c != null,true,false)}">Year(s),&nbsp;</apex:outputText>{!applicant1EmpStatus.emp.Months_2_Previous__c}&nbsp;<apex:outputText rendered="{!IF(applicant1EmpStatus.emp.Months_2_Previous__c != null,true,false)}">Month(s)</apex:outputText>
                     </td>
-                    <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                    <td width="35%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
                         {!applicant2EmpStatus.emp.Years_2_Previous__c}&nbsp;<apex:outputText rendered="{!IF(applicant2EmpStatus.emp.Years_2_Previous__c != null,true,false)}">Year(s),&nbsp;</apex:outputText>{!applicant2EmpStatus.emp.Months_2_Previous__c}&nbsp;<apex:outputText rendered="{!IF(applicant2EmpStatus.emp.Months_2_Previous__c != null,true,false)}">Month(s)</apex:outputText>
                     </td>
                 </tr>
@@ -1458,13 +1542,28 @@
             <tr></tr>
             <tr>
                 <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    spouse's primary source of income:
+                </td>
+                <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <apex:outputText rendered="{!IF(oppContacts.contact1.What_is_spouse_s_primary_income_source__c != null,true,false)}">{!oppContacts.contact1.What_is_spouse_s_primary_income_source__c}</apex:outputText>                                      
+                </td>
+                <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
+                    <apex:outputText rendered="{!IF(oppContacts.contact2.What_is_spouse_s_primary_income_source__c != null,true,false)}">{!oppContacts.contact2.What_is_spouse_s_primary_income_source__c}</apex:outputText>                
+                </td>
+            </tr>
+            <tr>
+                <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     Spouse Annual Income:
                 </td>
                 <td width="30%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    {!applicant1EmpStatus.emp.spouse_approximate_annual_income__c}
+                    <apex:outputText value="{0, number, $###,##0}" >
+                        <apex:param value="{!oppContacts.contact1.spouse_s_approximate_annual_income__c}"/>
+                    </apex:outputText>                    
                 </td>
                 <td width="40%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;display: {!IF(isApplicant2 == true,'block','none')}">
-                    {!applicant2EmpStatus.emp.spouse_approximate_annual_income__c}
+                    <apex:outputText value="{0, number, $###,##0}" >
+                        <apex:param value="{!oppContacts.contact2.spouse_s_approximate_annual_income__c}"/>
+                    </apex:outputText>                    
                 </td>
             </tr>
         </table>
@@ -1481,24 +1580,119 @@
             </tr>
         </table>
         
-        <table width="100%" align="left">
+        <apex:outputText rendered="{!oppContacts.opp.Living_Expense_Group_Type__c == 'Limited personal'}">
+            <table width="100%" align="left" style="margin-bottom: 15px;">
+                <tr></tr>
+                <tr></tr>
+                <tr>
+                    <td width="80%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        * All property<br/>Utilities, rates, levies and maintenance (not loans).
+                    </td>
+                    <td width="20%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        <apex:outputText value="{0, Number, '$'#,##0}">
+                            <apex:param value="{!livingExpensesDetails.Utilities__c}" />
+                        </apex:outputText>
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr>
+                    <td width="80%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        * Groceries &amp; transport<br/>include vehicle, public transport.
+                    </td>
+                    <td width="20%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        <apex:outputText value="{0, Number, '$'#,##0}">
+                            <apex:param value="{!livingExpensesDetails.Groceries_transport__c}" />
+                        </apex:outputText>
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr>
+                    <td width="80%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        * Clothing &amp; entertainment<br/>include recreation, personal care.
+                    </td>
+                    <td width="20%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        <apex:outputText value="{0, Number, '$'#,##0}">
+                            <apex:param value="{!livingExpensesDetails.Clothing_and_entertainment__c}" />
+                        </apex:outputText>
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr>
+                    <td width="80%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        * Insurance &amp; medical<br/>include all insurances.
+                    </td>
+                    <td width="20%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        <apex:outputText value="{0, Number, '$'#,##0}">
+                            <apex:param value="{!livingExpensesDetails.Insurance_and_medical__c}" />
+                        </apex:outputText>
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr>
+                    <td width="80%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        * Education &amp; childcare<br/>Day care, nannies, school fees and tutoring.
+                    </td>
+                    <td width="20%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        <apex:outputText value="{0, Number, '$'#,##0}">
+                            <apex:Param value="{!livingExpensesDetails.Education_and_childcare__c}" />
+                        </apex:outputText>
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr>
+                    <td width="80%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        * Other<br/>include gambling and anything else.
+                    </td>
+                    <td width="20%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        <apex:outputText value="{0, Number, '$'#,##0}">
+                            <apex:Param value="{!livingExpensesDetails.Other_Regular_Expenditure__c}" />
+                        </apex:outputText>
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr>
+                    <td width="80%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        <b>Total</b>
+                    </td>
+                    <td width="20%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        <b><apex:outputText value="{0, Number, '$'#,##0}">
+                            <apex:Param value="{!IF(livingExpensesDetails.Utilities__c != null,livingExpensesDetails.Utilities__c,0) +
+                                               IF(livingExpensesDetails.Groceries_transport__c != null,livingExpensesDetails.Groceries_transport__c,0) +
+                                               IF(livingExpensesDetails.Clothing_and_entertainment__c != null,livingExpensesDetails.Clothing_and_entertainment__c,0) +
+                                               IF(livingExpensesDetails.Insurance_and_medical__c != null,livingExpensesDetails.Insurance_and_medical__c,0) +
+                                               IF(livingExpensesDetails.Education_and_childcare__c != null,livingExpensesDetails.Education_and_childcare__c,0) +
+                                               IF(livingExpensesDetails.Other_Regular_Expenditure__c != null,livingExpensesDetails.Other_Regular_Expenditure__c,0)
+                                               }"/>
+                            </apex:outputText>
+                        </b>
+                    </td>
+                </tr>
+                
+            </table>
+        </apex:outputText>
+        
+        <apex:outputText rendered="{!oppContacts.opp.Living_Expense_Group_Type__c != 'Limited personal'}" >
+          
+        <table width="100%" align="left" style="margin-bottom: 15px;">
             <tr></tr>
             <tr></tr>
             <tr>
                 <td width="80%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    * Owner occupied property<br/>Utilities, rates and relates costs including taxes, levies, body corporate and Strata fees, repairs, maintenance and other household items.
+                    * All property<br/>Utilities, rates, levies and maintenance (not loans).
                 </td>
                 <td width="20%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    ${!livingExpensesDetails.Utilities__c}
+                    <apex:outputText value="{0, Number, '$'#,##0}">
+                        <apex:param value="{!livingExpensesDetails.Utilities__c}" />
+                    </apex:outputText>
                 </td>
             </tr>
             <tr></tr>
             <tr>
                 <td width="80%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    * Investment property<br/>Utilities, rates and relates costs including taxes, levies, body corporate and Strata fees, repairs, maintenance and other household items.
+                    * Insurance<br/>Car, house, health and risk.
                 </td>
                 <td width="20%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    <apex:outputText value="{0, number, $###,###,##0}">
+                    <apex:outputText value="{0, Number, '$'#,##0}">
                         <apex:Param value="{!livingExpensesDetails.Investment_property_utilities__c}" />
                     </apex:outputText>
                 </td>
@@ -1506,48 +1700,54 @@
             <tr></tr>
             <tr>
                 <td width="80%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    * Connections<br/>Phone, mobile, internet, cable TV and streaming services such as Netflix and Spotify.
+                    * Connections<br/>Phone, internet streaming services.
                 </td>
                 <td width="20%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    ${!livingExpensesDetails.Connections_Phone_Mobile_Internet_C__c}
-                </td>
-            </tr>
-            <tr></tr>
-            <tr>
-                <td width="80%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    * Childcare<br/>All childcare expenses. Including nannies
-                </td>
-                <td width="20%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    ${!livingExpensesDetails.Education_ChildCare_SchoolFees_Uniform__c}
-                </td>
-            </tr>
-            <tr></tr>
-            <tr>
-                <td width="80%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    * Education<br/>Public and private education fees and associated costs including books, uniforms etc.
-                </td>
-                <td width="20%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    <apex:outputText value="{0, number, $###,###,##0}">
-                        <apex:Param value="{!livingExpensesDetails.Education_public_and_private__c}" />
+                    <apex:outputText value="{0, Number, '$'#,##0}">
+                        <apex:Param value="{!livingExpensesDetails.Connections_Phone_Mobile_Internet_C__c}" />
                     </apex:outputText>
                 </td>
             </tr>
             <tr></tr>
             <tr>
                 <td width="80%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    * Groceries<br/>Supermarket, meat, fruit and vegetables.
+                    * Groceries<br/>Food &amp; supermarket.
                 </td>
                 <td width="20%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    ${!livingExpensesDetails.Food_Groceries_Meat_Fruit_Vegetabl__c}
+                    <apex:outputText value="{0, Number, '$'#,##0}">
+                        <apex:Param value="{!livingExpensesDetails.Food_Groceries_Meat_Fruit_Vegetabl__c}" />
+                    </apex:outputText>
                 </td>
             </tr>
             <tr></tr>
             <tr>
                 <td width="80%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    * Clothing and personal care<br/>Clothing, footwear, cosmetics and personal care.
+                    * Transport<br/>Public transport, fuel, serving &amp; registration.
                 </td>
                 <td width="20%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    <apex:outputText value="{0, number, $###,###,##0}">
+                    <apex:outputText value="{0, Number, '$'#,##0}">
+                        <apex:Param value="{!livingExpensesDetails.Transport_Public_Petrol_Registration__c}" />
+                    </apex:outputText>
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td width="80%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    * Medical and sport<br/>Doctor, dentist, physio, gym and training.
+                </td>
+                <td width="20%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <apex:outputText value="{0, Number, '$'#,##0}">
+                        <apex:Param value="{!livingExpensesDetails.Medical_Private_Health_Insurance_Ong__c}" />
+                    </apex:outputText>
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td width="80%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    * Clothing and personal care<br/>Inc. footwear, cosmetics &amp; personal care.
+                </td>
+                <td width="20%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <apex:outputText value="{0, Number, '$'#,##0}">
                         <apex:Param value="{!livingExpensesDetails.Clothing_and_personal_care__c}" />
                     </apex:outputText>
                 </td>
@@ -1555,20 +1755,11 @@
             <tr></tr>
             <tr>
                 <td width="80%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    * Transport<br/>Public transport fees, car expenses including petrol, registration, insurance, servicing, tolls.
+                    * Entertainment<br/>Essential recreation and entertainment.
                 </td>
                 <td width="20%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    ${!livingExpensesDetails.Transport_Public_Petrol_Registration__c}
-                </td>
-            </tr>
-            <tr></tr>
-            <tr>
-                <td width="80%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    * Medical and Health<br/>Including doctor and dentist, optical and pharmaceutical (excluding health insurance).
-                </td>
-                <td width="20%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    <apex:outputText value="{0, number, $###,###,##0}">
-                        <apex:Param value="{!livingExpensesDetails.Medical_Private_Health_Insurance_Ong__c}" />
+                    <apex:outputText value="{0, Number, '$'#,##0}">
+                        <apex:Param value="{!livingExpensesDetails.Entertainment_Dining_Out_Movies_Gift__c}" />
                     </apex:outputText>
                     
                 </td>
@@ -1576,75 +1767,50 @@
             <tr></tr>
             <tr>
                 <td width="80%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    * General Insurances<br/>All insurance including health, home and contents, motor vehicle.
+                    * Childcare<br/>Day care, nannies, school fees and tutoring.
                 </td>
                 <td width="20%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    ${!livingExpensesDetails.Insurances_Home_Personal_Voluntary__c}
-                </td>
-            </tr>
-            <tr></tr>
-            <tr>
-                <td width="80%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    * Personal Insurances<br/>Life and income protection, illness and accident, pet insurance, voluntary superannuation.
-                </td>
-                <td width="20%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    <apex:outputText value="{0, number, $###,###,##0}">
-                        <apex:Param value="{!livingExpensesDetails.Personal_Insurances_life_and_income_pro__c}" />
+                    <apex:outputText value="{0, Number, '$'#,##0}">
+                        <apex:Param value="{!livingExpensesDetails.Education_ChildCare_SchoolFees_Uniform__c}" />
                     </apex:outputText>
                 </td>
             </tr>
             <tr></tr>
             <tr>
                 <td width="80%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    * Recreation and Entertainment<br/>Dining out, movies, gifts, membership fees, sporting, pet care, holidays and other items.
+                    * Gambling<br/>Gambling, Betting &amp; lotto.
                 </td>
-                <td width="20%" valign="top" style="text-align:left;font-family:font-size:13px;Arial, Helvetica, sans-serif;">
-                    ${!livingExpensesDetails.Entertainment_Dining_Out_Movies_Gift__c}
-                </td>
-            </tr>
-            <tr></tr>
-            <tr>
-                <td width="80%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    * Gambling, Betting &amp; lottery
-                </td>
-                <td width="20%" valign="top" style="text-align:left;font-family:font-size:13px;Arial, Helvetica, sans-serif;">
-                    ${!livingExpensesDetails.Gambling_Betting_and_Lottery__c}
+                <td width="20%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <apex:outputText value="{0, Number, '$'#,##0}">
+                        <apex:Param value="{!livingExpensesDetails.Gambling_Betting_and_Lottery__c}" />
+                    </apex:outputText>
                 </td>
             </tr>
             <tr></tr>
             <tr>
                 <td width="80%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    * Other<br/>Any unique items not covered in the above categories.
+                    <b>Total</b>
                 </td>
-                <td width="20%" valign="top" style="text-align:left;font-family:font-size:13px;Arial, Helvetica, sans-serif;">
-                    ${!livingExpensesDetails.Other_Regular_Expenditure__c}
-                </td>
-            </tr>
-            <tr></tr>
-            <tr>
-                <td width="80%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                   <b>Total</b>
-                </td>
-                <td width="20%" valign="top" style="text-align:left;font-family:font-size:13px;Arial, Helvetica, sans-serif;">
-                    <b>$<apex:outputText value="{!TEXT(FLOOR(IF(livingExpensesDetails.Investment_property_utilities__c != null,livingExpensesDetails.Investment_property_utilities__c,0) +
-                                            IF(livingExpensesDetails.Connections_Phone_Mobile_Internet_C__c != null,livingExpensesDetails.Connections_Phone_Mobile_Internet_C__c,0) +
-                                            IF(livingExpensesDetails.Education_ChildCare_SchoolFees_Uniform__c != null,livingExpensesDetails.Education_ChildCare_SchoolFees_Uniform__c,0) +
-                                            IF(livingExpensesDetails.Education_public_and_private__c != null,livingExpensesDetails.Education_public_and_private__c,0) +
-                                            IF(livingExpensesDetails.Food_Groceries_Meat_Fruit_Vegetabl__c != null,livingExpensesDetails.Food_Groceries_Meat_Fruit_Vegetabl__c,0) +
-                                            IF(livingExpensesDetails.Clothing_and_personal_care__c != null,livingExpensesDetails.Clothing_and_personal_care__c,0) +
-                                            IF(livingExpensesDetails.Transport_Public_Petrol_Registration__c != null,livingExpensesDetails.Transport_Public_Petrol_Registration__c,0) +
-                                            IF(livingExpensesDetails.Medical_Private_Health_Insurance_Ong__c != null,livingExpensesDetails.Medical_Private_Health_Insurance_Ong__c,0) +
-                                            IF(livingExpensesDetails.Insurances_Home_Personal_Voluntary__c != null,livingExpensesDetails.Insurances_Home_Personal_Voluntary__c,0) +
-                                            IF(livingExpensesDetails.Personal_Insurances_life_and_income_pro__c != null,livingExpensesDetails.Personal_Insurances_life_and_income_pro__c,0) +
-                                            IF(livingExpensesDetails.Entertainment_Dining_Out_Movies_Gift__c != null,livingExpensesDetails.Entertainment_Dining_Out_Movies_Gift__c,0) +
-                                            IF(livingExpensesDetails.Gambling_Betting_and_Lottery__c != null,livingExpensesDetails.Gambling_Betting_and_Lottery__c,0) + 
-                                            IF(livingExpensesDetails.Other_Regular_Expenditure__c != null,livingExpensesDetails.Other_Regular_Expenditure__c,0) +
-                                            IF(livingExpensesDetails.Utilities__c != null,livingExpensesDetails.Utilities__c,0)))}"/>
+                <td width="20%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    <b><apex:outputText value="{0, Number, '$'#,##0}">
+                        <apex:Param value="{!IF(livingExpensesDetails.Utilities__c != null,livingExpensesDetails.Utilities__c,0) +
+                                           IF(livingExpensesDetails.Investment_property_utilities__c != null,livingExpensesDetails.Investment_property_utilities__c,0) +
+                                           IF(livingExpensesDetails.Connections_Phone_Mobile_Internet_C__c != null,livingExpensesDetails.Connections_Phone_Mobile_Internet_C__c,0) +
+                                           IF(livingExpensesDetails.Food_Groceries_Meat_Fruit_Vegetabl__c != null,livingExpensesDetails.Food_Groceries_Meat_Fruit_Vegetabl__c,0) +
+                                           IF(livingExpensesDetails.Medical_Private_Health_Insurance_Ong__c != null,livingExpensesDetails.Medical_Private_Health_Insurance_Ong__c,0) +
+                                           IF(livingExpensesDetails.Transport_Public_Petrol_Registration__c != null,livingExpensesDetails.Transport_Public_Petrol_Registration__c,0) +
+                                           IF(livingExpensesDetails.Clothing_and_personal_care__c != null,livingExpensesDetails.Clothing_and_personal_care__c,0) +
+                                           IF(livingExpensesDetails.Entertainment_Dining_Out_Movies_Gift__c != null,livingExpensesDetails.Entertainment_Dining_Out_Movies_Gift__c,0) +
+                                           IF(livingExpensesDetails.Education_ChildCare_SchoolFees_Uniform__c != null,livingExpensesDetails.Education_ChildCare_SchoolFees_Uniform__c,0) +
+                                           IF(livingExpensesDetails.Gambling_Betting_and_Lottery__c != null,livingExpensesDetails.Gambling_Betting_and_Lottery__c,0)
+                                           }"/>
+                        </apex:outputText>
                     </b>
                 </td>
             </tr>
             
         </table>
+        </apex:outputText>
         
         <table width="100%" align="left" class="itemColor">
             <tr></tr>
@@ -1661,8 +1827,8 @@
             <tr></tr>
             <tr></tr>
             <tr>
-                <td width="100%" >
-                    Primary reason for loan
+                <td width="100%" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                    Primary reason for loan: {!oppContacts.opp.Purpose__c}
                 </td>
             </tr>
         </table>
@@ -1682,150 +1848,86 @@
             <tr></tr>
             <tr>
                 <td width="80%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    On a scale of 1-10 how would you rate current Job Security?<br/>
-                    (The higher number, the more secure you feel - 1 is Not Secure, 10 is Highly Secure )
+                    On a scale of 1-5 how would you rate current Job Security?<br/>
+                    (The higher number, the more secure you feel - 1 is Not Secure, 5 is Highly Secure )
                 </td>
                 <td width="20%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
                     {!preferences.contact1.Rate_current_Job_Security__c}
                 </td>
             </tr>
-            <tr></tr>
-            <tr>
-                <td width="80%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    Have you ever had any defaults, judgements or legal proceedings recorded against you?
-                    <br/>
-                    {!preferences.contact1.Description_Judgement_legal_proceeding__c}
-                </td>
-                <td width="20%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    {!preferences.contact1.Judgements_or_legal_proceedings_recorded__c}
-                </td>
-            </tr>
-            <tr></tr>
-            <tr>
-                <td width="80%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    Are all of your current credit commitments up to date?
-                    <br/>
-                    {!preferences.contact1.Description_Credit_commitment_up_to_date__c}
-                </td>
-                <td width="20%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    {!preferences.contact1.Credit_commitments_up_to_date__c}
-                </td>
-            </tr>
-            <tr></tr>
-            <tr>
-                <td width="80%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    Do you anticipate any changes to your income in the next 6-12 months?
-                    <br/>
-                    {!preferences.contact1.Decription_income_in_next_6_12_months__c}
-                </td>
-                <td width="20%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    {!preferences.contact1.Your_income_in_the_next_6_12_months__c}
-                </td>
-            </tr>
-            <tr></tr>
-            <tr>
-                <td width="80%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    Do you anticipate your expenses will change materially in the next 6-12 months?
-                    <br/>
-                    {!preferences.contact1.Description_materially_next_6_12_months__c}
-                </td>
-                <td width="20%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    {!preferences.contact1.Materially_in_the_next_6_12_months__c}
-                </td>
-            </tr>
-            <tr></tr>
-            <tr>
-                <td width="80%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    Are there any other factors that you can think of that may materially affect your income and/or expenses in the next 6-12 months?
-                    <br/>
-                    {!preferences.contact1.Description_Income_expenses_6_12_months__c}
-                </td>
-                <td width="20%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    {!preferences.contact1.Income_expenses_in_the_next_6_12_months__c}
-                </td>
-            </tr>
             
         </table>
         <apex:outputText rendered="{!IF(isApplicant2 == true,true,false)}">
-        <table width="100%" align="left" class="itemColor">
-            <tr></tr>
-            <tr></tr>
-            <tr>
-                <td width="100%" >
-                    <u>Applicant 2</u>
-                </td>
-            </tr>
-        </table>
-        
-        <table width="100%" align="left">
-            <tr></tr>
-            <tr></tr>
-            <tr>
-                <td width="80%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    On a scale of 1-10 how would you rate current Job Security?<br/>
-                    (The higher number, the more secure you feel - 1 is Not Secure, 10 is Highly Secure )
-                </td>
-                <td width="20%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    {!preferences.contact2.Rate_current_Job_Security__c}
-                </td>
-            </tr>
-            <tr></tr>
-            <tr>
-                <td width="80%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    Have you ever had any defaults, judgements or legal proceedings recorded against you?
-                    <br/>
-                    {!preferences.contact2.Description_Judgement_legal_proceeding__c}
-                </td>
-                <td width="20%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    {!preferences.contact2.Judgements_or_legal_proceedings_recorded__c}
-                </td>
-            </tr>
-            <tr></tr>
-            <tr>
-                <td width="80%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    Are all of your current credit commitments up to date?
-                    <br/>
-                    {!preferences.contact2.Description_Credit_commitment_up_to_date__c}
-                </td>
-                <td width="20%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    {!preferences.contact2.Credit_commitments_up_to_date__c}
-                </td>
-            </tr>
-            <tr></tr>
-            <tr>
-                <td width="80%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    Do you anticipate any changes to your income in the next 6-12 months?
-                    <br/>
-                    {!preferences.contact2.Decription_income_in_next_6_12_months__c}
-                </td>
-                <td width="20%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    {!preferences.contact2.Your_income_in_the_next_6_12_months__c}
-                </td>
-            </tr>
-            <tr></tr>
-            <tr>
-                <td width="80%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    Do you anticipate your expenses will change materially in the next 6-12 months?
-                    <br/>
-                    {!preferences.contact2.Description_materially_next_6_12_months__c}
-                </td>
-                <td width="20%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    {!preferences.contact2.Materially_in_the_next_6_12_months__c}
-                </td>
-            </tr>
-            <tr></tr>
-            <tr>
-                <td width="80%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    Are there any other factors that you can think of that may materially affect your income and/or expenses in the next 6-12 months?
-                    <br/>
-                    {!preferences.contact2.Description_Income_expenses_6_12_months__c}
-                </td>
-                <td width="20%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
-                    {!preferences.contact2.Income_expenses_in_the_next_6_12_months__c}
-                </td>
-            </tr>
+            <table width="100%" align="left" class="itemColor">
+                <tr></tr>
+                <tr></tr>
+                <tr>
+                    <td width="100%" >
+                        <u>Applicant 2</u>
+                    </td>
+                </tr>
+            </table>
             
-        </table>
+            <table width="100%" align="left">
+                <tr></tr>
+                <tr></tr>
+                <tr>
+                    <td width="80%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        On a scale of 1-5 how would you rate current Job Security?<br/>
+                        (The higher number, the more secure you feel - 1 is Not Secure, 5 is Highly Secure )
+                    </td>
+                    <td width="20%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        {!preferences.contact2.Rate_current_Job_Security__c}
+                    </td>
+                </tr>            
+            </table>
+        </apex:outputText>
+        <apex:outputText >
+            <table width="100%" align="left" class="itemColor">
+                <tr></tr>
+                <tr></tr>
+                <tr>
+                    <td width="100%" >
+                        <u> General </u>
+                    </td>
+                </tr>
+            </table>
+            <table width="100%" align="left">
+                <tr>
+                    <td width="80%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        Do you anticipate any substantial increase to your household expenses in the next 6-12 month?
+                    </td>
+                    <td width="20%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        {!goals.household_expense_in_the_next_6_12_month__c}
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr>
+                    <td width="20%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">{!goals.Description_exp_in_the_next_6_12_month__c}</td>
+                </tr>
+                <tr></tr>
+                <tr>
+                    <td width="80%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        Do you ever struggle to meet your current household debts and expenses?
+                    </td>
+                    <td width="20%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        {!goals.Do_you_struggle_to_meet_your_household__c}
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr>
+                    <td width="20%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">{!goals.Description_struggle_to_meet_houshold__c}</td>
+                </tr>
+                <tr></tr>
+                 <tr>
+                    <td width="80%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        Do you have an a adequate plan to repay this loan in case you lose your income?
+                    </td>
+                    <td width="20%" valign="top" style="text-align:left;font-size:13px;font-family:Arial, Helvetica, sans-serif;">
+                        {!goals.Do_you_have_an_adequate_plan__c}
+                    </td>
+                </tr>
+            </table>
         </apex:outputText>
     </div>   
     

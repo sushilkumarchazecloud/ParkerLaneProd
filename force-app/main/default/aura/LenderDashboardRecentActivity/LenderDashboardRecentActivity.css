@@ -1,0 +1,67 @@
+.THIS .status-style{
+    border-radius: 20px;
+    text-align: center;
+    padding: 15px !important;
+    max-width: 8rem;
+    width: 0% !important;
+    margin-left: 10px !important;
+}
+
+.THIS .openMod{
+    position: relative !important;
+    padding: 5px !important;
+    margin-left: 15px;
+}
+
+.THIS .status-styleForOpenModal{
+    border-radius: 20px;
+    text-align: center;
+    padding: 7px;
+    max-width: 8rem;
+}
+
+.THIS .btnList{  
+    margin-left: 10rem;
+    margin-top: -3px;
+}
+.THIS .btnList .slds-button_neutral{
+    background: #d1d1d1 !important;
+    color: #1a2746 !important;
+    font-weight: bold !important;
+}
+.THIS .tab-btn button{
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 14px;
+}
+
+.THIS .box-style {
+    padding: 10px;
+    border: 1px solid #c2c2c2;
+    border-radius: 7px;
+    margin: 7px;
+}
+
+.THIS .slds-modal__content{
+    overflow-y: hidden !important;    
+}
+
+.THIS .no-abbr label.slds-form-element__label abbr, .THIS .no-abbr legend.slds-form-element__label abbr {
+    display: none;
+}
+
+.THIS .slds-form-element_stacked .slds-form-element__label{
+    font-weight : bold !important;
+     color : #222222 !important;
+}
+
+.THIS .slds-form-element__label{
+    font-weight: bold !important;
+    color: #1a2745 !important;
+}
+
+.THIS .spin{
+    margin : 48px 74px 80px;
+    position : absolute;
+}

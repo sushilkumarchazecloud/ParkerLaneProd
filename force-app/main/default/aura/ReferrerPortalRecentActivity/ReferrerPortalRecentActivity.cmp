@@ -1,0 +1,181 @@
+<aura:component controller="MyReferrerController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="sessionId" type="String" />
+    <aura:attribute name="accountId" type="String"/>
+    <aura:attribute name="getOppList" type="list" />
+    <aura:attribute name="status" type="String" />
+    <aura:attribute name="desc" type="String" />
+    <aura:attribute name="date" type="String" />
+    <aura:attribute name="time" type="String" />
+    <aura:attribute name="statusCode" type="String" />
+    <aura:attribute name="spinner" type="boolean" default="FALSE"/>
+     <aura:attribute name="cont" type="contact" />
+    <aura:attribute name="oppWrapper" type="Object" />
+    <aura:attribute name="OpportunityName" type="String"/>
+     <aura:attribute name="modalShow" type="boolean" default="false"/>
+    <aura:attribute name="isActionCntr" type="boolean" default="true"/>
+    <aura:attribute name="isDetail" type="boolean" default="false"/>
+    <aura:attribute name="isFinanceQt" type="boolean" default="false"/>
+    <aura:attribute name="isFunding" type="boolean" default="false"/>
+    <aura:attribute name="isDocument" type="boolean" default="false"/>
+    <aura:attribute name="VoiRecord1" type="String" />
+    <aura:attribute name="VoiRecord2" type="String" />
+    <aura:attribute name="VoiType1" type="String" />
+    <aura:attribute name="VoiType2" type="String" />
+    <aura:attribute name="OpenFactFind" type="boolean" default="true"/>
+    <aura:attribute name="ResendOSRequest" type="boolean" default="true"/>
+    <aura:attribute name="ResendVOISMSP1" type="boolean" default="true"/>
+    <aura:attribute name="ResendVOISMSP2" type="boolean" default="true"/>
+    <aura:attribute name="hideSms2" type="boolean" default="false"/>
+    <aura:attribute name="ishide" type="boolean" default="true"/>
+    <aura:attribute name="EditButtonShow" type="boolean" default="false"/>
+    <aura:attribute name="InstallEdit" type="boolean" default="true"/>
+    <aura:attribute name="isSaveBtnDisabled" type="Boolean" default = "true" />
+     <aura:attribute name="NextStep1" type="string"/>
+    <aura:attribute name="NextStep2" type="string"/>
+    <aura:attribute name="icon1" type="string"/>
+    <aura:attribute name="icon2" type="string"/>
+    <aura:attribute name="todoList" type="list"/>
+    <aura:attribute name="GroupName" type="String" />
+    <aura:attribute name="searchString" type="String"/>
+    <aura:attribute name="showSpinner" type="Boolean" default="false"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
+    
+    <aura:if isTrue="{!v.desc != null}">
+        <div class="slds-grid slds-wrap slds-m-top_medium" style="color: #9EB7BC;font-family: 'ProximaNovaAlt-Medium';">
+            <div class="status-style slds-col slds-size_2-of-12 slds-align_absolute-center" style="{!'background-color:' + v.statusCode +';color:' + IF(v.status=='Funded','#FFF;','#000;') }"></div>
+            <div class="slds-col slds-size_3-of-12 slds-align_absolute-center" style="font-size: 13px;line-height: initial;display:block;">
+                <p style="position: relative;right: 17px;">{!v.OpportunityName}</p> 
+            </div>
+            <div class="slds-col slds-size_3-of-12 slds-align_absolute-center" style="font-size: 13px;line-height: initial;display:block">
+                <p>{!v.desc}</p>
+            </div>
+            <div class="slds-col slds-size_2-of-12 slds-align_absolute-center" style="font-size: 13px;display: block;text-align: end;">
+                <div class="slds-grid slds-grid_vertical" style="margin-right: 15px;">
+                    <div class="slds-col">
+                        <p>{!v.date}</p>
+                    </div>
+                    <div class="slds-col">
+                        <p>{!v.time}</p>
+                    </div>
+                </div>
+            </div> 
+            <div class="slds-col slds-size_1-of-12">    
+                <lightning:buttonIcon class="openMod" iconName="utility:expand_alt" size="small" variant="bare" onclick="{!c.showModal}"/> 
+            </div>
+        </div>
+    </aura:if>
+    <aura:if isTrue="{!v.modalShow}">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_large" style="height:40rem;" >
+           <lightning:spinner aura:id="mySpinner" variant="brand" size="large" class="spin slds-hide" />
+            <div class="slds-modal__container ">
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" >
+                    <div class="slds-grid ">
+                        <div class="slds-col slds-size_9-of-12" style="line-height: initial;">
+                            <div class="heading2 slds-col"><b>{!v.OpportunityName}</b></div>
+                            <div class="heading3 slds-col slds-p-top_x-small">
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_2-of-12 tab-btn" style="width : 95px">
+                                        <button type="button" onclick="{!c.isDetailShow}">
+                                            <aura:if isTrue="{!v.isDetail}">
+                                                <img src="{!$Resource.SolarLoan + '/img/detailsdark.png'}" style="width : 15px"/>
+                                                <b style="position : relative; top : 2px">&nbsp;Details</b>
+                                                <aura:set attribute="else">
+                                                    <img src="{!$Resource.SolarLoan + '/img/detailslight.png'}" style="width : 15px"/>
+                                                    <b style="position : relative; top : 2px; color : grey;">&nbsp;Details</b> 
+                                                </aura:set>
+                                            </aura:if>
+                                        </button>
+                                    </div>
+                                    <div class="slds-col slds-size_3-of-12 tab-btn" style="width : 145px">
+                                        <button type="button" onclick="{!c.FinanceQuotesShow}">
+                                            <aura:if isTrue="{!v.isFinanceQt}">
+                                                <img src="{!$Resource.SolarLoan + '/img/dollardark.png'}" style="width : 15px"/>
+                                                <b style="position : relative; top : 2px;">&nbsp;Finance Quote</b>
+                                                <aura:set attribute="else">
+                                                    <img src="{!$Resource.SolarLoan + '/img/dollarlight.png'}" style="width : 15px"/>
+                                                    <b style="position : relative; top : 2px; color : grey;">&nbsp;Finance Quote</b>
+                                                </aura:set>
+                                            </aura:if>                                            
+                                        </button>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-12 tab-btn" style="width : 100px">
+                                        <button type="button">
+                                            <aura:if isTrue="{!v.isFunding}">
+                                                <img src="{!$Resource.SolarLoan + '/img/fundingdark.png'}" style="width : 15px"/>	
+                                                <b style="position : relative; top : 2px;">&nbsp;Funding</b>
+                                                <aura:set attribute="else">
+                                                    <img src="{!$Resource.SolarLoan + '/img/fundinglight.png'}" style="width : 15px"/>	
+                                                    <b style="position : relative; top : 2px; color : grey;">&nbsp;Funding</b>
+                                                </aura:set>
+                                            </aura:if>                                              
+                                        </button>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-12 tab-btn">
+                                        <button type="button" onclick="{!c.ActionCentreShow}">
+                                            <aura:if isTrue="{!v.isActionCntr}">
+                                                <img src="{!$Resource.SolarLoan + '/img/actiondark.png'}" style="width : 15px"/>
+                                                <b style="position : relative; top : 2px;">&nbsp;Action Centre</b>
+                                                <aura:set attribute="else">
+                                                    <img src="{!$Resource.SolarLoan + '/img/actionlight.png'}" style="width : 15px"/>
+                                                    <b style="position : relative; top : 2px; color : grey;">&nbsp;Action Centre</b>
+                                                </aura:set>
+                                            </aura:if>                                              
+                                        </button>
+                                    </div>
+                                    <aura:if isTrue="{!v.cont.Authorised_Credit_Representative__c}">
+                                        <div class="slds-col slds-size_2-of-12 tab-btn" style="width: 130px;">
+                                            <button type="button" onclick="{!c.DocumentsShow}">
+                                                <aura:if isTrue="{!v.isDocument}">
+                                                    <img src="{!$Resource.SolarLoan + '/img/filesdark.png'}" style="width : 21px"/>
+                                                    <b style="position : relative; top : 2px;">&nbsp;Documents</b>
+                                                    <aura:set attribute="else">
+                                                        <img src="{!$Resource.SolarLoan + '/img/fileslight.png'}" style="width : 21px"/>
+                                                        <b style="position : relative; top : 2px; color : grey;">&nbsp;Documents</b>
+                                                    </aura:set>
+                                                </aura:if>                                              
+                                            </button>
+                                        </div> 
+                                        <div class="slds-p-around_medium container" style="padding: inherit;">
+                                            <a href="javascript:void(0);"><lightning:buttonMenu alternativeText="Actions" label="Actions" class="btnList" onselect="{!c.actions}">
+                                                <lightning:menuItem value="Open Fact Find" label="Open Fact Find" disabled="{!v.OpenFactFind}"/>
+                                                <lightning:menuItem value="Resend O/S Request" label="Resend O/S Request" disabled="{!v.ResendOSRequest}"/>
+                                                <lightning:menuItem value="Resend VOI SMS (P1)" label="Resend VOI SMS (P1)" disabled="{!v.ResendVOISMSP1}"/>
+                                                <aura:if isTrue="{!!v.hideSms2}">
+                                                    <lightning:menuItem value="Resend VOI SMS (P2)" label="Resend VOI SMS (P2)" disabled="{!v.ResendVOISMSP2}"/>
+                                                </aura:if>
+                                                </lightning:buttonMenu></a>
+                                        </div>
+                                    </aura:if>
+                                </div>                                
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_2-of-12 " >
+                            <div class="status-styleForOpenModal" style="{!'background-color:' + v.statusCode +';color:' + IF(v.status=='Funded','#FFF;','#000;')+'margin-left:5rem;'}">{!v.status}</div>                  
+                        </div>
+                        <div class="slds-col slds-col slds-size_1-of-12 slds-text-align_right slds-m-top_xx-small ">
+                            <lightning:buttonIcon class="modalClose" variant="bare" size="medium" iconName="utility:close" onclick="{!c.closeModal}"/>                    
+                        </div> 
+                    </div>
+                    <aura:if isTrue="{!v.isDetail}">
+                        <c:ReferrerPortalDetailPage oppWrapper="{!v.oppWrapper}" OpportunityName="{!v.OpportunityName}" ishide="{!v.ishide}" InstallEdit="{!v.InstallEdit}" 
+                                    isSaveBtnDisabled="{!v.isSaveBtnDisabled}" EditButtonShow="{!v.EditButtonShow}" NextStep1="{!v.NextStep1}" NextStep2="{!v.NextStep2}"
+                                    icon1="{!v.icon1}" icon2="{!v.icon2}"   searchString="{!v.searchString}" showSpinner="{!v.showSpinner}"/>   
+                    </aura:if>
+                    <aura:if isTrue="{!v.isFinanceQt}">
+                        <c:ReferrerPortalFinanceQuotes WrapperData ="{!v.oppWrapper}" sessionId = "{!v.sessionId}" accountId="{!v.accountId}"/>
+                    </aura:if> 
+                    <aura:if isTrue="{!v.isActionCntr}">
+                        <c:ReferrerPortalActionCentre WrapperData ="{!v.oppWrapper}" accountId="{!v.accountId}" OpportunityName="{!v.OpportunityName}" />
+                    </aura:if>
+                  <aura:if isTrue="{!v.cont.Authorised_Credit_Representative__c}">
+                        <aura:if isTrue="{!v.isDocument}">
+                            <c:ReferrerPortalDocuments todoList="{!v.todoList}" NextStep1="{!v.NextStep1}" NextStep2="{!v.NextStep2}" icon1="{!v.icon1}" icon2="{!v.icon2}" WrapperData ="{!v.oppWrapper}" accountId="{!v.accountId}" OpportunityName="{!v.OpportunityName}" />
+                        </aura:if> 
+                    </aura:if> 
+                </div>                
+            </div>  
+        </section> 
+        <div class="slds-backdrop slds-backdrop_open" ></div>  
+    </aura:if>
+</aura:component>

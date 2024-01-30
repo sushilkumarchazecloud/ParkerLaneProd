@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Copy_of_Approved_Settled_Personal_Loans</fullName>
+    <columns>OPPORTUNITY.LAST_STAGE_CHANGE</columns>
+    <columns>OPPORTUNITY.NAME</columns>
+    <columns>Loan_Amount__c</columns>
+    <columns>Lender__c</columns>
+    <columns>Application_Supporting_Notes__c</columns>
+    <columns>Applicant_1_Credit_Score__c</columns>
+    <columns>Applicant_2_Credit_Score__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>OPPORTUNITY.STAGE_NAME</field>
+        <operation>equals</operation>
+        <value>Approved,Funding,Settled (closed won)</value>
+    </filters>
+    <filters>
+        <field>OPPORTUNITY.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Opportunity.Green_Loan</value>
+    </filters>
+    <label>Approved Data Entry</label>
+</ListView>

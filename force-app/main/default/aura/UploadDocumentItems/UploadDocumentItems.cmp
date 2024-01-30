@@ -1,25 +1,40 @@
 <aura:component controller="UploadDocuments" implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" access="global" >
     <aura:attribute name="sessionId" type="String" />
-    <aura:attribute name="sldUploadList" type="List" />
+    <aura:attribute name="sldUploadList" type="List[]" />
     <aura:attribute name="recordId" type="String" />
     <aura:attribute name="PersonName" type="String" />
+    <aura:attribute name="PersonNme" type="list" />
+    <aura:attribute name="uploadList" type="List" />
+    <aura:attribute name="status" type="String" />
+    <aura:attribute name="appUploadList" type="List" />
+    <aura:attribute name="checkTrue" type="boolean"/>
+    <aura:attribute name="total" type="Integer" default='0' />
+    <aura:attribute name="appInd" type="Integer" default='0' />
+    <aura:attribute name="generalInd" type="Integer" default='0' />
+    <aura:attribute name="isDisabled" type="boolean" default="true"/>
+    <aura:attribute name="changeCss" type="string"/>    
+    <aura:attribute name="sendMail" type="boolean"/>
+    <aura:attribute name="UserId" type="String" />
+    
+    <lightning:spinner aura:id="mySpinner" variant="brand" size="large" alternativeText="Loading" class="slds-is-fixed slds-hide" />
     <div class="slds-grid slds-wrap slds-p-around_small1">
         <aura:iteration items="{!v.sldUploadList}" var="mapKey" indexVar="index">
-            <div class="slds-m-around_medium1 slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12">
-                <div  class="{! (mapKey.isComplete?'doc-box-green':'doc-box') +' slds-m-around_medium  ' }">
-                    
+            <div class="slds-m-around_medium1 slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 " style="width: -webkit-fill-available;">
+                <div class="{! (mapKey.isComplete?'docCard-green':'docCard') +' slds-m-around_medium  ' }" aura:id="mainCssCopy">                    
                     <c:uploadFile PersonName="{!v.PersonName}" ishide="{!mapKey.isOpen}" 
-                                  CategryName="{!mapKey.Document}" recordId ="{!v.recordId}" 
-                                  Description ="{!mapKey.Details}"
-                                  docDescription = "{!mapKey.Discription}"
+                                  CategryName="{!mapKey.Document}" recordId ="{!v.recordId}" UserId ="{!v.UserId}" 
+                                  Description ="{!mapKey.Details}" status="{!v.status}"
+                                  docDescription = "{!mapKey.Discription}" checkTrue="{!v.checkTrue}"
                                   label="Attachment" isComplete="{!mapKey.isComplete}"   
-                                  parentId="{!mapKey.Id}" sessionId="{!v.sessionId}" 
-                                  count="{!mapKey.count}" />
-                    
+                                  parentId="{!mapKey.Id}" sessionId="{!v.sessionId}" aura:id="mainCssCopy"
+                                  count="{!mapKey.count}" isDisabled="{!mapKey.isDisabled}" changeCss="{!v.changeCss}"/>
+                   
                     <aura:if isTrue="{!mapKey.isOpen}">
-                        <div class="slds-p-around_x-small">
-                            <lightning:button class="slds-float_right save-btn" name="{!index}" variant="brand" label="Save &amp; Close" title="Mark as complete"  onclick="{!c.handleComplete}" /><br/><br/>
-                        </div>
+                        <aura:if isTrue="{!mapKey.count > 0}">
+                            <div class="slds-m-around_xx-small slds-align_absolute-center" style="margin-top : 25px;" >
+                                <lightning:button class="{!mapKey.isDisabled? 'save-btndisabled':'save-btn'}" disabled="{!mapKey.isDisabled}"  name="{!index}" variant="success" label="Save and Close" title=""  onclick="{!c.handleComplete}" /><br/><br/>
+                            </div>
+                        </aura:if>
                     </aura:if>
                 </div>
             </div>

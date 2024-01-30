@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Clothing_Recreational_Entertainment__c</fullName>
+    <externalId>false</externalId>
+    <formula>Entertainment_Dining_Out_Movies_Gift__c +  Sports_Hobbies_and_Memberships__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Clothing, Recreational &amp; Entertainment</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <type>Currency</type>
+</CustomField>

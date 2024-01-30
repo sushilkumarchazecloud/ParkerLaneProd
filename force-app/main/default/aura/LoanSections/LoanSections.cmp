@@ -181,6 +181,9 @@
                                    applicationSection="{!v.applicationSection}"
                                    isMortgage ="{!v.isMortgage}"/>
             </aura:if>
+            <aura:if isTrue="{!v.applicationSection == 'All Done'}">
+                <c:FinalSubmitted aura:id="Submitted"/>
+            </aura:if>
         </div>
     </div>
     <c:ParkerLaneFooter/>

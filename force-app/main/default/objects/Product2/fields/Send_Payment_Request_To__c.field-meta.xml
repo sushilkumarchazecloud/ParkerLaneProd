@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Send_Payment_Request_To__c</fullName>
+    <externalId>false</externalId>
+    <label>Send Payment Request To</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Send to Lender</fullName>
+                <default>false</default>
+                <label>Send to Lender</label>
+            </value>
+            <value>
+                <fullName>Send to Parker Lane</fullName>
+                <default>false</default>
+                <label>Send to Parker Lane</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

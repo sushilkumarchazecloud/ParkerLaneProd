@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>UFC_Date_Due_Required</fullName>
+    <active>true</active>
+    <errorConditionFormula>IF( ISCHANGED(UFC_Paid_Confirmed__c), AND(UFC_Paid_Confirmed__c = True, ISBLANK( UFC_Date_Due_Paid__c ) ), false)</errorConditionFormula>
+    <errorDisplayField>UFC_Date_Due_Paid__c</errorDisplayField>
+    <errorMessage>Date cannot be empty if UFC Paid Confirmed is Checked</errorMessage>
+</ValidationRule>

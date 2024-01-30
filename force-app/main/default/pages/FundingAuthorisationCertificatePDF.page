@@ -1,0 +1,558 @@
+<apex:page controller="AuthorisationCertificateController" renderAs="PDF" applyHtmlTag="false" applyBodyTag="false" standardStylesheets="false"  showHeader="false"  sidebar="false">
+    
+    <html>
+        <head>
+            <style TYPE="text/css">
+                @page {
+                margin-left: 0cm;
+                margin-right: 0cm;
+                margin-top: 0cm;
+                margin-bottom: 0cm;
+                size: 230mm 310mm; 
+                @top-left {
+                content: element(header);
+                } 
+                
+                @bottom-left {
+                content: element(footer);
+                }
+                }
+                .main{
+                
+                height : auto;
+                padding : 0px;
+                margin  :0px;
+                font-family : Dialog;
+                }
+                .hedr{
+                background : #1a2745;
+                }
+                .hedr img{
+                width : 22%;
+                padding : 22px; 
+                }
+                .hedr span{
+                color : White;
+                float : right;
+                font-size : 24px;
+                padding : 25px; 
+                }
+                .bodyData{
+                background : white;
+                height : auto;
+                width : 100%;
+                }
+                .content{
+                padding-top : 15px !important;
+                padding-bottom : 15px !important;
+                padding-left : 20px !important;
+                padding-right : 20px !important;
+                }
+                .tab{
+                width : 100%;
+                }
+                .tab tr td{
+                font-size : 13px;
+                }
+                .tab2{
+                width : 100%;
+                }
+                .tab2 tr td{
+                font-size : 16px
+                }
+                .tab3{
+                width :100%;
+                }
+                .tab3 td{
+                width :33%;
+                }
+                .bodysecnd{
+                margin-left : 20px;
+                margin-right : 20px;
+                background-color : #d1edee;
+                height :  auto;
+                width : 95%;
+                }
+                .personName{
+                font-size : 16px;
+                line-height : 1.5;
+                }
+                .verificationPanel{
+                margin-top : 10px;
+                margin-left : 20px;
+                margin-right : 20px;
+                background-color : #f4f4f4;
+                height : auto;
+                width : 95%;
+                }
+                .contenImg img{
+                width : 20px;
+                height : 10px;
+                }
+                .contenImg b{
+                font-size : 16px;
+                position : relative;
+                bottom : 5px;
+                }
+                .tabmainlogo img{
+                width : 38px;
+                height : 38px;
+                }
+                .mainImg img{
+                margin-top : 20px;
+                height : 55px;
+                width : 55px;
+                }
+                .bodyThird{
+                margin-top : 20px;
+                margin-left : 20px;
+                margin-right : 20px;
+                background-color : #d1edee;
+                height :  auto;
+                width : 95%;
+                }
+                .bodyThird span{
+                font-size : 16px;
+                }
+                .bodyThirdInside{
+                padding : 10px;			
+                }
+                .bodyFourth{
+                margin-top : 10px;
+                margin-left : 20px;
+                margin-right : 20px;
+                background-color : #f4f4f4;
+                height : auto;
+                width : 95%;
+                }
+                .imageSec{
+                margin-top : 10px;
+                margin-left : 20px;
+                margin-right : 20px;
+                height : auto;
+                width : 95%;
+                }
+                .imageCaption{
+                background-color : #f4f4f4;
+                font-size : 14px;
+                padding : 9px;
+                }
+                .imagesdata{
+                width: 255px !important;
+                height: 300px !important;
+                overflow: hidden;
+                }
+                .imagesdata img{              
+                width : 100%;                
+                height : 100%;
+                }
+                .imagesdata1 {
+                width: 255px !important;
+                height: 300px !important;
+                overflow: hidden;
+                }
+                .imagesdata1 img {                
+                width : 100%;
+				height : 100%;                
+                }
+                .pagenumber:before {
+                content: counter(page);
+                }
+                
+                .pagecount:before {
+                content: counter(pages);
+                }
+                div.footer{
+                margin-top : 10px;
+                background-color : #f4f4f4;
+                width : 95%;	
+                margin-left : 20px;
+                margin-right : 20px;
+                }
+                .subfooter{
+                text-align : center;
+                font-size : 14px;
+                padding : 17px;
+                }               
+            </style>
+        </head>
+        <body class="main">
+            <div class="hedr">
+                <apex:image url="{!$Resource.SolarLoan + '/img/logowhite.png'}"/> 
+                <span>FUNDING AUTHORISATION CERTIFICATE</span>
+            </div>
+            <div class="bodyData">
+                <div class="content">
+                    <table class="tab">
+                        <tr>
+                            <td>FUNDING ID# <b>{!frRec.Id}</b></td>
+                            <td style="text-align : center;">Type: <b>{!frRec.Request_Type__c}</b></td>
+                            <td style="width: 245px; text-align : right;">Application ID# <b>{!frRec.Opportunity__c}</b></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="bodysecnd">
+                    <center class="mainImg"><img src="{!$Resource.SolarLoan + '/img/final.png'}"/> </center><br/>
+                    <center><span class="personName"><span style="text-transform: uppercase; font-size : 16px;">{!oppName}</span><br/> <span style="font-size : 13px;"><b>authorised the drawdown of their approved loan. </b></span> <br/> <span style="font-size : 12px;">Authorised on {!auhtoDate}</span></span></center><br/>
+                </div>
+               <!-- <div class="verificationPanel">
+                    <table style="font-size : 14px; width : 100%; padding-top : 5px; padding-bottom : 5px;">
+                        <tr>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td rowspan="2" class="tabmainlogo"><img src="{!$Resource.SolarLoan + '/img/selfi.png'}"/></td>
+                                        <td colspan="2">Identity document</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="contenImg"><apex:image url="{!$Resource.VOI_Fron_Icons+'/final.png'}" height="20px;"/> <b style="font-size : 14px;">Clear and correct</b></td>
+                                    </tr>
+                                </table>
+                            </td> 
+                            <td>
+                                <table align="center">
+                                    <tr>
+                                        <td rowspan="2" class="tabmainlogo"><img src="{!$Resource.SolarLoan + '/img/signature.png'}" /></td>
+                                        <td colspan="2">&nbsp;Facial Match</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="contenImg"><apex:image url="{!$Resource.VOI_Fron_Icons+'/final.png'}" height="20px;" /> <b style="font-size : 14px;">Confirmed by a human</b></td>
+                                    </tr>
+                                </table>
+                            </td> 
+                            <td>
+                                <table align="right">
+                                    <tr>
+                                        <td rowspan="2" class="tabmainlogo"><img src="{!$Resource.SolarLoan + '/img/security2.png'}" /></td>
+                                        <td colspan="2">Secure Code</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="contenImg"> <apex:image url="{!$Resource.VOI_Fron_Icons+'/final.png'}" height="20px;"/> <b style="font-size : 14px;">{!voi.matchVerification__c}</b></td>
+                                    </tr>
+                                </table>
+                            </td> 
+                        </tr>    
+                    </table>
+                </div>-->
+                <div class="bodyThird">
+                    <div class="bodyThirdInside">
+                        <span><b>FUNDING INSTRUCTION</b></span>    
+                    </div>
+                </div>
+                <div class="verificationPanel">
+                    <table class="tab3" style="font-size : 13px; width : 100%; padding-top : 5px; padding-bottom : 5px;">
+                        <tr>
+                            <td style="">
+                                Supplier Disbursement
+                            </td>
+                            <td>
+                                Other Disbursements
+                            </td>
+                            <td>
+                                Funding Summary
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Payment Type: {!frRec.Request_Type__c}
+                            </td>
+                            <td>
+                                Compaign subsidy: NO
+                            </td>
+                            <td>
+                                Total approved limit: <apex:outputText value="{0, Number, '$'#,##0}">
+                                <apex:param value="{!frRec.Total_Funds_Approved_Customer_Amount__c}" />
+                                </apex:outputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Disbursement amount: <apex:outputText value="{0, Number, '$'#,##0}">
+                                <apex:param value="{!frRec.Disbursement_amount__c}" />
+                                </apex:outputText>
+                            </td>
+                            <td>
+                                Brokerage: <apex:outputText value="{0, Number, '$'#,##0}">
+                                <apex:param value="{!frRec.Opportunity__r.SyncedQuote.Brokerage_Amount__c}" />
+                                </apex:outputText>
+                            </td>
+                            <td>
+                                Net funds availiable: <apex:outputText value="{0, Number, '$'#,##0}">
+                                <apex:param value="{!frRec.Net_Funds_Available__c}" />
+                                </apex:outputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Pay to: Supplier (as per attached invoice)
+                            </td>
+                            <td>
+                                Funded to Date: <apex:outputText value="{0,Number,'$'#,##0}">
+                                <apex:param value="{!IF(ISBLANK(frRec.Funded_To_Date__c), 0, frRec.Funded_To_Date__c)}" />
+                                </apex:outputText>
+                            </td>
+                            <td>
+                                This request: <apex:outputText value="{0, Number, '$'#,##0}">
+                                <apex:param value="{!frRec.Request_Amount__c}" />
+                                </apex:outputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                Surplus/shortfall: <apex:outputText value="{0, Number, '$'#,##0}">
+                                <apex:param value="{!frRec.Net_Surplus_Shortfall__c}" />
+                                </apex:outputText>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="bodyThird">
+                    <div class="bodyThirdInside">
+                        <span><b>CERTIFICATE OF COMPLETION</b></span>    
+                    </div>
+                </div>
+                <div class="verificationPanel">
+                    <table class="tab3" style="font-size : 13px; width : 100%; padding-top : 5px; padding-bottom : 5px;">
+                        <tr>
+                            <td style="">
+                                Status: Authorised by customer
+                            </td>
+                            <td>
+                                Requested:&nbsp; <apex:outputText value="{0,date,dd/MM/yyyy hh:mm a}">
+                                <apex:param value="{!frRec.Request_Date__c}" />
+                                </apex:outputText>
+                            </td>
+                            <td style="">
+                                Requested by: {!frRec.Person_Requesting__r.Name}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Signing Authority: {!frRec.Customer_Authorisation_Type__c}
+                            </td>
+                            <td>
+                                Authorised: {!auhtoDate}
+                            </td>
+                            <td>
+                                Authorised by: {!authoName}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="bodyThird">
+                    <div class="">
+                        <table class="tab2 bodyThirdInside">
+                            <tr>
+                                <td>
+                                    <b>SINGER EVENTS</b>
+                                </td>
+                                <td>
+                                    <b>AUTHORISATION</b>
+                                </td>
+                                <td>
+                                    <b>TIME STAMP</b> 
+                                </td>
+                            </tr>
+                        </table>
+                    </div>    
+                </div>
+                <div class="verificationPanel">
+                    <table class="tab3" style="font-size : 13px; width : 100%; padding-top : 5px; padding-bottom : 5px;">
+                        <tr>
+                            <td >
+                                Requester:
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {!frRec.Person_Requesting__r.Name}
+                            </td>
+                            <td style="width:40%;">
+                                Has the customet aggreed to the this timing: YES
+                            </td>
+                            <td>
+                                Requested:&nbsp; <apex:outputText value="{0,date,dd/MM/yyyy hh:mm a}">
+                                <apex:param value="{!frRec.Request_Date__c}" />
+                                </apex:outputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {!frRec.Person_Requesting__r.email}
+                            </td>
+                            <td>
+                                Anticipated date:&nbsp; <apex:outputText value="{0,date,dd/MM/yyyy}">
+                                <apex:param value="{!frRec.Installation_Date__c}" />
+                                </apex:outputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Security level: Via parter portal / Via verified customer email 
+                            </td>
+                        </tr> 
+                    </table>
+                    
+                    <table class="tab3" style="font-size : 13px; width : 100%; padding-top : 10px; padding-bottom : 5px;">
+                        <tr>
+                            <td >
+                                Authoriser:
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {!frRec.Applicant_1_A1__r.Name}
+                            </td>
+                            <td>
+                                I have recived, read and agree to be bound by the terms of credit contract sent to me by {!frRec.Opportunity__r.Lender__c}: YES
+                            </td>
+                            <td>
+                                Sent: <apex:outputText value="{0,date,dd/MM/yyyy hh:mm a}">
+                                <apex:param value="{!frRec.Request_Date__c}" />
+                                </apex:outputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {!frRec.Applicant_1_A1__r.PersonEmail}
+                            </td>
+                            <td>
+                                The invoice attached contains the correct Supplier and payment details: YES
+                            </td>
+                            <td>
+                                Viewed: <apex:outputText value="{0,date,dd/MM/yyyy hh:mm a}">
+                                <apex:param value="{!frRec.Request_Date__c}" />
+                                </apex:outputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Security level: Verified email address 
+                            </td>
+                            <td style="width:40%;">
+                                I authorise lender to make payment in full after installation in amount of <apex:outputText value="{0, Number, '$'#,##0}">
+                                <apex:param value="{!frRec.Request_Amount__c}" />
+                                </apex:outputText> to the Supplier: YES
+                            </td>
+                            <td>
+                                Authorised:<apex:outputText value="{0,date,dd/MM/yyyy hh:mm a}">
+                                <apex:param value="{!frRec.A1_Payment_Authorisation_Submitted_Date__c}" />
+                                </apex:outputText>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                            </td>
+                            <td>
+                                Submit funding request: TRUE
+                            </td>
+                        </tr>
+                    </table>
+                    
+                    <apex:outputPanel rendered="{!IF(isTwoPerson,true,false)}">  
+                        <table class="tab3" style="font-size : 13px; width : 100%; padding-top : 10px; padding-bottom : 5px;">
+                            <tr>
+                                <td >
+                                    Authoriser:
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {!frRec.Applicant_2_A2__r.Name}
+                                </td>
+                                <td>
+                                    I have recived, read and agree to be bound by the terms of credit contract sent to me by {!frRec.Opportunity__r.Lender__c}: YES
+                                </td>
+                                <td>
+                                    Sent: <apex:outputText value="{0,date,dd/MM/yyyy hh:mm a}">
+                                    <apex:param value="{!frRec.Request_Date__c}" />
+                                    </apex:outputText>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {!frRec.Applicant_2_A2__r.PersonEmail}
+                                </td>
+                                <td>
+                                    The invoice attached contains the correct Supplier and payment details: YES
+                                </td>
+                                <td>
+                                    Viewed: <apex:outputText value="{0,date,dd/MM/yyyy hh:mm a}">
+                                    <apex:param value="{!frRec.Request_Date__c}" />
+                                    </apex:outputText>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Security level: Verified email address 
+                                </td>
+                                <td style="width:40%;">
+                                    I authorise lender to make payment in full after installation in amount of <apex:outputText value="{0, Number, '$'#,##0}">
+                                    <apex:param value="{!frRec.Request_Amount__c}" />
+                                    </apex:outputText> to the Supplier: YES
+                                </td>
+                                <td>
+                                    Authorised:<apex:outputText value="{0,date,dd/MM/yyyy hh:mm a}">
+                                    <apex:param value="{!frRec.A2_Payment_Authorisation_Submitted_Date__c}" />
+                                    </apex:outputText>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                </td>
+                                <td>
+                                    Submit funding request: TRUE
+                                </td>
+                            </tr>
+                        </table>
+                    </apex:outputPanel>
+                </div>
+               <!-- <div class="bodyFourth">
+                    <div class="bodyThirdInside">
+                        <table style="font-size : 14px;">
+                            <tr>
+                                <td style="width : 170px;">Current Address: </td>
+                                <td>{!contact.Residential_Address__c} (time there : {!contact.Year__c}years)</td>
+                            </tr>
+                            <tr>
+                                <td style="width : 170px;">Previous Address: </td>
+                                <td>{!contact.Residential_Address_1__c}</td>
+                            </tr>
+                            <tr>
+                                <td style="width : 170px;">Employer: </td>
+                                <td>{!contact.Primary_Employer_Name__c}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="bodyThird">
+                    <div class="bodyThirdInside">
+                        <span><span style="text-transform: uppercase;">{!voi.contact__r.name}</span> recorded the following information on <b>{!paksBackDate} at {!paksBacktime}:</b></span>    
+                    </div>
+                </div>
+                <div class="imageSec">
+                    <table>
+                        <tr>
+                            <td class="imageCaption">Photo ID(FRONT): <b>Match</b></td>
+                            <td class="imageCaption">Photo ID(Back): <b>Match</b></td>
+                            <td class="imageCaption">{!IF(voi.verified_by_selfie_ID__c,'Id with selfie:', 'Video Recording:')} <b>Match</b></td>
+                        </tr>
+                        <tr>
+                            <td class="imagesdata1"><apex:image url="{!frontDLURL}?ver=1"/></td>
+                            <td class="imagesdata"><apex:image url="{!BackDLURL}?ver=1"/> </td>
+                            <td class="imagesdata"><apex:image url="{!SnapURL}?ver1" alt="Image Not Found!"/> </td>    
+                        </tr>
+                    </table>
+                </div>
+                <div class="footer">
+                    <div class="subfooter">Page <span class="pagenumber"/> of <span class="pagecount"/></div>
+                </div>-->
+            </div>
+        </body>
+    </html>
+    
+</apex:page>

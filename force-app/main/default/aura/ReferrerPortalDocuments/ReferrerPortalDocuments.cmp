@@ -1,0 +1,60 @@
+<aura:component controller="MyReferrerController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="WrapperData" type="Object"/>
+    <aura:attribute name="accountId" type="String"/>
+    <aura:attribute name="OpportunityName" type="String"/>
+    <aura:attribute name="NextStep1" type="string"/>
+    <aura:attribute name="NextStep2" type="string"/>
+    <aura:attribute name="icon1" type="string"/>
+    <aura:attribute name="icon2" type="string"/>
+    <aura:attribute name="todoList" type="list"/>
+    
+    <aura:attribute name="showSpinner" type="boolean" default="false"/>
+    <aura:handler name ="init" value="{!this}" action ="{!c.doInit}"/>
+    
+    <aura:if isTrue="{!v.showSpinner}">
+    <lightning:spinner aura:id="mySpinner" variant="brand" size="large" class="spinnnner" />
+    </aura:if>
+    
+    <div class="slds-scrollable_y slds-grid slds-wrap" style="height:435px;">
+        <div class="slds-size_8-of-12">
+            <div class="slds-m-top_x-small slds-m-bottom_medium" style="border-bottom: 1px solid #c2c2c2"></div>
+            <div style="margin-bottom: 50px;">
+                <div class="heading3"><b>Documents Requested</b></div>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_9-of-12">
+                        <div style="margin-top: 5px">Upload Files here or send them to personalapplications@parkerlane.com.au</div><br/>
+                    </div>
+                    <div class="slds-col slds-size_3-of-12">
+                        <lightning:button variant="brand" class="uploadStyle" label="Open Upload Docs" onclick="{!c.OpenUploadDocs}" />
+                    </div>
+                </div>
+                <div style="height: auto;">
+                    <c:DocumentRequested recordId="{!v.WrapperData.Id}" showHeader="true"/>
+                </div>
+            </div>
+            <div>
+                <div class="heading3"><b>Files</b></div>
+                <c:DownloadFile recordId="{!v.WrapperData.Id}" showHeader="true"/>
+            </div>
+        </div>
+        <div class="slds-size_4-of-12" style="padding: 5px 15px 0px 20px;">
+            <div class="box-style" >
+                <div class="heading2"><b>To Do's</b></div>
+                <div class="Border" style="border-bottom: 1px solid #c2c2c2;margin-left:-10px;margin-right:-10px;"></div>
+                <div class="slds-p-around_small"> 
+                    <aura:iteration items="{!v.todoList}" var="data">
+                        <img src="{!$Resource.SolarLoan + '/img/'+ data.iconName+'.png'}" style="height:14px;"/>&nbsp;<b>{!data.doneText}</b><br/>                                                        
+                    </aura:iteration>
+                </div>
+            </div>
+            <div class="box-style" style="margin-top:22px;">
+                <div class="heading2"><b>Important file note</b> </div>
+                <div style="border-bottom: 1px solid #c2c2c2;margin-left:-10px;margin-right:-10px;"></div>
+                <div class="slds-p-around_small"> 
+                    <b>{!v.WrapperData.Opportunity.Application_Pending_Notes__c}</b>
+                </div>  
+            </div>
+        </div>
+    </div>
+    
+</aura:component>

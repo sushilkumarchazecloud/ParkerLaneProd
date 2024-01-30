@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Personal_Loan_ESCALATIONS</fullName>
+    <columns>Time_at_current_stage__c</columns>
+    <columns>OPPORTUNITY.STAGE_NAME</columns>
+    <columns>OPPORTUNITY.NAME</columns>
+    <columns>OPPORTUNITY.LEAD_SOURCE</columns>
+    <columns>FinServ__ReferredByContact__c</columns>
+    <columns>Lender__c</columns>
+    <columns>Loan_Amount__c</columns>
+    <columns>OPPORTUNITY.RECORDTYPE</columns>
+    <columns>Application_Pending_Notes__c</columns>
+    <columns>Application_Pending_Status__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>OPPORTUNITY.STAGE_NAME</field>
+        <operation>notEqual</operation>
+        <value>Nurturing,Working,Settled (closed won),Closed Lost</value>
+    </filters>
+    <filters>
+        <field>OPPORTUNITY.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Opportunity.Asset_Finance,Opportunity.Debt_Consolidation,Opportunity.Green_Loan,Opportunity.Home_Improvement,Opportunity.Personal_Loan,Opportunity.Solar,Opportunity.Vehicle_Purchase</value>
+    </filters>
+    <filters>
+        <field>Escalation__c</field>
+        <operation>equals</operation>
+        <value>1</value>
+    </filters>
+    <label>Personal Loan ESCALATIONS</label>
+</ListView>

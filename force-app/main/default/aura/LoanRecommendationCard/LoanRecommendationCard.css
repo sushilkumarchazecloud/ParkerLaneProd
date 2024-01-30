@@ -1,6 +1,15 @@
 .THIS.loan-recommendation-card .rate {
     /*border: 1px solid #1a2745;*/
 }
+.THIS .changeMe{
+    background : grey !important;
+    border-color: grey !important;
+}
+.THIS .alertInfo{
+    color: red;
+    font-weight: bold;
+    font-size: 13px;
+}
 .THIS.loan-recommendation-card .rate strong {
     font-size: .700rem;
 }
@@ -136,13 +145,14 @@
    
 }
 .THIS .fees-style{
-    font-size: 20px;
-    font-weight: 600;
+    font-size: 18px;
     white-space:nowrap;
 }
 .THIS .fees-title-style{
-    font-size: 14px;
-    white-space:nowrap;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+    font-family: ProximaNova-AltBold;
 }
 .THIS .non-clickable-checkbox .slds-checkbox_faux:after {
     border-color: #1a2745 !important;

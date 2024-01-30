@@ -1,0 +1,94 @@
+.THIS .slds-grid{
+    padding : 0px;
+}
+@font-face {
+    font-family: ProximaNova-AltBold;
+    src: url('/resource/customfonts/ProximaNova-AltBold.otf') format('OpenType');
+}
+@font-face {
+    font-family: ProximaNovaAlt-Medium;
+    src: url('/resource/customfonts/ProximaNovaAlt-Medium.otf') format('OpenType');
+}
+.THIS .logo{
+    padding: 9px;
+    background-color: #1a2745;
+    color: #fff;
+    align-items: center;
+    width : 100%;
+    height : 50px;
+}
+.THIS .logo img{
+    width: 200px;
+    padding: 9px 22px;
+    height: 40px;
+}
+.THIS .text1{
+    color : rgba(26,39,69,255);
+    font-family: ProximaNovaAlt-Medium;
+    font-size : 17px;
+    text-align: center;
+    line-height: initial;
+}
+.THIS .Head1 p{
+    text-align: center;
+    color : rgba(26,39,69,255);
+    font-family: ProximaNova-AltBold;
+    font-size : 22px;
+    margin-top : 13px;
+}
+.THIS .sfLogo{
+    height : 15rem !important;
+    width : auto;
+}
+.THIS .inputCls .slds-file-selector__dropzone .slds-file-selector__text{
+    display: none;
+}
+
+.THIS .inputCls .slds-file-selector__dropzone .slds-file-selector__button{
+    font-size: 0px;
+    color: white;
+    background: #45c65a;
+    border: none;
+    height : 65px;
+    font-weight : bold;
+    margin-top : 28px;
+    border-radius : 6px;
+    padding : 0px 69px;
+}
+.THIS .inputCls:focus{
+    outline: none !important;
+    border: none !important;
+}
+.THIS .inputCls .slds-file-selector__dropzone .slds-file-selector__button:hover{
+    cursor: pointer !important;
+}
+.THIS .inputCls .slds-file-selector__dropzone{
+    border: white;
+}
+.THIS .mainCls{
+    background : #1a2745;
+    height : 100%;
+    width : 100%;
+    min-height : 100rem;    
+}
+
+.THIS .meterStyle{
+    width: 96%;
+    height: 20px;
+    margin-left: 7px;
+}
+.THIS meter::-webkit-meter-optimum-value {
+    background: #45c65a;     
+}
+.THIS meter::-webkit-meter-bar {
+    border : none;  
+    background : transparent;
+}
+.THIS .borderFor{
+    height : 30px;
+    width  : 85%;
+    background : transparent;
+    border : 5px solid white;
+    border-radius : 20px;
+    margin-left : 28px;
+}

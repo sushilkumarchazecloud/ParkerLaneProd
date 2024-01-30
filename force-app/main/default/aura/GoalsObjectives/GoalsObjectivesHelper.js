@@ -69,7 +69,10 @@
                 }else{
                     if(ret !=''){
                         self.createEnvelope(component, event);
-                        window.location = JSON.parse(ret).url;
+                        var url = JSON.parse(ret).url;
+                        url = url.replace("SupportingDocument/?oppId", "supportingDocument?oppId");
+                        url = url.replace("supportingDocument/?oppId", "supportingDocument?oppId");
+                        window.location = url;
                     }
                 }
             }

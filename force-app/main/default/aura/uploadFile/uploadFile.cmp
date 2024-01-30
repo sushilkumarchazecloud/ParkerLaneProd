@@ -8,6 +8,7 @@
     <aura:attribute name="isAddNote" type="boolean" default="false"/>
     <aura:attribute name="isComplete" type="boolean" default="false"/>
     <aura:attribute name="message" type="String" />
+    <aura:attribute name="status" type="String" />
     <aura:attribute name="isUploading" type="boolean" default="false"/>
     <aura:attribute name="upload" type="boolean" default="false"/>
     <aura:attribute name="AddMore" type="boolean" default="false"/>
@@ -21,102 +22,396 @@
     <aura:attribute name="PersonName" type="String" />
     <aura:attribute name="CategryName" type="String" />
     <aura:attribute name="plusImageURL" type="String" />
+    <aura:attribute name="bankRedirectURL" type="String" />
     <aura:attribute name="checkImageURL" type="String" />
     <aura:attribute name="itemNo" type="integer" default="0" />
     <aura:attribute name="already" type="boolean" default="true"/>
+    <aura:attribute name="checkTrue" type="boolean" default="false"/>
     <aura:attribute name="ishide" type="boolean" default="false"/>
+    <aura:attribute name="ishideFake" type="boolean" default="false"/>
+    <aura:attribute name="bankSuccess" type="boolean" default="true"/>
+    <aura:attribute name="openFake" type="boolean" default="true"/>
     <aura:attribute name="isDelete" type="boolean" default="false"/>
     <aura:attribute name="count" type="integer" default="0"/>
     <aura:attribute name="isAttachUpdated" type="boolean" default="false"/>
+    <aura:attribute name="isOpen" type="boolean" default="false" />
+    <aura:attribute name="isDisabled" type="boolean" default="true"/>
+    <aura:attribute name="showImg" type="boolean" default="false"/>
+    <aura:attribute name="changeCss" type="string" default=""/>  
+    <aura:attribute name="bankBtn" type="string" default=""/>  
+    <aura:attribute name="modalShow" type="boolean" default="false"/>
+    <aura:attribute name="document" type="string" default=""/>   
+    <aura:attribute name="category" type="string" default=""/>
+    <aura:attribute name="UserId" type="String" />
+    
+    <aura:registerEvent name="UploadFileEvent" type="c:UploadFileEvent"/>
     
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>   
     <aura:handler name="change" value="{!v.AttachId}" action="{!c.updateName}"/>
     <aura:handler name="change" value="{!v.requestId}" action="{!c.updateName}"/>
+    <aura:handler name="change" value="{!v.changeCss}" action="{!c.handleCssChange}"/>  
     
-    <aura:if isTrue="{!v.already}">
-        <div class="slds-grid slds-wrap slds-p-around_x-small" style ="position: relative;color: #FFF;">
-            <div class="slds-col slds-size_10-of-12 slds-align_absolute-center" >
-                <div class="" Style="padding-top: 5px;padding-bottom: 5px;">
-                    <div class="file-upload-container">
-                        <lightning:input  onchange="{!c.handleFilesChange}" 
-                                         class="file-upload" type="file" multiple="false" 
-                                         style="{!'background-image:url('+ (v.isComplete ? v.checkImageURL: v.plusImageURL) + '), linear-gradient(to bottom, #FFF 50%, '+ (v.isComplete ? '#45C65A 50%);border-color: #45C65A;': '#0665EA 50%);border-color: #0665EA;')}" />
+    <aura:if isTrue="{!v.modalShow}">
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-align_absolute-center slds-modal slds-fade-in-open">
+            <div class="slds-modal__container modalStyle">
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_10-of-12"><img src="{!$Resource.SolarLoan + '/img/darkblueinfo.png'}" style="height:30px"/>
+                    </div>
+                    <div class="slds-col slds-size_2-of-12 slds-float_right" style="margin: auto;text-align: right;">
+                        <lightning:buttonIcon class="modalClose" variant="bare" size="large" iconName="utility:close" onclick="{!c.handleModal}"/>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_12-of-12">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_6-of-12" style="margin-left: -5px; margin-top: 10px;">
+                            <img src="{!$Resource.SolarLoan + '/img/illionLogo.png'}" style="width:12rem;"/>
+                        </div>
+                        <h2 class="pargraph-bold-style">It is a requirements of the lender
+                            that you provide your transaction information via BankStatements.</h2>
+                        <div class="para-style">
+                            <div>You are right to be concerned about your data. BankStatements uses bank-level
+                                security to keep you safe.</div>
+                        </div>
+                    </div>
+                    <!--<div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_-of-12 show-down">
+                    <img style="height: 3rem;" src="{!$Resource.SolarLoan + '/img/illionLogo.png'}"/>
+                </div>-->
+                </div>
+                
+                <div class=" slds-grid slds-wrap pargraph-style">
+                    <div class="slds-col slds-size_1-of-6 security-img" >
+                        <img src="{!$Resource.SolarLoan + '/img/security.png'}" class="securityImg"/>
+                    </div>
+                    <div class="slds-col slds-size_5-of-6" style="font-size: 16px;line-height: initial;font-weight: 400;">
+                        <table>
+                            <tr>
+                                <td class="statement-img"><img  src="{!$Resource.SolarLoan + '/img/checkmark.png'}"/></td>
+                                <td class="descCss">They never store online banking credentials</td>
+                            </tr>
+                            <tr>
+                                <td class="statement-img"><img  src="{!$Resource.SolarLoan + '/img/checkmark.png'}"/></td>
+                                <td class="descCss">Data is encrypted with bank level 256-bit encryption</td>
+                            </tr>
+                            <tr>
+                                <td class="statement-img"><img  src="{!$Resource.SolarLoan + '/img/checkmark.png'}"/></td>
+                                <td class="descCss">Secured by 2048-bit keys</td>
+                            </tr>
+                            <tr>
+                                <td class="statement-img"><img  src="{!$Resource.SolarLoan + '/img/checkmark.png'}"/></td>
+                                <td class="descCss">Independently tested and audited by external security experts</td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
+                <div class="slds-align_absolute-center">
+                    <lightning:button class="closeWindowBtn" iconName="" variant="brand" label="Close window" title="" onclick="{!c.handleModal}" />
+                </div>
             </div>
-            <div style="right: 0;position: absolute;" class="slds-p-around_x-small">
-                <lightning:icon iconName="utility:multi_picklist" variant="inverse" size="medium" />
-            </div>
-            <div class="slds-col slds-size_1-of-1 slds-text-align_center" style="font-size: 1.25rem;font-weight: 700;">
-                {!v.CategryName}
-            </div>
-            <div class="slds-col slds-size_1-of-1 slds-text-align_center" style="font-size: 1rem;font-weight: 100;">
-                {!v.docDescription}
-            </div>
-        </div>
-        <!--td Style="max-width:290px"-->
-        
-        <!--/td-->
-        <aura:set attribute="else">
-            <c:uploadFile PersonName="{!v.PersonName}" CategryName="{!v.CategryName}" label="Attachment" ishide="{!v.ishide}" recordId ="{!v.recordId}" isComplete="{!v.isComplete}" parentId="{!v.parentId}" sessionId="{!v.sessionId}" count="{!v.count}" />
-            
-            <aura:if isTrue="{!!v.isDelete}">
-                <aura:if isTrue="{!v.isComplete}">
-                    <div class="slds-grid slds-wrap slds-p-horizontal_small" style ="color: #FFF;">
-                        <div class="slds-col slds-size_10-of-12 " >
-                            {!v.Name}
+        </section>
+    </aura:if>
+    <aura:if isTrue="{!v.already}">        
+        <div class="slds-grid slds-wrap tileBlock" aura:id="mainCssCopy">
+            <div class="slds-col slds-size_11-of-12 slds-grid slds-wrap" style="padding:inherit">
+                <div class="mediaImg slds-align_absolute-center slds-col slds-size_1-of-12 slds-medium-size_1-of-12 slds-large-size_1-of-12" style="" onclick="{!IF(and(v.status == 'COMPLETE',v.bankBtn == 'yes'),c.handleClickBank,c.handleClick)}">
+                    <aura:if isTrue="{!v.isComplete}">
+                        <img src="{!$Resource.SolarLoan + '/img/Greentick.png'}" style="height:30px;"/>
+                    </aura:if>
+                    <aura:if isTrue="{!!v.isComplete}">
+                        <img src="{!$Resource.SolarLoan + '/img/yellowInfo.PNG'}" style="height:40px;"/>
+                    </aura:if>
+                </div>
+                <div class="slds-col slds-align_absolute-center slds-grid slds-grid_vertical slds-size_9-of-12 slds-medium-size_5-of-12 slds-large-size_5-of-12 txtArea" style="line-height: initial;" onclick="{!IF(and(v.status == 'COMPLETE',v.bankBtn == 'yes'),c.handleClickBank,c.handleClick)}">
+                    <div class="slds-col categoryName" >
+                        <aura:if isTrue="{!v.status == 'COMPLETE'}">
+                            <aura:if isTrue="{!v.bankBtn == 'yes'}">
+                                <aura:if isTrue="{!v.ishideFake}">
+                                    <b>{!v.CategryName}</b>
+                                    <aura:set attribute="else">
+                                        <b>{!v.category}</b>
+                                    </aura:set>
+                                </aura:if>
+                                <aura:set attribute="else">
+                                    <aura:if isTrue="{!v.ishide}">
+                                        <b>{!v.CategryName}</b>
+                                        <aura:set attribute="else">
+                                            <b>{!v.category}</b>
+                                        </aura:set>
+                                    </aura:if>
+                                </aura:set>
+                            </aura:if>
+							<aura:set attribute="else">
+                                    <aura:if isTrue="{!v.ishide}">
+                                        <b>{!v.CategryName}</b>
+                                        <aura:set attribute="else">
+                                            <b>{!v.category}</b>
+                                        </aura:set>
+                                    </aura:if>
+                                </aura:set>                            
+                        </aura:if>                                                
+                    </div>
+                    <div class="slds-col descriptionName">
+                        <aura:if isTrue="{!v.status == 'COMPLETE'}">
+                            <aura:if isTrue="{!v.bankBtn == 'yes'}">
+                                <aura:if isTrue="{!v.ishideFake}">
+                                    {!v.docDescription}
+                                    <aura:set attribute="else">
+                                        {!v.document}
+                                    </aura:set>
+                                </aura:if>
+                                <aura:set attribute="else">
+                                    <aura:if isTrue="{!v.ishide}">
+                                        {!v.docDescription}
+                                        <aura:set attribute="else">
+                                            {!v.document}
+                                        </aura:set>
+                                    </aura:if>
+                                </aura:set>
+                            </aura:if> 
+                            <aura:set attribute="else">
+                                    <aura:if isTrue="{!v.ishide}">
+                                        {!v.docDescription}
+                                        <aura:set attribute="else">
+                                            {!v.document}
+                                        </aura:set>
+                                    </aura:if>
+                                </aura:set>
+                        </aura:if>                                                
+                    </div>
+                </div>
+                
+                <aura:if isTrue="{!v.ishide}">
+                    <div class="slds-col slds-align_absolute-center slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-text-align_right showUploadHide">
+                        <aura:if isTrue="{!v.bankBtn == 'yes'}">
+                            <a href="{!v.bankRedirectURL}" style="text-decoration: none;"><lightning:button class="bankbutton" iconName="utility:lock" label="Submit your statements" iconPosition="left"  variant="brand"/></a>                            
+                            <aura:if isTrue="{!v.ishide}">
+                                <div class="slds-align_absolute-center" style="margin-left:20px"> 
+                                    <lightning:button variant="base" title="" onclick="{!c.showModal}"><img src="{!$Resource.SolarLoan + '/img/darkblueinfo.png'}" style="height:25px"/>Why is this required?</lightning:button>
+                                </div>
+                            </aura:if>
+                            <aura:set attribute="else">
+                                <aura:if isTrue="{!v.count != 0}">
+                                    <lightning:input  onchange="{!c.handleFilesChange}" 
+                                                     class="{!v.isComplete? 'myBtnStyle':'uploaderAdd'}" aura:id="uploaderCpy" type="file" multiple="false"/>
+                                    <aura:set attribute="else">
+                                        <lightning:input  onchange="{!c.handleFilesChange}" 
+                                                         class="{!v.isComplete? 'myBtnStyle':'uploaderCpy'}" aura:id="uploaderCpy" type="file" multiple="false"/>
+                                    </aura:set>
+                                </aura:if>
+                            </aura:set>
+                        </aura:if>
+                    </div>
+                    <aura:set attribute="else">
+                        <aura:if isTrue="{!v.ishideFake}">
+                            <aura:if isTrue="{!v.status == 'COMPLETE'}">
+                                <div class="slds-col slds-align_absolute-center slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-text-align_right showUploadHide">
+                                    <aura:if isTrue="{!v.bankBtn == 'yes'}">
+                                        <aura:if isTrue="{!v.bankSuccess}">
+                                            <lightning:button class="bankSuccess" iconName="" disabled="{!v.status == 'COMPLETE'}" label="" iconPosition="left"  variant="brand" onclick="{}"><img src="{!$Resource.SolarLoan + '/img/Greentick.png'}" style="height:30px;"/>&nbsp;&nbsp;Bank Data Submitted</lightning:button>                            
+                                            <aura:set attribute="else">
+                                                <a href="{!v.bankRedirectURL}" style="text-decoration: none;"><lightning:button class="bankbutton" iconName="utility:lock" label="Submit your statements" iconPosition="left"  variant="brand"/></a>                            
+                                            </aura:set>
+                                        </aura:if>
+                                            <aura:if isTrue="{!v.ishideFake}">
+                                            <div class="slds-align_absolute-center" style="margin-left:20px"> 
+                                                <lightning:button variant="base" title="" onclick="{!c.showModal}"><img src="{!$Resource.SolarLoan + '/img/darkblueinfo.png'}" style="height:25px"/>Why is this required?</lightning:button>
+                                            </div>
+                                        </aura:if>
+                                    </aura:if>
+                                </div>
+                            </aura:if>
+                        </aura:if>
+                    </aura:set>
+                </aura:if>
+                <div class="slds-col slds-align_absolute-center slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-text-align_right showUploadHideCpy">
+                    <aura:if isTrue="{!v.bankBtn == 'yes'}">
+                        <aura:if isTrue="{!v.status == 'COMPLETE'}">
+                            <lightning:button class="bankSuccess" iconName="" disabled="{!v.status == 'COMPLETE'}" label="" iconPosition="left"  variant="brand" onclick="{}"><img src="{!$Resource.SolarLoan + '/img/Greentick.png'}" style="height:30px;"/>&nbsp;&nbsp;Bank Data Submitted</lightning:button>           
+                            <aura:set attribute="else">
+                                <a href="{!v.bankRedirectURL}" style="text-decoration: none;"><lightning:button class="bankbutton" iconName="utility:lock" label="Submit your statements" iconPosition="left"  variant="brand"/></a><br/>
+                            </aura:set>
+                        </aura:if>
+                        <aura:set attribute="else">
+                            <aura:if isTrue="{!v.count != 0}">
+                                <lightning:input  onchange="{!c.handleFilesChange}" 
+                                                 class="{!v.isComplete? 'myBtnStyle':'uploaderAdd'}" aura:id="uploader" type="file" multiple="false"/>
+                                <aura:set attribute="else">                                    
+                                    <lightning:input  onchange="{!c.handleFilesChange}" 
+                                                     class="{!v.isComplete? 'myBtnStyle':'uploader'}" aura:id="uploader" type="file" multiple="false"/>
+                                </aura:set>
+                            </aura:if>
+                        </aura:set>
+                    </aura:if>
+                </div> 
+            </div>  
+            <aura:if isTrue="{!v.bankBtn == 'yes'}">
+                <aura:if isTrue="{!v.status == 'COMPLETE'}">
+                    <div class="slds-col slds-size_1-of-12 slds-align_absolute-center">
+                        <aura:if isTrue="{!!v.ishideFake}">
+                            <lightning:buttonIcon iconName="utility:chevronright"  size="large" onclick="{!c.handleClickBank}" class="upRight" variant="bare"/>
+                        </aura:if>
+                        <aura:if isTrue="{!v.ishideFake}">
+                            <lightning:buttonIcon iconName="utility:chevrondown"  size="large" onclick="{!c.handleClickDownBank}" class="{!v.bankBtn == 'yes'? 'upDown':'upDownBank'}" variant="bare"/>
+                        </aura:if>
+                    </div>
+                    <aura:set attribute="else"> 
+                        <div class="slds-col slds-size_1-of-12 slds-align_absolute-center">
+                            <aura:if isTrue="{!!v.ishide}">
+                                <lightning:buttonIcon iconName="utility:chevronright"  size="large" onclick="{!c.handleClick}" class="upRight" variant="bare"/>
+                            </aura:if>
+                            <aura:if isTrue="{!v.ishide}">
+                                <lightning:buttonIcon iconName="utility:chevrondown"  size="large" onclick="{!c.handleClickDown}" class="{!v.bankBtn == 'yes'? 'upDown':'upDownBank'}" variant="bare"/>
+                            </aura:if>
                         </div>
-                        <div class="slds-col slds-size_2-of-12 " style="justify-content: end;display: flex;">
-                            <div class="completedcheck">
-                                <lightning:icon iconName="utility:check" variant="inverse" size="xx-small"/> 
+                    </aura:set>
+                </aura:if> 
+                <aura:set attribute="else"> 
+                    <div class="slds-col slds-size_1-of-12 slds-align_absolute-center">
+                        <aura:if isTrue="{!!v.ishide}">
+                            <lightning:buttonIcon iconName="utility:chevronright"  size="large" onclick="{!c.handleClick}" class="upRight" variant="bare"/>
+                        </aura:if>
+                        <aura:if isTrue="{!v.ishide}">
+                            <lightning:buttonIcon iconName="utility:chevrondown"  size="large" onclick="{!c.handleClickDown}" class="{!v.bankBtn == 'yes'? 'upDown':'upDownBank'}" variant="bare"/>
+                        </aura:if>
+                    </div>
+                </aura:set>
+            </aura:if>
+            
+            <aura:if isTrue="{!v.bankBtn == 'yes'}">
+                <aura:if isTrue="{!v.status == 'COMPLETE'}">
+                    <aura:if isTrue="{!v.ishideFake}">
+                        <div class="reqButtonMob showUploadHideCpy">
+                            <lightning:button variant="base" title="" onclick="{!c.showModal}">
+                                <img src="{!$Resource.SolarLoan + '/img/darkblueinfo.png'}" style="height:25px"/>Why is this required?
+                            </lightning:button>
+                        </div>
+                    </aura:if>
+                </aura:if>                
+                <aura:if isTrue="{!v.ishide}">                           
+                    <div class="reqButtonMob showUploadHideCpy">
+                        <lightning:button variant="base" title="" onclick="{!c.showModal}">
+                            <img src="{!$Resource.SolarLoan + '/img/darkblueinfo.png'}" style="height:25px"/>Why is this required?
+                        </lightning:button>
+                    </div>
+                </aura:if>
+            </aura:if>
+        </div>
+    </aura:if>    
+    
+    <aura:if isTrue="{!v.openFake}">     
+        <aura:if isTrue="{!v.bankBtn == 'yes'}">
+            <aura:if isTrue="{!v.status == 'COMPLETE'}">      
+                <div class="slds-size_1-of-1 desktopView" style="{!v.ishideFake? 'margin-top: 20px;':'display:none'}">
+                    <div class="slds-grid slds-wrap slds-size_12-of-12 slds-align_absolute-center" style="">
+                        <div class="slds-col slds-size_1-of-12 slds-medium-size_1-of-12 slds-large-size_1-of-12 slds-align_absolute-center" style="width: auto;">
+                            <img src="{!$Resource.SolarLoan + '/img/fileicon.png'}" style="height:40px;"/>
+                        </div>
+                        <div class="slds-col slds-size_8-of-12 slds-medium-size_4-of-12 slds-large-size_5-of-12 descStyle">
+                            <b style="font-size:15px;">Bank Link Successful</b>
+                        </div>
+                        <div class="slds-col slds-size_1-of-12 slds-medium-size_1-of-12 slds-large-size_1-of-12 slds-align_absolute-center">
+                            <img src="{!$Resource.SolarLoan + '/img/tickgreen.png'}" class="greentickBank"/>
+                        </div>                    
+                        <div class="slds-col slds-size_11-of-12 slds-medium-size_5-of-12 slds-large-size_5-of-12" style="">
+                            <div class="slds-text-body_small slds-text-color_error slds-align_absolute-center">
+                                <meter class="meterStyleBank" value="100"/>
+                            </div>
+                        </div>
+                    </div>                    
+                    <!--<div class="slds-m-around_xx-small slds-align_absolute-center" style="margin-top : 25px;" >
+                        <lightning:button  class="save-btn saveFont"  variant="success" label="Save and Close" title=""  onclick="{!c.handleSaveClose}" /><br/><br/>
+                    </div>-->
+                </div>
+                <div class="slds-grid slds-wrap mobileView" style="{!v.ishideFake? '':'display:none'}">
+                    <div class="slds-col slds-size_1-of-12 slds-medium-size_1-of-12 slds-large-size_1-of-12 slds-align_absolute-center" style="width: auto;">
+                        <img src="{!$Resource.SolarLoan + '/img/fileicon.png'}" style="height:36px;margin-left: 4px;"/>
+                    </div>
+                    <div class="slds-grid slds-grid_vertical slds-col" style="margin-left:8px;margin-top: auto;">
+                        <div class="slds-col  slds-size_3-of-12 slds-medium-size_4-of-12 slds-large-size_4-of-12" style="width:auto">
+                            <b style="font-size:15px;">Bank Link Successful</b>
+                        </div>
+                        <div class="slds-col slds-size_6-of-12 slds-medium-size_5-of-12 slds-large-size_5-of-12">
+                            <div class="slds-text-body_small slds-text-color_error">
+                                <meter class="" style="width:275%;height:13px" value="100"/>
                             </div>
                         </div>
                     </div>
-                </aura:if>
-                <div class="slds-col slds-size_1-of-1" style="{!v.ishide? '':'display:none'}">
-                    <div class="slds-p-around_x-small slds-m-around_x-small" style="background: #0555cb;border-color: #0346a7;border-radius: 5px;">
-                        <div style="position: relative;">
-                            <lightning:input name="input2" class="inputSize slds-p-top_x-small" label="Document Name" placeholder="Document Name" value="{!v.Name}" onblur="{!c.updateName}" />
-                            <div class="processing-icon-style">
-                                <aura:if isTrue="{!v.isUploading}">
-                                        <img src="{!$Resource.SolarLoan + '/img/dualring.gif'}" class="spinner-img" alt="Loading"/>
-                                    <aura:set attribute="else">
-                                        <div class="completedcheck greenicon">
-                                            <lightning:icon iconName="utility:check" variant="inverse" size="xx-small"/> 
-                                        </div>
-                                    </aura:set>
-                                </aura:if>
-
+                    <div class="slds-col slds-size_3-of-12 slds-medium-size_1-of-12 slds-large-size_1-of-12">
+                        <img src="{!$Resource.SolarLoan + '/img/tickgreen.png'}" class="" style="position: relative;left: -15px;height: 2rem;bottom:8px"/>
+                    </div>
+                    <!--<div class="slds-m-around_xx-small slds-align_absolute-center " style="margin-top : 25px;width: -webkit-fill-available;" >
+                        <lightning:button  class="save-btn saveFont"  variant="success" label="Save and Close" title=""  onclick="{!c.handleSaveClose}" /><br/><br/>
+                    </div>-->
+                </div> 
+            </aura:if>
+        </aura:if>
+    </aura:if>
+            
+    <aura:if isTrue="{!v.isOpen}">
+        <c:uploadFile isUploading="{!v.isUploading}" isDisabled="{!v.isDisabled}" PersonName="{!v.PersonName}" changeCss="{!v.changeCss}" docDescription="{!v.docDescription}" CategryName="{!v.CategryName}" label="Attachment" ishide="{!v.ishide}" recordId ="{!v.recordId}" isComplete="{!v.isComplete}" parentId="{!v.parentId}" sessionId="{!v.sessionId}" count="{!v.count}" />        
+        
+        <aura:if isTrue="{!v.Name != null}">
+            <div class="slds-size_1-of-1 desktopView" style="{!v.ishide? '':'display:none'}">
+                <div class="docStyle slds-m-around_xx-small" style="margin-top:28px">
+                    <div class="slds-grid slds-wrap slds-size_12-of-12 slds-align_absolute-center" style="">
+                        <div class="slds-col slds-size_1-of-12 slds-medium-size_1-of-12 slds-large-size_1-of-12 slds-align_absolute-center" style="width: auto;">
+                            <img src="{!$Resource.SolarLoan + '/img/fileicon.png'}" style="height:40px;"/>
+                        </div>
+                        <div class="slds-col slds-size_8-of-12 slds-medium-size_4-of-12 slds-large-size_4-of-12 descStyle">
+                            <b style="font-size:15px;">{!v.Name}</b>
+                        </div>
+                        <aura:if isTrue="{!v.upload}">
+                            <div class="slds-col slds-size_1-of-12 slds-medium-size_1-of-12 slds-large-size_1-of-12 slds-align_absolute-center">
+                                <img src="{!$Resource.SolarLoan + '/img/tickgreen.png'}" class="greentick"/>
                             </div>
-                        </div> 
-                        <div class="slds-p-vertical_xx-small" >
+                        </aura:if>
+                        
+                        <div class="slds-col slds-size_11-of-12 slds-medium-size_5-of-12 slds-large-size_5-of-12" style="">
                             <aura:if isTrue="{!v.isUploading}">
-                                <div class="slds-text-body_small slds-text-color_error">
-                                    <meter style="width: 100%;" value="{!v.percent / 100}"/>
+                                <div class="slds-text-body_small slds-text-color_error slds-align_absolute-center">
+                                    <meter class="meterStyle" value="{!v.percent / 100}"/>
                                 </div>
                                 <aura:set attribute="else">
                                     <aura:if isTrue="{!v.upload}">
-                                        <meter style="width: 100%;" value="{!v.percent/100}"/>
+                                        <meter class="meterStyle slds-align_absolute-center" value="{!v.percent/100}"/>
                                     </aura:if>
                                 </aura:set>
                             </aura:if>
                         </div>
-                        
-                        <div class="slds-text-align_right">
-                            <lightning:button value="{!v.AttachId}" variant="natural" label="Add note" disabled="{!!v.upload}" iconName="utility:note" onclick="{!c.addNote}" title="Add Note"/>
-                            <lightning:button value="{!v.AttachId}" variant="natural" label="Delete" disabled="{!!v.upload}" iconName="utility:delete" onclick="{!c.onDelete}" title="Remove File"/>
-                            <c:priviewCmp id="{!v.AttachId}" isDisabled="{!v.upload}" contentBodyId="{!v.contentBodyId}" />
+                        <div class="slds-col slds-size_1-of-12 slds-medium-size_1-of-12 slds-large-size_1-of-12 slds-align_absolute-center">
+                            <lightning:buttonIcon iconName="utility:close" size="large" value="{!v.AttachId}" disabled="{!!v.upload}" class="{!!v.upload? 'crossBtnDisabled':'crossBtn'}" onclick="{!c.onDelete}" variant="bare"/>
                         </div>
-                        <aura:if isTrue="{!v.isAddNote}">
-                            <div>
-                                <lightning:textarea name="myTextArea" placeholder="Add a note(optional)"
-                                                    value="{!v.Description}"
-                                                    maxlength="300" onblur="{!c.updateName}" />
+                    </div> 
+                </div>
+            </div>
+            
+            <div class="slds-grid slds-wrap mobileView" style="{!v.ishide? '':'display:none'}">
+                <div class="slds-col slds-size_1-of-12 slds-medium-size_1-of-12 slds-large-size_1-of-12 slds-align_absolute-center" style="width: auto;">
+                    <img src="{!$Resource.SolarLoan + '/img/fileicon.png'}" style="height:36px;margin-left: 4px;"/>
+                </div>
+                <div class="slds-grid slds-grid_vertical slds-col" style="margin-left:8px;margin-top:auto;">
+                    <div class="slds-col  slds-size_3-of-12 slds-medium-size_4-of-12 slds-large-size_4-of-12" style="width:auto">
+                        <b style="font-size:15px;">{!v.Name}</b>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12 slds-medium-size_5-of-12 slds-large-size_5-of-12">
+                        <aura:if isTrue="{!v.isUploading}">
+                            <div class="slds-text-body_small slds-text-color_error">
+                                <meter class="" style="width:217%;height:13px" value="{!v.percent / 100}"/>
                             </div>
+                            <aura:set attribute="else">
+                                <aura:if isTrue="{!v.upload}">
+                                    <meter class="" style="width:242%;height:13px" value="{!v.percent/100}"/>
+                                </aura:if>
+                            </aura:set>
                         </aura:if>
                     </div>
                 </div>
-            </aura:if>
-        </aura:set>
+                <aura:if isTrue="{!v.upload}">
+                    <div class="slds-col slds-size_1-of-12 slds-medium-size_1-of-12 slds-large-size_1-of-12">
+                        <img src="{!$Resource.SolarLoan + '/img/tickgreen.png'}" class="" style="position: relative;left: -15px;height: 2rem;width: 100%;bottom:8px"/>
+                    </div>
+                </aura:if>
+                <div class="slds-col slds-size_1-of-12 slds-medium-size_1-of-12 slds-large-size_1-of-12 slds-align_absolute-center">
+                    <lightning:buttonIcon iconName="utility:close" size="large" value="{!v.AttachId}" disabled="{!!v.upload}" class="{!!v.upload? 'crossBtnDisabled':'crossBtnCpy'}" onclick="{!c.onDelete}" variant="bare"/>                    
+                </div>
+            </div> 
+        </aura:if>
     </aura:if>
 </aura:component>

@@ -1,18 +1,30 @@
 ({
-	doInit: function(component, event, helper) {
+    handleComponentEvent : function(component, event, helper) {
+        var valueFromChild = event.getParam("disable");
+        component.set("v.isDisabled", valueFromChild);
+        component.set("v.sendMail",false);
+    },
+    
+	doInit: function(component, event, helper) {         
          jQuery("document").ready(function(){
              console.log('jQuery Uploaded');
          });
         helper.toggleSpinner(component, event);
         console.log('toggle');
+        if(component.get("v.status") == 'COMPLETE'){
+            component.set("v.sendMail",false);
+            component.set("v.isDisabled",false);
+        }
         var mgRef = component.get('v.mgRef');
         if(mgRef != null && mgRef.length > 0){
             helper.getOppId(component);
         }else{
         	helper.getContact(component);    
         }
+        helper.getUserId(component);
         console.log('contact');
         helper.scrollTop(component, event, 0);
+        helper.DocumentStatusUpdate(component, event);
         window.setTimeout(
             $A.getCallback(function() {
                 var items = component.get("v.OrignalRecord");
@@ -25,9 +37,33 @@
         );
         
     },
+    
+    finishLaterEmail : function(cmp, event, helper) {
+        var recId = cmp.get("v.recordId");
+        helper.toggleSpinner(cmp, event);
+        var action = cmp.get('c.finishLater');
+        action.setParams({
+            recId : recId
+        });
+        action.setCallback(this, function(response){
+            var state = response.getState();
+            if(state == 'SUCCESS'){
+                cmp.set("v.sendMail",false);
+                cmp.set("v.showDialog",true);
+                window.setTimeout(
+                    $A.getCallback(function() {
+                            cmp.set("v.showDialog",false);
+                    }), 3000
+                );
+            }
+            helper.toggleSpinner(cmp, event);
+        });
+        $A.enqueueAction(action);        
+    },
+    
     handleBankAccount : function(cmp, event, helper) {
         helper.toggleSpinner(cmp, event);
-        helper.scrollTop(cmp, event, 0);
+        helper.scrollTop(cmp, event, 0);       
         var action = cmp.get('c.getBankStmtUrl');
         action.setParams({
             oppId : cmp.get("v.recordId")
@@ -65,7 +101,7 @@
                         ++count;
             }
         }
-        console.log(count);
+        console.log("count======",count);
         console.log(toCompleatList);
         cmp.set("v.OrignalRecord",result);
         var action = cmp.get('c.sendMail');

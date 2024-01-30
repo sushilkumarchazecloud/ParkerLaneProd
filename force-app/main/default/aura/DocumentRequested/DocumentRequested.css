@@ -4,13 +4,13 @@
 } 
 .THIS .slds-table td {
     white-space: normal;
+    line-height: initial;
 }
 
 .THIS .slds-file-selector_files .slds-file-selector__text{
     display : none;
     visibility: hidden;
 }
-
 .THIS .greyBTN{
     background : grey;
     color : white;

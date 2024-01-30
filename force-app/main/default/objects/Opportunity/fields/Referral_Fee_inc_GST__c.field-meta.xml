@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Referral_Fee_inc_GST__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( ISPICKVAL(RF_Type__c  , &apos;Percentage of Revenue&apos;) ,  Total_Revenue__c *  RF_Rate_inc_GST__c ,
+IF(ISPICKVAL(RF_Type__c  , &apos;Percentage of Loan Amount&apos;),  Loan_Amount__c *  RF_Rate_inc_GST__c, IF(ISPICKVAL(RF_Type__c  , &apos;Amount&apos;), RF_Rate_inc_GST__c , 0)))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Referral Fee inc GST</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

@@ -563,6 +563,52 @@
                 }
                 
                 
+                <!--Errors Pages-->
+                .ButtonStyle1 button{ 
+                width : 100%;
+                height: 65px;
+                font-size: 17px;
+                font-weight : 600;
+                background : transparent;
+                color : #0176d3;
+                border : 2px solid #0176d3;
+                border-radius : 7px;
+                }
+                .ButtonStyle2 button{
+                background : #45c65a;
+                border : none;
+                color : #ffffff;
+                width : 100%;
+                height: 65px;
+                font-size: 17px;
+                font-weight : 600;
+                border-radius : 7px;
+                }
+                .thirdBtn button{
+                background: white;
+                border-color: DodgerBlue;
+                color: DodgerBlue;
+                margin-bottom: 15px;
+                border-radius: 5px;
+                font-size: 17px;
+                font-weight: bold;
+                width : 100%;
+                height: 64px;
+                outline : none;
+                }                            
+                .logoforEror{
+                background-color: #1a2745;
+                color: #fff;
+                align-items: center;
+                width : 100%;
+                height : 50px;
+                }
+                .logoforEror img{
+                width: 190px;
+                padding: 15px 22px;
+                height: 27px;
+                }
+                <!--Errors Pages-->
             </style>
         </head>
         <body onload="defaultHIde()" id="dataBody" >
@@ -575,6 +621,10 @@
                         </div>
                     </div>
                 </div>
+                <apex:actionFunction name="updateStages" action="{!updateVOIStages}" reRender="none">
+                    <apex:param name="stage" value=""/>
+                </apex:actionFunction>
+                <apex:actionFunction name="mailSendToUs" action="{!SendMailtoUs}" reRender="none" oncomplete="stopSpinner();"/>
                 <apex:actionFunction name="jsActionFunction" action="{!securecode}" reRender="none">
                     <apex:param name="vfParam" value="" assignTo="{!SecureCodeOriginal}" />
                 </apex:actionFunction>
@@ -613,7 +663,7 @@
                 <apex:actionFunction name="addLog" action="{!generateLog}" reRender="none">
                     <apex:param name="startTime" value=""/>
                     <apex:param name="endTime" value=""/>
-               		<apex:param name="message" value=""/>
+                    <apex:param name="message" value=""/>
                 </apex:actionFunction>
                 <apex:actionFunction name="sendVideoSS" action="{!videoSS}" reRender="none">
                     <apex:param name="Video_SS" value=""/>
@@ -691,7 +741,7 @@
                                 </div>
                             </div>
                             <div class="slds-text-align_center slds-col slds-size_1-of-1 slds-medium-size_6-of-6 slds-large-size_6-of-6 slds-order_2 slds-medium-order_2 slds-large-order_2">
-                                <div class="slds-box box1" style="border-radius : 6px">
+                                <div class="slds-box box1" style="border-radius : 6px" onclick="checkIsEnableFirst();">
                                     <div class="slds-grid">
                                         <div class="slds-col slds-size_3-of-12" align="left">
                                             <span class="fron-Icon"><img src="{!$Resource.Front_Panle_Icons + '/photo.png'}" style="height:33px; width : 52px"/></span>
@@ -710,11 +760,14 @@
                                             <div id="icon3">
                                                 <span class="icon3"><img src="{!$Resource.VOI_Icons + '/greencircle.png'}" /></span>        
                                             </div>
+                                            <div id="icon4">
+                                                <span><img src="{!$Resource.VOI_Icons + '/cross.png'}" style="width : 35px;"/></span>        
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <!--Panel 2 start-->
-                                <div class="slds-box box2" style="border-radius : 6px">
+                                <div class="slds-box box2" style="border-radius : 6px" onclick="checkIsEnableSec();">
                                     <div class="slds-grid">
                                         <div class="slds-col slds-size_3-of-12" align="left">
                                             <span><img src="{!$Resource.Front_Panle_Icons + '/video.png'}" style="height:45px; width : 57px"/></span>
@@ -733,11 +786,14 @@
                                             <div id="icon1-3">
                                                 <span class="icon3"><img src="{!$Resource.VOI_Icons + '/greencircle.png'}" /></span>        
                                             </div>
+                                            <div id="icon1-4">
+                                                <span><img src="{!$Resource.VOI_Icons + '/cross.png'}" style="width : 35px;"/></span>        
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <!--Panel 3 start-->
-                                <div class="slds-box box3" style="border-radius : 6px">
+                                <div class="slds-box box3" style="border-radius : 6px" onclick="checkIsEnableThird();">
                                     <div class="slds-grid">
                                         <div class="slds-col slds-size_3-of-12" align="left">
                                             <span class="fron-Icon"><img src="{!$Resource.Front_Panle_Icons + '/sign.png'}" style="height:38px; width : 56px"/></span>
@@ -755,6 +811,9 @@
                                             </div>
                                             <div id="icon2-3">
                                                 <span class="icon3"><img src="{!$Resource.VOI_Icons + '/greencircle.png'}" /></span>        
+                                            </div>
+                                            <div id="icon2-4">
+                                                <span><img src="{!$Resource.VOI_Icons + '/cross.png'}" style="width : 35px;"/></span>        
                                             </div>
                                         </div>
                                     </div>
@@ -846,13 +905,13 @@
                                 </div>
                                 <div class="slds-col slds-size_3-of-6 confirm">
                                     <button type="button" onclick="confirmForFrontDL()">Yes</button>
-                                </div><br/><br/>
+                                </div>
                             </div>
                         </div>
                     </article>
                 </div>
                 <!--DL FRONT SECTION ENDS -->
-                	
+                    
                 <!--DL BACK SECTION STARTS-->
                 <div class="card2" id="pb2A">
                     <article class="slds-card">
@@ -1019,7 +1078,7 @@
                 
                 <!--SECTION ONE-->
                 <div>
-                	<apex:pageBlock id="pbreadsign">
+                    <apex:pageBlock id="pbreadsign">
                     <div id="ReadSign1">
                         <article class="slds-card">
                             <div class="slds-card__body slds-card__body_inner">
@@ -1382,7 +1441,7 @@
                                                         <p>Email:info@afca.org.au</p>
                                                         <p>Website:www.afca.org.au</p>
                                                         <p>
-                                                            Mail:      	Australian Financial Complaints Authority, GPO Box 3, Melbourne VIC 3001
+                                                            Mail:       Australian Financial Complaints Authority, GPO Box 3, Melbourne VIC 3001
                                                             Time limits may apply to complain to AFCA and so you should act promptly or otherwise consult the AFCA website to find out if or when the time limit relevant to your circumstances expires.
                                                         </p><br/>
                                                         <p><b>Things you should know</b></p>
@@ -1532,7 +1591,7 @@
                                         <span><center>To sign use your finger in the signature panel below then click finish.</center></span>
                                     </div><br/>
                                     <div>
-                                        <p><b>Signed by: </b>{!opportunity.Applicant_1__r.Name}</p>
+                                        <p><b>Signed by: </b>{!contact.name}</p>
                                     </div><br/><br/>
                                 </div>
                                 <div class="slds-text-align_left slds-col slds-size_1-of-1 slds-medium-size_6-of-6 slds-large-size_6-of-6 slds-order_2 slds-medium-order_2 slds-large-order_2">
@@ -1558,11 +1617,11 @@
                     </div>
                     
                 </apex:pageBlock>
-                	<!--SECTION ONE-->
+                    <!--SECTION ONE-->
                 
-                	<!--SECTION TWO-->
-               		<div id="ReadSign2" style="Display : {!if(opportunity.Lender__c == 'Transport Mutual Credit Union', 'Block', 'none')}">
-                    <article class="slds-card">	
+                    <!--SECTION TWO-->
+                    <div id="ReadSign2" style="Display : {!if(opportunity.Lender__c == 'Transport Mutual Credit Union', 'Block', 'none')}">
+                    <article class="slds-card"> 
                         <div class="slds-card__body slds-card__body_inner">
                             <br/>
                             <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-6 slds-large-size_6-of-6 slds-order_2 slds-medium-order_2 slds-large-order_2">
@@ -1743,7 +1802,7 @@
                                     <p>To sign use your finger in the signature panel below then click finish.</p>
                                 </div><br/>
                                 <div style="text-align : left">
-                                    <p>Signed by: <b>{!opportunity.Applicant_1__r.Name}</b></p>
+                                    <p>Signed by: <b>{!contact.name}</b></p>
                                     <h1></h1>
                                 </div><br/><br/>
                                 <div>
@@ -1763,9 +1822,9 @@
                         </div>
                     </article>
                 </div>
-                	<!--SECTION TWO-->
+                    <!--SECTION TWO-->
                 
-                	<!--READ AND SIGN SECTION ENDS-->
+                    <!--READ AND SIGN SECTION ENDS-->
                 </div>
             </apex:form>
             <div style="display : {!IF(redirectToError == true, 'Block', 'none')}">
@@ -1958,22 +2017,275 @@
                     </div>
                 </article>
             </div>
-        	<!--for sending only E-sign or VOI-->
+            <!--for sending only E-sign or VOI-->
             <div>
                 <canvas id="output" style="overflow:none; width : 100% !important; height : auto;"></canvas>
             </div>
+            <!--Error Section-->
+            <div style="color : #1a2745;">
+                <div id="mainErDiv">
+                    <div class="slds-media__figure logo" align="center">
+                        <span><img src="{!$Resource.New_PL_Logo}" /></span>
+                    </div>
+                    <div style="text-align:center; margin-top : 40px;" >
+                        <img src="{!$Resource.SolarLoan + '/img/Oopss.png'}" height="auto" width="19%" />
+                    </div>
+                    <div style="font-family: ProximaNova-AltBold !important; text-align:center;font-size: 35px; margin-top : 3px;">
+                        <span>Oops</span>
+                    </div>
+                    <div style="text-align:center;font-size:20px; margin-top : 10px;">
+                        <span><b>
+                            You have denied access to your <br/>
+                            camera or microphone.</b>
+                        </span>
+                    </div>
+                    <div style="text-align:center;font-size:18px;">
+                        <p>
+                            Follow the steps blow then return to <br/>
+                            this page and tap <span style="font-weight: bold; font-size : 16px;"> Try Again</span>
+                        </p>
+                    </div>
+                    <br/><br/>
+                    <div style="text-align:center;font-size:20px;">
+                        <div align="center">
+                            <span>
+                                <img src="{!$Resource.SolarLoan + '/img/Chrome.jpg'}" height="auto" width="10%"/>
+                                <a href="" style="color:DodgerBlue;text-decoration:underline;font-weight:bold;" onclick="goToChrome();"> Chrome(Android)</a>
+                            </span>
+                        </div>
+                        <div style="margin-top : 30px;" align="center">
+                            <span>
+                                <img src="{!$Resource.SolarLoan + '/img/safari.png'}" height="auto" width="12%" style="position : relative; right : 5px;"/>
+                                <a href="" style="color:DodgerBlue;text-decoration:underline;font-weight:bold;" onclick="goToSafari();"> Safari(iPhone)</a>
+                            </span>
+                        </div>
+                        <div style="margin-top : 25px;" align="center">
+                            <span>
+                                <img src="{!$Resource.SolarLoan + '/img/Chrome.jpg'}" height="auto" width="10%"/>
+                                <a href="" style="color:DodgerBlue;text-decoration:underline;font-weight:bold;" onclick="goToIosChrome();"> Chrome(iPhone)</a>
+                            </span>
+                        </div>
+                    </div>
+                    <div align="center" style="margin-top : 30px; font-size : 18px;">
+                        <p>Already tried this? <a href="" style="color : rgb(3, 45, 96); font-size : 16px;" onclick="goForEsignAfterError();"><b><u>Click here</u></b></a><br/>to skip this step.</p>
+                    </div>
+                </div>
+                
+                <div id="secerDIv">
+                    <div class="slds-media__figure logo" align="center">
+                        <span><img src="{!$Resource.New_PL_Logo}" /></span>
+                    </div>
+                    <div style="margin-top : 3px; margin-left : 9px; margin-right : 9px;">                                              
+                        <div>
+                            <div id="chrome" style="text-align : center; font-size : 18px; margin-top : 35px;">
+                                <div>
+                                    <p style="margin : 10px;">
+                                        <img src="{!$Resource.SolarLoan + '/img/infosymbol.png'}" style="width : 50px;"/>
+                                        <b style="font-size : 32px;">&nbsp;Steps</b>
+                                    </p>
+                                </div>
+                                <div>
+                                    <div>
+                                        <img src="{!$Resource.VOI_Chrome_Gif+'/Chrome.gif'}" width="50%"/>
+                                    </div>
+                                </div>
+                                <div  style="text-align : left; margin-left : 35px; margin-top : 18px;">
+                                    <ol class="slds-list_ordered">
+                                        <li>
+                                            <p>&nbsp;&nbsp;&nbsp;Tap
+                                                <img src="{!$Resource.SolarLoan + '/img/lockIcon.png'}" style="width : 27px; position : relative; bottom : 3px;"/>
+                                                in the address bar.
+                                            </p>
+                                        </li>
+                                        <li style="margin-top : 2px;">&nbsp;&nbsp;&nbsp;Tap 
+                                            <img src="{!$Resource.SolarLoan + '/img/cogWh.png'}" style="width : 25px;"/> 
+                                            <b style="font-size : 17px;">Permissions.</b>
+                                        </li>
+                                        <li style="margin-top : 2px;">
+                                            <p>&nbsp;&nbsp;&nbsp;Set both the <b style="font-size : 17px;">Camera</b> and <br/><b style="font-size : 17px;">&nbsp;&nbsp;&nbsp;Microphone</b> to <b style="font-size : 17px;">On.</b></p>
+                                        </li>
+                                        <li style="margin-top : 2px;"><p>&nbsp;&nbsp;&nbsp;Return here and Tap <a href="" onclick="location.reload();"><b style="font-size : 17px;"><u>Try Again</u></b></a></p></li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="safari" style="text-align : center; font-size : 18px; margin-top : 30px;">
+                            <div>
+                                <p style="margin : 15px;">
+                                    <img src="{!$Resource.SolarLoan + '/img/infosymbol.png'}" style="width : 50px;"/>
+                                    <b style="font-size : 32px;">&nbsp;Steps</b>
+                                </p>
+                            </div>
+                            <div>
+                                <div>
+                                    <img src="{!$Resource.VOI_Safari_Gif+'/Safari.gif'}" width="50%"/>
+                                </div>
+                            </div>
+                            <div style="text-align : left; margin-left : 35px; margin-top : 18px;">
+                                <ol class="slds-list_ordered">
+                                    <li><p>&nbsp;&nbsp;&nbsp;Tap <b style="font-size : 15px;">A</b><b style="font-size : 22px;">A</b> in the address bar.</p></li>
+                                    <li style="margin-top : 2px;">&nbsp;&nbsp;&nbsp;Tap 
+                                        <img src="{!$Resource.SolarLoan + '/img/cogWh.png'}" style="width : 25px;"/> 
+                                        <b style="font-size : 17px;">Website Settings.</b>
+                                    </li>
+                                    <li style="margin-top : 2px;">
+                                        <p>&nbsp;&nbsp;&nbsp;Set both the <b style="font-size : 17px;">Camera</b> and <br/><b style="font-size : 17px;">&nbsp;&nbsp;&nbsp;Microphone</b> to <b style="font-size : 17px;">Ask.</b></p>
+                                    </li>
+                                    <li style="margin-top : 2px;"><p>&nbsp;&nbsp;&nbsp;Return here and Tap <a href="" onclick="location.reload();"><b style="font-size : 17px; color : #0176D3"><u>Try Again</u></b></a></p></li>
+                                </ol>
+                            </div>                                                                         
+                        </div>
+                        <div id="iosChrome" style="text-align : center; font-size : 18px; margin-top : 35px;">
+                            <div>
+                                <p style="margin : 10px;">
+                                    <img src="{!$Resource.SolarLoan + '/img/infosymbol.png'}" style="width : 50px;"/>
+                                    <b style="font-size : 32px;">&nbsp;Steps</b>
+                                </p>
+                            </div>
+                            <div>
+                                <div>
+                                    <img src="{!$Resource.VOI_IO_CHROM_GIF+'/ChromeIOS.gif'}" width="45%"/>
+                                </div>
+                            </div>
+                            <div  style="text-align : left; margin-left : 35px; margin-top : 18px;">
+                                <ol class="slds-list_ordered">
+                                    <li>
+                                        <p>&nbsp;&nbsp;&nbsp;Open the <img src="{!$Resource.SolarLoan + '/img/setting.png'}"  width="6%" /> <b style="font-size : 16px;">Setting</b> app.
+                                        </p>
+                                    </li>
+                                    <li style="margin-top : 2px;">&nbsp;&nbsp;&nbsp;Open <img src="{!$Resource.SolarLoan + '/img/Chrome.jpg'}"  width="6%" /> <b style="font-size : 16px;">Chrome.</b>
+                                    </li>
+                                    <li style="margin-top : 2px;">
+                                        <p>&nbsp;&nbsp;&nbsp;Ensure both <img src="{!$Resource.SolarLoan + '/img/camera.png'}"  width="6%" /> Camera and <br/>&nbsp;&nbsp;&nbsp;<img src="{!$Resource.SolarLoan + '/img/mike.png'}"  width="6%" /> Microphone are set to <b style="font-size : 16px;">on.</b> </p>
+                                    </li>
+                                    <li style="margin-top : 2px;"><p>&nbsp;&nbsp;&nbsp;Return here and Tap <a href="" onclick="location.reload();"><b style="font-size : 17px;"><u>Try Again</u></b></a></p></li>
+                                </ol>
+                            </div>
+                        </div>                       
+                    </div>
+                </div>
+                <div id="laseerDiv">
+                    <div class="slds-media__figure logo" align="center">
+                        <span><img src="{!$Resource.New_PL_Logo}" /></span>
+                    </div>
+                    <div style="margin-top : 15px; margin-left : 9px; margin-right : 9px; text-align:center;">
+                        <div>
+                            <br/><br/> <img src="{!$Resource.SolarLoan + '/img/Oopss.png'}" height="auto" width="20%" />
+                        </div>
+                        <div style="text-align: center;margin-top: 15px;font-size: 40px">
+                            <p><b>Still no luck?</b></p>
+                        </div>
+                        <div style="font-size : 19px;">
+                            <p style="margin-top : 12px;"><b>Changing you camera settings<br/> can be a pain in the neck!</b></p>
+                            <p style="margin-top : 12px;">Our team have been notify and<br/> will be back to you in next 6-8<br/> business hours to help.</p>
+                            <p style="margin-top : 12px;"><b>if you application is urgent, please <br/> call 1300 13 17 11.</b></p><br/>
+                            <p><b>Want to give it another go ?</b> Click <br/>below to go back to the instructions <br/>page.</p>
+                        </div>
+                        <div class="thirdBtn">
+                            <br/><button type="button" onclick="location.reload();">Go Back and Try Again.</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="relaxDiv">
+                    <div class="slds-media__figure logo" align="center">
+                        <span><img src="{!$Resource.New_PL_Logo}" /></span>
+                    </div>
+                    <div style="text-align:center; margin-top : 40px;" >
+                        <img src="{!$Resource.SolarLoan + '/img/Relax.png'}" height="auto" width="22%" />
+                    </div>
+                    <div align="center">
+                        <br/><p style="font-size : 35px;"><b>Relax!</b></p><br/>
+                    </div>
+                    <div align="center" style="font-size : 17px;">
+                        <p><b>Camera settings can be a pain.</b></p><br/>
+                    </div>
+                    <div align="center" style="font-size : 17px; line-height : 1.6;">
+                        <p>Our team have been notify that<br/>you hit a snag with your identity<br/>verification.</p>
+                        <p style="margin-top : 12px;">We will call you within in the next 8<br/>business hours to get it sorted.</p>
+                        <p style="margin-top : 12px;"><b>In the meantime our credit team<br/>will begin working on your<br/>application so time is not wasted.</b></p><br/><br/>
+                    </div>
+                    <div class="finishbtn" style="margin : 15px;">
+                        <a href="https://www.parkerlane.com.au/"><button type="button">Finish</button></a>
+                    </div>
+                </div>
+            </div>
+            <!--Error Section-->
+            
         </body>
     </html>
     <script>
+    function checkIsEnableFirst(){
+        var x = document.getElementById("icon2");
+        if (window.getComputedStyle(x).display === "block") {
+           startCameraForFrontDL();
+        }        
+    }
+    function checkIsEnableSec(){
+        var x = document.getElementById("icon1-2");
+        if (window.getComputedStyle(x).display === "block") {
+            onVideoSec();
+        }                
+    }
+    function checkIsEnableThird(){
+        var x = document.getElementById("icon2-2");
+        if (window.getComputedStyle(x).display === "block") {
+            ReadANDSign();
+        }                
+    }
     
+    var IsErrorOnVOI;
+    var whereError;
+    function goToIosChrome(){
+        document.getElementById("mainErDiv").style.display = 'none';
+        document.getElementById("secerDIv").style.display = 'block';
+        document.getElementById("safari").style.display = 'none';
+        document.getElementById("iosChrome").style.display = 'block';
+        document.getElementById("chrome").style.display = 'none';
+        
+    }
+    function goToChrome(){
+        document.getElementById("mainErDiv").style.display = 'none';
+        document.getElementById("secerDIv").style.display = 'block';
+        document.getElementById("safari").style.display = 'none';
+        document.getElementById("iosChrome").style.display = 'none';
+        document.getElementById("chrome").style.display = 'block';
+    }
+    function goToSafari(){
+        document.getElementById("mainErDiv").style.display = 'none';
+        document.getElementById("secerDIv").style.display = 'block';
+        document.getElementById("safari").style.display = 'block';
+        document.getElementById("iosChrome").style.display = 'none';
+        document.getElementById("chrome").style.display = 'none';
+    }
+    function goback(){
+        document.getElementById("mainErDiv").style.display = 'block';
+        document.getElementById("secerDIv").style.display = 'none';
+    }
+    /*Errors pages*/
     function stopSpinner(){
-    	document.getElementById("spin").style.display = 'none';
+        document.getElementById("spin").style.display = 'none';
     }
     
     function defaultHIde(){
+        // alert('name'+{!contact.Current_VOI_stage__c});
+        /*Errors pages*/
+        // alert("Your screen resolution is: " + window.screen.width * window.devicePixelRatio + "x" + window.screen.height * window.devicePixelRatio);
+        document.getElementById("mainErDiv").style.display = 'none';
+        document.getElementById("iosChrome").style.display = 'none';
+        document.getElementById("relaxDiv").style.display = 'none'; 
+        document.getElementById("secerDIv").style.display = 'none';
+        document.getElementById("laseerDiv").style.display = 'none';
+        document.getElementById("chrome").style.display = 'none';
+        document.getElementById("safari").style.display = 'none';
+        /*Errors pages*/
+        IsErrorOnVOI = false;
+        document.getElementById("icon4").style.display = 'none';    
+        document.getElementById("icon1-4").style.display = 'none';  
+        document.getElementById("icon2-4").style.display = 'none';  
         document.getElementById("output").style.display = 'none';
         document.getElementById("singleVOI").style.display = 'none';
         document.getElementById("spin").style.display = 'none';
+        
         document.getElementById("pb2").style.display = 'none';
         document.getElementById("pb3").style.display = 'none';
         document.getElementById("pb2A").style.display = 'none';
@@ -2022,16 +2334,79 @@
         document.querySelector('.box3').style.background = 'none';
         document.querySelector('.box3').style.background = '#fafafa';
         document.querySelector('.box3').style.border = '2px solid #EEEEEE';
-      	
-        if({!IF(contact.VOI_type__c == 'VOI',true,false)} ){
+        
+        if({!IF(contact.Current_VOI_stage__c == 'Video Section', true, false)}){
+            document.getElementById("pb3A").style.display = 'none';
+            document.getElementById("pb1").style.display = 'Block';
+            
+            document.getElementById("icon2").style.display = 'none';
+            document.getElementById("icon3").style.display = 'Block';
+            
+            document.querySelector('.box1').style.border = '2px solid #EEEEEE';
+            document.querySelector('.box1').style.boxShadow = 'none';
+            document.querySelector('.box1').style.background = 'none';
+            document.querySelector('.box1').style.background = '#fafafa';
+            
+            
+            document.querySelector('.box2').style.border = 'none';
+            document.querySelector('.box2').style.background = 'none';
+            document.querySelector('.box2').style.boxShadow = '5px 5px 5px 0px rgb(0 0 0 / 54%)';
+            document.querySelector('.box2').style.background = '#ffffff';    
+            
+            document.querySelector('.box3').style.boxShadow = 'none';
+            document.querySelector('.box3').style.background = 'none';
+            document.querySelector('.box3').style.background = '#fafafa';
+            document.querySelector('.box3').style.border = '2px solid #EEEEEE';
+            
+            document.getElementById("icon1-1").style.display = 'none';
+            document.getElementById("icon1-2").style.display = 'Block';
+            
+            document.getElementById("firstText").style.display = 'none';
+            document.getElementById("SecondText").style.display = 'block';
+            
+            document.getElementById("launchBtn").style.display = 'none';
+            document.getElementById("nextBtn").style.display = 'Block';
+        }
+        else if({!IF(contact.Current_VOI_stage__c == 'E-sign', true, false)}){
+            document.getElementById("pb1").style.display = 'Block';
+            document.getElementById("Vid3").style.display = 'none';
+            document.getElementById("launchBtn").style.display = 'none';
+            
+            document.getElementById("firstText").style.display = 'none';
+            document.getElementById("SecondText").style.display = 'none';
+            document.getElementById("ThirdText").style.display = 'Block';
+            
+            document.getElementById("icon2").style.display = 'none';
+            document.getElementById("icon3").style.display = 'Block';
+            
+            document.getElementById("icon1-1").style.display = 'None';
+            document.getElementById("icon1-2").style.display = 'None';
+            document.getElementById("icon1-3").style.display = 'Block';
+            document.getElementById("icon2-1").style.display = 'None'; 
+            document.getElementById("icon2-2").style.display = 'Block';
+            
+            document.querySelector('.box2').style.boxShadow = 'none';
+            document.querySelector('.box2').style.background = 'none';
+            document.querySelector('.box2').style.background = '#fafafa';
+            document.querySelector('.box2').style.border = '2px solid #eeeeee';
+            
+            document.querySelector('.box3').style.border = 'none';
+            document.querySelector('.box3').style.background = 'none';
+            document.querySelector('.box3').style.boxShadow = '5px 5px 5px 0px rgb(0 0 0 / 54%)';
+            document.querySelector('.box3').style.background = '#ffffff';    
+            
+            
+            document.getElementById("nextBtn").style.display = 'None';
+            document.getElementById("ReadSignBtn").style.display = 'Block';
+        }
+        
+        if({!IF(voiS.VOI_stage__c == 'VOI',true,false)} ){
             document.getElementById("icon2-1").style.display = 'none';
             document.getElementById("icon2-2").style.display = 'none';
             document.getElementById("icon2-3").style.display = 'Block';
         }
         
-        
-        
-        if({!IF(contact.VOI_type__c == 'E-SIGN',true,false)} ){
+        if({!IF(voiS.VOI_stage__c == 'E-SIGN',true,false)} ){
             document.getElementById("pb1").style.display = 'Block';
             document.getElementById("Vid3").style.display = 'none';
             document.getElementById("launchBtn").style.display = 'none';
@@ -2069,6 +2444,8 @@
         if({!IsApplicantTwo} != true){
             document.getElementById("applicantTwoTable").style.display = 'none';
         }
+        
+        updateStages('Home');
     }
     /*FRONT DL STARTS*/
     let imagedataForFrotDL = [];
@@ -2083,15 +2460,23 @@
         document.getElementById("pb2").style.display = 'Block';
         const con = {
             audio: false,
-            video: { facingMode: { exact: "environment" } } //true
+            video: { facingMode: { exact: "environment" },
+                    width: { min: 1024, ideal: 3000, max: 3000 },
+                    height: { min: 576, ideal: 2400, max: 2400 }
+                   } 
         };
-        
         if (navigator.mediaDevices.getUserMedia) {
             navigator.mediaDevices.getUserMedia(con)
             .then(function (stream) {
                 video.srcObject = stream;
+                 updateStages('Front DL');
             }).catch(function (error) {
-                console.log("Something went wrong!");
+                alert('Oops! Your camera or microphone is disabled. Close for NEXT STEPS.');
+                document.getElementById("pb2").style.display = 'none';
+                document.getElementById("mainErDiv").style.display = 'block';
+                updateStages('Error Page');
+                IsErrorOnVOI = true;
+                whereError = 'DL Front';
             });
             
         }
@@ -2105,12 +2490,12 @@
             /*Increase Image Quality*/
             
             var video = document.getElementById('videoFrontDL');
-            var aspect = video.videoHeight / video.videoWidth;
-            var wantedWidth = 3024;   // or use height 1280
-            var height = 4032;//Math.round(wantedWidth * aspect);
+            //var aspect = video.videoHeight / video.videoWidth;
+            //var wantedWidth = 4020;   // or use height 1280
+            //var height = Math.round(wantedWidth * aspect);
             
-            canvas.width = wantedWidth;
-            canvas.height = height;
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
             
             canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
             
@@ -2119,10 +2504,7 @@
             let image_data_url = canvas.toDataURL('image/jpeg');
             //console.log('image BSAE 64  '+image_data_url);
             imagedataForFrotDL = image_data_url;
-            //alert('imagedata'+imagedata);
-            //document.querySelector('#Image').src = image_data_url;
-            
-            // // Send Image data to Apex class
+            updateStages('Front DL Preview');
             
         } catch(error){
             console.error('Error to Capture.', error);
@@ -2175,7 +2557,10 @@
         document.getElementById("pb2A").style.display = 'Block';
         const con = {
             audio: false,
-            video: { facingMode: { exact: "environment" } } //true
+            video: { facingMode: { exact: "environment" },
+                    width: { min: 1024, ideal: 3000, max: 3000 },
+                    height: { min: 576, ideal: 2400, max: 2400 }
+                   } 
         };
         
         if (navigator.mediaDevices.getUserMedia) {
@@ -2183,11 +2568,75 @@
             .then(function (stream) {
                 document.getElementById("spin").style.display = 'none';
                 video.srcObject = stream;
+                updateStages('Back DL');
             }).catch(function (error) {
-                alert("Something went wrong!");
+                alert('Oops! Your camera or microphone is disabled. Close for NEXT STEPS.');
+                document.getElementById("pb2A").style.display = 'none';
+                document.getElementById("spin").style.display = 'none';
+                document.getElementById("mainErDiv").style.display = 'block';
+                updateStages('Error Page');
+                IsErrorOnVOI = true;
+                whereError = 'DL Back';
             });
             
         }
+    }
+    
+    function goForEsignAfterError(){
+        document.getElementById("spin").style.display = 'none';
+        if({!IF(voiS.VOI_stage__c == 'FULL',true,false)} ){
+            document.getElementById("relaxDiv").style.display = 'none';
+            document.getElementById("mainErDiv").style.display = 'none';
+            document.getElementById("pb1").style.display = 'Block';
+            document.getElementById("Vid3").style.display = 'none';
+            document.getElementById("launchBtn").style.display = 'none';
+            
+            document.getElementById("firstText").style.display = 'none';
+            document.getElementById("SecondText").style.display = 'none';
+            document.getElementById("ThirdText").style.display = 'Block';
+            if(whereError == 'Video'){
+                document.getElementById("icon3").style.display = 'block';   
+                document.getElementById("icon4").style.display = 'none';    
+            }
+            else{
+                document.getElementById("icon3").style.display = 'none';    
+                document.getElementById("icon4").style.display = 'block';                   
+            }
+            document.getElementById("icon2").style.display = 'none';
+            
+            document.getElementById("icon1-4").style.display = 'block';
+            
+            document.getElementById("icon1-1").style.display = 'none';
+            document.getElementById("icon1-2").style.display = 'none';
+            document.getElementById("icon1-3").style.display = 'none';
+            document.getElementById("icon2-1").style.display = 'None'; 
+            document.getElementById("icon2-2").style.display = 'Block';
+            
+            document.querySelector('.box1').style.boxShadow = 'none';
+            document.querySelector('.box1').style.background = 'none';
+            document.querySelector('.box1').style.background = '#fafafa';
+            document.querySelector('.box1').style.border = '2px solid #eeeeee';
+            
+            document.querySelector('.box2').style.boxShadow = 'none';
+            document.querySelector('.box2').style.background = 'none';
+            document.querySelector('.box2').style.background = '#fafafa';
+            document.querySelector('.box2').style.border = '2px solid #eeeeee';
+            
+            document.querySelector('.box3').style.border = 'none';
+            document.querySelector('.box3').style.background = 'none';
+            document.querySelector('.box3').style.boxShadow = '5px 5px 5px 0px rgb(0 0 0 / 54%)';
+            document.querySelector('.box3').style.background = '#ffffff';    
+            
+            
+            document.getElementById("nextBtn").style.display = 'None';
+            document.getElementById("ReadSignBtn").style.display = 'Block';
+        }
+        
+        if({!IF(voiS.VOI_stage__c == 'VOI',true,false)}){
+            document.getElementById("mainErDiv").style.display = 'none';        
+            document.getElementById("laseerDiv").style.display = 'block';
+        }
+        mailSendToUs();
     }
     
     function stopCameraForBackDL(){
@@ -2199,12 +2648,12 @@
             /*Increase Image Quality*/
             
             var video = document.getElementById('videoBackDL');
-            var aspect = video.videoHeight / video.videoWidth;
-            var wantedWidth = 3024;   // or use height 1280
-            var height = 4032;//Math.round(wantedWidth * aspect);
+            // var aspect = video.videoHeight / video.videoWidth;
+            //var wantedWidth = 3024;   // or use height 1280
+            // var height = 4032;//Math.round(wantedWidth * aspect);
             
-            canvas.width = wantedWidth;
-            canvas.height = height;
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
             
             canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
             
@@ -2213,11 +2662,7 @@
             let image_data_url = canvas.toDataURL('image/jpeg');
             //console.log('image BSAE 64  '+image_data_url);
             imagedataForBackDL = image_data_url;
-            //alert('imagedata'+imagedata);
-            //document.querySelector('#Image').src = image_data_url;
-            
-            // // Send Image data to Apex class
-            
+            updateStages('Back DL Preview');
         } catch(error){
             console.error('Error to Capture.', error);
         }
@@ -2275,7 +2720,7 @@
         document.getElementById("launchBtn").style.display = 'none';
         document.getElementById("nextBtn").style.display = 'Block';
         SentBackDLData(imagedataForBackDL);
-        
+        updateStages('DL Uploaded');
     }
     
     /*BACK DL ENDS*/
@@ -2302,10 +2747,16 @@
     async function startVideCam(){
         try {
             camera_stream = await navigator.mediaDevices.getUserMedia(constraints);
-            
+            updateStages('Video Recording');
         }
         catch(error) {
-            alert(error.message);
+             alert('Oops! Your camera or microphone is disabled. Close for NEXT STEPS.');
+            document.getElementById("Vid2").style.display = 'none';
+            document.getElementById("Vid1").style.display = 'none';
+            document.getElementById("mainErDiv").style.display = 'block';
+            updateStages('video mike Error');
+            IsErrorOnVOI = true;
+            whereError = 'Video';
             return;
         }
         
@@ -2316,7 +2767,7 @@
         document.getElementById("Vid2").style.display = 'Block';
     }
     // video snap code
-    	
+        
         function shoot() {
             var canvas = document.getElementById('output');     
             var video = document.getElementById('videoRec');
@@ -2324,7 +2775,7 @@
             canvas.height = video.videoHeight;
             canvas.getContext('2d').drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
         
-        	Video_Screen_Shot = canvas.toDataURL('image/jpeg');
+            Video_Screen_Shot = canvas.toDataURL('image/jpeg');
             console.log('image ss = '+Video_Screen_Shot);
         }
     // video snap code
@@ -2402,12 +2853,13 @@
                     var stream = video1.srcObject;
                     var tracks = stream.getTracks();
                     for (var i = 0; i < tracks.length; i++) {
-                    	var track = tracks[i];
-                    	track.stop();
-                	}
+                        var track = tracks[i];
+                        track.stop();
+                    }
                     video1.srcObject = null;
                     document.getElementById("Vid2").style.display = 'none';
                     document.getElementById("Vid3").style.display = 'Block'; 
+                    updateStages('Video Preview');
                     //     document.getElementById("output").style.display = 'Block';
                 }
                     
@@ -2480,7 +2932,7 @@
                     document.getElementById("Vid2").style.display = 'Block';
                     
                 }  
-               	function videoconfirm(){
+                function videoconfirm(){
                     try {
                         sendVideoSS(Video_Screen_Shot);
                     }
@@ -2499,7 +2951,7 @@
                     var vid = document.getElementById("preview");
                     vid.pause();
                     
-                    if({!IF(contact.VOI_type__c == 'FULL' || contact.VOI_type__c == null,true,false)} ){
+                    if({!IF(voiS.VOI_stage__c == 'FULL' || voiS.VOI_stage__c == null,true,false)} ){
                         document.getElementById("pb1").style.display = 'Block';
                         document.getElementById("Vid3").style.display = 'none';
                         document.getElementById("SecondText").style.display = 'none';
@@ -2523,17 +2975,19 @@
                         document.getElementById("nextBtn").style.display = 'None';
                         document.getElementById("ReadSignBtn").style.display = 'Block';
                         // dataQuerymethod(); 
-                    	
-                	}
+                        
+                    }
                     else{
                         document.getElementById("Vid3").style.display = 'none';
                         document.getElementById("singleVOI").style.display = 'Block';
-                    	finishVOI();
+                        finishVOI();
                     }
                     sendVideo(recordedData);
+                    
                 }
                     
                     function StopSpin(){
+                    updateStages('Video Uploaded');
                     document.getElementById("spin").style.display = 'none';
                     var newDate = new Date();
                     endTime = newDate.getDate() + "/"
@@ -2552,9 +3006,10 @@
                     
                     /*READ AND SIGN FIRST SECTION STARTS*/
                     function ReadANDSign(){
-                    updateOppStatus(); // for update opportunity status
-                    document.getElementById("pb1").style.display = 'None';
+                    document.getElementById("pb1").style.display = 'none';
                     document.getElementById("ReadSign1").style.display = 'Block';
+                    updateOppStatus(); // for update opportunity status
+                    updateStages('CPQ sign');                    
                     var SignaturePad = (function(document) {
                     "use strict";
                     
@@ -3032,6 +3487,7 @@
     function saveCanvasAndNext(){
         document.getElementById("ReadSign1").style.display = 'none';
         document.getElementById("ReadSign2").style.display = 'Block';
+        updateStages('TMCU sign');
         $(window).scrollTop(0); // IMPORTANT FOR SCROLLING THE SECTION.
         
         var SignaturePad = (function(document) {
@@ -3469,16 +3925,12 @@
             //console.log('data'+data);
             ///console.log('data.length'+data.length);
             var taxResi = document.getElementById("tax-resident").value;
-            //alert('taxResi++'+taxResi.length);
             
             var taxFn = document.getElementById("taxFNumber").value;
-            // alert('taxfn=++'+taxFn.length);
             
             var tinN = document.getElementById("tinNumber").value;
-            //alert('tinNum--'+tinN.length);
             
             var numberOfap = document.getElementById("selectApplicant").value;
-            //alert('numberOfap---'+numberOfap.length);
             
             if(taxResi.length == 0 && numberOfap.length == 10){
                 document.getElementById('tax-resident').style.border = '1px solid red';
@@ -3527,47 +3979,38 @@
     
     function finishSignature(){
         document.getElementById("spin").style.display = 'Block';
-        document.getElementById("ReadSign1").style.display = 'none';
-        document.getElementById("ReadSign2").style.display = 'none';
-        document.getElementById("pb1").style.display = 'Block';
-        document.getElementById("icon2-2").style.display = 'none';
-        document.getElementById("icon2-3").style.display = 'Block';
-        document.getElementById("ReadSignBtn").style.display = 'none';  
-        document.getElementById("FinishBtn").style.display = 'Block';   
-        
-        document.getElementById("ThirdText").style.display = 'none';
-        
-        document.getElementById("FourthText").style.display = 'Block';
-        
-        
-        document.getElementById("firstAnchor").style.display = 'none';
-        
-        document.getElementById("2ndAnchor").style.display = 'Block';
+        //alert(IsErrorOnVOI);
+        if(IsErrorOnVOI == true){
+            document.getElementById("ReadSign1").style.display = 'none';
+            document.getElementById("ReadSign2").style.display = 'none';
+            document.getElementById("relaxDiv").style.display = 'Block';            
+        }
+        else{
+            document.getElementById("ReadSign1").style.display = 'none';
+            document.getElementById("ReadSign2").style.display = 'none';
+            document.getElementById("pb1").style.display = 'Block';
+            document.getElementById("icon2-2").style.display = 'none';
+            document.getElementById("icon2-3").style.display = 'Block';
+            document.getElementById("ReadSignBtn").style.display = 'none';  
+            document.getElementById("FinishBtn").style.display = 'Block';   
+            
+            document.getElementById("ThirdText").style.display = 'none';
+            
+            document.getElementById("FourthText").style.display = 'Block';
+            
+            
+            document.getElementById("firstAnchor").style.display = 'none';
+            
+            document.getElementById("2ndAnchor").style.display = 'Block';
+            
+            document.querySelector('.box3').style.boxShadow = 'none';
+            document.querySelector('.box3').style.background = 'none';
+            document.querySelector('.box3').style.background = '#fafafa';
+            document.querySelector('.box3').style.border = '2px solid #eeeeee';
+        }
         GeneratePDF();
         
-        document.querySelector('.box3').style.boxShadow = 'none';
-        document.querySelector('.box3').style.background = 'none';
-        document.querySelector('.box3').style.background = '#fafafa';
-        document.querySelector('.box3').style.border = '2px solid #eeeeee';
-        
     }
-    
-    
-    function finalShow(){
-        document.getElementById("pb1").style.display = 'Block';
-        document.getElementById("icon2-3").style.display = 'Block';
-        document.getElementById("FinishBtn").style.display = 'Block';   
-        
-        document.getElementById("FourthText").style.display = 'Block';
-        
-        
-        document.getElementById("2ndAnchor").style.display = 'Block';
-        
-        document.querySelector('.box3').style.boxShadow = 'none';
-        document.querySelector('.box3').style.background = 'none';
-        document.querySelector('.box3').style.background = '#fafafa';
-        document.querySelector('.box3').style.border = '2px solid #eeeeee';
-    }	
     
     /*READ AND SIGN SECOND SECTION ENDS*/
     /*Important code for collapse*/

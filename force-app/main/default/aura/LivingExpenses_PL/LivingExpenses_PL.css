@@ -7,6 +7,14 @@
     font-weight: 600;
 
 }
+.THIS .trackercls{
+    width: 50%;
+}
+@media screen and (max-width: 770px) {
+    .THIS .trackercls{
+        width: 85%;
+    }
+}
 .THIS .slds-form_areYouSure  ul {
 
     color: rgb(107, 109, 112);

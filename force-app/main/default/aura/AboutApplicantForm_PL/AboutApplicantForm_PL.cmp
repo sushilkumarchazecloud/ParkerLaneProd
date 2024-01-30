@@ -51,7 +51,9 @@
         </div>  
         <div class="max-700">
             <header class="checkout-page-banner--gradient">
-                
+                <div class="slds-align_absolute-center slds-m-top_x-large">
+                    <img src="{!$Resource.headersLogo + '/headersLogo/Whoisapplying.png'}" class="trackercls"/>
+                </div>
                 <div class="">
                     <h1 class="slds-p-vertical_medium slds-p-top_medium slds-p-bottom_small heading--page slds-m-top_medium">Your household</h1>
                 </div>

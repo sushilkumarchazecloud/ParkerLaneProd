@@ -1,0 +1,56 @@
+.THIS .signature_css{
+    background: #f2f2f2;
+    width: 32%;
+    font-family: GreatVibes-Regular !important;
+    text-align: center;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    height: 80px;
+}
+
+.THIS .sign_btn{
+    padding: 8px 38px 8px 38px !important;
+}
+
+.THIS .txt_css{
+    font-size: 13px !important;
+    margin-left: 10px;
+    margin-top: 2px;
+    color: #1a2745 !important;
+    font-weight: bold;
+    font-family: Proxima Nova Alt Regular;
+}
+
+.THIS .slds-checkbox_toggle input[type="checkbox"]:focus + .slds-checkbox_faux_container .slds-checkbox_faux,
+.THIS .slds-checkbox_toggle input[type="checkbox"]:focus:not(:checked) + .slds-checkbox_faux_container .slds-checkbox_faux {
+    box-shadow: none;
+    border-color: transparent;
+}
+
+.THIS .slds-checkbox_toggle input[type="checkbox"]:active + .slds-checkbox_faux_container .slds-checkbox_faux,
+.THIS .slds-checkbox_toggle input[type="checkbox"]:active:not(:checked) + .slds-checkbox_faux_container .slds-checkbox_faux {
+    box-shadow: none;
+    border-color: transparent;
+}
+.THIS .slds-checkbox_toggle [type=checkbox]+.slds-checkbox_faux_container .slds-checkbox_off{
+    display: none !important;
+}
+.THIS .slds-checkbox_toggle [type=checkbox]+.slds-checkbox_faux_container .slds-checkbox_on{
+    display: none !important;
+}
+.THIS .slds-checkbox_toggle [type=checkbox]:checked+.slds-checkbox_faux_container .slds-checkbox_faux:after{
+    display: none !important;
+}
+.THIS .canvasSpnr{
+    position: relative !important;
+    margin-left: 5.5rem;
+    top: 40px !important;
+}
+
+@font-face {
+    font-family: 'GreatVibes-Regular'; 
+    src: url('../../resource/signature/GreatVibes-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}

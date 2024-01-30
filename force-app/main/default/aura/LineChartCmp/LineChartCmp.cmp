@@ -1,0 +1,18 @@
+<aura:component controller="Linechartcont" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="mailList" type="list" default="[]"/>
+    <aura:attribute name="opId" type="string" />
+    <aura:handler name="init" value="{!this}" action="{!c.myAction}"/>
+    <div align="center" style="background-color : white; padding : 10px 0px;">
+        <aura:iteration items="{!v.mailList}" var="task">
+            <c:childLineChart activity="{!task}"/>
+        </aura:iteration> <br/><br/>
+        <div>
+            <div>
+                <img src="{!$Resource.SolarLoan + '/img/linechartinfo.png'}" style="width: 94%;"/>
+            </div>
+        </div>
+    </div>
+    <div>
+        <!--<c:UploadDocumentGen recordId="{!v.recordId}"/>-->
+    </div>
+</aura:component>

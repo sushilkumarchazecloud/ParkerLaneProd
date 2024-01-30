@@ -1,0 +1,263 @@
+<aura:component controller="MyReferrerController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+   
+    <aura:attribute name="oppWrapper" type="Object" /> 
+    <aura:attribute name="OpportunityName" type="String"/>
+    <aura:attribute name="ishide" type="boolean" />
+    <aura:attribute name="InstallEdit" type="boolean"/>
+    <aura:attribute name="isSaveBtnDisabled" type="Boolean"/>
+    <aura:attribute name="NextStep1" type="string"/>
+    <aura:attribute name="NextStep2" type="string"/>
+    <aura:attribute name="icon1" type="string"/>
+    <aura:attribute name="icon2" type="string"/>
+    <aura:attribute name="EditButtonShow" type="boolean" default="false"/>
+    <aura:attribute name="showError" type="Boolean" default="false"/>
+    <aura:attribute name="errorMsg" type="String" default="Please update the form entries highlighted in red and try again"/>
+    <aura:attribute name="searchString" type="String"/>
+    <aura:attribute name="street" type="String" />
+    <aura:attribute name="postalCode" type="String" />
+    <aura:attribute name="suburb" type="String" />
+    <aura:attribute name="country" type="String" />
+    <aura:attribute name="state" type="String" />
+    <aura:attribute name="streetNumber" type="String" />
+    <aura:attribute name="streetType" type="String" />
+    <aura:attribute name="showSpinner" type="Boolean"/>
+    
+    <aura:handler name ="init" value="{!this}" action ="{!c.doInit}"/>
+    
+    <aura:if isTrue="{!v.showSpinner}">
+    <lightning:spinner aura:id="mySpinner" variant="brand" size="large" class="" style="margin-top : 48px;margin-bottom : 80px;position : absolute;"/>
+    </aura:if>    
+    <div class="slds-grid slds-wrap">
+        <div class=" slds-size_8-of-12" >
+            <div class="slds-m-top_x-small slds-m-bottom_medium" style="border-bottom: 1px solid #c2c2c2"></div>
+            <aura:if isTrue="{!v.showError}">
+                <div class="slds-notify slds-notify_toast slds-theme_error slds-align_absolute-center slds-m-vertical--medium error-section">
+                    <span class="slds-assistive-text">error</span>
+                    <div class="slds-notify__content">
+                        <p class="slds-align_absolute-center">{!v.errorMsg}.</p>                
+                    </div>
+                </div>
+            </aura:if>
+            <div class="slds-scrollable_y" style="height:435px;margin-top:-15px;" aura:id="scrollerTop">
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2" >
+                        <div class="slds-form slds-p-top_large " role="list">
+                            <div class="slds-form__column" style="line-height:initial;">
+                                <div class="slds-form__item " role="listitem" >
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-grid">
+                                        <div class="slds-size_4-of-6 heading3"><b>Primary Contacts</b></div>
+                                        <div class="slds-size_2-of-6 slds-text-m-right_small">
+                                            <aura:if isTrue="{!v.EditButtonShow}">
+                                                <aura:if isTrue="{!v.ishide}">
+                                                    <lightning:buttonIcon class="modalEdit" variant="bare" size="small" iconName="utility:edit" onclick="{!c.editModal}"/>
+                                                    <a style="color: darkgrey;" onclick="{!c.editModal}">Edit</a>  
+                                                </aura:if>
+                                            </aura:if>
+                                        </div>
+                                    </div>
+                                </div>
+                                <aura:if isTrue="{!v.ishide}">
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing"> 
+                                            <lightning:input  label="Name" value="{!v.oppWrapper.Applicant_1__r.FirstName + ' '+v.oppWrapper.Applicant_1__r.LastName}"  
+                                                             readonly="true"/>
+                                        </div>
+                                    </div>
+                                    <aura:set attribute="else">
+                                        <div class="slds-form__item" role="listitem">
+                                            <div class="slds-form-element slds-form-element_stacked slds-is-editing"> 
+                                                <lightning:input class="no-abbr" label="First Name" value="{!v.oppWrapper.Applicant_1__r.FirstName}" placeholder="First Name"  
+                                                                 readonly="{!v.ishide}" required="true" aura:id="fieldcheck"/>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form__item" role="listitem">
+                                            <div class="slds-form-element slds-form-element_stacked slds-is-editing"> 
+                                                <lightning:input class="no-abbr" label="Last Name" value="{!v.oppWrapper.Applicant_1__r.LastName}" placeholder="Last Name"  
+                                                                 readonly="{!v.ishide}" required="true" aura:id="fieldcheck"/>
+                                            </div>
+                                        </div>  
+                                    </aura:set>
+                                </aura:if>
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                        <lightning:input class="no-abbr" label="Mobile"  value="{!v.oppWrapper.Applicant_1__r.Phone}"
+                                                         readonly="{!v.ishide}" pattern="([0-9]{10}|[0-9]{4} [0-9]{3} [0-9]{3}|[0-9]{2} [0-9]{4} [0-9]{4})"
+                                                         aura:id="fieldcheck" required="true"
+                                                         messageWhenPatternMismatch="Pattern should be 1234567890 or 1234 567 890 or 12 3456 7890" />
+                                    </div>
+                                </div>
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing"> 
+                                        <lightning:input class="no-abbr" label="Email"  value="{!v.oppWrapper.Applicant_1__r.PersonEmail}"
+                                                         required="true" type="email" readonly="{!v.ishide}" aura:id="fieldcheck"
+                                                         pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{1,5})$"
+                                                         messageWhenPatternMismatch = "Please enter valid Email Id"  /> 
+                                    </div>
+                                </div>
+                                <aura:if isTrue="{!not(v.ishide)}">
+                                    <div class="slds-form__item slds-text-align_right" role="listitem" >
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                            <lightning:button  variant="base" label="Save" disabled="{!v.isSaveBtnDisabled}" onclick="{!c.saveModal}" />
+                                        </div>
+                                    </div>
+                                </aura:if>
+                            </div>
+                            <div class="slds-form slds-p-top_small" role="list">
+                                <div class="slds-form__column" style="line-height:initial;">
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-grid">
+                                            <div class="slds-size_4-of-6 heading3"><b>Referrer Contact</b></div>
+                                        </div>
+                                    </div> 
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                            <lightning:input  label="Name" value="{!v.oppWrapper.FinServ__ReferredByContact__r.Name}" 
+                                                             readonly="true"/>
+                                        </div>
+                                    </div>
+                                </div>  
+                            </div>    
+                        </div> 
+                    </div>
+                    
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2" >
+                        <div class="slds-form slds-p-top_large " role="list">
+                            <div class="slds-form__column " style="line-height:initial;">  
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-grid">
+                                        <div class="slds-size_4-of-6 heading3"><b>Funding Details</b></div>
+                                        <div class="slds-size_2-of-6 slds-text-m-right_small">
+                                            <!--            <aura:if isTrue="{!v.EditButtonShow}">
+                                                                    <aura:if isTrue="{!v.ishide}">
+                                                                        <lightning:buttonIcon class="modalEdit" variant="bare" size="small" iconName="utility:edit" onclick="{!c.editModal}"/>
+                                                                        <a style="color: darkgrey;" onclick="{!c.editModal}">Edit</a>  
+                                                                    </aura:if>
+                                                                </aura:if> -->
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing  ">
+                                        <lightning:input  label="Funds available"  value="{!v.oppWrapper.Total_Funds_Available__c}" 
+                                                         readonly="true" />
+                                    </div>
+                                </div>
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing ">
+                                        <lightning:input  label="Lender"  value="{!v.oppWrapper.Lender__c}"
+                                                         readonly="true" />
+                                    </div>
+                                </div>
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing ">
+                                        <lightning:input  label="Funding Details"  value=""
+                                                         readonly="true" />
+                                    </div>
+                                </div> 
+                                
+                            </div>  
+                            <div class="slds-form slds-p-top_small" role="list">
+                                <div class="slds-form__column" style="line-height:initial;">
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-grid">
+                                            <div class="slds-size_4-of-6 heading3"><b>Installation Details</b></div>
+                                            <div class="slds-size_2-of-6 slds-text-m-right_small">
+                                                <aura:if isTrue="{!v.EditButtonShow}">
+                                                    <aura:if isTrue="{!v.InstallEdit}">
+                                                        <lightning:buttonIcon class="modalEdit" variant="bare" size="small" iconName="utility:edit" onclick="{!c.InstalleditModal}"/>
+                                                        <a style="color: darkgrey;" onclick="{!c.InstalleditModal}">Edit</a>  
+                                                    </aura:if> 
+                                                </aura:if>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                    <aura:if isTrue="{!v.InstallEdit}">
+                                        <div class="slds-form__item" role="listitem">
+                                            <div class="slds-form-element slds-form-element_stacked slds-is-editing ">
+                                                <lightning:input  label="Installation address"  value="{!v.searchString}"
+                                                                 readonly="{!v.InstallEdit}" />
+                                            </div>
+                                        </div>
+                                        <aura:set attribute="else">
+                                            <div class="slds-form__item" role="listitem">
+                                                <div class="slds-form-element slds-form-element_stacked slds-is-editing" >
+                                                    <c:AddressAPItool aura:id="addressTool" label="Installation address" isFindAdd = "{!v.isFindAdd}" streetType="{!v.streetType}" streetNumber="{!v.streetNumber}" state="{!v.state}" country="{!v.country}" suburb="{!v.suburb}" street="{!v.street}" postalCode="{!v.postalCode}" searchString="{!v.searchString}" addressplaceholder="Installation address" />
+                                                </div>
+                                            </div> 
+                                        </aura:set>
+                                    </aura:if>
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing ">
+                                            <lightning:input  label="Anticipated Installation Date" value="" 
+                                                             readonly="true" /> 
+                                        </div>
+                                    </div>
+                                    <aura:if isTrue="{!not(v.InstallEdit)}">
+                                        <div class="slds-form__item slds-text-align_right" role="listitem" >
+                                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                                <lightning:button  variant="base" label="Save" disabled="{!v.isSaveBtnDisabled}" onclick="{!c.SaveAddress}" />
+                                            </div>
+                                        </div>
+                                    </aura:if>
+                                </div>
+                            </div>
+                            <!--      <div class="slds-form slds-p-top_small" role="list">
+                                                    <div class="slds-form__column" style="line-height:initial;">
+                                                        <div class="slds-form__item" role="listitem">
+                                                            <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-grid">
+                                                                <div class="slds-size_4-of-6 heading3"><b><u>Supplier Documents</u></b></div>   
+                                                            </div>
+                                                        </div>
+                                                        <div class="slds-form__item" role="listitem">
+                                                            <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                                                <c:UploadDocumentGen sessionId="{!v.sessionId}"/>                                                           
+                                                            </div>
+                                                        </div> 
+                                                    </div>
+                                                </div> -->
+                        </div>  
+                    </div>
+                </div>  
+            </div> 
+        </div> 
+        
+        <div class=" slds-size_4-of-12 ">
+            <div class="slds-scrollable_y" style="height:435px;margin-top:9px;">
+                <div class="slds-p-around_small" style="margin-top:-14px;">
+                    <div class="box-style" >
+                        <div class="heading2"><b>To Do's</b></div>
+                        <div class="Border" style="border-bottom: 1px solid #c2c2c2;margin-left:-10px;margin-right:-10px;"></div>
+                        <div class="slds-p-around_small"> 
+                            <aura:if isTrue="{!v.NextStep1 == Null}">
+                                <aura:set attribute="else">
+                                    <img src="{!$Resource.SolarLoan + '/img/'+ v.icon1+'.png'}" style="height:14px;"/>&nbsp;<b>{!v.NextStep1}</b>
+                                </aura:set>
+                            </aura:if>
+                            <br/>
+                            <aura:if isTrue="{!v.NextStep2 == Null}">
+                                <aura:set attribute="else">
+                                    <img src="{!$Resource.SolarLoan + '/img/'+ v.icon2+'.png'}" style="height:14px;"/>&nbsp;<b style="color:#b0c0e2;">{!v.NextStep2}</b>
+                                </aura:set>
+                            </aura:if>
+                        </div>
+                    </div>
+                    <div class="box-style" style="margin-top:22px;">
+                        <div class="heading2"><b>Important file note</b> </div>
+                        <div style="border-bottom: 1px solid #c2c2c2;margin-left:-10px;margin-right:-10px;"></div>
+                        <div class="slds-p-around_small"> 
+                            <b>{!v.oppWrapper.Application_Pending_Notes__c}</b>
+                        </div>  
+                    </div>
+                    <div class="box-style" style="margin-top:22px;" >
+                        <div class="heading2"><b>Application Progress</b> </div>
+                        <div class="Border" style="margin-left:-10px;margin-right:-10px;border-bottom: 1px solid #c2c2c2"></div>
+                        <div> 
+                            <c:LineChartCmp recordId="{!v.oppWrapper.Id}" />
+                        </div>  
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</aura:component>

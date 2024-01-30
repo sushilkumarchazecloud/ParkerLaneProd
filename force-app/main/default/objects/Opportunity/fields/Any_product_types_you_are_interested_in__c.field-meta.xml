@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Any_product_types_you_are_interested_in__c</fullName>
+    <externalId>false</externalId>
+    <label>Any product types you are interested in?</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Basic Loan</fullName>
+                <default>false</default>
+                <label>Basic Loan</label>
+            </value>
+            <value>
+                <fullName>Professional Package</fullName>
+                <default>false</default>
+                <label>Professional Package</label>
+            </value>
+            <value>
+                <fullName>Line of Credit</fullName>
+                <default>false</default>
+                <label>Line of Credit</label>
+            </value>
+            <value>
+                <fullName>Fixed Rate</fullName>
+                <default>false</default>
+                <label>Fixed Rate</label>
+            </value>
+            <value>
+                <fullName>Low Doc</fullName>
+                <default>false</default>
+                <label>Low Doc</label>
+            </value>
+            <value>
+                <fullName>Don’t know</fullName>
+                <default>false</default>
+                <label>Don’t know</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

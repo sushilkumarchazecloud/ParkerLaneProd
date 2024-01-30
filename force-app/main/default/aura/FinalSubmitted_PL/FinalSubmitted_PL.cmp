@@ -12,7 +12,10 @@
         <section class="slds-p-around_large">
             
             <div class="max-360 slds-p-bottom_x-large">
-                <section class="all-done slds-p-bottom_x-large">
+                <div class="slds-align_absolute-center slds-m-top_medium">
+                    <img src="{!$Resource.SolarLoan + '/img/Step3.png'}" class="trackercls"/>
+                </div>
+                <section class="all-done slds-p-bottom_x-large slds-m-top_x-large">
                     <div>
                         <img src="{!$Resource.SolarLoan + '/img/checkgreen.png'}" style="border-radius: 72px; border: 2px solid #5bc65b;" />
                     </div>

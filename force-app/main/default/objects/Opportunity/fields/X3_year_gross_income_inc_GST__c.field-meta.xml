@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>X3_year_gross_income_inc_GST__c</fullName>
+    <externalId>false</externalId>
+    <formula>Service_Fee_inc_GST__c  +   Brokerage_Service_Fee_inc_GST__c   +  Up_Front_Commission_inc_GST__c  +  Monthly_Trail_Commission_inc_GST__c  * 12*2.7  -  Monthly_Trail_Commission_inc_GST__c *  IF(ISPICKVAL(TC_Commences__c, &quot;After 6 months&quot;) , 6, IF(ISPICKVAL(TC_Commences__c, &quot;After 1 year&quot;),12,0))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>3 year gross income inc GST</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

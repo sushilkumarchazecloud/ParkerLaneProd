@@ -1,0 +1,67 @@
+<aura:component controller="LenderdashboardController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    
+    <aura:attribute name="sessionId" type="String" />
+    <aura:attribute name="navSection" type="String" default="Home"/>
+    <aura:attribute name="conName" type="String" />
+    <aura:attribute name="con" type="contact" default=""/>
+    <aura:attribute name="phone" type="String"/>
+    <aura:attribute name="searchKeyword" type="String"/>
+    <aura:attribute name="accountId" type="String"/>
+    <aura:attribute name="ShowAccount" type="Boolean" default="false" />
+    <aura:attribute name="isDeclarationModalOpen" type="Boolean" default = "false" />
+    <aura:handler name="init" value="{!this}" action="{!c.myAction}"/>
+    
+    <div class="lender-dashboard-section">        
+        <table style="width:100%;height: -webkit-fill-available;">
+            <tr><th style="width:15rem"></th><th></th></tr>
+            <tr>
+                <td style="background-color: #1a2745;vertical-align: top;">                    
+                    <div class="" style="background-color: #1a2745;color:#FFF;">
+                        <div class="slds-text-align_center slds-p-around_large">
+                            <div class="slds-p-bottom_x-large " style="padding-top: 12px;"><img src="{!$Resource.SolarLoan + '/img/logowhite.png'}" style="max-width : 70%;"/></div>
+                            <div class="short-name slds-m-vertical_large ">
+                                <span>{!v.conName}</span>
+                            </div>
+                            <div  class="heading1">{!v.con.Name}</div>
+                            <div class="heading4">{!v.con.Account.Name}</div>
+                        </div>
+                        <div class="nav-menu--container slds-m-top_large heading4">
+                            <div class="nav-menu onHover" onclick="{!c.navHome}" style="{!v.navSection == 'Home' ? 'background: #304B88': ''}">
+                                <span><img src="{!$Resource.ReferralPortal + '/ReferralPortal/Dashboard.png'}"/></span>
+                                <span>Dashboard</span>
+                            </div>    
+                            <div class="nav-menu onHover" onclick="{!c.navMyReferrals}" style="{!v.navSection == 'MySettlements' ? 'background: #304B88': ''}">
+                                <span><img src="{!$Resource.ReferralPortal + '/ReferralPortal/MyReferrals.png'}"/></span>
+                                <span>My Settlements</span>
+                            </div>
+                            <aura:if isTrue="{!AND(v.con.Portal_View__c == 'Admin View', v.con.Admin__c == true)}">
+                                <div class="nav-menu onHover" onclick="{!c.navMyTeam}" style="{!v.navSection == 'MyTeam' ? 'background: #304B88': ''}">
+                                    <span><img src="{!$Resource.ReferralPortal + '/ReferralPortal/MyTeam.png'}"/></span>
+                                    <span>My Team</span>
+                                </div>
+                            </aura:if>
+                            <div class="nav-menu onHover" onclick="{!c.navMyAccount}" style="{!v.navSection == 'MyAccount' ? 'background: #304B88': ''}">
+                                <span><img src="{!$Resource.ReferralPortal + '/ReferralPortal/Account.png'}"/></span>
+                                <span>Account</span>
+                            </div>                            
+                        </div>
+                    </div>                    
+                </td>
+                <td style="vertical-align: top;">
+                    <aura:if isTrue="{!v.navSection == 'Home'}" >
+                        <c:LenderDashboardHome sessionId = "{!v.sessionId}" searchKeyword="{!v.searchKeyword}" navSection ="{!v.navSection}" phone = "{!v.phone}" cont ='{!v.con}' accountId = "{!v.accountId}" ShowAccount="{!v.ShowAccount}"/>
+                    </aura:if> 
+                    <aura:if isTrue="{!v.navSection == 'MySettlements'}" >
+                        <c:LenderDashboardMySettlements cont="{!v.con}" searchKeyword="{!v.searchKeyword}" navSection ="{!v.navSection}" sessionId = "{!v.sessionId}" accountId = "{!v.accountId}"/> 
+                    </aura:if>
+                    <aura:if isTrue="{!v.navSection == 'MyTeam'}" >
+                        <c:LenderDashboardMyTeam navSection ="{!v.navSection}" accountId = "{!v.accountId}"/>
+                    </aura:if> 
+                    <aura:if isTrue="{!v.navSection == 'MyAccount'}" >
+                        <c:LenderDashboardMyAccount navSection ="{!v.navSection}" accountId = "{!v.accountId}"/> 
+                    </aura:if>              
+                </td>
+            </tr>
+        </table>        
+    </div>
+</aura:component>

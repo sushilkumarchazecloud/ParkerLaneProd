@@ -1,0 +1,295 @@
+<aura:component controller="MyReferrerController"> 
+    <ltng:require scripts="{!$Resource.Jquery}" />
+    <aura:attribute name="label" type="String" />
+    <aura:attribute name="sessionId" type="String" />
+    <aura:attribute name="nameMP" type="Map" default="{}" />
+    <aura:attribute name="contentBodyId" type="string" />
+    <aura:attribute name="count" type="integer" default="0"/>
+    <aura:attribute name="IdList" type="List" />
+    <aura:attribute name="NameOfUploadFile" type="string" default="test Name"/>
+    <aura:attribute name="NmList" type="List" />
+    <aura:attribute name="cdlId" type="List" />
+    <aura:attribute name="requestId" type="String" />
+    <aura:attribute name="AttachId" type="String" />
+    <aura:attribute name="upload" type="boolean" default="false"/>
+    <aura:attribute name="percent" type="integer" default="0" />
+    <aura:attribute name="Name" type="String" />
+    <aura:attribute name="files" type="Blob" />
+    <aura:attribute name="ShowMeter" type="boolean" default="true" />
+    <aura:attribute name="accountId" type="String"/>
+    <aura:attribute name="filetype" type="List" default="['.png', '.jpg', '.jpeg']" />
+    <aura:attribute name="multiple" type="Boolean" default="true" />
+    <aura:attribute name="disabled" type="Boolean" default="true" />
+    <aura:attribute name="showForMetr" type="Boolean" default="false" />
+    <aura:attribute name="fundingPage" type="Boolean" default="false" />
+    <aura:attribute name="Authorisation" type="Boolean" default="false" />
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="indx" type="integer" />
+    <aura:attribute name="UploadButtonFunding" type="boolean" default="true"/>
+    <aura:attribute name="opp" type="Object"/>
+    <aura:attribute name="docreqId" type="Id"/>
+    <aura:attribute name="DocExist" type="boolean" default="false" />
+    <aura:attribute name="DocError" type="boolean" default="false" />
+    <aura:attribute name="isCustomer" type="boolean" default="false"/>
+    <div  align="center"> 
+        <aura:html tag="style">
+            .inpUpload .slds-file-selector__dropzone .slds-file-selector__button:after{
+            content: '{!v.NameOfUploadFile}';
+            font-size: 13px;
+            color: #1a2745;
+            } 
+        </aura:html>
+        <div>
+            <aura:if isTrue="{!v.fundingPage}">
+                <aura:if isTrue="{!v.ShowMeter}">
+                    <aura:iteration items="{!v.NmList}" var="item" indexVar="indx">
+                        <div class="slds-grid slds-gutters slds-m-top_small" >
+                            <div class="slds-col slds-size_2-of-12 slds-medium-size_2-of-12 slds-large-size_1-of-6 slds-align_absolute-center" align="left" style="padding-inline: inherit;">
+                                <img src="{!$Resource.SolarLoan + '/img/fileicon.png'}" style="height:35px;"/>
+                            </div>
+                            
+                            <div class="slds-col slds-size_10-of-12 slds-medium-size_10-of-12 slds-large-size_5-of-6 slds-align_absolute-center" style="padding-inline: inherit;margin-top:0px;">
+                                <div class="slds-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_3-of-6 slds-align_absolute-center" style="justify-content: left;">
+                                    <b style="font-size:12px;text-wrap: nowrap;">{!item}</b> 
+                                </div> 
+                                <aura:if isTrue="{!v.upload}">
+                                    <div class="slds-size_3-of-12 slds-medium-size_3-of-12 slds-large-size_2-of-6">
+                                        <img src="{!$Resource.SolarLoan + '/img/tickgreen.png'}" class=""/>  
+                                    </div>
+                                </aura:if>
+                                <div class="slds-size_3-of-12 slds-medium-size_3-of-12 slds-large-size_1-of-6" style="margin-top: 5px;position: relative;">
+                                    <lightning:buttonIcon name="{!indx}" iconName="utility:close" size="small" value="{!v.AttachId}" disabled="{!!v.upload}" class="{!!v.upload? 'crossBtnDisabledFunding':'crossBtnFinanceFunding'}" onclick="{!c.onFundingDelete}" variant="bare"/>
+                                </div>                                
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters " >
+                            <div class="slds-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12">
+                               <meter style="width: 75%;margin-left: 25px;margin-top: -13px;" value="100" />
+                            </div>   
+                        </div>
+                        <!--     <div class="slds-grid slds-gutters slds-m-top_small" >
+                            <div class="slds-col slds-size_1-of-12 slds-medium-size_1-of-12 slds-large-size_1-of-6 slds-align_absolute-center" style="padding-inline: inherit;">
+                                <img src="{!$Resource.SolarLoan + '/img/fileicon.png'}" style="height:35px;"/>
+                            </div>
+                            <div class="slds-grid slds-grid_vertical" style="line-height: initial;margin-left: inherit;">
+                                <div class="slds-col slds-size_1-of-12 slds-medium-size_1-of-12 slds-large-size_2-of-6 slds-align_absolute-center" style="text-align: left;margin-top: 5px;">
+                                    <b style="font-size:12px;max-width: 110px;min-width: 120px;">{!item}</b>
+                                </div> 
+                                <div class="slds-col slds-size_1-of-12 slds-medium-size_1-of-12 slds-large-size_6-of-6" align="left"> 
+                                    <meter class="" value="100" style="width:235%"/>
+                                </div> 
+                            </div>
+                            <aura:if isTrue="{!v.upload}">
+                                <div class="slds-col slds-size_1-of-12 slds-medium-size_1-of-12 slds-large-size_2-of-6">
+                                    <img src="{!$Resource.SolarLoan + '/img/tickgreen.png'}" class="greentick"/>
+                                </div>
+                            </aura:if> -->
+                        <!--<div class="slds-col slds-size_1-of-1 slds-large-size_2-of-6">                                
+                                        <div style="margin-top : 13px;" align="left">
+                                            <meter class="meterStyle" value="100"/>
+                                        </div>
+                                    </div>-->
+                        <!--       <div class="slds-col slds-size_1-of-12 slds-medium-size_1-of-12 slds-large-size_2-of-6" style="margin-top: 5px;position: relative;">
+                                <lightning:buttonIcon name="{!indx}" iconName="utility:close" size="small" value="{!v.AttachId}" disabled="{!!v.upload}" class="{!!v.upload? 'crossBtnDisabledFunding':'crossBtnFinanceFunding'}" onclick="{!c.onFundingDelete}" variant="bare"/>
+                            </div>
+                        </div>  -->
+                    </aura:iteration>  
+                    
+                    <aura:if isTrue="{!v.showForMetr}">                         
+                        <div class="slds-grid slds-gutters" style="margin-top: 15px;">
+                            <div class="slds-col slds-size_1-of-12 slds-medium-size_1-of-12 slds-large-size_1-of-6 slds-align_absolute-center" style="padding-inline: inherit;">
+                                <img src="{!$Resource.SolarLoan + '/img/fileicon.png'}" style="height:35px;"/>
+                            </div>
+                            <div class="slds-grid slds-grid_vertical" style="line-height: initial;margin-left: inherit;margin-right: 60px;margin-left: inherit;">
+                                <div class="slds-col slds-size_1-of-12 slds-medium-size_1-of-12 slds-large-size_3-of-6 slds-align_absolute-center" style="text-align: left;margin-top: 5px;">
+                                    <b style="font-size:12px;max-width: 110px;min-width: 120px;">{!v.Name}</b>
+                                </div> 
+                                <div class="slds-col slds-size_1-of-12 slds-medium-size_1-of-12 slds-large-size_6-of-6" align="left" > 
+                                    <meter class="" value="{!v.percent / 100}" style="width:212%"/>
+                                </div>
+                            </div>
+                            <!-- <aura:if isTrue="{!v.upload}">
+                                        <div class="slds-col slds-size_1-of-12 slds-medium-size_1-of-12 slds-large-size_1-of-12 slds-align_absolute-center">
+                                            <img src="{!$Resource.SolarLoan + '/img/tickgreen.png'}" class="greentick"/>
+                                        </div>
+                                    </aura:if>-->
+                            <!--<div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">                                
+                                        <div style="margin-top : 13px;" align="left">
+                                            <meter class="meterStyle" value="{!v.percent / 100}"/>
+                                        </div>
+                                    </div>-->
+                            <div class="slds-col slds-size_1-of-12 slds-medium-size_1-of-12 slds-large-size_3-of-6" style="margin-top: 5px;position: relative;">
+                                <lightning:buttonIcon name="{!indx}" iconName="utility:close" size="small" value="{!v.AttachId}" disabled="{!!v.upload}" class="{!!v.upload? 'crossBtnDisabledFunding':'crossBtnFinanceFunding'}" onclick="{!c.onFundingDelete}" variant="bare"/>
+                            </div>
+                        </div>
+                    </aura:if>
+                </aura:if>
+                
+                <aura:if isTrue="{!v.UploadButtonFunding}">
+                    <div class="slds-float_left" >
+                        <div class="slds-col  slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col" style="">
+                            <lightning:input  onchange="{!c.FundingDocUpload}" 
+                                             class="inpUpload" aura:id="" type="file" multiple="false" style="content : "/>
+                        </div>
+                    </div>
+                    <aura:set attribute="else">
+                        <div class="slds-float_left" >
+                            <div class="slds-col  slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col" style="">
+                                <div style ="display: inline-flex;">
+                                    <lightning:input  onchange="{!c.Replace}" 
+                                                     class="inpReplace" aura:id="" type="file" multiple="false" />
+                                    <span class="slds-m-left_medium" style="margin-top:auto;"> 
+                                        <!--   <lightning:button class="viewBtn" label="View" onclick="{!c.downloadDocument}"/> -->
+                                        <lightning:button onclick="{!c.downloadDocument}" class="viewBtn" >
+                                            <lightning:buttonIcon iconName="utility:preview"  size="medium" variant="bare"/>
+                                            <p style="margin-left:-7px;">Preview </p>  
+                                        </lightning:button> 
+                                    </span> 
+                                </div>
+                            </div>
+                        </div>
+                    </aura:set>
+                </aura:if>
+            </aura:if> 
+            
+                        
+            <aura:if isTrue="{!v.Authorisation}">
+                <aura:if isTrue="{!v.ShowMeter}">
+                    <aura:iteration items="{!v.NmList}" var="item" indexVar="indx">
+                        <div class="desktopView">
+                            <div>                            
+                                <!--{!v.indx}-->
+                                <div class="slds-grid slds-gutters slds-m-top_small" >
+                                    <div class="slds-col slds-size_1-of-12 slds-medium-size_1-of-6 slds-large-size_1-of-6 slds-align_absolute-center" style="padding-inline: inherit;">
+                                        <img src="{!$Resource.SolarLoan + '/img/fileicon.png'}" style="height:35px;"/>
+                                    </div>
+                                    <div class="slds-grid slds-grid_vertical" style="line-height: initial;margin-left: inherit;">
+                                        <div class="slds-col slds-size_1-of-12 slds-medium-size_1-of-6 slds-large-size_2-of-6 slds-align_absolute-center" style="text-align: left;margin-top: 5px;">
+                                            <b style="font-size:12px;max-width: 110px;min-width: 110px;text-wrap: nowrap;">{!item}</b>
+                                        </div> 
+                                        <div class="slds-col slds-size_1-of-12 slds-medium-size_6-of-6 slds-large-size_6-of-6" align="left"> 
+                                            <meter class="" value="100" style="width:240%"/>
+                                        </div>
+                                    </div>
+                                    <aura:if isTrue="{!v.upload}">
+                                        <div class="slds-col slds-size_1-of-12 slds-medium-size_2-of-6 slds-large-size_2-of-6">
+                                            <img src="{!$Resource.SolarLoan + '/img/tickgreen.png'}" class="greentick"/>
+                                        </div>
+                                    </aura:if>
+                                    <!--<div class="slds-col slds-size_1-of-1 slds-large-size_2-of-6">                                
+                                        <div style="margin-top : 13px;" align="left">
+                                            <meter class="meterStyle" value="100"/>
+                                        </div>
+                                    </div>-->
+                                    <div class="slds-col slds-size_1-of-12 slds-medium-size_2-of-6 slds-large-size_2-of-6" style="margin-top: 5px;position: relative;margin-left: 8px;">    
+                                        <div class="{!v.isCustomer ? ' ' : 'customerStyle'}">    
+                                            <lightning:buttonIcon name="{!indx}" iconName="utility:close" size="small" value="{!v.AttachId}" disabled="false" class="{!!v.upload? 'crossBtnDisabledFunding':'crossBtnFinanceFunding'}" onclick="{!c.onFundingDelete}" variant="bare"/> 
+                                        </div>   
+                                    </div>
+                                </div>
+                            </div>                                      
+                        </div>
+                        <div class="slds-grid slds-wrap mobileView">
+                            <div class="slds-col slds-size_1-of-12 slds-medium-size_1-of-12 slds-large-size_1-of-12 slds-align_absolute-center" style="width: auto;">
+                                <img src="{!$Resource.SolarLoan + '/img/fileicon.png'}" style="height:36px;margin-left: 4px;"/>
+                            </div>
+                            <div class="slds-grid slds-grid_vertical slds-col" style="margin-left:8px">
+                                <div class="slds-col  slds-size_3-of-12 slds-medium-size_4-of-12 slds-large-size_4-of-12" style="width:auto">
+                                    <b style="font-size:15px;">{!item}</b>
+                                </div>
+                                <div class="slds-col slds-size_6-of-6 slds-medium-size_5-of-12 slds-large-size_5-of-12" align="left">
+                                    <meter class="" style="width:125%" value="100"/>
+                                </div>
+                            </div>
+                            <aura:if isTrue="{!v.upload}">
+                                <div class="slds-col slds-size_1-of-12 slds-medium-size_1-of-12 slds-large-size_1-of-12">
+                                    <img src="{!$Resource.SolarLoan + '/img/tickgreen.png'}" class="" style="position: relative;height: 2rem;width: 100%;bottom:8px"/>
+                                </div>
+                                <aura:if isTrue="{!v.isCustomer}">
+                                    <div class="slds-col slds-size_1-of-12 slds-medium-size_1-of-12 slds-large-size_1-of-12 slds-align_absolute-center" style="margin-bottom: 17px;">
+                                        <lightning:buttonIcon name="{!indx}" iconName="utility:close" size="medium" value="{!v.AttachId}" disabled="{!!v.upload}" class="{!!v.upload? 'crossBtnDisabled':'crossBtnCpy'}" onclick="{!c.onFundingDelete}" variant="bare"/>                    
+                                    </div>
+                                </aura:if>
+                            </aura:if>                                             
+                        </div>
+                    </aura:iteration>  
+                    <aura:if isTrue="{!v.showForMetr}">  
+                        <div class="slds-grid slds-wrap mobileView">
+                            <div class="slds-col slds-size_1-of-12 slds-medium-size_1-of-12 slds-large-size_1-of-12 slds-align_absolute-center" style="width: auto;">
+                                <img src="{!$Resource.SolarLoan + '/img/fileicon.png'}" style="height:36px;margin-left: 4px;"/>
+                            </div>
+                            <div class="slds-grid slds-grid_vertical slds-col" style="margin-left:8px;">
+                                <div class="slds-col  slds-size_3-of-12 slds-medium-size_4-of-12 slds-large-size_4-of-12" style="width:auto">
+                                    <b style="font-size:15px;">{!v.Name}</b>
+                                </div>
+                                <div class="slds-col slds-size_6-of-6 slds-medium-size_5-of-12 slds-large-size_5-of-12" align="left">
+                                    <meter class="" style="width:125%" value="{!v.percent / 100}"/>
+                                </div> 
+                            </div> 
+                        </div>
+                    </aura:if> 					
+                    
+                    <aura:if isTrue="{!v.showForMetr}">   
+                        <div class="desktopView">
+                            <div>                            
+                                <div class="slds-grid slds-gutters" style="margin-top: 15px;float: right;margin-right:55px">
+                                    <div class="slds-col slds-size_1-of-12 slds-medium-size_1-of-6 slds-large-size_1-of-6 slds-align_absolute-center" style="padding-inline: inherit;">
+                                        <img src="{!$Resource.SolarLoan + '/img/fileicon.png'}" style="height:35px;"/>
+                                    </div>
+                                    <div class="slds-grid slds-grid_vertical" style="line-height: initial;margin-left: inherit;margin-right: 60px;margin-left: inherit;">
+                                        <div class="slds-col slds-size_1-of-12 slds-medium-size_1-of-6 slds-large-size_2-of-6 slds-align_absolute-center" style="text-align: left;margin-top: 5px;">
+                                            <b style="font-size:12px;max-width: 110px;min-width: 110px;text-wrap: nowrap;">{!v.Name}</b>
+                                        </div> 
+                                        <div class="slds-col slds-size_1-of-12 slds-medium-size_6-of-6 slds-large-size_6-of-6" align="left"> 
+                                            <meter class="" value="{!v.percent / 100}" style="width:240%"/>
+                                        </div>
+                                    </div>
+                                    <!-- <aura:if isTrue="{!v.upload}">
+                                        <div class="slds-col slds-size_1-of-12 slds-medium-size_1-of-12 slds-large-size_1-of-12 slds-align_absolute-center">
+                                            <img src="{!$Resource.SolarLoan + '/img/tickgreen.png'}" class="greentick"/>
+                                        </div>
+                                    </aura:if>-->
+                                    <!--<div class="slds-col slds-size_1-of-1 slds-large-size_4-of-12">                                
+                                        <div style="margin-top : 13px;" align="left">
+                                            <meter class="meterStyle" value="{!v.percent / 100}"/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-12 slds-medium-size_2-of-6 slds-large-size_2-of-6" style="margin-top: 5px;position: relative;">
+                                        <lightning:buttonIcon name="{!indx}" iconName="utility:close" size="small" value="{!v.AttachId}" disabled="{!!v.upload}" class="{!!v.upload? 'crossBtnDisabledFunding':'crossBtnFinanceFunding'}" onclick="{!c.onFundingDelete}" variant="bare"/>
+                                    </div>-->
+                                </div>
+                            </div>                                      
+                        </div>
+                    </aura:if>
+                </aura:if>
+                
+                <aura:if isTrue="{!v.UploadButtonFunding}">
+                    <div class="slds-float_left" >
+                        <div class="slds-col  slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col" style="">
+                            <lightning:input  onchange="{!c.FundingDocUpload}" 
+                                             class="inpUpload" aura:id="" type="file" multiple="false" style="content : "/>
+                        </div>
+                    </div>
+                    <aura:set attribute="else">
+                        <div class="slds-float_left" >
+                            <div class="slds-col  slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col" style="">
+                                <div style ="display: flex;">
+                                    <lightning:button class="viewBtn viewBtn2"  label="Preview" onclick="{!c.downloadDocument}">
+                                        <lightning:buttonIcon iconName="utility:preview"  size="medium" variant="bare"/>
+                                        <p style="margin-left:-7px; font-size: 13px;">Preview </p>
+                                    </lightning:button>
+                                    <aura:if isTrue="{!v.isCustomer}">
+                                        <span class="slds-m-left_medium" style="margin-top:auto;">  <lightning:input  onchange="{!c.Replace}" 
+                                                                                                                     class="inpReplace" aura:id="" type="file" multiple="false" /> </span>
+                                    </aura:if>
+                                </div>
+                            </div>
+                        </div>
+                    </aura:set>
+                </aura:if>
+            </aura:if>
+  
+        </div>
+    </div>
+    
+</aura:component>

@@ -2,13 +2,18 @@
 	doInit: function(component, event, helper) {
         var recordIds = component.get("v.recordId");
         helper.callDoInit(component, recordIds);
+        helper.getOppDocs(component, recordIds);
+        helper.getCurrentAppName(component, event, helper);
     },
     openUploadDocs: function(component, event, helper) {
         var recordIds = component.get("v.recordId");
-        window.open('https://apply-parkerlane.secure.force.com/supportingDocument?oppId='+recordIds,'_blank');
+        var label = $A.get("$Label.c.baseUrl"); 
+        window.open(label+'supportingDocument?oppId='+recordIds,'_blank');
+        //window.open('https://lanecorp--uat.sandbox.my.salesforce-sites.com/supportingDocument?oppId='+recordIds,'_blank');
     },
     navigateToRecord : function(component , event, helper){
         var recordId = event.currentTarget.dataset.recordId;
+        var currentApp = component.get("v.currentAppName");
         var navService = component.find("navService");
         var pageReference = {    
             "type": "standard__recordPage",
@@ -17,12 +22,19 @@
                 "actionName": "view"
             }
         }
-        navService.generateUrl(pageReference).then($A.getCallback(function(url) {
-            window.open(url,'_blank');
-        }), 
-        $A.getCallback(function(error) {
+        if (currentApp == 'Service Console') {
+            // Running in Service Console (not open in new tab).
+            navService.navigate(pageReference);
+        } 
+        else {
+        // Running in Financial Service Cloud, open the record in a new tab
+        navService.generateUrl(pageReference).then($A.getCallback(function (url) {
+            window.open(url, '_blank');
+        }),
+        $A.getCallback(function (error) {
             console.log('error: ' + error);
-        }));    
+        }));
+     }
     },
     //Select all contacts
     handleSelectAllContact: function(component, event, helper) {
@@ -401,7 +413,8 @@
         helper.fetchUploadedFiles(component, idContent);
     },
 	closeIsAfter: function(component, event, helper){
-		component.set("v.isAfterUpload",false);            
+		component.set("v.isAfterUpload",false);
+        component.set("v.docExistError",false);
     },
     titleChange: function(component, event, helper){
 		var cid = event.getSource().get("v.name");	            
@@ -460,8 +473,30 @@
         }
         console.log(list);
         component.set("v.finalUpload",list);
+        
+        //Added by Pawan PDO-1019--
+        var olddocs = component.get("v.oldDocExist");
+        var cmbList = component.get("v.finalUpload");
+        if(olddocs){
+            for(var j=0; j< cmbList.length; j++){
+                if(cmbList[j].Category__c == 'Lender Credit Contract'){
+                    component.set("v.docExistError",true); 
+                    break;
+                }
+                else{
+                    component.set("v.docExistError",false);  
+                }
+            }
+            
+        } 
+        else{
+            component.set("v.docExistError",false);  
+        }
+        //Pawan Code End.
     },
     handleFinalUploadDoc: function(component, event, helper){
+        component.set("v.docExistError",false);
+        
 		var list = [];
         list = component.get("v.finalUpload")
         for(var i=0; i<list.length; i++){
@@ -517,6 +552,42 @@
                 }
             }
         }
-       	helper.mergePdf(component,selectedCV);
+        helper.mergePdf(component,selectedCV);
     },
+        
+        
+        updateForLender : function(component,event,helper){
+           	$A.util.removeClass(component.find("mySpinnerOpp"), "slds-show");
+            var lender = event.getSource().get("v.value");
+            var action = component.get("c.updateLender");
+            var recordIds = component.get("v.recordId");
+            var index = event.getSource().get("v.name");
+            action.setParams({
+                chkbx :  lender,
+                CVID : index
+            });
+            action.setCallback(this, function(response) {
+                var state = response.getState();
+                if (state === "SUCCESS") {
+                    helper.callDoInit(component, recordIds);
+                    $A.util.addClass(component.find("mySpinnerOpp"), 'slds-hide');
+                }
+                else if (state === "INCOMPLETE") {
+                    // do something
+                }
+                    else if (state === "ERROR") {
+                        var errors = response.getError();
+                        if (errors) {
+                            if (errors[0] && errors[0].message) {
+                                alert("Error message: " + 
+                                      errors[0].message);
+                            }
+                        } else {
+                            alert("Unknown error");
+                        }
+                    }
+            });
+            
+            $A.enqueueAction(action);
+        }
 })

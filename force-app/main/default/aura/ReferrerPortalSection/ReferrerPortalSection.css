@@ -1,0 +1,101 @@
+.THIS .referrer-portal-section, .THIS.referrer-portal-section{
+    height:100%;
+}
+.THIS .buttonStyle{
+    border-radius: 15px;
+    height: 135px;
+}
+
+.THIS .onHover:hover{
+    background: #304B88;
+}
+
+.THIS .slds-btn-txt{
+    color: #1a2745;
+    font-weight: bold;
+	font-size: 19px;
+    font-family: Open Sans;
+    padding: inherit;
+    margin-right: 15px;
+}
+
+.THIS .chatButton{
+    color: #1a2745;
+    font-size: 22px;
+    font-weight: bold;	    
+}
+
+.THIS .short-name span{
+    padding: 14px 13px 14px 13px;
+    background-color: #fff;
+    color: #1a2745;
+    border-radius: 60px;
+    font-size: 17px;
+}
+.THIS .nav-menu {
+    padding: 10px;
+    cursor: pointer;
+}
+.THIS .nav-menu img {
+    width: 25px;
+    margin-right: 15px;
+    margin-left: 50px;
+}
+
+.THIS .notification-box{
+    background-color: #fff;
+    border-radius: 10px;
+    /*box-shadow: 1px 4px 14px 1px #dfdfdf;*/
+    padding: 15px;
+    padding-left: 20px;
+    padding-top: 14px;
+}
+
+.THIS .todobox{
+    background-color: #fff;
+    border-radius: 10px;
+    /*box-shadow: 1px 4px 14px 1px #dfdfdf;*/
+    /*padding: 15px;*/
+    padding-left: 20px;
+    padding-top: 14px;
+}
+
+.THIS .recent-activity-box{
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 1px 4px 14px 1px #dfdfdf;
+    /*padding: 15px;*/
+    padding-left: 20px;
+    padding-top: 14px;
+}
+.THIS .status-box{
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 1px 4px 14px 1px #dfdfdf;
+    padding: 15px;
+    padding-left: 20px;
+    padding-top: 10px;
+    min-height: 9rem;
+}
+.THIS .blank-circle {
+    border: 1px solid #ffffff;
+    padding: 10px;
+    border-radius: 100px;
+    box-shadow: 1px 2px 12px 4px #dfdfdf;
+    height: 10px;
+    width: 10px;
+}
+.THIS .search-name .slds-input{
+    font-family: Proxima Nova Alt Regular;
+    font-size: 15px;
+    height: 46px;
+    width : 100%;
+    border-radius : 8px;
+    color: #1a2746;
+}
+.THIS .search-name .slds-input::placeholder {
+    color: #9EB7BC;
+}
+.THIS .spinBlur{
+    opacity :40% !important;
+}

@@ -1,0 +1,51 @@
+<aura:component implements="lightningsnapin:prechatUI" description="Sample custom pre-chat component for Embedded Chat. Implemented using Aura.">
+    <!-- You must implement "lightningsnapin:prechatUI" for this component to appear in the "Pre-chat Component" customization dropdown in the Embedded Service setup -->
+    
+    <!-- Pre-chat field components to render -->
+    <aura:attribute name="prechatFieldComponents" type="List" description="An array of objects representing the pre-chat fields specified in pre-chat setup."/>
+    <aura:attribute name="btndisabled" type="boolean" default="true" />
+    <aura:attribute name="first_name" type="string"  />
+    <aura:attribute name="noPredata" type="boolean" default="false" />
+    <aura:attribute name="custEmail" type="String"/>
+    <!-- Handler for when this component is initialized -->
+    <aura:handler name="init" value="{!this}" action="{!c.onInit}" />
+    
+    <!-- For Aura performance -->
+    <aura:locator target="startButton" description="Pre-chat form submit button."/>
+    
+    <!-- Contains methods for getting pre-chat fields, starting a chat, and validating fields -->
+    <lightningsnapin:prechatAPI aura:id="prechatAPI"/> 
+    <div >
+        <aura:if isTrue="{!v.noPredata}">
+            <div class="slds-m-top_medium"> Hi, how can we help you today?</div>
+            <div class="slds-m-top_x-small slds-p-around_medium">
+                <lightning:input class="no-abbr" aura:id="firstname"  label="" placeholder="First Name" value=""  onchange="{!c.subjectOnchange}"/>                                                  
+            </div>
+            <div class="slds-p-around_medium">
+                <lightning:input class="no-abbr" aura:id="lastname"  label="" placeholder="Last Name" value=""  onchange="{!c.subjectOnchange}"/>                                                  
+            </div>
+            <div class="slds-p-around_medium">
+                <lightning:input type="email" label="" placeholder="Email address" class="no-abbr"
+                                 aura:id="emll" required="true" pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{1,5})$"
+                                 messageWhenPatternMismatch="You have entered an invalid format."
+                                 value="{!v.custEmail}" onchange="{!c.subjectOnchange}" onkeyup="{!c.checkEmail}"/>
+            </div>
+            <div class="slds-m-top_small slds-p-around_medium">
+                <lightning:textarea class="inp" aura:id="customSubjectField" maxlength="255" label="Tell us as much as you can and we’ll assign you to the right person." value=""  onchange="{!c.subjectOnchange}"/>                                                  
+            </div>
+            <div class="stBtn slds-m-top_xx-small slds-p-around_medium ">
+                <lightning:button aura:id="startButton" disabled="{!v.btndisabled}" class="startButton" variant="brand" label="Begin Chat" onclick="{!c.handleStartButtonClick}"/>
+            </div>
+            <aura:set attribute="else">
+                <div class="slds-m-top_xx-large"> Hi {!v.first_name}, how can we help you today?</div>
+                <div class="slds-m-top_x-large slds-p-around_medium">
+                    <lightning:textarea class="inp" aura:id="customSubjectField" maxlength="255" label="Tell us as much as you can and we’ll assign you to the right person." value=""  onchange="{!c.subjectOnchange}"/>                                                  
+                </div>
+                <div class="startButtonWrapper slds-m-top_x-large slds-p-around_medium " style="margin-top: 7rem;">
+                    <lightning:button aura:id="startButton" disabled="{!v.btndisabled}" class="startButton" variant="brand" label="Begin Chat" onclick="{!c.handleStartButtonClick}"/>
+                </div>
+            </aura:set>
+        </aura:if>
+    </div>
+    
+</aura:component>

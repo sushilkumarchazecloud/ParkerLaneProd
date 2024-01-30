@@ -1,0 +1,235 @@
+.THIS .company-logo img, .THIS.company-logo img{
+    width: 200px;
+    padding: 10px;
+    height: 43px;
+}
+
+.THIS .max-700, .THIS.max-700{
+    max-width: 700px !important;
+    width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    font-size: 0.95rem !important;
+    font-family: ProximaNovaAlt-Medium !important;
+    margin-bottom : 7rem !important;
+}
+.THIS .company-logo, .THIS.company-logo{
+    padding: 10px;
+    background-color: #1a2745;
+    color: #fff;
+    min-height: 70px;
+    align-items: center;
+}
+
+.THIS .header--section,.THIS.header--section{
+    background-color: #d2edee;
+    text-align: center;
+    padding: 15px;
+}
+
+.THIS .header-logo{
+    border-radius: 72px;
+    border: 2px solid #5bc65b;
+    width: 90px;
+    padding: 10px;
+    height: 90px;
+    background-color: #FFF;
+}
+
+.THIS .heading-style{
+    font-size: 1.85rem;
+    font-family: ProximaNova-AltBold;
+    line-height: normal;
+}
+
+.THIS .mobileDesc{
+    margin-bottom: revert;
+}
+
+.THIS .cmb .slds-input_faux{
+    background: white;
+    padding-block: 5px !important;
+    font-size: 15px;
+    border-radius: 0.25rem!important;
+    box-shadow: none;
+    border-color: #c9c9c9;
+}
+
+.THIS .cmb .slds-form-element__label{
+    font-size: 0.95rem;
+    font-family: ProximaNovaAlt-Medium !important;
+    font-color: black !important;
+    color: #032d60 !important;  
+    margin-bottom : 8px;
+}
+
+.THIS .surplusMargin{
+    margin-top: 19px;
+}
+
+.THIS .cmbWidh{
+    width: 50%;
+}
+
+.THIS .Inp1 .slds-input{
+    padding-block : 5px !important;
+    font-size: 16px !important; 
+    border-radius: 0.25rem!important;
+    margin-top: 10px;
+    padding-left : 25px  !important;
+    box-shadow: none;
+    border-color: #c9c9c9;
+}
+
+.THIS .Inp1 .slds-input:focus {
+    outline: none;
+    box-shadow: none;/* Remove the blue outline */
+}
+
+.THIS .Inp1 .slds-form-element__label{
+    font-size: 0.95rem;
+    font-family: ProximaNovaAlt-Medium !important;
+    font-color: black !important;
+    color: #032d60 !important;    
+}
+
+.THIS .Inp1 lightning-input:before {
+    position: absolute;
+    content: "$" ;
+    top:  44px;
+    z-index: 1;
+    font-size: 18px;
+    left:  12px;
+}
+
+.THIS .Inp2 .slds-input{
+    padding-block : 5px !important;
+    font-size: 16px !important; 
+    border-radius: 0.25rem!important;
+    margin-top: 10px;
+    padding-left : 25px  !important;
+}
+
+.THIS .Inp2 .slds-form-element__label{
+    font-size: 0.95rem;
+    font-family: ProximaNovaAlt-Medium !important;
+    font-color: black !important;
+    color: #032d60 !important;    
+}
+
+.THIS .Inp2 lightning-input:before {
+    position: absolute;
+    content: "$" ;
+    top:  47px;
+    z-index: 1;
+    font-size: 18px;
+    left:  12px;
+}
+
+.THIS .btnC {
+    width: 100%;
+    padding: 18px!important;
+    border-color: green;
+    color: #fff!important;
+    font-size: 1rem;
+    border: 0;
+    font-weight: 500;
+}
+
+.THIS .txtformat {
+   font-size: 0.95rem !important;
+   font-family: ProximaNovaAlt-Medium !important;
+}
+
+.THIS .slds-checkbox_toggle input[type="checkbox"]:checked + .slds-checkbox_faux_container .slds-checkbox_faux {
+    background-color:#45c65a ;
+}
+
+.THIS .slds-checkbox_toggle input[type="checkbox"]:checked + .slds-checkbox_faux_container .slds-checkbox_faux:hover {
+    background-color:#45c65a;
+    border-color:#45c65a;
+}
+
+.THIS .slds-checkbox_toggle input[type="checkbox"]:checked + .slds-checkbox_faux_container .slds-checkbox_faux:not(:hover) {
+    background-color: #45c65a;
+    border-color: #45c65a;
+}
+
+.THIS .slds-checkbox_toggle [type=checkbox]:checked+.slds-checkbox_faux_container .slds-checkbox_faux:after{
+    display: none;
+}
+
+.THIS .slds-checkbox_toggle input[type="checkbox"]:focus + .slds-checkbox_faux_container .slds-checkbox_faux,
+.THIS .slds-checkbox_toggle input[type="checkbox"]:focus:not(:checked) + .slds-checkbox_faux_container .slds-checkbox_faux {
+    box-shadow: none;
+    border-color: transparent;
+}
+
+.THIS .slds-checkbox_toggle input[type="checkbox"]:active + .slds-checkbox_faux_container .slds-checkbox_faux,
+.THIS .slds-checkbox_toggle input[type="checkbox"]:active:not(:checked) + .slds-checkbox_faux_container .slds-checkbox_faux {
+    box-shadow: none;
+    border-color: transparent;
+}
+
+.THIS .toggle-btn .slds-checkbox_on{
+    display : none !important;
+}
+.THIS .toggle-btn .slds-checkbox_off{
+    display : none !important;
+}
+
+
+.THIS .cmb .slds-icon-text-default{
+    fill: black !important;
+}
+
+.THIS .no-abbr label.slds-form-element__label abbr, .THIS .no-abbr legend.slds-form-element__label abbr {
+    display: none;
+}
+
+@font-face {
+    font-family: ProximaNova-AltBold;
+    src: url('/resource/customfonts/ProximaNova-AltBold.otf') format('OpenType');
+}
+
+.THIS .ProximaNovaAlt-Medium {
+    font-family: ProximaNovaAlt-Medium !important;
+}
+
+@font-face {
+    font-family: ProximaNovaAlt-Medium;
+    src: url('/resource/customfonts/ProximaNovaAlt-Medium.otf') format('OpenType');
+}
+
+.THIS .desk_css{
+    margin-left: auto;
+}
+
+.THIS .boxalign {
+    text-align: -webkit-right;
+}
+
+@media screen and (max-width: 770px) {
+    .THIS .mob_css{
+        margin-top: -15px;
+        margin-inline: auto;
+    }
+    .THIS .company-logo div, .THIS.company-logo div{
+        text-align: center;
+        padding: 7px;
+        font-size: 12px;
+    }
+    .THIS .max-700 , .THIS.max-700{
+        padding: medium;
+    }
+    .THIS .cmbWidh{
+        width: 90%;
+    }
+    .THIS .invoiceClass{
+        margin-top: inherit;
+    }
+    .THIS .surplusMargin{
+        margin-top: 10px;
+    }
+    
+}

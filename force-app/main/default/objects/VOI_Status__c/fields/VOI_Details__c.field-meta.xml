@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VOI_Details__c</fullName>
+    <externalId>false</externalId>
+    <formula>Contact__r.FirstName + &apos; &apos; + Contact__r.MiddleName + &apos; &apos; + Contact__r.LastName + &apos; (&apos; + IF( ISBLANK(TEXT(VOI_Type_For__c) ) , TEXT(Contact__r.VOI_type__c), TEXT(VOI_Type_For__c) ) + &apos;)&apos;  
+&amp; IF( OR(TEXT(VOI_Status__c) == &apos;Submitted&apos;, TEXT(VOI_Status__c) == &apos;eSign Complete&apos;), BR() &amp;&apos; (&apos; &amp; TEXT(VOI_Status__c ) &amp; &apos; &apos; &amp; TEXT(DAY( DATEVALUE(Date_submitted__c )))+&quot;/&quot; +TEXT(MONTH(DATEVALUE(Date_submitted__c )))+&quot;/&quot; +TEXT(YEAR(DATEVALUE(Date_submitted__c))) &amp; &apos; &apos; &amp; IF (ISBLANK(DATEVALUE(Date_submitted__c )), &quot;&quot;,
+IF(HOUR(TIMEVALUE(Date_submitted__c )) &lt; 12, TEXT(HOUR(TIMEVALUE(Date_submitted__c )) + 12), TEXT(HOUR(TIMEVALUE(Date_submitted__c ) ) - 12)) &amp; &quot;:&quot; &amp;
+IF (MINUTE(TIMEVALUE(Date_submitted__c )) &lt; 10, &quot;0&quot; + TEXT(MINUTE(TIMEVALUE(Date_submitted__c ))), TEXT(MINUTE(TIMEVALUE(Date_submitted__c )))) ) &amp;&apos;)&apos;, &apos;&apos;)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>VOI Details</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

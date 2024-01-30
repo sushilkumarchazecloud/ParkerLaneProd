@@ -143,7 +143,7 @@
                                                 class="slds-scope no-abbr"
                                                 dropdownAlignment="bottom-left"/>
                             -->
-                            <lightning:select name="Job title" aura:id="fieldcheck"
+                           <!-- <lightning:select name="Job title" aura:id="fieldcheck"
                                             class="no-abbr" required="true"
                                             value="{!v.emp.FinServ__Occupation__c}"
                                             label="Job title / occupation">
@@ -152,7 +152,10 @@
                                 <aura:iteration items="{!v.employmentTypeOptions}" var="option">
                                     <option value="{!option.value}" text="{!option.label}"></option>
                                 </aura:iteration>
-                            </lightning:select>
+                            </lightning:select> -->
+                            <lightning:input class="no-abbr" type="text" label="Job title" value="{!v.emp.Job_Title__c}" placeholder="Job Title"
+                                                 aura:id="fieldcheck" maxlength="80" 
+                                                 required="true"/>
                         </div>
                     </div>
                 </div>

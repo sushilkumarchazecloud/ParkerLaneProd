@@ -6,7 +6,13 @@
     <aura:attribute name="appSectionPath" type="List" default="[]"/>
     <aura:attribute name="showError" type="Boolean" default="false"/>
     <aura:attribute name="errorMsg" type="String" default="Please update the form entries highlighted in red and try again"/>
+    <aura:attribute name="showAmountError" type="Boolean" default="false"/>
     <aura:attribute name="totalAmount" type="Decimal" default="0"/>
+    <aura:attribute name="shortAmount" type="Decimal" default="0"/>
+    <aura:attribute name="isLimited" type="Boolean" default="false"/>
+    <aura:attribute name="employmentsList1" type="FinServ__Employment__c[]" />
+    <aura:attribute name="employmentStatus1" type="String" default=""/>
+     <aura:attribute name="scrollToElementId" type="String" default="scrollTarget"/>
     
     <aura:handler action="{!c.doInit}" name="init" value="{!this}"/>
     <aura:method name="saveLivingExpensesDetails" action="{!c.saveApplication}" access="PUBLIC"  >
@@ -25,69 +31,129 @@
         </aura:if>
         <lightning:spinner aura:id="mySpinner" variant="brand" size="large" class="" />
         <header class="checkout-page-banner1--gradient max-700">
+            <div class="slds-align_absolute-center slds-m-top_x-large">
+                <img src="{!$Resource.headersLogo + '/headersLogo/LivingExpenses.png'}" class="trackercls"/>
+            </div>
             <div class="slds-align1_absolute-center ">
                 <div class="page-banner__content1-text slds-p-around_medium slds-m-top_medium">
-                    <h1 class="header-text">List your <u>monthly</u> essential living expenses</h1>
+                    <h1 class="header-text">List your household's <u> monthly</u> living expenses</h1>
                     <div style="text-transform:none;text-align:left;">
                         <p style="color: #1e8ffd!important;font-weight: bold;">
                             Use the slider for a faster process
                         </p>
                     </div>
+                    <div aura:id="scrollTarget"></div>
                 </div>
             </div>
         </header>
         
-        <section class="max-700 slds-p-around--medium slds-col slds-si1ze_1-of-1 bg-lightest1 txt-blue">
-            
-            <div class="slds-form " onchange="{!c.totalExpenses}">
-               
-                <c:RangeSelectionBar heading="All property" sliderNo="i" val="{!v.applicant.Utilities__c}"
-                                     subHeading ="Utilities, rates, levies and maintenance (not loans)"
-                                     isIconImag = "true" imgName = "AllProperty.png"/>
-                
-                <c:RangeSelectionBar heading="Insurance" sliderNo="ii" val="{!v.applicant.Investment_property_utilities__c}"
-                                     subHeading ="Car, house, health and risk"
-                                     isIconImag = "true" imgName = "Insurance.png"/>
-                
-                <c:RangeSelectionBar heading="Connections" sliderNo="iii" val="{!v.applicant.Connections_Phone_Mobile_Internet_C__c}"
-                                     subHeading ="Phone, internet streaming services"
-                                     isIconImag = "true" imgName = "Connections.png"/>
-                
-                <c:RangeSelectionBar heading="Groceries" sliderNo="vi" val="{!v.applicant.Food_Groceries_Meat_Fruit_Vegetabl__c}"
-                                     subHeading ="Food &amp; supermarket"
-                                     isIconImag = "true" imgName = "groceries.png"/>
-                
-                <c:RangeSelectionBar heading="Transport" sliderNo="viii" val="{!v.applicant.Transport_Public_Petrol_Registration__c}"
-                                     subHeading ="Public transport, fuel, serving &amp; registration"
-                                     isIconImag = "true" imgName = "Transport.png"/>
-                
-                <c:RangeSelectionBar heading="Medical and sport" sliderNo="ix" val="{!v.applicant.Medical_Private_Health_Insurance_Ong__c}"
-                                     subHeading ="Doctor, dentist, physio, gym and training"
-                                     isIconImag = "true" imgName = "MedicalandSport.png"/>
-                
-                <c:RangeSelectionBar heading="Clothing and personal care" sliderNo="vii" val="{!v.applicant.Clothing_and_personal_care__c}"
-                                     subHeading ="Inc. footwear, cosmetics &amp; personal care"
-                                     isIconImag = "true" imgName = "ClothingandPersonalCare.png"/>
-                
-                <c:RangeSelectionBar heading="Entertainment" sliderNo="xii" val="{!v.applicant.Entertainment_Dining_Out_Movies_Gift__c}"
-                                     subHeading ="Essential recreation and entertainment"
-                                     isIconImag = "true" imgName = "Entertainment.png"/>
-                
-                <c:RangeSelectionBar heading="Childcare" sliderNo="iv" val="{!v.applicant.Education_ChildCare_SchoolFees_Uniform__c}"
-                                     subHeading ="Day care, nannies, school fees and tutoring"
-                                     isIconImag = "true" imgName = "Childcare.png"/>
-                
-                <c:RangeSelectionBar heading="Gambling" sliderNo="xiii" val="{!v.applicant.Gambling_Betting_and_Lottery__c}"
-                                     subHeading ="Gambling, Betting &amp; lotto"
-                                     isIconImag = "true" imgName = "Gambling.png"/>
-                
-                <div class="slds-m-vertical_medium div-color">
-                    <div class="" title="Total Amount">
-                        Total Expenses: $<lightning:formattedNumber value="{!v.totalAmount}" maximumFractionDigits="2"/>
+            <aura:if isTrue="{!v.showAmountError}">
+                <div style="color:red;" class="max-700 slds-p-left--medium slds-p-right--medium slds-col slds-si1ze_1-of-1 bg-lightest1 txt-blue">
+                    <div><span><img src="{!$Resource.SolarLoan + '/img/Warning.PNG'}" style="height:30px;"/></span>
+                        <span class="slds-text-heading_medium sub_heading_font"><strong>Your estimate is too low</strong> <br/></span>  
+                    </div>
+                    <div style="line-height: 16px;font-size: 14px;"> 
+                        According to government statistics, your estimate looks at least <lightning:formattedNumber value="{!v.shortAmount}" style="currency" currencyCode="AUD"  minimumFractionDigits="0" /> short. Please double check your figures to avoid any unnecessary delay or scrutiny.
                     </div>
                 </div>
-            </div>
-        </section>
+            </aura:if>
+        
+        <aura:if isTrue="{!v.isLimited}"> 
+            
+            <section class="max-700 slds-p-around--medium slds-col slds-si1ze_1-of-1 bg-lightest1 txt-blue">   
+                <div class="slds-form " onchange="{!c.totalExpenses}">
+
+                    <c:RangeSelectionBar aura:id="Utilities" heading="All property" sliderNo="i" val="{!v.applicant.Utilities__c}"
+                                         subHeading ="Utilities, rates, levies and maintenance (not loans)"
+                                         />
+                    
+                    <c:RangeSelectionBar aura:id="Groceries" heading="Groceries &amp; transport " sliderNo="ii" val="{!v.applicant.Groceries_transport__c}"
+                                         subHeading ="include vehicle, public transport"
+                                         
+                                         /> 
+                    
+                    <c:RangeSelectionBar aura:id="Clothing" heading="Clothing &amp; entertainment " sliderNo="iii" val="{!v.applicant.Clothing_and_entertainment__c}"
+                                         subHeading ="include recreation, personal care"
+                                         
+                                         />
+                    
+                    <c:RangeSelectionBar aura:id="Insurance" heading="Insurance &amp; medical " sliderNo="iv" val="{!v.applicant.Insurance_and_medical__c}"
+                                         subHeading ="include all insurances"
+                                         
+                                         />
+                    
+                    <c:RangeSelectionBar heading="Education &amp; childcare " sliderNo="v" val="{!v.applicant.Education_and_childcare__c}"
+                                         subHeading ="Day care, nannies, school fees and tutoring" isRequired="false"
+                                         
+                                         />
+                    
+                    <c:RangeSelectionBar heading="Other " sliderNo="vi" val="{!v.applicant.Other_Regular_Expenditure__c}"
+                                         subHeading ="include gambling and anything else" isRequired="false"
+                                         
+                                         />
+                    <div class="slds-m-vertical_medium div-color">
+                        <div class="" title="Total Amount">
+                            Total Expenses: $<lightning:formattedNumber value="{!v.totalAmount}" maximumFractionDigits="2"/>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <aura:set attribute="else">
+                <section class="max-700 slds-p-around--medium slds-col slds-si1ze_1-of-1 bg-lightest1 txt-blue">   
+                    <div class="slds-form " onchange="{!c.totalExpenses}">
+
+                        <c:RangeSelectionBar aura:id="Utilities2" heading="All property" sliderNo="i" val="{!v.applicant.Utilities__c}"
+                                             subHeading ="Utilities, rates, levies and maintenance (not loans)"
+                                             isIconImag = "true" imgName = "AllProperty.png"
+                                             />
+                        
+                        <c:RangeSelectionBar aura:id="Insurance2" heading="Insurance" sliderNo="ii" val="{!v.applicant.Investment_property_utilities__c}"
+                                             subHeading ="Car, house, health and risk"
+                                             isIconImag = "true" imgName = "Insurance.png"/>
+                        
+                        <c:RangeSelectionBar aura:id="Connections2" heading="Connections" sliderNo="iii" val="{!v.applicant.Connections_Phone_Mobile_Internet_C__c}"
+                                             subHeading ="Phone, internet streaming services"
+                                             isIconImag = "true" imgName = "Connections.png"/>
+                        
+                        <c:RangeSelectionBar aura:id="Groceries2" heading="Groceries" sliderNo="vi" val="{!v.applicant.Food_Groceries_Meat_Fruit_Vegetabl__c}"
+                                             subHeading ="Food &amp; supermarket"
+                                             isIconImag = "true" imgName = "groceries.png"/>
+                        
+                        <c:RangeSelectionBar aura:id="Transport2" heading="Transport" sliderNo="viii" val="{!v.applicant.Transport_Public_Petrol_Registration__c}"
+                                             subHeading ="Public transport, fuel, serving &amp; registration"
+                                             isIconImag = "true" imgName = "Transport.png"/>
+                        
+                        <c:RangeSelectionBar aura:id="Medical2" heading="Medical and sport" sliderNo="ix" val="{!v.applicant.Medical_Private_Health_Insurance_Ong__c}"
+                                             subHeading ="Doctor, dentist, physio, gym and training"
+                                             isIconImag = "true" imgName = "MedicalandSport.png"/>
+                        
+                        <c:RangeSelectionBar aura:id="Clothing2" heading="Clothing and personal care" sliderNo="vii" val="{!v.applicant.Clothing_and_personal_care__c}"
+                                             subHeading ="Inc. footwear, cosmetics &amp; personal care"
+                                             isIconImag = "true" imgName = "ClothingandPersonalCare.png"/>
+                        
+                        <c:RangeSelectionBar aura:id="Entertainment2" heading="Entertainment" sliderNo="xii" val="{!v.applicant.Entertainment_Dining_Out_Movies_Gift__c}"
+                                             subHeading ="Essential recreation and entertainment"
+                                             isIconImag = "true" imgName = "Entertainment.png"/>
+                        
+                        <c:RangeSelectionBar heading="Childcare" sliderNo="iv" val="{!v.applicant.Education_ChildCare_SchoolFees_Uniform__c}"
+                                             subHeading ="Day care, nannies, school fees and tutoring" isRequired="false"
+                                             isIconImag = "true" imgName = "Childcare.png"/>
+                        
+                        <c:RangeSelectionBar aura:id="Gambling" heading="Gambling" sliderNo="xiii" val="{!v.applicant.Gambling_Betting_and_Lottery__c}"
+                                             subHeading ="Gambling, Betting &amp; lotto"
+                                             isIconImag = "true" imgName = "Gambling.png"/>
+                        
+                        
+                        <div class="slds-m-vertical_medium div-color">
+                            <div class="" title="Total Amount">
+                                Total Expenses: $<lightning:formattedNumber value="{!v.totalAmount}" maximumFractionDigits="2"/>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </aura:set>
+        </aura:if>
         <div class="max-700 preNxtBtn slds-p-around_medium" style="margin-bottom: 40px;">
             <div class="slds-grid slds-wrap">
                 <div class="slds-size_1-of-2">

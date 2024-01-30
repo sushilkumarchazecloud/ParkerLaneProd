@@ -1,0 +1,202 @@
+<apex:page renderAs="PDF" controller="Genrate_PDF_For_VOI_Controller"  showHeader="false" sidebar="false"  standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false" action="{!generateImageURL}">
+    <html>
+        <head>
+            <style>
+                body{
+                font-family: sans-serif;
+                }
+                .PHead{
+                font-size : 28px;
+                font-weight : bold;
+                }
+                .BodyData{
+                font-size : 15px;
+                }
+                .heading{
+                font-size : 14px;
+                color : blue;
+                text-align : center;
+                font-family: sans-serif;
+                }
+                .tableData{
+                font-size : 14px;
+                font-family: sans-serif;
+                }
+                .TmcuInfo{
+                font-size : 14px;
+                font-family : Arial Unicode MS;
+                }
+                .normalHead{
+                font-size : 14px;
+                font-weight : bold;
+                }
+            </style>
+        </head>
+        <body>
+            <div>
+                <apex:pageBlock >
+                    <!--<div class="heading">
+                        <div style="text-align : left; text-align : justify; font-size : 16px; color : blue;">
+                            <span><img src="{!$Resource.SolarLoan+'/img/darkblueinfo.png'}" style="height : 27px;"/></span><br/>
+                            <span>You become a member of a credit union when taking out a product or service with them. Please read and sign the document below</span>
+                        </div><br/>
+                    </div>-->
+                    <div style="font-size : 25px; font-family: sans-serif;">
+                        <span><b>Broken Hill Community Credit Union Membership Application Form.</b></span>
+                    </div><br/><br/>
+                    <div class="BodyData" >
+                        <p>By applying for membership, you subscribe to one $10.00 membership share with The Broken Hill Community Credit Union Limited <b>(BHCCU).</b></p>
+                        <p>Membership confers rights and obligations under the Credit Union’s Constitution, a copy of which you can obtain on request.</p>
+                    </div>
+                    
+                    <div class="BodyData" >
+                        <div style="Display : {!IF(isApp2 == false, 'Block', 'none')}">                            
+                            <table>
+                                <tbody>
+                                    <tr><td><b>APPLICANT DETAILS</b></td></tr>
+                                    <tr><td><b>Title: </b>{!opportunity.Applicant_1__r.Salutation}</td></tr>
+                                    <tr><td><b>First Name: </b>{!opportunity.Applicant_1__r.FirstName}</td></tr>
+                                    <tr><td><b>Middle Name: </b>{!opportunity.Applicant_1__r.MiddleName}</td></tr>
+                                    <tr><td><b>Surname: </b>{!opportunity.Applicant_1__r.LastName}</td></tr>
+                                    <tr><td><b>Date of Birth: </b>{!opportunity.Applicant_1__r.PersonBirthdate}</td></tr>
+                                    <tr><td><b>Gender: </b>N/A</td></tr>
+                                    <tr><td><b>Address: </b>{!appOneAddress}</td></tr>
+                                    <tr><td><b>Postal Address: </b>{!opportunity.Applicant_1__r.Postal_Address__pc}</td></tr>
+                                    <tr><td><b>Phone: </b>{!opportunity.Applicant_1__r.PersonMobilePhone}</td></tr>
+                                    <tr><td><b>Email: </b>{!opportunity.Applicant_1__r.PersonEmail}</td></tr>
+                                    <tr><td><b>Employer: </b>{!emp1.Name}</td></tr>
+                                    <tr><td><b>Occupation: </b>{!emp1.Job_Title__c}</td></tr>
+                                </tbody>
+                            </table><br/>
+                        </div>
+                        <div style="Display : {!IF(isApp2 == true, 'Block', 'none')}">
+                            <table>
+                                <tbody>
+                                    <tr><td><b>APPLICANT DETAILS</b></td></tr>
+                                    <tr><td><b>Title: </b>{!opportunity.Applicant_2__r.Salutation}</td></tr>
+                                    <tr><td><b>First Name: </b>{!opportunity.Applicant_2__r.FirstName}</td></tr>
+                                    <tr><td><b>Middle Name: </b>{!opportunity.Applicant_2__r.MiddleName}</td></tr>
+                                    <tr><td><b>Surname: </b>{!opportunity.Applicant_2__r.LastName}</td></tr>
+                                    <tr><td><b>Date of Birth: </b>{!opportunity.Applicant_2__r.PersonBirthdate}</td></tr>
+                                    <tr><td><b>Gender: </b>N/A</td></tr>
+                                    <tr><td><b>Address: </b>{!appTwoAddress}</td></tr>
+                                    <tr><td><b>Postal Address: </b>{!opportunity.Applicant_2__r.Postal_Address__pc}</td></tr>
+                                    <tr><td><b>Phone: </b>{!opportunity.Applicant_2__r.PersonMobilePhone}</td></tr>
+                                    <tr><td><b>Email: </b>{!opportunity.Applicant_2__r.PersonEmail}</td></tr>
+                                    <tr><td><b>Employer: </b>{!emp2.Name}</td></tr>
+                                    <tr><td><b>Occupation: </b>{!emp2.Job_Title__c}</td></tr>
+                                </tbody>
+                            </table><br/>
+                        </div>
+                    </div><br/>
+                    <div class="BodyData">
+                        <span>List all the country(ies) you are a citizen of: {!contact.resident_of_country__c}</span>                                                                   
+                    </div><br/>
+                    <div class="BodyData">
+                        <p><b>TAX RESIDENCE OF OTHER COUNTRIES</b></p>
+                        <p>To enable us to comply with Australian Tax Law, we are required to confirm all account holders tax residency. If you are a tax resident of another country, we will contact you and you will need to complete a Self-Certification form and provide us with your Taxpayer Identification Number (TIN).</p>
+                    </div>
+                    <div class="BodyData">
+                        <span>List all countries you are required to pay tax in OTHER than Australia: {!contact.Tax_Resident_of_countries__c}</span>  
+                    </div><br/>
+                    <div class="BodyData">
+                        <p>Read the following sections carefully</p>
+                        <p><b>TAX FILE NUMBER</b></p>
+                        <span>Collection of Tax File Number (TFN) information is authorised and its use and disclosure are strictly regulated by the tax laws and the Privacy Act.  We will ask you whether you want to disclose your Tax File Number or exemption. If you disclose it, we will note your TFN against any account you activate. You do not have to disclose your TFN to us. If you do not, tax may be taken out from interest paid on your deposit accounts. For a joint account, each holder must quote their TFN and/or exemptions, otherwise withholding tax applies to all interest earned on the joint account.</span>
+                    </div>
+                    <div class="BodyData">
+                        <p><b>DECLARATION</b></p>
+                        <span>I declare that the information relating to my personal details provided to be true and correct. I acknowledge it is an offence under the Anti-Money Laundering and Counter Terrorism Financing Act 2006 to give false and misleading information.</span>
+                    </div><br/><br/>
+                    <div class="BodyData">
+                        <p><b>PRIVACY AND ACKNOWLEDGEMENT</b></p>
+                        <span>I acknowledge receipt of a copy of BHCCU’s Account and Access Facility Conditions of Use, Privacy Policy, Fees and Charges and Financial Services Guide, which are obtainable from our website <a href="www.bhccu.com.au.">www.bhccu.com.au.</a></span>
+                    </div><br/><br/>
+                    <div class="BodyData">
+                        <p><b>CONSENT TO ELECTRONIC IDENTIFICATION</b></p>
+                        <p>We are required under the Anti-Money Laundering and Counter-Terrorism Financing Act, to collect and verify information relating to your identity. </p>
+                        <p>Subject to your consent, we will disclose your name, address and date of birth to external organisations in order to electronically match your information with information on their databases.  These organisations will assess and advise us whether all or some of the information you provided matches their records.  We have an arrangement with Equifax Pty Ltd who completes electronic verification on our behalf.</p>
+                        <span>The external data sources used to verify your identity include:</span>
+                        <ul style="margin-top:0">
+                            <li>Credit information files held by Equifax Pty Ltd (this is only to confirm your identity and is not a credit check)</li>
+                            <li>Publicly available information such as the electoral roll and white pages</li>
+                            <li>Information held by the official record holder via third party systems.</li>
+                        </ul>
+                        <p>We will share your personal information with the following external organisations for the purpose of verifying your identity;</p>
+                        <ul style="margin-top:0">
+                            <li>Equifax Pty Ltd</li>
+                            <li>The Australian Government’s Document Verification Service (DVS)</li>
+                        </ul>
+                        <p>If you do not wish BHCCU to provide your personal information to the external organisations listed above we will not be able to verify your identity electronically.  Please contact BHCCU on (08) 8088 2199 for information on alternative ways we can verify your identity.</p>
+                        <p>Further information about how we collect and handle personal information is available in our Privacy Policy located on our website <a href="www.bhccu.com.au">www.bhccu.com.au</a>.</p>
+                        <p>By agreeing to these terms and conditions you agree that;</p>
+                        <ul>
+                            <li>The information you are providing is your personal information and you have authority to provide it to us; and</li>
+                            <li>We may use and disclose your personal information for the purposes of electronic verification as described above.</li>
+                        </ul>
+                    </div><br/>
+                    <div class="BodyData">
+                        <p><b>CONSENT FOR ELECTRONIC DELIVERY OF STATEMENTS AND NOTICES</b></p>
+                        <span>Please use my email address:</span>
+                        <ul style="margin-top:0">
+                            <li>To send me statements and notices for all of my banking and loan accounts; or</li>
+                            <li>To tell me that they are available to view or download from your Internet Banking site.</li> <br/>                           
+                        </ul>                        
+                        <span>I understand that:</span>
+                        <ul style="margin-top:0">
+                            <li>You will stop posting me paper statements and notices.</li>
+                            <li>I need to check my emails regularly.</li>
+                            <li>I can revert to receiving paper statements and notices in the post at any time.</li>
+                        </ul>
+                    </div><br/>
+                    <div class="BodyData">
+                        <p><b>CONSENT FOR ELECTRONIC DELIVERY OF NATIONAL CREDIT CODE DOCUMENTS</b></p>
+                        <p>I consent to your giving me documents such as loan offers (in the form of a contract for me to accept), statements and notices electronically.</p>
+                        <p>For loan documents, I understand that you must sign any loan offer you make to me.</p>
+                        <p>I consent to that requirement being met by your attaching the offer document to an email addressed to me.</p>
+                        <p>THE EMAIL ADDRESS TO BE USED FOR ELECTRONIC DELIVERY WILL BE THE ADDRESS THAT YOU HAVE SUPPLIED IN THIS APPLICATION: {!contact.Email}</p>
+                        <span>I acknowledge that by signing this consent:</span>
+                        <ul style="margin-top:0">
+                            <li>I may no longer be given paper documents;</li>
+                            <li>I must regularly check electronic communications for documents;</li>
+                            <li>I may withdraw this consent to receive documents by electronic communication at any time.</li>
+                        </ul>
+                    </div><br/>
+                    <div class="BodyData">
+                        <p><b>BHCCU DETAILS</b></p>
+                        <span>The Broken Hill Community Credit Union Ltd<br/>Branch Address: 2 Chloride St Broken Hill NSW 2880 </span><br/>
+                        <span>Mail Address: PO Box 294 Broken Hill NSW 2880</span><br/>
+                        <span>Phone Number: (08) 8088 2199</span><br/>
+                        <span>Website: <a href="www.bhccu.com.au">www.bhccu.com.au</a></span><br/>
+                        <span>ABN: 12 087 650 762</span><br/>
+                        <span>AFSL/ACL:  238020</span><br/>
+                        <span>BSB:  802-377</span>                  
+                    </div><br/><br/> 
+                    
+                    <div class="BodyData">
+                        <span style="font-size : 16px;"><b>ACKNOWLEDGMENTS</b></span><br/>
+                        <span>By signing below I confirm that:</span><br/>
+                        <ul style="margin-top:0;">
+                            <li>I have read and agreed to the terms and conditions set out in the above. </li>
+                            <li>I have read and agreed to BHCCU’s Privacy Policy and Privacy Notice, made available on our website <a href="www.bhccu.com.au">www.bhccu.com.au</a> or by visiting <a href="https://www.bhccu.com.au/corporate-disclosure-documents">https://www.bhccu.com.au/corporate-disclosure-documents</a></li>
+                        </ul><br/><br/>                       
+                    </div>
+                    <div class="BodyData">
+                        <span><b>Signed by: </b>{!contact.Name}</span><br/>
+                        <apex:image value="{!imgWrap.imageURl}" style="margin-left : -35px;" width="220" height="145" alt="Not Found"/><br/>
+                    	<span >{!imgWrap.DateOfsign}</span>
+                    </div>
+                    <!-- <div class="TmcuInfo">
+                        <span><u>Completion Certificate</u></span><br/>
+                        <span>Document ID #: {Case ID Number}</span><br/>
+                        <span>Sent via SMS to: {Mobile Number}</span><br/>
+                        <span>Sent: {send date}</span><br/>
+                        <span>Viewed:  {opened date}</span><br/>
+                        <span>Signed:  {signed date}</span><br/>
+                        <span>IP address: {IP Address when signed}</span><br/>
+                        </div>-->
+                </apex:pageBlock> 
+            </div>
+        </body>
+    </html>
+</apex:page>

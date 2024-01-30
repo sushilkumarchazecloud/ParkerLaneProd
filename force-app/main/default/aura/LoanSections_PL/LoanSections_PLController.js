@@ -1,14 +1,14 @@
 ({
-    doInit : function(component, event, helper) {
+    doInit : function(component, event, helper) {        
         var recordId =component.get("v.recordId");
         if(recordId=='' || recordId==null){
             component.set("v.applicationSection","Priorities");
         }else{
             helper.getSelPerson(component, event);
-			helper.getSectionStatus(component, event, recordId);            
+			helper.getSectionStatus(component, event, recordId);  
+            helper.getOppRec(component, event, recordId);
         }
         var applicationSection = component.get("v.applicationSection");
-
         if(applicationSection === 'Getting Started'){
             component.set('v.isShowPreFor', true);
         }else{

@@ -1,0 +1,22 @@
+.THIS {
+    background-color: #d2edee;
+}
+.THIS .Success_Message{
+    font-size: 2.85rem;
+    font-family: ProximaNova-AltBold;
+    line-height: normal;
+    padding-bottom: 10px;
+    font-weight: 800;
+}
+.THIS .Info{
+    font-size: 1.5rem;
+    font-family:ProximaNovaAlt-Medium;
+}
+.THIS .Link{
+    font-size: 1.4rem;
+    font-family:ProximaNovaAlt-Medium;
+}
+.THIS .LinkDesign{
+    font-family:ProximaNovaAlt-Medium;
+    font-weight:bold;
+}

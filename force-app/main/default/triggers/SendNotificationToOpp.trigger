@@ -37,7 +37,7 @@ trigger SendNotificationToOpp on dsfs__DocuSign_Status__c (after insert,after up
             }
             
             if(oppIds.size() > 0){
-                List<Opportunity> oppList = [SELECT Id, Name, StageName, Applicant_1__r.Name,Owner.Name, Owner.Email,
+                List<Opportunity> oppList = [SELECT Id, Name,Documents_Outstanding__c,App_1_VOI_eSign_Complete__c,App_2_VOI_eSign_Complete__c, StageName, Applicant_1__r.Name,Owner.Name, Owner.Email,
                                 (SELECT Purpose__c,Total_loan_amount__c FROM Quotes WHERE Application__c = true)
                                FROM Opportunity WHERE Id IN: oppIds];
                                

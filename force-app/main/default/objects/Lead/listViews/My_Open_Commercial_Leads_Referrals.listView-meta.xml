@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>My_Open_Commercial_Leads_Referrals</fullName>
+    <columns>FULL_NAME</columns>
+    <columns>LEAD.EMAIL</columns>
+    <columns>LEAD.PHONE</columns>
+    <columns>LEAD.LEAD_SOURCE</columns>
+    <columns>LEAD.STATUS</columns>
+    <columns>LEAD.UNREAD</columns>
+    <columns>pi__score__c</columns>
+    <columns>LEAD.RECORDTYPE</columns>
+    <columns>FinServ__ReferredByContact__c</columns>
+    <columns>LEAD.CREATED_DATE</columns>
+    <columns>leadType__c</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <filterScope>Mine</filterScope>
+    <filters>
+        <field>LEAD.STATUS</field>
+        <operation>notEqual</operation>
+        <value>Qualified</value>
+    </filters>
+    <filters>
+        <field>leadType__c</field>
+        <operation>equals</operation>
+        <value>Commercial</value>
+    </filters>
+    <label>My Open Commercial Leads &amp; Referrals</label>
+</ListView>

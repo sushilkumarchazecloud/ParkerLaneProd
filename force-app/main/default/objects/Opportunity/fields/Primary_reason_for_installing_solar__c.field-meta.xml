@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Primary_reason_for_installing_solar__c</fullName>
+    <externalId>false</externalId>
+    <label>Primary benefit of taking out the loan?</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Save money</fullName>
+                <default>false</default>
+                <label>Save money</label>
+            </value>
+            <value>
+                <fullName>Benefit the environment</fullName>
+                <default>false</default>
+                <label>Benefit the environment</label>
+            </value>
+            <value>
+                <fullName>Reduce household expenditure</fullName>
+                <default>false</default>
+                <label>Reduce household expenditure</label>
+            </value>
+            <value>
+                <fullName>Improve property value</fullName>
+                <default>false</default>
+                <label>Improve property value</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

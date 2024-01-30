@@ -9,6 +9,88 @@
     border: 10px solid lightgreen;
     margin-top: 12px;
 }
+.THIS .saveFont{
+    font-size: 18px !important;
+}
+.THIS .myBtnStyle .slds-file-selector__dropzone .slds-file-selector__button{
+    font-size: 0px;
+    background: #e2f6e5;
+    border: 2px solid #45c65a;
+    padding: 0 24px 0 22px;
+    margin-top: -3px;
+    margin-bottom: 1px;
+    color: #1a2745;
+}
+
+.THIS .myBtnStyle .slds-file-selector__dropzone .slds-file-selector__button:hover{
+ 	background: #cae9ce;
+    border: 2px solid #45c65a;
+    cursor: pointer !important;
+}
+
+.THIS .myBtnStyle .slds-file-selector__dropzone .slds-file-selector__button:after{
+    content: 'Upload or drag and drop';
+    line-height: initial !important;
+    font-size: 15px;
+    color: #1a2745;
+}
+.THIS .myBtnStyle .slds-file-selector__button{
+    height: 50px;
+}
+.THIS .myBtnStyle .slds-file-selector__dropzone{
+    border: white;
+    margin-right: 15px;
+}
+.THIS .myBtnStyle .slds-file-selector__dropzone .slds-file-selector__text{
+    display: none;
+}
+.THIS .upDown{
+    color: #1a2745;
+    /*height: 22px;
+    width: auto;
+    position: relative;
+    left: 20px;
+    top:21px;*/
+}
+.THIS .upDownBank{
+    color: #1a2745;
+}
+.THIS .upRight{
+    color: #1a2745;
+    /*height: 22px;
+    width: auto;
+    position: relative;
+    left: 20px;
+    top:21px;*/
+}
+.THIS .docCard{
+    border-radius: 7px;
+    margin-top: -5px;
+    box-shadow: 1px 3px 4px 1px grey;
+    padding: 12px;    
+    background-color: #FFF;
+}
+
+.THIS .changeStyle{
+    background-color : white;
+    
+}
+/*.THIS .docStyle{
+    background-color : white;
+}*/
+
+
+.THIS .docCard-green{
+    border-radius: 7px;
+    box-shadow: 1px 3px 4px 1px grey;
+    margin-top: -5px;
+    padding: 12px;
+    background-color:#e2f6e5;
+}
+.THIS .tileBlock{
+    
+}
+
 .THIS .rqstd {
     float:left;
     width:14px;
@@ -35,13 +117,22 @@
 .THIS .save-btn{
     background-color: #45C65A;
     color: #FFF;
-    padding: 6px;
+    padding: 8px ;
+    border-color: #45c65a;
+    width: 50% ;
+}
+.THIS .save-btndisabled{
+    background-color: grey ; 
+    color: #FFF ;
+    padding: 8px;
+    border-color: grey ;
+    width: 50% ;
 }
 .THIS .save-btn:hover {
     background-color: #3a844a;
     border-color: #3a844a;
 }
-.THIS .doc-box{
+/*.THIS .doc-box{
     border: 1px solid lightgrey;
     padding: 3px;
     border-radius: 5px;
@@ -52,9 +143,169 @@
     padding: 3px;
     border-radius: 5px;
     background-color: #45C65A;
+}*/
+.THIS .greentick{
+    height: 28px;
+    position: relative;
+    bottom: 3px;
+    /*top: 5px;
+    left: 10px;*/
 }
+.THIS .greentickBank{
+    height: 28px;
+    position: relative;
+    bottom: 3px; 
+    right: 50px;
+}
+.THIS .meterStyle{
+    width: 95%;
+    height: 13px;
+    margin-left: 1px;
+    margin-top: 3px;
+}
+.THIS .meterStyleBank{
+    width: 95%;
+    height: 13px; 
+    position: relative;
+    margin-top: 3px;
+    right: 57px;
+}
+.THIS .descStyle{
+    margin: auto;
+    margin-left:10px;
+}
+
+.THIS .divHide {
+    display: none; 
+}
+.THIS .showUploadHide{
+    display:none;
+}
+.THIS .showUploadHideCpy{
+    display:block;
+}
+.THIS .mobileView{
+    display:none;
+}
+.THIS .mediaImg{
+    margin-left: -5px;
+}
+
+
 @media screen and (max-width: 770px) {
+    .THIS .closeWindowBtn{
+        height: 55px;
+        line-height: normal!important;
+        padding: 0 89px!important;
+        font-size: 15px!important;
+        margin-top: 15px;
+    }
+    .THIS .myBtnStyle .slds-file-selector__dropzone .slds-file-selector__button{
+        font-size: 0px;
+        background: #e2f6e5;
+        border: 2px solid #45c65a;
+        min-width: 115%;
+        padding-right: 38px;
+        padding-left: 38px;
+        color: #1a2745;
+    }
+    .THIS .saveFont{
+        font-size: 18px !important;
+    }
+    .THIS .myBtnStyle .slds-file-selector__dropzone .slds-file-selector__button:after{
+        content: 'Tap to add a file or image';
+        line-height: initial !important;
+        font-size: 18px;
+        color: #1a2745;
+    }
+    .THIS .myBtnStyle .slds-file-selector__button{
+        height: 55px;
+    }
+    .THIS .myBtnStyle .slds-file-selector__dropzone{
+        border: white;
+        margin-right: 15px;
+        margin-top: 15px;
+    }
+    .THIS .myBtnStyle .slds-file-selector__dropzone .slds-file-selector__text{
+        display: none;
+    }
+    .THIS .desktopView{
+		display:none;
+    }
+    .THIS .mobileView{
+        display:flex;
+        margin-top:26px
+    }
+    
+    .THIS .showUploadHideCpy{
+        display:none;
+    }
+    .THIS .showUploadHide {
+        display:block;
+    } 
+    .THIS .divHide{
+        display:block;
+    } 
     .THIS .doc-box{
         width: fit-content;
+    }
+    .THIS .mediaImg{
+        margin-inline: initial;
+        width: 13%;
+        /*margin-top: 4px;
+        margin-bottom: 4px;*/
+    }
+    .THIS .upRight{
+        color: #1a2745;
+        /*height: 20px;
+        width: auto;
+        position: relative;
+        left: 0px;
+        top: 18px;*/
+    }
+    .THIS .upDown{
+        color: #1a2745;
+        bottom: 55px;
+    }
+    .THIS .upDownBank{
+        color: #1a2745;
+        bottom: 35px;
+    }
+    .THIS .greentick{
+        height: 22px;
+        position: relative;
+        top: 0px;
+        left: -44px;
+    }
+    .THIS .meterStyle{
+        width: 92%;
+        height: 15px;
+        margin-left: 42px;
+        margin-top: -34px;
+    }
+    .THIS .descStyle{
+        margin: auto;
+        margin-inline: 20px;
+        margin-left: 10px;
+        margin-right: 30px;
+        margin-top: inherit;
+    }
+    .THIS .save-btn{
+        background-color: #45c65a;
+        color: #fff;
+        padding: 10px;
+        border-color: #45c65a;
+        width: 100%;
+    }
+    .THIS .save-btndisabled{
+        background-color: grey ; 
+        color: #FFF ;
+        padding: 10px;
+        border-color: grey ;
+        width: 100% ;
+    }
+    .THIS .docCard{
+        border-radius: 7px;   
+        background-color: #FFF;
     }
 }

@@ -4,14 +4,214 @@
     margin-left: auto;
     margin-right: auto;
 }
-.THIS .bg-white,.THIS.bg-white{
-    background-color: #fff;
+.THIS .deleteBtn{
+    color: #1a2745 !important;
 }
+.THIS .slds-gutters .slds-col{
+    padding-right: 0px !important;
+}
+.THIS .slds-icon{
+    fill: #1a2745;
+}
+/*.THIS .slds-truncate{
+    color: #1a2745 !important;
+}*/
+.THIS .company-logo img, .THIS.company-logo img{
+    width: 184px !important;
+    padding: 11px !important;
+    height: 43px !important;
+}
+/*.THIS .company-logo img, .THIS.company-logo img{
+    width: 200px !important;
+    padding: 10px !important;
+    height: 43px !important;    
+}*/
 .THIS .company-logo, .THIS.company-logo{
+    padding: 10px !important;
+    background-color: #1a2745 !important;
+    color: #fff !important;
+    /*min-height: 70px !important;*/
+    align-items: center !important;
+}
+.THIS .slds-radio_button__label:hover{
+    background-color: #91dadc !important;
+}
+.THIS .verifyBtn{
+    width: 10rem;
+    padding: 5px;
+    background-color: #1a2745;
+    border-color: #1a2745;
+}
+.THIS .slds-input_faux:not(.slds-combobox__input-value) {
+    color: #c4c4c4 !important;
+}
+.THIS .verifyBtn:hover{
+    background-color:#24365f !important;
+    border-color: #24365f !important;
+}
+.THIS .SuccessBtn{
+    width: 10rem;
+    padding: 5px;
+    color : white !important;
+}
+.THIS .crossBtnDisabled{
+    margin-top: -17px;
+    margin-left: -2px;
+    border: 1px solid grey !important;
+    border-radius: 15px!important;
+    color: grey !important;
+}
+.THIS .crossBtnCpy{
+    margin-top: -17px;
+    margin-left: -2px;
+    border: 1px solid grey !important;
+    border-radius: 15px!important;
+    color: grey !important;
+}
+.THIS .slds-icon_xx-small{
+    width: 18px;
+    height: 18px;
+}
+.THIS .slds-input__icon-group_right .slds-input__icon_right{
+    margin-right: 7px;
+}
+.THIS .amtInput lightning-input:before{
+    position: absolute;
+    content: "$";
+    top: 19.7px;
+    z-index: 1;
+    font-size: 18px;
+    left: 12px;
+}
+.THIS .rg-style .slds-radio_button [type=radio]:checked+.slds-radio_button__label{
+    background: #91dadc;
+    color: #1a2745;
+}
+
+.THIS .addQuote{
+    text-decoration: underline!important;
+    font-size: 13px;
+    font-weight: bold;
+    color: #137fd5;
+}
+.THIS .addQuote{
+    border: none !important;
+    outline: none !important;
+    white-space: nowrap;
+}
+.THIS .uploadeQuote .slds-file-selector__dropzone .slds-file-selector__text{
+    display: none;
+}
+
+.THIS .uploadeQuote .slds-file-selector__dropzone .slds-file-selector__button{
+    font-size: 0px;
+    color: black;
+    background: #f9fbfd;
+    border: none;
+}
+.THIS .uploadeQuote .slds-file-selector__dropzone .slds-file-selector__button:after{
+    content: 'Upload quote (optional)';
+    font-size: 13px;
+    color: #1a2745;
+} 
+.THIS .no-abbr label.slds-form-element__label abbr, .THIS .no-abbr legend.slds-form-element__label abbr {
+    display: none;
+}
+.THIS .slds-has-error .slds-form-element__help{
+    font-size: 11px !important;
+}
+.THIS .uploadeQuote .slds-file-selector{
+    float: right;
+}
+
+.THIS .uploadeQuote .slds-file-selector__dropzone{
+    border: white;
+}
+.THIS input::-webkit-input-placeholder {
+    color: #c4c4c4 !important;
+}
+.THIS .submitQtBtn{
+    padding: 8px !important;
+    background: #1a2745 !important;
+    border-color: #1a2745 !important;
+}
+.THIS .submitQtBtn:hover{
+    background-color:#24365f !important;
+    border-color: #24365f !important;
+}
+.THIS .submitQtBtnDisable{
+    padding: 8px !important;
+    background: grey !important;
+    border-color: grey !important;
+}
+.THIS .successMsg{
+    color:#45c65a;
+  /*  width: 25rem !important; */
+    text-align: center;
+ /*   padding-left: 30px; */
+    line-height: initial;
+}
+.THIS .oopsMsg{
+    color:red;
+   /* width: 25rem !important; */
+    text-align: center;
+   /* padding-left: 30px; */
+    line-height: initial;
+}
+.THIS .SuccessBtn{
+    padding: 8px !important;
+    color : white !important;
+    width: -webkit-fill-available !important; 
+}
+.THIS .slds-checkbox__label .slds-form-element__label{
+    line-height: initial;
+    display: inline !important;
+    font-size: 12px !important;
+    font-weight: 400 !important;
+}
+.THIS .slds-checkbox .slds-checkbox_faux{
+    border-color: #2e497d !important;
+    margin-top: 2px !important;
+}
+.THIS .slds-input_faux{
+    /*color: #c4c4c4 !important;*/
+    background: white;
+    padding-block: 10px !important;
+    border: 2px solid #ebecec !important;
+    font-size: 14px;
+}
+.THIS .body button{
+    background: white;
+}
+.THIS .qtInput .slds-input{
+    padding-left: 23px !important;
+    border: 2px solid #ebecec !important;
+}
+.THIS .qtInputErr .slds-input{
+    padding-left: 23px !important;
+    border: 2px solid red !important;
+}
+.THIS .slds-input{    
+    padding-block: 10px !important;
+    border: 2px solid #ebecec !important;
+    font-size: 14px;
+}
+.THIS .slds-form-element__label{
+    font-weight: bold;
+    color: #1a2745 !important;
+}
+.THIS .headingStyle{
+    font-size: 20px;
+}
+.THIS .bg-white,.THIS.bg-white{
+    background-color: #f9fbfd;
+    color: #1a2745;
+}
+/*.THIS .company-logo, .THIS.company-logo{
     padding: 10px;
     background-color: #fff;
     min-height: 50px;
-}
+}*/
 .THIS .company-banner, .THIS.company-banner{
     padding: 10px;
     background-color: #006ac6;
@@ -19,12 +219,12 @@
     min-height: 50px;
     font-size: 16px;
 }
-.THIS .company-logo img, .THIS.company-logo img{
+/*.THIS .company-logo img, .THIS.company-logo img{
     width: 200px;
     padding: 10px;
     height: 43px;
     
-}
+}*/
 .THIS .txt-h4{
     font-size: 2rem;
 }
@@ -37,20 +237,35 @@
     text-align: center;
     width: 100%;
 }
-.THIS .rg-style label.slds-radio_button__label {
-    margin: 0px 5px;
+.THIS .slds-radio_button:first-child{
+    margin-right: 20px;
+}
+.THIS .slds-radio_button:last-child>.slds-radio_button__label{
+    padding: 5px;
+}
+.THIS .slds-radio_button:first-child>.slds-radio_button__label{
+    padding: 5px;
+}
+.THIS .rg-style label.slds-radio_button__label {    
     padding: 1px 5px;
     border-radius: .25rem !important;
-    border: 1px solid rgb(217, 219, 221);
+    border: 2px solid #91dadc;
     width: 100%;
     display: flex;
+    color: #1a2745;
     justify-content: center;
     align-content: center;
     align-items: center;
+    line-height: 1;
+    height : 50px !important;
+}
+.THIS .slds-required{
+    display: none !important;
 }
 .THIS .rg-style .slds-radio_faux{
-    padding: 5px !important;
-    line-height: 1.4;
+    padding: 2px!important;
+    font-size: 13px;
+    font-weight: bold !important;
 }
 
 .THIS .rg-style .slds-radio_button, .THIS .rg-style .slds-radio--button {
@@ -58,9 +273,10 @@
     width: 50%;
 }
 .THIS .header{
-    font-weight: 600;
+    font-weight: bold;
+    color: #1a2745;
 }
-.THIS .checkout-page-banner--gradient{
+/*.THIS .checkout-page-banner--gradient{
     font-size: 2rem;
     line-height: 1;
     letter-spacing: 1px;
@@ -68,4 +284,4 @@
     text-align: center;
     font-family: Lexia Ad,Lexia,Trebuchet MS,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Tahoma,sans-serif;
     color: #006ac6;
-}
+}*/

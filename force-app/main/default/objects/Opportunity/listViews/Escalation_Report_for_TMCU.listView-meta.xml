@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Escalation_Report_for_TMCU</fullName>
+    <columns>Escalation__c</columns>
+    <columns>OPPORTUNITY.STAGE_NAME</columns>
+    <columns>OPPORTUNITY.NAME</columns>
+    <columns>Time_at_current_stage__c</columns>
+    <columns>Loan_Amount__c</columns>
+    <columns>Lender__c</columns>
+    <columns>Application_Pending_Notes__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>OPPORTUNITY.STAGE_NAME</field>
+        <operation>equals</operation>
+        <value>Application,Funding</value>
+    </filters>
+    <filters>
+        <field>Lender__c</field>
+        <operation>equals</operation>
+        <value>Transport Mutual Credit Union</value>
+    </filters>
+    <filters>
+        <field>Escalation__c</field>
+        <operation>equals</operation>
+        <value>1</value>
+    </filters>
+    <label>Escalation Report for TMCU</label>
+</ListView>

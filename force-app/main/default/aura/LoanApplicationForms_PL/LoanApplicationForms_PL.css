@@ -1,3 +1,9 @@
+/* Added by Pawan for let's begin hover remove Live chat effect */
+.THIS .continue-btn-style:hover{
+    background: #91dadc !important;
+    border-color : #91dadc !important;
+}
+/* Pawan code end here */
 .THIS .applicant-compact-form{
     border-radius: .25rem;
     font-family: Proxima Nova Alt Regular;
@@ -67,8 +73,13 @@
 .THIS .customPaddingOndesktopview{
     padding-left:12px;
 }
-
+.THIS .trackercls{
+    width: 50%;
+}
 @media screen and (max-width: 770px) {
+    .THIS .trackercls{
+        width: 85%;
+    }
     .THIS .applicant-compact-form{
         border-radius: .25rem;
         margin-left: -7px;

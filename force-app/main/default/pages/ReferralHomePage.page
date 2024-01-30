@@ -1,0 +1,25 @@
+<apex:page standardController="opportunity" extensions="sessionIdclass"  
+           action="{!ReturnAccessToken}" showHeader="false"
+           sidebar="false" applyBodyTag="false" applyHtmlTag="false">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0"/>
+    <apex:slds />
+    <apex:includeLightning />
+    <div id="ref" style="background:#f9fbfd">        
+    </div>
+    <script>
+    if(window.location != window.parent.location){
+        var redirecturl = window.location;
+        window.top.location.href = redirecturl;
+    }
+    
+    $Lightning.use("c:ReferralHomeApp", function(){
+        $Lightning.createComponent("c:ReferralHome", { 
+                                               recordId :'{!$CurrentPage.parameters.oppId}',
+                                               mgRef :'{!$CurrentPage.parameters.MGREF}',
+                                               sessionId :'{!accessToken}'
+            								   
+                                           }, "ref", function(){
+        });
+    });
+    </script>
+</apex:page>

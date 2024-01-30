@@ -1,0 +1,110 @@
+<aura:component Controller="LenderDashboardController">
+    <aura:attribute name="navSection" type="String" />
+    <aura:attribute name="accountId" type="String"/>
+    <aura:attribute name="Otp" type="integer"/>
+    <aura:attribute name="saveOtp" type="integer"/>    
+    <aura:attribute name="newPassword" type="String"/>
+    <aura:attribute name="checkNewPassword" type="String"/>
+    <aura:attribute name="opt1" type="Boolean" default = "false" />
+    <aura:attribute name="opt2" type="Boolean" default = "false" />
+    <aura:attribute name="opt3" type="Boolean" default = "false" />
+    <aura:attribute name="isDeclarationBtnDisabled" type="Boolean" default = "true" />
+    <aura:attribute name="isDeclarationModalOpen" type="Boolean" default = "true" />
+    <aura:attribute name="DeclarationSigned" type="Boolean" default = "false" />
+    <aura:attribute name="decCheckBoxdisabled" type="Boolean" default = "false" />
+    <aura:attribute name="SignedDate" type="Date" />
+    <aura:attribute name="SignedTime" type="Time" />
+    <aura:attribute name="con" type="Object"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInIt}"/>
+    <aura:attribute name="spinner" type="boolean" default="FALSE"/>
+    <aura:attribute name="enterPassword" type="boolean" default="FALSE"/>
+    <aura:attribute name="rightOtp" type="boolean" default="true"/>
+    <aura:attribute name="updateButton" type="boolean" default="true"/>
+    <aura:attribute name="showpassword" type="Boolean" default="false"/>
+    <aura:attribute name="shownewpassword" type="Boolean" default="false"/>
+    <aura:attribute name="successPassMsg" type="Boolean" default="false"/>
+    <aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>
+    
+    <div class="ReferrerPortalMyAccount">
+        <div>
+            <div class="slds-grid slds-wrap slds-grid slds-wrap slds-p-top_large slds-p-left_large slds-p-right_large">
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_8-of-12">
+                    <div>
+                        <div style="padding-top: 7px;padding-left: 11px;font-size:20px;" class="heading1"><b>My Account</b></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <aura:if isTrue="{!v.spinner}">
+            <div aura:id="spinnerId" class="slds-spinner_container slds-is-fixed">
+                <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative slds-text-align_center" role="alert">
+                    <span class="slds-assistive-text">Loading...</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+            </div>
+        </aura:if>
+        <div class="slds-grid slds-wrap">
+            <div class="slds-m-left_x-large slds-m-top_medium slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_8-of-12" Style="border-radius:8px;width: 60%;background-color: #FFFFFF;margin-bottom: 40px;" >
+                <div class="slds-p-around_large"> 
+                    <div class="heading2">My Details</div>
+                    <div class="slds-p-top_medium heading4" >
+                        <u>You</u><br/>
+                        {!v.con.Name}<br/>
+                        <span style="font-weight: bold;">M</span><span class="slds-m-left_x-small"> {!v.con.MobilePhone} </span><br/>
+                        <span style="font-weight: bold;">E</span><span class="slds-m-left_small">{!v.con.Email} </span><br/>
+                        <span style="font-weight: bold;">S</span><span class="slds-m-left_x-small"> {!v.con.State__c} </span><br/>
+                    </div>
+                    <div class="slds-p-top_medium heading4" > 
+                        <u>Your Company</u> <br/> 
+                        {!v.con.Account.Name} <br/> 
+                    </div>
+                    <div class="slds-p-top_medium heading4 buttonCls"> 
+                        <lightning:button label="Change my password" variant="brand" onclick="{!c.sendEmail}"/>
+                    </div>
+                    <aura:if isTrue="{!v.successPassMsg}">
+                        <div class="slds-m-top_small" style="color:#45c65a;">
+                            Password Changed! Your password has been changed successfully.
+                        </div>
+                    </aura:if>
+                    <aura:if isTrue="{!v.enterPassword}">                        
+                        <div class="slds-p-top_large">OTP</div>
+                        <div>Enter the 4-digit secure code we sent to your email address.</div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                            <lightning:input type="tel" value="{!v.Otp}" maxlength="4" onchange="{!c.checkOtp}"/>
+                        </div>
+                        <div class="slds-p-top_large">New password</div>
+                        <div>Must include at least 8 characters, 1 letter and 1 number.</div>
+                        <div class="slds-grid">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                                <lightning:input value="{!v.newPassword}" aura:id="fieldcheck" class="no-abbr" required="true" type="{!v.showpassword ? 'text':'password'}" pattern="^(?=.*[A-Za-z])(?=.*\d).{8,}$" 
+                                                 messageWhenPatternMismatch="Must include at least 8 characters, 1 letter and 1 number." disabled="{!v.rightOtp}" onchange="{!c.checkPassword}"/>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-12 slds-large-size_2-of-12" style="margin-top: 6px;">
+                                <lightning:buttonIcon class="slds-button slds-input__icon slds-text-color--default eyebtn" 
+                                                      iconName="{!v.showpassword ? 'utility:hide':'utility:preview'}" 
+                                                      onclick="{!c.togglePassword}"/>
+                            </div>
+                        </div>
+                        <div class="slds-p-top_large">Confirm new password</div>
+                        <div class="slds-grid">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
+                                <lightning:input value="{!v.checkNewPassword}" aura:id="fieldcheck" class="no-abbr" required="true" type="{!v.shownewpassword ? 'text':'password'}" pattern="^(?=.*[A-Za-z])(?=.*\d).{8,}$" 
+                                                 messageWhenPatternMismatch="Must include at least 8 characters, 1 letter and 1 number." disabled="{!v.rightOtp}" onchange="{!c.checkPassword}"/>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-12 slds-large-size_2-of-12" style="margin-top: 6px;">
+                                <lightning:buttonIcon class="slds-button slds-input__icon slds-text-color--default eyebtn" 
+                                                      iconName="{!v.shownewpassword ? 'utility:hide':'utility:preview'}" 
+                                                      onclick="{!c.toggleNewPassword}"/>
+                            </div>
+                        </div>
+                        <div class="slds-p-top_large heading4 buttonCls"> 
+                            <lightning:button label="Update password" variant="brand" onclick="{!c.updatePassword}" disabled="{!v.updateButton}"/>
+                        </div>
+                    </aura:if>
+                </div>
+            </div>
+        </div>
+    </div> 
+</aura:component>

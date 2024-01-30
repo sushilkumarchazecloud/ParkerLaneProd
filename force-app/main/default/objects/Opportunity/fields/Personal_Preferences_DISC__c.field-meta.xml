@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Personal_Preferences_DISC__c</fullName>
+    <description>D - Be business-like, get to the point. Abrupt fast talker. NO chat
+I - Friendly small talk. Show personal interest 
+S - Informal human approach. Trust based. Relax your pace
+C - Detail oriented. Get to point but don’t speak too fast. Let them be the expert</description>
+    <externalId>false</externalId>
+    <inlineHelpText>D-Be business-like, get to the point. Abrupt fast talker. NO chat
+I-Friendly small talk. Show personal interest
+S-Informal human approach. Trust based. Relax your pace
+C-Detail oriented. Get to point but don’t speak too fast. Let them be the expert</inlineHelpText>
+    <label>Personal Preferences (DISC)</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>D - Dominating</fullName>
+                <default>false</default>
+                <label>D - Dominating</label>
+            </value>
+            <value>
+                <fullName>I - Influential</fullName>
+                <default>false</default>
+                <label>I - Influential</label>
+            </value>
+            <value>
+                <fullName>S - Steady</fullName>
+                <default>false</default>
+                <label>S - Steady</label>
+            </value>
+            <value>
+                <fullName>C - Conforming</fullName>
+                <default>false</default>
+                <label>C - Conforming</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

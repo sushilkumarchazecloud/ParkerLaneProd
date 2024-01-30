@@ -1,8 +1,8 @@
 ({
-	getGoals : function(component, event) {
-		var action = component.get("c.getGoals");
+    getGoals : function(component, event) {
+        var action = component.get("c.getGoals");
         var self = this;
-     	action.setParams({
+        action.setParams({
             recordId: component.get('v.recordId')
         });
         action.setCallback(this, function(response) {
@@ -48,11 +48,11 @@
             //self.scrollTop(component, event, 300);
         });
         $A.enqueueAction(action);
-	},
+    },
     getOppCons : function(component, event) {
-		var action = component.get("c.getPreferences");
+        var action = component.get("c.getPreferences");
         var self = this;
-     	action.setParams({
+        action.setParams({
             recordId: component.get('v.recordId')
         });
         action.setCallback(this, function(response) {
@@ -78,7 +78,7 @@
             self.scrollTop(component, event, 70);
         });
         $A.enqueueAction(action);
-	},
+    },
     
     upsertFinGoals: function (component, event, isOppUpdate, isShare) {
         //var action = component.get("c.upsertGoals");
@@ -86,8 +86,8 @@
         var self = this;
         var oppId = component.get('v.recordId');
         var goal= component.get('v.goal');
-
-     	action.setParams({
+        
+        action.setParams({
             goal : component.get('v.goal'),
             oppId : oppId,
             con1 : component.get('v.applicant1'), 
@@ -95,25 +95,28 @@
             isOppUpdate : isOppUpdate,
             isShare : isShare
         });
-
+        
         action.setCallback(this, function(response) {
             var state = response.getState();
             console.log('@@@@' + JSON.stringify(response));
             console.log('@@@@' + JSON.stringify(response.getError()));
             if (state === "SUCCESS") {
                 var ret = response.getReturnValue();
-                console.log('@@@@' + JSON.stringify(ret));
                 if(ret=='[]' || $A.util.isUndefinedOrNull(ret)){                    
                     component.set("v.showError", true);
                     component.set("v.errorMsg", $A.get("$Label.c.Error_Message"));
                 }else{
                     if(ret !=''){
+                        self.createEnvelope(component, event);
                         component.set('v.applicationSection', JSON.parse(ret).CurrentSection);
-                        component.set('v.appSectionPath', JSON.parse(ret).path);
-                        
+                        component.set('v.appSectionPath', JSON.parse(ret).path);                        
                         component.set('v.redirectURL', JSON.parse(ret).url);
                         
-                        self.createEnvelope(component, event);
+                        var isRedirect = JSON.parse(ret).isRedirect;
+                        self.GeneratePreliminaryPDF(component, event);
+                        if(isRedirect =="Yes"){
+                            window.location = JSON.parse(ret).url;
+                        }
                     }
                 }
             }
@@ -128,10 +131,10 @@
         var self = this;
         var oppId = component.get('v.recordId');
         
-     	action.setParams({
+        action.setParams({
             oppId : oppId
         });
-
+        
         action.setCallback(this, function(response) {
             var state = response.getState();
             console.log('state>>>>' + state)
@@ -140,15 +143,15 @@
     },
     
     SavePrev : function(component, event, recordId) {
-		var action = component.get("c.previous");
+        var action = component.get("c.previous");
         var self = this;
         
-     	action.setParams({
+        action.setParams({
             recordId: component.get('v.recordId')
         });
         action.setCallback(this, function(response) {
             var state = response.getState();
-
+            
             if (state === "SUCCESS") {
                 var ret = response.getReturnValue();
                 if(ret=='[]' || $A.util.isUndefinedOrNull(ret)){
@@ -163,7 +166,7 @@
             self.toggleSpinner(component, event);
         });
         $A.enqueueAction(action);
-	},
+    },
     
     toggleSpinner: function (component, event) {
         var spinner = component.find("mySpinner");
@@ -171,7 +174,7 @@
     },
     
     scrollTop: function (component, event, top){
-         var isMoile = false;
+        var isMoile = false;
         if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
             isMoile = true;
             top += 100;
@@ -185,4 +188,19 @@
         }
         window.scrollTo(scrollOptions);
     },
+    
+    GeneratePreliminaryPDF: function (component, event){
+        var action = component.get("c.inertPDF");
+        var self = this;
+        
+        action.setParams({
+            oppId: component.get('v.recordId')
+        });
+        action.setCallback(this, function(response) {
+            var state = response.getState();
+           
+            self.toggleSpinner(component, event);
+        });
+        $A.enqueueAction(action);
+    }
 })

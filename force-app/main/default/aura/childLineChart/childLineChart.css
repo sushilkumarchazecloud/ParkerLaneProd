@@ -1,0 +1,26 @@
+.THIS .linesGry{
+    border-left: 3px solid #dcdcdc;
+    height: 25px;
+    width : 5px;
+}
+.THIS .linesdt{
+    border-left: 3px dotted #629d39;
+    height: 25px;
+    width : 5px;
+}
+.THIS .lines{
+    border-left: 3px solid #629d39;
+    height: 25px;
+    width : 5px;
+}
+
+.THIS .imagesOF img {
+    margin-left: -2px;       
+}
+
+@media screen and (max-width: 770px) {
+    .THIS .line{
+        line-height: 11px;
+        font-size: 10px;
+    }
+}

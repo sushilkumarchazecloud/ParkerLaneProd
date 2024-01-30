@@ -410,4 +410,16 @@ public class ParkerLaneLoanControllerTest {
         ParkerLaneLoanController.getOppDetails(opp.Id);
         test.stopTest();
     }
+    static testmethod void quoteUpdateTest(){
+        Opportunity opp = [SELECT Id, AccountId, FinServ__Household__c, Account.RecordType.Name 
+                           FROM Opportunity Limit 1];
+        sObject selectedQuote = (sObject)[SELECT Id, Actual_Comparison_Rate__c, Comparison_Rate_Warning__c, Eligibility__c,
+                 Features__c, Interest_Rate__c, Customer_Amount__c, Loan_Term__c,Not_Applicable__c, Name, Product__c, Up_Front_Costs_Applicable__c,
+                 Monthly_Repayment__c, Min_Loan_Term__c, Max_Loan_Term__c, Purpose__c, Lead__c,Product__r.Maximum_Loan_Amount__c,Product__r.Minimum_Loan_Amount__c
+                                          FROM Quote WHERE OpportunityId=:opp.Id limit 1];
+
+        ParkerLaneLoanController.getFreshQuotes(selectedQuote);
+        ParkerLaneLoanController.updateNotApplicableQuote(selectedQuote);
+ 
+    }
 }

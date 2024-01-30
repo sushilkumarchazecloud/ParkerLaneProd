@@ -23,7 +23,7 @@
                         component.set('v.app2Children', ret.app2Children);
                         if(ret.opp.Number_of_applicants__c == 1 || !$A.util.isUndefinedOrNull(ret.contact1)){
                             component.set('v.selectedPerson', "single");
-                            if(ret.contact1.FirstName !='' && ret.contact1.LastName !='' && ret.contact1.Email !='' && 
+                            if(!$A.util.isUndefinedOrNull(ret.contact1) && ret.contact1.FirstName !='' && ret.contact1.LastName !='' && ret.contact1.Email !='' && 
                                ret.contact1.Phone !='' && !$A.util.isUndefinedOrNull(ret.contact1.FirstName) && 
                                !$A.util.isUndefinedOrNull(ret.contact1.LastName) && !$A.util.isUndefinedOrNull(ret.contact1.Email) && 
                                !$A.util.isUndefinedOrNull(ret.contact1.Phone)){

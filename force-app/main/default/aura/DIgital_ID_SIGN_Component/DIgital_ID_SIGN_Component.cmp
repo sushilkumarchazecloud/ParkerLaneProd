@@ -1,10 +1,12 @@
 <aura:component controller="Digital_ID_Sign" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
     <aura:attribute name="ImageData" type="string" default=""/>
     <aura:attribute name="ImageDataSec" type="string" default=""/>
+    <aura:attribute name="SelfiData" type="string" default=""/>
     <aura:attribute name="Con" type="Contact" default=""/>
     <aura:handler name="init" value="{!this}" action="{!c.myAction}"/>
     <aura:attribute name="isModalOpen" type="boolean" default="false"/>
     <aura:attribute name="isModalOpenBack" type="boolean" default="false"/>
+    <aura:attribute name="isModalOpenForSelfi" type="boolean" default="false"/>
     <aura:attribute name="accept" type="List" default="['.jpg', '.jpeg', '.png']"/>  
     <lightning:navigation aura:id="navService"/>
     <div>
@@ -74,8 +76,8 @@
                                 <!--Modal/Popup Box Body Starts here-->
                                 <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
                                     <div class="slds-align_absolute-center">
-                                        <lightning:fileUpload  name="fileUploader" label= "Upload Front DL" accept="{!v.accept}" multiple="false" 
-                                                              recordId="{!v.recordId}" onuploadfinished="{!c.handleDocUploadFinishedForBack}"/>
+                                        <lightning:fileUpload  name="fileUploader" label= "Upload Back DL" accept="{!v.accept}" multiple="false" 
+                                                              recordId="{!v.recordId}" onuploadfinished="{!c.backDataUpload}"/>
                                     </div>
                                 </div>
                                 <!--Modal/Popup Box Footer Starts here-->
@@ -90,9 +92,53 @@
                         <div class="slds-backdrop slds-backdrop_open"></div>
                     </aura:if>
                 </div>
-            </div>
+            </div>            
+        </div><br/><br/>
+        <div class="slds-grid slds-gutters">
+			<div class="slds-col">
+                <div class="fileCard">
+                    <label class="idText">Selfie holding license</label>
+                    <lightning:fileCard fileId="{!v.SelfiData}" description="Selfie holding DL"/>
+                </div><br/>
+                <div>
+                    <lightning:button variant="brand" label="Selfie holding DL" title="Selfie holding DL" onclick="{!c.openModaForSelfi}"/>
+                    <aura:if isTrue="{!v.isModalOpenForSelfi}">
+                        
+                        <!-- Modal/Popup Box starts here-->
+                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                            <div class="slds-modal__container">
+                                <!-- Modal/Popup Box Header Starts here-->
+                                <header class="slds-modal__header">
+                                    <lightning:buttonIcon iconName="utility:close"
+                                                          onclick="{! c.closeModel }"
+                                                          alternativeText="close"
+                                                          variant="bare-inverse"
+                                                          class="slds-modal__close"/>
+                                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Upload Selfie holding DL</h2>
+                                </header>
+                                <!--Modal/Popup Box Body Starts here-->
+                                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                    <div class="slds-align_absolute-center">
+                                        <lightning:fileUpload  name="fileUploader" label= "Upload Selfie holding DL" accept="{!v.accept}" multiple="false" 
+                                                              recordId="{!v.recordId}" onuploadfinished="{!c.uploadSelfiData}"/>
+                                    </div>
+                                </div>
+                                <!--Modal/Popup Box Footer Starts here-->
+                                <footer class="slds-modal__footer">
+                                    <lightning:button variant="neutral"
+                                                      label="Cancel"
+                                                      title="Cancel"
+                                                      onclick="{! c.closeModel }"/>
+                                </footer>
+                            </div>
+                        </section>
+                        <div class="slds-backdrop slds-backdrop_open"></div>
+                    </aura:if>
+                </div>
+            </div>        
         </div>
     </div>
+    
     <br/><br/><br/>
     
     <div class="slds-m-around_x-small">
@@ -122,12 +168,6 @@
             <div>
                 <div class="slds-grid slds-gutters slds-wrap NameBox">                    
                     <div class="slds-col slds-size_6-of-12">
-                        <label>&nbsp;Contact 1</label>
-                        <div class="slds-box">
-                            <a href="javascript:void(0);" onclick="{!c.navigateToRecord}" data-record-id="{!v.Con.Id}">{!v.Con.Name}</a>
-                        </div>
-                    </div>
-                    <div class="slds-col slds-size_6-of-12">
                         <lightning:select name="select1" label="Salutation" value="{!v.Con.Salutation}">
                             <option value="">--Select--</option>
                             <option value="Mr.">Mr.</option>
@@ -138,14 +178,47 @@
                         </lightning:select>
                     </div>
                     <div class="slds-col slds-size_6-of-12">
-                        <lightning:input type="date" name="input1" label="Birthdate" value="{!v.Con.Birthdate}"/><br/>
-                    </div>
-                    <div class="slds-col slds-size_6-of-12">
                         <lightning:select name="select1" label="Government ID" value="{!v.Con.Government_ID__c}">
                             <option value="">--Select--</option>
                             <option value="Passport">Passport</option>
                             <option value="Card">Card</option>
                             <option value="driving licence">driving licence</option>
+                        </lightning:select>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning:input name="input1" label="FirstName" value="{!v.Con.FirstName}"/><br/>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning:input name="input1" label="Govt Id Number" value="{!v.Con.Govt_Id_Number__c}"/><br/>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning:input name="input1" label="MiddleName" value="{!v.Con.MiddleName}"/><br/>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning:input name="input1" label="ID Card Number" value="{!v.Con.ID_Card_Number__c}"/><br/>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning:input name="input1" label="Last Name" value="{!v.Con.LastName}"/><br/>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning:input name="input1" label="Residential Address" value="{!v.Con.Residential_Address__c + ' ' + v.Con.Postal_Code__c}" disabled="true"/><br/>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning:input type="date" name="input1" label="Birthdate" value="{!v.Con.Birthdate}"/><br/>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <label>&nbsp;Contact 1</label>
+                        <div class="slds-box">
+                            <a href="javascript:void(0);" onclick="{!c.navigateToRecord}" data-record-id="{!v.Con.Id}">{!v.Con.Name}</a>
+                        </div>
+                    </div>
+                     <div class="slds-col slds-size_6-of-12">
+                        <lightning:select name="select1" label="Gender" value="{!v.Con.FinServ__Gender__c}">
+                            <option value="">choose one...</option>
+                            <option value="Female">Female</option>
+                            <option value="Male">Male</option>
+                            <option value="Decline to Specify">Decline to Specify</option>
+                            <option value="Other">Other</option>
                         </lightning:select>
                     </div>
                     <div class="slds-col slds-size_6-of-12">
@@ -159,23 +232,9 @@
                             <option value="Western Australia">Western Australia</option>
                             <option value="Tasmania">Tasmania</option>
                             <option value="Northern Territory">Northern Territory</option>
-                        </lightning:select>
+                        </lightning:select><br/><br/>
                     </div>
-                    <div class="slds-col slds-size_6-of-12">
-                        <lightning:input name="input1" label="Govt Id Number" value="{!v.Con.Govt_Id_Number__c}"/><br/>
-                    </div>
-                    <div class="slds-col slds-size_6-of-12">
-                        <lightning:select name="select1" label="Gender" value="{!v.Con.FinServ__Gender__c}">
-                            <option value="">choose one...</option>
-                            <option value="Female">Female</option>
-                            <option value="Male">Male</option>
-                            <option value="Decline to Specify">Decline to Specify</option>
-                            <option value="Other">Other</option>
-                        </lightning:select>
-                    </div>
-                    <div class="slds-col slds-size_6-of-12">
-                        <lightning:input name="input1" label="Residential Address" value="{!v.Con.Residential_Address__c + ' ' + v.Con.Postal_Code__c}" disabled="true"/><br/>
-                    </div>
+                   
                     <div class="slds-col slds-size_12-of-12" align="center">
                         <lightning:button variant="brand" label="Submit" title="Submit"  onclick="{!c.UpdateContact}"/>
                     </div>

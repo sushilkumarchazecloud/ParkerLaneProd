@@ -111,7 +111,8 @@
     font-size: 1.25rem;
     border: 2px solid !important;
     font-family: ProximaNovaAlt-Medium;
-    color: var(--slds-c-button-color-border, var(--sds-c-button-color-border, transparent)) !important;
+    /*Commented by Pawan related to live chat css issue */
+   /* color: var(--slds-c-button-color-border, var(--sds-c-button-color-border, transparent)) !important; */ 
     background: rgb(245 245 245) !important;
 }
 .THIS .width_of_combo .slds-scope .slds-dropdown-trigger_click.slds-is-open .slds-dropdown,.THIS .slds-scope .slds-dropdown-trigger--click.slds-is-open .slds-dropdown{ 

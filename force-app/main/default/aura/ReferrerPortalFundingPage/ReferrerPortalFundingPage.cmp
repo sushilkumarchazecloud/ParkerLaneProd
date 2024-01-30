@@ -1,0 +1,406 @@
+<aura:component controller="MyReferrerController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="accountId" type="String"/>
+    <aura:attribute name="opp" type="Object"/>
+    <aura:attribute name="sessionId" type="String"/>
+    <aura:attribute name="loanExpired" type="boolean" default="false"/>
+    <aura:attribute name="notApproved" type="boolean" default="false"/>
+    <aura:attribute name="reqSubmitted" type="boolean" default="false"/>
+    <aura:attribute name="request" type="boolean" default="false"/>
+    <aura:attribute name="RemainderRequest" type="boolean" default="false"/>
+    <aura:attribute name="surplusShow" type="boolean" default="false"/>
+    <aura:attribute name="amtDifference" type="boolean" default="false"/>
+    <aura:attribute name="rGroupNullError" type="boolean" default="false"/>
+    <aura:attribute name="CsmtAgreedNullError" type="boolean" default="false"/>
+    <aura:attribute name="isSubmitBtnDisabled" type="Boolean" default = "true" />
+    <aura:attribute name="customeramount" type="currency" default="22000.00"/>
+    <aura:attribute name="invoiceAmount" type="currency"/>
+    <aura:attribute name="surplusAmount" type="currency" default="" />
+    <aura:attribute name="rGroupOptions" type="List" default="[{'label': 'Variation to contract (requires re-approval)', 'value': 'Variation to contract (requires re-approval)'},
+                                                              {'label': 'Surplus retained by customer', 'value': 'Surplus retained by customer'}]"/>
+    <aura:attribute name="comboOBoxptions" type="List" />
+    <aura:attribute name="options" type="List" default="[{'label': 'Yes', 'value': 'Yes'}, {'label': 'No / not sure', 'value': 'No'}]"/>
+    <aura:attribute name="rGroupValue" type="String"/>
+    <aura:attribute name="comboBoxValue" type="String"/>
+    <aura:attribute name="CustomerAgreedOrNot" type="String"/>
+    <aura:attribute name="partPaymentAmt" type="currency"/>
+    <aura:attribute name="fundsPaidToDate" type="currency"/>
+    <aura:attribute name="partPmtError" type="Boolean" default = "false" />
+    <aura:attribute name="AntDateBeforeError" type="Boolean" default = "false" />
+    <aura:attribute name="AnticipatedInstDate" type="date" />
+    <aura:attribute name="remaindercomboOption" type="List" default="[{'label' : 'Remainder of payment after installation', 'value' : 'Remainder of payment after installation'}]"/>
+    <aura:attribute name="remainderComboValue" type="String" default="Remainder of payment after installation"/>
+    <aura:attribute name="quoteDetailWrpList" type="list"/>
+    <aura:attribute name="DocExistsORNot" type="Boolean" default = "false" />
+    <aura:attribute name="DocWrapper" type="Object"/>
+    <aura:attribute name="Surplus_ShortFallInstruction" type="String" />
+    <aura:attribute name="PreviousData" type="List" default=""/>
+    <aura:attribute name="fundsRemaining" type="currency" default=""/>
+    <aura:attribute name="DocError"  type="Boolean" default = "false" />
+    <aura:attribute name="DocExist" type="boolean" default="false" />
+    <aura:attribute name="spinner2" type="boolean" default="false" />
+    <aura:attribute name="status" type="String" />
+    <aura:attribute name="statusCode" type="String" />
+    <aura:attribute name="OpportunityName" type="String"/>
+    <aura:handler name ="init" value="{!this}" action ="{!c.doInit}"/>
+    
+    <lightning:spinner aura:id="mySpinner" variant="brand" size="large" style="margin-top : 48px;margin-bottom : 80px;position : absolute;" />
+    <div class="slds-grid slds-wrap">
+        <div class=" slds-size_8-of-12" >
+            <div class="slds-m-top_x-small slds-m-bottom_medium" style="border-bottom: 1px solid #c2c2c2"></div>
+            <div class="slds-scrollable_y" style="height:435px;margin-top:-15px;" >
+                <div class="heading3 slds-p-top_large"><b>Funding</b></div><br/>
+                <div style="margin-top:-15px;">
+                    Each lender is slightly different in how they fund, but our process is always the same.
+                    Once you are ready to be paid (and the customer consents) simply submit a funding request 
+                    via this page and we'll take care of the rest.
+                </div>
+                <div class="heading3 slds-m-top_medium"><b>Funding options</b></div>
+                <div class="slds-grid slds-gutters"> 
+                    <div class="slds-col slds-m-top_medium  slds-size_1-of-2" >
+                        <div class="heading4"><b>In full after installation</b></div>
+                        <div class="heading4 slds-m-top_xx-small"> <ui:outputText value="{!v.opp.SyncedQuote.Product__r.Instruction_In_full_after_installation__c}"/> </div>
+                    </div> 
+                    <div class="slds-col slds-m-top_medium  slds-size_1-of-2" >
+                        <div class="heading4"><b>In full before installation</b></div>
+                        <div class="heading4 slds-m-top_xx-small"> <ui:outputText value="{!v.opp.SyncedQuote.Product__r.Instruction_In_full_before_installation__c}" /></div>
+                    </div> 
+                </div>
+                <div class="slds-grid slds-gutters"> 
+                    <div class="slds-col slds-m-top_medium  slds-size_1-of-2" >
+                        <div class="heading4"><b>Partial before installation</b></div>
+                        <div class="heading4 slds-m-top_xx-small"> <ui:outputText value="{!v.opp.SyncedQuote.Product__r.Instruction_Part_payment_before__c}" /></div>
+                    </div> 
+                </div>
+            </div>
+        </div>  
+        <div class=" slds-size_4-of-12 ">
+            <div class ="spinner">
+                <lightning:spinner aura:id="mySpinner2" variant="brand" size="medium" class="slds-hide spinner2" />
+            </div> 
+            <div class="{!v.spinner2 ? 'slds-scrollable_y onSpin' : 'slds-scrollable_y'}" style="height:435px;">
+                <div class="slds-p-around_small" style="margin-top:-10px;" > 
+                    <div class="box-style" >
+                        <div class="heading2"><b>Funding Requests</b></div>
+                        <div class="Border" style="border-bottom: 1px solid #c2c2c2;margin-left:-10px;margin-right:-10px"></div>
+                        <div class="slds-p-around_small">
+                            <aura:iteration items="{!v.PreviousData}" var="Data">
+                                <c:ReferrerPortalPreviousFundingRequests item="{!Data}" />
+                            </aura:iteration>   
+                        </div>
+                    </div>
+                    <div class="box-style" style="margin-top:22px;">
+                        <div class="heading2"><b>Request Funding</b></div>
+                        <div class="Border" style="border-bottom: 1px solid #c2c2c2;margin-left:-10px;margin-right:-10px"></div>
+                        <div class="slds-p-top_small slds-p-bottom_small">
+                            <aura:if isTrue="{!v.loanExpired}">
+                             <div>
+                             You can’t submit a funding request after the loan approval has expired.
+                             </div>
+                            </aura:if>
+                            <aura:if isTrue="{!v.notApproved}">
+                                <div>
+                                    You can not submit a funding request until after the loan is approved.   
+                                </div>
+                            </aura:if>
+                            <aura:if isTrue="{!v.reqSubmitted}">
+                                <div>
+                                    Funding request received. There's nothing more required at this stage.
+                                </div>
+                            </aura:if>
+                            
+                            
+                            <aura:if isTrue="{!v.request}">
+                                <div class="RequestUpperBody">
+                                    <div>
+                                        <div><b>Funds available</b></div>
+                                        <div class="slds-m-top_x-small">
+                                            <lightning:formattedNumber value="{!v.opp.SyncedQuote.Customer_Amount__c}" style="currency" currencyCode="AUD" />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div  class="slds-m-top_medium"> <b>Total invoice amount</b></div>
+                                        <div>Total amount to be paid from loan proceeds </div>
+                                        <div class="Inp1 slds-size_5-of-12 slds-m-top_x-small">
+                                            <lightning:input aura:id="invoiceAmtCheck" class="no-abbr" value="{!v.invoiceAmount}" type="number" onchange="{!c.Errors}" required="true"/>
+                                        </div>
+                                    </div> 
+                                    <div class="slds-m-top_medium">
+                                        <aura:if isTrue="{!v.surplusShow}">
+                                            <div><b>Surplus / Shortfall</b></div>
+                                            <div class="slds-m-top_x-small">{!v.surplusAmount}</div>
+                                            <aura:if isTrue="{!v.amtDifference}">
+                                                <div class="slds-m-top_x-small" style ="display: inline-flex;">
+                                                    <img src="{!$Resource.SolarLoan + '/img/darkblueinfo.png'}" style="height: -webkit-fill-available;"/> 
+                                                    <span class="slds-p-around_xx-small" style="color:#0176d3;">{!v.Surplus_ShortFallInstruction}</span> 
+                                                </div>
+                                                <!--  <div class="slds-m-top_medium"><b>How does the customer want to manage the difference?</b></div>
+                                            <div class="slds-m-top_x-small">
+                                                <lightning:radioGroup class="no-abbr"  aura:id="rGroup" options="{!v.rGroupOptions}" value="{!v.rGroupValue}" type="radio" onchange="{!c.Errors}"/>
+                                            </div> 
+                                            <aura:if isTrue="{!v.rGroupNullError}">
+                                                <div class="slds-m-top_xx-small" style="color:red">
+                                                    Complete this field.                                      
+                                                </div>
+                                            </aura:if>
+                                            <aura:if isTrue="{!v.rGroupValue == 'Variation to contract (requires re-approval)'}">
+                                                <div class="slds-m-top_x-small" style ="display: inline-flex;">
+                                                    <img src="{!$Resource.SolarLoan + '/img/darkblueinfo.png'}" style="height: -webkit-fill-available;"/> 
+                                                    <span class="slds-p-around_xx-small" style="color:#0176d3;">{!v.Surplus_ShortFallInstruction}</span> 
+                                                </div>
+                                            </aura:if> -->
+                                            </aura:if>  
+                                        </aura:if>
+                                    </div>
+                                    <div class="slds-grid slds-grid_vertical">
+                                        <div class="slds-m-top_large slds-col">
+                                            <div><b>Quote / invoice</b></div>
+                                            <div>Document must include remittance details </div>
+                                            <div >
+                                                <aura:if isTrue="{!v.DocExistsORNot}">
+                                                    <c:DocumentUploadFunding DocExist="{!v.DocExist}" DocError="{!v.DocError}" opp ="{!v.opp}" upload="true"  showForMetr="false" fundingPage="true" UploadButtonFunding="false" count="1" requestId="{!v.DocWrapper.document.Id}" IdList="{!v.DocWrapper.cdlId}"  Name="{!v.DocWrapper.document.Title}"  NmList="{!v.DocWrapper.NmList}" cdlId="{!v.DocWrapper.cdlId}" docreqId="{!v.DocWrapper.docReqId}" accountId="{!v.opp.Id}" sessionId="{!v.sessionId}" NameOfUploadFile="Upload" />
+                                                    <aura:set attribute="else">
+                                                        <aura:iteration items="{!v.quoteDetailWrpList}" var="item" indexVar="index">
+                                                            <c:DocumentUploadFunding DocExist="{!v.DocExist}"  DocError="{!v.DocError}" opp ="{!v.opp}" fundingPage="true"  cdlId="{!item.cdlId}" NmList="{!item.NmList}"  accountId="{!v.opp.Id}" sessionId="{!v.sessionId}" NameOfUploadFile="Upload"/>
+                                                        </aura:iteration> 
+                                                    </aura:set> 
+                                                </aura:if>
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="slds-m-top_medium slds-col" >
+                                            <div> <b>Timing of payment</b></div>
+                                            <div class="slds-m-top_x-small">
+                                                <lightning:combobox class="slds-combobox"
+                                                                    placeholder="Select"
+                                                                    value="{!v.comboBoxValue}"
+                                                                    options="{!v.comboOBoxptions}"
+                                                                    onchange ="{!c.comboboxchange}"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <aura:if isTrue="{!v.comboBoxValue == 'Payment in full before installation'}">
+                                    <div class="slds-m-top_large">
+                                        <div><b>Has the customer agreed to this timing?</b></div>
+                                        <div class="slds-m-top_x-small">
+                                            <lightning:radioGroup aura:id="CsmtAgreedrGroup" class="no-abbr" options="{!v.options}" value="{!v.CustomerAgreedOrNot}" type="radio" required="true" onchange="{!c.Errors}"/>
+                                        </div>
+                                        <aura:if isTrue="{!v.CsmtAgreedNullError}">
+                                            <div class="slds-m-top_xx-small" style="color:red">
+                                                Complete this field.                                      
+                                            </div>
+                                        </aura:if>
+                                        <aura:if isTrue="{!v.CustomerAgreedOrNot == 'No'}">
+                                            <div class="slds-m-top_xx-small" style="color:red;">Please come back and submit this form only once you have your customer’s acceptance to fund prior to installation.</div>
+                                        </aura:if>
+                                        <div class="slds-m-top_large">
+                                            <b>Anticipated installation date</b>
+                                        </div>
+                                        <div  class="slds-size_5-of-12 slds-m-top_x-small">
+                                            <lightning:input aura:id ="DateInst" class="no-abbr" value="{!v.AnticipatedInstDate}" type="date" onchange="{!c.Errors}" required="true"/>
+                                        </div>
+                                        <aura:if isTrue="{!v.AntDateBeforeError}">
+                                            <div class="slds-m-top_xx-small" style="color:red;">
+                                                Installation date can not be in the past.
+                                            </div>
+                                        </aura:if>
+                                        <aura:if isTrue="{!v.DocError}">
+                                            <div class="slds-m-top_small" style="color:red;">
+                                                <b> Please upload Document.</b>
+                                            </div>
+                                        </aura:if>
+                                        <div class="slds-m-top_large">
+                                            <lightning:button variant="brand" class="{!v.isSubmitBtnDisabled? 'SubmitBtnDisable':'SumbmitRequestButton'}"
+                                                              label="Submit Request"
+                                                              title="Submit Request"
+                                                              disabled="{!v.isSubmitBtnDisabled}"
+                                                              onclick="{!c.submitRequest}"/>
+                                        </div>
+                                    </div>
+                                </aura:if>
+                                <aura:if isTrue="{!v.comboBoxValue == 'Part payment before installation'}">
+                                    <div class="slds-m-top_large" >
+                                        <div><b>Part payment amount</b></div>
+                                        <div class="Inp1 slds-size_5-of-12 slds-m-top_x-small">
+                                            <lightning:input aura:id="partpmtamt" class="no-abbr" value="{!v.partPaymentAmt}" type="number" onchange="{!c.Errors}" required="true" />
+                                        </div>
+                                        <div class="slds-m-top_small" style="color:#0176d3;">The remainder will be paid after installation. You must submit another funding request <u>after</u> installation.</div>
+                                        <aura:if isTrue="{!v.partPmtError}">
+                                            <div class="slds-m-top_xx-small" style="color:red;">Error! You can not request a partial up front payment of greater than 50% of the finance limit.</div>
+                                        </aura:if>
+                                        <div class="slds-m-top_large"> Has the customer agreed to this timing?</div>
+                                        <div class="slds-m-top_x-small">
+                                            <lightning:radioGroup aura:id="CsmtAgreedrGroup" options="{!v.options}" value="{!v.CustomerAgreedOrNot}" type="radio" onchange="{!c.Errors}"/>
+                                        </div>
+                                        <aura:if isTrue="{!v.CsmtAgreedNullError}">
+                                            <div class="slds-m-top_xx-small" style="color:red">
+                                                Complete this field.                                      
+                                            </div>
+                                        </aura:if>
+                                        <aura:if isTrue="{!v.CustomerAgreedOrNot == 'No'}">
+                                            <div class="slds-m-top_xx-small" style="color:red;">Please come back and submit this form only once you have your customer’s acceptance to fund prior to installation.</div>
+                                        </aura:if>
+                                        <div class="slds-m-top_large">
+                                            <b>Anticipated installation date</b>
+                                        </div>
+                                        <div  class="slds-size_5-of-12 slds-m-top_x-small">
+                                            <lightning:input aura:id ="DateInst" class="date" value="{!v.AnticipatedInstDate}" type="date" onchange="{!c.Errors}"/>
+                                        </div>
+                                        <aura:if isTrue="{!v.AntDateBeforeError}">
+                                            <div class="slds-m-top_xx-small" style="color:red;">
+                                                Installation date can not be in the past.
+                                            </div>
+                                        </aura:if>
+                                        <aura:if isTrue="{!v.DocError}">
+                                            <div class="slds-m-top_small" style="color:red;">
+                                                <b> Please upload Document.</b>
+                                            </div>
+                                        </aura:if>
+                                        <div class="slds-m-top_large">
+                                            <lightning:button variant="brand" class="{!v.isSubmitBtnDisabled? 'SubmitBtnDisable':'SumbmitRequestButton'}"
+                                                              label="Submit Request"
+                                                              title="Submit Request"
+                                                              disabled="{!v.isSubmitBtnDisabled}"
+                                                              onclick="{!c.submitRequest}"/>
+                                        </div>
+                                    </div>
+                                </aura:if>
+                                <aura:if isTrue="{!v.comboBoxValue == 'Payment in full after installation'}">
+                                    <div class="slds-m-top_large">
+                                        <div><b>Has the system been installed to the customer's satisfaction?</b></div>
+                                        <div class="slds-m-top_x-small">
+                                            <lightning:radioGroup aura:id="CsmtAgreedrGroup" options="{!v.options}" value="{!v.CustomerAgreedOrNot}" type="radio" onchange="{!c.Errors}" />
+                                        </div>
+                                        <aura:if isTrue="{!v.CsmtAgreedNullError}">
+                                            <div class="slds-m-top_xx-small" style="color:red">
+                                                Complete this field.                                      
+                                            </div>
+                                        </aura:if>
+                                        <aura:if isTrue="{!v.CustomerAgreedOrNot == 'No'}">
+                                            <div class="slds-m-top_xx-small" style="color:red;">Please come back and request funding after installation is complete.</div>
+                                        </aura:if> 
+                                        <div class="slds-m-top_large">
+                                            <b>Date installed</b>
+                                        </div>
+                                        <div  class="slds-medium-size_10-of-12 slds-large-size_5-of-12 slds-m-top_x-small">
+                                            <lightning:input aura:id ="DateInst" class="date" value="{!v.AnticipatedInstDate}" type="date" onchange="{!c.Errors}"/>
+                                        </div>
+                                        <aura:if isTrue="{!v.AntDateBeforeError}">
+                                            <div class="slds-m-top_xx-small" style="color:red;">
+                                                Installation date can not be in the future.
+                                            </div>
+                                        </aura:if>
+                                        <aura:if isTrue="{!v.DocError}">
+                                            <div class="slds-m-top_small" style="color:red;">
+                                                <b> Please upload Document.</b>
+                                            </div>
+                                        </aura:if>
+                                        <div class="slds-m-top_large">
+                                            <lightning:button variant="brand" class="{!v.isSubmitBtnDisabled? 'SubmitBtnDisable':'SumbmitRequestButton'}"
+                                                              label="Submit Request"
+                                                              title="Submit Request"
+                                                              disabled="{!v.isSubmitBtnDisabled}"
+                                                              onclick="{!c.submitRequest}"/>
+                                        </div>
+                                    </div>
+                                </aura:if>
+                            </aura:if> 
+                            <aura:if isTrue="{!v.RemainderRequest}">
+                                <div class="RemainderRequest">
+                                    <div class="heading3">
+                                        <b> Request final payment after installation</b>
+                                    </div>
+                                    <div class="slds-m-top_medium">
+                                        <div><b>Funds paid to date</b></div>
+                                        <div class="slds-m-top_x-small">
+                                            <lightning:formattedNumber value="{!v.fundsPaidToDate}" style="currency" currencyCode="AUD" />
+                                        </div>  
+                                    </div>
+                                    <div class="slds-m-top_medium">
+                                        <div><b>Remaining funds available</b></div>
+                                        <div class="slds-m-top_x-small">
+                                            <lightning:formattedNumber value="{!v.fundsRemaining}" style="currency" currencyCode="AUD" />
+                                        </div>
+                                    </div>
+                                    <div class="slds-m-top_medium">
+                                        <div > <b>Final payment amount</b></div>
+                                        <div>Final amount to be paid from loan proceeds.</div>
+                                        <div class="Inp1 slds-size_5-of-12 slds-m-top_x-small">
+                                            <lightning:input aura:id= "rempartpmt" value="{!v.partPaymentAmt}" type="number" onchange="{!c.Errors}"/>
+                                        </div>
+                                        <aura:if isTrue="{!v.partPmtError}">
+                                            <div class="slds-m-top_xx-small" style="color:red;">Error! You can’t request payment which exceeds funds available in the loan account.</div>
+                                        </aura:if>
+                                    </div> 
+                                    <div class="slds-grid slds-grid_vertical">
+                                        <div class="slds-m-top_large slds-col">
+                                            <div><b>Quote / invoice</b></div>
+                                            <div>Document must include remittance details </div>
+                                            <div> 
+                                                <aura:if isTrue="{!v.DocExistsORNot}">
+                                                    <c:DocumentUploadFunding DocExist="{!v.DocExist}" DocError="{!v.DocError}"  opp ="{!v.opp}" upload="true"  showForMetr="false" fundingPage="true" UploadButtonFunding="false" count="1" requestId="{!v.DocWrapper.document.Id}" IdList="{!v.DocWrapper.cdlId}"  Name="{!v.DocWrapper.document.Title}"  NmList="{!v.DocWrapper.NmList}" cdlId="{!v.DocWrapper.cdlId}" docreqId="{!v.DocWrapper.docReqId}" accountId="{!v.opp.Id}" sessionId="{!v.sessionId}" NameOfUploadFile="Upload" />
+                                                    <aura:set attribute="else">
+                                                        <aura:iteration items="{!v.quoteDetailWrpList}" var="item" indexVar="index">
+                                                            <c:DocumentUploadFunding DocExist="{!v.DocExist}" DocError="{!v.DocError}"  opp ="{!v.opp}" fundingPage="true"  cdlId="{!item.cdlId}" NmList="{!item.NmList}"  accountId="{!v.opp.Id}" sessionId="{!v.sessionId}" NameOfUploadFile="Upload"/>
+                                                        </aura:iteration> 
+                                                    </aura:set> 
+                                                </aura:if>
+                                                <!--  <lightning:button variant="brand" class="UploadBtn" label="Upload" title="Upload"/> -->
+                                            </div>
+                                        </div>
+                                        <div class="slds-col">
+                                            <div> <b>Timing of payment</b></div>
+                                            <div class="slds-m-top_x-small">
+                                                <lightning:combobox class="slds-combobox"
+                                                                    placeholder="Select"
+                                                                    value="{!v.remainderComboValue}"
+                                                                    options="{!v.remaindercomboOption}"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-m-top_large">
+                                        <div><b>Has the system been installed to the customer's satisfaction?</b></div>
+                                        <div class="slds-m-top_x-small">
+                                            <lightning:radioGroup aura:id="CsmtAgreedrGroup" options="{!v.options}" value="{!v.CustomerAgreedOrNot}" type="radio" onchange="{!c.Errors}" />
+                                        </div>
+                                        <aura:if isTrue="{!v.CsmtAgreedNullError}">
+                                            <div class="slds-m-top_xx-small" style="color:red">
+                                                Complete this field.                                      
+                                            </div>
+                                        </aura:if>
+                                        <aura:if isTrue="{!v.CustomerAgreedOrNot == 'No'}">
+                                            <div class="slds-m-top_xx-small" style="color:red;">Please come back and request funding after installation is complete.</div>
+                                        </aura:if> 
+                                        <div class="slds-m-top_large">
+                                            <b>Date installed</b>
+                                        </div>
+                                        <div  class="slds-size_5-of-12 slds-m-top_x-small">
+                                            <lightning:input aura:id ="DateInst" class="date" value="{!v.AnticipatedInstDate}" type="date" onchange="{!c.Errors}"/>
+                                        </div>
+                                        <aura:if isTrue="{!v.AntDateBeforeError}">
+                                            <div class="slds-m-top_xx-small" style="color:red;">
+                                                Installation date can not be in the future.
+                                            </div>
+                                        </aura:if>
+                                        <aura:if isTrue="{!v.DocError}">
+                                            <div class="slds-m-top_small" style="color:red;">
+                                                <b> Please upload Document.</b>
+                                            </div>
+                                        </aura:if>
+                                        <div class="slds-m-top_large">
+                                            <lightning:button variant="brand" class="{!v.isSubmitBtnDisabled? 'SubmitBtnDisable':'SumbmitRequestButton'}"
+                                                              label="Submit Request"
+                                                              title="Submit Request"
+                                                              disabled="{!v.isSubmitBtnDisabled}"
+                                                              onclick="{!c.submitRemainderRequest}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </aura:if>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </div>
+</aura:component>

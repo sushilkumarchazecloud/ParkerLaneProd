@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Approved_Settled</fullName>
+    <columns>OPPORTUNITY.LAST_STAGE_CHANGE</columns>
+    <columns>OPPORTUNITY.NAME</columns>
+    <columns>OPPORTUNITY.RECORDTYPE</columns>
+    <columns>Loan_Amount__c</columns>
+    <columns>FinServ__ReferredByContact__c</columns>
+    <columns>Referred_by_Company__c</columns>
+    <columns>Lender__c</columns>
+    <columns>OPPORTUNITY.STAGE_NAME</columns>
+    <columns>OPPORTUNITY.CLOSE_DATE</columns>
+    <columns>HLHC_Offered__c</columns>
+    <columns>HLHC_Offer_Outcome__c</columns>
+    <columns>State__c</columns>
+    <columns>Application_Supporting_Notes__c</columns>
+    <columns>Applicant_1_Credit_Score__c</columns>
+    <columns>Applicant_2_Credit_Score__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>OPPORTUNITY.STAGE_NAME</field>
+        <operation>equals</operation>
+        <value>Settled (closed won)</value>
+    </filters>
+    <filters>
+        <field>OPPORTUNITY.RECORDTYPE</field>
+        <operation>equals</operation>
+        <value>Opportunity.Green_Loan</value>
+    </filters>
+    <label>Approved &amp; Settled Personal Loans</label>
+</ListView>

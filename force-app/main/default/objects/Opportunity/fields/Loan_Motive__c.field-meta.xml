@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Loan_Motive__c</fullName>
+    <externalId>false</externalId>
+    <label>Loan Motive</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Save money</fullName>
+                <default>false</default>
+                <label>Save money</label>
+            </value>
+            <value>
+                <fullName>Reduce cost of living</fullName>
+                <default>false</default>
+                <label>Reduce cost of living</label>
+            </value>
+            <value>
+                <fullName>Environmental</fullName>
+                <default>false</default>
+                <label>Environmental</label>
+            </value>
+            <value>
+                <fullName>Improve Property Value</fullName>
+                <default>false</default>
+                <label>Improve Property Value</label>
+            </value>
+            <value>
+                <fullName>Improve lifestyle</fullName>
+                <default>false</default>
+                <label>Improve lifestyle</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

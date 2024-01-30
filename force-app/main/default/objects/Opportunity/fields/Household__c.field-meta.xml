@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Household__c</fullName>
+    <externalId>false</externalId>
+    <label>Household</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Couple</fullName>
+                <default>false</default>
+                <label>Couple</label>
+            </value>
+            <value>
+                <fullName>Couple with 1 child</fullName>
+                <default>false</default>
+                <label>Couple with 1 child</label>
+            </value>
+            <value>
+                <fullName>Couple with 2 children</fullName>
+                <default>false</default>
+                <label>Couple with 2 children</label>
+            </value>
+            <value>
+                <fullName>Couple with 3 or more children</fullName>
+                <default>false</default>
+                <label>Couple with 3 or more children</label>
+            </value>
+            <value>
+                <fullName>Single</fullName>
+                <default>false</default>
+                <label>Single</label>
+            </value>
+            <value>
+                <fullName>Single Parent with 1 child</fullName>
+                <default>false</default>
+                <label>Single Parent with 1 child</label>
+            </value>
+            <value>
+                <fullName>Single Parent with 2 children</fullName>
+                <default>false</default>
+                <label>Single Parent with 2 children</label>
+            </value>
+            <value>
+                <fullName>Single Parent with 3 or more children</fullName>
+                <default>false</default>
+                <label>Single Parent with 3 or more children</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

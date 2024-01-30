@@ -1,9 +1,7 @@
-<aura:component controller="ParkerLaneLoanController">
+<aura:component controller="ReferralPageController">
     <aura:attribute name="typesOptions" type="List" default="[{'label': 'Solar', 'value': 'Solar'},{'label': 'Home Improvement', 'value': 'Home Improvement'},{'label': 'Debt Consolidation', 'value': 'Debt Consolidation'}]"/>
-    <aura:attribute name="sendQuoteOptions" type="List" default="[{'label': 'Me and my customer', 'value': 'Me and my customer'},{'label': 'Me only', 'value': 'Me only'}]"/>
-    <aura:attribute name="supportOptions" type="List" default="[{'label': 'Please contact the customer', 'value': 'Please contact the customer'},{'label': 'The customer will contact you', 'value': 'The customer will contact you'}]"/>
-    
-    <aura:attribute name="isReferralAgreement" type="Boolean" default="false"/>
+    <aura:attribute name="sendQuoteOptions" type="List" default="[{'label': 'Send to me and my customer', 'value': 'Me and my customer'},{'label': 'Send to me only', 'value': 'Me only'}]"/>
+    <aura:attribute name="sessionId" type="String" />
     <aura:attribute name="isObtainedTheCustomer" type="Boolean" default="false"/>
     <aura:attribute name="showMessage" type="Boolean" default="false"/>
     <aura:attribute name="status" type="String"/>
@@ -12,192 +10,472 @@
     <aura:attribute name="sendQuote" type="String"/>
     <aura:attribute name="referrerEmail" type="String"/>
     <aura:attribute name="quoteType" type="String"/>
-    <aura:attribute name="quoteAmount" type="Integer"/>
-    <aura:attribute name="custName" type="String"/>  
+    <aura:attribute name="Amount" type="Decimal"/>
+    <aura:attribute name="masterQuote" type="String"/>
+    <aura:attribute name="firstName" type="String"/>  
+    <aura:attribute name="lastName" type="String"/>  
     <aura:attribute name="custEmail" type="String"/>
     <aura:attribute name="custPhone" type="String"/>
+    <aura:attribute name="loanError" type="String" default="false"/>
+    <aura:attribute name="Name" type="String"/>
+    <aura:attribute name="ret" type="String" default="true"/>
+    <aura:attribute name="files" type="Blob" />
+    <aura:attribute name="indx" type="integer" />
+    <aura:attribute name="percent" type="integer" default="0" />
     <aura:attribute name="custInstallationAddress" type="String"/>
+    <aura:attribute name="street" type="String" />
+    <aura:attribute name="postalCode" type="String" />
+    <aura:attribute name="suburb" type="String" />
+    <aura:attribute name="country" type="String" />
+    <aura:attribute name="state" type="String" />
+    <aura:attribute name="streetNumber" type="String" />
+    <aura:attribute name="streetType" type="String" />
+    <aura:attribute name="show" type="Boolean" default="false"/>
+    <aura:attribute name="showCustomer" type="Boolean" default="true"/>
+    <aura:attribute name="showDetails" type="Boolean" default="false"/>
+    <aura:attribute name="isUploading" type="boolean" default="false"/>
+    <aura:attribute name="submitcheck" type="boolean" default="true"/>
+    <aura:attribute name="showBtn" type="boolean" default="true"/>
+    <aura:attribute name="upload" type="boolean" default="false"/>
+    <aura:attribute name="AttachId" type="String" />
+    <aura:attribute name="contentBodyId" type="string" />
+    <aura:attribute name="requestId" type="String" />
+    <aura:attribute name="removeFooter" type="String" default="true"/>
+    <aura:attribute name="isNotNull" type="String" default="true"/>
+    <aura:attribute name="accountId" type="String"/>
+    <aura:attribute name="quoteDetailWrpList" type="list"/>
+    <aura:attribute name="isInMaintenance" type="boolean" default="false"/>
     
-    <div class="company-logo"> 
-        <div class="slds-float_left">
-            <img src="{!$Resource.SolarLoan + '/img/parkerlane.png'}"/>
-        </div >
-    </div>
-    <section class="slds-p-around--large slds-text-align_center company-banner">
-        <h4 class="txt-h4">REFER A CUSTOMER</h4>
-        <div class="loan-rec-panel slds-container_medium slds-container_center">
-            <div class="slds-grid slds-p-vertical_x-small slds-grid_vertical-align-center">
-                <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12">
-                    <span class="slds-p-horizontal--small ">Delivering awesome value and customer service doesn’t have to stop with you. Give your customers access to the best value finance from Australia’s #1 rated finance team for customer service.</span>
-                </div>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>    
+    
+    <lightning:spinner aura:id="mySpinner" variant="brand" size="large" class="slds-hide slds-is-fixed" />
+    <aura:if isTrue="{!v.removeFooter}">
+        <div class="company-logo slds-grid slds-wrap" style="align-items: center;"> 
+            <div class=" slds-text-align_left slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 slds-order_3  slds-medium-order_1 slds-large-order_1">
+                <span class="slds-p-horizontal--medium" style="font-size: 14px;">
+                    Need Help? Call 1300 13 17 11
+                </span>
             </div>
+            <div class="slds-text-align_center slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 slds-order_2 slds-medium-order_2 slds-large-order_2">
+                <span ><img src="{!$Resource.SolarLoan + '/img/logowhite.png'}"/></span>
+            </div>        
         </div>
-       
-    </section>
-   	<lightning:spinner aura:id="mySpinner" variant="brand" size="large" class="slds-hide" />
-    <div class="bg-white slds-p-around--medium">
-        <header class="checkout-page-banner--gradient">
-            <div class="slds-align_absolute-center ">
-                <div class="page-banner__content-text">
-                    <h1 class="slds-p-vertical--medium heading--page">Please add your referral details here</h1>
-                    <p class="font-intro">
-                        
-                    </p>
+        <div class="slds-p-around_large" style="margin-bottom: 20px; text-align: center; background: #d2edee;padding: 20px;">
+            <h1 style="font-size: 27px; font-family: Bely-Bold; font-weight: bold">Refer a Customer</h1>
+        </div>
+    </aura:if>
+    <aura:if isTrue="{!v.isInMaintenance}">
+        <c:MaintenanceCmp />
+    </aura:if>
+    <aura:if isTrue="{!!v.isInMaintenance}">
+        <div class="bg-white max-700 slds-p-around_large" style="min-height: 45rem">
+            <aura:if isTrue="{!v.showMessage}">
+                <div class="{!'slds-notify slds-notify_toast slds-align_absolute-center slds-m-vertical--medium slds-theme_'+ v.status}" style="min-width: inherit;">
+                    <span class="slds-assistive-text">{!v.status}</span>
+                    <div class="slds-notify__content">
+                        <p class="slds-align_absolute-center">{!v.message}.</p>                
+                    </div>
                 </div>
+            </aura:if>
+            <div class="">
+                <b class="headingStyle">Request a Quote</b>
             </div>
-        </header>
-        <aura:if isTrue="{!v.showMessage}">
-            <div class="{!'slds-notify slds-notify_toast slds-align_absolute-center slds-m-vertical--medium slds-theme_'+ v.status}" style="min-width: inherit;">
-                <span class="slds-assistive-text">{!v.status}</span>
-                <div class="slds-notify__content">
-                    <p class="slds-align_absolute-center">{!v.message}.</p>                
-                </div>
+            <div class="slds-m-top_medium">
+                <p>Complete the form to send finance options to you, your customer or both.</p>
             </div>
-        </aura:if>
-        <div class="slds-clearfix  slds-p-vertical--medium slds-form max-700  ">
-            <div class="slds-form" role="list">
-                <h2 class="header">Quote Details</h2>
-                <div class="slds-form__row">
-                    <div class="slds-form__item" role="listitem">
-                        <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
-                            <lightning:combobox label="Quote Type" aura:id="fieldcheck" required="true"
-                                                value="{!v.quoteType}" 
-                                                options="{! v.typesOptions }" 
-                                                placeholder="Quote Type"/>
-                            
-                        </div>
-                    </div>
-                    <div class="slds-form__item" role="listitem">
-                        <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
-                            <lightning:input label="Quote Amount" type="number" aura:id="fieldcheck" required="true" 
-                                             placeholder="Quote Amount" formatter="currency"
-                                             value="{!v.quoteAmount}"/>
-                        </div>
-                    </div>
+            <aura:if isTrue="{!v.removeFooter}">            
+                <!--<div class="slds-m-top_medium">
+                <h2 class="header">Verify Yourself</h2>
+            </div>  -->
+                <div class="slds-grid_vertical">
+                    <div class="slds-col slds-size_8-of-12 slds-m-top_medium" onkeypress="{!c.handleChange}">
+                        <lightning:input class="no-abbr" label="Verify Yourself" onchange="{!c.handleDisable}" aura:id="mailCheck" required="true" placeholder="Enter your email address" value="{!v.referrerEmail}"/>     
+                    </div> 
                 </div>
-                
-                <h2 class="header">Customer Details</h2>
-                <div class="slds-form__row">
-                    <div class="slds-form__item" role="listitem">
-                        <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
-                            <lightning:input label="Full Name" aura:id="fieldcheck" required="true" 
-                                             placeholder="Full Name" value="{!v.custName}"/>
-                        </div>
+                <aura:if isTrue="{!v.showBtn}"> 
+                    <div class="slds-col slds-size_3-of-12">
+                        <lightning:button class="slds-button slds-button_brand slds-m-top_small slds-size_6-of-12 slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_3-of-12 verifyBtn" variant="brand" 
+                                          label="Verify Email" onclick="{!c.getReferrer}"/>
                     </div>
-               
-                    <div class="slds-form__item" role="listitem">
-                        <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
-                            <lightning:input label="Email" placeholder="Email"
-                                             aura:id="fieldcheck" required="true"
-                                             value="{!v.custEmail}"/>
+                    <aura:set attribute="else">
+                        <div class="slds-col slds-size_3-of-12 slds-m-top_small">
+                            <button class="slds-button slds-button_success SuccessBtn">
+                                <span class="slds-m-left_small">Verified</span>
+                                <span class="slds-m-left_x-small">
+                                    <img style="width:25px;" src="{!$Resource.SolarLoan + '/img/final.png'}"/>
+                                </span>                        
+                            </button>
                         </div>
-                    </div>
-                </div>
-                <div class="slds-form__row">
-                    <div class="slds-form__item" role="listitem">
-                        <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
-                            <lightning:input label="Phone" aura:id="fieldcheck" required="true" 
-                                             pattern="([0-9]{10}|[0-9]{4} [0-9]{3} [0-9]{3})"
-                                             type="tel"
-                                             messageWhenPatternMismatch="Pattern should be 1234567890 or 1234 567 890"
-                                             placeholder="Phone" value="{!v.custPhone}"/>
-                        </div>
-                    </div>
-               
-                    <div class="slds-form__item" role="listitem">
-                        <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
-                            <lightning:input label="Installation Address" placeholder="Installation Address"
-                                             value="{!v.custInstallationAddress}"/>
-                        </div>
-                    </div>
-                </div>
-                
-                <h2 class="header">Referrer Details</h2>
-                <div class="slds-form__row">
-                    <div class="slds-form__item" role="listitem">
-                        <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
-                            <lightning:input label="Your Email" placeholder="Your Email"
-                                             aura:id="fieldcheck" required="true"
-                                             value="{!v.referrerEmail}"/>
-                        </div>
-                    </div>
-               
-                    <div class="slds-form__item" role="listitem">
-                        <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
-                            
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="slds-form__row">
-                    <div class="slds-form__item" role="listitem">
-                        <div class="slds-form-element rg-style">
-                            <div class="slds-grid slds-wrap">
-                                <div class="slds-size_1-of-1 slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12">
-                                    <lightning:radioGroup name="sendQuoteRG"
-                                                          aura:id="fieldcheck" 
-                                                          required="true"
-                                                          label="Please send the quote to"
-                                                          options="{! v.sendQuoteOptions }"
-                                                          value="{! v.sendQuote }"
-                                                          type="button"/>
+                    </aura:set>
+                </aura:if>  
+            </aura:if>
+            <aura:if isTrue="{!!v.showCustomer}">
+                <aura:if isTrue="{!!v.showDetails}">
+                    <div class="slds-clearfix  slds-p-vertical--medium slds-form">
+                        <div class="slds-form" role="list">
+                            <div class="slds-form__row slds-grid slds-gutters">
+                                <div class="slds-col slds-size_8-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col" role="listitem" style="padding-right: 0px;">
+                                    
+                                    <lightning:combobox label="Loan Purpose" aura:id="fieldcheck" required="true"
+                                                        value="{!v.quoteType}" class="no-abbr"
+                                                        options="{!v.typesOptions }" onchange="{!c.submitable}"
+                                                        placeholder="Loan Purpose"/>                            
+                                    
+                                </div>                
+                                <div class="slds-col slds-size_5-of-12" style="font-size: 12px; padding-top: 20px; line-height: initial; width: 31%;">
+                                    <div class="slds-grid slds-grid_vertical">
+                                        <div class="slds-col">
+                                            <img src="{!$Resource.SolarLoan + '/img/information.png'}" style="height:40px;"/>
+                                        </div>
+                                        <div class="slds-col" style="margin-left: 8px;">
+                                            <b>Do you provide more than one price option when you quote?</b>                        	
+                                        </div>                            
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <br/>
-                <div class="slds-form__row">
-                    <div class="slds-form__item" role="listitem">
-                        <div class="slds-form-element rg-style">
-                            <div class="slds-grid slds-wrap">
-                                <div class="slds-size_1-of-1 slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12">
-                                    <lightning:radioGroup name="supportRG"
-                                                          aura:id="fieldcheck" 
-                                                          required="true"
-                                                          label="How would you like us to support you?"
-                                                          options="{! v.supportOptions }"
-                                                          value="{! v.support }"
-                                                          type="button"/>
+                            
+                            <h2 class="header">Customer Details</h2>
+                            <div class="slds-form__row">
+                                <div class="slds-form__item slds-grid slds-grid_vertical" role="listitem">
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-size_4-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col" style="padding-right: inherit;">
+                                            <lightning:input label="" aura:id="fieldcheck" required="true" class="no-abbr"
+                                                             placeholder="First name" value="{!v.firstName}" onchange="{!c.submitable}"/>
+                                        </div>
+                                        <div class="slds-col slds-size_4-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col" style="padding-right: inherit;">
+                                            <lightning:input label="" aura:id="fieldcheck" required="true" class="no-abbr" 
+                                                             placeholder="Last name" value="{!v.lastName}" onchange="{!c.submitable}"/>
+                                        </div>
+                                        <div class="slds-col slds-size_4-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col" style="margin-left: 20px; margin-top: -17px; line-height: initial; font-size: 12px;width: 30%;">
+                                            Give your customers finance options for up to 4 different prices in the one referral. Click + 'Add another quote'.
+                                        </div>
+                                    </div>
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-size_8-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                                            <lightning:input label="" aura:id="" required="" 
+                                                             pattern="([04]{2}[0-9]{8}|[04]{2}[0-9]{2} [0-9]{3} [0-9]{3}|[04]{2} [0-9]{4} [0-9]{4})"
+                                                             type="tel"
+                                                             messageWhenPatternMismatch="Pattern should be 0412345678 or 0412 345 678 or 04 1234 5678"
+                                                             placeholder="Mobile phone (no landlines)" value="{!v.custPhone}"/>
+                                        </div>
+                                        <div class="slds-col slds-size_6-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col" style="margin-left: 15px; margin-top: auto;">
+                                            <img src="{!$Resource.SolarLoan + '/img/upload.png'}" style="height:35px;"/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-size_8-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                                            <lightning:input type="email" label="" placeholder="Email address" class="no-abbr"
+                                                             aura:id="fieldcheck" required="true" pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{1,5})$"
+                                                             messageWhenPatternMismatch="You have entered an invalid format."
+                                                             value="{!v.custEmail}" onchange="{!c.submitable}" onkeyup="{!c.checkEmail}"/>
+                                            <!-- <lightning:input label="" placeholder="Installation address" style="margin-top: 10px;"
+                                                         value="{!v.custInstallationAddress}"/> -->
+                                            <div style="margin-top: 10px;">
+                                                <c:AddressAPItool aura:id="addressTool" isFindAdd = "{!v.isFindAdd}" streetType="{!v.streetType}" streetNumber="{!v.streetNumber}" state="{!v.state}" country="{!v.country}" suburb="{!v.suburb}" street="{!v.street}" postalCode="{!v.postalCode}" searchString="{!v.custInstallationAddress}" addressplaceholder="Installation address" isAddressLabelPresent="false" />
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid_vertical">
+                                            <div class="slds-col slds-size_6-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col" style="margin-left: 22px; font-size: 12px; line-height: initial; margin-top: -5px;width:auto;">
+                                                <b>Why do we give you the option to load your quote?</b>
+                                            </div>
+                                            <div class="slds-col slds-size_6-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col" style="margin-left: 22px; font-size: 12px; line-height: initial; margin-top: -5px;width:auto;">
+                                                Depending on the finance option your customer chooses, we will required a quote
+                                                from you at some point in the process.
+                                            </div>
+                                            <div class="slds-col slds-size_6-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col" style="margin-left: 22px; font-size: 12px; line-height: initial; margin-top: 5px;width:auto;">
+                                                Cover off every scenario by including your 'pay to' details on the quote or invoice.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            <div class="slds-m-bottom_medium">
+                                <aura:iteration items="{!v.quoteDetailWrpList}" var="item" indexVar="index">
+                                    <div class="slds-grid slds-gutters slds-size_12-of-12">
+                                        <div class="slds-col slds-size_7-of-12 slds-m-top_medium"><b>Quote {!index + 1}</b></div>
+                                        <aura:if isTrue="{!index >= 1 }">
+                                            <div class="slds-col slds-size_1-of-12 slds-m-top_medium slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col" style="display: grid;padding-inline: 3rem;">
+                                                <lightning:buttonIcon class="deleteBtn" name="{!index}" variant="bare" size="medium" iconName="utility:delete" onclick="{!c.deleteProperty}"/>                                    
+                                            </div>
+                                        </aura:if>
+                                    </div>
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="amtInput slds-col slds-size_3-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col" style="padding-right: 0px;">
+                                            <lightning:input onchange="{!c.submitable}" aura:id="fieldcheck" min="0" step="1" label="" type="number" value="{!item.Amount}" class="{!item.checkError == true ? 'no-abbr qtInputErr': 'no-abbr qtInput'}" required="true"/>
+                                            <aura:if isTrue="{!item.checkError}">
+                                                <br/><p style="margin-top: -20px; color: red; font-size: smaller;">No loans for this amount</p>
+                                            </aura:if>
+                                        </div>
+                                        <div class="slds-col slds-size_5-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col" style="padding-right: 0px;margin-top: 2px">
+                                            <lightning:input aura:id="fieldcheck" messageWhenPatternMismatch="Special characters are not allowed" onchange="{!c.submitable}" pattern="^[a-zA-Z0-9 ]+$" label="" placeholder="Name (optional)" value="{!item.masterQuote}" type="text" />                                        
+                                        </div>                            
+                                    </div> 
+                                    <div class="slds-form-element__control slds-grid_vertical slds-size_6-of-12" style="">
+                                        <div class="slds-col slds-size_6-of-6 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col slds-float_right" style="">
+                                            <c:UploadDocumentGen submitcheck="{!v.submitcheck}" referralQt="true" cdlId="{!item.cdlId}" NmList="{!item.NmList}"  accountId="{!v.accountId}" sessionId="{!v.sessionId}" NameOfUploadFile="Upload quote (optional)"/>
+                                        </div>
+                                    </div>    
+                                </aura:iteration>
+                            </div>
+                            <div class="slds-grid_vertical slds-size_12-of-12">
+                                <div class="slds-col slds-size_9-of-12 slds-m-top_medium slds-align_absolute-center" style="padding-right: 14rem;">
+                                    <aura:if isTrue="{!v.quoteDetailWrpList.length != 4}">                                        
+                                        <lightning:button label="" class="" variant="base" onclick="{!c.addProperty}"><img src="{!$Resource.SolarLoan + '/img/plusicon.png'}" style="height:23px;"/><b class="addQuote">Add another quote</b></lightning:button>                        
+                                    </aura:if>
+                                </div>
+                            </div>
+                            
+                            <div class="slds-form__row slds-m-top_large">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element rg-style">
+                                        <div class="slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_8-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                                                <lightning:radioGroup name="sendQuoteRG"
+                                                                      aura:id="fieldcheck" 
+                                                                      required="true"
+                                                                      class="no-abbr"
+                                                                      onchange="{!c.submitable}"
+                                                                      options="{!v.sendQuoteOptions }"
+                                                                      value="{!v.sendQuote }"
+                                                                      type="button"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <br/>
+                            <div class="slds-form__row">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-size_8-of-12" style="display: inline-flex;line-height: initial;">                                    
+                                        <span style="margin-right:-10px;"> <lightning:input type="checkbox" aura:id="fieldcheck" 
+                                                                                            required="true" class="no-abbr"
+                                                                                            onchange="{!c.submitable}"
+                                                                                            checked="{!v.isObtainedTheCustomer}"
+                                                                                            label="" />
+                                        </span>
+                                        <span>Within the last 5 days I have obtained the customer’s consent to pass their details to Parker Lane.</span>
+                                    </div>
                                 </div>
                                 
                             </div>
-                        </div>
+                            <br/>                
+                        </div>   
+                        <aura:if isTrue="{!v.ret}">
+                            <div class="{!v.status == 'Success!'? 'successMsg slds-m-vertical_small slds-col slds-size_8-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col':'oopsMsg slds-m-vertical_small slds-col slds-size_8-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col'}">
+                                <div class=""><b>{!v.status}</b> </div>
+                                <div class="slds-m-top_x-small">{!v.message}</div>
+                            </div>
+                            <div class="">
+                                <lightning:button class="{!v.submitcheck? 'submitQtBtnDisable slds-button slds-button_brand slds-m-vertical_medium slds-col slds-size_8-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col slds-float_left':'submitQtBtn slds-button slds-button_brand slds-m-vertical_medium slds-col slds-size_8-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col slds-float_left'}" variant="brand" 
+                                                  label="Submit Quote" disabled="{!v.submitcheck}" 
+                                                  onclick="{!c.saveReferral}" />
+                            </div> 
+                            
+                            <aura:set attribute="else">
+                                <div class="slds-m-vertical_medium  slds-col slds-size_8-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col slds-float_left">
+                                    <button class="slds-button slds-button_success SuccessBtn">
+                                        <span class="slds-m-left_x-large">Submitted</span>
+                                        <span class="slds-m-left_large">
+                                            <img style="width:25px;" src="{!$Resource.SolarLoan + '/img/final.png'}"/>
+                                        </span>                            
+                                    </button>
+                                </div>
+                                <div class="{!v.status == 'Success!'? 'successMsg slds-m-vertical_small  slds-col slds-size_8-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col ':'oopsMsg slds-m-vertical_small  slds-col slds-size_8-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col '}">
+                                    <div class=""><b>{!v.status}</b> </div>
+                                    <div class="slds-m-top_x-small">{!v.message}</div>
+                                </div>
+                            </aura:set>
+                        </aura:if>
                     </div>
-                </div>
-                <br/>
-                <div class="slds-form__row">
-                    <div class="slds-form__item" role="listitem">
-                        <div class="slds-form-element" style="text-align: justify">
-                            <lightning:input type="checkbox" aura:id="fieldcheck" 
-                                                          required="true"
-                                             value="{!v.isObtainedTheCustomer}"
-                                             label="Within the last 5 days I have obtained the customer’s consent to pass their details to Parker Lane." />
-                        </div>
+                </aura:if>
+            </aura:if>
+            <aura:if isTrue="{!v.showDetails}">
+                <aura:if isTrue="{!!v.showCustomer}">
+                    <div class="slds-clearfix  slds-p-vertical--medium slds-form">
+                        <div class="slds-form" role="list">
+                            <div class="slds-form__row slds-grid slds-gutters">
+                                <div class="slds-col slds-size_8-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col" role="listitem" style="padding-right: 0px;">
+                                    
+                                    <lightning:combobox label="Loan Purpose" aura:id="fieldcheck" required="true"
+                                                        value="{!v.quoteType}" class="no-abbr"
+                                                        options="{!v.typesOptions }" onchange="{!c.submitable}"
+                                                        placeholder="Loan Purpose"/>                            
+                                    
+                                </div>                
+                                <div class="slds-col slds-size_5-of-12" style="font-size: 12px; padding-top: 20px; line-height: initial; width: 31%;">
+                                    <div class="slds-grid slds-grid_vertical">
+                                        <div class="slds-col">
+                                            <img src="{!$Resource.SolarLoan + '/img/information.png'}" style="height:40px;"/>
+                                        </div>
+                                        <div class="slds-col" style="margin-left: 8px;">
+                                            <b>Do you provide more than one price option when you quote?</b>                        	
+                                        </div>                            
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <h2 class="header">Customer Details</h2>
+                            <div class="slds-form__row">
+                                <div class="slds-form__item slds-grid slds-grid_vertical" role="listitem">
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-size_4-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col" style="padding-right: inherit;">
+                                            <lightning:input label="" aura:id="fieldcheck" required="true" class="no-abbr"
+                                                             placeholder="First name" value="{!v.firstName}" onchange="{!c.submitable}"/>
+                                        </div>
+                                        <div class="slds-col slds-size_4-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col" style="padding-right: inherit;">
+                                            <lightning:input label="" aura:id="fieldcheck" required="true" class="no-abbr" 
+                                                             placeholder="Last name" value="{!v.lastName}" onchange="{!c.submitable}"/>
+                                        </div>
+                                        <div class="slds-col slds-size_4-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col" style="margin-left: 20px; margin-top: -17px; line-height: initial; font-size: 12px;width: 30%;">
+                                            Give your customers finance options for up to 4 different prices in the one referral. Click + 'Add another quote'.
+                                        </div>
+                                    </div>
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-size_8-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                                            <lightning:input label="" aura:id="" required="" 
+                                                             pattern="([04]{2}[0-9]{8}|[04]{2}[0-9]{2} [0-9]{3} [0-9]{3}|[04]{2} [0-9]{4} [0-9]{4})"
+                                                             type="tel"
+                                                             messageWhenPatternMismatch="Pattern should be 0412345678 or 0412 345 678 or 04 1234 5678"
+                                                             placeholder="Mobile phone (no landlines)" value="{!v.custPhone}"/>
+                                        </div>
+                                        <div class="slds-col slds-size_6-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col" style="margin-left: 15px; margin-top: auto;">
+                                            <img src="{!$Resource.SolarLoan + '/img/upload.png'}" style="height:35px;"/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-size_8-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                                            <lightning:input type="email" label="" placeholder="Email address" class="no-abbr"
+                                                             aura:id="fieldcheck" required="true" pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{1,5})$"
+                                                             messageWhenPatternMismatch="You have entered an invalid format."
+                                                             value="{!v.custEmail}" onchange="{!c.submitable}" onkeyup="{!c.checkEmail}"/>
+                                            <!-- <lightning:input label="" placeholder="Installation address" style="margin-top: 10px;"
+                                                         value="{!v.custInstallationAddress}"/> -->
+                                            <div style="margin-top: 10px;">
+                                                <c:AddressAPItool aura:id="addressTool" isFindAdd = "{!v.isFindAdd}" streetType="{!v.streetType}" streetNumber="{!v.streetNumber}" state="{!v.state}" country="{!v.country}" suburb="{!v.suburb}" street="{!v.street}" postalCode="{!v.postalCode}" searchString="{!v.custInstallationAddress}" addressplaceholder="Installation address" isAddressLabelPresent="false" />
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid_vertical">
+                                            <div class="slds-col slds-size_6-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col" style="margin-left: 22px; font-size: 12px; line-height: initial; margin-top: -5px;width:auto;">
+                                                <b>Why do we give you the option to load your quote?</b>
+                                            </div>
+                                            <div class="slds-col slds-size_6-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col" style="margin-left: 22px; font-size: 12px; line-height: initial; margin-top: -5px;width:auto;">
+                                                Depending on the finance option your customer chooses, we will required a quote
+                                                from you at some point in the process.
+                                            </div>
+                                            <div class="slds-col slds-size_6-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col" style="margin-left: 22px; font-size: 12px; line-height: initial; margin-top: 5px;width:auto;">
+                                                Cover off every scenario by including your 'pay to' details on the quote or invoice.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            <div class="slds-m-bottom_medium">
+                                <aura:iteration items="{!v.quoteDetailWrpList}" var="item" indexVar="index">
+                                    <div class="slds-grid slds-gutters slds-size_12-of-12">
+                                        <div class="slds-col slds-size_7-of-12 slds-m-top_medium"><b>Quote {!index + 1}</b></div>
+                                        <aura:if isTrue="{!index >= 1 }">
+                                            <div class="slds-col slds-size_1-of-12 slds-m-top_medium slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col" style="display: grid;padding-inline: 3rem;">
+                                                <lightning:buttonIcon class="deleteBtn" name="{!index}" variant="bare" size="medium" iconName="utility:delete" onclick="{!c.deleteProperty}"/>                                    
+                                            </div>
+                                        </aura:if>
+                                    </div>
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="amtInput slds-col slds-size_3-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col" style="padding-right: 0px;">
+                                            <lightning:input onchange="{!c.submitable}" aura:id="fieldcheck" min="0" step="1" label="" type="number" value="{!item.Amount}" class="{!item.checkError == true ? 'no-abbr qtInputErr': 'no-abbr qtInput'}" required="true"/>
+                                            <aura:if isTrue="{!item.checkError}">
+                                                <br/><p style="margin-top: -20px; color: red; font-size: smaller;">No loans for this amount</p>
+                                            </aura:if>
+                                        </div>
+                                        <div class="slds-col slds-size_5-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col" style="padding-right: 0px;margin-top: 2px">
+                                            <lightning:input aura:id="fieldcheck" messageWhenPatternMismatch="Special characters are not allowed" onchange="{!c.submitable}" pattern="^[a-zA-Z0-9 ]+$" label="" placeholder="Name (optional)" value="{!item.masterQuote}" type="text" />                                        
+                                        </div>                            
+                                    </div> 
+                                    <div class="slds-form-element__control slds-grid_vertical slds-size_6-of-12" style="">
+                                        <div class="slds-col slds-size_6-of-6 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col slds-float_right" style="">
+                                            <c:UploadDocumentGen submitcheck="{!v.submitcheck}" referralQt="true" cdlId="{!item.cdlId}" NmList="{!item.NmList}"  accountId="{!v.accountId}" sessionId="{!v.sessionId}" NameOfUploadFile="Upload quote (optional)"/>
+                                        </div>
+                                    </div>    
+                                </aura:iteration>
+                            </div>
+                            <div class="slds-grid_vertical slds-size_12-of-12">
+                                <div class="slds-col slds-size_9-of-12 slds-m-top_medium slds-align_absolute-center" style="padding-right: 14rem;">
+                                    <aura:if isTrue="{!v.quoteDetailWrpList.length != 4}">                                        
+                                        <lightning:button label="" class="" variant="base" onclick="{!c.addProperty}"><img src="{!$Resource.SolarLoan + '/img/plusicon.png'}" style="height:23px;"/><b class="addQuote">Add another quote</b></lightning:button>                        
+                                    </aura:if>
+                                </div>
+                            </div>
+                            
+                            <div class="slds-form__row slds-m-top_large">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element rg-style">
+                                        <div class="slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_8-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
+                                                <lightning:radioGroup name="sendQuoteRG"
+                                                                      aura:id="fieldcheck" 
+                                                                      required="true"
+                                                                      class="no-abbr"
+                                                                      onchange="{!c.submitable}"
+                                                                      options="{!v.sendQuoteOptions }"
+                                                                      value="{!v.sendQuote }"
+                                                                      type="button"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <br/>
+                            <div class="slds-form__row">
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-size_8-of-12" style="display: inline-flex;line-height: initial;">                                    
+                                        <span style="margin-right:-10px;">
+                                            <lightning:input type="checkbox" aura:id="fieldcheck" 
+                                                             required="true" class="no-abbr"
+                                                             onchange="{!c.submitable}"
+                                                             checked="{!v.isObtainedTheCustomer}"
+                                                             label="" />
+                                        </span>
+                                        <span>Within the last 5 days I have obtained the customer’s consent to pass their details to Parker Lane.</span>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <br/>                
+                        </div>   
+                        <aura:if isTrue="{!v.ret}">
+                            <div class="{!v.status == 'Success!'? 'successMsg slds-m-vertical_small slds-col slds-size_8-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col':'oopsMsg slds-m-vertical_small slds-col slds-size_8-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col'}">
+                                <div class=""><b>{!v.status}</b> </div>
+                                <div class="slds-m-top_x-small">{!v.message}</div>
+                            </div>
+                            <div class="">
+                                <lightning:button class="{!v.submitcheck? 'submitQtBtnDisable slds-button slds-button_brand slds-m-vertical_medium slds-col slds-size_8-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col slds-float_left':'submitQtBtn slds-button slds-button_brand slds-m-vertical_medium slds-col slds-size_8-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col slds-float_left'}" variant="brand" 
+                                                  label="Submit Quote" disabled="{!v.submitcheck}" 
+                                                  onclick="{!c.saveReferral}" />
+                            </div>                        
+                            <aura:set attribute="else">
+                                <div class="slds-m-vertical_medium slds-col slds-size_8-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col slds-float_left">
+                                    <button class="slds-button slds-button_success SuccessBtn">
+                                        <span class="slds-m-left_x-large">Submitted</span>
+                                        <span class="slds-m-left_large">
+                                            <img style="width:25px;" src="{!$Resource.SolarLoan + '/img/final.png'}"/>
+                                        </span>                            
+                                    </button>
+                                </div>
+                                <div class="{!v.status == 'Success!'? 'successMsg slds-m-vertical_small slds-col slds-size_8-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col':'oopsMsg slds-m-vertical_small slds-col slds-size_8-of-12 slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col'}">
+                                    <div class=""><b>{!v.status}</b> </div>
+                                    <div class="slds-m-top_x-small">{!v.message}</div>
+                                </div>
+                            </aura:set>
+                        </aura:if>
                     </div>
-                    
-                </div>
-                <br/>
-                <div class="slds-form__row">
-                    <div class="slds-form__item" role="listitem">
-                        <div class="slds-form-element" style="text-align: justify">
-                            <lightning:input type="checkbox" aura:id="fieldcheck" 
-                                                          required="true"
-                                             value="{!v.isReferralAgreement}"
-                                             label="I will comply with my commitments under our referral agreement and I will not provide any recommendations or advice concerning loans." />
-                        </div>
-                    </div>
-                    
-                </div>
-                
-            </div>
-            
-            <div class="max-7001 preNxtBtn">
-                <lightning:button class="slds-button slds-button_brand slds-m-vertical_medium slds-size_1-of-1 slds-small-size_3-of-12 slds-medium-size_2-of-12 slds-large-size_2-of-12 slds-float_right" variant="brand" 
-                                              label="Submit" title="Submit" 
-                                              onclick="{! c.submit }" />
-            </div>
+                </aura:if>
+            </aura:if>
         </div>
-    </div>
-    <c:ParkerLaneFooter/>
+    </aura:if>
+    <aura:if isTrue="{!v.removeFooter}">
+        <c:ParkerLaneFooter/>
+    </aura:if>
 </aura:component>

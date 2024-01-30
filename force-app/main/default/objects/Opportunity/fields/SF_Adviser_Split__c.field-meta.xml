@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SF_Adviser_Split__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( $User.Id = OwnerId ||  $Profile.Name = &quot;System Administrator&quot;, Service_Fee_inc_GST__c / 1.1  *  Owner.Adviser_Service_Fee_Rate__c , 0.00 )</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Note:referral fees not deducted from split”</inlineHelpText>
+    <label>SF Adviser Split</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Currency</type>
+</CustomField>

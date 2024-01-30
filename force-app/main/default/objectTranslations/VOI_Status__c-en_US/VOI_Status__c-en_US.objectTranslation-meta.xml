@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>VOI Status</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>VOI Status</value>
+    </caseValues>
+    <quickActions>
+        <label></label>
+        <name>New_VOI</name>
+    </quickActions>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

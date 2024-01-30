@@ -1,9 +1,34 @@
 ({
 	doInit : function(component, event, helper) {
-        console.log('>>>>>');
         helper.getQuotes(component, event);
         helper.getLead(component, event);
         helper.scrollTop(component, event, 0);
+    },
+    
+    onAmountChange : function(component, event, helper) {
+        var csmtrAmt = component.get("v.customerAmount");      
+        var timer = component.get('v.timer');
+        clearTimeout(timer);
+
+        var timer = setTimeout(function(){
+            component.set("v.customerAmountnew", csmtrAmt);
+            clearTimeout(timer);
+            component.set('v.timer', null);
+        }, 1000);
+
+        component.set('v.timer', timer);
+    },
+    
+    addSpinner : function(component, event, helper){
+        var spinner = component.find("inItSpinner");
+        var spin = component.get("v.isSpinner");
+        console.log('spinner '+spin);
+        if(spin){
+            $A.util.removeClass(spinner, 'slds-hide');
+        }
+        else{
+            $A.util.addClass(spinner, 'slds-hide');
+        }        
     },
     
     Apply : function(component, event, helper) {

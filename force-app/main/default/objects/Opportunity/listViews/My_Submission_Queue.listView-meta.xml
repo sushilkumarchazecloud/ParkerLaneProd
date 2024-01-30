@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>My_Submission_Queue</fullName>
+    <columns>OPPORTUNITY.NAME</columns>
+    <columns>Application_Sections__c</columns>
+    <columns>Application_Pending_Notes__c</columns>
+    <columns>OPPORTUNITY.RECORDTYPE</columns>
+    <columns>OPPORTUNITY.CREATED_DATE</columns>
+    <columns>OPPORTUNITY.STAGE_NAME</columns>
+    <columns>Application_Pending_Status__c</columns>
+    <columns>FinServ__ReferredByContact__c</columns>
+    <columns>Referred_by_Company__c</columns>
+    <columns>How_would_you_like_us_to_support_you__c</columns>
+    <columns>Send_the_quote_to__c</columns>
+    <columns>OPPORTUNITY.EXP_AMOUNT</columns>
+    <columns>OPPORTUNITY.AMOUNT</columns>
+    <filterScope>Mine</filterScope>
+    <label>My Deals In Progress</label>
+</ListView>

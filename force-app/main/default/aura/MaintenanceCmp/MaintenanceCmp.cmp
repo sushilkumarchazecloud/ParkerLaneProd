@@ -1,0 +1,3 @@
+<aura:component >
+	<div class="slds-align_absolute-center slds-notify slds-notify_alert slds-alert_warning" style="height: 7rem;color: #fff;font-size: 20px;">This page is down for unscheduled maintenance. Please check back in 2 hours.</div>
+</aura:component>

@@ -57,7 +57,7 @@
                     <span>REVIEW YOUR DETAILS</span>
                 </div>
                 <div>
-                    <span>By signing this document you acknowledge that you  have reviewed the information entered in the application form and certify that the information is true and complete. You can access your application details by <a onclick="window.open('https://findev-apply-parkerlane.cs5.force.com/?id={!opportunity.id}')">clicking here.</a></span>
+                    <span>By signing this document you acknowledge that you  have reviewed the information entered in the application form and certify that the information is true and complete. You can access your application details by <a onclick="window.open('https://lanecorp--uat.sandbox.my.salesforce-sites.com/?id={!opportunity.id}')">clicking here.</a></span>
                 </div><br/><br/>
                 
                 <div class="normalHead">
@@ -75,7 +75,7 @@
                             <td><b>Address: </b>{!opportunity.Applicant_1__r.Residential_Address__pc}</td>
                         </tr>
                         <tr>
-                            <td><b>Credit provider: </b>{!Quote.Lender__c}</td>
+                            <td><b>Credit provider: </b>{!if(opportunity.Purpose__c == 'Solar', 'Community First Credit Union or Transport Mutual Credit Union or The Broken Hill Community Credit Union', 'Community First Credit Union or Transport Mutual Credit Union')}</td>
                         </tr>
                         <tr>
                             <td><b>Product: </b>{!Quote.Product__r.Name}</td>
@@ -83,7 +83,7 @@
                         <tr>
                             <td>
                                 <apex:outputText value="{0, number, currency}">
-                                    <b>loan Amount: </b><apex:param value="{!IF( TEXT(Quote.Total_loan_amount__c) != '', Quote.Total_loan_amount__c, 0)}"/>
+                                    <b>Loan amount: </b><apex:param value="{!IF( TEXT(Quote.Total_loan_amount__c) != '', Quote.Total_loan_amount__c, 0)}"/>
                                 </apex:outputText>
                             </td>
                         </tr>
@@ -97,7 +97,7 @@
                             <td><b>Repayment type: </b>{!Quote.Product__r.Repayment_Type__c}</td>                                          
                         </tr>
                         <tr>
-                            <td><b>Repayments: </b>{!Mrepayment}</td>                                            
+                            <td><b>Monthly Repayments: </b>{!Mrepayment}&nbsp;(inclusive of any ongoing fee)</td>                                            
                         </tr>
                         <tr>
                             <td><b>Loan Term: </b>{!Quote.Loan_Term__c} months</td>                                           
@@ -119,7 +119,12 @@
                                 </apex:outputText>
                             </td>
                         </tr>
-                    </table><br/><br/>
+                    </table>
+                    <div class="Explanation text">
+                        <i>Total cost includes all interest, up front fees and ongoing fees - 
+                            assuming you make only the minimum repayments for the entire term of the loan.</i>
+                    </div>
+                    <br/><br/>
                     <span>Note: If you repay the loan sooner, the total loan cost will also be less due to saved interest and fees.</span>
                 </div><br/><br/>
                 <div class="BodyData">
@@ -162,7 +167,7 @@
                     </table><br/>
                 </div><br/>
                 <div class="BodyData">
-                    <span>Please read the following sections carefully.</span>
+                    <span>Read the following sections carefully.</span>
                 </div><br/><br/>
                 <div class="BodyData"> 
                     <span style="font-size : 18px"><b>ABOUT US</b></span><br/>
@@ -204,7 +209,11 @@
                             </td>
                         </tr>
                         <tr>
-                        	<td><b>Account Keeping: </b>Up to {!Amount}</td>
+                        	<td><b>Account Keeping: </b>
+                                <apex:outputText value="{0, number, currency}">
+                                    Up to&nbsp;<apex:param value="{!amt}" />
+                                </apex:outputText>
+                            </td>
                         </tr>
                     </table>
                     <span>(over the life of the loan. Note that if you repay early, you will only pay the monthly fees applicable up to that point)</span>
@@ -224,7 +233,7 @@
                 <div class="BodyData">
                     <span style="font-size : 18px"><b>CREDIT QUOTE &amp; PROPOSAL</b></span><br/><br/>
                     <span style="font-size : 18px"><b>Credit Quote Terms</b></span><br/>
-                    <span>This document provides information on the maximum amount of fees and charges payable by you in relation tocredit assistance and services we provide to you.</span><br/><br/>
+                    <span>This document provides information on the maximum amount of fees and charges payable by you in relation to credit assistance and services we provide to you.</span><br/><br/>
                     <span>We provide credit assistance by:</span>
                     <ul>
                         <li>supplying you with information in relation to a loan,</li>
@@ -238,11 +247,11 @@
                         <li>Commitment Fee: Nil</li>
                         <li>Service Fee: Nil</li>
                     </ul>
-                    <span>BROKERAGE: In the provision of products and services we may charge a brokerage fee which is paid by you to thelender who in turn pays us. Refer to the Schedule above for amounts.</span><br/><br/>
+                    <span>BROKERAGE: In the provision of products and services we may charge a brokerage fee which is paid by you to the lender who in turn pays us. Refer to the Schedule above for amounts.</span><br/><br/>
                     <span><i>Note: a copy of the signed Credit Quote will be provided for your records.</i></span>
                 </div><br/><br/>
                 <div class="BodyData">
-                    <span style="font-size : 18px"><b>CREDIIT PROPOSAL TERMS</b></span><br/><br/>
+                    <span style="font-size : 18px"><b>CREDIT PROPOSAL TERMS</b></span><br/><br/>
                     <span><b>General Terms &amp; Conditions</b></span><br/>
                     <span>This Credit Proposal outlines the information provided by you about your needs and requirements together with the product recommendation(s) made in finding a loan solution which meets your goals.</span><br/>
                     <span>In preparing this credit proposal we have relied on the information that you have given to us. If you believe any aspect of your situation has been overlooked or is not correctly represented, please notify us immediately before proceeding.
@@ -254,13 +263,20 @@
                     <span>Fee estimates are rounded to the nearest dollar. The final amount of fees and charges will be shown within the credit contract which will be issued by the lender. Some or all of these fees and charges may be payable from the loan proceeds and do not include any ongoing charges.</span><br/><br/>
                     <span style="font-size : 18px"><b>Commission</b></span><br/>
                     <span>The commission to be paid by the lender will be disbursed between our aggregator or directly to us and any business referrer (if applicable).</span><br/>
-                    <span>From time to time, Upside Downside Pty Ltd and its employees may receive a non-commission benefit by way of training, professional development, entertainment, gift, conference attendance, sponsorship, or entry into a competition run by a lender or my aggregator, at no extra cost to you. The nature of such arrangements are temporary, and the occurrence and amounts are often not readily ascertainable, however if they are apparent as a result of assisting you with credit assistance, this will be disclosed to you.</span><br/>
-                    <span>As disclosed in our Credit Guide, we and/or our employees have a preferential relationship with this lender. This preferential program gives you, as our customer access to preferential services. This does not include any additional commission paid to us nor customer discounts.</span><br/><br/>
-                    <span style="font-size : 18px"><b>Referral Fees</b></span><br/>
-                    <span>If you were introduced or ‘referred by’ one of our referrers, we will be paying a referral fee of up to 20% of the income we receive from this application. This fee is not paid by you. 
-                        Acknowledgement of risk insurance offering 
-                        Note: a copy of the signed Credit Proposal Disclosure and Credit Quote will be provided for your records.
-                    </span>
+                    <br/><span>From time to time, Upside Downside Pty Ltd and its employees may receive a non-commission benefit by way of training, professional development, entertainment, gift, conference attendance, sponsorship, or entry into a competition run by a lender or my aggregator, at no extra cost to you. The nature of such arrangements are temporary, and the occurrence and amounts are often not readily ascertainable, however if they are apparent as a result of assisting you with credit assistance, this will be disclosed to you.</span><br/>
+                    <br/><span>As disclosed in our Credit Guide, we and/or our employees have a preferential relationship with this lender. This preferential program gives you, as our customer access to preferential services. This does not include any additional commission paid to us nor customer discounts.</span><br/><br/>                    
+                   	<p style="display : {!IF(AND(opportunity.Referral_Fee_inc_GST__c != null, opportunity.Referral_Fee_inc_GST__c > 0), 'Block', 'none')}" >
+                        <span style="font-size : 18px"><b>Referral Fees</b></span><br/>
+                        If you were introduced or ‘referred by’ one of our referrers, We will pay a referral fee to {!opportunity.Referral_Fee_Recipient__r.Name} of up to                                                   
+                        <apex:outputText value="{0, Number, '$'#,##0}">
+                             <apex:param value="{!CEILING(opportunity.Referral_Fee_inc_GST__c)}"/>
+                        </apex:outputText>  including GST. This fee is not paid by you.                         
+                    </p>
+                    <p style="display : {!IF(AND(opportunity.Referral_Fee_inc_GST__c != null, opportunity.Referral_Fee_inc_GST__c > 0), 'none', 'Block')}">
+                        <span style="font-size : 18px"><b>Referral Fees</b></span><br/>
+                        If you were introduced or ‘referred by’ one of our referrers, we may pay a referral fee up to 20% of the income we receive from this application. This fee is not paid by you.
+                    </p>
+                    <span>Acknowledgement of risk insurance offering Note: a copy of the signed Credit Proposal Disclosure and Credit Quote will be provided for your records.</span>
                 </div><br/><br/>
                 <div class="BodyData">
                     <span style="font-size : 18px"><b>CREDIT GUIDE</b></span><br/><br/>
@@ -289,7 +305,7 @@
                     <span style="font-size : 16px"><b>Obtaining a copy of the Preliminary Assessment</b></span><br/>
                     <span>If we provide you with credit assistance, you may request a copy of our Preliminary Assessment anytime for up to 7 years and we must provide you with a copy of the assessment within the following timeframes:</span>
                     <ol>
-                        <li>Your request is made before the Credit Day*: As soon as possible afer we receive your request.</li>
+                        <li>Your request is made before the Credit Day*: As soon as possible after we receive your request.</li>
                         <li>Up to 2 years after the Credit Day: Within 7 business days after we receive your request</li>
                         <li>Between 2 to 7 years after the Credit Day: Within 21 business days after we receive your request</li>
                     </ol>
@@ -308,17 +324,17 @@
                     <span>We obtain referrals from a range of sources, including accountants, financial planners, real estate agents and other people. If you were introduced or referred to us, we may pay the referrer a commission or a fee.</span><br/>
                     <span>Details of any commission or fees being paid to the referrer will be included in the Summary of Requirements and Credit Proposal document.</span><br/><br/>
                     <span style="font-size : 16px"><b>Fees and charges that are payable by you in relation to our credit assistance</b></span><br/>
-                    <span>We may charge a fee for providing credit assistance to you. If applicable, details about those fees payable by you will be set out in a Credit Quote which we will give you prior to submitting your loan application.</span><br/>
-                    <span>Other fees and charges</span><br/>
+                    <span>We may charge a fee for providing credit assistance to you. If applicable, details about those fees payable by you will be set out in a Credit Quote which we will give you prior to submitting your loan application.</span><br/><br/>
+                    <span style="font-size : 16px"><b>Other fees and charges</b></span><br/>
                     <span>You may have to pay other fees and charges (such as application fees, valuation costs and other applicable fees) to the lender or other parties. You should review the particular loan contract documentation for further details of any such fees and charges.</span><br/><br/>
                     <span style="font-size : 16px;"><b>How do we get paid?</b></span><br/>
                     <span>We receive a commission and/or brokerage fee from lenders when your loan is settled. The commission is paid to us either directly by the lenders or paid to us via our aggregator.</span><br/>
                     <span>The amount paid is based on both the total amount financed and the particular loan product you have selected. We may receive the following commissions after your loan has settled.</span><br/><br/>
                     <span style="font-size : 16px;"><b>Commission or Brokerage Fee</b></span><br/>
-                    <span>Paid after settlement)</span><br/>
-                    <span>Ranging from a minimum 0% to a maximum of 8% depending on the type of credit contract and calculated on the total loan amount financed including GST.</span><br/>
-                    <span>The method of calculation is based on the net amount financed including GST. Details of commission and/or brokerage to be received will be included in the Summary of Requirements and Credit Proposal document that we will provide you with when credit assistance is provided.</span><br/>
-                    <span>From time to time, I may receive a non-commission benefit by way of training, professional development, entertainment, gift, conference attendance, sponsorship, or entry into a competition run by a lender or my aggregator, at no extra cost to you. The nature of such arrangements are temporary, and the occurrence and amounts are often not readily ascertainable, however if they are apparent as a result of assisting you with credit assistance, this will be disclosed to you.</span><br/><br/>
+                    <span>An upfront commission may be payable by lenders in relation to settled (drawn-down) loans and is calculated as a percentage of the loan amount. It is usually paid after settlement of the loan.</span><br/><br/>
+                    <span>Trail commission may be payable by lenders in relation to settled (drawn-down) loans. It is calculated monthly on the outstanding loan balance and is paid in arrears.</span><br/><br/>
+                    <span>The upfront and trail commissions that we are paid by lenders are not payable by you. Details of commission to be received will be included in the Credit Proposal Disclosure document that we will provide you with when credit assistance is provided.</span><br/><br/>
+                    <span>From time to time, we may receive a non-commission benefit by way of training, professional development, entertainment, gift, conference attendance, sponsorship, or entry into a competition run by a lender or my aggregator, at no extra cost to you. The nature of such arrangements are temporary, and the occurrence and amounts are often not readily ascertainable, however if they are apparent as a result of assisting you with credit assistance, this will be disclosed to you.</span><br/><br/>
                     <span style="font-size : 16px;"><b>Our lender panel</b></span><br/>
                     <span>We are authorised to engage in credit activities and therefore provide assistance to obtain consumer asset finance and personal loans for you from a panel of credit providers. The following are the credit providers through which we generally conduct the most business:</span><br/><br/>
                     <span style="font-size : 16px;"><b>Consumer Asset Finance</b></span>
@@ -363,8 +379,8 @@
                     <span>We obtain referrals from a range of sources, including accountants, financial planners, real estate agents and other people. If you were introduced or referred to us, we may pay the referrer a commission or a fee.</span><br/>
                     <span>Details of any commission or fees being paid to the referrer will be included in the Summary of Requirements and Credit Proposal document.</span><br/><br/>
                     <span style="font-size : 16px;"><b>Dispute resolution and complaints</b></span><br/>
-                    <span>We are committed to providing you with the best possible service, however we understand there may be times where you are not satisfied. If this occurs, please inform us verbally or in writing with the exact details of your complaint, so we can work towards a prompt and fair resolution.</span><br/>
-                    <span>If we are unable to reach a satisfactory resolution, you can make a complaint in writing to us. With regards to complaints resolution, we are mindful of the need to ensure that consumers are treated fairly and with respect during the complaints handling process. Any dissatisfaction with a credit representative operating under the licence will be handled in an efficient, timely and effective manner in accordance with ASIC regulations of Internal Dispute Resolution (IDR).</span><br/>
+                    <span>We are committed to providing you with the best possible service, however we understand there may be times where you are not satisfied. If this occurs, please inform us verbally or in writing with the exact details of your complaint, so we can work towards a prompt and fair resolution.</span><br/><br/>
+                    <span>If we are unable to reach a satisfactory resolution, you can make a complaint in writing to us. With regards to complaints resolution, we are mindful of the need to ensure that consumers are treated fairly and with respect during the complaints handling process. Any dissatisfaction with a credit representative operating under the licence will be handled in an efficient, timely and effective manner in accordance with ASIC regulations of Internal Dispute Resolution (IDR).</span><br/><br/>
                     <span>Our details are:</span><br/>
                     <span>Attention:  Compliance and Complaints <br/>Handling Officer</span><br/>
                     <span>Phone: 1300 13 17 11</span><br/>
@@ -408,7 +424,7 @@
                         </ol>
                     </ul>
                     <span>As your broker, we require the information we collect from you to assess your credit or guarantor application or the credit application of a company of which you are a director, to source a suitable credit provider and any required insurances and to manage the application process, where required. If you do not provide the information sought, we may be unable to process your application, or the company’s application, or we may be limited in the other services we can offer you or the company.</span><br/><br/>
-                    <span style="font-size : 16px;">Your information - Collection and Disclosure</span><br/>
+                    <span style="font-size : 16px;"><b>Your information - Collection and Disclosure</b></span><br/>
                     <span>The personal information we collect may include a broad range of information from your name, address, and contact details to other information about your qualifications, employment history and financial information.</span><br/>
                     <span>“Personal information” may include any sensitive information (including health information) and may include any information you tell us about any vulnerability you may have. We may use that information to assess your application and, where appropriate, to source a suitable credit provider or lessor and / or insurance provider. We may, as appropriate:</span><br/><br/>
                     <ul>
@@ -462,7 +478,7 @@
                         <li>A CRS not to use your information for direct marketing assessment purposes, including pre-screening.</li>
                         <li>A CRS to provide you with a copy of any information it holds about you.</li>
                     </ul>
-                    <span>You can gain access to the information we hold about you by contacting our Privacy Officer at the following address:{!opportunity.Applicant_1__r.Postal_Address__pc}</span><br/>
+                    <span>You can gain access to the information we hold about you by contacting our Privacy Officer at the following address: 24 The Avenue, Linley Point NSW 2066 </span><br/><br/>
                     <span>In some cases, an administration fee may be charged to cover the cost of providing the information. Our Privacy Policy also deals with our complaints process and is available on our website or we will provide you with a copy if you ask us. Schedule 1 at the end of this document sets out the contact details for each CRS.</span><br/><br/>
                     <span style="font-size : 16px;"><b>Extended Effectiveness for Commercial Credit</b></span><br/>
                     <span>Your agreement and consent to the disclosures and consents in this document will be effective for a period of 12 months, but only in relation to commercial credit. Your agreement to this ceases when you either withdraw it by contacting us using our details above or 12 months after you sign below, whichever first occurs. This will allow us to continue to provide our services to you without the need to ask you to sign a new privacy statement and consent each time you require commercial credit within a 12-month period. The extended effectiveness does not apply in relation to consumer credit.
@@ -493,22 +509,27 @@
                 
                 <div class="BodyData">
                     <span style="font-size : 18px"><b>ELECTRONIC COMMUNICATION</b></span><br/>
-                    <span>By signing this document you consent to receive all documents and offers (in the form of a contract for you toaccept) from us and the credit provider ({!Quote.Lender__c}) via electronic means (email and SMS) to the following contactdetails:</span><br/><br/>
+                    <span>By signing this document you consent to receive all documents and offers (in the form of a contract for you to accept) from us and the credit provider ({!Quote.Lender__c}) via electronic means (email and SMS) to the following contact details:</span><br/><br/>
                 </div>
                 <div class="BodyData">
-                    <span><b>Email address :</b>{!contact.Email}</span><br/>
-                    <span><b>Mobile phone :</b>{!contact.Phone}</span>
+                    <span><b>Email address: </b>{!contact.Email}</span><br/>
+                    <span><b>Mobile phone: </b>{!contact.Phone}</span>
                 </div><br/><br/>
                 <div class="BodyData">
-                    <span>You also consent to the Credit Provider attaching the loan offer document to an email addressed to you andacknowledge that in doing so the Credit Provider has signed the loan offer.</span>
+                    <span>You also consent to the Credit Provider attaching the loan offer document to an email addressed to you and acknowledge that in doing so the Credit Provider has signed the loan offer.</span>
                 </div><br/><br/>
                 <div class="BodyData">
-                    <span><b>By signing below you confirm that you have read and agreed to the terms and conditions set out in this documentand the Annexure Documents accessible via the links above.</b></span>
-                </div><br/><br/>
+                    <span>By signing below you confirm that:</span> 
+                    <ul>
+                        <li>You have read and agreed to the terms and conditions set out in this document; and</li>
+                        <li>The information in the application form is true and complete.</li>
+                    </ul>
+                </div>
                 <div class="BodyData">
                     <span><b>Signed by: </b>{!contact.Name}</span><br/>
-                    <apex:image value="{!ImageSrc}" width="220" height="155" alt="Not Found"/>
-                </div><br/>
+                    <apex:image value="{!imgWrap.imageURl}" style="margin-left : -35px;" width="220" height="145" alt="Not Found"/><br/>
+                	<span >{!imgWrap.DateOfsign}</span>
+                </div>
                <!-- <div class="BodyData">
                     <span><u>Completion Certificate</u></span><br/>
                     <span>Document ID #: {Case ID Number}</span><br/>

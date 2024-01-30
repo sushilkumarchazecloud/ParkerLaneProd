@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Current_VOI_section__c</fullName>
+    <externalId>false</externalId>
+    <label>Current VOI section</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>VOI_Type_For__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Email Verificaiton</fullName>
+                <default>true</default>
+                <label>Email Verificaiton</label>
+            </value>
+            <value>
+                <fullName>Id Upload</fullName>
+                <default>false</default>
+                <label>Id Upload</label>
+            </value>
+            <value>
+                <fullName>Video</fullName>
+                <default>false</default>
+                <label>Video</label>
+            </value>
+            <value>
+                <fullName>CQP</fullName>
+                <default>false</default>
+                <label>CQP</label>
+            </value>
+            <value>
+                <fullName>TMCU</fullName>
+                <default>false</default>
+                <label>TMCU</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>FULL</controllingFieldValue>
+            <controllingFieldValue>VOI</controllingFieldValue>
+            <valueName>Email Verificaiton</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>FULL</controllingFieldValue>
+            <controllingFieldValue>VOI</controllingFieldValue>
+            <valueName>Id Upload</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>FULL</controllingFieldValue>
+            <controllingFieldValue>VOI</controllingFieldValue>
+            <valueName>Video</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>FULL</controllingFieldValue>
+            <controllingFieldValue>E-SIGN</controllingFieldValue>
+            <valueName>CQP</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>FULL</controllingFieldValue>
+            <controllingFieldValue>E-SIGN</controllingFieldValue>
+            <valueName>TMCU</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

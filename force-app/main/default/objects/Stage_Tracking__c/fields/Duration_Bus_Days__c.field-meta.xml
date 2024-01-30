@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Duration_Bus_Days__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( New_Stage__c == TEXT(Opportunity__r.StageName) ,
+    VALUE(TEXT(
+    IF(MOD((NOW() - Last_Stage_Change_Date__c)*24,24)&lt;9,
+        CEILING(( NOW()  - Last_Stage_Change_Date__c))-1,
+        CEILING((NOW()  - Last_Stage_Change_Date__c))
+    )
+    +
+    MOD(
+        ROUND(
+            9 * (
+                ( 5 * 
+                    FLOOR(
+                        ( DATEVALUE(NOW()) - DATE( 1900, 1, 8) ) / 7) + 
+                        MIN(5, MOD( DATEVALUE(NOW()) - DATE( 1900, 1, 8), 7) + 
+                        MIN( 1, 24 / 9 * ( MOD(NOW() - DATETIMEVALUE( &apos;1900-01-08 22:00:00&apos; ), 1 ) ) )
+                    )
+                )-( 5 *
+                     FLOOR(
+                         ( DATEVALUE(Last_Stage_Change_Date__c  ) - DATE( 1900, 1, 8) ) / 7) +
+                        MIN( 5, MOD( DATEVALUE(Last_Stage_Change_Date__c ) - DATE( 1996, 1, 1), 7 ) + 
+                        MIN( 1, 24 / 9 * ( MOD(Last_Stage_Change_Date__c - DATETIMEVALUE( &apos;1900-01-08 22:00:00&apos; ), 1) ) )
+                    )
+                )
+            ),
+        0), 9
+    )/10
+)),
+VALUE(TEXT(
+    IF(MOD((Stage_Changing_Date__c - Last_Stage_Change_Date__c)*24,24)&lt;9,
+        CEILING((Stage_Changing_Date__c - Last_Stage_Change_Date__c))-1,
+        CEILING((Stage_Changing_Date__c - Last_Stage_Change_Date__c))
+    )
+    +
+    MOD(
+        ROUND(
+            9 * (
+                ( 5 * 
+                    FLOOR(
+                        ( DATEVALUE(Stage_Changing_Date__c) - DATE( 1900, 1, 8) ) / 7) + 
+                        MIN(5, MOD( DATEVALUE(Stage_Changing_Date__c) - DATE( 1900, 1, 8), 7) + 
+                        MIN( 1, 24 / 9 * ( MOD(Stage_Changing_Date__c- DATETIMEVALUE( &apos;1900-01-08 22:00:00&apos; ), 1 ) ) )
+                    )
+                )-( 5 *
+                     FLOOR(
+                         ( DATEVALUE(Last_Stage_Change_Date__c  ) - DATE( 1900, 1, 8) ) / 7) +
+                        MIN( 5, MOD( DATEVALUE(Last_Stage_Change_Date__c ) - DATE( 1996, 1, 1), 7 ) + 
+                        MIN( 1, 24 / 9 * ( MOD(Last_Stage_Change_Date__c - DATETIMEVALUE( &apos;1900-01-08 22:00:00&apos; ), 1) ) )
+                    )
+                )
+            ),
+        0), 9
+    )/10
+))
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Duration (Bus. Days)</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

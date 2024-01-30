@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Previous_Req_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Previous Req Type</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Payment in full before installation</fullName>
+                <default>false</default>
+                <label>Payment in full before installation</label>
+            </value>
+            <value>
+                <fullName>Payment in full after installation</fullName>
+                <default>false</default>
+                <label>Payment in full after installation</label>
+            </value>
+            <value>
+                <fullName>Part payment before installation</fullName>
+                <default>false</default>
+                <label>Part payment before installation</label>
+            </value>
+            <value>
+                <fullName>Remainder of payment after installation</fullName>
+                <default>false</default>
+                <label>Remainder of payment after installation</label>
+            </value>
+            <value>
+                <fullName>Variation</fullName>
+                <default>false</default>
+                <label>Variation</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

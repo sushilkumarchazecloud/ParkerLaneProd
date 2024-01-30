@@ -223,6 +223,7 @@ public class FundingRequestTest {
     }
     
     static testMethod void testFundingReq5(){
+        test.startTest();
         //FundingRequest.sendMessage('0412567677','HI');
         Opportunity opp = [select id,Applicant_1__c,Applicant_2__c,Applicant_1__r.personcontactId,Applicant_2__r.personcontactId,name from opportunity where Name= 'Test Opportunity 1' LIMIT 1];
         Funding_Request__c fr2 = new Funding_Request__c();
@@ -242,8 +243,9 @@ public class FundingRequestTest {
         for(Funding_Request__c fr : frlist){
             isList.add(fr.id);
         }
-        test.startTest();
+       
         FundingRequest.sendMessages(isList);
+        FundingRequest.DeEscalateFunding(fr2.id);
         test.stopTest();
     }
     
@@ -264,6 +266,7 @@ public class FundingRequestTest {
         
         Test.StartTest();
         FundingRequest.UpdateFundingRequest(fr2.id, 22000, 'Variation',21000,System.Today());
+        FundingRequest.escalateFunding(fr2.id);
         Test.StopTest();
     }
     
@@ -274,6 +277,7 @@ public class FundingRequestTest {
     }
     
     static testMethod void testFundingReq8(){
+        Test.StartTest();
         Opportunity opp = [select id,name,Applicant_1__c,Applicant_2__c,Applicant_1__r.personcontactId from opportunity where Name= 'Test Opportunity 1' LIMIT 1];
         Funding_Request__c fr2 = new Funding_Request__c();
         fr2.Request_Type__c = 'Variation';
@@ -286,11 +290,13 @@ public class FundingRequestTest {
         fr2.Invoice_Amount__c = 20000;
         fr2.Request_Amount__c = 15000;  
         insert fr2;
+        
         list<Funding_Request__c> fundlist = [select id,name,opportunity__c from Funding_Request__c where opportunity__c =:opp.id AND Request_Type__c = 'Variation' limit 1];
         string rec = fundlist[0].id;
-        Test.StartTest();
+        
         FundingRequest.cancelVariation(fundlist[0].id);
         FundingRequest.UpdateFundingRequest(fr2.id, 22000, 'Payment in full after installation',21000,System.Today());
+        FundingRequest.insertAuthorisationCertificate(opp.id);
         Test.StopTest();
     }
     

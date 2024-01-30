@@ -1,0 +1,174 @@
+<aura:component controller="LenderdashboardController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+   
+    <aura:attribute name="oppWrapper" type="Object" /> 
+    <aura:attribute name="OpportunityName" type="String"/> 
+    <aura:attribute name="NextStep1" type="string"/>
+    <aura:attribute name="NextStep2" type="string"/>
+    <aura:attribute name="icon1" type="string"/>
+    <aura:attribute name="icon2" type="string"/>
+    <aura:attribute name="approvedDate" type="string"/>
+    <aura:attribute name="spinner" type="Boolean"/>
+    <aura:attribute name="expireDays" type="Integer"/>
+    <aura:attribute name="lenderNotes" type="String" />
+    
+    <aura:handler name ="init" value="{!this}" action ="{!c.doInit}"/>
+    
+    <aura:if isTrue="{!v.spinner}"> 
+    <lightning:spinner aura:id="mySpinner" variant="brand" size="large" class="" style="margin-top : 48px;margin-bottom : 80px;position : absolute;"/>
+    </aura:if>    
+    <div class="slds-grid slds-wrap">
+        <div class=" slds-size_8-of-12" >
+            <div class="slds-m-top_x-small slds-m-bottom_medium" style="border-bottom: 1px solid #c2c2c2"></div>
+            <div class="slds-scrollable_y" style="height:435px;margin-top:-15px;" aura:id="scrollerTop">
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2" >
+                        <div class="slds-form slds-p-top_large " role="list">
+                            <div class="slds-form__column" style="line-height:initial;">
+                                <div class="slds-form__item " role="listitem" >
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-grid">
+                                        <div class="slds-size_4-of-6 heading3"><b>General</b></div>
+                                    </div>
+                                </div>
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing"> 
+                                        <lightning:input  label="Loan purpose" value="{!v.oppWrapper.RecordType.Name}"  
+                                                         readonly="true"/>
+                                    </div>
+                                </div>
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                        <lightning:input class="no-abbr" label="Approved Date"  value="{!v.approvedDate}"
+                                                         readonly="true" />
+                                    </div>
+                                </div>
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing"> 
+                                        <lightning:input class="no-abbr" label="Lender application ID"  value="{!v.oppWrapper.Lender_Application_ID__c}"
+                                                         readonly="true" /> 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-form slds-p-top_small" role="list">
+                                <div class="slds-form__column" style="line-height:initial;">
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-grid">
+                                            <div class="slds-size_4-of-6 heading3"><b>Applicants</b></div>
+                                        </div>
+                                    </div> 
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                            <lightning:input  label="Applicant 1" value="{!v.oppWrapper.Applicant_1_Name__c}" 
+                                                             readonly="true"/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                            <lightning:input  label="Phone" value="{!v.oppWrapper.Applicant_1_Phone_Number__c}" 
+                                                             readonly="true"/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                                            <lightning:input  label="Email" value="{!v.oppWrapper.Applicant_1_Email__c}" 
+                                                             readonly="true"/>
+                                        </div>
+                                    </div>
+                                </div>  
+                            </div>    
+                        </div> 
+                    </div>
+                    
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2" >
+                        <div class="slds-form slds-p-top_large " role="list">
+                            <div class="slds-form__column " style="line-height:initial;"> 
+                                <div class="slds-form__item slds-m-top_large" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing  ">
+                                        <lightning:input  label="Approved amount" min="0" step="1" type="number" minimumFractionDigits="0" formatter="currency"  value="{!v.oppWrapper.SyncedQuote.Customer_Amount__c}" 
+                                                         readonly="true" />
+                                    </div>
+                                </div>
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing ">
+                                        <lightning:input  label="Days to expiry"  value="{!v.expireDays}"
+                                                         readonly="true" />
+                                    </div>
+                                </div>
+                                <div class="slds-form__item" role="listitem">
+                                    <div class="slds-form-element slds-form-element_stacked slds-is-editing ">
+                                        <lightning:input  label="Our Reference ID"  value="{!v.oppWrapper.Id}"
+                                                         readonly="true" />
+                                    </div>
+                                </div> 
+                                
+                            </div>
+                            <aura:if isTrue="{!v.oppWrapper.Applicant_2__c != null}">
+                                <div class="slds-form slds-p-top_small" role="list">
+                                <div class="slds-form__column" style="line-height:initial;"> 
+                                    <div class="slds-form__item" style="margin-top:27px;" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing ">
+                                            <lightning:input  label="Applicant 2"  value="{!v.oppWrapper.Applicant_2_Name__c}"
+                                                             readonly="true" />
+                                        </div>
+                                    </div>
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing ">
+                                            <lightning:input  label="Phone" value="{!v.oppWrapper.Applicant_2_Phone_Number__c}" 
+                                                             readonly="true" /> 
+                                        </div>
+                                    </div>
+                                    <div class="slds-form__item" role="listitem">
+                                        <div class="slds-form-element slds-form-element_stacked slds-is-editing ">
+                                            <lightning:input  label="Email" value="{!v.oppWrapper.Applicant_2_Email__c}" 
+                                                             readonly="true" /> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </aura:if>
+                            
+                        </div>  
+                    </div>
+                </div>  
+            </div> 
+        </div> 
+        
+        <div class=" slds-size_4-of-12 ">
+            <div class="slds-scrollable_y" style="height:435px;margin-top:9px;">
+                <div class="slds-p-around_small" style="margin-top:-14px;">
+                    <div class="box-style" >
+                        <div class="heading2"><b>To Do's</b></div>
+                        <div class="Border" style="border-bottom: 1px solid #c2c2c2;margin-left:-10px;margin-right:-10px;"></div>
+                        <div class="slds-p-around_small"> 
+                            <aura:if isTrue="{!v.NextStep1 == Null}">
+                                <aura:set attribute="else">
+                                    <img src="{!$Resource.SolarLoan + '/img/'+ v.icon1+'.png'}" style="height:14px;"/>&nbsp;<b>{!v.NextStep1}</b>
+                                </aura:set>
+                            </aura:if>
+                            <br/>
+                            <aura:if isTrue="{!v.NextStep2 == Null}">
+                                <aura:set attribute="else">
+                                    <img src="{!$Resource.SolarLoan + '/img/'+ v.icon2+'.png'}" style="height:14px;"/>&nbsp;<b style="color:#b0c0e2;">{!v.NextStep2}</b>
+                                </aura:set>
+                            </aura:if>
+                        </div>
+                    </div>
+                    <div class="box-style" style="margin-top:22px;">
+                        <div class="heading2"><b>Important file note</b> </div>
+                        <div style="border-bottom: 1px solid #c2c2c2;margin-left:-10px;margin-right:-10px;"></div>
+                        <div class="slds-p-around_small"> 
+                            <b><ui:outputText value="{!v.lenderNotes}"/></b>
+                        </div>  
+                    </div>
+                    <div class="box-style" style="margin-top:22px;" >
+                        <div class="heading2"><b>Application Progress</b> </div>
+                        <div class="Border" style="margin-left:-10px;margin-right:-10px;border-bottom: 1px solid #c2c2c2"></div>
+                        <div> 
+                            <c:LineChartCmp recordId="{!v.oppWrapper.Id}" />
+                        </div>  
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</aura:component>

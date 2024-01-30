@@ -23,6 +23,10 @@
                 }else{
                     if(JSON.parse(ret).status == 'Success'){
                         component.set('v.recordId', JSON.parse(ret).recordId);
+                        var msgMethod = component.get("v.vfMsgMethod");
+                        msgMethod(JSON.parse(ret).recordId, function(){
+                            //handle callback
+                        }); 
                         component.set('v.masterQuote', JSON.parse(ret).quoteGrpName);
                         component.set('v.applicationSection', JSON.parse(ret).CurrentSection);
                         component.set('v.appSectionPath', JSON.parse(ret).path);
@@ -69,9 +73,9 @@
         action.setParams({
             oppId: oppId,
             leadId: leadId,
-            quoteId: quoteId,
+            quoteId: oppId,  //for changing the info. on quote email
             emails: emails,
-            templateName: 'Quotation From Application',
+            templateName: 'Quotation From Application VF', //new template by rakesh
             isPDFAttach : false
         });
         action.setCallback(this, function(response) {

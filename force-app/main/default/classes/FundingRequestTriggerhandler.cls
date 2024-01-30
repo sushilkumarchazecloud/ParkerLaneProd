@@ -1,4 +1,5 @@
 public class FundingRequestTriggerhandler {
+    public static Boolean isByPassAuthFromSite = false;
     public void LastRequestStatusUpdate(List<Funding_Request__c> newRequest,Map<ID, Funding_Request__c> oldReqMap){
         for(Funding_Request__c fr : newRequest){
             if(oldReqMap == Null){
@@ -21,6 +22,11 @@ public class FundingRequestTriggerhandler {
         for(Funding_Request__c fr : newRequest){
             if(oldReqMap == Null){
                 SendMailOnInsert(newRequest);
+                if(fr.Opportunity__c != null && fr.Request_Status__c != null && fr.Request_Status__c == 'Payment authorised by customer'){
+                    if(!isByPassAuthFromSite){
+                        insertAuthorisationCertificate(fr.Id, fr.Opportunity__c);
+                    }
+                }
             }else if(oldReqMap != null){
                 if(!fr.Funding_On_Hold__c && oldReqMap.get(fr.Id).Funding_On_Hold__c && fr.Funding_Hold_Expiry_Date__c == Date.today() && fr.Opportunity__c != null){
                     Task tk = new Task();
@@ -32,6 +38,11 @@ public class FundingRequestTriggerhandler {
                     tklist.add(tk); 
                 }
                 SendMailOnUpdate(newRequest,oldReqMap);
+                if(fr.Opportunity__c != null && fr.Request_Status__c != null && fr.Request_Status__c == 'Payment authorised by customer' && oldReqMap.get(fr.Id).Request_Status__c != 'Payment authorised by customer'){
+                    if(!isByPassAuthFromSite){
+                        insertAuthorisationCertificate(fr.Id, fr.Opportunity__c);
+                    }
+                }
             }
         } 
         if(!tklist.isEmpty()){
@@ -259,7 +270,7 @@ public class FundingRequestTriggerhandler {
         }
         List<String> emailTemplateNames = New List<String>{'FundingNotAuthorised','FundingOnHold',
             'VariationRequested','VariationRequested(EmailToReferrer)','FundingAuthorised(EmailToReferrer)','Funded(EmailToReferrer)'
-            ,'Funded(EmailToCustomers)','RequestedByApplicantORReferrer','RequestedByApplicantORReferrer(App2)'};
+            ,'Funded(EmailToCustomers)','RequestedByApplicantORReferrer','RequestedByApplicantORReferrer(App2)','FundingAuthorisedEmail'};
                 Map<String, Id> emailTempIdMap = New Map<String, Id>();
         for(EmailTemplate emailTemp: [SELECT id, Name  FROM EmailTemplate WHERE Name IN: emailTemplateNames]){
             emailTempIdMap.put(emailTemp.Name, emailTemp.Id);
@@ -269,7 +280,7 @@ public class FundingRequestTriggerhandler {
         list<String> conEmailList = new list<String>();
         list<contact> conList = new list<contact>();
         if(!frIds.isEmpty()){
-            list<Funding_Request__c> frRec = [select id,Opportunity__r.Applicant_1__c,Opportunity__r.SyncedQuote.Product__r.Funding_Authorisation_Type__c, Requested_by__c,Request_Type__c,
+            list<Funding_Request__c> frRec = [select id,Opportunity__r.Applicant_1__c,Opportunity__r.SyncedQuote.Product__r.Lender_Account__r.Funding_Email_Notifications__c,Opportunity__r.SyncedQuote.Product__r.Lender_Account__r.Funding_Notification_Email_Address__c,Opportunity__r.SyncedQuote.Product__r.Funding_Authorisation_Type__c, Requested_by__c,Request_Type__c,
                                               Opportunity__r.Referred_by_Company__c,Applicant_2_A2__c,Applicant_2_A2__r.PersonEmail,Applicant_1_A1__c,Applicant_1_A1__r.PersonEmail,Opportunity__r.Name,Opportunity__r.Referred_by_Company__r.Name,Applicant_1_A1__r.Phone,Applicant_2_A2__r.Phone,
                                               Customer_Authorisation_Type__c,Date_Last_Request_Status_Changes__c,Customer_Authorisation_Status__c,Applicant_1_A1__r.PersonContactId,Applicant_2_A2__r.PersonContactId,Person_Requesting__r.Name,Opportunity__r.Purpose__c,Applicant_1_A1__r.Name,Applicant_2_A2__r.Name,
                                               Funding_On_Hold__c,Person_Requesting__c,Person_Requesting__r.id,Opportunity__r.Contact_1__c,Opportunity__r.Contact_2__c,Request_Status__c,Opportunity__r.FinServ__ReferredByContact__c,Opportunity__r.FinServ__ReferredByContact__r.Email from Funding_Request__c where id IN: frIds];
@@ -411,10 +422,7 @@ public class FundingRequestTriggerhandler {
                        }
                    }
                 //Requested by Applicant OR Referrer (or after variation request is approved or after hold is expired) - Email & SMS to Applicant(s) 
-                List<String> sendList = new List<string>();                
-                /*system.debug('getFr.Request_Status__c'+getFr.Request_Status__c);
-                system.debug('oldReqMap.get(getFr.Id).Request_Status__c'+oldReqMap.get(getFr.Id).Request_Status__c);
-                system.debug('getFr.Requested_by__c'+getFr.Requested_by__c);*/
+                List<String> sendList = new List<string>();
                 if(newDate != null && oldDate != null && tDay == date.today() && oldDate != newDate &&
                    (((getFr.Request_Status__c == 'Payment requested by supplier' || getFr.Request_Status__c == 'Payment requested by supplier (pending contract)') && oldReqMap.get(getFr.Id).Request_Status__c == 'Variation requested by customer')
                     || ((getFr.Request_Status__c == 'Payment requested by customer' || getFr.Request_Status__c == 'Payment requested by customer (pending contract)') && oldReqMap.get(getFr.Id).Request_Status__c == 'Variation requested by customer') 
@@ -489,7 +497,28 @@ public class FundingRequestTriggerhandler {
                                }
                            }
                        }                
-                   }                
+                   }        
+                if(newDate != null && oldDate != null && tDay == date.today() && oldDate != newDate &&
+                   getFr.Request_Status__c == 'Payment authorised by customer' && getFr.Opportunity__r.SyncedQuote.Product__r.Lender_Account__r.Funding_Email_Notifications__c
+                  && getFr.Opportunity__r.SyncedQuote.Product__r.Lender_Account__r.Funding_Notification_Email_Address__c != null && getFr.Opportunity__r.SyncedQuote.Product__r.Funding_Authorisation_Type__c == 'Managed via Parker Lane'){
+                    Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+                       mail.setTemplateId(emailTempIdMap.get('FundingAuthorisedEmail'));
+                       mail.setTargetObjectId(getFr.Opportunity__r.Contact_1__c);
+                       mail.setTreatTargetObjectAsRecipient(false);
+                       mail.setUseSignature(false);
+                       mail.Setwhatid(getFr.Id);
+                       
+                       if(owea.size() > 0){
+                           mail.setorgWideEmailAddressId(Owea.get(0).Id);
+                       }
+                       
+                       List<string> sendTo = new List<string>();
+                       sendTo.add(getFr.Opportunity__r.SyncedQuote.Product__r.Lender_Account__r.Funding_Notification_Email_Address__c);
+                       if(sendTo.size() > 0){
+                           mail.setToAddresses(sendTo);                  
+                           emailList.add(mail);
+                       }
+                }
                 if(!emailList.isEmpty()){
                     if(!Test.isRunningTest()){
                         Messaging.sendEmail(emailList);
@@ -766,23 +795,141 @@ public class FundingRequestTriggerhandler {
         }
     }
     
-    public void variationDelete(List<Funding_Request__c> newRequest){
+    public void variationDelete(List<Funding_Request__c> oldrequest){
         Set<Id> oppIds = new Set<Id>();
-        for(Funding_Request__c fr : newRequest){
+        for(Funding_Request__c fr : oldrequest){
             if(fr.Request_Type__c == 'Variation' && fr.Opportunity__c != null){
                oppIds.add(fr.Opportunity__c);
             }
+            if(fr.Opportunity__c != null){
+                afterDelete(fr);
+            }
         }
         List<Opportunity> OppListToUpdate = new List<Opportunity>();
+        Set<Id> OldDocsIdToUpdate = new Set<Id>();
         if(!oppIds.isEmpty()){
-            List<Opportunity> oppList = [SELECT Id,Funding_Variation_Request__c FROM Opportunity WHERE Id IN: oppIds AND Funding_Variation_Request__c = true];
+            List<Opportunity> oppList = [SELECT Id,Funding_Variation_Request__c,Lender_Documents_after_Variation__c,
+                                         Previous_Loan_Amount_After_Variation__c FROM Opportunity WHERE Id IN: oppIds AND Funding_Variation_Request__c = true];
             if(!oppList.isEmpty() && oppList != null){
                 for(Opportunity opp : oppList){
-                    system.debug('reType'+opp.Funding_Variation_Request__c);
                     opp.Funding_Variation_Request__c = false;
+                    if(opp.Lender_Documents_after_Variation__c != null){
+                        String OldDocsIdsString = opp.Lender_Documents_after_Variation__c;
+                        List<String> idStrings = OldDocsIdsString.split(',');
+                        for (String idString : idStrings) { 
+                            OldDocsIdToUpdate.add(idString);
+                        }
+                    }
                     OppListToUpdate.add(opp);
                 }
                 Update OppListToUpdate;
+                
+                // Updating old Documents as True again.
+                if(!OldDocsIdToUpdate.isEmpty()){
+                    List<ContentVersion> oldCvListToUpdate = new List<ContentVersion>();
+                    List<ContentVersion> oldCvList = [SELECT Id, Title,Category__c,Current_in_use__c, ContentDocumentId FROM ContentVersion WHERE Id IN: OldDocsIdToUpdate]; 
+                    if(!oldCvList.isEmpty()){
+                        for(ContentVersion cv : oldCvList){
+                            if(cv.Category__c == 'Lender Credit Contract' && cv.Current_in_use__c == false){
+                                cv.Current_in_use__c = true;
+                                oldCvListToUpdate.add(cv);
+                            }   
+                        } 
+                        if(!oldCvListToUpdate.isEmpty()){
+                            Update oldCvListToUpdate;
+                        }  
+                    }   
+                }
+                
+                //Updating SyncedQuotes Amount as before.
+                List<Quote> qtlist = [SELECT Id,customer_amount__c,Gruop_Name__c,Opportunity.Previous_Loan_Amount_After_Variation__c,OpportunityId,Opportunity.SyncedQuote.Gruop_Name__c FROM Quote WHERE OpportunityId IN: oppIds];
+                List<Quote> qtListToUpdate = new List<Quote>();
+                if(!qtlist.isEmpty()){
+                    for(Quote qt : qtlist){
+                        if(qt.Gruop_Name__c == qt.Opportunity.SyncedQuote.Gruop_Name__c){
+                            qt.customer_amount__c =  qt.Opportunity.Previous_Loan_Amount_After_Variation__c;
+                            qtListToUpdate.add(qt);
+                        }
+                    }
+                    if(!qtListToUpdate.isEmpty()){
+                        update qtListToUpdate; 
+                    }
+                } 
+                
+                // Update Vois To Rejected.
+                List<voi_Status__c> OldvoiList = new List<voi_Status__c>();            
+                for(voi_Status__c vs : [SELECT Id,CreatedDate,link_Expire_code__c, Name,Case_Status__c,Opportunity__r.id,
+                                        contact__c,VOI_Type_For__c FROM VOi_status__c WHERE Opportunity__r.id IN: oppIds ORDER BY CreatedDate DESC ]){
+                                            if(vs.VOI_Type_For__c == 'E-SIGN' && (vs.Case_Status__c == 'Sent' || vs.Case_Status__c == 'Delivered' || vs.Case_Status__c == 'Rejected')){
+                                                vs.link_Expire_code__c = '';
+                                                vs.Case_Status__c = 'Rejected';
+                                                OldvoiList.add(vs);
+                                            }
+                                        }
+                if(OldvoiList != null && OldvoiList.size() > 0){
+                    Update OldvoiList; 
+                } 
+            }
+        }
+    }
+    
+    @Future(callout=true)
+    public static void insertAuthorisationCertificate(String frId, Id oppId){
+        Opportunity opp = [SELECT Id,Name FROM Opportunity WHERE Id=: oppId LIMIT 1]; 
+        String[] oppName = opp.Name.split(',');
+        string name = 'Funding Autorisation Certificate for '+oppName;
+        
+        Document_Requested__c dc = new Document_Requested__c();
+        dc.Category__c = 'Funding Authorisation Certificate';
+        dc.Opportunity__c = oppId;
+        insert dc;
+        
+        PageReference pdf = Page.FundingAuthorisationCertificatePDF;
+        pdf.getParameters().put('id',frId);
+        pdf.setRedirect(true);
+        Blob bPDF;
+        
+        if (Test.IsRunningTest()){
+            bPDF=Blob.valueOf('UNIT.TEST');
+        }
+        else{
+            bPDF = pdf.getContent();
+        }
+        
+        ContentVersion ContVerFile = new ContentVersion();
+        ContVerFile.VersionData = bPDF;
+        ContVerFile.Title = name; 
+        ContVerFile.PathOnClient= name+'.pdf'; 
+        ContVerFile.Document_Requested__c = dc.Id;
+        ContVerFile.FirstPublishLocationId = oppId;
+        insert ContVerFile;
+        
+        if(ContVerFile != null){
+            Document_Requested__c doc = new Document_Requested__c();
+            doc.id = dc.Id;
+            doc.isComplete__c = true;
+            update doc;
+        }
+    }
+    
+    public void afterDelete(Funding_Request__c oldrequest){
+        List<ContentVersion> oldCvListToUpdate = new List<ContentVersion>();
+        Set<Id> contentDocId = new Set<Id>();
+         Set<Id> doccIdss = new Set<Id>();
+        List<ContentDocumentLink> linkList = [SELECT Id,LinkedEntityId,ContentDocumentId FROM ContentDocumentLink WHERE LinkedEntityId =: oldrequest.Opportunity__c];  
+        if(!linkList.isEmpty()){
+            for(ContentDocumentLink cnt : linkList){
+                contentDocId.add(cnt.ContentDocumentId);
+            }
+        }
+        if(!contentDocId.isEmpty()){
+            List<ContentVersion> cvList = [SELECT Id,CreatedDate,Title,Category__c, ContentDocumentId FROM ContentVersion WHERE ContentDocumentId IN: contentDocId AND Category__c = 'Funding Authorisation Certificate' ORDER By CreatedDate DESC LIMIT 1];
+            if(!cvList.isEmpty()){
+                for(ContentVersion cvv : cvList){
+                   doccIdss.add(cvv.ContentDocumentId);
+                }
+                List<ContentDocument> cddList = [SELECT Id FROM ContentDocument WHERE Id In: doccIdss];
+                delete cddList;
             }
         }
     }

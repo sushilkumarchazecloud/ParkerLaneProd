@@ -1,15 +1,32 @@
 <aura:component controller = "ParkerLaneLoanController">
     <aura:attribute name="recordId" type="Id" />
     <aura:attribute name="masterQuote" type="String" />
+    <aura:attribute name="IsApplicantTwo" type="String" />
+    <aura:attribute name="redirectURL" type="String" />
+    <aura:attribute name="oppData" type="opportunity" />
     <aura:attribute name="isMortgage" type="Boolean" default="False"/>
+    <aura:attribute name="isTMCU" type="Boolean" default="False"/>
+    <aura:attribute name="vfMsgMethod" type="object" description=""/>
     <aura:handler action="{!c.doInit}" name="init" value="{!this}"/>
-    <div class="solarloanfont">
-
-        <aura:if isTrue="{!v.isMortgage}">
-            <c:LoanSections recordId = "{!v.recordId}"  masterQuote = "{!v.masterQuote}"/>
-        </aura:if>
-        <aura:if isTrue="{!!v.isMortgage}">
-           <c:LoanSections_PL recordId = "{!v.recordId}" masterQuote = "{!v.masterQuote}"/>
-        </aura:if>
+    <div class="solarloanfont">            
+        <div>    
+            <aura:If isTrue="{!v.IsApplicantTwo == 'true'}" >
+                <aura:if isTrue="{!v.isTMCU}">
+                    <c:Summary_PL aura:id="SummaryPage"
+                              redirectURL = "{!v.redirectURL}"
+                              recordId ="{!v.recordId}"
+                              selectedQuote ="{!v.selectedQuote}"
+                               IsApplicantTwo ="{!v.IsApplicantTwo}"   />                                      
+                </aura:if>                
+                <aura:set attribute="else">
+                    <aura:if isTrue="{!v.isMortgage}">
+                        <c:LoanSections recordId = "{!v.recordId}"  masterQuote = "{!v.masterQuote}"/>
+                    </aura:if>
+                    <aura:if isTrue="{!!v.isMortgage}">
+                        <c:LoanSections_PL recordId = "{!v.recordId}" masterQuote = "{!v.masterQuote}" IsApplicantTwo = "{!v.IsApplicantTwo}" vfMsgMethod="{!v.vfMsgMethod}"/>
+                    </aura:if>
+                </aura:set>
+            </aura:If>        	
+        </div>
     </div>
 </aura:component>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Task_Due_Status__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF( ISPICKVAL(Status , &quot;Completed&quot;) , &quot;&quot; , IF( ActivityDate &gt; TODAY() , &quot;Due Later&quot; , IF( ActivityDate = TODAY() , &quot;Due Today&quot; , &quot;Overdue&quot; ) ))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Task Due Status</label>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

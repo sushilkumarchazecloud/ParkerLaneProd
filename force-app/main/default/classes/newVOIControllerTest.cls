@@ -163,10 +163,10 @@ public class newVOIControllerTest {
     public static void testAttOne(){
         OpportunityTriggerHandler.isByPassTrigger = true;
         opportunity op = [Select id, name, Applicant_1__r.personContactId from Opportunity where name = 'testing' Limit 1];
-        contact con = [Select id, MiddleName,FirstName,LastName,ID_Card_Number__c,Driver_s_licence_state_Territory__c, name,Postal_Code__c,Salutation,Birthdate,Government_ID__c,Govt_Id_Number__c,FinServ__Gender__c from contact where LastName = 'testing123' Limit 1];
+        contact con = [Select id, MiddleName,FirstName,is_Email_verified_for_VOI__c,LastName,ID_Card_Number__c,Driver_s_licence_state_Territory__c, name,Postal_Code__c,Salutation,Birthdate,Government_ID__c,Govt_Id_Number__c,FinServ__Gender__c from contact where LastName = 'testing123' Limit 1];
         VOI_Status__c temp = [select Id, name,VOI_Detail__c,link_Expire_code__c, contact__c from VOI_Status__c WHERE contact__r.Id =: con.id order by createddate DESC LIMIT 1];
         
-        test.startTest();
+        
         string SecureCodeOriginal = string.valueOf(Math.round((Math.random() * (9000) + 1000)));
         VOI_Detail__c voi  = new VOI_Detail__c();
         voi.Secure_Code_Orignal__c = SecureCodeOriginal;
@@ -183,6 +183,7 @@ public class newVOIControllerTest {
         System.currentPageReference().getParameters().put('SecureCode', '12345');
         newVOIController obj = new newVOIController();
         
+        test.startTest();
         opportunity opprt = newVOIController.getOpportunityData(op.id);
         VOI_Status__c VST = newVOIController.getVOI(con.Id);
         newVOIController.getContactData(con.Id);
@@ -196,8 +197,9 @@ public class newVOIControllerTest {
         newVOIController.insertPDFAndSendEmail(con.Id, op.id);
         newVOIController.forDocsAndAlldone(op.id, op.Applicant_1__r.personContactId);
         newVOIController.updateContFromLWC(con.Id,op.id, 'both to sign',  'Australia', '92029', 'test', '29109', '92188 9128');
+        //newVOIController.sendEmailAndSMSForCode(con);
         
-        newVOIController.emailForOtp(con.Id);
+        //newVOIController.emailForOtp(con.Id);
         test.stopTest();
         
         OpportunityTriggerHandler.isByPassTrigger = false;
@@ -205,18 +207,47 @@ public class newVOIControllerTest {
     
     @isTest
     public static void testAttTwo(){
+        Id custSupPersonId = [select id,username from user where username=: System.Label.customerSite].id;
         OpportunityTriggerHandler.isByPassTrigger = true;
         opportunity op = [Select id, name, Applicant_1__r.personContactId from Opportunity where name = 'testing' Limit 1];
         contact con = [Select id,Email, MiddleName,FirstName,LastName,ID_Card_Number__c,Driver_s_licence_state_Territory__c, name,Postal_Code__c,Salutation,Birthdate,Government_ID__c,Govt_Id_Number__c,FinServ__Gender__c from contact where LastName = 'testing123' Limit 1];
-        VOI_Status__c temp = [select Id, name,VOI_Detail__c,link_Expire_code__c, contact__c from VOI_Status__c WHERE contact__r.Id =: con.id order by createddate DESC LIMIT 1];
         string SecureCodeOriginal = string.valueOf(Math.round((Math.random() * (9000) + 1000)));
         VOI_Detail__c voi  = new VOI_Detail__c();
         voi.Secure_Code_Orignal__c = SecureCodeOriginal;
         voi.Contact__c = con.id;
         voi.opportunity__c = op.Id;
         insert voi;
+        //VOI_Status__c temp = [select Id, name,VOI_Detail__c,link_Expire_code__c, contact__c from VOI_Status__c WHERE VOI_Detail__c =: voi.Id order by createddate DESC LIMIT 1];
+        
+        VOI_Status__c voiS = new VOI_Status__c();
+        voiS.link_Expire_code__c = '12345';
+        voiS.Contact__c = con.Id;
+        voiS.VOI_Detail__c = voi.Id;
+        insert voiS;
+        
+        Document_Requested__c dc = new Document_Requested__c();
+        dc.Category__c = 'Purchase Invoice';
+        dc.Opportunity__c = op.Id;
+        Insert dc;
+        
+        List<ContentVersion> cnvList = new List<ContentVersion>();
+        ContentVersion cv = new ContentVersion();
+        cv.Title = 'VideoSnap';
+        cv.PathOnClient = 'TestPath';
+        cv.VersionData = Blob.valueOf('Test Data');
+        cv.Current_in_use__c = true;
+        cv.Document_Requested__c = dc.Id;
+        insert cv;
         
         test.startTest();
+        ContentDocumentLink link = new ContentDocumentLink(
+            ContentDocumentId = [SELECT ContentDocumentId, Title FROM ContentVersion WHERE Id = :cv.Id].ContentDocumentId,
+            LinkedEntityId = voi.Id,
+            ShareType = 'I'
+        );
+        insert link;
+        
+        
         con.Email = 't@gamil.com';
         update con;
         PageReference pageRef = Page.DigitalSigning;
@@ -224,7 +255,7 @@ public class newVOIControllerTest {
         pageRef.getParameters().put('conId', con.Id);
 		pageRef.getParameters().put('videoData', 'test,testtesttesttesttest');
         pageRef.getParameters().put('type', 'email');
-         pageRef.getParameters().put('conId', con.Id);
+        pageRef.getParameters().put('conId', con.Id);
         pageRef.getParameters().put('sign1', 'test,testtesttesttesttest');
         pageRef.getParameters().put('name', 'sign1');
         pageRef.getParameters().put('section', 'TMCU');
@@ -284,5 +315,33 @@ public class newVOIControllerTest {
         test.stopTest();
         
         OpportunityTriggerHandler.isByPassTrigger = false;
-    }      
+    }
+    
+    @isTest
+    public static void testFour(){
+        OpportunityTriggerHandler.isByPassTrigger = true;
+        opportunity op = [Select id, Lender__c,name, Applicant_1__r.personContactId from Opportunity where name = 'testing' Limit 1];
+        contact con = [Select id, MiddleName,FirstName,LastName,ID_Card_Number__c,Driver_s_licence_state_Territory__c, name,Postal_Code__c,Salutation,Birthdate,Government_ID__c,Govt_Id_Number__c,FinServ__Gender__c from contact where LastName = 'testing123' Limit 1];
+        VOI_Status__c temp = [select Id, name,VOI_Detail__c,link_Expire_code__c, contact__c from VOI_Status__c WHERE contact__r.Id =: con.id order by createddate DESC LIMIT 1];
+        List<ContentDocument> documents1 = [SELECT Id, Title, LatestPublishedVersionId FROM ContentDocument];
+        
+        op.Lender__c = 'Transport Mutual Credit Union';
+        OpportunityTriggerHandler.isByPassTrigger = true;
+        update op;
+        OpportunityTriggerHandler.isByPassTrigger = false;
+        
+        VOI_Detail__c voi  = new VOI_Detail__c();
+        voi.Contact__c = con.id;
+        voi.opportunity__c = op.Id;
+        insert voi;        
+        
+        con.Email = 'te@gamil.com';
+        update con;
+        test.startTest();
+        newVOIController.updateContactForBhccu(con.Id,'Australia','Australia');
+        newVOIController.emailForOtp(con.Id);
+        test.stopTest();
+        
+        OpportunityTriggerHandler.isByPassTrigger = false;
+    }
 }

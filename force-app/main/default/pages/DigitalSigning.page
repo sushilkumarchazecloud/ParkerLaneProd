@@ -1,0 +1,203 @@
+<apex:page controller="newVOIController" docType="html-5.0" manifest="/apex/CacheManifestVF" showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false">
+    <html>
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0"/>
+        <head>
+            <title>Parker Lane - Australia's No.1 Rated Finance Service</title>
+            <link REL="icon" HREF="{!URLFOR($Resource.faviconNew)}" type="image/x-icon"/>            
+            <apex:includeScript value="/soap/ajax/20.0/connection.js"/>
+            <apex:includeScript value="/soap/ajax/20.0/apex.js"/>
+            <apex:includeScript value="{!$Resource.Jquery}"/>
+            <apex:includeScript value="{!$Resource.Jquerymin}"/>
+            <apex:includeScript value="{!$Resource.ESIGNATURE}"/>
+            <apex:slds />
+            <apex:includeLightning /> 
+            <script>
+                (function(h,o,t,j,a,r){
+                    h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+                    h._hjSettings={hjid:3095000,hjsv:6};
+                    a=o.getElementsByTagName('head')[0];
+                    r=o.createElement('script');r.async=1;
+                    r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+                    a.appendChild(r);
+                })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+                </script>
+                <!-- Google tag (gtag.js) --> 
+                <script src="https://www.googletagmanager.com/gtag/js?id=G-K2K45FK4PR"></script> 
+                <script> 
+                    window.dataLayer = window.dataLayer || []; 
+                    function gtag(){dataLayer.push(arguments);} 
+                    gtag('js', new Date()); 
+                    gtag('config', 'G-K2K45FK4PR'); 
+        </script>
+        </head>
+        <body>
+                <style>
+                .embeddedServiceHelpButton{
+                font-family: Proxima Nova Alt Regular !important;
+                }
+                .embeddedServiceHelpButton .helpButton{
+                right : 70px !important;
+                }
+                .embeddedServiceHelpButton .helpButton .uiButton {
+                background-color: #005290;
+                font-family: Proxima Nova Alt Regular !important;
+                background: #1a2745 !important;
+                }
+                .embeddedServiceHelpButton .helpButton .uiButton:focus {
+                outline: 1px solid #005290;
+                }
+                .embeddedServiceHelpButton .embeddedServiceIcon::before{
+                font-size: 2.25em !important;
+                }
+                .embeddedServiceHelpButton .uiButton .helpButtonLabel{
+                overflow : inherit !important;
+                max-width: fit-content !important;
+                } 
+                .embeddedServiceSidebarMinimizedDefaultUI.helpButton{
+                background: #1a2745 !important;
+                }
+                .message {
+                font-size: 16px !important; 
+                background-color: #1a2745 !important;
+                border-style: solid;
+                border-width: 0px !important;
+                color: #ffffff !important;
+                padding: 6px 8px 6px 0px;
+                margin: 0px !important
+                }
+                .headerAnnouncement{
+                color : black !important;
+                background : #dd7a01 !important;
+                }
+            </style>
+            <apex:form >
+                <apex:actionFunction name="updateAppSec" action="{!updateOppSection}" oncomplete="callAfterData();" reRender="none">            
+                    <apex:param name="oppId" value=""/>        
+                </apex:actionFunction> 
+            </apex:form>
+            <div id="ref" style="background-color: #f4f4f4;min-height: 45rem">        
+            </div>
+                        
+            
+            <div id="videoSection">
+                <c:newVideoSection />
+            </div>
+        </body>
+    </html>
+    <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
+    <script>
+     $(document).ready(function() { 
+        initCall() }); 
+    
+    function initCall(){
+       document.getElementById("videoSection").style.display = 'none'; 
+        var code = "{!$CurrentPage.parameters.r}";
+        var voi = '{!voiS.link_Expire_code__c}';       
+        var opId = '{!oppData.Id}';
+        var conid = "{!$CurrentPage.parameters.conId}";
+        var opp = '{!oppData.Applicant_2__r.personContactId}';
+        var masterQuote = '{!oppData.SyncedQuote.Quote_Group_Label__c}';
+        var label = '{!$Label.baseUrl}';
+        if(voi != code){           
+            //updateAppSec(opId);
+            if(conid == opp){
+               // alert('HI call init');
+                var istr = true;
+                window.location.href = label+'?id='+opId + '&LinkExpired=' + istr + '&AppTwo=' + istr +'&master='+masterQuote.replace('&', '%26'), '_blank';
+            }else{
+                var flag=  true;
+                window.location.href = label+'?id='+opId+'&LinkExpired=' + flag + '&master='+masterQuote.replace('&', '%26'), '_blank';
+            } 
+             
+            /*var label = '{!$Label.baseUrl}'; 
+            window.location.href = label+'supportingDocument?oppId={!oppData.Id}';*/
+        }
+    }
+
+    function callAfterData(){
+        var opId = '{!oppData.Id}';
+        var conid = "{!$CurrentPage.parameters.conId}";
+        var opp = '{!oppData.Applicant_2__r.personContactId}';
+        var masterQuote = '{!oppData.SyncedQuote.Gruop_Name__c}';
+        var label = '{!$Label.baseUrl}';   
+        console.log('00-->>'+opp);
+        console.log('00--conid>>'+conid);
+        if(conid == opp){
+            // alert('HI call');
+            window.location.href = label+'?id='+opId+'&master='+masterQuote.replace('&', '%26'), '_blank' + '&appTwo';
+        }else{
+            window.location.href = label+'?id='+opId+'&master='+masterQuote.replace('&', '%26'), '_blank';
+        }                    
+    }
+  
+    var oppId = "{!$CurrentPage.parameters.oppId}";
+    var conId = "{!$CurrentPage.parameters.conId}";
+    var code = "{!$CurrentPage.parameters.r}";
+    $Lightning.use("embeddedService:sidebarApp", function(){
+        $Lightning.createComponent("c:voiEmailVerification", {
+            authToken : '{!accessToken}',
+            callvfPageforVideo : showVideoSec,
+            oppId : oppId,
+            conId : conId,
+            code : code
+        }, "ref", function(){
+        });
+    });   
+     
+    
+    
+    function showVideoSec(){
+        document.getElementById("ref").style.display = 'none';
+        document.getElementById("videoSection").style.display = 'Block';
+    }
+    
+        if({!Active}){
+        var initESW = function(gslbBaseURL) {
+            embedded_svc.settings.displayHelpButton = true; //Or false
+            embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
+            if(recordId != null){
+                embedded_svc.settings.prepopulatedPrechatFields = {
+                   FirstName: '{!JSENCODE(contct.FirstName)}',
+                   LastName: '{!JSENCODE(contct.LastName)}',
+                   Email: '{!JSENCODE(contct.Email)}',
+                }; 
+            }
+            embedded_svc.settings.defaultMinimizedText = 'Chat with us'; //(Defaults to Chat with an Expert)
+            embedded_svc.settings.disabledMinimizedText = 'Chat with us'; //(Defaults to Agent Offline)
+            embedded_svc.settings.loadingText = 'Please wait'; //(Defaults to Loading)
+            embedded_svc.settings.offlineSupportMinimizedText = 'Chat with us'; //(Defaults to Contact Us)
+            
+            embedded_svc.settings.enabledFeatures = ['LiveAgent'];
+            embedded_svc.settings.entryFeature = 'LiveAgent';
+            
+           embedded_svc.init(
+            'https://lanecorp.my.salesforce.com',
+            'https://lanecorp.my.site.com/',
+            gslbBaseURL,
+            '00D0o000001AAhI',
+            'Application_Form_Chat_Support',
+            {
+                baseLiveAgentContentURL: 'https://c.la1-core1.sfdc-vwfla6.salesforceliveagent.com/content',
+                deploymentId: '573Ol0000000DdB',
+                buttonId: '572Ol0000000kcL',
+                baseLiveAgentURL: 'https://d.la1-core1.sfdc-vwfla6.salesforceliveagent.com/chat',
+                eswLiveAgentDevName: 'Application_Form_Chat_Support',
+                isOfflineSupportEnabled: false
+            }
+        );
+    };
+
+    if (!window.embedded_svc) {
+        var s = document.createElement('script');
+        s.setAttribute('src', 'https://lanecorp.my.salesforce.com/embeddedservice/5.0/esw.min.js');
+        s.onload = function() {
+            initESW(null);
+        };
+        document.body.appendChild(s);
+    } else {
+        initESW('https://service.force.com');
+    }
+    }
+    
+    </script>
+</apex:page>

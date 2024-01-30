@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Broker_confirmation_the_loan_is_not_unsu__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Broker confirmation the loan is not unsuitable</description>
+    <externalId>false</externalId>
+    <inlineHelpText>I have conducted a thorough needs analysis and preliminary assessment of the applicants and the loan I have recommended is not unsuitable to their objectives and financial circumstances. If this is a refinance I also certify the applicants will be better.</inlineHelpText>
+    <label>I certify this loan is not unsuitable</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

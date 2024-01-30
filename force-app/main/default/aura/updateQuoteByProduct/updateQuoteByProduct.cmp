@@ -1,0 +1,21 @@
+<aura:component controller="updateQuoteHandle" implements="force:appHostable,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+    <aura:attribute name="isModel" type="boolean" default="true"/>
+    
+    
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_large" style="height:40rem;" >           
+        <div class="slds-modal__container">
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" >
+                <p style="text-align : center; font-size : 22px;"><b>Are you sure?</b></p><br/>
+                <p style="font-size : 18px;text-align : center;">This will update all the realted Quotes to this Product with stage of Nurturing,Working,CPA Started,CPA Done,Packs Out,Packs Back,Quote</p><br/><br/>                    
+            </div>
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col btn" align="right">
+                    <lightning:button variant="success" label="Yes" title="Yes" onclick="{! c.runBatch }"/>
+                </div>
+                <div class="slds-col btn">
+                    <lightning:button variant="brand" label="Cancel" title="Cancel" onclick="{! c.cancel }" />
+                </div>
+            </div>                        
+        </div>
+    </section>                    
+</aura:component>

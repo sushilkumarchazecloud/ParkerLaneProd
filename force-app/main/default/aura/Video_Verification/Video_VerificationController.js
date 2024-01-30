@@ -30,42 +30,37 @@
     
     updateVOI : function(component, event, helper){
         var action = component.get("c.UpdateVOI");
-        var t = component.get("v.VOI");
-        var chkbx = component.find("checkbx").get("v.value");
-        
         let isPDF;
+       //ar wantPDF = component.get("v.wantPDF");
         
         if(confirm("Do you want to generate PDF Also?")){
             component.set("v.wantPDF", true);
+            isPDF = true;
         }
         else{
             component.set("v.wantPDF", false);
+            isPDF = false;
         }
-        
         action.setParams({
             voiDt : component.get("v.VOI"),
-            wantPDF : component.get("v.wantPDF")
         });
         
        
         action.setCallback(this, function(response) {
-            var toastEvent = $A.get("e.force:showToast");
-            var isPDF = component.get("v.wantPDF");
-            var mesg; 
-            if(isPDF == true){
-                mesg = 'Record Updated and PDF generated.';
-            }
-            else{
-               mesg = 'Record Updated'; 
-            }
+            var toastEvent = $A.get("e.force:showToast");            
             var state = response.getState();
             if (state === "SUCCESS") {
                 component.set('v.VOI', action.getReturnValue());
-                toastEvent.setParams({
-                    "title": "Success!",
-                    "message": mesg  ,
-                    "type" : "success"
-                }); 
+                if(isPDF){                    
+                    helper.helperMethod(component);                         
+                }
+                else{
+                    toastEvent.setParams({
+                        "title": "Success!",
+                        "message": "Record Updated"  ,
+                        "type" : "success"
+                    });
+                }
             }
             else if (state === "INCOMPLETE") {
                 // do something
@@ -83,8 +78,8 @@
                 }
             toastEvent.fire();
         });
+       
         
-        $A.get("e.force:refreshView").fire();
         $A.enqueueAction(action);
     },
     

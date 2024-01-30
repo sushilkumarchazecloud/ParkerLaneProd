@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Code_Match_Status__c</fullName>
+    <externalId>false</externalId>
+    <label>Code Match Status</label>
+    <required>false</required>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Match(Success)</fullName>
+                <default>false</default>
+                <label>Match(Success)</label>
+            </value>
+            <value>
+                <fullName>Not-Match(Failed)</fullName>
+                <default>false</default>
+                <label>Not-Match(Failed)</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -15,7 +15,7 @@
                     component.set("v.errorMsg", $A.get("$Label.c.Error_Message"));
                 }else{
                     component.set('v.applicant1', ret.applicant1);
-                    
+                    console.log(">>>>>>>>>>>>>>>>"+JSON.stringify(ret));
                     if($A.util.isUndefinedOrNull(component.get('v.applicant1').FinServ__Employment__r)){
                         component.set('v.employmentsList1', []);
                         self.addIncome(component, event, 1);

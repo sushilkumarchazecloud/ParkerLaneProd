@@ -1,0 +1,193 @@
+.THIS .max-700, .THIS.max-700 {
+    max-width: 700px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.THIS .slds-radio_button .slds-radio_faux{
+    line-height: initial;
+}
+.THIS .deleteBtn{
+    color: #1a2745;
+}
+.THIS .slds-gutters .slds-col{
+    padding-right: 0px;
+}
+.THIS .slds-icon{
+    fill: #1a2745;
+}
+.THIS .no-abbr label.slds-form-element__label abbr, .THIS .no-abbr legend.slds-form-element__label abbr {
+    display: none !important;
+}
+.THIS .slds-required{
+    display: none !important;
+}
+.THIS .slds-radio_button:last-child>.slds-radio_button__label{
+    padding-left: 36px !important;
+    padding-right: 37px !important;
+}
+.THIS .slds-radio_button:first-child>.slds-radio_button__label{
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+}
+.THIS .slds-radio_button__label:hover{
+    background-color: #91dadc !important;
+}
+.THIS .slds-checkbox .slds-checkbox__label .slds-form-element__label {
+    font-weight: 500 !important;
+    color: #1a2745 !important;
+}
+.THIS .slds-icon_xx-small{
+    width: 18px;
+    height: 18px;
+}
+.THIS .slds-input__icon-group_right .slds-input__icon_right{
+    margin-right: 7px;
+}
+.THIS .amtInput lightning-input:before{
+    position: absolute;
+    content: "$";
+    top: 16px;
+    z-index: 1;
+    font-size: 17px;
+    left: 12px;
+}
+.THIS .slds-has-error .slds-form-element__help{
+    font-size: 11px !important;
+}
+.THIS .rg-style .slds-radio_button [type=radio]:checked+.slds-radio_button__label{
+    background: #91dadc;
+    color: #1a2745;
+}
+.THIS .slds-scope abbr[title]{
+    display: none !important;
+}
+.THIS .addQuote{
+    text-decoration: underline!important;
+    font-size: 13px;
+    font-weight: bold;
+    color: #137fd5;
+}
+.THIS input::-webkit-input-placeholder {
+    color: #c4c4c4 !important;
+}
+.THIS .submitQtBtn{
+    padding: 8px !important;
+    background: #1a2745 !important;
+    border-color: #1a2745 !important;
+    width: -webkit-fill-available;
+}
+.THIS .submitQtBtnDisable{
+    padding: 8px !important;
+    background: grey !important;
+    border-color: grey !important;
+    width: -webkit-fill-available;
+}
+.THIS .SuccessBtn{
+    padding: 8px !important;
+    color : white !important;
+    width: -webkit-fill-available !important; 
+}
+.THIS .slds-checkbox__label .slds-form-element__label{
+    line-height: initial;
+    display: inline !important;
+    font-size: 12px !important;
+    font-weight: 400;
+}
+.THIS .slds-checkbox .slds-checkbox_faux{
+    border-color: #2e497d !important;
+}
+.THIS .slds-input_faux{
+    color: #c4c4c4 !important;
+    background: white;
+    padding-block: 6px;
+    border: 2px solid #ebecec;
+    font-size: 14px;
+}
+.THIS .body button{
+    background: white;
+}
+.THIS .slds-input{
+    padding-block: 6px !important;
+    border: 2px solid #ebecec !important;
+    font-size: 14px;
+}
+.THIS .slds-form-element__label{
+    font-weight: bold;
+    color: #1a2745;
+}
+.THIS .headingStyle{
+    font-size: 20px;
+}
+.THIS .bg-white,.THIS.bg-white{
+    color: #1a2745;
+}
+.THIS .txt-h4{
+    font-size: 2rem;
+}
+
+.THIS .rg-style {
+    width: 100%; 
+}
+.THIS .rg-style .slds-radio_button-group, .THIS .rg-style .slds-radio--button-group {
+    border : 0;
+    text-align: center;
+    width: 100%; 
+}
+.THIS .qtAmount .slds-input{
+    padding-left: 23px !important;
+}
+.THIS .successMsg{
+    color:#45c65a;
+    width: 25rem;
+    text-align: center;
+    padding-left: 30px;
+    line-height: initial;
+}
+.THIS .oopsMsg{
+    color:red;
+    width: 25rem;
+    text-align: center;
+    padding-left: 30px;
+    line-height: initial;
+}
+.THIS .qtAmountErr .slds-input{
+    padding-left: 23px !important;
+    border: 2px solid red !important;
+}
+.THIS .slds-radio_button:first-child{
+    margin-right: 20px;
+}
+/*.THIS .slds-radio_button:last-child{
+    padding: 2px 20px 2px 20px;
+}
+.THIS .slds-radio_button:first-child{
+    padding: 2px 20px 2px 20px;
+}*/
+.THIS .rg-style label.slds-radio_button__label {    
+    padding: 5px; 
+    border-radius: .25rem !important;
+    border: 2px solid #91dadc;
+    width: 100%;  
+    display: flex; 
+    color: #1a2745;
+    justify-content: center;
+    align-content: center;
+    align-items: center; 
+    line-height:initial !important;
+    height : 50px !important;
+}
+.THIS .rg-style .slds-radio_faux{
+    padding: 3px !important; 
+    font-size: 12px;
+    font-weight: bold !important;
+    display: contents;
+}
+
+.THIS .rg-style .slds-radio_button, .THIS .rg-style .slds-radio--button {
+    border: 0 !important;
+}
+.THIS .header{
+    font-weight: bold;
+    color: #1a2745;
+}

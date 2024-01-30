@@ -10,14 +10,49 @@
 .THIS .doc-style{
     padding: 2px;
 }
-
-.THIS .btnC {
+.THIS .modalStyle{
+    height: 20px;
+    background: white;
+    box-shadow: 0px 0px 10px 5px grey !important;
+}
+.THIS .finishBtn{
+    font-size: 16px;
+    color: black !important;
+    font-weight: 500;
     width: 100%;
     padding: 15px!important;
     border-color: green;
-    color: #fff!important;
-    font-size: 1.25rem;
     border: 0;
+}
+
+.THIS .btnC {
+    width: 95.5%;
+    padding: 18px!important;
+    border-color: green;
+    color: #fff!important; 
+    background-color: rgb(187 186 186);
+    font-size: 1rem;
+    border: 0;
+    font-weight: 500;
+}
+.THIS .btnC:hover {
+    width: 95.5%;
+    padding: 18px!important;
+    border-color: green;
+    color: #fff!important; 
+    background-color: rgb(206 206 206);
+    font-size: 1rem;
+    border: 0;
+    font-weight: 500;
+}
+.THIS .btnC2 {
+    width: 95.5%;
+    padding: 18px!important;
+    border-color: green;
+    color: #fff!important;
+    font-size: 1rem;
+    border: 0;
+    font-weight: 500;
 }
 .THIS .buttonIconClass svg {
     width: 1.4rem;
@@ -83,8 +118,7 @@
 .THIS .company-logo img, .THIS.company-logo img{
     width: 200px;
     padding: 10px;
-    height: 43px;
-    
+    height: 43px;    
 }
 .THIS .show-up{
     display:none;
@@ -93,7 +127,8 @@
     display:block;
 }
 .THIS .statement-img img{
-    width: 12px;
+    width: 13px;
+    margin-left:8px;
 }
 .THIS .statement-img {
     padding: 6px;
@@ -110,8 +145,82 @@
     font-family: ProximaNova-AltBold;
     line-height: initial;
 }
-
+.THIS .forDocs{
+    font-family:ProximaNova-AltBold;
+    padding-left: 17px;
+    font-size: 18px;
+    margin-bottom: 10px;
+    margin-top: 15px;
+}
+.THIS .docMobView{
+    margin-top: -20px;
+}
+.THIS .mobileStyleFalse{
+    display: block;
+}
+.THIS .mobileStyleTrue{
+    display: none;
+}
+.THIS .trackercls{
+    width: 50%;
+}
 @media screen and (max-width: 770px) {
+    .THIS .trackercls{
+        width: 85%;
+    }
+    .THIS .mobileDesc{
+        margin-bottom: revert;
+    }
+    .THIS .mobileStyleTrue{
+        margin-top: 30px;
+        display: block;
+    }
+    .THIS .mobileStyleFalse{
+        display: none;
+    }    
+    /*.THIS .docsBtnView{
+    margin: -16px;
+    margin-bottom: inherit;
+}*/
+    .THIS .pargraph-bold-style{
+        width: 98%;
+        font-size: 16px;
+        line-height: initial;
+        margin-top: 20px;
+        font-family: ProximaNova-AltBold;
+    }
+    .THIS .btnReview {
+        width: 100%;
+        padding: 17px!important;
+        border-color: green;
+        color: #fff!important;
+        font-size: 1rem;
+        border: 0;
+        line-height: inherit;
+    }
+    .THIS .btnC {
+        width: 100%;
+        padding: 5px!important;
+        border-color: green; 
+        background-color: rgb(187 186 186);
+        color: #fff!important; 
+        font-size: 1rem;
+        border: 0;
+        line-height: inherit;
+    }
+    .THIS .finishBtn{
+        font-size: 14px;
+        color: black!important;
+        font-weight: 500;
+        width: 110%;
+        padding: 15px!important;
+        border-color: green;
+        border: 0;
+        margin-left: -14px;
+    }
+    .THIS .forDocs{
+        margin-top: 25px;
+    }
   .THIS .company-logo div, .THIS.company-logo div{
         text-align: center;
         padding: 7px;
@@ -131,7 +240,16 @@
         font-family: ProximaNova-AltBold;
         line-height: initial;
     }
-        
+    .THIS .upload-text-container{    
+        margin: 0px !important;
+        padding: 15px !important;
+        border-radius: 15px !important;
+    }
+    .THIS .docMobView{
+        padding: initial;
+        margin-top: 0px;
+    }
+    
     .THIS .show-up{
         display:block;
     }
@@ -158,16 +276,17 @@
     line-height: normal;
 }
 .THIS .pargraph-style{
+    margin-top: 10px;
     font-size: 1rem;
-    font-family: ProximaNovaAlt-Medium;
+    width: 100%;
+    line-height: initial;
     font-weight: bold;
 }
 .THIS .pargraph-bold-style{
-    font-size: .75rem;
+    font-size: 16px;
+    line-height: initial;
+    margin-top: 20px;
     font-family: ProximaNova-AltBold;
-    text-align: justify;
-    line-height: normal;
-    text-transform: uppercase;
 }
 
 .THIS .upload-text-container{    
@@ -176,7 +295,6 @@
     border-radius: 15px;
 }
 .THIS .upload-text-container li {
-    list-style: auto;
     padding-left: 10px;
     margin-left: 20px;
     line-height: normal;

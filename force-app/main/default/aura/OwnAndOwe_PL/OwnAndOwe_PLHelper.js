@@ -16,7 +16,13 @@
                     component.set("v.errorMsg", $A.get("$Label.c.Error_Message"));
                 }else{
                     if(!$A.util.isUndefinedOrNull(ret.Asset)){
+                        console.log('ret.Asset'+JSON.stringify(ret.Asset));
                         component.set('v.assetsList',ret.Asset);
+                        ret.Asset.forEach(function(item){
+                            component.set('v.CreditCardscheck', item.FinServ__PrimaryOwner__r.CreditCardsCommitments__pc);
+                            component.set('v.PersonalAndAutoLoanscheck',item.FinServ__PrimaryOwner__r.PersonalAndAuto__pc);
+                            component.set('v.OtherCommitmentscheck', item.FinServ__PrimaryOwner__r.OtherCommitments__pc);
+                        });
                     }
                     if(!$A.util.isUndefinedOrNull(ret.Liability)){
                         component.set('v.liabilitiesList', ret.Liability);
@@ -197,7 +203,8 @@
             isShare : isShare,
             creditCardscheck : creditCardscheck,
             personalAndAutoLoanscheck: personalAndAutoLoanscheck,
-            OtherCommitmentscheck: OtherCommitmentscheck
+            OtherCommitmentscheck: OtherCommitmentscheck,
+            skipSave: false
         });
         
         action.setCallback(this, function(response) {
@@ -256,10 +263,10 @@
                 }else{
                     component.set('v.applicationSection', JSON.parse(ret).CurrentSection);
                     component.set('v.appSectionPath', JSON.parse(ret).path);
-                        component.set('v.mortgageList', []);
+                        /*component.set('v.mortgageList', []);
                         component.set('v.creditCardlist', []);
                         component.set('v.personalAndAutoloanlist', []);
-                        component.set('v.otherCommitmentlist', []);
+                        component.set('v.otherCommitmentlist', []);*/
                     self.upsertOppAssetsAndLiabilities(component, event, false, false);
                 }
             }
@@ -312,6 +319,7 @@
         if(!$A.util.isUndefinedOrNull(mortgageList)){
             mortgageList.forEach(function(item) {
                 if(!$A.util.isEmpty(item.Value__c)){
+                    console.log("item.Value__c"+item.Value__c);
                     totalLiabilitiesAmt += parseFloat(item.Value__c);
                 }
             });
@@ -320,6 +328,7 @@
         if(!$A.util.isUndefinedOrNull(creditCardlist)){
             creditCardlist.forEach(function(item) {
                 if(!$A.util.isEmpty(item.Value__c)){
+                    console.log("item.Value__c"+item.Value__c);
                     totalLiabilitiesAmt += parseFloat(item.Value__c);
                 }
             });
@@ -328,6 +337,7 @@
         if(!$A.util.isUndefinedOrNull(personalAndAutoloanlist)){
             personalAndAutoloanlist.forEach(function(item) {
                 if(!$A.util.isEmpty(item.Value__c)){
+                    console.log("item.Value__c"+item.Value__c);
                     totalLiabilitiesAmt += parseFloat(item.Value__c);
                 }
             });
@@ -336,6 +346,7 @@
         if(!$A.util.isUndefinedOrNull(otherCommitmentlist)){
             otherCommitmentlist.forEach(function(item) {
                 if(!$A.util.isEmpty(item.Value__c)){
+                    console.log("item.Value__c"+item.Value__c);
                     totalLiabilitiesAmt += parseFloat(item.Value__c);
                 }
             });

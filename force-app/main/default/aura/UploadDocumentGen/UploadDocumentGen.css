@@ -1,0 +1,55 @@
+.THIS .crossBtnDisabled{
+    margin-top: -17px;
+    margin-left: -2px;
+    border: 1px solid grey !important;
+    border-radius: 15px!important;
+    color: grey !important;
+}  
+
+.THIS .crossBtn{
+    margin-left: 20px;
+    border: 1px solid grey !important;
+    border-radius: 15px !important;
+    color: grey !important;
+}
+
+.THIS .crossBtnFinance{
+    border: 1px solid grey !important;
+    border-radius: 15px !important;
+    color: grey !important;
+    float: right !important;
+}
+.THIS .greentick{
+    position: relative; 
+    bottom: 1px; 
+    left: 25px;
+}
+.THIS .inputCls .slds-file-selector__dropzone .slds-file-selector__text{
+    display: none;
+}
+
+.THIS .inputCls .slds-file-selector__dropzone .slds-file-selector__button{
+    font-size: 0px;
+    color: black;
+    background: transparent;
+    border: none;
+}
+.THIS .inputCls .slds-file-selector{
+    float: right;
+}
+.THIS .inputCls:focus{
+    outline: none !important;
+    border: none !important;
+}
+.THIS .inputCls .slds-file-selector__dropzone .slds-file-selector__button:hover{
+    cursor: pointer !important;
+}
+/*.THIS .inputCls .slds-file-selector__dropzone .slds-file-selector__button:after{
+    content: 'Upload quote (optional)';
+    font-size: 13px;
+    color: #1a2745;
+} */
+
+.THIS .inputCls .slds-file-selector__dropzone{
+    border: white;
+}

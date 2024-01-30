@@ -1,6 +1,7 @@
 ({
     callDoInit: function(component, recordIds){
         var action = component.get("c.getContentVersion");
+        var size = 0;//component.get("v.selectedSize");
         action.setParams({
             'recordIdStr': recordIds
         });
@@ -8,6 +9,32 @@
             var state = result.getState();
             if (component.isValid() && state === "SUCCESS"){
                 component.set("v.cvList",result.getReturnValue());   
+            	var cvList = component.get("v.cvList");
+                for(var i=0; i<cvList.length; i++){
+                    if(cvList[i].Send_to_Lender__c == true){
+                        size += cvList[i].ContentSize;
+                    }
+                }
+            }
+           // alert('size'+size);
+            component.set("v.selectedSize",size);
+            
+        });
+        $A.enqueueAction(action);
+    },
+    getOppDocs: function(component, recordIds){
+        var action = component.get("c.getOppDetail");
+        action.setParams({
+            'recId': recordIds
+        });
+        action.setCallback(this, function(result){
+            var state = result.getState();
+            var storeResponse = result.getReturnValue();
+            if(storeResponse.Docs_Outstanding__c > 0){
+                component.set("v.disableUploadDocs",false);
+            }
+            else{
+                component.set("v.disableUploadDocs",true);
             }
         });
         $A.enqueueAction(action);
@@ -230,7 +257,9 @@
     },
     fetchUploadedFiles: function(component, idContent){
         this.showSpinner(component);
+        var self = this;
         var action = component.get("c.fetchUploaded");
+        var recordIds = component.get("v.recordId");
         component.set("v.isUpload",false);
         action.setParams({
             'documentIds': idContent
@@ -241,11 +270,38 @@
             if (component.isValid() && state === "SUCCESS"){
                 component.set("v.filesUploaded",result.getReturnValue());
                 component.set("v.finalUpload",result.getReturnValue());
+                self.updateActivity(component, recordIds);
+                self.getOldDocs(component);
             }
             this.hideSpinner(component);
         });
         $A.enqueueAction(action);
     },
+
+    getOldDocs : function(component){
+        var action = component.get("c.fetchPreviousDocs");
+        var recordIds = component.get("v.recordId");
+        action.setParams({
+            'recordId': recordIds
+        });
+        action.setCallback(this, function(result){
+            var state = result.getState();
+            if (state == "SUCCESS"){
+                component.set("v.oldDocExist",result.getReturnValue());
+            }
+        });
+        $A.enqueueAction(action);
+    },
+    
+    updateActivity: function(component, recordIds){
+        var action = component.get("c.updateCustomerActivity");
+        action.setParams({
+            recId : recordIds
+        });
+        action.setCallback(this, function(result){});                           
+        $A.enqueueAction(action);
+    },
+    
     helperApplicant: function(component){
         this.showSpinner(component);
         var action = component.get("c.getOppDetail");
@@ -328,5 +384,16 @@
             this.hideSpinner(component);
         });
         $A.enqueueAction(action1);
+    },
+    
+     getCurrentAppName : function(component, event, helper){
+        var action = component.get("c.getAppName");
+        action.setCallback(this, function(result){
+            var state = result.getState();
+            if(state == 'SUCCESS'){
+              component.set("v.currentAppName",result.getReturnValue()); 
+            }
+        });
+        $A.enqueueAction(action);
     },
 })

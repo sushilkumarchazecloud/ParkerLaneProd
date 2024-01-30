@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Customer_Res__c</fullName>
+    <externalId>false</externalId>
+    <label>Customer Action</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Commenced application</fullName>
+                <default>false</default>
+                <label>Commenced application</label>
+            </value>
+            <value>
+                <fullName>Completed application</fullName>
+                <default>false</default>
+                <label>Completed application</label>
+            </value>
+            <value>
+                <fullName>Documents Provided (docs remain outstanding)</fullName>
+                <default>false</default>
+                <label>Documents Provided (docs remain outstanding)</label>
+            </value>
+            <value>
+                <fullName>Documents Provided (all received)</fullName>
+                <default>false</default>
+                <label>Documents Provided (all received)</label>
+            </value>
+            <value>
+                <fullName>Signed CQP</fullName>
+                <default>false</default>
+                <label>Signed CQP</label>
+            </value>
+            <value>
+                <fullName>Signed credit contract</fullName>
+                <default>false</default>
+                <label>Signed credit contract</label>
+            </value>
+            <value>
+                <fullName>ID Verification</fullName>
+                <default>false</default>
+                <label>ID Verification</label>
+            </value>
+            <value>
+                <fullName>Loan Drawn Down</fullName>
+                <default>false</default>
+                <label>Loan Drawn Down</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

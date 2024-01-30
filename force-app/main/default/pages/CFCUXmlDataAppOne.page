@@ -47,7 +47,7 @@
                                     <nm_group>Parker Lane</nm_group>
                                     <cd_product>{!productCode}</cd_product> 
                                     <!--nm_product>{!selectedQuote.Product__r.Name}</nm_product-->
-                                    <nm_product>Green Loan 4.49% (via Partner)</nm_product>
+                                    <nm_product>Green Loan (via Partner)</nm_product>
                                     <tx_code_external>L81</tx_code_external>
                                     <fg_obsolete>0</fg_obsolete> 
                                     <am_loan_amount><apex:outputText value="{0,number,0.00}">
@@ -80,8 +80,8 @@
                                             <cd_section>Default Rate</cd_section>
                                             <id_rate>GL399</id_rate>
                                             <tx_code_external />
-                                            <no_default>4.49</no_default>
-                                            <nm_rate>Green Loan Rate 4.49%</nm_rate>
+                                            <no_default>5.24</no_default>
+                                            <nm_rate>Green Loan Rate 5.24%</nm_rate>
                                         </rate>
                                     </rate_list>
                                     <fee_list>
@@ -133,13 +133,14 @@
                                     <fg_act_privacy>0</fg_act_privacy> 
                                     <cd_residence>61</cd_residence> 
                                     <ct_dependants>{!oppContacts.app1NoChild}</ct_dependants>  
-                                    <dependants>
+                                    <dependants></dependants>
+                                    <!--<dependants>
                                         <apex:repeat value="{!oppContacts.app1Children}" var="items">
                                             <dependant>
                                                 <no_age>{!IF(CONTAINS(LEFT(items.Child_Age__c,2)," "),LEFT(items.Child_Age__c,1),LEFT(items.Child_Age__c,2))}</no_age>  
                                             </dependant>
                                         </apex:repeat>
-                                    </dependants>
+                                    </dependants>-->
                                     <cd_citizenship>{!oppContacts.contact1.Citizenship_Status__c}</cd_citizenship>  
                                 </individual>
                                 <address>

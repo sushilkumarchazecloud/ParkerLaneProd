@@ -3,8 +3,12 @@
         helper.scrollTop(component, event);
         var quote = component.get("v.quote");
         component.set("v.gettingCustomerAmount", parseFloat(quote.Customer_Amount__c) + parseFloat(quote.Total_Setup_Fees__c));
-        var whatYouGet = quote.Product__r.Summary_Page_What_You_ll_Get__c .split(";");
-        var whatYouNeed = quote.Product__r.What_document_needs_to_apply__c .split(";");
+        if(!$A.util.isUndefinedOrNull(quote.Product__r.Summary_Page_What_You_ll_Get__c) && quote.Product__r.Summary_Page_What_You_ll_Get__c != null){
+            var whatYouGet = quote.Product__r.Summary_Page_What_You_ll_Get__c.split(";");
+        }
+        if(!$A.util.isUndefinedOrNull(quote.Product__r.What_document_needs_to_apply__c) && quote.Product__r.What_document_needs_to_apply__c != null){
+            var whatYouNeed = quote.Product__r.What_document_needs_to_apply__c.split(";");
+        }
        	component.set("v.whatYouNeed", whatYouNeed);
         component.set("v.whatYouGet", whatYouGet);
         component.set("v.quote",quote); 
@@ -22,7 +26,7 @@
         var opp = component.get("v.opportunity");
         
         var isPrivacyCreditGuide = component.get("v.isPrivacyCreditGuide");
-        var productDisclosure = quote.Up_Front_Costs_Applicable__c;
+        var productDisclosure = quote.Affordability_Confirmation__c;
         var timeInfo = component.get("v.timeInfo");
 
         if(isPrivacyCreditGuide == 'Yes' && productDisclosure == 'Yes' && timeInfo == 'Yes'){

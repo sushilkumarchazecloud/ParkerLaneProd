@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Discharge__c</fullName>
+    <externalId>false</externalId>
+    <label>Discharge</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>sent to client</fullName>
+                <default>false</default>
+                <label>sent to client</label>
+            </value>
+            <value>
+                <fullName>Executed &amp; received from client</fullName>
+                <default>false</default>
+                <label>Executed &amp; received from client</label>
+            </value>
+            <value>
+                <fullName>Sent to outgoing</fullName>
+                <default>false</default>
+                <label>Sent to outgoing</label>
+            </value>
+            <value>
+                <fullName>Sent to incoming lender</fullName>
+                <default>false</default>
+                <label>Sent to incoming lender</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

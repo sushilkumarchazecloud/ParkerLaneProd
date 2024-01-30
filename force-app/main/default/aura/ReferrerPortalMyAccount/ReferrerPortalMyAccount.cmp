@@ -1,0 +1,114 @@
+<aura:component Controller="ReferrerPortalController">
+    <aura:attribute name="navSection" type="String" />
+    <aura:attribute name="accountId" type="String"/> 
+    <aura:attribute name="opt1" type="Boolean" default = "false" />
+    <aura:attribute name="opt2" type="Boolean" default = "false" />
+    <aura:attribute name="opt3" type="Boolean" default = "false" />
+    <aura:attribute name="isDeclarationBtnDisabled" type="Boolean" default = "true" />
+    <aura:attribute name="isDeclarationModalOpen" type="Boolean" default = "true" />
+    <aura:attribute name="DeclarationSigned" type="Boolean" default = "false" />
+    <aura:attribute name="decCheckBoxdisabled" type="Boolean" default = "false" />
+    <aura:attribute name="SignedDate" type="Date" />
+    <aura:attribute name="SignedTime" type="Time" />
+    <aura:attribute name="con" type="Object"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInIt}"/>
+    <aura:attribute name="spinner" type="boolean" default="FALSE"/>
+    <aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>
+    
+    <div class="ReferrerPortalMyAccount">
+        <div>
+            <div class="slds-grid slds-wrap slds-grid slds-wrap slds-p-top_large slds-p-left_large slds-p-right_large">
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-large-size_8-of-12">
+                    <div>
+                        <div style="padding-top: 7px;padding-left: 11px;font-size:20px;" class="heading1"><b>My Account</b></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <aura:if isTrue="{!v.spinner}">
+            <div aura:id="spinnerId" class="slds-spinner_container slds-is-fixed">
+                <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative slds-text-align_center" role="alert">
+                    <span class="slds-assistive-text">Loading...</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+            </div>
+        </aura:if>
+        <div class="slds-grid slds-wrap">
+            <div class="slds-m-left_x-large slds-m-top_medium slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_8-of-12" Style="border-radius:8px;width: 60%;background-color: #FFFFFF;" >
+                <div class="slds-p-around_large"> 
+                    <div class="heading2">My Details</div>
+                    <div class="slds-p-top_medium heading4" >
+                        <u>You</u><br/>
+                        {!v.con.Name}<br/>
+                        <span style="font-weight: bold;">M</span><span class="slds-m-left_x-small"> {!v.con.MobilePhone} </span><br/>
+                        <span style="font-weight: bold;">E</span><span class="slds-m-left_small">{!v.con.Email} </span><br/>
+                        <span style="font-weight: bold;">S</span><span class="slds-m-left_x-small"> {!v.con.State__c} </span><br/>
+                    </div>
+                    <div class="slds-p-top_medium heading4" > 
+                        <u>Your Company</u> <br/> 
+                        {!v.con.Account.Name} <br/> 
+                    </div>
+                    <div class="slds-p-top_medium heading4" > 
+                        <div><u>Your unique login URL</u></div> 
+                        <div style="width:50%;"> 
+                         https://lanecorp.my.salesforce-sites.com/WelcomeReferrerVf?id={!v.con.Id} 
+                        </div>
+                    </div>  
+                </div>
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 slds-p-around_large">
+                <div class="slds-p-right_xx-large" >
+                    <div class="slds-col slds-size_1-of-1 ">
+                        <div class="notification-box" style="background-color: #FEF5DC;">
+                            <div class="heading2"> Referrer Status</div>
+                            <div  class="heading4">  {!v.con.Referrer_Rating__c} </div>  
+                        </div>
+                    </div> 
+                </div>
+            </div>
+        </div>
+        <aura:if isTrue="{!v.isDeclarationModalOpen}">
+        <div class="slds-m-left_x-large slds-m-top_medium slds-m-bottom_large" Style="border-radius:8px;width: 60%;background-color: #d2edee;">
+            <div class="slds-p-around_large">
+                <div class="heading2">My Declaration</div>
+                <div class="slds-p-top_medium heading4" >
+                    <div style ="display: inline-flex;">
+                        <lightning:input type="checkbox" label="" style="width: 19px;" name="opt1" checked ="{!v.opt1}" onchange="{!c.tncChange}" disabled="{!v.decCheckBoxdisabled}" />
+                        <span class="slds-p-left_small" >I have read and agree to comply with <a href="https://www.parkerlane.com.au/referral-terms" target="_main" style="font-weight: bold;color:black"><u>terms of the referral agreement</u></a> signed by my company.</span>
+                    </div>
+                    <div style ="display: inline-flex;" class="slds-m-top_small">
+                        <lightning:input type="checkbox" label="" style="width: 29px;" name="opt2" checked ="{!v.opt2}" onchange="{!c.tncChange}" disabled="{!v.decCheckBoxdisabled}" />
+                        <span class="slds-p-left_small">I understand that the National Consumer Credit Protection (NCCP) Act has prohibits a person from engaging in credit activities without an Austrailian Credit License.</span>
+                    </div>
+                    <div style ="display: inline-flex;"  class="slds-m-top_small">
+                        <lightning:input type="checkbox" label="" style="width: 18px;" name="opt3" checked ="{!v.opt3}" onchange="{!c.tncChange}" disabled="{!v.decCheckBoxdisabled}" />
+                        <span class="slds-p-left_small">I acknowledge than I must only inform the consumer that we are able to arrange loans but</span>
+                    </div>
+                    <UL class="slds-list_dotted heading4" style="padding-left: 21px;">
+                        <LI>Not specify any perticular product; and</LI>
+                        <LI>Not provide any recommendations or advise concerning loans or leases; and</LI>
+                        <LI>Inform the consumer of any benefits It may recieve as a result of the referral.</LI>
+                    </UL>
+                    <div class=" slds-p-top_large heading4" style="font-weight : bold;">By clicking the button below you agree that you are signing the declaration.</div>
+                    <div class="slds-m-top_medium slds-text-align_left">
+                        <lightning:button variant="brand" class="{!v.isDeclarationBtnDisabled?'Green-btn-color':'Green-btn-color'}"
+                                          label="Declaration Signed"
+                                          title="Declaration Signed"
+                                          disabled="{!v.isDeclarationBtnDisabled}"
+                                          onclick="{!c.submitDeclaration}"/>
+                    </div> 
+                    <aura:if isTrue="{!v.DeclarationSigned}">
+                    <div class="slds-m-top_medium slds-text-align_left" style="color: #45c65a;font-weight:bold;">
+                        Signed by: {!v.con.Name}<br/>
+                        On: {!v.SignedDate} <br/> 
+                        At: {!v.SignedTime}  
+                    </div>
+                  </aura:if>
+                </div>
+            </div>
+        </div>
+       </aura:if>
+    </div> 
+</aura:component>
