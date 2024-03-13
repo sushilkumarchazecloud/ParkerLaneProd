@@ -689,6 +689,8 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Case_Status__c</fields>
+        <fields>VOI_Detail__c</fields>
         <relatedList>VOI_Status__c.Opportunity__c</relatedList>
     </relatedLists>
     <relatedLists>

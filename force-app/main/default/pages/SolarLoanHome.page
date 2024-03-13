@@ -1,8 +1,8 @@
 <apex:page showHeader="false" sidebar="false" applyBodyTag="false" applyHtmlTag="false">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0"/>
     <head>
-        <title>Parker Lane - Australia's No.1 Rated Finance Service</title>
-        <link REL="icon" HREF="{!URLFOR($Resource.faviconNew)}" type="img/x-icon"/> <!---->        
+        <title>Chaze Cloud Services Private Ltd.</title>
+        <link REL="icon" HREF="{!URLFOR($Resource.CC)}" type="img/x-icon"/> 
     </head>
     <apex:includeLightning />
     <style>

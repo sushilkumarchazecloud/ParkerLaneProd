@@ -376,4 +376,38 @@
             <default>false</default>
         </values>
     </picklistValues>
+    <picklistValues>
+        <picklist>Send_the_quote_to__c</picklist>
+        <values>
+            <fullName>Me and my customer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Me only</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Timeframe__c</picklist>
+        <values>
+            <fullName>Immediately</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>just looking %28no timeline%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>next 3 months</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>next 4 weeks</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>next 6 months</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
 </RecordType>

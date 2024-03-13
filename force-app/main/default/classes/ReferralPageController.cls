@@ -16,7 +16,7 @@ public without sharing class ReferralPageController {
         return New QuoteDetailWrapper();
     }
     
-    public static Map<String, Id> oppRecordTypeMap = New Map<String, Id>{
+    /*public static Map<String, Id> oppRecordTypeMap = New Map<String, Id>{
         'Solar' => Schema.SObjectType.Opportunity.getRecordTypeInfosByName().get('Green Loan').getRecordTypeId(),
             'Home Improvement' => Schema.SObjectType.Opportunity.getRecordTypeInfosByName().get('Home Improvement').getRecordTypeId(),
             'Debt Consolidation' => Schema.SObjectType.Opportunity.getRecordTypeInfosByName().get('Debt Consolidation').getRecordTypeId()};
@@ -24,7 +24,7 @@ public without sharing class ReferralPageController {
                 public static Map<String, Id> leadRecordTypeMap = New Map<String, Id>{
                     'Solar' => Schema.SObjectType.Lead.getRecordTypeInfosByName().get('Green Loan').getRecordTypeId(),
                         'Home Improvement' => Schema.SObjectType.Lead.getRecordTypeInfosByName().get('Home Improvement').getRecordTypeId(),
-                        'Debt Consolidation' => Schema.SObjectType.Lead.getRecordTypeInfosByName().get('Debt Consolidation').getRecordTypeId()};
+                        'Debt Consolidation' => Schema.SObjectType.Lead.getRecordTypeInfosByName().get('Debt Consolidation').getRecordTypeId()};*/
     
     @auraEnabled
     public static id getEmail(string referrerEmail){
@@ -162,7 +162,7 @@ return errorMsg;
             lead = New Lead(FirstName = firstName, LastName = lastName, Email = custEmail, leadAddress__c = custAdd, 
                             /*Customer_Amount__c = quoteAmount,*/ company = con[0].Account.Name, ReferredByContact__c = con[0].Id,
                             RelatedAccount__c = con[0].AccountId, Phone = custPhone,
-                            Referred_by_Company__c= con[0].AccountId, RecordTypeId = leadRecordTypeMap.get(quoteType),
+                            Referred_by_Company__c= con[0].AccountId, //RecordTypeId = leadRecordTypeMap.get(quoteType),
                             Point_of_Origin__c = 'Referral Page', Timeframe__c = 'Immediately', Send_the_quote_to__c = sendQuote,
                             Purpose__c = quoteType, Lead_Type__c = 'Business Referral', Status = 'Online Quote');
             if('Solar Installer'.EqualsIgnoreCase(con[0].Account.Referrer_Business_Type__c) || 'Solar Retailer'.EqualsIgnoreCase(con[0].Account.Referrer_Business_Type__c)){
@@ -179,7 +179,7 @@ return errorMsg;
             List<Quote> existingQuotesList = [SELECT Id FROM Quote WHERE Lead__c =: lead.Id AND Opportunity.Purpose__c =:quoteType  AND 
                                               Opportunity.StageName != 'Settled (closed won)' AND Opportunity.StageName != 'Closed Lost'];
             if(!existingQuotesList.isEmpty()){
-                newWrp.errorMessage = 'Oops! This customer is already in our system and can not be referred again. Please contact the team if you have any questions on 1300 13 17 11.';
+                newWrp.errorMessage = 'Oops! This customer is already in our system and can not be referred again. Please contact the team if you have any questions on 0400000000.';
                 return newWrp;
             }
         }
@@ -188,7 +188,7 @@ return errorMsg;
         
         List<Account> existingPAccList = [SELECT Id FROM Account WHERE PersonContact.Email =: lead.Email];
         if(!existingPAccList.isEmpty()){                    
-            newWrp.errorMessage = 'Oops! This customer is already in our system and can not be referred again. Please contact the team if you have any questions on 1300 13 17 11.';
+            newWrp.errorMessage = 'Oops! This customer is already in our system and can not be referred again. Please contact the team if you have any questions on 0400000000.';
             return newWrp;
         }
         
@@ -223,7 +223,7 @@ return errorMsg;
                                           Point_of_Origin__c = lead.Point_of_Origin__c,
                                           CloseDate = Date.today(),
                                           Send_the_quote_to__c = sendQuote,
-                                          RecordTypeId = oppRecordTypeMap.get(quoteType),
+                                         // RecordTypeId = oppRecordTypeMap.get(quoteType),
                                           LeadSource = lead.LeadSource,
                                           Lead_Type__c =  lead.Lead_Type__c);
         

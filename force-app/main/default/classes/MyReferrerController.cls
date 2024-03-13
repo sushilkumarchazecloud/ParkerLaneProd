@@ -2,10 +2,10 @@ public without sharing class MyReferrerController {
     public static final String adminEmail = 'tazeem.khan@chazecloud.com';
     public static final String guestUserName = 'Lanecorp Site Guest User';
     public static final String personalCreditEmailId = 'tazeem.khan@chazecloud.com';
-    private static Map<String, Id> oppRecordTypeMap = New Map<String, Id>{
+   /* private static Map<String, Id> oppRecordTypeMap = New Map<String, Id>{
         'Solar' => Schema.SObjectType.Opportunity.getRecordTypeInfosByName().get('Green Loan').getRecordTypeId(),
             'Home Improvement' => Schema.SObjectType.Opportunity.getRecordTypeInfosByName().get('Home Improvement').getRecordTypeId(),
-            'Debt Consolidation' => Schema.SObjectType.Opportunity.getRecordTypeInfosByName().get('Debt Consolidation').getRecordTypeId()};
+            'Debt Consolidation' => Schema.SObjectType.Opportunity.getRecordTypeInfosByName().get('Debt Consolidation').getRecordTypeId()};*/
                 
                 @AuraEnabled
                 public static List<getMyReferralWrapper> getMyRefferals(String searchKey, String conId, String Str){
@@ -159,7 +159,7 @@ public without sharing class MyReferrerController {
     public static void sendMail(String recId){
         try{
             Opportunity opp = [select id,Applicant_1__c,Applicant_2__c,Purpose__c,Contact_1__c,Contact_2__c,Applicant_1_Email__c,Applicant_2_Email__c from opportunity where id =: recId];
-            OrgWideEmailAddress[] owea = [SELECT Id from OrgWideEmailAddress WHERE Address =:UtilityClass.adminEmail];
+            /*OrgWideEmailAddress[] owea = [SELECT Id from OrgWideEmailAddress WHERE Address =:UtilityClass.adminEmail];
             List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
             Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage(); 
             List<string> sendTo = new List<string>();
@@ -184,7 +184,7 @@ public without sharing class MyReferrerController {
             mails.add(mail);
             if(!test.isRunningTest()){
                 Messaging.sendEmail(mails);   
-            }  
+            }  */
         }catch(exception e){
             UtilityClass.createException(recId,'MyReferrerController', 'sendMail', e.getMessage(), e.getStackTraceString(), ''+e.getLineNumber(),
                                          e.getTypeName(), ''+e.getCause());
@@ -785,7 +785,7 @@ public without sharing class MyReferrerController {
                                How_much_do_you_need__c, Applicant_1__r.Phone, Send_the_quote_to__c,
                                Owner.Name, Owner.Email,Credit_Analyst__c, Credit_Analyst__r.Email,RecordType.Name,RecordTypeId
                                FROM Opportunity WHERE Id =: oppId LIMIT 1];
-            List<String>emailBCCList = New List<String>();
+            /*List<String>emailBCCList = New List<String>();
             List<String>emailCCList = new List<String>();
             List<String>  personalRecTypeNameList = New List<String>{'Green Loan','Asset Finance','Commercial Solar Purchase','Commercial Asset Finance','Debt Consolidation','Home Improvement','Personal Loan','Vehicle Purchase'};
                 List<String>  mortgageRecTypeNameList = New List<String>{'Commercial Mortgage','Commercial Property Purchase','Home Loan Construction','Home Loan Purchase','Home Loan Refinance','Opportunity (Wallet Share)'};
@@ -849,7 +849,7 @@ public without sharing class MyReferrerController {
                 mail.setFileAttachments(new Messaging.EmailFileAttachment[] {efa});
             }
             
-            Messaging.SendEmailResult [] r = Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
+            Messaging.SendEmailResult [] r = Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });*/
             
         }catch(exception e){
             UtilityClass.createException(oppId, 'MyReferrerController', 'sendApplication', e.getMessage(), e.getStackTraceString(), ''+e.getLineNumber(),

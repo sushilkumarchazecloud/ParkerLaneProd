@@ -104,7 +104,9 @@ public without sharing class UploadDocuments {
     @AuraEnabled
     public static void finishLater(String recId){
         Opportunity opp = [select id,Applicant_1__c,Applicant_2__c,Contact_1__c,Contact_2__c,Applicant_1_Email__c,Applicant_2_Email__c from opportunity where id =: recId];
-        OrgWideEmailAddress[] owea = [SELECT Id from OrgWideEmailAddress WHERE Address =:UtilityClass.adminEmail];
+      	//Commented By Tazeem
+      	
+        /* OrgWideEmailAddress[] owea = [SELECT Id from OrgWideEmailAddress WHERE Address =:UtilityClass.adminEmail];
         List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage(); 
         List<string> sendTo = new List<string>();
@@ -128,7 +130,9 @@ public without sharing class UploadDocuments {
         mails.add(mail);
         if(!test.isRunningTest()){
             Messaging.sendEmail(mails);   
-        }        
+        }        */
+        
+        //Commented By Tazeem
     }    
     
     @AuraEnabled
@@ -322,7 +326,9 @@ public without sharing class UploadDocuments {
             System.debug(e.getMessage());
             throw new AuraHandledException('Please contact to Administrator, error!'+e.getMessage());
         }
-        Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+        
+        //Commented By Tazeem
+        /*Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
         EmailTemplate et = [SELECT Id,Subject,htmlValue FROM EmailTemplate WHERE DeveloperName = 'receivedDocuments'];
         
         string[] to = new string[] {op.Applicant_1__r.PersonEmail};
@@ -367,10 +373,10 @@ public without sharing class UploadDocuments {
         EmailTemplate et2 = [SELECT Id,Subject,htmlValue FROM EmailTemplate WHERE DeveloperName = 'Owner_Notification_on_upload_document'];
         ownerMail.setToAddresses(new string[] {op.Owner.Email});
         
-        /*/added 16-2-22
+        added 16-2-22
         if(String.isNotBlank(op.Credit_Analyst__c)){
             ownerMail.setCcAddresses(new string[] {op.Credit_Analyst__r.Email});
-        }*/
+        }
         //added 2-3-22
         
         if ( owea.size() > 0 ) {
@@ -401,7 +407,9 @@ public without sharing class UploadDocuments {
         } catch (Exception e) {
             System.debug(e.getMessage());
             throw new AuraHandledException('Please contact to Administrator, error!'+e.getMessage());
-        }
+        }*/ 
+        
+        //Commented By Tazeem
     }
     @AuraEnabled
     public static String getBankStmtUrl(String oppId){

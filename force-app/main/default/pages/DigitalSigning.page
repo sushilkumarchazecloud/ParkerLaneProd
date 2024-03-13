@@ -2,8 +2,8 @@
     <html>
         <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0"/>
         <head>
-            <title>Chaze Cloud</title>
-            <link REL="icon" HREF="{!URLFOR($Resource.faviconNew)}" type="image/x-icon"/>            
+            <title>Chaze Cloud Services Private Ltd.</title>
+        <link REL="icon" HREF="{!URLFOR($Resource.CC)}" type="img/x-icon"/>          
             <apex:includeScript value="/soap/ajax/20.0/connection.js"/>
             <apex:includeScript value="/soap/ajax/20.0/apex.js"/>
             <apex:includeScript value="{!$Resource.Jquery}"/>

@@ -722,6 +722,48 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Portal_View__pc</picklist>
+        <values>
+            <fullName>Admin View</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agent View</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Referrer View</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Position__pc</picklist>
+        <values>
+            <fullName>Admin</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Company Secretary</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Director</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Manager</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Owner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sales</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Postal_Box_Type__pc</picklist>
         <values>
             <fullName>GPO Box</fullName>
@@ -853,6 +895,29 @@
         </values>
         <values>
             <fullName>Silver</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Referrer_Status__pc</picklist>
+        <values>
+            <fullName>Active</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Current</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inactive</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>New</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Returned</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1060,6 +1125,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Status__pc</picklist>
+        <values>
+            <fullName>Active</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Hold</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Retired</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Time_Horizon__c</picklist>
         <values>
             <fullName>Long Term</fullName>
@@ -1117,6 +1197,69 @@
         </values>
         <values>
             <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>VOI_stages__pc</picklist>
+        <values>
+            <fullName>Back DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Back DL Preview</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CPQ sign</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DL Uploaded</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Email Sent To customer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Error Page</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Front DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Front DL Preview</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Home</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PDF generated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TMCU sign</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Video Preview</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Video Recording</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Video Uploaded</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>video mike Error</fullName>
             <default>false</default>
         </values>
     </picklistValues>

@@ -252,7 +252,7 @@ export default class NewDlSections extends LightningElement {
         console.log('--'+this.filesUploaded);
         var filedt = this.filesUploaded;
         let flag = false;
-        if(filedt.includes('Passport')){ // || filedt.includes('Photo ID Card')
+        /*if(filedt.includes('Passport')){ // || filedt.includes('Photo ID Card')
             console.log('if');
             this.isDeisable = false;
             const buttonElement = this.template.querySelector('[data-id="submtBtn"]');
@@ -264,7 +264,8 @@ export default class NewDlSections extends LightningElement {
             this.isDeisable = true;
         }
 
-        if(filedt.includes('Front of your Driver\'s License') && filedt.includes('Back of your Driver\'s License')){
+        console.log('docstoupload-'+this.docstoupload);
+        if(filedt.includes('Front') && filedt.includes('Back')){
             console.log('else if');
             this.isDeisable = false;
             console.log('condition true');
@@ -277,7 +278,20 @@ export default class NewDlSections extends LightningElement {
                 console.log('else');
                 this.isDeisable = true;
             }
-        }                              
+        }   */                           
+        console.log('filedt->'+filedt);
+        console.log('this.docstoupload->'+this.docstoupload);
+        if(JSON.stringify(filedt) == JSON.stringify(this.docstoupload)){
+            this.isDeisable = false;
+            console.log('condition true');
+            const buttonElement = this.template.querySelector('[data-id="submtBtn"]');
+            buttonElement.style.background = '#45c65a';
+            buttonElement.style.border = 'none';
+        }
+        else{
+            this.isDeisable = true;
+        }
+
     }
 
     callforError(event){

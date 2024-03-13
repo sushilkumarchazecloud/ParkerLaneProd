@@ -23,7 +23,7 @@ public without sharing class ReferrerPortalController {
             contact getContact = [Select id,Session_Start_Time__c,Email,LoginOtp__c,Count__c, Phone, PhoneForPortal__c from contact where id =: recId LIMIT 1];
             getContact.LoginOtp__c = String.valueOf(num);
             update getContact;
-            OrgWideEmailAddress[] owea = [SELECT Id from OrgWideEmailAddress WHERE Address =:UtilityClass.adminEmail];
+            /*OrgWideEmailAddress[] owea = [SELECT Id from OrgWideEmailAddress WHERE Address =:UtilityClass.adminEmail];
             List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
             Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
             List<string> sendTo = new List<string>();
@@ -44,7 +44,7 @@ public without sharing class ReferrerPortalController {
             mails.add(mail);
             if(!test.isRunningTest()){
                 Messaging.sendEmail(mails);   
-            }
+            }*/
             return num;
         }catch(exception e){
             UtilityClass.createException(recId,'ReferrerPortalController', 'emailForOtp', e.getMessage(), e.getStackTraceString(), ''+e.getLineNumber(),
@@ -356,7 +356,7 @@ public without sharing class ReferrerPortalController {
             List<ContentVersion> conVerList = [SELECT Id, Title,VersionData FROM ContentVersion WHERE ContentDocumentId = : docId];
             b = conVerList[0].VersionData;
             
-            Messaging.EmailFileAttachment efa = new Messaging.EmailFileAttachment();
+            /*Messaging.EmailFileAttachment efa = new Messaging.EmailFileAttachment();
             efa.setFileName('Signed Referral Agreement.pdf');
             efa.setContentType('application/pdf');
             efa.setBody(b);
@@ -378,7 +378,7 @@ public without sharing class ReferrerPortalController {
             mails.add(mail);
             if(mails.size() > 0 && mails != null){
                 Messaging.sendEmail(mails);   
-            }
+            }*/
         }catch(exception e){
             UtilityClass.createException(conId,'ReferrerPortalController', 'sendWelcomeMail', e.getMessage(), e.getStackTraceString(), ''+e.getLineNumber(),
                                          e.getTypeName(), ''+e.getCause());
@@ -468,7 +468,7 @@ public without sharing class ReferrerPortalController {
                 conList = [SELECT Id, Name,AccountId FROM Contact WHERE id =: con.Id];
             }
             System.debug('tazeems Debug____'+conList);
-            list<Opportunity> oppList = [SELECT id,Name,Line_Chart_JSON__c,Stagename,Applicant_1_Name__c,Applicant_2_Name__c,Applicant_1_Email__c,Applicant_1_Phone_Number__c, CreatedDate,Lender__c, Loan_Amount__c,Status__c,
+            list<Opportunity> oppList = [SELECT id,Name,LastModifiedDate,Line_Chart_JSON__c,Stagename,Applicant_1_Name__c,Applicant_2_Name__c,Applicant_1_Email__c,Applicant_1_Phone_Number__c, CreatedDate,Lender__c, Loan_Amount__c,Status__c,
                                          Current_Application_Sections__c,Last_Stage_Change_Date__c,Total_Funds_Available__c,ReferredByContact__r.Name,ReferredByContact__c,Applicant_1__c,Applicant_1__r.Name,Application_Pending_Notes__c,
                                          Applicant_1__r.FirstName,Send_the_quote_to__c,Approved_Date__c,Applicant_1__r.LastName,RecordType.Name,Applicant_1__r.PersonEmail,Applicant_1__r.Phone
                                          FROM Opportunity WHERE ReferredByContact__c IN : conList ORDER BY CreatedDate DESC];

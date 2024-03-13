@@ -5,444 +5,227 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Admin User Name</shortDescription>
-        <value>tazeem.khan@chazecloud.com.devorg4</value>
-    <
-    /labels>
-    <
-    labels>
-        <
-        fullName>Already_Customer_Exist</fullName>
-        <
-        categories>Error</categories>
-        <
-        language>en_US</language>
-        <
-        protected>false</protected>
-        <
-        shortDescription>Already Customer Exist</shortDescription>
-        <
-        value>We already have an application in our system with the details you have entered.
-            Please call us on 1300 131 711 or email us with details instead to
-            tazeem.khan@chazecloud.com</value>
-    <
-    /labels>
-    <
-    labels>
-        <
-        fullName>Bank_Statement_URL</fullName>
-        <
-        language>en_US</language>
-        <
-        protected>false</protected>
-        <
-        shortDescription>Bank Statement URL</shortDescription>
-        <
-        value>https://www.bankstatements.com.au/r/b/BZPK</value>
-    <
-    /labels>
-    <
-    labels>
-        <
-        fullName>ClientId</fullName>
-        <
-        language>en_US</language>
-        <
-        protected>false</protected>
-        <
-        shortDescription>ClientId</shortDescription>
-        <
-        value>3MVG95mg0lk4batglcGH0ctd1Vw.8fi4ret0f1NFbmIFOc2QmCdEOZeGGp4XgAIzRxVaLiDiiOg==</value>
-    <
-    /labels>
-    <
-    labels>
-        <
-        fullName>ClientSecret</fullName>
-        <
-        language>en_US</language>
-        <
-        protected>false</protected>
-        <
-        shortDescription>ClientSecret</shortDescription>
-        <
-        value>F041BA0AB2AF4113E7C231B930350FAF459185BE3B0C0E6E891865F629492803</value>
-    <
-    /labels>
-    <
-    labels>
-        <
-        fullName>Consent_and_Identification_Description</fullName>
-        <
-        categories>Customer Acknowledgments</categories>
-        <
-        language>en_US</language>
-        <
-        protected>false</protected>
-        <
-        shortDescription>Consent and Identification Description</shortDescription>
-        <
-        value>I confirm that all applicants consent to this application. I understand that all
-            applicants must be identified and provide their consent via video call prior to
-            receiving any offer for finance
-            Customer Response:</value>
-    <
-    /labels>
-    <
-    labels>
-        <
-        fullName>Credit_Check_Description</fullName>
-        <
-        categories>Customer Acknowledgments</categories>
-        <
-        language>en_US</language>
-        <
-        protected>false</protected>
-        <
-        shortDescription>Credit Check Description</shortDescription>
-        <
-        value>I consenting to Parker Lane conducting a ‘soft’ credit file look up and I understand
-            that this will not affect my credit rating.
-            Customer Response:</value>
-    <
-    /labels>
-    <
-    labels>
-        <
-        fullName>Credit_analyst</fullName>
-        <
-        language>en_US</language>
-        <
-        protected>false</protected>
-        <
-        shortDescription>Credit analyst</shortDescription>
-        <
-        value>priya.saxena@chazecloud.com.devorg4</value>
-    <
-    /labels>
-    <
-    labels>
-        <
-        fullName>DML_AccessErrorMessage</fullName>
-        <
-        language>en_US</language>
-        <
-        protected>true</protected>
-        <
-        shortDescription>DML AccessErrorMessage</shortDescription>
-        <
-        value>Access Denied: {0} on {1}</value>
-    <
-    /labels>
-    <
-    labels>
-        <
-        fullName>Electronic_Communication_Description</fullName>
-        <
-        categories>Customer Acknowledgments</categories>
-        <
-        language>en_US</language>
-        <
-        protected>false</protected>
-        <
-        shortDescription>Electronic Communication Description</shortDescription>
-        <
-        value>I consent to receiving a copy of my credit quote and proposal, credit guide, loan
-            contract, and settlement documents electronically.
-            Customer Response:</value>
-    <
-    /labels>
-    <
-    labels>
-        <
-        fullName>Email_Subject</fullName>
-        <
-        categories>Offers</categories>
-        <
-        language>en_US</language>
-        <
-        protected>false</protected>
-        <
-        shortDescription>Daily Digest Email Subject</shortDescription>
-        <
-        value>(4.99% special offer this month!)</value>
-    <
-    /labels>
-    <
-    labels>
-        <
-        fullName>EndpointURL</fullName>
-        <
-        language>en_US</language>
-        <
-        protected>false</protected>
-        <
-        shortDescription>EndpointURL</shortDescription>
-        <
-        value>https://login.salesforce.com/services/oauth2/token?grant_type=password</value>
-    <
-    /labels>
-    <
-    labels>
-        <
-        fullName>Error_Message</fullName>
-        <
-        categories>Error</categories>
-        <
-        language>en_US</language>
-        <
-        protected>false</protected>
-        <
-        shortDescription>Error Message</shortDescription>
-        <
-        value>The system has encountered an error. Please refresh this page and in the problem
-            persists call us on 1300 131 711</value>
-    <
-    /labels>
-    <
-    labels>
-        <
-        fullName>PasswordSupportingDoc</fullName>
-        <
-        language>en_US</language>
-        <
-        protected>false</protected>
-        <
-        shortDescription>PasswordSupportingDoc</shortDescription>
-        <
-        value>Cloud@123Jg7nbfaSxGgnoRTVluY0JQTdj</value>
-    <
-    /labels>
-    <
-    labels>
-        <
-        fullName>Personal_App_Email</fullName>
-        <
-        categories>Email</categories>
-        <
-        language>en_US</language>
-        <
-        protected>false</protected>
-        <
-        shortDescription>Personal App Email</shortDescription>
-        <
-        value>tazeem.khan@chazecloud.com.devorg4</value>
-    <
-    /labels>
-    <
-    labels>
-        <
-        fullName>Privacy_and_Credit_Guide_Description</fullName>
-        <
-        categories>Customer Acknowledgments</categories>
-        <
-        language>en_US</language>
-        <
-        protected>false</protected>
-        <
-        shortDescription>Privacy and Credit Guide Description</shortDescription>
-        <
-        value>I have read and agree to the Parker Lane’s Important Privacy Policy and Credit Guide.
-            Customer Response:</value>
-    <
-    /labels>
-    <
-    labels>
-        <
-        fullName>Product_Disclosure_Description</fullName>
-        <
-        categories>Customer Acknowledgments</categories>
-        <
-        language>en_US</language>
-        <
-        protected>false</protected>
-        <
-        shortDescription>Product Disclosure Description</shortDescription>
-        <
-        value>I confirm that the loan and amount I am applying for meets my personal needs and I am
-            comfortably able to meet the loan repayments. I consent to adding the upfront fees to
-            the loan amount requested.
-            Customer Response:</value>
-    <
-    /labels>
-    <
-    labels>
-        <
-        fullName>QuotationReferralName</fullName>
-        <
-        language>en_US</language>
-        <
-        protected>false</protected>
-        <
-        shortDescription>Quotation Referral Name</shortDescription>
-        <
-        value>Shrishti</value>
-    <
-    /labels>
-    <
-    labels>
-        <
-        fullName>Referral_Fees_Description</fullName>
-        <
-        categories>Customer Acknowledgments</categories>
-        <
-        language>en_US</language>
-        <
-        protected>false</protected>
-        <
-        shortDescription>Referral Fees Description</shortDescription>
-        <
-        value>I acknowledge that Parker Lane may pay a referral fee and that amount may be up to
-            20% of the remuneration Parker Lane receives from the lender for assisting me with my
-            loan. This amount is not payable by me and all remuneration will be fully disclosed to
-            me be prior to accepting any loan offer.
-            Customer Response:</value>
-    <
-    /labels>
-    <
-    labels>
-        <
-        fullName>SMS_Sender_Id</fullName>
-        <
-        language>en_US</language>
-        <
-        protected>false</protected>
-        <
-        shortDescription>SMS Repliable Phone Number</shortDescription>
-        <
-        value>0480 049 081</value>
-    <
-    /labels>
-    <
-    labels>
-        <
-        fullName>SiteUrl</fullName>
-        <
-        language>en_US</language>
-        <
-        protected>false</protected>
-        <
-        shortDescription>SiteUrl</shortDescription>
-        <
-        value>&apos;&apos;</value>
-    <
-    /labels>
-    <
-    labels>
-        <
-        fullName>Username</fullName>
-        <
-        language>en_US</language>
-        <
-        protected>false</protected>
-        <
-        shortDescription>Username</shortDescription>
-        <
-        value>chaze@cloud.com</value>
-    <
-    /labels>
-    <
-    labels>
-        <
-        fullName>Ways_to_Save_Description</fullName>
-        <
-        categories>Customer Acknowledgments</categories>
-        <
-        language>en_US</language>
-        <
-        protected>false</protected>
-        <
-        shortDescription>Ways to Save Description</shortDescription>
-        <
-        value>I would like to know about other areas I may be eligible to save money, based on the
-            information I will be providing here.
-            Customer Response:</value>
-    <
-    /labels>
-    <
-    labels>
-        <
-        fullName>WelcomeNote</fullName>
-        <
-        language>en_US</language>
-        <
-        protected>false</protected>
-        <
-        shortDescription>WelcomeNote</shortDescription>
-        <
-        value>Please enjoy this advanced &apos;beta testing&apos; access. We&apos;ve designed the
-            portal with maximum control and transparency in mind, so if you find bugs or have
-            suggestions please email us at sethu.rawat@chazecloud.com.</value>
-    <
-    /labels>
-    <
-    labels>
-        <
-        fullName>bankStatementRedirectURL</fullName>
-        <
-        language>en_US</language>
-        <
-        protected>false</protected>
-        <
-        shortDescription>bankStatementRedirectURL</shortDescription>
-        <
-        value>https://www.bankstatements.com.au/r/b/BZPK-</value>
-    <
-    /labels>
-    <
-    labels>
-        <
-        fullName>baseUrl</fullName>
-        <
-        language>en_US</language>
-        <
-        protected>false</protected>
-        <
-        shortDescription>baseUrl</shortDescription>
-        <
-        value>https://chazecloud42-dev-ed.develop.my.salesforce-sites.com/</value>
-    <
-    /labels>
-    <
-    labels>
-        <
-        fullName>customerSite</fullName>
-        <
-        language>en_US</language>
-        <
-        protected>false</protected>
-        <
-        shortDescription>customerSite</shortDescription>
-        <
-        value>lanecorp@apply-parkerlane.force.com.devorg4</value>
-    <
-    /labels>
-    <
-    labels>
-        <
-        fullName>instanceURL</fullName>
-        <
-        language>en_US</language>
-        <
-        protected>false</protected>
-        <
-        shortDescription>instanceURL</shortDescription>
-        <
-        value>http://findev-lanecorpfindev.cs74.force.com</value>
-    <
-    /labels>
-    <
-    labels>
-        <
-        fullName>loginMessage</fullName>
-        <
-        language>en_US</language>
-        <
-        protected>false</protected>
-        <
-        shortDescription>loginMessage</shortDescription>
-        <
-        value>test</value>
-    <
-    /labels>
-<
-/CustomLabels>
+        <value>chaze@cloud.com</value>
+    </labels>
+    <labels>
+        <fullName>Already_Customer_Exist</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Already Customer Exist</shortDescription>
+        <value>We already have an application in our system with the details you have entered. Please call us on 0400000000 or email us with details instead to Info@chazecloud.com</value>
+    </labels>
+    <labels>
+        <fullName>Bank_Statement_URL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Bank Statement URL</shortDescription>
+        <value>https://www.bankstatements.com.au/r/b/BZPK</value>
+    </labels>
+    <labels>
+        <fullName>ClientId</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ClientId</shortDescription>
+        <value>3MVG95mg0lk4batglcGH0ctd1Vw.8fi4ret0f1NFbmIFOc2QmCdEOZeGGp4XgAIzRxVaLiDiiOg==</value>
+    </labels>
+    <labels>
+        <fullName>ClientSecret</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ClientSecret</shortDescription>
+        <value>F041BA0AB2AF4113E7C231B930350FAF459185BE3B0C0E6E891865F629492803</value>
+    </labels>
+    <labels>
+        <fullName>Consent_and_Identification_Description</fullName>
+        <categories>Customer Acknowledgments</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Consent and Identification Description</shortDescription>
+        <value>I confirm that all applicants consent to this application. I understand that all applicants must be identified and provide their consent via video call prior to receiving any offer for finance
+Customer Response:</value>
+    </labels>
+    <labels>
+        <fullName>Credit_Check_Description</fullName>
+        <categories>Customer Acknowledgments</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Credit Check Description</shortDescription>
+        <value>I consenting to Parker Lane conducting a ‘soft’ credit file look up and I understand that this will not affect my credit rating.
+Customer Response:</value>
+    </labels>
+    <labels>
+        <fullName>Credit_analyst</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Credit analyst</shortDescription>
+        <value>tazeem.khan@chazecloud.com</value>
+    </labels>
+    <labels>
+        <fullName>DML_AccessErrorMessage</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>DML AccessErrorMessage</shortDescription>
+        <value>Access Denied: {0} on {1}</value>
+    </labels>
+    <labels>
+        <fullName>Electronic_Communication_Description</fullName>
+        <categories>Customer Acknowledgments</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Electronic Communication Description</shortDescription>
+        <value>I consent to receiving a copy of my credit quote and proposal, credit guide, loan contract, and settlement documents electronically.
+Customer Response:</value>
+    </labels>
+    <labels>
+        <fullName>Email_Subject</fullName>
+        <categories>Offers</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Daily Digest Email Subject</shortDescription>
+        <value>(4.99% special offer this month!)</value>
+    </labels>
+    <labels>
+        <fullName>EndpointURL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>EndpointURL</shortDescription>
+        <value>https://login.salesforce.com/services/oauth2/token?grant_type=password</value>
+    </labels>
+    <labels>
+        <fullName>Error_Message</fullName>
+        <categories>Error</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error Message</shortDescription>
+        <value>The system has encountered an error. Please refresh this page and in the problem persists call us on 0400000000</value>
+    </labels>
+    <labels>
+        <fullName>PasswordSupportingDoc</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PasswordSupportingDoc</shortDescription>
+        <value>Cloud@123Jg7nbfaSxGgnoRTVluY0JQTdj</value>
+    </labels>
+    <labels>
+        <fullName>Personal_App_Email</fullName>
+        <categories>Email</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Personal App Email</shortDescription>
+        <value>info@chazecloud.com</value>
+    </labels>
+    <labels>
+        <fullName>Privacy_and_Credit_Guide_Description</fullName>
+        <categories>Customer Acknowledgments</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Privacy and Credit Guide Description</shortDescription>
+        <value>I have read and agree to the Parker Lane’s Important Privacy Policy and Credit Guide.
+Customer Response:</value>
+    </labels>
+    <labels>
+        <fullName>Product_Disclosure_Description</fullName>
+        <categories>Customer Acknowledgments</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Product Disclosure Description</shortDescription>
+        <value>I confirm that the loan and amount I am applying for meets my personal needs and I am comfortably able to meet the loan repayments. I consent to adding the upfront fees to the loan amount requested.
+Customer Response:</value>
+    </labels>
+    <labels>
+        <fullName>QuotationReferralName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Quotation Referral Name</shortDescription>
+        <value>Shrishti</value>
+    </labels>
+    <labels>
+        <fullName>Referral_Fees_Description</fullName>
+        <categories>Customer Acknowledgments</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Referral Fees Description</shortDescription>
+        <value>I acknowledge that Parker Lane may pay a referral fee and that amount may be up to 20% of the remuneration Parker Lane receives from the lender for assisting me with my loan. This amount is not payable by me and all remuneration will be fully disclosed to me be prior to accepting any loan offer.
+Customer Response:</value>
+    </labels>
+    <labels>
+        <fullName>SMS_Sender_Id</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SMS Repliable Phone Number</shortDescription>
+        <value>0400000000</value>
+    </labels>
+    <labels>
+        <fullName>SiteUrl</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SiteUrl</shortDescription>
+        <value>&apos;&apos;</value>
+    </labels>
+    <labels>
+        <fullName>Username</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Username</shortDescription>
+        <value>chaze@cloud.com</value>
+    </labels>
+    <labels>
+        <fullName>Ways_to_Save_Description</fullName>
+        <categories>Customer Acknowledgments</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Ways to Save Description</shortDescription>
+        <value>I would like to know about other areas I may be eligible to save money, based on the information I will be providing here.
+Customer Response:</value>
+    </labels>
+    <labels>
+        <fullName>WelcomeNote</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>WelcomeNote</shortDescription>
+        <value>Please enjoy this advanced &apos;beta testing&apos; access. We&apos;ve designed the portal with maximum control and transparency in mind, so if you find bugs or have suggestions please email us at hello@parkerlane.com.au.</value>
+    </labels>
+    <labels>
+        <fullName>bankStatementRedirectURL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>bankStatementRedirectURL</shortDescription>
+        <value>https://www.bankstatements.com.au/r/b/BZPK-</value>
+    </labels>
+    <labels>
+        <fullName>baseUrl</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>baseUrl</shortDescription>
+        <value>https://chazecloud42-dev-ed.develop.my.salesforce-sites.com/</value>
+    </labels>
+    <labels>
+        <fullName>customerSite</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>customerSite</shortDescription>
+        <value>chaze_cloud@00d5h000009czemeag.org.force.com</value>
+    </labels>
+    <labels>
+        <fullName>instanceURL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>instanceURL</shortDescription>
+        <value>&apos;&apos;</value>
+    </labels>
+    <labels>
+        <fullName>loginMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>loginMessage</shortDescription>
+        <value>test</value>
+    </labels>
+    <labels>
+        <fullName>site_User</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>site User</shortDescription>
+        <value>chaze_cloud@00d5h000009czemeag.org.force.com</value>
+    </labels>
+</CustomLabels>

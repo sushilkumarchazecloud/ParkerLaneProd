@@ -7,12 +7,10 @@
             <title>Upload Documents</title>
             <meta charset="UTF-8"/>
             <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-            <title>Parker Lane - Australia's No.1 Rated Finance Service</title>
-            <link REL="icon" HREF="{!URLFOR($Resource.faviconNew)}" type="img/x-icon"/>
+            <title>Chaze Cloud</title>
+            <link REL="icon" HREF="{!URLFOR($Resource.faviconNew)}" type="image/x-icon"/>
             <apex:slds />
-            <apex:includeLightning />
-            
-            
+            <apex:includeLightning />                        
         </head>
         <body style="background: #f5f5f5;">
             
