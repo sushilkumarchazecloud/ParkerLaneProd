@@ -5,7 +5,7 @@
     <externalId>false</externalId>
     <label>HLHC Created By</label>
     <referenceTo>User</referenceTo>
-    <relationshipName>Opportunities2</relationshipName>
+    <relationshipName>OpportunitiesHlhcCreated</relationshipName>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>

@@ -16,11 +16,11 @@
                 }else{
                     component.set('v.applicant1', ret.applicant1);
                     console.log(">>>>>>>>>>>>>>>>"+JSON.stringify(ret));
-                    if($A.util.isUndefinedOrNull(component.get('v.applicant1').FinServ__Employment__r)){
+                    if($A.util.isUndefinedOrNull(component.get('v.applicant1').Employment__r)){
                         component.set('v.employmentsList1', []);
                         self.addIncome(component, event, 1);
                     }else{
-                        component.set('v.employmentsList1', component.get('v.applicant1').FinServ__Employment__r);
+                        component.set('v.employmentsList1', component.get('v.applicant1').Employment__r);
                         var emp = component.get("v.employmentsList1");
                         
                         if($A.util.isUndefinedOrNull(emp[0].Months_1_Previous__c)){
@@ -64,11 +64,11 @@
                         component.set("v.applicantNameOptions",ops);
                         component.set('v.applicant2', ret.applicant2);
                         
-                        if($A.util.isUndefinedOrNull(component.get('v.applicant2').FinServ__Employment__r)){
+                        if($A.util.isUndefinedOrNull(component.get('v.applicant2').Employment__r)){
                             component.set('v.employmentsList2', []);
                             self.addIncome(component, event, 2);
                         }else{
-                            component.set('v.employmentsList2', component.get('v.applicant2').FinServ__Employment__r);
+                            component.set('v.employmentsList2', component.get('v.applicant2').Employment__r);
                             var emp = component.get("v.employmentsList2");
                             
                             if($A.util.isUndefinedOrNull(emp[0].Months_1_Previous__c)){
@@ -163,9 +163,9 @@
         var employmentsList = component.get("v.employmentsList" + appNo);
         var applicant = component.get("v.applicant" + appNo);
         employmentsList.push({
-            'sobjectType': 'FinServ__Employment__c',
-            'FinServ__Contact__c': applicant.Id,
-            'FinServ__EmploymentStatus__c': '',
+            'sobjectType': 'Employment__c',
+            'Contact__c': applicant.Id,
+            'EmploymentStatus__c': '',
             "Years__c":"0","Months__c":"0"
         });
         component.set("v.employmentsList" + appNo, employmentsList);

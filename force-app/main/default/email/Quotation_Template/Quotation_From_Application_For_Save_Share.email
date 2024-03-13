@@ -1,0 +1,43 @@
+<div>Hello {!Quote.Applicant_2_Full_Name__c},</div>
+<br />
+<div>
+    We are writing to let you know that {!Quote.Applicant_1_Full_Name__c} has given you access to complete an application form which you are listed as Applicant 2 to. Details of the loan application is as follows:
+</div>
+<br />
+<div><i>{!Quote.Shared_Message__c}</i></div>
+<br />
+<div>
+    <div><b>Loan Type:</b> {!Quote.Product_Type__c} </div>
+    <div><b>Amount:</b> {!Quote.Customer_Amount__c} </div>
+    <div><b>Term:</b> {!Quote.Loan_Term__c} months </div>
+    <div><b>Interest rate:</b> {!Quote.Interest_Rate__c}% p.a.</div>
+    <div><b>Comparison Rate:</b> {!Quote.Actual_Comparison_Rate__c} p.a.*</div>
+    <div><b>Estimated monthly payment:</b> {!Quote.Monthly_Repayment__c} </div>
+</div>
+<br />
+
+<div style="font-size:9px;">{!Quote.Comparison_Rate_Display__c} 
+    <b>WARNING: </b> 
+    These comparison rates apply only to the example or examples given and may not include all fees and charges. Different terms, fees or other loan amounts might result in a different comparison rate.
+</div>
+<br/>
+<div>
+    <div>
+        <i>
+       If you did not consent to being a party to this application please notify us immediately by replying to this email or calling 1300 13 17 11.
+        </i>
+    </div>
+    <br/>
+    <div>We have automatically created a login for you via the link below. To login and complete the form you will simply need your email address and mobile phone number.</div>
+    <br/>
+    <div><a href="{!Quote.ORG_URL__c}/?id={!Quote.OpportunityId__c}&master={!Quote.Master_Quote_For_URL__c}">View your application form</a></div>
+    <br/>
+
+    <div>
+        If you have any questions about borrowing with the help of Parker Lane please don't hesitate to call us on 1300 131 711, or simply reply to this email.
+    </div>
+    <div>We thank you again for your interest in Parker Lane, and look forward to hearing from you soon. </div>
+    <br/>
+</div>
+Kind regards, <br />
+The Parker Lane team

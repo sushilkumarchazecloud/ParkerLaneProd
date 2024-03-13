@@ -1,0 +1,7 @@
+/* This is main div */
+.firstDiv {
+    background-color: rgb(243,243,243);
+    border: 1px rgb(201,201,201) solid;
+    overflow: scroll;
+    /* overflow-x: scroll; height:100%; width:100%  */
+}

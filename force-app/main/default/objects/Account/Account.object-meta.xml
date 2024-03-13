@@ -184,17 +184,17 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
-        <comment>Action override updated by Lightning App Builder during activation.</comment>
-        <content>Account_Record_Page1</content>
-        <formFactor>Small</formFactor>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Account_Record_Page</content>
+        <formFactor>Large</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
         <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>Account_Record_Page1</content>
-        <formFactor>Large</formFactor>
+        <content>Account_Record_Page</content>
+        <formFactor>Small</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Flexipage</type>
     </actionOverrides>
@@ -230,25 +230,30 @@
         <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
-    <compactLayoutAssignment>Account_Compact_Layout</compactLayoutAssignment>
-    <enableEnhancedLookup>true</enableEnhancedLookup>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <enableFeeds>true</enableFeeds>
-    <enableHistory>true</enableHistory>
-    <externalSharingModel>ReadWrite</externalSharingModel>
+    <enableHistory>false</enableHistory>
+    <externalSharingModel>Read</externalSharingModel>
     <recordTypeTrackFeedHistory>false</recordTypeTrackFeedHistory>
-    <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <searchLayouts>
         <customTabListAdditionalFields>ACCOUNT.NAME</customTabListAdditionalFields>
         <customTabListAdditionalFields>ACCOUNT.ADDRESS1_CITY</customTabListAdditionalFields>
         <customTabListAdditionalFields>ACCOUNT.PHONE1</customTabListAdditionalFields>
         <lookupDialogsAdditionalFields>ACCOUNT.NAME</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>ACCOUNT.SITE</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>CORE.USERS.ALIAS</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>ACCOUNT.TYPE</lookupDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>ACCOUNT.NAME</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>ACCOUNT.SITE</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>CORE.USERS.ALIAS</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>ACCOUNT.TYPE</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>ACCOUNT.PHONE1</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>PC_PHONE3</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>PC_PHONE4</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>PC_PHONE5</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>PC_PHONE6</lookupPhoneDialogsAdditionalFields>
         <searchResultsAdditionalFields>ACCOUNT.NAME</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ACCOUNT.SITE</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>ACCOUNT.PHONE1</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>CORE.USERS.ALIAS</searchResultsAdditionalFields>
     </searchLayouts>

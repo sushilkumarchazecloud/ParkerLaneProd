@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Referrer Onboarding Form Email</name>
+    <style>none</style>
+    <subject>Welcome to Parker lane. You&apos;re all set up!</subject>
+    <textOnly>Dear {!Contact.Name},
+
+Welcome to Parker Lane!
+
+I&apos;m thrilled that you decided to help your customers save even more with fast, simple and super-low rate finance.
+
+You&apos;re all set up to create personalised loan options brochures for your customers.
+
+Refer in 3 easy steps:
+
+STEP 1
+Follow the referral link below, OR visit the Referrer Partners page on our website and click [refer a customer].
+
+STEP 2
+Enter customer details; choose where to send the email; choose whether you want us to contact your customer or not.
+
+Note: if you select [send to me and my customer] your customer will receive a link so they can calculate things like payments options over different loan terms and complete their application online.
+
+STEP 3
+Receive updates as the file progresses.
+
+REFERRAL LINK
+
+REPAYMENT TABLE DOWNLOAD
+
+save it to your web browser’s favourites
+
+SEND A TEST NOW
+I recommend you send us a test referral now so you know how it looks from both the customer and referrer&apos;s perspective.
+
+Follow the link above
+Put &apos;test&apos; in the name section and your email as BOTH the customer and referrer
+Select the option [send to me and my customer].
+
+The most successful businesses using Parker Lane say they&apos;re winning more business because it takes care of the finance conversation for them. The top reasons they say they will keep using it are:
+
+More control
+It&apos;s faster
+Customers like the self-serve form
+
+If you have any questions or for file updates please contact the team on 1300 13 17 11
+
+Kind regards,
+The Parker Lane team</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

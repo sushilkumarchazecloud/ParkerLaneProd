@@ -1,0 +1,6 @@
+<messaging:emailTemplate subject="30 days expiry notice for {!relatedTo.Name}" recipientType="Contact" relatedToType="Opportunity">
+<messaging:HtmlEmailBody >
+
+<c:ReminderForApprovedCmp oppId="{!relatedTo.Id}" thirtyDaysEmailRef="true"/>
+</messaging:HtmlEmailBody>
+</messaging:emailTemplate>

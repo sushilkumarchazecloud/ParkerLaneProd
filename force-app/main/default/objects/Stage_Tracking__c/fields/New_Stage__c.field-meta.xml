@@ -3,8 +3,9 @@
     <fullName>New_Stage__c</fullName>
     <externalId>false</externalId>
     <label>New Stage</label>
-    <length>50</length>
+    <length>255</length>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>
     <type>Text</type>
     <unique>false</unique>

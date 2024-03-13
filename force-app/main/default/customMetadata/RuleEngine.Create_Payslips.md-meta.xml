@@ -16,15 +16,17 @@
     </values>
     <values>
         <field>Fields__c</field>
-        <value xsi:type="xsd:string">FinServ__EmploymentStatus__c</value>
+        <value xsi:type="xsd:string">EmploymentStatus__c</value>
     </values>
     <values>
         <field>Object__c</field>
-        <value xsi:type="xsd:string">FinServ__Employment__c</value>
+        <value xsi:type="xsd:string">Employment__c</value>
     </values>
     <values>
         <field>Rules__c</field>
-        <value xsi:type="xsd:string">FinServ__Employment__c.FinServ__EmploymentStatus__c == Fulltimepermanent || FinServ__Employment__c.FinServ__EmploymentStatus__c == Parttimepermanent || FinServ__Employment__c.FinServ__EmploymentStatus__c == CasualTemporary</value>
+        <value xsi:type="xsd:string">Employment__c.EmploymentStatus__c == Fulltimepermanent ||
+            Employment__c.EmploymentStatus__c == Parttimepermanent ||
+            Employment__c.EmploymentStatus__c == CasualTemporary</value>
     </values>
     <values>
         <field>isGeneral__c</field>

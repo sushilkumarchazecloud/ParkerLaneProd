@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>FinServ__RetirementPlanning</fullName>
+    <fullName>RetirementPlanning</fullName>
     <active>false</active>
-    <businessProcess>FinServ__Wallet Share</businessProcess>
+    <businessProcess>Wallet Share</businessProcess>
     <label>Retirement Planning</label>
     <picklistValues>
         <picklist>Any_product_types_you_are_interested_in__c</picklist>

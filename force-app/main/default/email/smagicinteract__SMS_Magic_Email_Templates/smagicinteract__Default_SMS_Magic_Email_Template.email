@@ -1,0 +1,9 @@
+Hi {!User.FirstName},
+You have received a new incoming message from {!smagicinteract__smsMagic__c.smagicinteract__PhoneNumber__c}:
+Message Type: {!smagicinteract__smsMagic__c.smagicinteract__Message_Type__c}
+SMS Text: {!smagicinteract__smsMagic__c.smagicinteract__SMSText__c}
+Sender ID: {!smagicinteract__smsMagic__c.smagicinteract__SenderId__c}
+SMS History ID: https://login.salesforce.com/{!smagicinteract__smsMagic__c.Id}
+
+Thank You,
+Team SMS-Magic

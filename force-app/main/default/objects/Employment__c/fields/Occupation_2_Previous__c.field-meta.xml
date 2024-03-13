@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Occupation_2_Previous__c</fullName>
+    <externalId>false</externalId>
+    <label>Occupation 2 Previous</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Advertising</fullName>
+                <default>false</default>
+                <label>Advertising</label>
+            </value>
+            <value>
+                <fullName>Agri/Horticulture</fullName>
+                <default>false</default>
+                <label>Agri/Horticulture</label>
+            </value>
+            <value>
+                <fullName>Armed Services</fullName>
+                <default>false</default>
+                <label>Armed Services</label>
+            </value>
+            <value>
+                <fullName>Banking/Finance</fullName>
+                <default>false</default>
+                <label>Banking/Finance</label>
+            </value>
+            <value>
+                <fullName>Civil Services</fullName>
+                <default>false</default>
+                <label>Civil Services</label>
+            </value>
+            <value>
+                <fullName>Cleaning/Laundry</fullName>
+                <default>false</default>
+                <label>Cleaning/Laundry</label>
+            </value>
+            <value>
+                <fullName>Construction</fullName>
+                <default>false</default>
+                <label>Construction</label>
+            </value>
+            <value>
+                <fullName>Education</fullName>
+                <default>false</default>
+                <label>Education</label>
+            </value>
+            <value>
+                <fullName>Emergency Services</fullName>
+                <default>false</default>
+                <label>Emergency Services</label>
+            </value>
+            <value>
+                <fullName>Home Duties</fullName>
+                <default>false</default>
+                <label>Home Duties</label>
+            </value>
+            <value>
+                <fullName>Hospital</fullName>
+                <default>false</default>
+                <label>Hospital</label>
+            </value>
+            <value>
+                <fullName>Hotel</fullName>
+                <default>false</default>
+                <label>Hotel</label>
+            </value>
+            <value>
+                <fullName>Industry Services</fullName>
+                <default>false</default>
+                <label>Industry Services</label>
+            </value>
+            <value>
+                <fullName>Insurance</fullName>
+                <default>false</default>
+                <label>Insurance</label>
+            </value>
+            <value>
+                <fullName>IT</fullName>
+                <default>false</default>
+                <label>IT</label>
+            </value>
+            <value>
+                <fullName>Leisure/Entertainment</fullName>
+                <default>false</default>
+                <label>Leisure/Entertainment</label>
+            </value>
+            <value>
+                <fullName>Manufacturing</fullName>
+                <default>false</default>
+                <label>Manufacturing</label>
+            </value>
+            <value>
+                <fullName>Media</fullName>
+                <default>false</default>
+                <label>Media</label>
+            </value>
+            <value>
+                <fullName>Mining</fullName>
+                <default>false</default>
+                <label>Mining</label>
+            </value>
+            <value>
+                <fullName>Other Category</fullName>
+                <default>false</default>
+                <label>Other Category</label>
+            </value>
+            <value>
+                <fullName>Pensioner</fullName>
+                <default>false</default>
+                <label>Pensioner</label>
+            </value>
+            <value>
+                <fullName>Property/Business</fullName>
+                <default>false</default>
+                <label>Property/Business</label>
+            </value>
+            <value>
+                <fullName>Restaurant</fullName>
+                <default>false</default>
+                <label>Restaurant</label>
+            </value>
+            <value>
+                <fullName>Retail/Wholesale</fullName>
+                <default>false</default>
+                <label>Retail/Wholesale</label>
+            </value>
+            <value>
+                <fullName>Retired</fullName>
+                <default>false</default>
+                <label>Retired</label>
+            </value>
+            <value>
+                <fullName>Sciences</fullName>
+                <default>false</default>
+                <label>Sciences</label>
+            </value>
+            <value>
+                <fullName>Student</fullName>
+                <default>false</default>
+                <label>Student</label>
+            </value>
+            <value>
+                <fullName>Transport</fullName>
+                <default>false</default>
+                <label>Transport</label>
+            </value>
+            <value>
+                <fullName>Unemployed</fullName>
+                <default>false</default>
+                <label>Unemployed</label>
+            </value>
+            <value>
+                <fullName>Administration</fullName>
+                <default>false</default>
+                <label>Administration</label>
+            </value>
+            <value>
+                <fullName>Professional</fullName>
+                <default>false</default>
+                <label>Professional</label>
+            </value>
+            <value>
+                <fullName>Sales</fullName>
+                <default>false</default>
+                <label>Sales</label>
+            </value>
+            <value>
+                <fullName>Technical</fullName>
+                <default>false</default>
+                <label>Technical</label>
+            </value>
+            <value>
+                <fullName>Trade</fullName>
+                <default>false</default>
+                <label>Trade</label>
+            </value>
+            <value>
+                <fullName>Workcover / Workers Compensation</fullName>
+                <default>false</default>
+                <label>Workcover / Workers Compensation</label>
+            </value>
+            <value>
+                <fullName>Self Employed</fullName>
+                <default>false</default>
+                <label>Self Employed</label>
+            </value>
+            <value>
+                <fullName>Government Benefits</fullName>
+                <default>false</default>
+                <label>Government Benefits</label>
+            </value>
+            <value>
+                <fullName>Carer</fullName>
+                <default>false</default>
+                <label>Carer</label>
+            </value>
+            <value>
+                <fullName>Self Funded Retired</fullName>
+                <default>false</default>
+                <label>Self Funded Retired</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

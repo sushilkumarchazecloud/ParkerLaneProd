@@ -12,7 +12,7 @@
         
         if(index == 0){
             emp.Is_Primary__c = true;
-            if(!$A.util.isUndefinedOrNull(emp.FinServ__EmploymentStatus__c) && emp.FinServ__EmploymentStatus__c != ''){
+            if(!$A.util.isUndefinedOrNull(emp.EmploymentStatus__c) && emp.EmploymentStatus__c != ''){
                 var checkEmpHistory = component.getEvent("monthYearChangeEvent");
                 checkEmpHistory.setParams({"years" : component.get("v.years"),
                                            "months" : component.get("v.months"),
@@ -28,7 +28,7 @@
         var index = component.get("v.index");
         if(index == 0){
             helper.setOccupation(component, event);
-            component.set("v.emp.FinServ__EmploymentStatus__c", "");
+            component.set("v.emp.EmploymentStatus__c", "");
         }
     },
     
@@ -74,7 +74,7 @@
             }
             searchString += streetNumber + ' ' + street + ' ' + streetType + ' ' + suburb + ' ' +
                 state + ' ' + country + ' ' + postalCode;
-            emp.FinServ__EmployerAddress__c = searchString;
+            emp.EmployerAddress__c = searchString;
             component.set("v.emp", emp);
         }
         

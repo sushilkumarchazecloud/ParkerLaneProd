@@ -1,0 +1,18 @@
+<!-- Start by Sethu -->
+<template>
+    <div class="product-selector__choices-container">
+        <div class="product-selector__choices slds-grid slds-wrap">
+            <template for:each={productTypeList} for:item="productRec">
+                <div key={productRec.Id} class="slds-size--1-of-2 slds-medium-size--1-of-3 slds-large-size--1-of-3">
+                    <lightning-button class="slds-button slds-button_neutral slds-p-around_medium" onclick={handleGetSolarQuote}>
+                        <div class="slds-btn-img">
+                            <img src={productRec.Icon__c} alt={productRec.Name} />
+                        </div>
+                        <div class="slds-btn-txt">{productRec.Name}</div>
+                    </lightning-button>
+                </div>
+            </template>
+        </div>
+    </div>
+</template>
+<!-- End by Sethu -->

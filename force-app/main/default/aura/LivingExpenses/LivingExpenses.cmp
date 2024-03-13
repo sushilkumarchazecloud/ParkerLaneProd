@@ -1,4 +1,4 @@
-<aura:component controller="ParkerLaneLoanController">
+<aura:component controller="ApplicationFormController">
     <aura:attribute name="applicant" type="Contact" default="{'sobjectType': 'Contact'}"/>
     <aura:attribute name="total" type="decimal" default=""/>
     <aura:attribute name="recordId" type="Id" />

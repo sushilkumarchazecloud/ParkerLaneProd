@@ -2,7 +2,7 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>House</fullName>
     <active>false</active>
-    <businessProcess>FinServ__Opportunity Process</businessProcess>
+    <businessProcess>Opportunity Process</businessProcess>
     <label>House</label>
     <picklistValues>
         <picklist>Any_product_types_you_are_interested_in__c</picklist>

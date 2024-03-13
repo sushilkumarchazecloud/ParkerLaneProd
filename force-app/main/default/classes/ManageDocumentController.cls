@@ -269,8 +269,8 @@ public without sharing class ManageDocumentController{
         message += '<p>To upload document please <a href="'+url+'">click here</a></p>';
         System.debug(message);
         //sendMail(op.Applicant_1__r.PersonEmail, op.Applicant_2__r.PersonEmail,message);
-        if(isSendEmail)
-            UtilityClass.sendEmail(op);
+        // if(isSendEmail)
+        //     UtilityClass.sendEmail(op);
             
         insert docList;
     }

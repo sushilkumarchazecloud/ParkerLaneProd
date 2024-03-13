@@ -3,6 +3,8 @@
 #
 
 package.xml
+force-app/main/default/classes/ParkerLaneLoanController.cls 
+force-app/main/default/classes/ParkerLaneLoanController.cls-meta.xml
 
 # LWC configuration files
 **/jsconfig.json

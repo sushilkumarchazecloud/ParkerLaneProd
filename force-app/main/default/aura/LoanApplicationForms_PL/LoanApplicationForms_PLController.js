@@ -40,8 +40,8 @@
             if(selectedPerson == 'joint' && !$A.util.isUndefinedOrNull(opp) ){
 
                 if(opp.Relationship_to_Applicant_2__c === 'Spouse'){
-                    applicant1.FinServ__MaritalStatus__c = 'Married / Defacto (to applicant 2)';
-                    applicant2.FinServ__MaritalStatus__c = 'Married / Defacto (to applicant 1)';
+                    applicant1.MaritalStatus__c = 'Married / Defacto (to applicant 2)';
+                    applicant2.MaritalStatus__c = 'Married / Defacto (to applicant 1)';
                     component.set("v.applicant1",applicant1);
                     component.set("v.applicant2",applicant2);
                 }
@@ -64,9 +64,6 @@
                 }
                 helper.toggleSpinner(component, event);	
                 helper.checkExistingCustomer(component, event);
-                //Added By Pawan.
-                helper.getUpdatedQuote(component, event, helper);
-                //Pawan Code End.
             }
             
         } else{

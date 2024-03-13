@@ -141,26 +141,36 @@
         <type>Default</type>
     </actionOverrides>
     <allowInChatterGroups>false</allowInChatterGroups>
-    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <compactLayoutAssignment>Custom_Compact_Layout</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
-    <enableActivities>false</enableActivities>
+    <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableFeeds>false</enableFeeds>
+    <enableFeeds>true</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableLicensing>false</enableLicensing>
-    <enableReports>false</enableReports>
-    <enableSearch>false</enableSearch>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>ReadWrite</externalSharingModel>
+    <externalSharingModel>Private</externalSharingModel>
     <label>Anticipated Changes to Circumstance</label>
     <nameField>
-        <displayFormat>AC-{000000}</displayFormat>
-        <label>Anticipated Changes to Circumstance Name</label>
-        <type>AutoNumber</type>
+        <label>Anticipated Changes to Circumstance</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
     </nameField>
     <pluralLabel>Anticipated Changes to Circumstances</pluralLabel>
-    <searchLayouts></searchLayouts>
+    <searchLayouts>
+        <searchResultsAdditionalFields>Additional_income_source_Description__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Additional_income_source__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Applicant_1_planning_to_retire_Age__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Applicant_2_planning_to_retire_Age__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Co_applicant_s_income_Description__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Co_applicant_s_income_Retirement_Desc__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Co_applicant_s_income_Retirement__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Co_applicant_s_income__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Do_you_plan_or_anticipate_changes__c</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

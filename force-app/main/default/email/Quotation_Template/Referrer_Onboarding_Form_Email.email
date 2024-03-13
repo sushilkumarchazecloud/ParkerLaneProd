@@ -1,0 +1,104 @@
+<div style="max-width: 30rem;">
+        <p>Dear {!Contact.FirstName},</p>   
+        
+        <p>Welcome to Parker Lane!</p>
+        
+        <p>I'm thrilled that you decided to help your customers save even more with fast, simple and super-low rate finance.</p>
+        
+        <p>You're all set up to provide personalised loan options for your customers.</p>
+        
+        <span>Read below to learn how to:</span>
+        <ol style="margin : 0px !important;">
+            <li>Access your Partner Portal</li>
+            <li>Refer a customer</li>
+            <li>Get instant rate & repayment estimates</li>
+            <li>Download a product brochure</li>
+            <li>Send a test referral</li>
+            <li>Contact us</li>
+        </ol><br/><br/>
+
+<b>1. ACCESS YOUR PARTNER PORTAL</b><br/>
+<span>Access to your Partner Portal is via secure OTP sent to your mobile phone, so you never need to remember a password. Simply go to chazecloud.com and click LOGIN or follow your unique access link below:</span><br/><br/>
+
+<b>UNIQUE ACCESS LINK</b><br/>
+https://lanecorp.my.salesforce-sites.com/welcomeReferrerVf?id={!Contact.Id}<br/><br/><br/>
+        
+        <b>2. REFER IN 3 EASY STEPS</b><br/>
+        
+        <p><span><b>STEP 1 </b>
+        Visit your Partner Portal or click [Refer a customer] at chazecloud.com/affiliates.</span></p>
+        
+        <p><span><b>STEP 2</b></span>
+        Enter customer details and choose where to send the email. <br/>     
+        <i>Note: if you select [send to me and my customer] your customer will receive a link so they can calculate things like payment options over different loan terms and complete their application online.</i></span></p>  
+        
+        <p><span><b>STEP 3 </b>
+        Receive updates as the file progresses.</span> </p><br/>
+
+<span><b>3. GET INSTANT RATES & REPAYMENTS</b><br/>
+Need a quick quote but you don't want to make a referral yet? I've added a Daily Rate Calculator to the Referral Partners Page of the website (for your own personal use).<span><br/><br/>
+
+<span>What it does:</span>
+<ul style="margin : 0px !important;">
+<li>Quotes the best rate available</li>
+<li>Calculates repayments including all up-front and ongoing fees (no hidden surprises)</li>
+<li>Shows repayments weekly and monthly</li>
+</ul>
+
+<p>Go to the [referral partners] page of chazecloud.com to access the calculator or click here: https://chazecloud.com/affiliates</p><br/>
+
+<span><b>4. PRODUCT BROCHURE & REPAYMENT TABLE DOWNLOAD</b><br/>
+https://drive.google.com/file/d/1zL5RJWT8BQ8FpzzDuxhGfGs2K5lrhZz9/view?usp=sharing<br/>
+**save it to your web browser’s favourites**</span><br/><br/><br/>
+
+<span><b>5. SEND A TEST NOW</b><br/>
+        
+            I recommend you send us a test referral now so you know how it looks from both the customer and referrer’s perspective.<br/>
+            <ol style="margin : 0px !important;">
+                <li>Follow the link above</li>
+                <li>Put 'test' in the name section and your email as BOTH the customer and referrer</li>
+                <li>Select the option [send to me and my customer].</li>
+            </ol>
+       </span><br/><br/>        
+
+<span><b>6. KEY CONTACTS</b><br/>
+<b>PHONE</b> Call 1300 13 17 11<br/>
+<b>SMS</b> Text to 0480 049 081<br/>
+<b>HELP DESK</b> Email to tazeem.khan@chazecloud.com<br/><br/><br/>
+
+<span>The most successful businesses using Parker Lane say they're winning more business because it takes care of the finance conversation for them. The top reasons they say they will keep using it are:</span><br/>
+        <ol style="margin : 0px !important;">
+            <li>Better rates</li>
+            <li>More control</li>
+            <li>Faster</li>
+            <li>Self service</li>
+        </ol>
+        
+        <p>If you have any questions or for file updates please reply here or contact the team on 1300 13 17 11.</p>
+        
+        <p>Regards,</p>
+        
+        <p>The Parker Lane team</p>
+
+<img width="115px" src="https://lanecorp--uat.sandbox.file.force.com/servlet/servlet.ImageServer?id=0159h00000064c1&oid=00D9h0000008XtF&lastMod=1664367526000" /><br/>
+                <i style="color : #192744; font-size :12px;">Do more with what you’ve got </i><br/><br/>
+                
+                <p>P.S. here’s why we’re recommended more often</p>
+                <ul>
+                    <li>Incredible rates!</li>
+                    <li>Great tech, real people</li>
+                    <li>Available to chat up to 7pm EST</li>
+                    <li>Awarded best in Australia for Personal Loans</li>
+                    <li>Awarded best in Australia for Home Loans</li>
+                    <li>Rated 4.92 out of 5 on ProductReview.com.au</li>
+                </ul>  
+                
+                <p style="color : #D3D3D3;">___</p>
+                <p style="color : #D3D3D3;">Want to get hold of us?<br/>
+                    Email: sethu.rawat@chazecloud.com<br/>
+                    Text: 0480 049 081  Call: 1300 13 17 11<br/>
+                    Australian Credit Licence Number 482276<br/>
+                </p>
+                <p style="color : #BFBFBF; font-size : 10px;">This email is confidential. If received in error, please delete it from your system. No confidentiality, privilege or intellectual property rights are waived or lost by any mis-transmission. To the extent permitted by law, Parker Lane does not assume responsibility or duty of care for any use or reliance upon this email by anyone other than the intended recipient. Parker Lane is committed to minimising its impact on the environment. Please consider the environment before printing this email.</p>
+        
+    </div>

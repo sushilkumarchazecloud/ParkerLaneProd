@@ -3,10 +3,8 @@
     <fullName>Visa_Details__c</fullName>
     <externalId>false</externalId>
     <label>Visa Details</label>
-    <length>255</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>TextArea</type>
 </CustomField>

@@ -1,0 +1,16 @@
+<messaging:emailTemplate subject="SMS-Magic: New Message received" recipientType="User" relatedToType="smagicinteract__smsMagic__c">
+<messaging:plainTextEmailBody >
+Congratulations!
+This is your new Visualforce Email Template.
+</messaging:plainTextEmailBody>
+<messaging:htmlEmailBody >
+         
+    <p style="margin: 0px 95px 10px 0px;font-size: 16px;color: #333333;">Hi {!recipient.name}</p>
+    <c:VFNotificationTemplate IncId="{!relatedTo.Id}" ConvId="{!relatedTo.smagicinteract__Conversation__c}"
+        PrimObj="{!relatedTo.smagicinteract__ObjectType__c}" RecipName="{!relatedTo.smagicinteract__Name__c}"
+        IncDate="{!relatedTo.smagicinteract__CreatedOn__c}" text="{!relatedTo.smagicinteract__SMSText__c}" IncObj="{!relatedTo}"/>
+    <p>Thank You,</p>
+    <p>Team SMS-Magic</p>
+   
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

@@ -67,7 +67,7 @@
             <div class="max-700">
                 <div class="slds-grid slds-wrap upload-text-container">
                     <div class="slds-align_absolute-center slds-m-top_medium">
-                        <img src="{!$Resource.headersLogo + '/headersLogo/DocumentUpload.png'}" class="trackercls"/>
+                        <img src="{!$Resource.SolarLoan + '/img/Step2Docs.png'}" class="trackercls"/>
                     </div>      
                     
                     <div class="slds-size_2-of-2 slds-p-bottom_x-small slds-m-top_x-large">

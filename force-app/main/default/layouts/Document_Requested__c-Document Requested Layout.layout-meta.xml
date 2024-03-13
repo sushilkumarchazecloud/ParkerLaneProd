@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
-    <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>false</customLabel>
         <detailHeading>false</detailHeading>
@@ -17,15 +16,19 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Category__c</field>
+                <field>Details__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>isComplete__c</field>
+                <field>Document__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>IsJoint__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>isAlready_provided__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -37,37 +40,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Person_Account__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>is_bank_fail__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Status__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Received_Date__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>OwnerId</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Opportunity__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Related_To__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Contact__c</field>
+                <field>isComplete__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -75,15 +48,29 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Details__c</field>
+                <field>is_bank_fail__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Document__c</field>
+                <field>Current_in_use__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>isAlready_provided__c</field>
+                <field>Contact__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Opportunity__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Person_Account__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>OwnerId</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -108,33 +95,17 @@
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
     <layoutSections>
-        <customLabel>true</customLabel>
+        <customLabel>false</customLabel>
         <detailHeading>false</detailHeading>
-        <editHeading>true</editHeading>
-        <label>Custom Links</label>
-        <layoutColumns/>
-        <layoutColumns/>
+        <editHeading>false</editHeading>
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
     <relatedLists>
-        <fields>TASK.SUBJECT</fields>
-        <fields>TASK.WHO_NAME</fields>
-        <fields>ACTIVITY.TASK</fields>
-        <fields>TASK.DUE_DATE</fields>
-        <fields>TASK.STATUS</fields>
-        <fields>TASK.PRIORITY</fields>
-        <fields>CORE.USERS.FULL_NAME</fields>
-        <relatedList>RelatedActivityList</relatedList>
+        <relatedList>RelatedNoteList</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>TASK.SUBJECT</fields>
-        <fields>TASK.WHO_NAME</fields>
-        <fields>ACTIVITY.TASK</fields>
-        <fields>TASK.DUE_DATE</fields>
-        <fields>CORE.USERS.FULL_NAME</fields>
-        <fields>TASK.LAST_UPDATE</fields>
-        <relatedList>RelatedHistoryList</relatedList>
+        <relatedList>RelatedFileList</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>VERSION.TITLE</fields>
@@ -147,10 +118,4 @@
     <showInteractionLogPanel>false</showInteractionLogPanel>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
-    <summaryLayout>
-        <masterLabel>00h0o00000icp9M</masterLabel>
-        <sizeX>4</sizeX>
-        <sizeY>0</sizeY>
-        <summaryLayoutStyle>Default</summaryLayoutStyle>
-    </summaryLayout>
 </Layout>

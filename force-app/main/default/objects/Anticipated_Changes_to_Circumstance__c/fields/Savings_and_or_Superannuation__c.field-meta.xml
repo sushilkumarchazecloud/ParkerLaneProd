@@ -3,7 +3,8 @@
     <fullName>Savings_and_or_Superannuation__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Savings and/or Superannuation</label>
+    <label>Savings and or Superannuation</label>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

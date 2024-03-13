@@ -60,11 +60,7 @@
                             <div class="nav-menu onHover" onclick="{!c.navMyAccount}" style="{!v.navSection == 'MyAccount' ? 'background: #304B88': ''}">
                                 <span><img src="{!$Resource.ReferralPortal + '/ReferralPortal/Account.png'}"/></span>
                                 <span>Account</span>
-                            </div>  
-                            <div class="nav-menu onHover" onclick="{!c.navcalculator}" style="{!v.navSection == 'Calculator' ? 'background: #304B88': ''}">
-                                <span><img src="{!$Resource.ReferralPortal + '/ReferralPortal/Calculator.png'}"/></span>
-                                <span>Calculator</span>
-                            </div> 
+                            </div>                            
                         </div>
                     </div>                    
                 </td>
@@ -82,9 +78,6 @@
                         <aura:if isTrue="{!v.navSection == 'MyAccount'}" >
                             <c:ReferrerPortalMyAccount navSection ="{!v.navSection}" accountId = "{!v.accountId}"/> 
                         </aura:if>
-                        <aura:if isTrue="{!v.navSection == 'Calculator'}" >
-                            <c:ReferrerPortalCalculator sessionId = "{!v.sessionId}" navSection ="{!v.navSection}" searchKeyword="{!v.searchKeyword}" accountId = "{!v.accountId}"/> 
-                        </aura:if>
                         <aura:set attribute = "else">
                             <aura:if isTrue="{!v.navSection == 'Home'}" >
                                 <c:ReferrerPortalHome sessionId = "{!v.sessionId}" searchKeyword="{!v.searchKeyword}" navSection ="{!v.navSection}" phone = "{!v.phone}" cont ='{!v.con}' accountId = "{!v.accountId}" ShowAccount="{!v.ShowAccount}"/>
@@ -100,9 +93,6 @@
                             </aura:if> 
                             <aura:if isTrue="{!v.navSection == 'MyAccount'}" >
                                 <c:ReferrerPortalMyAccount navSection ="{!v.navSection}" accountId = "{!v.accountId}"/> 
-                            </aura:if>
-                            <aura:if isTrue="{!v.navSection == 'Calculator'}" >
-                                <c:ReferrerPortalCalculator sessionId = "{!v.sessionId}" navSection ="{!v.navSection}" searchKeyword="{!v.searchKeyword}" accountId = "{!v.accountId}"/> 
                             </aura:if>
                         </aura:set>
                     </aura:if>                    

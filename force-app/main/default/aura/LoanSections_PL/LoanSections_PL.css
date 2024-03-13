@@ -192,9 +192,9 @@
     align-items: center;
 }
 .THIS .company-logo img, .THIS.company-logo img{
-    width: 200px;
-    padding: 10px;
-    height: 43px;
+    width: 170px;
+    /*padding: 10px;
+    height: 43px;*/
     
 }
 .THIS .desk_css{
@@ -444,14 +444,9 @@
     padding-left: 3rem !important;
     padding-right: 3rem !important;
     font-family: ProximaNovaAlt-Medium;
-  /*  color: var(--slds-c-button-color-border, var(--sds-c-button-color-border, transparent)) !important;
-   */ background: rgb(245 245 245) !important;
-    color: #0176d3 !important; 
+    color: var(--slds-c-button-color-border, var(--sds-c-button-color-border, transparent)) !important;
+    background: rgb(245 245 245) !important;
      
-}
-.THIS .privious-button_style:hover{
-    color : #10467a !important;
-    background: #f5f5f5 !important;
 }
 .THIS .save-button_style{
     font-family: ProximaNovaAlt-Medium;

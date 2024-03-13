@@ -8,12 +8,8 @@
         <label>Quote Information</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Purpose__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Gruop_Name__c</field>
+                <behavior>Readonly</behavior>
+                <field>QuoteNumber</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
@@ -24,46 +20,40 @@
                 <field>OpportunityId</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>AccountId</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Gruop_Name__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Quote_Group_Label__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Product__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Customer_Amount__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Lender__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Interest_Rate__c</field>
+                <behavior>Readonly</behavior>
+                <field>Commission_Type__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Monthly_Account_Keeping_Fees__c</field>
+                <field>Brokerage_Amount__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Interest_Rate_Override__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Interest_Rate_From__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Actual_Comparison_Rate__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Application__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Is_Featured__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Customer_Amount__c</field>
+                <field>Up_Front_Fees__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -71,37 +61,48 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Up_Front_Costs_Applicable__c</field>
+                <field>Monthly_Account_Keeping_Fees__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Total_loan_amount__c</field>
+                <behavior>Edit</behavior>
+                <field>Up_Front_Costs_Applicable__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Loan_Term__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Monthly_Repayments__c</field>
+                <behavior>Edit</behavior>
+                <field>Interest_Rate__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Total_Fees__c</field>
+                <behavior>Readonly</behavior>
+                <field>Total_loan_amount__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Monthly_Repayments__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Total_Loan_Cost__c</field>
             </layoutItems>
-        </layoutColumns>
-        <style>TwoColumnsTopToBottom</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>true</editHeading>
-        <label>Additional Quote Details</label>
-        <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Monthly_Repayment__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Purpose__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Lead__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Shared_Message__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Weekly_Repayments__c</field>
@@ -111,80 +112,69 @@
                 <field>Fortnightly_Repayments__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Comparison_Rate_Display__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Product_Description__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Shared_Message__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Monthly_Repayment__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Repayment_Frequency_Options__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Financial_Account__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Min_Loan_Term__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Max_Loan_Term__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Up_Front_Fees__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Comparison_Rate_Warning__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <style>TwoColumnsLeftToRight</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>true</editHeading>
-        <label>BROKERAGE &amp; COMMISSION</label>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Brokerage_Amount__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Commission_Type__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Commission_Amount__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Commission_Override_Amount__c</field>
+                <field>Application__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Product_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Actual_Comparison_Rate__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IsSelected__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Comparison_Rate_Warning__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Eligibility__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Product_Description__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Total_Fees__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Credit_Available_after_Setup_Costs__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Product_Type_Lookup__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ExpirationDate</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Commission_Description__c</field>
+                <field>IsSyncing</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Status</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Description</field>
             </layoutItems>
         </layoutColumns>
-        <style>TwoColumnsLeftToRight</style>
+        <style>TwoColumnsTopToBottom</style>
     </layoutSections>
     <layoutSections>
         <customLabel>false</customLabel>
@@ -192,10 +182,6 @@
         <editHeading>true</editHeading>
         <label>Totals</label>
         <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Features__c</field>
-            </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Subtotal</field>
@@ -237,15 +223,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Description</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Email</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>IsSyncing</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -269,10 +247,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>BillingName</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Total_Income_Inc_GST__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -323,6 +297,8 @@
     <miniLayout>
         <fields>Name</fields>
         <fields>OpportunityId</fields>
+        <fields>ExpirationDate</fields>
+        <fields>Status</fields>
         <fields>Discount</fields>
         <fields>GrandTotal</fields>
     </miniLayout>
@@ -364,12 +340,6 @@
         <relatedList>RelatedQuoteDocumentList</relatedList>
     </relatedLists>
     <relatedLists>
-        <relatedList>RelatedContentNoteList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <relatedList>RelatedFileList</relatedList>
-    </relatedLists>
-    <relatedLists>
         <fields>TASK.SUBJECT</fields>
         <fields>TASK.WHO_NAME</fields>
         <fields>ACTIVITY.TASK</fields>
@@ -389,26 +359,13 @@
         <relatedList>RelatedHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>NAME</fields>
-        <fields>Fee_Type__c</fields>
-        <fields>Amount__c</fields>
-        <relatedList>Loan_Fees__c.Quote__c</relatedList>
+        <relatedList>RelatedNoteList</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>FinServ__Status__c</fields>
-        <fields>FinServ__FinancialAccountNumber__c</fields>
-        <fields>FinServ__Balance__c</fields>
-        <fields>FinServ__OpenDate__c</fields>
-        <relatedList>FinServ__FinancialAccount__c.Quote__c</relatedList>
+        <relatedList>Loan_Fees__c.Quote__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
-    <summaryLayout>
-        <masterLabel>00h0o00000ihD9n</masterLabel>
-        <sizeX>4</sizeX>
-        <sizeY>0</sizeY>
-        <summaryLayoutStyle>Default</summaryLayoutStyle>
-    </summaryLayout>
 </Layout>

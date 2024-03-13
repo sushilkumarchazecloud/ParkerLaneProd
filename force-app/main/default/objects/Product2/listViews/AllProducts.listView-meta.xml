@@ -2,6 +2,7 @@
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>AllProducts</fullName>
     <columns>PRODUCT2.NAME</columns>
+    <columns>Product_Type_Lookup__c</columns>
     <columns>Acceptable_Loan_Purpose__c</columns>
     <columns>Lender__c</columns>
     <columns>Product_Order__c</columns>

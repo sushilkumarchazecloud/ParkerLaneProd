@@ -4,6 +4,7 @@
     <externalId>false</externalId>
     <label>Fee Type</label>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
@@ -11,79 +12,9 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Account Keeping</fullName>
+                <fullName>Value1</fullName>
                 <default>false</default>
-                <label>Account Keeping</label>
-            </value>
-            <value>
-                <fullName>Application</fullName>
-                <default>false</default>
-                <label>Application</label>
-            </value>
-            <value>
-                <fullName>Claw Back</fullName>
-                <default>false</default>
-                <label>Claw Back</label>
-            </value>
-            <value>
-                <fullName>Deferred Establishment</fullName>
-                <default>false</default>
-                <label>Deferred Establishment</label>
-            </value>
-            <value>
-                <fullName>Discharge</fullName>
-                <default>false</default>
-                <label>Discharge</label>
-            </value>
-            <value>
-                <fullName>Establishment</fullName>
-                <default>false</default>
-                <label>Establishment</label>
-            </value>
-            <value>
-                <fullName>Exit</fullName>
-                <default>false</default>
-                <label>Exit</label>
-            </value>
-            <value>
-                <fullName>Government Charges</fullName>
-                <default>false</default>
-                <label>Government Charges</label>
-            </value>
-            <value>
-                <fullName>Legal</fullName>
-                <default>false</default>
-                <label>Legal</label>
-            </value>
-            <value>
-                <fullName>Other</fullName>
-                <default>false</default>
-                <label>Other</label>
-            </value>
-            <value>
-                <fullName>Package</fullName>
-                <default>false</default>
-                <label>Package</label>
-            </value>
-            <value>
-                <fullName>Payment Processing</fullName>
-                <default>false</default>
-                <label>Payment Processing</label>
-            </value>
-            <value>
-                <fullName>Risk</fullName>
-                <default>false</default>
-                <label>Risk</label>
-            </value>
-            <value>
-                <fullName>Valuation</fullName>
-                <default>false</default>
-                <label>Valuation</label>
-            </value>
-            <value>
-                <fullName>Refundable Lender Membership Fee</fullName>
-                <default>false</default>
-                <label>Refundable Lender Membership Fee</label>
+                <label>Value1</label>
             </value>
         </valueSetDefinition>
     </valueSet>

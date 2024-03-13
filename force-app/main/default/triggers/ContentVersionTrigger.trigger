@@ -1,15 +1,8 @@
-trigger ContentVersionTrigger on ContentVersion (after Update, after insert) {
-    ContentVersiontriggerHandler handler = new ContentVersiontriggerHandler();
-    if(Trigger.isAfter){
-        if(Trigger.isupdate){
-            if(ContentVersiontriggerHandler.Stop == false){ 
-                ContentVersiontriggerHandler.Stop = true;
-                handler.afterUpdate(Trigger.new); 
-                ContentVersiontriggerHandler.Stop = false;
-            } 
-        }
-        if(Trigger.isinsert){
-            handler.afterInsert(Trigger.new);
-        }
-    }
+/**
+ * @description: This is a trigger class for ContentVersion object.
+ * @author     : Sethu Singh Rawat
+ * @created on : 26-02-2024
+ */
+trigger ContentVersionTrigger on ContentVersion (before insert,after insert, before update, after update, before delete, after undelete) {
+	TriggerDispatcher.run(new ContentVersionTriggerHandler(),'ContentVersionTrigger');
 }

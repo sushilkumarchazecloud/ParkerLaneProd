@@ -1,4 +1,4 @@
-<aura:component  controller="ParkerLaneLoanController">
+<aura:component  controller="ApplicationFormController">
     <aura:attribute name="customerAmount" type="Integer" default=""/>
     <aura:attribute name="totalAmount" type="Integer" />
     <aura:attribute name="applicantFName" type="String" default=""/>
@@ -59,7 +59,6 @@
                         <span class="slds-p-horizontal--small ">Monthly Repayment: ${!v.totalAmount}</span>
                     </div>
                 </div>
-                
             </div>
         </section> 
     </div>

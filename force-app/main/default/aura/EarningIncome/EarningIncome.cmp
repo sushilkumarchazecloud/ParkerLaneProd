@@ -1,5 +1,5 @@
 <aura:component >
-    <aura:attribute name="emp" type="FinServ__Employment__c" />
+    <aura:attribute name="emp" type="Employment__c" />
     <aura:attribute name="incomeFrom" type="String" default=""/>
     <aura:attribute name="incomeSource" type="String" default=""/>
     <aura:attribute name="managedSource" type="String" default=""/>
@@ -36,7 +36,7 @@
     <aura:registerEvent name="monthYearChangeEvent" type="c:monthYearChangeEvent"/>
     <aura:registerEvent name="validateResultCmpEvent" type="c:ValidateResultCmpEvent"/>
     <aura:handler event="c:validateAppEvent" action="{!c.doValidate}" />
-    <!--aura:handler name="change" value="{!v.applicant.FinServ__Occupation__c}" action="{!c.occupationChanged}" /-->
+    <!--aura:handler name="change" value="{!v.applicant.Occupation__c}" action="{!c.occupationChanged}" /-->
 	<aura:handler name="change" value="{!v.occupation}" action="{!c.occupationChanged}" />
     <aura:handler action="{!c.doInit}" name="init" value="{!this}"/>
     
@@ -61,7 +61,7 @@
             <div class="slds-form__item" role="listitem">
                 <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
                     <lightning:combobox label="Income From" 
-                                        value="{!v.emp.FinServ__EmploymentStatus__c}"                                                 
+                                        value="{!v.emp.EmploymentStatus__c}"                                                 
                                         options="{! v.incomeFromOptions }"
                                         onchange="{!c.changeMonthYear}"
                                         aura:id="fieldcheckIncome"
@@ -70,15 +70,15 @@
             </div>
         </div>
         
-        <aura:if isTrue="{!v.emp.FinServ__EmploymentStatus__c=='Full time permanent' ||
-                         v.emp.FinServ__EmploymentStatus__c=='Part time permanent' || 
-                         v.emp.FinServ__EmploymentStatus__c=='Casual / Temporary'}">
+        <aura:if isTrue="{!v.emp.EmploymentStatus__c=='Full time permanent' ||
+                         v.emp.EmploymentStatus__c=='Part time permanent' || 
+                         v.emp.EmploymentStatus__c=='Casual / Temporary'}">
             
             <div class="slds-form__row">
                 <div class="slds-form__item" role="listitem">
                     <div class="slds-form-element slds-form-element_stacked slds-is-editing">
                         <lightning:input label="Income amount (before taking out tax)" 
-                                         value="{!v.emp.FinServ__AnnualIncome__c}"
+                                         value="{!v.emp.AnnualIncome__c}"
                                          formatter="currency"
                                          type="number"
                                          placeholder="Income amount"
@@ -97,7 +97,7 @@
                 </div>
             </div>
             
-            <aura:if isTrue="{!v.emp.FinServ__EmploymentStatus__c == 'Part time permanent'}">
+            <aura:if isTrue="{!v.emp.EmploymentStatus__c == 'Part time permanent'}">
                 <div class="slds-form__row">
                     <div class="slds-form__item" role="listitem">
                         <div class="slds-form-element slds-form-element_stacked slds-is-editing ">
@@ -110,7 +110,7 @@
                     </div>
                 </div>
             </aura:if>
-            <aura:if isTrue="{!v.emp.FinServ__EmploymentStatus__c != 'Casual / Temporary'}">
+            <aura:if isTrue="{!v.emp.EmploymentStatus__c != 'Casual / Temporary'}">
                 <div class="slds-form__row">
                     <div class="slds-form__item" role="listitem">
                         <div class="slds-form-element slds-form-element_stacked slds-is-editing">
@@ -267,7 +267,7 @@
                 <div class="slds-form__item" role="listitem">
                     <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
                         <lightning:combobox label="Industry" 
-                                            value="{!v.emp.FinServ__Occupation__c}"                                                 
+                                            value="{!v.emp.Occupation__c}"                                                 
                                             options="{! v.occupationOptions }"
                                             aura:id="fieldcheck"
                                             required="true"/>
@@ -295,7 +295,7 @@
                 <div class="slds-form__item" role="listitem">
                     <div class="slds-form-element slds-form-element_stacked slds-is-editing">
                         <lightning:input type="tel" label="Employer Contact Number" 
-                                         value="{!v.emp.FinServ__EmployerPhoneNumber__c}" 
+                                         value="{!v.emp.EmployerPhoneNumber__c}" 
                                          pattern="([0-9]{10}|[0-9]{4} [0-9]{3} [0-9]{3}|[0-9]{2} [0-9]{4} [0-9]{4})"
                                          messageWhenPatternMismatch="Pattern should be 1234567890 or 1234 567 890 or 12 3456 7890"
                                          placeholder="Employer Contact Number"
@@ -308,7 +308,7 @@
                 <div class="slds-form__item" role="listitem">
                     <div class="slds-form-element slds-form-element_stacked slds-is-editing">
                         <c:AddressAPItool aura:id="addressTool" isFindAdd = "{!v.emp.Is_Find_Address__c}"
-                                              searchString="{!v.emp.FinServ__EmployerAddress__c}" label="Address"
+                                              searchString="{!v.emp.EmployerAddress__c}" label="Address"
                                               streetNumber="{!v.emp.Street_Number__c}" street="{!v.emp.Street__c}"
                                               state="{!v.emp.State__c}" suburb="{!v.emp.Suburb__c}"
                                               postalCode="{!v.emp.Postal_Code__c}" country="{!v.emp.Country__c}"
@@ -425,9 +425,9 @@
             </div>
             
         </aura:if>
-        <aura:if isTrue="{!v.emp.FinServ__EmploymentStatus__c=='Self Employed / Contractor' || 
-                         v.emp.FinServ__EmploymentStatus__c=='Business Income' || 
-                         v.emp.FinServ__EmploymentStatus__c=='Workcover Workers / Compensation'}">
+        <aura:if isTrue="{!v.emp.EmploymentStatus__c=='Self Employed / Contractor' || 
+                         v.emp.EmploymentStatus__c=='Business Income' || 
+                         v.emp.EmploymentStatus__c=='Workcover Workers / Compensation'}">
             <div class="slds-form__row">
                 <div class="slds-form__item" role="listitem">
                     <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
@@ -466,14 +466,14 @@
                 <div class="slds-form__item" role="listitem">
                     <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
                         <lightning:combobox label="Industry" 
-                                            value="{!v.emp.FinServ__Occupation__c}"                                                 
+                                            value="{!v.emp.Occupation__c}"                                                 
                                             options="{! v.occupationOptions }"
                                             aura:id="fieldcheck"
                                             required="true"/>
                     </div>
                 </div>
             </div>
-            <aura:if isTrue="{!v.emp.FinServ__EmploymentStatus__c=='Self Employed / Contractor'}">
+            <aura:if isTrue="{!v.emp.EmploymentStatus__c=='Self Employed / Contractor'}">
                 <div class="slds-form__row">
                     <div class="slds-form__item" role="listitem">
                         <div class="slds-form-element slds-form-element_stacked slds-is-editing">
@@ -573,7 +573,7 @@
             <div class="slds-form__row">
                 <div class="slds-form__item" role="listitem">
                     <div class="slds-form-element slds-form-element_stacked slds-is-editing">
-                        <aura:if isTrue="{!v.emp.FinServ__EmploymentStatus__c=='Self Employed / Contractor'}">
+                        <aura:if isTrue="{!v.emp.EmploymentStatus__c=='Self Employed / Contractor'}">
                             <lightning:combobox aura:id="fieldcheck" required="true"
                                                 label="Time running this business (years and months)" 
                                                 value="{!v.emp.Years__c}" 
@@ -581,7 +581,7 @@
                                                 placeholder="Years"
                                                 onchange="{!c.changeMonthYear}"/>
                         </aura:if>
-                        <aura:if isTrue="{!v.emp.FinServ__EmploymentStatus__c!='Self Employed / Contractor'}">
+                        <aura:if isTrue="{!v.emp.EmploymentStatus__c!='Self Employed / Contractor'}">
                             <lightning:combobox aura:id="fieldcheck" required="true"
                                                 label="Time with this employer (years and months)" 
                                                 value="{!v.emp.Years__c}" 
@@ -605,16 +605,16 @@
             </div>
         </aura:if>
         
-        <aura:if isTrue="{!v.emp.FinServ__EmploymentStatus__c == 'Other' || v.emp.FinServ__EmploymentStatus__c == 'Family Tax Benefits' || v.emp.FinServ__EmploymentStatus__c == 'Dividends or Annuity' ||
-                         v.emp.FinServ__EmploymentStatus__c == 'New Start Allowance' || v.emp.FinServ__EmploymentStatus__c == 'Disability Pension' ||
-                         v.emp.FinServ__EmploymentStatus__c == 'Carer’s Pension' || v.emp.FinServ__EmploymentStatus__c == 'Child Support' || 
-                         v.emp.FinServ__EmploymentStatus__c == 'Pension'}">
+        <aura:if isTrue="{!v.emp.EmploymentStatus__c == 'Other' || v.emp.EmploymentStatus__c == 'Family Tax Benefits' || v.emp.EmploymentStatus__c == 'Dividends or Annuity' ||
+                         v.emp.EmploymentStatus__c == 'New Start Allowance' || v.emp.EmploymentStatus__c == 'Disability Pension' ||
+                         v.emp.EmploymentStatus__c == 'Carer’s Pension' || v.emp.EmploymentStatus__c == 'Child Support' || 
+                         v.emp.EmploymentStatus__c == 'Pension'}">
             <div class="slds-form__row">
                 <div class="slds-form__item" role="listitem">
                     <div class="slds-form-element slds-form-element_stacked slds-is-editing">
                         <lightning:input label="Income amount" formatter="currency"
                                          type="number"
-                                         value="{!v.emp.FinServ__AnnualIncome__c}" 
+                                         value="{!v.emp.AnnualIncome__c}" 
                                          placeholder="Income amount"
                                          aura:id="fieldcheck"
                                          required="true"/>
@@ -655,7 +655,7 @@
             </div>
             
         </aura:if>
-        <aura:if isTrue="{!v.emp.FinServ__EmploymentStatus__c != ''}">
+        <aura:if isTrue="{!v.emp.EmploymentStatus__c != ''}">
             <div class="slds-form__row">
                 <div class="slds-form__item" role="listitem">
                     <div class="slds-form-element slds-form-element_stacked slds-is-editing">

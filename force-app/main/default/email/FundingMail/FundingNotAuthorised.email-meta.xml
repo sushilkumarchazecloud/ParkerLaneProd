@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>FundingNotAuthorised</name>
+    <style>none</style>
+    <subject>Funding delayed! We&apos;ve been unable to reach [opportunity name without purpose] to authorise payment.</subject>
+    <type>visualforce</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

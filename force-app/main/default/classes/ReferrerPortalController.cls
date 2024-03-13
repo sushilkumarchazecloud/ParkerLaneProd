@@ -53,66 +53,66 @@ public without sharing class ReferrerPortalController {
         }
     }    
     
-    @auraEnabled
-    public static getConWrapper SendMessage(String getPhone, String recId){
-        try{
-            list<Contact> conList;
-            list<Account> accList;
-            if(getPhone != null){
-                conList=[SELECT Id, Name, Status__c, Email, AccountId, Phone, On_Board_Individual__c, PhoneForPortal__c FROM Contact where PhoneForPortal__c =: getPhone and RecordType.Name = 'Referrer' and Status__c = 'Active'];
-                if(conList != Null && conList.size() > 0){
-                    accList=[Select id, On_Board_Referral__c from account where id =: conList[0].AccountId limit 1];
-                }
-            }
-            if(conList != Null && conList.size() == 1 && !String.isBlank(recId) && recId != conList[0].Id){
-                return null;
-            }
-            if(conList != Null && conList.size() == 1 && (accList[0].On_Board_Referral__c == true || conList[0].On_Board_Individual__c == true) && conList[0].Status__c == 'Active'){
-                List<smagicinteract__smsMagic__c> smsObjectList = new List<smagicinteract__smsMagic__c> ();
-                Double randomNum = Math.floor(1000 + Math.random() * 9000);
-                Integer num = Math.round(randomNum);
-                //String senderId = 'Parkerlane'; // Please replace the 'smsMagic' with your relevant sender ID.
-                String templateText = 'Your 4-digit verification code is ' + num; // you can fetch the template text by querying the record on smagicinteract__SMS_Template__c object 
-                smagicinteract__smsMagic__c smsObject = new smagicinteract__smsMagic__c();
-                smsObject.smagicinteract__SenderId__c = 'parkerlane';
-                smsObject.smagicinteract__PhoneNumber__c = getPhone;//'61400247471';//contact.MobilePhone;
-                smsObject.smagicinteract__Name__c = conList[0].Name;//contact.Name; // recordsname
-                smsObject.smagicinteract__ObjectType__c = 'Contact';//'Contact'; // record type
-                smsObject.smagicinteract__disableSMSOnTrigger__c = 0; // this field either be 0 or 1, if you specify the value as 1 then sms will not get send but entry of sms will get create under SMS History object
-                smsObject.smagicinteract__external_field__c = smagicinteract.ApexAPI.generateUniqueKey();
-                smsObject.smagicinteract__SMSText__c = templateText;
-                smsObject.smagicinteract__Contact__c = conList[0].Id;
-                smsObjectList.add(smsObject);
-                Database.SaveResult[] results = Database.insert(smsObjectList, false);
-                // iterate over the list of returned results
-                for(Database.SaveResult result : results) {
-                    if(result.isSuccess()) {
-                        //  System.debug('Successfully inserted Accounts : ' + result.getId());
-                    } else {
-                        // iterate over the failed ones
-                        for(Database.Error error : result.getErrors()) {
-                            System.debug('Error Status : ' + error.getMessage() + ' : ' + 'Error Fields : ' + error.getFields());
-                        }
-                    }
-                }    
-                getConWrapper gcw = new getConWrapper();
-                gcw.rndNum = randomNum;
-                gcw.conData = conList[0];
-                gcw.listSize = false;
-                return gcw;
-            }
-            else if(conList != Null && conList.size() > 1){
-                getConWrapper gcw = new getConWrapper();
-                gcw.listSize = true;
-                return gcw;
-            }
-            return null;
-        }catch(exception e){
-            UtilityClass.createException(recId,'ReferrerPortalController', 'SendMessage', e.getMessage(), e.getStackTraceString(), ''+e.getLineNumber(),
-                                         e.getTypeName(), ''+e.getCause());
-            return null;
-        }
-    }
+    // @auraEnabled
+    // public static getConWrapper SendMessage(String getPhone, String recId){
+    //     try{
+    //         list<Contact> conList;
+    //         list<Account> accList;
+    //         if(getPhone != null){
+    //             conList=[SELECT Id, Name, Status__c, Email, AccountId, Phone, On_Board_Individual__c, PhoneForPortal__c FROM Contact where PhoneForPortal__c =: getPhone and RecordType.Name = 'Referrer' and Status__c = 'Active'];
+    //             if(conList != Null && conList.size() > 0){
+    //                 accList=[Select id, On_Board_Referral__c from account where id =: conList[0].AccountId limit 1];
+    //             }
+    //         }
+    //         if(conList != Null && conList.size() == 1 && !String.isBlank(recId) && recId != conList[0].Id){
+    //             return null;
+    //         }
+    //         if(conList != Null && conList.size() == 1 && (accList[0].On_Board_Referral__c == true || conList[0].On_Board_Individual__c == true) && conList[0].Status__c == 'Active'){
+    //             List<smagicinteract__smsMagic__c> smsObjectList = new List<smagicinteract__smsMagic__c> ();
+    //             Double randomNum = Math.floor(1000 + Math.random() * 9000);
+    //             Integer num = Math.round(randomNum);
+    //             //String senderId = 'Parkerlane'; // Please replace the 'smsMagic' with your relevant sender ID.
+    //             String templateText = 'Your 4-digit verification code is ' + num; // you can fetch the template text by querying the record on smagicinteract__SMS_Template__c object 
+    //             smagicinteract__smsMagic__c smsObject = new smagicinteract__smsMagic__c();
+    //             smsObject.smagicinteract__SenderId__c = 'parkerlane';
+    //             smsObject.smagicinteract__PhoneNumber__c = getPhone;//'61400247471';//contact.MobilePhone;
+    //             smsObject.smagicinteract__Name__c = conList[0].Name;//contact.Name; // recordsname
+    //             smsObject.smagicinteract__ObjectType__c = 'Contact';//'Contact'; // record type
+    //             smsObject.smagicinteract__disableSMSOnTrigger__c = 0; // this field either be 0 or 1, if you specify the value as 1 then sms will not get send but entry of sms will get create under SMS History object
+    //             smsObject.smagicinteract__external_field__c = smagicinteract.ApexAPI.generateUniqueKey();
+    //             smsObject.smagicinteract__SMSText__c = templateText;
+    //             smsObject.smagicinteract__Contact__c = conList[0].Id;
+    //             smsObjectList.add(smsObject);
+    //             Database.SaveResult[] results = Database.insert(smsObjectList, false);
+    //             // iterate over the list of returned results
+    //             for(Database.SaveResult result : results) {
+    //                 if(result.isSuccess()) {
+    //                     //  System.debug('Successfully inserted Accounts : ' + result.getId());
+    //                 } else {
+    //                     // iterate over the failed ones
+    //                     for(Database.Error error : result.getErrors()) {
+    //                         System.debug('Error Status : ' + error.getMessage() + ' : ' + 'Error Fields : ' + error.getFields());
+    //                     }
+    //                 }
+    //             }    
+    //             getConWrapper gcw = new getConWrapper();
+    //             gcw.rndNum = randomNum;
+    //             gcw.conData = conList[0];
+    //             gcw.listSize = false;
+    //             return gcw;
+    //         }
+    //         else if(conList != Null && conList.size() > 1){
+    //             getConWrapper gcw = new getConWrapper();
+    //             gcw.listSize = true;
+    //             return gcw;
+    //         }
+    //         return null;
+    //     }catch(exception e){
+    //         UtilityClass.createException(recId,'ReferrerPortalController', 'SendMessage', e.getMessage(), e.getStackTraceString(), ''+e.getLineNumber(),
+    //                                      e.getTypeName(), ''+e.getCause());
+    //         return null;
+    //     }
+    // }
     
     @auraEnabled 
     public static void otpMatched(String conId){
@@ -164,33 +164,33 @@ public without sharing class ReferrerPortalController {
             Decimal TotalLoanAmount_Approved = 0;
             Decimal TotalLoanAmount_Settled =0;
             map<id,list<opportunity>> map1=new map<id,list<opportunity>>();
-            list<Opportunity> opplist =[select id,name,stagename,Total_Loan_amount__c,FinServ__ReferredByContact__c from opportunity where FinServ__ReferredByContact__c IN: conlist ];
+            list<Opportunity> opplist =[select id,name,stagename,Total_Loan_amount__c,ReferredByContact__c from opportunity where ReferredByContact__c IN: conlist ];
             for(opportunity opp : opplist){
-                if(!map1.containskey(opp.FinServ__ReferredByContact__c)){
-                    map1.put(opp.FinServ__ReferredByContact__c, new List<opportunity>{opp});
+                if(!map1.containskey(opp.ReferredByContact__c)){
+                    map1.put(opp.ReferredByContact__c, new List<opportunity>{opp});
                 }
                 else{
-                    map1.get(opp.FinServ__ReferredByContact__c).add(opp);
+                    map1.get(opp.ReferredByContact__c).add(opp);
                 }
                 if(opp.stagename =='Approved' || Opp.stagename =='Funding'){
-                    if(!MapOfApprovedLoanAmount.containsKey(opp.FinServ__ReferredByContact__c)){
-                        MapOfApprovedLoanAmount.put(opp.FinServ__ReferredByContact__c, opp.Total_Loan_amount__c); 
+                    if(!MapOfApprovedLoanAmount.containsKey(opp.ReferredByContact__c)){
+                        MapOfApprovedLoanAmount.put(opp.ReferredByContact__c, opp.Total_Loan_amount__c); 
                     }
                     else{
-                        Decimal dc = MapOfApprovedLoanAmount.get(opp.FinServ__ReferredByContact__c);
+                        Decimal dc = MapOfApprovedLoanAmount.get(opp.ReferredByContact__c);
                         dc += opp.Total_Loan_amount__c;
-                        MapOfApprovedLoanAmount.put(opp.FinServ__ReferredByContact__c, dc);
+                        MapOfApprovedLoanAmount.put(opp.ReferredByContact__c, dc);
                     }
                 }    
                 
                 if(opp.stagename =='Settled (closed won)'){
-                    if(!MapOfClosedLoanAmount.containsKey(opp.FinServ__ReferredByContact__c)){
-                        MapOfClosedLoanAmount.put(opp.FinServ__ReferredByContact__c, opp.Total_Loan_amount__c); 
+                    if(!MapOfClosedLoanAmount.containsKey(opp.ReferredByContact__c)){
+                        MapOfClosedLoanAmount.put(opp.ReferredByContact__c, opp.Total_Loan_amount__c); 
                     }
                     else{
-                        Decimal dc = MapOfClosedLoanAmount.get(opp.FinServ__ReferredByContact__c);
+                        Decimal dc = MapOfClosedLoanAmount.get(opp.ReferredByContact__c);
                         dc += opp.Total_Loan_amount__c;
-                        MapOfClosedLoanAmount.put(opp.FinServ__ReferredByContact__c, dc);
+                        MapOfClosedLoanAmount.put(opp.ReferredByContact__c, dc);
                     }
                 }
             }
@@ -434,7 +434,7 @@ public without sharing class ReferrerPortalController {
             List<Opportunity> oppList = new List<Opportunity>();
             
             if ( searchKey != Null ) {
-                String query ='SELECT id,Name FROM Opportunity WHERE (FinServ__ReferredByContact__c =: contactId';
+                String query ='SELECT id,Name FROM Opportunity WHERE (ReferredByContact__c =: contactId';
                 if(con.Admin__c == true && con.Portal_View__c == 'Admin View' && AccountId != null){
                     query += ' OR Referred_by_Company__c=: AccountId';   
                 }
@@ -469,9 +469,9 @@ public without sharing class ReferrerPortalController {
             }
             System.debug('tazeems Debug____'+conList);
             list<Opportunity> oppList = [SELECT id,Name,Line_Chart_JSON__c,Stagename,Applicant_1_Name__c,Applicant_2_Name__c,Applicant_1_Email__c,Applicant_1_Phone_Number__c, CreatedDate,Lender__c, Loan_Amount__c,Status__c,
-                                         Current_Application_Sections__c,Last_Stage_Change_Date__c,Total_Funds_Available__c,FinServ__ReferredByContact__r.Name,FinServ__ReferredByContact__c,Applicant_1__c,Applicant_1__r.Name,Application_Pending_Notes__c,
+                                         Current_Application_Sections__c,Last_Stage_Change_Date__c,Total_Funds_Available__c,ReferredByContact__r.Name,ReferredByContact__c,Applicant_1__c,Applicant_1__r.Name,Application_Pending_Notes__c,
                                          Applicant_1__r.FirstName,Send_the_quote_to__c,Approved_Date__c,Applicant_1__r.LastName,RecordType.Name,Applicant_1__r.PersonEmail,Applicant_1__r.Phone
-                                         FROM Opportunity WHERE FinServ__ReferredByContact__c IN : conList ORDER BY CreatedDate DESC];
+                                         FROM Opportunity WHERE ReferredByContact__c IN : conList ORDER BY CreatedDate DESC];
             decimal totalAmt = 0; 
             decimal totalApprovedAmt = 0;
             integer count = 0;
@@ -541,9 +541,9 @@ public without sharing class ReferrerPortalController {
             }
             System.debug('tazeems Debug____'+conList);
             list<Opportunity> oppList = [SELECT id,Name,Line_Chart_JSON__c,Stagename,Applicant_1_Name__c,Applicant_2_Name__c,Applicant_1_Email__c,Applicant_1_Phone_Number__c, CreatedDate,Lender__c, Loan_Amount__c,Status__c,
-                                         Current_Application_Sections__c,Last_Stage_Change_Date__c,Total_Funds_Available__c,FinServ__ReferredByContact__r.Name,FinServ__ReferredByContact__c,Applicant_1__c,Applicant_1__r.Name,Application_Pending_Notes__c,
+                                         Current_Application_Sections__c,Last_Stage_Change_Date__c,Total_Funds_Available__c,ReferredByContact__r.Name,ReferredByContact__c,Applicant_1__c,Applicant_1__r.Name,Application_Pending_Notes__c,
                                          Applicant_1__r.FirstName,Send_the_quote_to__c,Approved_Date__c,Applicant_1__r.LastName,RecordType.Name,Applicant_1__r.PersonEmail,Applicant_1__r.Phone
-                                         FROM Opportunity WHERE FinServ__ReferredByContact__c IN : conList AND Id Not IN: oldoppList ORDER BY CreatedDate DESC];
+                                         FROM Opportunity WHERE ReferredByContact__c IN : conList AND Id Not IN: oldoppList ORDER BY CreatedDate DESC];
             
             List<opportunity> opl = new List<opportunity>();
             if(!oppList.isEmpty()){

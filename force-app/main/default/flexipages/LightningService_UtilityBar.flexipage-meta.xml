@@ -5,16 +5,13 @@
         <itemInstances>
             <componentInstance>
                 <componentName>console:history</componentName>
+                <identifier>console_history</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>notes:utilityBarNoteList</componentName>
-            </componentInstance>
-        </itemInstances>
-        <itemInstances>
-            <componentInstance>
-                <componentName>runtime_service_omnichannel:omniWidget</componentName>
+                <identifier>notes_utilityBarNoteList</identifier>
             </componentInstance>
         </itemInstances>
         <name>utilityItems</name>

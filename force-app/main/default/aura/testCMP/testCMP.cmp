@@ -1,0 +1,15 @@
+<aura:component controller="ApplicationFormController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+
+    <!-- Define attributes -->
+    <aura:attribute name="contentMap" type="Map" />
+    
+    <!-- Fetch data from the server -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <h1>hi </h1>
+    <!-- Iterate over the map and display the data -->
+    <aura:iteration items="{!v.contentMap}" var="key" indexVar="indx" >
+        <p>{!key}</p>
+                     
+    </aura:iteration>
+
+</aura:component>

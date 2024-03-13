@@ -1,9 +1,6 @@
 <template>
     <div>
         <div class="max-700">                    
-            <label if:true={isFront} style="font-family: Proxima Nova Alt Regular;position : relative; top : 15px; left: 2px; font-size : 1rem; color: #1a2745;"><b>Front </b>of your Driving License</label>
-            <label if:true={isBack} style="font-family: Proxima Nova Alt Regular;position : relative; top : 15px; left: 2px; font-size : 1rem; color: #1a2745;"><b>Back </b>of your Driving License</label>
-            <label if:true={isOther} style="font-family: Proxima Nova Alt Regular;position : relative; top : 15px; left: 2px; font-size : 1rem; color: #1a2745;">{idtype}</label>
             <div if:false={isUploadingFront}>                                                
                 <lightning-input type="file" varient="label-hidden" accept="image/png, image/jpg" onchange={handleUploadFinished} style="width : 100%;"></lightning-input>
             </div>

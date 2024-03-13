@@ -3,7 +3,7 @@
     <fullName>How_much_do_you_need__c</fullName>
     <externalId>false</externalId>
     <label>How much do you need</label>
-    <precision>18</precision>
+    <precision>10</precision>
     <required>false</required>
     <scale>2</scale>
     <trackFeedHistory>false</trackFeedHistory>

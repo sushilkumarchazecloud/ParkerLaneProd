@@ -4,9 +4,4 @@
     <availableInTouch>false</availableInTouch>
     <confirmationTokenRequired>false</confirmationTokenRequired>
     <label>PreliminaryAssessmentPDF</label>
-    <packageVersions>
-        <majorNumber>242</majorNumber>
-        <minorNumber>0</minorNumber>
-        <namespace>FinServ</namespace>
-    </packageVersions>
 </ApexPage>

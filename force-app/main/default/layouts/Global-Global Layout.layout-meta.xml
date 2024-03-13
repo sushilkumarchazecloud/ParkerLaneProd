@@ -23,12 +23,12 @@
             <sortOrder>3</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>LogACall</actionName>
+            <actionName>NewContact</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>4</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>NewContact</actionName>
+            <actionName>LogACall</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>5</sortOrder>
         </platformActionListItems>
@@ -38,29 +38,34 @@
             <sortOrder>6</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>NewLead</actionName>
+            <actionName>NewCase</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>7</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>FeedItem.ContentNote</actionName>
+            <actionName>NewLead</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>8</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>FeedItem.PollPost</actionName>
+            <actionName>FeedItem.LinkPost</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>9</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>SendEmail</actionName>
+            <actionName>FeedItem.PollPost</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>10</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Email_Advisor</actionName>
+            <actionName>FeedItem.QuestionPost</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>11</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>SendEmail</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>12</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList>
@@ -71,13 +76,10 @@
             <quickActionName>FeedItem.ContentPost</quickActionName>
         </quickActionListItems>
         <quickActionListItems>
-            <quickActionName>NewTask</quickActionName>
-        </quickActionListItems>
-        <quickActionListItems>
             <quickActionName>NewEvent</quickActionName>
         </quickActionListItems>
         <quickActionListItems>
-            <quickActionName>Email_Advisor</quickActionName>
+            <quickActionName>NewTask</quickActionName>
         </quickActionListItems>
         <quickActionListItems>
             <quickActionName>NewContact</quickActionName>
@@ -89,10 +91,19 @@
             <quickActionName>NewOpportunity</quickActionName>
         </quickActionListItems>
         <quickActionListItems>
+            <quickActionName>NewCase</quickActionName>
+        </quickActionListItems>
+        <quickActionListItems>
             <quickActionName>NewLead</quickActionName>
         </quickActionListItems>
         <quickActionListItems>
+            <quickActionName>FeedItem.LinkPost</quickActionName>
+        </quickActionListItems>
+        <quickActionListItems>
             <quickActionName>FeedItem.PollPost</quickActionName>
+        </quickActionListItems>
+        <quickActionListItems>
+            <quickActionName>FeedItem.QuestionPost</quickActionName>
         </quickActionListItems>
         <quickActionListItems>
             <quickActionName>SendEmail</quickActionName>

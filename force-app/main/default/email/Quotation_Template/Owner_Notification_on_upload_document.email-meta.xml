@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Owner Notification on upload document</name>
+    <style>none</style>
+    <subject>{!Opportunity.OwnerFirstName}! {!Opportunity.Name} documents received! There are {!Opportunity.remaining__c} documents outstanding.</subject>
+    <textOnly>Hi {!Opportunity.OwnerFullName}
+{!Opportunity.Name} uploaded documents at {!DATETIMEVALUE(Opportunity.LastModifiedDate)}. There are {!Opportunity.remaining__c} documents outstanding.
+Documents Received (list of docs received) [document name], [person]  Documents Outstanding (if any are not uploaded) [document name], [person]
+Click here to open the application</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

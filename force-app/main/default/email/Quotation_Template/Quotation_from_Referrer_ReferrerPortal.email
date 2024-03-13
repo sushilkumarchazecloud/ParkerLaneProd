@@ -1,0 +1,6 @@
+<messaging:emailTemplate subject="Referral successful! Loan options for your customer enclosed" recipientType="Contact" relatedToType="Opportunity" renderUsingSystemContextWithoutSharing="true" >
+<messaging:HtmlEmailBody >
+
+<c:QuotesendwithPdfCmp oppId="{!relatedTo.Id}"/>
+</messaging:HtmlEmailBody>
+</messaging:emailTemplate>

@@ -9,8 +9,8 @@
         var days = [];
         var years = [];
         var mediExpYears =[];
-        applicant.FinServ__NumberOfChildren__c = ''+ applicant.FinServ__NumberOfChildren__c;
-        applicant.FinServ__Gender__c = ''+ applicant.FinServ__Gender__c;
+        applicant.NumberOfChildren__c = ''+ applicant.NumberOfChildren__c;
+        applicant.Gender__c = ''+ applicant.Gender__c;
         component.set("v.applicant", applicant);
         for (var i = 1; i <= 31; i++) {
             var dayStr='';
@@ -182,7 +182,7 @@
     },
     changeRelationship : function(component, event, helper) {
         var applicantNo = component.get("v.applicantNo");
-        component.set("v.relationship", applicantNo + '----' + component.get("v.applicant.FinServ__MaritalStatus__c"));
+        component.set("v.relationship", applicantNo + '----' + component.get("v.applicant.MaritalStatus__c"));
     },
     setBirthday : function(component, event, helper) {
         var applicant = component.get("v.applicant");
@@ -199,7 +199,7 @@
     changeDependent: function(component, event) {
         var applicant = component.get("v.applicant");
         var applicantChildren = component.get("v.applicantChildren");
-        var sel= applicant.FinServ__NumberOfChildren__c;
+        var sel= applicant.NumberOfChildren__c;
         var len=0;
         if(applicantChildren.length>sel){
             len = applicantChildren.length - sel;
@@ -249,8 +249,8 @@
             applicant.Suburb__c = applicant1.Suburb__c;
             applicant.State__c = applicant1.State__c;
             applicant.Postal_Code__c = applicant1.Postal_Code__c;
-            applicant.FinServ__CountryOfResidence__c = applicant1.FinServ__CountryOfResidence__c;
-            applicant.FinServ__PrimaryAddressIsOther__c = applicant1.FinServ__PrimaryAddressIsOther__c;
+            applicant.CountryOfResidence__c = applicant1.CountryOfResidence__c;
+            applicant.PrimaryAddressIsOther__c = applicant1.PrimaryAddressIsOther__c;
             applicant.Postal_Address__c = applicant1.Postal_Address__c;
             applicant.isFindPostalAdd__c = applicant1.isFindPostalAdd__c;
             applicant.Postal_address_is_PO_or_GPO_box__c = applicant1.Postal_address_is_PO_or_GPO_box__c;
@@ -276,8 +276,8 @@
             applicant.Suburb__c = "";
             applicant.State__c = "";
             applicant.Postal_Code__c = "";
-            applicant.FinServ__CountryOfResidence__c = "";
-            applicant.FinServ__PrimaryAddressIsOther__c=false;
+            applicant.CountryOfResidence__c = "";
+            applicant.PrimaryAddressIsOther__c=false;
             applicant.Postal_Address__c="";
             applicant.isFindPostalAdd__c=false;
             applicant.Postal_address_is_PO_or_GPO_box__c = false;

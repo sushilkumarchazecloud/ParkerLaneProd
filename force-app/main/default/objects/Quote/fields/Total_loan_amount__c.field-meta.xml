@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Total_loan_amount__c</fullName>
-    <businessStatus>Active</businessStatus>
     <externalId>false</externalId>
-    <formula>Customer_Amount__c +  IF(  ISPICKVAL( Up_Front_Costs_Applicable__c , &apos;Yes&apos;)  ,  Total_Setup_Fees__c , 0)</formula>
+    <formula>Customer_Amount__c + IF( ISPICKVAL( Up_Front_Costs_Applicable__c , &apos;Yes&apos;) , Total_Setup_Fees__c , 0)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Total loan amount</label>
     <precision>18</precision>

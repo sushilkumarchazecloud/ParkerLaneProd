@@ -6,90 +6,14 @@
     <picklistValues>
         <picklist>Fee_Type__c</picklist>
         <values>
-            <fullName>Account Keeping</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Application</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Claw Back</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Deferred Establishment</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Discharge</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Establishment</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Exit</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Government Charges</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Legal</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Other</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Package</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Payment Processing</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Refundable Lender Membership Fee</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Risk</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Valuation</fullName>
+            <fullName>Value1</fullName>
             <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
         <picklist>Frequency__c</picklist>
         <values>
-            <fullName>Annual</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Exit</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Fortnightly</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Monthly</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Setup</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Weekly</fullName>
+            <fullName>Value1</fullName>
             <default>false</default>
         </values>
     </picklistValues>

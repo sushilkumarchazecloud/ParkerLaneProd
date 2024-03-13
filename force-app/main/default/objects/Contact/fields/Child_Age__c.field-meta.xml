@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Child_Age__c</fullName>
     <externalId>false</externalId>
-    <label>Child Age</label>
+    <label>Child_Age</label>
     <length>10</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

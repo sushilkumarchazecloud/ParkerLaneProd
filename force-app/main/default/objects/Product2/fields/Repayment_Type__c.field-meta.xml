@@ -13,7 +13,7 @@
             <value>
                 <fullName>Principle &amp; Interest</fullName>
                 <default>false</default>
-                <label>Principal &amp; Interest</label>
+                <label>Principle &amp; Interest</label>
             </value>
             <value>
                 <fullName>Interest Only</fullName>
@@ -29,6 +29,12 @@
                 <fullName>Credit Card</fullName>
                 <default>false</default>
                 <label>Credit Card</label>
+            </value>
+            <value>
+                <fullName>Principal &amp; Interest</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Principal &amp; Interest</label>
             </value>
         </valueSetDefinition>
     </valueSet>

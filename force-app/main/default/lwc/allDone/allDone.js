@@ -2,7 +2,7 @@ import { LightningElement, wire, track, api } from 'lwc';
 import SolarLoan from '@salesforce/resourceUrl/SolarLoan';
 import headersLogo from '@salesforce/resourceUrl/headersLogo';
 import ReferralPortal from '@salesforce/resourceUrl/ReferralPortal';
-import getOppDetails from '@salesforce/apex/ParkerLaneLoanController.getOppDetails';
+import getOppDetails from '@salesforce/apex/ApplicationFormController.getOppDetails';
 import LwcStyle from '@salesforce/resourceUrl/LwcStyle';
 import { loadStyle } from 'lightning/platformResourceLoader';
 
@@ -74,7 +74,7 @@ export default class AllDone extends LightningElement {
     }
 
     closePage(event){
-        window.location.href = 'https://www.parkerlane.com.au/';
+        window.location.href = 'https://chazecloud.com/';
     }
 
 }

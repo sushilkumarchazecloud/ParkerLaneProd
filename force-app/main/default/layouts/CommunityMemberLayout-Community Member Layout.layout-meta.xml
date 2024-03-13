@@ -24,11 +24,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Broker_Quote__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Broker_Quote_By__c</field>
+                <field>Best_Customer_Review__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

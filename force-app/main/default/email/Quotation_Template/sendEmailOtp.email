@@ -1,0 +1,34 @@
+<messaging:emailTemplate subject="Your secure login code is: {!relatedTo.LoginOtp__c}" recipientType="Contact" relatedToType="Contact" renderUsingSystemContextWithoutSharing="true">
+<messaging:htmlEmailBody >
+    <div style="max-width: 30rem;">
+                <div> Hi {!relatedTo.FirstName},</div><br/>
+                <div>Your secure login code is: {!relatedTo.LoginOtp__c}.</div><br/>                
+                <div>This code will expire shortly.</div><br/>
+                <div>Regards,</div>
+                <div>The Parker Lane Team</div><br/>
+                
+            <div>
+                <img width="115px" src="https://lanecorp--uat.sandbox.file.force.com/servlet/servlet.ImageServer?id=0159h00000064c1&oid=00D9h0000008XtF&lastMod=1664367526000" /><br/>
+                <i style="color : #192744; font-size :12px;">Do more with what you’ve got </i><br/><br/>
+                
+                <p>P.S. here’s why we’re recommended more often</p>
+                <ul>
+                    <li>Incredible rates!</li>
+                    <li>Great tech, real people</li>
+                    <li>Available to chat up to 7pm EST</li>
+                    <li>Awarded best in Australia for Personal Loans</li>
+                    <li>Awarded best in Australia for Home Loans</li>
+                    <li>Rated 4.92 out of 5 on ProductReview.com.au</li>
+                </ul>  
+                
+                <p style="color : #D3D3D3;">___</p>
+                <p style="color : #D3D3D3;">Want to get hold of us?<br/>
+                    Email: sethu.rawat@chazecloud.com<br/>
+                    Text: 0480 049 081  Call: 1300 13 17 11<br/>
+                    Australian Credit Licence Number 482276<br/>
+                </p>
+                <p style="color : #BFBFBF; font-size : 10px;">This email is confidential. If received in error, please delete it from your system. No confidentiality, privilege or intellectual property rights are waived or lost by any mis-transmission. To the extent permitted by law, Parker Lane does not assume responsibility or duty of care for any use or reliance upon this email by anyone other than the intended recipient. Parker Lane is committed to minimising its impact on the environment. Please consider the environment before printing this email.</p>
+            </div>
+    </div>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

@@ -10,9 +10,9 @@
         }
         emp.Months__c = '' + emp.Months__c;
         var applicant = component.get("v.applicant");
-        if(!$A.util.isUndefinedOrNull(applicant.FinServ__NumberOfChildren__c ) && applicant.FinServ__NumberOfChildren__c >0){
+        if(!$A.util.isUndefinedOrNull(applicant.NumberOfChildren__c ) && applicant.NumberOfChildren__c >0){
             helper.onChangeDependent(component, event);
-            applicant.FinServ__NumberOfChildren__c = ''+ applicant.FinServ__NumberOfChildren__c;
+            applicant.NumberOfChildren__c = ''+ applicant.NumberOfChildren__c;
             component.set("v.applicant", applicant);
         }
         
@@ -20,7 +20,7 @@
             emp.Minimum_hours_per_week__c = '' + emp.Minimum_hours_per_week__c;
         }
         
-        if(emp.FinServ__EmploymentStatus__c == ''){
+        if(emp.EmploymentStatus__c == ''){
             component.set("v.IsShowAnotherIncome",false);
         }else{
             component.set("v.IsShowAnotherIncome",true);
@@ -34,7 +34,7 @@
 
             var IsShowAnotherIncome = component.get("v.IsShowAnotherIncome");
             var employment = component.get("v.emp");
-            if(employment.FinServ__EmploymentStatus__c == ''){
+            if(employment.EmploymentStatus__c == ''){
                 component.set("v.IsShowAnotherIncome",false);
             }else{
                 component.set("v.IsShowAnotherIncome",true);
@@ -45,7 +45,7 @@
         var index = component.get("v.index");
         if(index == 0){
             helper.setOccupation(component, event);
-            component.set("v.emp.FinServ__EmploymentStatus__c", "");
+            component.set("v.emp.EmploymentStatus__c", "");
         }
     },
     
@@ -60,7 +60,7 @@
         var applicant = component.get("v.applicant");
         var applicantChildren = component.get("v.applicantChildren");
         
-        if(employment.FinServ__EmploymentStatus__c == 'Family Tax Benefits'){
+        if(employment.EmploymentStatus__c == 'Family Tax Benefits'){
             if(applicantChildren.length==0){
                 childAgeListedorNot = false;
             }
@@ -108,7 +108,7 @@
             }
             searchString += streetNumber + ' ' + street + ' ' + streetType + ' ' + suburb + ' ' +
                 state + ' ' + country + ' ' + postalCode;
-            emp.FinServ__EmployerAddress__c = searchString;
+            emp.EmployerAddress__c = searchString;
             component.set("v.emp", emp);
         }
         
@@ -166,9 +166,9 @@
             emp.Suburb__c = applicant.Suburb__c;
             emp.State__c = applicant.State__c;
             emp.Postal_Code__c = applicant.Postal_Code__c;
-            emp.Country__c = applicant.FinServ__CountryOfResidence__c;
+            emp.Country__c = applicant.CountryOfResidence__c;
             
-            emp.FinServ__EmployerAddress__c = applicant.Residential_Address__c;
+            emp.EmployerAddress__c = applicant.Residential_Address__c;
             component.set("v.emp", emp);
             
         }else{
@@ -183,7 +183,7 @@
             emp.Postal_Code__c = "";
             emp.Country__c = "";
             
-            emp.FinServ__EmployerAddress__c = null;
+            emp.EmployerAddress__c = null;
             component.set("v.emp", emp);
         }
         

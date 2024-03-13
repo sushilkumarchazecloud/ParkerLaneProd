@@ -2,8 +2,11 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Co_applicant_s_income_Retirement_Desc__c</fullName>
     <externalId>false</externalId>
-    <label>Co-applicant&apos;s income Retirement Desc</label>
+    <label>Co applicant s income Retirement Desc</label>
+    <length>255</length>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>
-    <type>TextArea</type>
+    <type>Text</type>
+    <unique>false</unique>
 </CustomField>

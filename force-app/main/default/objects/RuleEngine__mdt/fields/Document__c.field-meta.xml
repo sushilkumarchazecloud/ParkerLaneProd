@@ -4,8 +4,6 @@
     <externalId>false</externalId>
     <fieldManageability>DeveloperControlled</fieldManageability>
     <label>Document</label>
-    <length>255</length>
-    <required>true</required>
-    <type>Text</type>
-    <unique>false</unique>
+    <required>false</required>
+    <type>TextArea</type>
 </CustomField>

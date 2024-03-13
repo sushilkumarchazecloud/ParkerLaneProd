@@ -3,7 +3,10 @@
     <fullName>Relevant_options_Other_Description__c</fullName>
     <externalId>false</externalId>
     <label>Relevant options Other Description</label>
+    <length>255</length>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>
-    <type>TextArea</type>
+    <type>Text</type>
+    <unique>false</unique>
 </CustomField>

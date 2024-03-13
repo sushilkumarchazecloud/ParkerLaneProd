@@ -1,0 +1,6 @@
+<messaging:emailTemplate subject="Reminder: your {!relatedTo.Purpose__c} finance approval is ready for draw-down" recipientType="Contact" relatedToType="Opportunity">
+<messaging:HtmlEmailBody >
+
+<c:ReminderForApprovedCmp oppId="{!relatedTo.Id}" thirtyCsmtEmailForApp2="true"/>
+</messaging:HtmlEmailBody>
+</messaging:emailTemplate>

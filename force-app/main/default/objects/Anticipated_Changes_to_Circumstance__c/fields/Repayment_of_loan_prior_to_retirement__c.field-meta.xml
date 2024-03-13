@@ -4,6 +4,7 @@
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
     <label>Repayment of loan prior to retirement</label>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

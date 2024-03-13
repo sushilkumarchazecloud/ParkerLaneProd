@@ -52,24 +52,24 @@
         var applicant2 = component.get('v.applicant2');
 
         if(!$A.util.isUndefinedOrNull(appRelationship) && appNo == '1' && selectedPerson == 'joint'){    
-            if(!$A.util.isUndefinedOrNull(applicant1.FinServ__MaritalStatus__c) && 
-               applicant1.FinServ__MaritalStatus__c == 'Married / Defacto (to applicant 2)'){
+            if(!$A.util.isUndefinedOrNull(applicant1.MaritalStatus__c) && 
+               applicant1.MaritalStatus__c == 'Married / Defacto (to applicant 2)'){
                 
-                applicant2.FinServ__MaritalStatus__c = 'Married / Defacto (to applicant 1)';
-            }else if(!$A.util.isUndefinedOrNull(applicant1.FinServ__MaritalStatus__c) && 
-                     !$A.util.isUndefinedOrNull(applicant2.FinServ__MaritalStatus__c) && 
-                     applicant1.FinServ__MaritalStatus__c != 'Married / Defacto (to applicant 2)' &&
-                     applicant2.FinServ__MaritalStatus__c == 'Married / Defacto (to applicant 1)'){
+                applicant2.MaritalStatus__c = 'Married / Defacto (to applicant 1)';
+            }else if(!$A.util.isUndefinedOrNull(applicant1.MaritalStatus__c) && 
+                     !$A.util.isUndefinedOrNull(applicant2.MaritalStatus__c) && 
+                     applicant1.MaritalStatus__c != 'Married / Defacto (to applicant 2)' &&
+                     applicant2.MaritalStatus__c == 'Married / Defacto (to applicant 1)'){
                 
-                applicant2.FinServ__MaritalStatus__c = '';
+                applicant2.MaritalStatus__c = '';
             }
         }else if(appNo == '2'){
-            if(!$A.util.isUndefinedOrNull(applicant1.FinServ__MaritalStatus__c) && 
-               !$A.util.isUndefinedOrNull(applicant2.FinServ__MaritalStatus__c) &&
-               applicant1.FinServ__MaritalStatus__c != 'Married / Defacto (to applicant 2)' &&
-               applicant2.FinServ__MaritalStatus__c == 'Married / Defacto (to applicant 1)'){
+            if(!$A.util.isUndefinedOrNull(applicant1.MaritalStatus__c) && 
+               !$A.util.isUndefinedOrNull(applicant2.MaritalStatus__c) &&
+               applicant1.MaritalStatus__c != 'Married / Defacto (to applicant 2)' &&
+               applicant2.MaritalStatus__c == 'Married / Defacto (to applicant 1)'){
 				
-                applicant2.FinServ__MaritalStatus__c = '';
+                applicant2.MaritalStatus__c = '';
                 component.set('v.showError',true);
                 helper.scrollTop(component, event);
             }else{

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Send Email when stage is CPA start or CPA Done</name>
+    <style>none</style>
+    <subject>{!Opportunity.OwnerFirstName}! {!Opportunity.Name} has moved to {!Opportunity.StageName}</subject>
+    <textOnly>Hi {!Opportunity.OwnerFullName}
+{!Opportunity.Name} application&apos;s stage has changed with {!Opportunity.StageName}.
+Click here to commence your application</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

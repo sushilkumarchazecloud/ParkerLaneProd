@@ -184,14 +184,11 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
-        <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>Case_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <skipRecordTypeSelect>false</skipRecordTypeSelect>
-        <type>Flexipage</type>
+        <type>Default</type>
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
+        <formFactor>Large</formFactor>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -199,15 +196,14 @@
         <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
-    <compactLayoutAssignment>Case_Compact_Layout</compactLayoutAssignment>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <enableFeeds>true</enableFeeds>
-    <externalSharingModel>ReadWriteTransfer</externalSharingModel>
+    <externalSharingModel>Private</externalSharingModel>
     <searchLayouts>
         <customTabListAdditionalFields>CASES.CASE_NUMBER</customTabListAdditionalFields>
         <customTabListAdditionalFields>CASES.SUBJECT</customTabListAdditionalFields>
         <customTabListAdditionalFields>CASES.CREATED_DATE</customTabListAdditionalFields>
         <customTabListAdditionalFields>CASES.PRIORITY</customTabListAdditionalFields>
-        <listViewButtons>Mass_Case_Delete</listViewButtons>
         <lookupDialogsAdditionalFields>CASES.CASE_NUMBER</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>CASES.SUBJECT</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>NAME</lookupDialogsAdditionalFields>

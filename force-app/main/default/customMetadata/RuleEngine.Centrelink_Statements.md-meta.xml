@@ -16,15 +16,18 @@
     </values>
     <values>
         <field>Fields__c</field>
-        <value xsi:type="xsd:string">FinServ__EmploymentStatus__c</value>
+        <value xsi:type="xsd:string">EmploymentStatus__c</value>
     </values>
     <values>
         <field>Object__c</field>
-        <value xsi:type="xsd:string">FinServ__Employment__c</value>
+        <value xsi:type="xsd:string">Employment__c</value>
     </values>
     <values>
         <field>Rules__c</field>
-        <value xsi:type="xsd:string">FinServ__Employment__c.FinServ__EmploymentStatus__c == Pension || FinServ__Employment__c.FinServ__EmploymentStatus__c == FamilyTaxBenefits || FinServ__Employment__c.FinServ__EmploymentStatus__c == DisabilityPension || FinServ__Employment__c.FinServ__EmploymentStatus__c == CarersPension</value>
+        <value xsi:type="xsd:string">Employment__c.EmploymentStatus__c == Pension ||
+            Employment__c.EmploymentStatus__c == FamilyTaxBenefits ||
+            Employment__c.EmploymentStatus__c == DisabilityPension ||
+            Employment__c.EmploymentStatus__c == CarersPension</value>
     </values>
     <values>
         <field>isGeneral__c</field>

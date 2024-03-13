@@ -86,7 +86,6 @@
     getSendQuote: function (component, event) {
         
         var repayOverTerm = event.getSource().get('v.value');
-        
         //var repayOverTermcheck = component.get("v.repayOverTerm");
 
         if(!$A.util.isUndefinedOrNull(repayOverTerm) && repayOverTerm !=''){

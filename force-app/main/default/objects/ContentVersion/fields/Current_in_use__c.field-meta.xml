@@ -3,7 +3,7 @@
     <fullName>Current_in_use__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Current (in use)</label>
+    <label>Current in use</label>
     <trackHistory>false</trackHistory>
     <type>Checkbox</type>
 </CustomField>

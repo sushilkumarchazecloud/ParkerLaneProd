@@ -45,7 +45,7 @@ public without sharing class QuotationTemplatePDFCtrl {
                      FROM Opportunity WHERE Id =: OppId];
             }
             
-            List<String> appSectionsList = ParkerLaneLoanController.getApplicationSections();
+            List<String> appSectionsList = ApplicationFormController.getApplicationSections();
             
             if(!oppsQuotesList.isEmpty()){
                 opprtunity = oppsQuotesList[0];

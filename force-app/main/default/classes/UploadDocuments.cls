@@ -18,18 +18,18 @@ public without sharing class UploadDocuments {
         Boolean applicantOneEmp = false;
         Boolean applicantTwoEmp = false;
         
-        if(conEmpMap.get('applicant1').FinServ__Employment__r.size() > 0){
-            for(FinServ__Employment__c emp : conEmpMap.get('applicant1').FinServ__Employment__r){
-                if(emp.FinServ__EmploymentStatus__c == 'Full time permanent' || emp.FinServ__EmploymentStatus__c == 'Part time permanent' || emp.FinServ__EmploymentStatus__c == 'Casual / Temporary'){
+        if(conEmpMap.get('applicant1').Employment__r.size() > 0){
+            for(Employment__c emp : conEmpMap.get('applicant1').Employment__r){
+                if(emp.EmploymentStatus__c == 'Full time permanent' || emp.EmploymentStatus__c == 'Part time permanent' || emp.EmploymentStatus__c == 'Casual / Temporary'){
                     applicantOneEmp = true;
                     break;
                 }
             }
         }
         if(opp.Applicant_2__c != null){
-            if(conEmpMap.get('applicant2').FinServ__Employment__r.size() > 0){
-                for(FinServ__Employment__c emp : conEmpMap.get('applicant2').FinServ__Employment__r){
-                    if(emp.FinServ__EmploymentStatus__c == 'Full time permanent' || emp.FinServ__EmploymentStatus__c == 'Part time permanent' || emp.FinServ__EmploymentStatus__c == 'Casual / Temporary'){
+            if(conEmpMap.get('applicant2').Employment__r.size() > 0){
+                for(Employment__c emp : conEmpMap.get('applicant2').Employment__r){
+                    if(emp.EmploymentStatus__c == 'Full time permanent' || emp.EmploymentStatus__c == 'Part time permanent' || emp.EmploymentStatus__c == 'Casual / Temporary'){
                         applicantTwoEmp = true;
                         break;
                     }
@@ -136,7 +136,7 @@ public without sharing class UploadDocuments {
         
         Opportunity opp = [Select Id,Applicant_1__c,Applicant_2__c,RecordTypeId  from Opportunity where Id=:oppId Limit 1];
         
-        if(!ParkerLaneLoanController.mortgageRTList.contains(opp.RecordTypeId)){
+        if(!ApplicationFormController.mortgageRTList.contains(opp.RecordTypeId)){
             ApexPages.PageReference pgRef = new ApexPages.PageReference(pgUrl);
             Map<String, String> params = pgRef.getParameters();
             
@@ -160,18 +160,18 @@ public without sharing class UploadDocuments {
             Boolean applicantOneEmp = false;
             Boolean applicantTwoEmp = false;
             
-            if(conEmpMap.get('applicant1').FinServ__Employment__r.size() > 0){
-                for(FinServ__Employment__c emp : conEmpMap.get('applicant1').FinServ__Employment__r){
-                    if(emp.FinServ__EmploymentStatus__c == 'Full time permanent' || emp.FinServ__EmploymentStatus__c == 'Part time permanent' || emp.FinServ__EmploymentStatus__c == 'Casual / Temporary'){
+            if(conEmpMap.get('applicant1').Employment__r.size() > 0){
+                for(Employment__c emp : conEmpMap.get('applicant1').Employment__r){
+                    if(emp.EmploymentStatus__c == 'Full time permanent' || emp.EmploymentStatus__c == 'Part time permanent' || emp.EmploymentStatus__c == 'Casual / Temporary'){
                         applicantOneEmp = true;
                         break;
                     }
                 }
             }
             if(opp.Applicant_2__c != null){
-                if(conEmpMap.get('applicant2').FinServ__Employment__r.size() > 0){
-                    for(FinServ__Employment__c emp : conEmpMap.get('applicant2').FinServ__Employment__r){
-                        if(emp.FinServ__EmploymentStatus__c == 'Full time permanent' || emp.FinServ__EmploymentStatus__c == 'Part time permanent' || emp.FinServ__EmploymentStatus__c == 'Casual / Temporary'){
+                if(conEmpMap.get('applicant2').Employment__r.size() > 0){
+                    for(Employment__c emp : conEmpMap.get('applicant2').Employment__r){
+                        if(emp.EmploymentStatus__c == 'Full time permanent' || emp.EmploymentStatus__c == 'Part time permanent' || emp.EmploymentStatus__c == 'Casual / Temporary'){
                             applicantTwoEmp = true;
                             break;
                         }
@@ -334,17 +334,17 @@ public without sharing class UploadDocuments {
         //added 2-3-22
         List<String>  personalRecTypeNameList = New List<String>{'Green Loan','Asset Finance','Commercial Solar Purchase','Commercial Asset Finance','Debt Consolidation','Home Improvement','Personal Loan','Vehicle Purchase'};
         List<String>  mortgageRecTypeNameList = New List<String>{'Commercial Mortgage','Commercial Property Purchase','Home Loan Construction','Home Loan Purchase','Home Loan Refinance','Opportunity (Wallet Share)'};
-        String fromEmailAddress = 'hello@parkerlane.com.au';
+        String fromEmailAddress = 'sethu.rawat@chazecloud.com';
         
         if(personalRecTypeNameList.contains(op.RecordType.Name)){
-            fromEmailAddress = 'personalapplications@parkerlane.com.au';
-            mail.setReplyTo('personalapplications@parkerlane.com.au');
+            fromEmailAddress = 'tazeem.khan@chazecloud.com';
+            mail.setReplyTo('tazeem.khan@chazecloud.com');
         }else if(mortgageRecTypeNameList.contains(op.RecordType.Name)){
             //added 16-2-22
             if(String.isNotBlank(op.Credit_Analyst__c)){
                 mail.setCcAddresses(new string[] {op.Credit_Analyst__r.Email});
             }
-            fromEmailAddress = 'mortgageapplications@parkerlane.com.au';
+            fromEmailAddress = 'tazeem.khan@chazecloud.com';
             mail.setReplyTo(op.Owner.Email);
         }
         OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address =:fromEmailAddress];
@@ -385,7 +385,7 @@ public without sharing class UploadDocuments {
         ownerMail.setTreatTargetObjectAsRecipient(false); 
         ownerMail.setTargetobjectid((ID)op.Applicant_1__r.PersonContactId );
         ownerMail.setTemplateId(et2.Id);
-        ownerMail.setReplyTo('personalapplications@parkerlane.com.au');
+        ownerMail.setReplyTo('tazeem.khan@chazecloud.com');
         //ownerMail.setReplyTo(op.Owner.Email);
         List<Messaging.SingleEmailMessage> allmsg2 = new List<Messaging.SingleEmailMessage>();
         allmsg2.add(ownerMail);
@@ -442,7 +442,7 @@ public without sharing class UploadDocuments {
     
      @AuraEnabled
     public static string getUserId(){
-        User userid = [select id,username from user where username='lanecorp@apply-parkerlane.force.com'][0];
+        User userid = [select id,username from user where username=: system.label.site_User][0];
         return userid.Id;
         //system.debug('userid'+userid.Id);
     }

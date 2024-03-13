@@ -23,12 +23,12 @@ global without sharing class Digital_ID_Sign {
     public static String signId {get; set;} 
     public static String ImageSrc {get; set;}
     public static boolean redirectToError {get; set;}
-    public static FinServ__FinancialGoal__c financialGoal {get; set;}
+    public static Goals__c financialGoal {get; set;}
     public static string secApplicantName {get; set;}
     public static string message {get;set;}
     public string accessToken {get;set;}
-    public static FinServ__Employment__c emp1{get; set;}
-    public static FinServ__Employment__c emp2{get; set;}
+    public static Employment__c emp1{get; set;}
+    public static Employment__c emp2{get; set;}
     public static boolean isVOIforApp2{get; set;}
     
     
@@ -79,8 +79,8 @@ global without sharing class Digital_ID_Sign {
         }        
     }
     
-    public static FinServ__Employment__c Employementdata(string dataId){
-        FinServ__Employment__c obj = [select id, Name,FinServ__Occupation__c from FinServ__Employment__c WHERE FinServ__Contact__c =: dataId AND Is_Primary__c = true ];
+    public static Employment__c Employementdata(string dataId){
+        Employment__c obj = [select id, Name,Occupation__c from Employment__c WHERE Contact__c =: dataId AND Is_Primary__c = true ];
         return obj;
     }
     
@@ -163,9 +163,9 @@ global without sharing class Digital_ID_Sign {
     public static Opportunity getOpportunity(){
         System.debug('oppp: : : '+OppId);
        // RecordId  = ApexPages.currentPage().getParameters().get('id');
-       	Opp = [select Id,Name,Amount,Number_of_applicants__c,Applicant_1__r.Number_of_applicants_to_operate_account__pc, Application_Sections__c,Applicant_2__r.FinServ__Occupation__pc, Applicant_1__r.Tax_Resident_of_countries__pc, Current_Application_Sections__c,FinServ__ReferredByUser__c,Applicant_2__r.FinServ__Gender__pc,Applicant_2__r.Residential_Address__pc,Applicant_2__r.Postal_Address__pc,Applicant_2__r.PersonMobilePhone,Applicant_2__r.PersonEmail,Applicant_2__r.Primary_Employer_Job_Title__pc,Applicant_2__r.FirstName,
-               Applicant_1__c,Applicant_1__r.Residential_Address__pc,Applicant_1__r.Primary_Employer_Job_Title__pc,Applicant_1__r.FinServ__Occupation__pc, Applicant_1__r.Postal_Address__pc, Lender__c,Product_Name__c,Brokerage_Service_Fee_inc_GST__c,Total_Loan_amount__c,Interest_Rate__c, Applicant_1__r.Name,Applicant_1__r.PersonContactId,Loan_Term_months__c, Applicant_2__c, Applicant_2__r.PersonContactId,Lead_Source__c,Loan_Amount__c,
-               Account.RecordType.Name,Applicant_1__r.PersonEmail,Applicant_2__r.Name,Customer_Support_Person__c, Applicant_1__r.Tax_File_Number_TFN__pc, Applicant_1__r.PersonMobilePhone, Applicant_2__r.LastName, Applicant_1__r.PersonBirthdate,Applicant_2__r.PersonBirthdate, Applicant_1__r.FinServ__Gender__pc, Applicant_1__r.LastName,Applicant_1__r.FirstName, FinServ__Household__c,Type_of_interest_rate__c,Monthly_Repayments__c, Application_Supporting_Notes__c, Preferred_repayment_frequency__c, Relationship_to_Applicant_2__c,RecordType.Name,
+       	Opp = [select Id,Name,Amount,Number_of_applicants__c,Applicant_1__r.Number_of_applicants_to_operate_account__pc, Application_Sections__c,Applicant_2__r.Occupation__pc, Applicant_1__r.Tax_Resident_of_countries__pc, Current_Application_Sections__c,ReferredByUser__c,Applicant_2__r.Gender__pc,Applicant_2__r.Residential_Address__pc,Applicant_2__r.Postal_Address__pc,Applicant_2__r.PersonMobilePhone,Applicant_2__r.PersonEmail,Applicant_2__r.Primary_Employer_Job_Title__pc,Applicant_2__r.FirstName,
+               Applicant_1__c,Applicant_1__r.Residential_Address__pc,Applicant_1__r.Primary_Employer_Job_Title__pc,Applicant_1__r.Occupation__pc, Applicant_1__r.Postal_Address__pc, Lender__c,Product_Name__c,Brokerage_Service_Fee_inc_GST__c,Total_Loan_amount__c,Interest_Rate__c, Applicant_1__r.Name,Applicant_1__r.PersonContactId,Loan_Term_months__c, Applicant_2__c, Applicant_2__r.PersonContactId,Lead_Source__c,Loan_Amount__c,
+               Account.RecordType.Name,Applicant_1__r.PersonEmail,Applicant_2__r.Name,Customer_Support_Person__c, Applicant_1__r.Tax_File_Number_TFN__pc, Applicant_1__r.PersonMobilePhone, Applicant_2__r.LastName, Applicant_1__r.PersonBirthdate,Applicant_2__r.PersonBirthdate, Applicant_1__r.Gender__pc, Applicant_1__r.LastName,Applicant_1__r.FirstName, Household__c,Type_of_interest_rate__c,Monthly_Repayments__c, Application_Supporting_Notes__c, Preferred_repayment_frequency__c, Relationship_to_Applicant_2__c,RecordType.Name,
                Name_s_on_account__c,Financial_Institution__c,BSB_number__c,Account_number__c FROM Opportunity WHERE Id =: OppId limit 1];
         
       
@@ -178,16 +178,16 @@ global without sharing class Digital_ID_Sign {
         return opp;
     }
     
-    public static FinServ__FinancialGoal__c getfinancialGoal(){
+    public static Goals__c getfinancialGoal(){
         opportunity op = [select Id, name, Applicant_1__r.Id from opportunity WHERE ID =:OppId LIMIT 1];
         
-        List<FinServ__FinancialGoal__c> fgList = new List<FinServ__FinancialGoal__c>();
+        List<Goals__c> fgList = new List<Goals__c>();
           
-        for(FinServ__FinancialGoal__c obj : [select Id, Which_financial_priorities_relevant_you__c FROM FinServ__FinancialGoal__c where FinServ__PrimaryOwner__c =: op.Applicant_1__r.Id LIMIT 1]){
+        for(Goals__c obj : [select Id, Which_financial_priorities_relevant_you__c FROM Goals__c where PrimaryOwner__c =: op.Applicant_1__r.Id LIMIT 1]){
             fgList.add(obj);
         }
     	
-        FinServ__FinancialGoal__c obj;
+        Goals__c obj;
         
         if(fgList !=  null){
             if(fgList.size() > 0){
@@ -566,8 +566,8 @@ global without sharing class Digital_ID_Sign {
                 String bSBN = Apexpages.currentPage().getParameters().get('BSB');
                 String accountNum = Apexpages.currentPage().getParameters().get('AcNmbr');
                 
-                Contact con = [SELECT Name, Medicare_Reference__c,Number_of_applicants_to_operate_account__c,Tax_Resident_of_countries__c,Tax_File_Number_TFN__c,Tax_Identification_Number_TIN__c, FirstName,AccountId, LastName,Govt_Id_Number__c, MiddleName,Does_your_spouse_earn_an_income__c,spouse_s_approximate_annual_income__c, Email, Phone, Title, Birthdate,FinServ__Occupation__c,Account.Industry,Primary_Employer_Job_Title__c, 
-                               OtherPhone, FinServ__Gender__c,Rental_or_Board_paid__c, FinServ__MaritalStatus__c, Government_ID__c,
+                Contact con = [SELECT Name, Medicare_Reference__c,Number_of_applicants_to_operate_account__c,Tax_Resident_of_countries__c,Tax_File_Number_TFN__c,Tax_Identification_Number_TIN__c, FirstName,AccountId, LastName,Govt_Id_Number__c, MiddleName,Does_your_spouse_earn_an_income__c,spouse_s_approximate_annual_income__c, Email, Phone, Title, Birthdate,Occupation__c,Account.Industry,Primary_Employer_Job_Title__c, 
+                               OtherPhone, Gender__c,Rental_or_Board_paid__c, MaritalStatus__c, Government_ID__c,
                                Rental_Amount__c, Rental_Frequency__c, Rental_Managed_via__c, Citizenship_Status__c, Visa_Details__c,
                                Driver_s_licence_state_Territory__c,First_Name_Child_1__c, Residential_Address__c,First_Name_Child_2__c, First_Name_Child_3__c, First_Name_Child_4__c, First_Name_Child_5__c,
                                Age_Child_1__c, Age_Child_2__c, Age_Child_3__c, Age_Child_4__c, Age_Child_5__c,Medicare_Card_Colour__c,
@@ -664,8 +664,8 @@ global without sharing class Digital_ID_Sign {
         
         system.debug('recordId'+voi.contact__r.Id);
         
-        Contact con = [SELECT Name, Medicare_Reference__c,Postal_Code__c,ID_Card_Number__c,Salutation, FirstName,AccountId, LastName,Govt_Id_Number__c, MiddleName,Does_your_spouse_earn_an_income__c,spouse_s_approximate_annual_income__c, Email, Phone, Title, Birthdate,FinServ__Occupation__c,Account.Industry,Primary_Employer_Job_Title__c, 
-                                                                 OtherPhone, FinServ__Gender__c,Rental_or_Board_paid__c, FinServ__MaritalStatus__c, Government_ID__c,
+        Contact con = [SELECT Name, Medicare_Reference__c,Postal_Code__c,ID_Card_Number__c,Salutation, FirstName,AccountId, LastName,Govt_Id_Number__c, MiddleName,Does_your_spouse_earn_an_income__c,spouse_s_approximate_annual_income__c, Email, Phone, Title, Birthdate,Occupation__c,Account.Industry,Primary_Employer_Job_Title__c, 
+                                                                 OtherPhone, Gender__c,Rental_or_Board_paid__c, MaritalStatus__c, Government_ID__c,
                                                                  Rental_Amount__c, Rental_Frequency__c, Rental_Managed_via__c, Citizenship_Status__c, Visa_Details__c,
                                                                  First_Name_Child_1__c,Driver_s_licence_state_Territory__c, Residential_Address__c,First_Name_Child_2__c, First_Name_Child_3__c, First_Name_Child_4__c, First_Name_Child_5__c,
                                                                  Age_Child_1__c, Age_Child_2__c, Age_Child_3__c, Age_Child_4__c, Age_Child_5__c,Medicare_Card_Colour__c,
@@ -683,7 +683,7 @@ global without sharing class Digital_ID_Sign {
         con.Birthdate = cont.Birthdate;
         con.Government_ID__c = cont.Government_ID__c;
         con.Govt_Id_Number__c = cont.Govt_Id_Number__c;
-        con.FinServ__Gender__c = cont.FinServ__Gender__c;
+        con.Gender__c = cont.Gender__c;
         con.MiddleName = cont.MiddleName;
         con.FirstName = cont.FirstName;
         con.LastName = cont.LastName;
@@ -945,13 +945,13 @@ global without sharing class Digital_ID_Sign {
             email.setTemplateId(emailTemplate.id);         
             email.setTargetObjectId(con.id);
             email.setWhatId(OppId);
-            OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address =: UtilityClass.adminEmail]; // 'personalapplications@parkerlane.com.au'
+            OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address =: UtilityClass.adminEmail]; // 'tazeem.khan@chazecloud.com'
             if(owea != null){
                 if ( owea.size() > 0 ) {
                     email.setOrgWideEmailAddressId(owea.get(0).Id);
                 }
             }
-            email.setReplyTo('personalapplications@parkerlane.com.au');
+            email.setReplyTo('tazeem.khan@chazecloud.com');
             System.debug('efaList+'+efaList.size());
             email.setFileAttachments(efaList);
             //email.setFileAttachments(new Messaging.EmailFileAttachment[] {efa});
@@ -1134,15 +1134,15 @@ global without sharing class Digital_ID_Sign {
             email.setTargetObjectId(con.id);
             email.setWhatId(opp.id);
            	email.setTreatTargetObjectAsRecipient(false);
-            OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'personalapplications@parkerlane.com.au'];
+            OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'tazeem.khan@chazecloud.com'];
             if(owea != null){
                 if ( owea.size() > 0 ) {
                     email.setOrgWideEmailAddressId(owea.get(0).Id);
                 }
             }
-            email.setReplyTo('personalapplications@parkerlane.com.au');
+            email.setReplyTo('tazeem.khan@chazecloud.com');
             email.saveAsActivity = true;
-            string[] to = new string[] {'personalapplications@parkerlane.com.au'};  
+            string[] to = new string[] {'tazeem.khan@chazecloud.com'};  
                 email.setToAddresses(to);
             
             Messaging.sendEmail(new Messaging.SingleEmailMessage[] {email});           

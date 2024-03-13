@@ -14,7 +14,7 @@
         if(!$A.util.isUndefinedOrNull(selectedPerson) && selectedPerson == 'single'){
             component.set("v.OwnershipOptions", []);
             var JointWithSpouse = '';
-            if(applicant.FinServ__MaritalStatus__c == 'Married / defacto' || applicant.FinServ__MaritalStatus__c == 'Married' || applicant.FinServ__MaritalStatus__c == 'Divorced'){
+            if(applicant.MaritalStatus__c == 'Married / defacto' || applicant.MaritalStatus__c == 'Married' || applicant.MaritalStatus__c == 'Divorced'){
                 JointWithSpouse = 'Joint with Spouse';
             }
             var applicant1optionslist = ['Applicant 1', JointWithSpouse, 'Joint with other']; 
@@ -29,9 +29,9 @@
          var highlight = component.find('changeIt');
          $A.util.addClass(highlight, 'highlightOnselect');
         
-        if(!$A.util.isUndefinedOrNull(applicant.FinServ__NumberOfChildren__c )){
-            applicant.FinServ__NumberOfChildren__c = ''+ applicant.FinServ__NumberOfChildren__c;
-            applicant.FinServ__Gender__c = ''+ applicant.FinServ__Gender__c;
+        if(!$A.util.isUndefinedOrNull(applicant.NumberOfChildren__c )){
+            applicant.NumberOfChildren__c = ''+ applicant.NumberOfChildren__c;
+            applicant.Gender__c = ''+ applicant.Gender__c;
             component.set("v.applicant", applicant);
             $A.util.removeClass(highlight, 'highlightOnselect');
         }
@@ -164,7 +164,7 @@
     },
     changeRelationship : function(component, event, helper) {
         var applicantNo = component.get("v.applicantNo");
-        component.set("v.relationship", applicantNo + '----' + component.get("v.applicant.FinServ__MaritalStatus__c"));
+        component.set("v.relationship", applicantNo + '----' + component.get("v.applicant.MaritalStatus__c"));
     },
     setBirthday : function(component, event, helper) {
         var applicant = component.get("v.applicant");
@@ -183,7 +183,7 @@
         var highlight = component.find('changeIt');
         var applicant = component.get("v.applicant");
         var applicantChildren = component.get("v.applicantChildren");
-        var sel= applicant.FinServ__NumberOfChildren__c;
+        var sel= applicant.NumberOfChildren__c;
         var len=0;
         if(applicantChildren.length>sel){
             len = applicantChildren.length - sel;

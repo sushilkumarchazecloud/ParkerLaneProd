@@ -3,7 +3,8 @@
     <fullName>Medical_treatment_illness__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Medical treatment / illness</label>
+    <label>Medical treatment illness</label>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

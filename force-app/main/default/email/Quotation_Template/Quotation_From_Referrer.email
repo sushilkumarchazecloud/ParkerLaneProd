@@ -1,0 +1,40 @@
+<div>Dear {!Lead.Referrer_First_Name__c},</div>
+<br />
+<div style="text-align: justify">
+    <div>
+        <b>Thank you! Your customers are lucky that you’re willing to go the extra mile.</b>
+    </div>
+    <br />
+    <div>
+        <div>
+            Thank you! We’re thrilled that you thought of us to offer alternative payment options for your customers, we won’t let you down. Your referral details are as follows
+        </div>
+        
+        <br />
+
+        <div><b>Name:</b> {!Lead.Name} </div>
+        <div><b>Quote Amount:</b> {!Lead.Customer_Amount__c} </div>
+        <div><b>Address:</b> {!Lead.leadAddress__c} </div>
+        <div><b>Phone:</b> {!Lead.Phone}</div>
+        <div><b>Send email to:</b> {!Lead.Send_the_quote_to__c} </div>
+    </div>
+    <br />
+    <div >
+    Attached are three (3) excellent options to help your customers do business with you. We think these are likely to be the most competitive unsecured {!Lead.Purpose__c} loan rate around.
+    </div>
+    <br/>
+    <div>
+        <div>
+        <i>This document is provided only for the purposes of forwarding to the customer. Do not discuss its contents with the customer.</i>
+        </div>
+        <br/>
+        <div><b><u>Please provide the attached document to your customer within the next 5 days.</u></b></div>
+        <br/>
+        <div>And remember, the NCCP Act strictly prohibits engaging in any credit activities by non credit license holders. Stay safe and avoid discussing any matters relating to finance.</div>
+        <br/>
+        <div>If you have any questions about this email please don't hesitate to call us on 1300 131 711, or simply reply to this email.</div>
+        <br/>
+    </div>
+</div>
+Kind regards, <br />
+The Parker Lane team

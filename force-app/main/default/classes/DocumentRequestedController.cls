@@ -90,7 +90,7 @@ public without sharing class DocumentRequestedController{
             
             System.debug('oppUpdate'+oppUpdate);
             System.debug('oppUpdate'+oppUpdate.Applicant_1__r.PersonContact.Email);
-            ParkerLaneLoanController.sendApplication(oppId, oppUpdate.Applicant_1__r.PersonContactId, oppUpdate.Quotes[0].id, New List<String>{oppUpdate.Applicant_1__r.PersonContact.Email}, 'Application Form Completion Remainder', false);
+            ApplicationFormController.sendApplication(oppId, oppUpdate.Applicant_1__r.PersonContactId, oppUpdate.Quotes[0].id, New List<String>{oppUpdate.Applicant_1__r.PersonContact.Email}, 'Application Form Completion Remainder', false);
             return 'success';
         }else{
             return 'error';

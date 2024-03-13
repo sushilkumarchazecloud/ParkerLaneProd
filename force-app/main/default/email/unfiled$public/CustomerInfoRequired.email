@@ -1,0 +1,5 @@
+<messaging:emailTemplate subject="{!relatedTo.Last_Customer_Action__c}! Verify your details to receive a decision" recipientType="Contact" relatedToType="Opportunity" renderUsingSystemContextWithoutSharing="true">
+<messaging:htmlEmailBody >
+<c:customerInformationRequired oppId="{!relatedTo.Id}"/>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

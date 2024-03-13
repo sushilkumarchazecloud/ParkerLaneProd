@@ -5,10 +5,9 @@
     <externalId>false</externalId>
     <label>Dependent Parent</label>
     <referenceTo>Account</referenceTo>
-    <relationshipLabel>Dependent Children</relationshipLabel>
-    <relationshipName>Dependent_Parents</relationshipName>
+    <relationshipLabel>Accounts (Dependent Parent)</relationshipLabel>
+    <relationshipName>Accounts1</relationshipName>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
     <type>Lookup</type>
 </CustomField>

@@ -5,36 +5,12 @@
         helper.scrollTop(component, event, 0);
     },
     
-    onAmountChange : function(component, event, helper) {
-        var csmtrAmt = component.get("v.customerAmount");      
-        var timer = component.get('v.timer');
-        clearTimeout(timer);
-
-        var timer = setTimeout(function(){
-            component.set("v.customerAmountnew", csmtrAmt);
-            clearTimeout(timer);
-            component.set('v.timer', null);
-        }, 1000);
-
-        component.set('v.timer', timer);
-    },
-    
-    addSpinner : function(component, event, helper){
-        var spinner = component.find("inItSpinner");
-        var spin = component.get("v.isSpinner");
-        console.log('spinner '+spin);
-        if(spin){
-            $A.util.removeClass(spinner, 'slds-hide');
-        }
-        else{
-            $A.util.addClass(spinner, 'slds-hide');
-        }        
-    },
-    
     Apply : function(component, event, helper) {
         var quote = event.getParam("selectedQuote");
+        console.log('Monthly repayment '+quote.Monthly_Repayment__c);
         var purpose = component.get("v.purpose");
         quote.Purpose__c = purpose;
+        console.log('++_+selectedQuote'+JSON.stringify(quote));
         component.set('v.selectedQuote', quote);
         var quotesWpr = component.get("v.quotesWpr");
         var quotes = [];

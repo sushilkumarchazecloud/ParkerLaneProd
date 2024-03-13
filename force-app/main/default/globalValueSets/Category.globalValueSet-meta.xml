@@ -110,11 +110,6 @@
         <default>false</default>
         <label>Direct Debit Form</label>
     </customValue>
-    <customValue>
-        <fullName>Funding Authorisation Certificate</fullName>
-        <default>false</default>
-        <label>Funding Authorisation Certificate</label>
-    </customValue>
     <masterLabel>Category</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

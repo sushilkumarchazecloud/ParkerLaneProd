@@ -1,0 +1,49 @@
+<messaging:emailTemplate subject="Funding delayed! We’ve been unable to reach your customers to complete the variation requested by !relatedTo.Variation_Requested_By__r.Name" recipientType="Contact" relatedToType="Funding_Request__c">
+<messaging:htmlEmailBody >
+
+    <div style="max-width: 30rem;">
+        <div>Hi [relatedTo.Opportunity__r.Referred_by_Company__r.Name] team,</div><br/>
+        <div style="text-align: left">
+            <div>
+                As you know 6 days ago we received a request to vary the approved limit for [relatedTo.Opportunity__r.Name]. We have made daily attempts to contact them for the last 6 days via phone, emails and SMS.
+            </div><br/>    
+            <div>
+                The following applicants are yet to authorise payment:<br/>
+                 [applicant names]
+            </div><br/>           
+            <div>
+                We will continue to attempt contact. In the meantime we recommend that you also reach out to your customers and ask that they respond to our requests.
+            </div><br/>
+            <div > 
+                If anything has changed or you require further assistance, please reply to this email.
+            </div><br/>
+            <div>
+                Here to help!<br/>
+                <br/>
+                <span>The Parker Lane Team.</span><br/><br/>
+
+                <img width="115px" src="https://lanecorp--uat.sandbox.file.force.com/servlet/servlet.ImageServer?id=0159h00000064c1&oid=00D9h0000008XtF&lastMod=1664367526000" /><br/>
+                <i style="color : #192744; font-size :12px;">Do more with what you’ve got </i><br/><br/>
+                
+                <p>P.S. here’s why we’re recommended more often</p>
+                <ul>
+                    <li>Incredible rates!</li>
+                    <li>Great tech, real people</li>
+                    <li>Available to chat up to 7pm EST</li>
+                    <li>Awarded best in Australia for Personal Loans</li>
+                    <li>Awarded best in Australia for Home Loans</li>
+                    <li>Rated 4.92 out of 5 on ProductReview.com.au</li>
+                </ul>  
+                
+                <p style="color : #D3D3D3;">___</p>
+                <p style="color : #D3D3D3;">Want to get hold of us?<br/>
+                    Email: sethu.rawat@chazecloud.com<br/>
+                    Text: 0480 049 081  Call: 1300 13 17 11<br/>
+                    Australian Credit Licence Number 482276<br/>
+                </p>
+                <p style="color : #BFBFBF; font-size : 10px;">This email is confidential. If received in error, please delete it from your system. No confidentiality, privilege or intellectual property rights are waived or lost by any mis-transmission. To the extent permitted by law, Parker Lane does not assume responsibility or duty of care for any use or reliance upon this email by anyone other than the intended recipient. Parker Lane is committed to minimising its impact on the environment. Please consider the environment before printing this email.</p>
+            </div>                
+        </div>
+    </div>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

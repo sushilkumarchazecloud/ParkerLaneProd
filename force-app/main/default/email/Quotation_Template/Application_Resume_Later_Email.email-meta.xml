@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Application Resume Later Email</name>
+    <style>none</style>
+    <subject>Saved! Finish your application with Parker Lane</subject>
+    <textOnly>Dear  {!Quote.Applicant_1_Full_Name__c},
+
+Application saved!
+
+Most people who save at this page complete their application within the next 3 days. Details of the loan application is as follows:
+
+Loan Type: {!Quote.Product_Type__c}
+Amount: {!Quote.Customer_Amount__c}
+Term: {!Quote.Loan_Term__c} months
+Interest rate: {!Quote.Interest_Rate__c}% p.a.
+Comparison Rate: {!Quote.Actual_Comparison_Rate__c} p.a.*
+Estimated monthly payment: {!Quote.Monthly_Repayment__c}
+
+To finish what you’ve started simply sign in via the link below.
+
+Resume my application
+
+Prefer to speak to a human?
+Our expert Advisers are here to help you find the loan that’s right for you. Book a call back time or call 1300 13 17 11 today.
+
+Kind regards,
+The Parker Lane team</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

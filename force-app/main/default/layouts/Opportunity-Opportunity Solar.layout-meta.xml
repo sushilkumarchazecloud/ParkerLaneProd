@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
-    <customButtons>Request_Document_q</customButtons>
-    <customButtons>Open_Mortgage_CPA</customButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>false</customLabel>
@@ -31,7 +29,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>FinServ__Household__c</field>
+                <field>Household__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -42,16 +40,8 @@
                 <field>Applicant_1__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Applicant_1_Phone_Number__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Applicant_2__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Applicant_2_Phone_Number__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -67,7 +57,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>FinServ__ReferredByContact__c</field>
+                <field>ReferredByContact__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -81,12 +71,16 @@
                 <behavior>Edit</behavior>
                 <field>I_certify_the_information_is_correct__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Interest_Rate__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Product_Type_Lookup__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>State__c</field>
-            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Escalation__c</field>
@@ -284,10 +278,6 @@
                 <behavior>Edit</behavior>
                 <field>Signed_Credit_Quote_Attached__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Referral_Fee_inc_GST__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -311,7 +301,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>FinServ__ReferredByUser__c</field>
+                <field>ReferredByUser__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -476,18 +466,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Interest_Rate__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>Monthly_Repayments__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>FinServ__FinancialAccount__c</field>
-            </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Loan_Term_months__c</field>
@@ -596,10 +578,6 @@
         <label>Disclosure Statement</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Disclosure_Statement__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>referred_Application_URL__c</field>
             </layoutItems>
@@ -615,10 +593,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Applicant_1_FirstName__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Number_of_applicants__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -653,10 +627,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>LastModifiedById</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Purpose_Type__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -706,203 +676,6 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
-    <platformActionList>
-        <actionListContext>Record</actionListContext>
-        <platformActionListItems>
-            <actionName>Opportunity.Approved</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>0</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Edit</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>1</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>dsfs__Send_with_DocuSign</actionName>
-            <actionType>CustomButton</actionType>
-            <sortOrder>2</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>mercury__Send_SMS</actionName>
-            <actionType>CustomButton</actionType>
-            <sortOrder>3</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Request_Document_q</actionName>
-            <actionType>CustomButton</actionType>
-            <sortOrder>4</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Opportunity.Product_Search</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>5</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Delete</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>6</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Clone</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>7</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Share</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>8</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>FinServ__NewTask</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>9</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>FinServ__NewTaskAdvisor</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>10</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>FinServ__LogACall</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>11</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>FinServ__LogACallAdvisor</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>12</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Log_Activity</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>13</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Opportunity.Submit_To_CFCU</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>14</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Opportunity.Send_Credit_Proposal</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>15</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Opportunity.Submit_To_Mercury</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>16</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Opportunity.dsfs__OpportunityDocuSignAction</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>17</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>SendEmail</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>18</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Customer_Action</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>19</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Lender_Response</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>20</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>FinServ__NewEvent</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>21</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>FinServ__NewEventAdvisor</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>22</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>FeedItem.ContentNote</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>23</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>TMCU_Form</actionName>
-            <actionType>CustomButton</actionType>
-            <sortOrder>24</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Credit_Proposal</actionName>
-            <actionType>CustomButton</actionType>
-            <sortOrder>25</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Opportunity.Create_HLHC_Opportunity</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>26</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Send_TMCU_Member_form_1P</actionName>
-            <actionType>CustomButton</actionType>
-            <sortOrder>27</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Send_TMCU_Member_form_2P</actionName>
-            <actionType>CustomButton</actionType>
-            <sortOrder>28</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Opportunity.Submit_To_ZEAL</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>29</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Opportunity.Submit_to_ZEAL_FULL</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>30</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Opportunity.Resend_VOI_or_eSign</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>31</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Opportunity.Request_funding</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>32</sortOrder>
-        </platformActionListItems>
-    </platformActionList>
-    <quickActionList>
-        <quickActionListItems>
-            <quickActionName>FeedItem.TextPost</quickActionName>
-        </quickActionListItems>
-        <quickActionListItems>
-            <quickActionName>FeedItem.ContentPost</quickActionName>
-        </quickActionListItems>
-        <quickActionListItems>
-            <quickActionName>FeedItem.MobileSmartActions</quickActionName>
-        </quickActionListItems>
-        <quickActionListItems>
-            <quickActionName>FeedItem.RypplePost</quickActionName>
-        </quickActionListItems>
-        <quickActionListItems>
-            <quickActionName>FeedItem.LinkPost</quickActionName>
-        </quickActionListItems>
-        <quickActionListItems>
-            <quickActionName>FeedItem.PollPost</quickActionName>
-        </quickActionListItems>
-        <quickActionListItems>
-            <quickActionName>FeedItem.QuestionPost</quickActionName>
-        </quickActionListItems>
-        <quickActionListItems>
-            <quickActionName>FeedItem.ContentNote</quickActionName>
-        </quickActionListItems>
-        <quickActionListItems>
-            <quickActionName>SendEmail</quickActionName>
-        </quickActionListItems>
-    </quickActionList>
     <relatedContent>
         <relatedContentItems>
             <layoutItem>
@@ -948,23 +721,8 @@
         <relatedList>Exception__c.Opportunity__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <customButtons>Resend_SMS</customButtons>
-        <fields>NAME</fields>
-        <fields>VOI_Details__c</fields>
-        <fields>VOI_Status__c</fields>
-        <fields>VOI_Detail__c</fields>
-        <fields>Contact__c</fields>
-        <fields>Case_Status__c</fields>
-        <fields>LAST_UPDATE</fields>
-        <fields>Sender__c</fields>
-        <relatedList>VOI_Status__c.Opportunity__c</relatedList>
-    </relatedLists>
-    <relatedLists>
         <fields>NAME</fields>
         <relatedList>Funding_Request__c.Opportunity__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <relatedList>RelatedContentNoteList</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>Product2</fields>
@@ -981,8 +739,6 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>Document__c</fields>
-        <fields>Category__c</fields>
-        <fields>Status__c</fields>
         <fields>Description__c</fields>
         <fields>Person_Account__c</fields>
         <fields>isApplicable__c</fields>
@@ -1022,15 +778,6 @@
         <relatedList>RelatedNoteList</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>NAME</fields>
-        <fields>dsfs__Sender__c</fields>
-        <fields>dsfs__Subject__c</fields>
-        <fields>dsfs__Envelope_Status__c</fields>
-        <fields>dsfs__Hrs_Sent_to_Sign__c</fields>
-        <fields>dsfs__Sent_Date_Time__c</fields>
-        <relatedList>dsfs__DocuSign_Status__c.dsfs__Opportunity__c</relatedList>
-    </relatedLists>
-    <relatedLists>
         <fields>TASK.SUBJECT</fields>
         <fields>TASK.WHO_NAME</fields>
         <fields>ACTIVITY.TASK</fields>
@@ -1039,16 +786,6 @@
         <fields>TASK.PRIORITY</fields>
         <fields>CORE.USERS.FULL_NAME</fields>
         <relatedList>RelatedActivityList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <customButtons>Task.Send_SMS</customButtons>
-        <fields>TASK.SUBJECT</fields>
-        <fields>TASK.WHO_NAME</fields>
-        <fields>ACTIVITY.TASK</fields>
-        <fields>TASK.DUE_DATE</fields>
-        <fields>CORE.USERS.FULL_NAME</fields>
-        <fields>TASK.LAST_UPDATE</fields>
-        <relatedList>RelatedHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -1068,14 +805,6 @@
         <fields>Expected_Revenue__c</fields>
         <fields>Change_in_Expected_Revenue__c</fields>
         <relatedList>Stage_Tracking__c.Opportunity__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>Name</fields>
-        <fields>LiveChatVisitor</fields>
-        <fields>StartTime</fields>
-        <fields>EndTime</fields>
-        <fields>Status</fields>
-        <relatedList>LiveChatTranscript.Opportunity__c</relatedList>
     </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

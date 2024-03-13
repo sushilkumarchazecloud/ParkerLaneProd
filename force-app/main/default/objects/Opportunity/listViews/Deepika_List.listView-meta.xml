@@ -11,7 +11,7 @@
     <filters>
         <field>OPPORTUNITY.RECORDTYPE</field>
         <operation>equals</operation>
-        <value>Opportunity.Asset_Finance,Opportunity.Commercial_Asset_purchase,Opportunity.Commercial_Mortgage,Opportunity.Commercial_Property_Purchase,Opportunity.Commercial_Solar_Purchase,Opportunity.Debt_Consolidation,Opportunity.FinServ__General,Opportunity.Green_Loan,Opportunity.Home_Improvement,Opportunity.Home_Loan_Construction,Opportunity.Home_Loan_Purchase,Opportunity.Home_Loan_Refinance,Opportunity.Personal_Loan,Opportunity.Solar,Opportunity.Vehicle_Purchase</value>
+        <value>Opportunity.Asset_Finance,Opportunity.Commercial_Asset_purchase,Opportunity.Commercial_Mortgage,Opportunity.Commercial_Property_Purchase,Opportunity.Commercial_Solar_Purchase,Opportunity.Debt_Consolidation,Opportunity.General,Opportunity.Green_Loan,Opportunity.Home_Improvement,Opportunity.Home_Loan_Construction,Opportunity.Home_Loan_Purchase,Opportunity.Home_Loan_Refinance,Opportunity.Personal_Loan,Opportunity.Solar,Opportunity.Vehicle_Purchase</value>
     </filters>
     <filters>
         <field>HLHC_Interest_Rate__c</field>

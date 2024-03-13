@@ -90,14 +90,14 @@
 		font-weight : bold;
 	}
 	.submitBtn{
-		margin-top: 40px;
+		margin-top: 40px;		
 	}
 	.blanksection{
 		display: block;
 	}
 	.hideblank{
 		display: none !important;
-	}	
+	}		
 
 @media only screen and (max-width: 600px) {	
 	.blankSection{
@@ -107,17 +107,17 @@
 		display: none !important;
 	}
 	.buttonOfAnother button{
-width :100%;
-padding: 20px 10px 17px 10px; 
-border : 1px solid #afc2e3;
-margin-top: 10px;
-border-radius : 8px;
-background : #ffffff;
-}
-.listBx{
-	width: 98%;
-}
-.submitBtn{
-	margin-top: 0px !important;
-}
+		width :100%;
+		padding: 20px 10px 17px 10px; 
+		border : 1px solid #afc2e3;
+		margin-top: 10px;
+		border-radius : 8px;
+		background : #ffffff;
 	}
+	.listBx{
+		width: 98%;
+	}
+	.submitBtn{
+		margin-top: 0px !important;
+	}
+}

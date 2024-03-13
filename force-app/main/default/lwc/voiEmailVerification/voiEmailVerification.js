@@ -71,13 +71,15 @@ export default class VoiEmailVerification extends LightningElement {
             if(result.con.is_Email_verified_for_VOI__c){
                 this.isEmailVerified = true;
             }
-            this.correctOtp = result.con.voi_Email_Verification_Code__c;            
+            this.correctOtp = result.con.voi_Email_Verification_Code__c;
+           // alert(result.con.voi_Email_Verification_Code__c);            
             this.applicantEmail = result.con.Email;  
             this.showSpinMain = false;   
             sendEmailAndSMSForCode({con : result.con})
             .then(result => {
                 if(result != null){
                     this.correctOtp = result.voi_Email_Verification_Code__c;
+                    alert(result.voi_Email_Verification_Code__c);
                 }                
             })
             .catch(error => {
@@ -86,6 +88,7 @@ export default class VoiEmailVerification extends LightningElement {
             });                    
         })
         .catch(error => {
+            console.log('--0-error-->'+JSON.stringify(error));
             this.error = error;
             this.showSpinMain = false;
         });
@@ -201,7 +204,7 @@ export default class VoiEmailVerification extends LightningElement {
                 this.codeSentSpinner = false;
                 this.correctOtp = result.voi_Email_Verification_Code__c;
                 this.mailSent = true;                
-               //alert('OTP-'+result.voi_Email_Verification_Code__c);
+                alert('OTP-'+result.voi_Email_Verification_Code__c);
             }            
             else{
                 this.showErrormsg = true;
@@ -257,10 +260,10 @@ export default class VoiEmailVerification extends LightningElement {
                 this.emailSentsuccess = true;
                 this.conRecord = result;                
                 this.correctOtp = result.voi_Email_Verification_Code__c;           
-               // alert('otp is: '+this.correctOtp);
+                alert('otp is: '+this.correctOtp);
             }
             else{
-               // alert('please enter correct email.');
+                alert('please enter correct email.');
                 this.emailSentOn = false;
             }
 

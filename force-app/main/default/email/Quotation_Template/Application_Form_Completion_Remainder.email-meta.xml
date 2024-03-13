@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Application Form Completion Remainder</name>
+    <style>none</style>
+    <subject>REMINDER: We need some documents to complete your application</subject>
+    <textOnly>Dear {!Quote.Applicant_1_Full_Name__c},
+
+Congratulations! Your application is complete and we’re working on it.
+
+Thank you for completing your application via Parker Lane.
+
+We have received your application and will be in touch shortly.
+
+If you haven’t already uploaded them, we may need some documents so the lender can validate your application.
+
+To upload some or all of this information from your phone or PC now please follow this link below. It’s incredibly easy to use - no scanning required. You can even:
+
+Point and shoot from your phone
+Link bank accounts online
+
+
+Please click the button below to get started.
+
+START UPLOADING NOW
+
+If you have any questions about this email please don&apos;t hesitate to call us on 1300 131 711, or simply reply to this email.
+
+Thank you in advance for your prompt attention to this email.
+
+Kind regards,
+The Parker Lane team</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

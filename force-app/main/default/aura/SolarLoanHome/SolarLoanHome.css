@@ -54,7 +54,7 @@
     top: 0;
     content: "$";
     z-index: 1;
-    padding: 9px 10px!important;
+    padding: 13px 10px!important;
 }
 .THIS .firstLatterCapital .slds-input{
    text-transform: capitalize !important;

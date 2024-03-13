@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Income_Description_Field__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF ( Annual_Base_Income__c &gt; 0 , &quot;Base: $&quot; + Text(Annual_Base_Income__c) , &quot;&quot; )
++ IF ( Annual_Commission_Bonus_Income__c &gt; 0 , &quot; + Bonus &amp; Commission: $&quot; + Text(Annual_Commission_Bonus_Income__c ) , &quot;&quot; )
++ IF ( Annual_Overtime_Inome__c &gt; 0 , &quot; + Overtime: $&quot; + Text(Annual_Overtime_Inome__c ) , &quot;&quot; )
++ IF(ISPICKVAL( Provide_a_Company_Car__c ,&quot;Yes&quot;), &quot; + Company Car&quot;, &quot;&quot; )
++ IF ( Last_year_net_profit__c &gt; 0 , &quot; + Last Yr Net Profit: $&quot; + Text(Last_year_net_profit__c ) , &quot;&quot; )
++ IF ( Previous_year_net_profit__c &gt; 0 , &quot; + Prev Yr Net Profit: $&quot; + Text(Previous_year_net_profit__c ) , &quot;&quot; )
++ IF ( Annual_salary_before_tax__c &gt; 0 , &quot; + Salary from Business: $&quot; + Text(Annual_salary_before_tax__c ) , &quot;&quot; )</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Income Description Field</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

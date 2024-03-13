@@ -13,7 +13,7 @@
             <sorted>false</sorted>
             <value>
                 <fullName>DL Section</fullName>
-                <default>true</default>
+                <default>false</default>
                 <label>DL Section</label>
             </value>
             <value>

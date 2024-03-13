@@ -1,10 +1,10 @@
-<aura:component controller="ParkerLaneLoanController">
+<aura:component controller="ApplicationFormController">
     <aura:attribute name="YesNoOptions" type="List" default="[{'label': 'Yes', 'value': 'Yes'},
                                                              {'label': 'No', 'value': 'No'}]"/>
     <aura:attribute name="applicant1" type="Contact" default="{'sobjectType': 'Contact', 'FirstName': '', 'LastName': '',
-                                                              'Email': '', 'Phone': '', 'FinServ__MaritalStatus__c':''}"/>
+                                                              'Email': '', 'Phone': '', 'MaritalStatus__c':''}"/>
     <aura:attribute name="applicant2" type="Contact" default="{'sobjectType': 'Contact', 'FirstName': '', 'LastName': '',
-                                                              'Email': '', 'Phone': '', 'FinServ__MaritalStatus__c':''}"/>
+                                                              'Email': '', 'Phone': '', 'MaritalStatus__c':''}"/>
     <aura:attribute name="app1Children" type="Contact[]" />
     <aura:attribute name="app2Children" type="Contact[]" />
     <aura:attribute name="NoOfapplicantsOptions" type="List" default="[{'label': 'One', 'value': 'single'},{'label': 'Two', 'value':  'joint'}]"/>
@@ -25,9 +25,9 @@
     <aura:attribute name="applicantEmailForVerification" type="String" default=""/>
     <aura:attribute name="NoOfapplicants2Options" type="List" default="[{'label': 'Two Person', 'value':  'joint'}]"/>
     <aura:attribute name="NoOfapplicants1Options" type="List" default="[{'label': 'One Person', 'value': 'single'}]"/>
-    <aura:attribute name="allAssetsList" type="FinServ__AssetsAndLiabilities__c[]" />
+    <aura:attribute name="allAssetsList" type="AssetsAndLiabilities__c[]" />
     <aura:attribute name="isCFCU" type="Boolean" default="false"/>
-    <aura:attribute name="selectedQuote" type="sObject" />
+    
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     
     <aura:method name="upsertOppContacts" action="{!c.saveApplications}" access="PUBLIC" >
@@ -62,7 +62,7 @@
             <section class="slds-p-around_medium slds-col slds-si1ze_1-of-1 bg-lightest txt-blue" style="margin-bottom: 40px;">
                 <div class="max-700 getting-started ">
                     <div class="slds-align_absolute-center slds-m-top_medium">
-                        <img src="{!$Resource.headersLogo + '/headersLogo/Whoisapplying.png'}" class="trackercls"/>
+                        <img src="{!$Resource.SolarLoan + '/img/StepWhoisapplying.png'}" class="trackercls"/>
                     </div>
                     <header class="checkout-page-banner--gradient">
                         <div class="">
@@ -200,7 +200,7 @@
                                                 <div class="slds-form-element slds-form-element_stacked editSelect">
                                                     <lightning:select name="MaritalStatus11" aura:id="fieldcheck"
                                                                       class="no-abbr" required="true"
-                                                                      value="{!v.applicant1.FinServ__MaritalStatus__c}" onchange="" label="Marital Status">
+                                                                      value="{!v.applicant1.MaritalStatus__c}" onchange="" label="Marital Status">
                                                         
                                                         <option value="">Select</option>
                                                         <aura:iteration items="{!v.maritalOption}" var="option">
@@ -213,7 +213,7 @@
                                                     <div class="slds-form-element slds-form-element_stacked editSelect">
                                                         <lightning:select name="MaritalStatus1" aura:id="fieldcheck"
                                                                           class="no-abbr" required="true"
-                                                                          value="{!v.applicant1.FinServ__MaritalStatus__c}" onchange="" label="Marital Status">
+                                                                          value="{!v.applicant1.MaritalStatus__c}" onchange="" label="Marital Status">
                                                             
                                                             <option value="">Select</option>
                                                             <aura:iteration items="{!v.maritalOption}" var="option">
@@ -290,7 +290,7 @@
                                                     <div class="slds-form-element slds-form-element_stacked editSelect">
                                                         <lightning:select name="MaritalStatus2" aura:id="fieldcheck" required="true"
                                                                           class="no-abbr"
-                                                                          value="{!v.applicant2.FinServ__MaritalStatus__c}" onchange="" label="Marital Status">
+                                                                          value="{!v.applicant2.MaritalStatus__c}" onchange="" label="Marital Status">
                                                             
                                                             <option value="">Select</option>
                                                             <aura:iteration items="{!v.maritalOption}" var="option">

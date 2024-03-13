@@ -1,132 +1,38 @@
 <apex:page standardController="Opportunity" extensions="sessionIdclass"  
-       action="{!ReturnAccessToken}" lightningStylesheets="true" showHeader="false"
-       sidebar="false" applyBodyTag="false" applyHtmlTag="false">
-
-<html>
-    <head>
-        <title>Upload Documents</title>
-        <meta charset="UTF-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <title>Parker Lane - Australia's No.1 Rated Finance Service</title>
-        <link REL="icon" HREF="{!URLFOR($Resource.faviconNew)}" type="img/x-icon"/>
-        <apex:slds />
-        <apex:includeLightning />
-        
-        <!-- Hotjar Tracking Code for https://lanecorp--uat.sandbox.my.salesforce-sites.com/ -->
-        <script>
-        (function(h,o,t,j,a,r){
-            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-            h._hjSettings={hjid:3095000,hjsv:6};
-            a=o.getElementsByTagName('head')[0];
-            r=o.createElement('script');r.async=1;
-            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-            a.appendChild(r);
-        })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-        </script>
-    </head>
-    <body style="background: #f5f5f5;">
-        <style>
-            .embeddedServiceHelpButton{
-            font-family: Proxima Nova Alt Regular !important;
+           action="{!ReturnAccessToken}" lightningStylesheets="true" showHeader="false"
+           sidebar="false" applyBodyTag="false" applyHtmlTag="false">
+    
+    <html>
+        <head>
+            <title>Upload Documents</title>
+            <meta charset="UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            <title>Parker Lane - Australia's No.1 Rated Finance Service</title>
+            <link REL="icon" HREF="{!URLFOR($Resource.faviconNew)}" type="img/x-icon"/>
+            <apex:slds />
+            <apex:includeLightning />
+            
+            
+        </head>
+        <body style="background: #f5f5f5;">
+            
+            <div id="FlipcardContainer" style="margin:auto; font-size: large;"/>
+            <script>
+            if(window.location != window.parent.location){
+                var redirecturl = window.location;
+                window.top.location.href = redirecturl;
             }
-            .embeddedServiceHelpButton .helpButton{
-            right : 70px !important;
-            }
-            .embeddedServiceHelpButton .helpButton .uiButton {
-            background-color: #005290;
-            font-family: Proxima Nova Alt Regular !important;
-            background: #1a2745 !important;
-            }
-            .embeddedServiceHelpButton .helpButton .uiButton:focus {
-            outline: 1px solid #005290;
-            }
-            .embeddedServiceHelpButton .embeddedServiceIcon::before{
-            font-size: 2.25em !important;
-            }
-            .embeddedServiceHelpButton .uiButton .helpButtonLabel{
-            overflow : inherit !important;
-            max-width: fit-content !important;
-            } 
-            .embeddedServiceSidebarMinimizedDefaultUI.helpButton{
-            background: #1a2745 !important;
-            }
-            .message {
-            font-size: 16px !important; 
-            background-color: #1a2745 !important;
-            border-style: solid;
-            border-width: 0px !important;
-            color: #ffffff !important;
-            padding: 6px 8px 6px 0px;
-            margin: 0px !important
-            }
-            .headerAnnouncement{
-            color : black !important;
-            background : #dd7a01 !important;
-            }
-        </style>
-        <div id="FlipcardContainer" style="margin:auto; font-size: large;"/>
-        <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
-        <script>
-        if(window.location != window.parent.location){
-            var redirecturl = window.location;
-            window.top.location.href = redirecturl;
-        }
-        $Lightning.use("embeddedService:sidebarApp", function() {   //c:UploadDocumentApp
-            $Lightning.createComponent("c:UploadDocumentCmp",
-                                       { 
-                                           recordId :'{!$CurrentPage.parameters.oppId}',
-                                           mgRef :'{!$CurrentPage.parameters.MGREF}',
-                                           sessionId :'{!accessToken}'
-                                       },
-                                       "FlipcardContainer",
-                                       function(cmp) {});
-        });
-         if({!Active}){
-            var initESW = function(gslbBaseURL) {
-                embedded_svc.settings.displayHelpButton = true; //Or false
-                embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
-                embedded_svc.settings.prepopulatedPrechatFields = {
-                    FirstName: '{!JSENCODE(opp.Applicant_1__r.FirstName)}',
-                    LastName: '{!JSENCODE(opp.Applicant_1__r.LastName)}',
-                    Email: '{!JSENCODE(opp.Applicant_1__r.PersonEmail)}',
-                }; 
-                embedded_svc.settings.defaultMinimizedText = 'Chat with us'; //(Defaults to Chat with an Expert)
-                embedded_svc.settings.disabledMinimizedText = 'Chat with us'; //(Defaults to Agent Offline)
-                embedded_svc.settings.loadingText = 'Please wait'; //(Defaults to Loading)
-                embedded_svc.settings.offlineSupportMinimizedText = 'Chat with us'; //(Defaults to Contact Us)
-                
-                embedded_svc.settings.enabledFeatures = ['LiveAgent'];
-                embedded_svc.settings.entryFeature = 'LiveAgent';
-                
-                 embedded_svc.init(
-            'https://lanecorp.my.salesforce.com',
-            'https://lanecorp.my.site.com/',
-            gslbBaseURL,
-            '00D0o000001AAhI',
-            'Application_Form_Chat_Support',
-            {
-                baseLiveAgentContentURL: 'https://c.la1-core1.sfdc-vwfla6.salesforceliveagent.com/content',
-                deploymentId: '572Ol0000000kcL',
-                buttonId: '573Ol0000000DdB',
-                baseLiveAgentURL: 'https://d.la1-core1.sfdc-vwfla6.salesforceliveagent.com/chat',
-                eswLiveAgentDevName: 'Application_Form_Chat_Support',
-                isOfflineSupportEnabled: false
-            }
-        );
-    };
-
-    if (!window.embedded_svc) {
-        var s = document.createElement('script');
-        s.setAttribute('src', 'https://lanecorp.my.salesforce.com/embeddedservice/5.0/esw.min.js');
-        s.onload = function() {
-            initESW(null);
-        };
-        document.body.appendChild(s);
-    } else {
-        initESW('https://service.force.com');
-    }
-}
-        </script>
-    </body>
-</html>
+            $Lightning.use("c:UploadDocumentApp", function() {
+                $Lightning.createComponent("c:UploadDocumentCmp",
+                                           { 
+                                               recordId :'{!$CurrentPage.parameters.oppId}',
+                                               mgRef :'{!$CurrentPage.parameters.MGREF}',
+                                               sessionId :'{!accessToken}'
+                                           },
+                                           "FlipcardContainer",
+                                           function(cmp) {});
+            });
+            </script>
+        </body>
+    </html>
 </apex:page>

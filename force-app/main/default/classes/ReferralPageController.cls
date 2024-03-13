@@ -63,7 +63,7 @@ public without sharing class ReferralPageController {
                 maxAmount = qdw.Amount;
             }
         }
-        User usrManager = [SELECT Id FROM User WHERE Email = 'chris.white@parkerlane.com.au' AND Profile.Name='System Administrator' LIMIT 1];            
+        User usrManager = [SELECT Id FROM User WHERE Email = 'chris.white@chazecloud.com' AND Profile.Name='System Administrator' LIMIT 1];            
         Map<Id,Profile> guestProfileIds = new Map<id,profile>([SELECT Id,Name,UserLicenseId FROM Profile where UserLicenseId  in (SELECT Id FROM UserLicense where name ='Guest User License')]);
         
         Map<Id,Product2> productsMap = New Map<Id,Product2>(
@@ -152,7 +152,7 @@ return errorMsg;
         //String errorMsg = '';
         String ownerId = '';                
         conId = con[0].Id;              
-        List<Lead> leadList = [SELECT Id, FirstName, LastName, Email, Status, FinServ__ReferredByContact__c, FinServ__RelatedAccount__c, OwnerId, 
+        List<Lead> leadList = [SELECT Id, FirstName, LastName, Email, Status, ReferredByContact__c, RelatedAccount__c, OwnerId, 
                                Point_of_Origin__c, Phone, LeadSource, Referred_by_Company__c
                                FROM Lead WHERE Email =: custEmail LIMIT 1];
         Lead lead = New Lead();
@@ -160,8 +160,8 @@ return errorMsg;
         if(leadList.isEmpty()){
             system.debug('lastName'+lastName);
             lead = New Lead(FirstName = firstName, LastName = lastName, Email = custEmail, leadAddress__c = custAdd, 
-                            /*Customer_Amount__c = quoteAmount,*/ company = con[0].Account.Name, FinServ__ReferredByContact__c = con[0].Id,
-                            FinServ__RelatedAccount__c = con[0].AccountId, Phone = custPhone,
+                            /*Customer_Amount__c = quoteAmount,*/ company = con[0].Account.Name, ReferredByContact__c = con[0].Id,
+                            RelatedAccount__c = con[0].AccountId, Phone = custPhone,
                             Referred_by_Company__c= con[0].AccountId, RecordTypeId = leadRecordTypeMap.get(quoteType),
                             Point_of_Origin__c = 'Referral Page', Timeframe__c = 'Immediately', Send_the_quote_to__c = sendQuote,
                             Purpose__c = quoteType, Lead_Type__c = 'Business Referral', Status = 'Online Quote');
@@ -198,14 +198,14 @@ return errorMsg;
         
         Account householdAccount = new Account(Name = firstName + ' '+ lastName +' Household', RecordTypeId = householdAccRTId,
                                                Referred_by_Company__c = refCompanyId, Account_Lead_Source__c = lead.leadSource,
-                                               FinServ__ReferredByContact__c = lead.FinServ__ReferredByContact__c);
+                                               ReferredByContact__c = lead.ReferredByContact__c);
         insert householdAccount;
         
         Account personAccount = new Account(FirstName = firstName, LastName = lastName, PersonEmail = lead.Email, Phone = custPhone,
                                             Relationship_with_Applicant_1__c='Client', RecordTypeId = personAccRTId, Residential_Address__pc = custAdd, 
                                             Street__pc = street, Postal_Code__pc = postalCode, Suburb__pc = suburb, Street_Type__pc = streetType,
-                                            FinServ__CountryOfResidence__pc = country, State__pc = state, Street_Number__pc = streetNumber, Referred_by_Company__c = refCompanyId,
-                                            Account_Lead_Source__c = lead.leadSource, FinServ__ReferredByContact__c = lead.FinServ__ReferredByContact__c);
+                                            CountryOfResidence__pc = country, State__pc = state, Street_Number__pc = streetNumber, Referred_by_Company__c = refCompanyId,
+                                            Account_Lead_Source__c = lead.leadSource, ReferredByContact__c = lead.ReferredByContact__c);
         insert personAccount;
         Id pConId = [SELECT Id, PersonContactId FROM Account WHERE Id =: personAccount.Id].PersonContactId;
         Opportunity opp = new Opportunity(Name = firstName + ' '+ LastName + ', ' + (quoteType =='Solar' ? 'Green Loan' : quoteType),
@@ -218,7 +218,7 @@ return errorMsg;
                                           //How_much_do_you_need__c = quoteAmount,
                                           StageName='Quote', 
                                           installationAddressLineOne__c = custAdd,
-                                          FinServ__ReferredByContact__c = con[0].Id,
+                                          ReferredByContact__c = con[0].Id,
                                           Referred_by_Company__c = con[0].AccountId,
                                           Point_of_Origin__c = lead.Point_of_Origin__c,
                                           CloseDate = Date.today(),
@@ -419,14 +419,14 @@ return errorMsg;
     public static String generateAndSendPDF(Map<String,String> pdfData){
         String errMsg = '';
         system.debug('==generateAndSendPDF==');
-        /*ParkerLaneLoanController.sendApplication(pdfData.get('oppId'), pdfData.get('conId'), pdfData.get('leadId'), new List<String>{pdfData.get('referrerEmail')}, 'Quotation From Referrer VF', true);
+        /*ApplicationFormController.sendApplication(pdfData.get('oppId'), pdfData.get('conId'), pdfData.get('leadId'), new List<String>{pdfData.get('referrerEmail')}, 'Quotation From Referrer VF', true);
         if(pdfData.get('sendQuote').equalsIgnoreCase('Me and my customer')){            
-            ParkerLaneLoanController.sendApplication(pdfData.get('oppId'), pdfData.get('conId'), pdfData.get('leadId'), New List<String>{pdfData.get('customerEmail')}, 'Quotation From Referral VF', false);
+            ApplicationFormController.sendApplication(pdfData.get('oppId'), pdfData.get('conId'), pdfData.get('leadId'), New List<String>{pdfData.get('customerEmail')}, 'Quotation From Referral VF', false);
         }*/
-        ParkerLaneLoanController.sendApplication(pdfData.get('oppId'), pdfData.get('conId'), pdfData.get('oppId'), new List<String>{pdfData.get('referrerEmail')}, 'Quotation_from Referrer_ReferrerPortal', true);
+        ApplicationFormController.sendApplication(pdfData.get('oppId'), pdfData.get('conId'), pdfData.get('oppId'), new List<String>{pdfData.get('referrerEmail')}, 'Quotation_from Referrer_ReferrerPortal', true);
         if(pdfData.get('sendQuote').equalsIgnoreCase('Me and my customer')){
             system.debug('Me and My customer');
-            ParkerLaneLoanController.sendApplication(pdfData.get('oppId'), pdfData.get('conId'), pdfData.get('oppId'), New List<String>{pdfData.get('customerEmail'),pdfData.get('referrerEmail')}, 'Quotation_from Referral_ReferrerPortal', false);
+            ApplicationFormController.sendApplication(pdfData.get('oppId'), pdfData.get('conId'), pdfData.get('oppId'), New List<String>{pdfData.get('customerEmail'),pdfData.get('referrerEmail')}, 'Quotation_from Referral_ReferrerPortal', false);
         }
         list<Quote> quoteList = [select id,name,IsSelected__c from quote where IsSelected__c=true AND OpportunityId=:pdfData.get('oppId')];
         for(Quote qtt : quoteList){

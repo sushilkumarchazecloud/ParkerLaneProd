@@ -1,0 +1,82 @@
+<template>
+    
+    <div class="slds-p-left_large slds-col slds-size_9-of-12">
+        <div class="verticalLine">
+
+            <template for:each={objectData} for:item="object" for:index="index">
+                <template if:false={object.isParent}>
+                    <div key={object.objectName} class="slds-p-bottom_large slds-p-right_large slds-grid slds-wrap">
+                        <div class="objectHorizontal slds-col slds-size_1-of-12">
+                            <div class="horizontalLine"></div>
+                        </div>
+
+                        <template if:true={object.hasNoRecords}>
+                            <div class="contentDiv slds-col slds-size_8-of-12 slds-grid slds-wrap">
+    
+                                <div class="blockOne">
+                                    <lightning-icon icon-name={object.icon}  size="small"></lightning-icon>
+                                </div>
+
+                                <h4 class="blockTwo slds-col slds-size_5-of-8 slds-grid">Related 
+                                    <div class="slds-truncate">{object.objectName}</div> 
+                                    <b class="countBold">({object.recordCount})</b>
+                                </h4>
+
+                                <lightning-button class="blockThree slds-col slds-size_2-of-8" 
+                                                    label="New"
+                                                    data-object-name={object.objectName}
+                                                    onclick={handleNewClick}>
+                                </lightning-button>
+                            </div>
+                        </template>
+    
+                        <template if:true={object.hasRecords}>
+    
+                            <div class="contentDiv slds-col slds-size_8-of-12 slds-grid slds-wrap">
+    
+                                <div>
+                                    <lightning-button-icon icon-name={object.dynamicIconName}   
+                                                           size="small"
+                                                           onclick={handleExpand}
+                                                           data-object-name={object.objectName}
+                                                           class="blocksZero">
+                                    </lightning-button-icon>
+                                </div>
+    
+                                <div class="blocksOne">
+                                    <!-- You can use a dynamic icon based on the object name -->
+                                    <lightning-icon icon-name={object.icon}  size="small"></lightning-icon>
+                                </div>
+    
+                                <h4 class="blocksTwo slds-col slds-size_4-of-8 slds-grid">Related 
+                                    <div class="slds-truncate">{ object.objectName }</div> 
+                                    <b class="countBold">({object.recordCount})</b>
+                                </h4>
+                
+                                <lightning-button class="blocksThree slds-col slds-size_2-of-8" 
+                                                    label="New"
+                                                    data-object-name={object.objectName}
+                                                    onclick={handleNewClick}>
+                                </lightning-button>
+    
+                                <template if:true={object.isExpanded}>    
+                                    <c-arc-record-template objectid = {recordObjectId}
+                                                           objectname = {recordObjectName}>
+                                    </c-arc-record-template>
+                                </template>
+    
+                            </div>
+    
+                        </template>
+    
+                    </div>
+                </template>
+            </template>
+
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </template>
+        </div>
+    </div>
+
+</template>

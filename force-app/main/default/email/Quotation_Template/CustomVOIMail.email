@@ -1,0 +1,42 @@
+<messaging:emailTemplate subject="Action required!" recipientType="Contact" relatedToType="VOI_Status__c" renderUsingSystemContextWithoutSharing="true">
+<messaging:htmlEmailBody >
+
+    <div style="max-width: 30rem;">
+        <div>Dear {!recipient.FirstName},</div><br/>
+        <div>Action Required! </div><br/>
+        <div>Please 
+            <apex:outputPanel rendered="{!If(relatedTo.VOI_Type_For__c== 'FULL',true,false)}"> verify your details</apex:outputpanel> 
+            <apex:outputPanel rendered="{!If(relatedTo.VOI_Type_For__c== 'VOI',true,false)}"> verify your identity</apex:outputpanel> 
+            <apex:outputPanel rendered="{!If(relatedTo.VOI_Type_For__c== 'E-SIGN',true,false)}"> authorise your documents</apex:outputpanel> before your {!relatedTo.opportunity__r.Purpose__c} application can be finalised.
+            <apex:outputPanel rendered="{!If(OR(relatedTo.VOI_Type_For__c== 'FULL', relatedTo.VOI_Type_For__c== 'VOI'),true,false)}"> Have your photo ID document ready.</apex:outputpanel> Click below to begin.
+        </div><br/> <br/>        
+        <div><a href="{!relatedTo.VOI_URL__c}"
+        style="background-color:#45c65a;border-radius:30px;padding: 14px;color: white;text-decoration: none;" >BEGIN NOW</a></div><br/><br/>
+        <div>Got questions? Simply reply to this email.</div><br/>
+        <div>                
+                <span>Here to help,</span><br/><br/>
+
+                <img width="115px" src="https://lanecorp--uat.sandbox.file.force.com/servlet/servlet.ImageServer?id=0159h00000064c1&oid=00D9h0000008XtF&lastMod=1664367526000" /><br/>
+                <i style="color : #192744; font-size :12px;">Do more with what you’ve got </i><br/>
+                
+                <p>P.S. here’s why we’re recommended more often</p>
+                <ul>
+                    <li>Incredible rates!</li>
+                    <li>Great tech, real people</li>
+                    <li>Available to chat up to 7pm EST</li>
+                    <li>Awarded best in Australia for Personal Loans</li>
+                    <li>Awarded best in Australia for Home Loans</li>
+                    <li>Rated 4.92 out of 5 on ProductReview.com.au</li>
+                </ul>  
+                
+                <p style="color : #D3D3D3;">___</p>
+                <p style="color : #D3D3D3;">Want to get hold of us?<br/>
+                    Email: sethu.rawat@chazecloud.com<br/>
+                    Text: 0480 049 081  Call: 1300 13 17 11<br/>
+                    Australian Credit Licence Number 482276<br/>
+                </p>
+                <p style="color : #BFBFBF; font-size : 10px;">This email is confidential. If received in error, please delete it from your system. No confidentiality, privilege or intellectual property rights are waived or lost by any mis-transmission. To the extent permitted by law, Parker Lane does not assume responsibility or duty of care for any use or reliance upon this email by anyone other than the intended recipient. Parker Lane is committed to minimising its impact on the environment. Please consider the environment before printing this email.</p>
+            </div> 
+    </div>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

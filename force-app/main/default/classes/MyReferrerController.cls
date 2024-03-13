@@ -1,7 +1,7 @@
 public without sharing class MyReferrerController {
-    public static final String adminEmail = 'personalapplications@parkerlane.com.au';
+    public static final String adminEmail = 'tazeem.khan@chazecloud.com';
     public static final String guestUserName = 'Lanecorp Site Guest User';
-    public static final String personalCreditEmailId = 'personal.credit@parkerlane.com.au';
+    public static final String personalCreditEmailId = 'tazeem.khan@chazecloud.com';
     private static Map<String, Id> oppRecordTypeMap = New Map<String, Id>{
         'Solar' => Schema.SObjectType.Opportunity.getRecordTypeInfosByName().get('Green Loan').getRecordTypeId(),
             'Home Improvement' => Schema.SObjectType.Opportunity.getRecordTypeInfosByName().get('Home Improvement').getRecordTypeId(),
@@ -22,10 +22,10 @@ public without sharing class MyReferrerController {
                         List<Opportunity> oppList = new List<Opportunity>();
                         String query ='SELECT id,Name,Contact_1__c,Contact_2__c,SyncedQuoteId,Docs_Outstanding__c,App_1_VOI_eSign_Complete__c,Applicant_1__r.personContactId,Applicant_2__r.personContactId,App_2_VOI_eSign_Complete__c,Stagename,Applicant_1__c,Applicant_1_Name__c,';
                         query += 'Applicant_2_Name__c, Applicant_1_Email__c,Applicant_1_Phone_Number__c, CreatedDate,Applicant_1__r.FirstName,Applicant_1__r.LastName, Applicant_1__r.PersonEmail, Applicant_1__r.Phone,Applicant_2__c,Applicant_2__r.Phone,Lender__c,LeadId__c,';
-                        query +=  'Loan_Amount__c,Status__c,Current_Application_Sections__c,Total_Funds_Available__c, FinServ__ReferredByContact__r.Name,FinServ__ReferredByContact__r.Email,FinServ__ReferredByContact__r.Referrer_Rating__c,FinServ__ReferredByContact__c,';
+                        query +=  'Loan_Amount__c,Status__c,Current_Application_Sections__c,Total_Funds_Available__c, ReferredByContact__r.Name,ReferredByContact__r.Email,ReferredByContact__r.Referrer_Rating__c,ReferredByContact__c,';
                         query += 'Applicant_1__r.Name, Application_Pending_Notes__c,RecordType.Name,Line_Chart_JSON__c,installationAddressLineOne__c,Applicant_1__r.Number_of_applicants_to_operate_account__pc,SyncedQuote.Product__r.Funding_Options_Available__c, ';
                         query +='SyncedQuote.Customer_Amount__c,SyncedQuote.Product__r.No_of_Signatories_allowed__c,SyncedQuote.Product__r.Instruction_In_full_after_installation__c,SyncedQuote.Product__r.Instruction_In_full_before_installation__c, ';
-                        query += 'SyncedQuote.Product__r.Instruction_Part_payment_before__c, SyncedQuote.Product__r.Surplus_Instructions__c,SyncedQuote.Product__r.Short_Fall_Instructions__c,Approved_Expire_Date__c FROM Opportunity WHERE FinServ__ReferredByContact__c IN: conlist';
+                        query += 'SyncedQuote.Product__r.Instruction_Part_payment_before__c, SyncedQuote.Product__r.Surplus_Instructions__c,SyncedQuote.Product__r.Short_Fall_Instructions__c,Approved_Expire_Date__c FROM Opportunity WHERE ReferredByContact__c IN: conlist';
                         if ( searchKey != Null ) {  
                             if ( Str != null ){
                                 String key = '%' + searchKey + '%';
@@ -51,13 +51,13 @@ public without sharing class MyReferrerController {
                                        Applicant_1__r.FirstName,Applicant_1__r.LastName, Applicant_1__r.PersonEmail,Applicant_2__r.personContactId,
                                        Applicant_1__r.Phone,Lender__c,LeadId__c,Loan_Amount__c,Status__c,Applicant_2__c,
                                        Current_Application_Sections__c,Total_Funds_Available__c,Applicant_1__r.personContactId,
-                                       FinServ__ReferredByContact__r.Name,FinServ__ReferredByContact__r.Email,FinServ__ReferredByContact__r.Referrer_Rating__c,
-                                       FinServ__ReferredByContact__c,Applicant_1__r.Name,Application_Pending_Notes__c,RecordType.Name,Line_Chart_JSON__c,installationAddressLineOne__c,
+                                       ReferredByContact__r.Name,ReferredByContact__r.Email,ReferredByContact__r.Referrer_Rating__c,
+                                       ReferredByContact__c,Applicant_1__r.Name,Application_Pending_Notes__c,RecordType.Name,Line_Chart_JSON__c,installationAddressLineOne__c,
                                        Applicant_1__r.Number_of_applicants_to_operate_account__pc,SyncedQuote.Product__r.Funding_Options_Available__c,SyncedQuote.Customer_Amount__c,
                                        SyncedQuote.Product__r.No_of_Signatories_allowed__c,SyncedQuote.Product__r.Instruction_In_full_after_installation__c,
                                        SyncedQuote.Product__r.Instruction_In_full_before_installation__c,SyncedQuote.Product__r.Instruction_Part_payment_before__c,
                                        SyncedQuote.Product__r.Surplus_Instructions__c,SyncedQuote.Product__r.Short_Fall_Instructions__c,Approved_Expire_Date__c FROM Opportunity WHERE
-                                       FinServ__ReferredByContact__c IN: conlist ORDER By CreatedDate DESC];
+                                       ReferredByContact__c IN: conlist ORDER By CreatedDate DESC];
                         }
                         
                         list<getMyReferralWrapper> refList = new List<getMyReferralWrapper>();
@@ -94,7 +94,7 @@ public without sharing class MyReferrerController {
                                   Applicant_1__r.FirstName,Applicant_1__r.LastName,Applicant_1__r.PersonEmail,
                                   Applicant_1__r.Phone,Lender__c, Loan_Amount__c,Status__c,
                                   Current_Application_Sections__c,Total_Funds_Available__c,
-                                  FinServ__ReferredByContact__r.Name,FinServ__ReferredByContact__r.Referrer_Rating__c,FinServ__ReferredByContact__c,Applicant_1__r.Name,
+                                  ReferredByContact__r.Name,ReferredByContact__r.Referrer_Rating__c,ReferredByContact__c,Applicant_1__r.Name,
                                   Application_Pending_Notes__c,Line_Chart_JSON__c,installationAddressLineOne__c,Applicant_1__r.Number_of_applicants_to_operate_account__pc,
                                   SyncedQuote.Customer_Amount__c,SyncedQuote.Product__r.Funding_Options_Available__c,SyncedQuote.Product__r.No_of_Signatories_allowed__c,
                                   SyncedQuote.Product__r.Instruction_In_full_after_installation__c,SyncedQuote.Product__r.Instruction_In_full_before_installation__c,
@@ -118,7 +118,7 @@ public without sharing class MyReferrerController {
                                    Applicant_1__r.FirstName,Applicant_1__r.LastName,Applicant_1__r.PersonEmail,
                                    Applicant_1__r.Phone,Lender__c, Loan_Amount__c,Status__c,
                                    Current_Application_Sections__c,Total_Funds_Available__c,
-                                   FinServ__ReferredByContact__r.Name,FinServ__ReferredByContact__r.Referrer_Rating__c,FinServ__ReferredByContact__c,Applicant_1__r.Name,
+                                   ReferredByContact__r.Name,ReferredByContact__r.Referrer_Rating__c,ReferredByContact__c,Applicant_1__r.Name,
                                    Application_Pending_Notes__c,Line_Chart_JSON__c,installationAddressLineOne__c,Applicant_1__r.Number_of_applicants_to_operate_account__pc,
                                    SyncedQuote.Product__r.Funding_Options_Available__c,SyncedQuote.Product__r.No_of_Signatories_allowed__c,
                                    SyncedQuote.Product__r.Instruction_In_full_after_installation__c,SyncedQuote.Product__r.Instruction_In_full_before_installation__c,
@@ -141,7 +141,7 @@ public without sharing class MyReferrerController {
                 personAccount.Postal_Code__pc = postalCode;
                 personAccount.Suburb__pc = suburb;
                 personAccount.Street_Type__pc = streetType;
-                personAccount.FinServ__CountryOfResidence__pc = country;
+                personAccount.CountryOfResidence__pc = country;
                 personAccount.State__pc = state;
                 personAccount.Street_Number__pc = streetNumber;
                 update personAccount;
@@ -191,28 +191,28 @@ public without sharing class MyReferrerController {
         }
     }
     
-    @AuraEnabled
-    public static void sendVoi1(String phoneNo, String OppId, String contactName, string voiType){
-        try{
-            system.debug('enterVoi1');
-            ResendSMSController.resendSMS(phoneNo,OppId,contactName,voiType,'SMS only');
-        }
-        catch(exception e){
-            UtilityClass.createException(OppId,'MyReferrerController', 'sendVoi1', e.getMessage(), e.getStackTraceString(), ''+e.getLineNumber(),
-                                         e.getTypeName(), ''+e.getCause());
-        }
-    }
+    // @AuraEnabled
+    // public static void sendVoi1(String phoneNo, String OppId, String contactName, string voiType){
+    //     try{
+    //         system.debug('enterVoi1');
+    //         ResendSMSController.resendSMS(phoneNo,OppId,contactName,voiType,'SMS only');
+    //     }
+    //     catch(exception e){
+    //         UtilityClass.createException(OppId,'MyReferrerController', 'sendVoi1', e.getMessage(), e.getStackTraceString(), ''+e.getLineNumber(),
+    //                                      e.getTypeName(), ''+e.getCause());
+    //     }
+    // }
     
-    @AuraEnabled
-    public static void sendVoi2(String phoneNo, String OppId, String contactName, string voiType){
-        try{
-            ResendSMSController.resendSMS(phoneNo,OppId,contactName,voiType,'SMS only');
-        }
-        catch(exception e){
-            UtilityClass.createException(OppId,'MyReferrerController', 'sendVoi2', e.getMessage(), e.getStackTraceString(), ''+e.getLineNumber(),
-                                         e.getTypeName(), ''+e.getCause());
-        }
-    }
+    // @AuraEnabled
+    // public static void sendVoi2(String phoneNo, String OppId, String contactName, string voiType){
+    //     try{
+    //         ResendSMSController.resendSMS(phoneNo,OppId,contactName,voiType,'SMS only');
+    //     }
+    //     catch(exception e){
+    //         UtilityClass.createException(OppId,'MyReferrerController', 'sendVoi2', e.getMessage(), e.getStackTraceString(), ''+e.getLineNumber(),
+    //                                      e.getTypeName(), ''+e.getCause());
+    //     }
+    // }
     
     @AuraEnabled
     public static List<getMyReferralWrapper> getUpdatedListofOpp(string stagenm, String conId, String searchKey, String Str){
@@ -262,10 +262,10 @@ public without sharing class MyReferrerController {
             List<Opportunity> oppList = new List<Opportunity>();
             String query ='SELECT id,Name,Stagename,Applicant_1_Name__c,Applicant_2_Name__c,Approved_Date__c,Applicant_1_Email__c,Applicant_1_Phone_Number__c, CreatedDate,Lender__c,';
             query += 'Loan_Amount__c,Status__c,Current_Application_Sections__c,Total_Funds_Available__c,Applicant_1__r.FirstName,Applicant_1__r.LastName,';
-            query+='Applicant_1__r.PersonEmail,Applicant_1__r.Phone, FinServ__ReferredByContact__r.Name,FinServ__ReferredByContact__r.Referrer_Rating__c,installationAddressLineOne__c,Applicant_1__r.Number_of_applicants_to_operate_account__pc,';
-            query+='FinServ__ReferredByContact__c,Application_Pending_Notes__c,Line_Chart_JSON__c,Applicant_1__r.personContactId,Applicant_2__r.personContactId,SyncedQuote.Product__r.Funding_Options_Available__c,SyncedQuote.Customer_Amount__c, ';
+            query+='Applicant_1__r.PersonEmail,Applicant_1__r.Phone, ReferredByContact__r.Name,ReferredByContact__r.Referrer_Rating__c,installationAddressLineOne__c,Applicant_1__r.Number_of_applicants_to_operate_account__pc,';
+            query+='ReferredByContact__c,Application_Pending_Notes__c,Line_Chart_JSON__c,Applicant_1__r.personContactId,Applicant_2__r.personContactId,SyncedQuote.Product__r.Funding_Options_Available__c,SyncedQuote.Customer_Amount__c, ';
             query+= 'SyncedQuote.Product__r.No_of_Signatories_allowed__c,SyncedQuote.Product__r.Instruction_In_full_after_installation__c,SyncedQuote.Product__r.Instruction_In_full_before_installation__c,Approved_Expire_Date__c, ';
-            query+= 'SyncedQuote.Product__r.Instruction_Part_payment_before__c,SyncedQuote.Product__r.Surplus_Instructions__c,SyncedQuote.Product__r.Short_Fall_Instructions__c FROM Opportunity WHERE FinServ__ReferredByContact__c IN: conlist AND stageName IN: srtlst';
+            query+= 'SyncedQuote.Product__r.Instruction_Part_payment_before__c,SyncedQuote.Product__r.Surplus_Instructions__c,SyncedQuote.Product__r.Short_Fall_Instructions__c FROM Opportunity WHERE ReferredByContact__c IN: conlist AND stageName IN: srtlst';
             if ( searchKey != Null ) {
                 if ( Str != null ){
                     String key = '%' + searchKey + '%';
@@ -288,12 +288,12 @@ public without sharing class MyReferrerController {
                           Applicant_1_Phone_Number__c, CreatedDate,Lender__c, Loan_Amount__c,Status__c,Current_Application_Sections__c,
                           Total_Funds_Available__c,Applicant_1__r.FirstName,Applicant_1__r.LastName,
                           Applicant_1__r.PersonEmail,Applicant_1__r.Phone,Approved_Date__c,
-                          FinServ__ReferredByContact__r.Name,FinServ__ReferredByContact__r.Referrer_Rating__c,FinServ__ReferredByContact__c,Application_Pending_Notes__c,Line_Chart_JSON__c,
+                          ReferredByContact__r.Name,ReferredByContact__r.Referrer_Rating__c,ReferredByContact__c,Application_Pending_Notes__c,Line_Chart_JSON__c,
                           Applicant_1__r.personContactId,Applicant_2__r.personContactId,installationAddressLineOne__c,Applicant_1__r.Number_of_applicants_to_operate_account__pc,SyncedQuote.Customer_Amount__c,
                           SyncedQuote.Product__r.Funding_Options_Available__c,SyncedQuote.Product__r.No_of_Signatories_allowed__c,SyncedQuote.Product__r.Instruction_In_full_after_installation__c,
                           SyncedQuote.Product__r.Instruction_In_full_before_installation__c,SyncedQuote.Product__r.Instruction_Part_payment_before__c,SyncedQuote.Product__r.Surplus_Instructions__c,
                           SyncedQuote.Product__r.Short_Fall_Instructions__c,Approved_Expire_Date__c
-                          FROM Opportunity WHERE FinServ__ReferredByContact__c IN: conlist AND stageName IN: srtlst ORDER By CreatedDate DESC ];
+                          FROM Opportunity WHERE ReferredByContact__c IN: conlist AND stageName IN: srtlst ORDER By CreatedDate DESC ];
             }
             list<getMyReferralWrapper> refList = new List<getMyReferralWrapper>();
             for(Opportunity opp : oppList){
@@ -376,9 +376,9 @@ public without sharing class MyReferrerController {
                 mail.setorgWideEmailAddressId(Owea.get(0).Id);
             }
             
-            String[] toAddress = new String[] {'personalapplications@parkerlane.com.au''};
+            String[] toAddress = new String[] {'tazeem.khan@chazecloud.com''};
                 mail.setToAddresses(toAddress);
-            //mail.setReplyTo('personalapplications@parkerlane.com.au');
+            //mail.setReplyTo('tazeem.khan@chazecloud.com');
             
             if(mail != Null){
                 Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
@@ -727,7 +727,7 @@ public without sharing class MyReferrerController {
                 groupnames.add(qtw.GroupName);
             }
             
-            Lead ld = [SELECT Id, FirstName, LastName, Email, Status, FinServ__ReferredByContact__c, FinServ__RelatedAccount__c, OwnerId, 
+            Lead ld = [SELECT Id, FirstName, LastName, Email, Status, ReferredByContact__c, RelatedAccount__c, OwnerId, 
                        Point_of_Origin__c, Phone, LeadSource, Referred_by_Company__c
                        FROM Lead WHERE Email =: custEmail LIMIT 1];
             if(isPdf == 'No'){
@@ -781,7 +781,7 @@ public without sharing class MyReferrerController {
     public static void sendApplication(String oppId, String leadId, String conId, List<String> emails, String templateName, Boolean isPDFAttach){
         try{
             
-            Opportunity opp = [SELECT Id, Purpose__c, Applicant_1__r.Name, FinServ__ReferredByContact__r.Name, 
+            Opportunity opp = [SELECT Id, Purpose__c, Applicant_1__r.Name, ReferredByContact__r.Name, 
                                How_much_do_you_need__c, Applicant_1__r.Phone, Send_the_quote_to__c,
                                Owner.Name, Owner.Email,Credit_Analyst__c, Credit_Analyst__r.Email,RecordType.Name,RecordTypeId
                                FROM Opportunity WHERE Id =: oppId LIMIT 1];
@@ -818,11 +818,11 @@ public without sharing class MyReferrerController {
             EmailTemplate et=[Select id, Subject, Body from EmailTemplate where Name=:templateName]; 
             //System.debug('et>>' + et);
             mail.setTemplateId(et.id); 
-            String fromEmailAddress = 'hello@parkerlane.com.au';
+            String fromEmailAddress = 'sethu.rawat@chazecloud.com';
             if(personalRecTypeNameList.contains(opp.RecordType.Name)){
                 fromEmailAddress = UtilityClass.adminEmail;
             }else if(mortgageRecTypeNameList.contains(opp.RecordType.Name)){
-                fromEmailAddress = 'mortgageapplications@parkerlane.com.au';
+                fromEmailAddress = 'tazeem.khan@chazecloud.com';
             }
             OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address =:fromEmailAddress];
             if ( owea.size() > 0 ) {
@@ -1178,8 +1178,8 @@ quote.Quote_Group_Label__c = quoteDetailWrpList[i].masterQuote;
                                Applicant_1__r.FirstName,Applicant_1__r.LastName, Applicant_1__r.PersonEmail,Applicant_2__r.personContactId,
                                Applicant_1__r.Phone,Lender__c,LeadId__c,Loan_Amount__c,Status__c,Applicant_2__c,
                                Current_Application_Sections__c,Total_Funds_Available__c,Applicant_1__r.personContactId,
-                               FinServ__ReferredByContact__r.Name,FinServ__ReferredByContact__r.Email,FinServ__ReferredByContact__r.Referrer_Rating__c,
-                               FinServ__ReferredByContact__c,Applicant_1__r.Name,Application_Pending_Notes__c,RecordType.Name,Line_Chart_JSON__c,installationAddressLineOne__c,
+                               ReferredByContact__r.Name,ReferredByContact__r.Email,ReferredByContact__r.Referrer_Rating__c,
+                               ReferredByContact__c,Applicant_1__r.Name,Application_Pending_Notes__c,RecordType.Name,Line_Chart_JSON__c,installationAddressLineOne__c,
                                Applicant_1__r.Number_of_applicants_to_operate_account__pc,SyncedQuote.Product__r.Funding_Options_Available__c,SyncedQuote.Customer_Amount__c,
                                SyncedQuote.Product__r.No_of_Signatories_allowed__c,SyncedQuote.Product__r.Instruction_In_full_after_installation__c,
                                SyncedQuote.Product__r.Instruction_In_full_before_installation__c,SyncedQuote.Product__r.Instruction_Part_payment_before__c,

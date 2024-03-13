@@ -29,9 +29,6 @@
                         component.set("v.lgImage", extractedURL);
                     }
                 }
-                else{
-                    component.set("v.lgImage",ret[0].opp.Referred_by_Company__r.Supplier_Logo_URL_For_Site__c);
-                }
                 
                 if(ret.length == 3){                
                     if(ret[0].quote.Product__r.Product_Order__c == null){
@@ -133,21 +130,9 @@
                     component.set("v.showError", true);
                     component.set("v.errorMsg", $A.get("$Label.c.Error_Message"));
                 }else{
-                    component.set('v.quotesWpr', mainArr); 
+                    component.set('v.quotesWpr', mainArr);                    
+                    component.set('v.customerAmount', mainArr[0].quote.Customer_Amount__c);                    
                     component.set('v.purpose', mainArr[0].quote.Purpose__c);
-                    var isTrue = true;
-                    for(var i=0;i<mainArr.length;i++){
-                        if(mainArr[i].quote.Not_Applicable__c == false){
-                            isTrue = false;
-                            component.set('v.customerAmount', mainArr[i].quote.Customer_Amount__c);
-                            component.set('v.customerAmountnew', mainArr[i].quote.Customer_Amount__c);
-                            break;
-                        }
-                    }
-                    if(isTrue){
-                        component.set('v.customerAmount', mainArr[0].quote.Customer_Amount__c);
-                        component.set('v.customerAmountnew', mainArr[0].quote.Customer_Amount__c);
-                    }
                 }
             }
             $A.util.addClass(spinner, 'slds-hide');

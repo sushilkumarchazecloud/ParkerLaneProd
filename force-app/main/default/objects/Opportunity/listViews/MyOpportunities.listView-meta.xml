@@ -1,21 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>MyOpportunities</fullName>
-    <columns>OPPORTUNITY.NAME</columns>
-    <columns>OPPORTUNITY.LEAD_SOURCE</columns>
-    <columns>OPPORTUNITY.AMOUNT</columns>
-    <columns>INACTIVE_DAYS</columns>
-    <columns>OPPORTUNITY.STAGE_NAME</columns>
-    <columns>Application_Sections__c</columns>
-    <columns>OPPORTUNITY.PROBABILITY</columns>
-    <columns>Point_of_Origin__c</columns>
-    <columns>OPPORTUNITY.CREATED_DATE</columns>
-    <columns>OPPORTUNITY.CLOSE_DATE</columns>
     <filterScope>Mine</filterScope>
-    <filters>
-        <field>OPPORTUNITY.STAGE_NAME</field>
-        <operation>equals</operation>
-        <value>Researching,Deciding,Presentation Appointment,CPA Started,CPA Done,Packs Out,Packs Back,Application,Submitted,Conditionally Approved,Conditional,Unconditional,Approved,Docs Signed,Settlement Booked</value>
-    </filters>
     <label>My Opportunities</label>
 </ListView>

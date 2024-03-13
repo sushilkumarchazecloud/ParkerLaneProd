@@ -7,7 +7,7 @@
     <columns>OPPORTUNITY.LAST_UPDATE</columns>
     <columns>OPPORTUNITY.STAGE_NAME</columns>
     <columns>OPPORTUNITY.NAME</columns>
-    <columns>FinServ__ReferredByContact__c</columns>
+    <columns>ReferredByContact__c</columns>
     <columns>Lender__c</columns>
     <columns>Loan_Amount__c</columns>
     <columns>Application_Pending_Notes__c</columns>

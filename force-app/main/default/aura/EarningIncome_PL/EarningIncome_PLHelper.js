@@ -46,8 +46,8 @@
         var applicant = component.get("v.applicant");
         var applicantChildren = component.get("v.applicantChildren");
         
-        if(!$A.util.isUndefinedOrNull(applicant.FinServ__NumberOfChildren__c ) && applicant.FinServ__NumberOfChildren__c >0){     
-            var sel = applicant.FinServ__NumberOfChildren__c;
+        if(!$A.util.isUndefinedOrNull(applicant.NumberOfChildren__c ) && applicant.NumberOfChildren__c >0){     
+            var sel = applicant.NumberOfChildren__c;
             var len=0;
             if(applicantChildren.length>sel){
                 len = applicantChildren.length - sel;

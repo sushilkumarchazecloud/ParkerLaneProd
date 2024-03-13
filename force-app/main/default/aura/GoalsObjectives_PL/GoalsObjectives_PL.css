@@ -190,15 +190,9 @@
     padding-left: 2.7rem!important;
     padding-right: 2.7rem!important;
     font-family: ProximaNovaAlt-Medium;
-   /* color: var(--slds-c-button-color-border, var(--sds-c-button-color-border, transparent))!important;
-    background: rgb(245 245 245)!important; */
-    color: #0176d3 !important;
-    background: #f5f5f5 !important;
+    color: var(--slds-c-button-color-border, var(--sds-c-button-color-border, transparent))!important;
+    background: rgb(245 245 245)!important;
      
-}
-.THIS .privious-button_style1:hover{
-    color : #10467a !important;
-    background: #f5f5f5 !important;
 }
 .THIS .custom button.slds-button.slds-button_success.slds-m-vertical_medium.slds-float_right.save-button_style1.slds-m-right_x-small{
             white-space: nowrap;                    

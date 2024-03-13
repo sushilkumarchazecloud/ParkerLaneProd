@@ -3,7 +3,10 @@
     <fullName>Income_from_other_investment_Description__c</fullName>
     <externalId>false</externalId>
     <label>Income from other investment Description</label>
+    <length>255</length>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>
-    <type>TextArea</type>
+    <type>Text</type>
+    <unique>false</unique>
 </CustomField>

@@ -1,0 +1,37 @@
+.mainDiv{
+    border:1px solid rgb(243,243,243);
+    min-width: 19.375rem;
+    max-width: 19.375rem;
+    margin-top: 11px;
+}
+
+.mainDivHierarchy{
+    border:1px solid rgb(1,118,211);
+    min-width: 19.375rem;
+    max-width: 19.375rem;
+    margin-top: 11px;
+    height: 76px;
+}
+
+.horizontalLineTwo{
+    border-top: 2px solid rgb(1,118,211);
+    width: 40px;
+    margin-left: 300px;
+}
+
+.slds-size_3-of-8{
+    width: 33%;;
+}
+
+.slds-size_4-of-8 {
+    width: 54% !important;
+}
+
+/* .slds-button_icon-small{
+    transform: rotate(-90deg);
+} */
+
+.hierarchyIcon .slds-button_icon-small{
+    transform: rotate(-90deg);
+    border:1px solid rgb(1,118,211);
+}

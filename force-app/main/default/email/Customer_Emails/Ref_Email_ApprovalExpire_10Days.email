@@ -1,0 +1,6 @@
+<messaging:emailTemplate subject="Approval expires in 10 days! {!relatedTo.Name}" recipientType="Contact" relatedToType="Opportunity">
+<messaging:HtmlEmailBody >
+
+<c:ReminderForApprovedCmp oppId="{!relatedTo.Id}" TenDaysEmailRef="true"/>
+</messaging:HtmlEmailBody>
+</messaging:emailTemplate>

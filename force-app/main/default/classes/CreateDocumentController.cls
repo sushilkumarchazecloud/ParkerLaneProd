@@ -1,8 +1,8 @@
 public class CreateDocumentController{
     
-    public static List<FinServ__AssetsAndLiabilities__c> assets{get;set;}
-    public static List<FinServ__AssetsAndLiabilities__c> liabilities{get;set;}
-    public static Map<String, List<FinServ__AssetsAndLiabilities__c>> assetsAndLiabilities{get;set;}
+    public static List<AssetsAndLiabilities__c> assets{get;set;}
+    public static List<AssetsAndLiabilities__c> liabilities{get;set;}
+    public static Map<String, List<AssetsAndLiabilities__c>> assetsAndLiabilities{get;set;}
     public static Quote selectedQuote{get;set;}
     
     //Define set of all allowed operators
@@ -86,13 +86,13 @@ public class CreateDocumentController{
             
             selectedQuote = fetchSelectedQuote(oppId);
             
-            List<RuleEngine__mdt> ruleList = [SELECT Document__c, Fields__c, Object__c, Description__c, Category__c, Rules__c, isGeneral__c FROM RuleEngine__mdt WHERE Object__c = 'FinServ__Employment__c'];
+            List<RuleEngine__mdt> ruleList = [SELECT Document__c, Fields__c, Object__c, Description__c, Category__c, Rules__c, isGeneral__c FROM RuleEngine__mdt WHERE Object__c = 'Employment__c'];
             if(ruleList.size() > 0){
-                System.debug('===> '+empDetail.get('applicant1').FinServ__Employment__r.size());
-                if(empDetail.get('applicant1').FinServ__Employment__r.size() > 0){
-                    System.debug('===> '+empDetail.get('applicant1').FinServ__Employment__r.size());
-                    List<FinServ__Employment__c> empList = empDetail.get('applicant1').FinServ__Employment__r;
-                    for(FinServ__Employment__c emp : empList){
+                System.debug('===> '+empDetail.get('applicant1').Employment__r.size());
+                if(empDetail.get('applicant1').Employment__r.size() > 0){
+                    System.debug('===> '+empDetail.get('applicant1').Employment__r.size());
+                    List<Employment__c> empList = empDetail.get('applicant1').Employment__r;
+                    for(Employment__c emp : empList){
                         for(RuleEngine__mdt re : ruleList){
                             System.debug('re.Document__c '+re.Document__c);
                             System.debug('app1docs '+app1docs.contains(re.Document__c)+' '+app1docs);
@@ -141,10 +141,10 @@ public class CreateDocumentController{
                 }
                 
                 if(checkApplicant2){
-                    if(empDetail.get('applicant2').FinServ__Employment__r.size() > 0){
-                        System.debug('EmploymentSize '+empDetail.get('applicant2').FinServ__Employment__r.size());
-                        List<FinServ__Employment__c> empList = empDetail.get('applicant2').FinServ__Employment__r;
-                        for(FinServ__Employment__c emp : empList){
+                    if(empDetail.get('applicant2').Employment__r.size() > 0){
+                        System.debug('EmploymentSize '+empDetail.get('applicant2').Employment__r.size());
+                        List<Employment__c> empList = empDetail.get('applicant2').Employment__r;
+                        for(Employment__c emp : empList){
                             for(RuleEngine__mdt re : ruleList){
                                 if(!app2docs.contains(re.Document__c) && !app2set.contains(re.Document__c) && !gendocs.contains(re.Document__c)){
                                     Map<String, String> bindings = new Map<String, String>();
@@ -191,10 +191,10 @@ public class CreateDocumentController{
             assets = assetsAndLiabilities.get('Asset');
             liabilities = assetsAndLiabilities.get('Liability');
             
-            ruleList = [SELECT Document__c, Fields__c, Object__c, Description__c, Category__c, Rules__c, isGeneral__c FROM RuleEngine__mdt WHERE Object__c = 'FinServ__AssetsAndLiabilities__c'];
+            ruleList = [SELECT Document__c, Fields__c, Object__c, Description__c, Category__c, Rules__c, isGeneral__c FROM RuleEngine__mdt WHERE Object__c = 'AssetsAndLiabilities__c'];
             if(ruleList.size() > 0){
                 if(assets.size() > 0){
-                    for(FinServ__AssetsAndLiabilities__c assts: assets){
+                    for(AssetsAndLiabilities__c assts: assets){
                         for(RuleEngine__mdt re : ruleList){
                             if(!app1docs.contains(re.Document__c) && !app1set.contains(re.Document__c) && !gendocs.contains(re.Document__c)){
                                 Map<String, String> bindings = new Map<String, String>();
@@ -350,8 +350,8 @@ public class CreateDocumentController{
             Boolean temp = false;
             if(liabilities != null){
                 if(liabilities.size() > 0){
-                    for(FinServ__AssetsAndLiabilities__c liab: liabilities){
-                        if(liab.FinServ__AssetsAndLiabilitiesType__c == 'Home Loan/Mortgage' || liab.FinServ__AssetsAndLiabilitiesType__c == 'Investment Home Loan'){
+                    for(AssetsAndLiabilities__c liab: liabilities){
+                        if(liab.AssetsAndLiabilitiesType__c == 'Home Loan/Mortgage' || liab.AssetsAndLiabilitiesType__c == 'Investment Home Loan'){
                             temp = true;
                             break;
                         }    
@@ -359,9 +359,9 @@ public class CreateDocumentController{
                 }                
             }
             
-            if(empDetail.get('applicant1').FinServ__Employment__r != null && empDetail.get('applicant1').FinServ__Employment__r.size() > 0){
-                List<FinServ__Employment__c> empList = empDetail.get('applicant1').FinServ__Employment__r;
-                for(FinServ__Employment__c emp : empList){
+            if(empDetail.get('applicant1').Employment__r != null && empDetail.get('applicant1').Employment__r.size() > 0){
+                List<Employment__c> empList = empDetail.get('applicant1').Employment__r;
+                for(Employment__c emp : empList){
                     if(selectedQuote.Opportunity.Applicant_1__r.Does_your_spouse_earn_an_income__pc == 'Yes' && opp.Lender__c == 'Community First Credit Union' && temp == true){
                         if(!gendocs.contains('Council or water rates notice')){
                             docList.put('Council or water rates notice', createDocumentRequest(opp.Applicant_1__c, new RuleEngine__mdt(Document__c='Council or water rates notice',Category__c='Assets',isGeneral__c=true, Description__c='Less than 6 months old'), oppId));
@@ -372,10 +372,10 @@ public class CreateDocumentController{
             }      
             
             //added by tazeem on 10-02-23
-            if(empDetail.get('applicant1').FinServ__Employment__r != null && empDetail.get('applicant1').FinServ__Employment__r.size() > 0){
-                List<FinServ__Employment__c> empList = empDetail.get('applicant1').FinServ__Employment__r;
-                for(FinServ__Employment__c emp : empList){
-                    if(emp.FinServ__EmploymentStatus__c == 'Casual / Temporary' && opp.Lender__c != 'Transport Mutual Credit Union'){
+            if(empDetail.get('applicant1').Employment__r != null && empDetail.get('applicant1').Employment__r.size() > 0){
+                List<Employment__c> empList = empDetail.get('applicant1').Employment__r;
+                for(Employment__c emp : empList){
+                    if(emp.EmploymentStatus__c == 'Casual / Temporary' && opp.Lender__c != 'Transport Mutual Credit Union'){
                         if(!app1docs.contains('Last Year\'s Income Statement (Group Certificate)')){
                             docList.put('Last Year\'s Income Statement (Group Certificate)', createDocumentRequest(opp.Applicant_1__c, new RuleEngine__mdt(Document__c='Last Year\'s Income Statement (Group Certificate)',Category__c='Income',isGeneral__c=false, Description__c='Your employer provides you with an Income Statement every year OR you can access it via ATO Online Services via your myGov account.'), oppId));
                         	break;
@@ -384,10 +384,10 @@ public class CreateDocumentController{
                 }
             }
             if(opp.Applicant_2__c != null){
-                if(empDetail.get('applicant2').FinServ__Employment__r != null && empDetail.get('applicant2').FinServ__Employment__r.size() > 0){
-                    List<FinServ__Employment__c> empList = empDetail.get('applicant2').FinServ__Employment__r;
-                    for(FinServ__Employment__c emp : empList){
-                        if(emp.FinServ__EmploymentStatus__c == 'Casual / Temporary' && opp.Lender__c != 'Transport Mutual Credit Union'){
+                if(empDetail.get('applicant2').Employment__r != null && empDetail.get('applicant2').Employment__r.size() > 0){
+                    List<Employment__c> empList = empDetail.get('applicant2').Employment__r;
+                    for(Employment__c emp : empList){
+                        if(emp.EmploymentStatus__c == 'Casual / Temporary' && opp.Lender__c != 'Transport Mutual Credit Union'){
                             if(!app1docs.contains('Last Year\'s Income Statement (Group Certificate)')){
                                 docList.put('Last Year\'s Income Statement (Group Certificate)', createDocumentRequest(opp.Applicant_2__c, new RuleEngine__mdt(Document__c='Last Year\'s Income Statement (Group Certificate)',Category__c='Income',isGeneral__c=false, Description__c='Your employer provides you with an Income Statement every year OR you can access it via ATO Online Services via your myGov account.'), oppId));
                             	break;
@@ -400,7 +400,7 @@ public class CreateDocumentController{
             Boolean flag = false;
             if(assets != null){
                 if(assets.size() > 0){
-                    for(FinServ__AssetsAndLiabilities__c assts: assets){
+                    for(AssetsAndLiabilities__c assts: assets){
                         if(assts.Rental_Amount__c > 0){
                             flag = true;
                             break;
@@ -417,7 +417,7 @@ public class CreateDocumentController{
                 docList.put('Bank Statement Data', createDocumentRequest(opp.Applicant_1__c, new RuleEngine__mdt(Document__c='Bank Statement Data',Category__c='Bank Statements',isGeneral__c=true, Description__c='Provide your transaction bank account data via secure service BankStatements.com.au.'), oppId));
             }    
             
-            if(selectedQuote.Opportunity.FinServ__ReferredByContact__c != null || (cvList!= null && cvList.size() > 0)){
+            if(selectedQuote.Opportunity.ReferredByContact__c != null || (cvList!= null && cvList.size() > 0)){
                 if(docList.get('Purchase Quote or Invoice'+opp.Applicant_1__c) != null)
                     docList.remove('Purchase Quote or Invoice'+opp.Applicant_1__c);
                 if(docList.get('Purchase Quote or Invoice'+opp.Applicant_2__c) != null)
@@ -437,13 +437,13 @@ public class CreateDocumentController{
                 }*/
                 
                 //docList.add(createDocumentRequest(opp.Applicant_1__c, new RuleEngine__mdt(Document__c='Bank Statements (or link account above)',Category__c='Income', Description__c='3 months bank statements showing income credits'), oppId));
-                /*if(empDetail.get('applicant1').FinServ__Employment__r.size() > 0){
-                    System.debug('===> '+empDetail.get('applicant1').FinServ__Employment__r.size());
-                    List<FinServ__Employment__c> empList = empDetail.get('applicant1').FinServ__Employment__r;
-                    if(empList[0].FinServ__EmploymentStatus__c == 'Full time permanent' || empList[0].FinServ__EmploymentStatus__c == 'Part time permanent'){
+                /*if(empDetail.get('applicant1').Employment__r.size() > 0){
+                    System.debug('===> '+empDetail.get('applicant1').Employment__r.size());
+                    List<Employment__c> empList = empDetail.get('applicant1').Employment__r;
+                    if(empList[0].EmploymentStatus__c == 'Full time permanent' || empList[0].EmploymentStatus__c == 'Part time permanent'){
                         docList.add(createDocumentRequest(opp.Applicant_1__c, new RuleEngine__mdt(Document__c='1 month bank statement showing income credits (or link account above)',Category__c='Income'), oppId));
                     }
-                    if(empList[0].FinServ__EmploymentStatus__c != 'Full time permanent' || empList[0].FinServ__EmploymentStatus__c != 'Part time permanent'){
+                    if(empList[0].EmploymentStatus__c != 'Full time permanent' || empList[0].EmploymentStatus__c != 'Part time permanent'){
                         docList.add(createDocumentRequest(opp.Applicant_1__c, new RuleEngine__mdt(Document__c='3 months bank statements showing income credits (or link account above)',Category__c='Income'), oppId));
                     }
                 }*/
@@ -494,10 +494,10 @@ public class CreateDocumentController{
         if(opp.Applicant_2__c != null){
             conIds.add(opp.Applicant_2__r.PersonContactId);
         }
-        Map<Id, Contact> conEmploymentMap = new Map<Id, Contact>([SELECT Name, FinServ__CurrentEmployer__c, 
-              FinServ__Occupation__c, FinServ__MaritalStatus__c, Email,
-             (SELECT Id, Name, FinServ__Occupation__c, FinServ__AnnualIncome__c, FinServ__EmployerAddress__c,Minimum_hours_per_week__c,
-              FinServ__EmployerPhoneNumber__c, FinServ__EmploymentStatus__c, Income_Frequency__c, Months__c,
+        Map<Id, Contact> conEmploymentMap = new Map<Id, Contact>([SELECT Name, CurrentEmployer__c, 
+              Occupation__c, MaritalStatus__c, Email,
+             (SELECT Id, Name, Occupation__c, AnnualIncome__c, EmployerAddress__c,Minimum_hours_per_week__c,
+              EmployerPhoneNumber__c, EmploymentStatus__c, Income_Frequency__c, Months__c,
               Years__c, Self_Employed_Type__c, Employment_Status_1_Previous__c, Employer_Name_1_Previous__c,
               Years_1_Previous__c, Months_1_Previous__c, Annual_Income_1_Previous__c, Occupation_1_Previous__c, 
               Employment_Status_2_Previous__c, Employer_Name_2_Previous__c,Years_2_Previous__c, Months_2_Previous__c, 
@@ -511,7 +511,7 @@ public class CreateDocumentController{
               Address_2_Previous__c, Regularly_work_Overtime__c, Work_Overtime_amount__c, Work_Overtime_Frequency__c, 
               Regularly_receive_Commission_or_Bonus__c, Commission_or_Bonus_amount__c, Commission_or_Bonus_Frequency__c,
               Regularly_Receive_Allowance__c, Allowance_Amount__c, Allowance_Frequency__c, Provide_a_Company_Car__c,Job_Title__c 
-              FROM FinServ__Employment__r)
+              FROM Employment__r)
               FROM Contact WHERE Id in :conIds]);
         Map<String, Contact> conMap = new Map<String, Contact>();
         if(opp.Applicant_1__c != null){
@@ -529,7 +529,7 @@ public class CreateDocumentController{
         try{
             Quote qt = [SELECT Id, Customer_Amount__c, Loan_Term__c, Monthly_Repayment__c, Purpose__c,  Interest_Rate__c,Total_Loan_Cost__c,Total_Fees__c,Brokerage_Amount__c,
                         Lead__c, Lead__r.FirstName, Lead__r.LastName, Lead__r.Email, Shared_Message__c, Monthly_Repayments__c,Product__r.Interest_Rate_Type__c,Credit_Available_after_Setup_Costs__c,
-                        Opportunity.Applicant_1__r.PersonContactId, Opportunity.Applicant_1__r.Does_your_spouse_earn_an_income__pc, Opportunity.FinServ__ReferredByContact__c, Product__c, Product__r.Name,Total_loan_amount__c,Total_Setup_Fees__c,Product__r.Ongoing_Fees__c,Lender__c
+                        Opportunity.Applicant_1__r.PersonContactId, Opportunity.Applicant_1__r.Does_your_spouse_earn_an_income__pc, Opportunity.ReferredByContact__c, Product__c, Product__r.Name,Total_loan_amount__c,Total_Setup_Fees__c,Product__r.Ongoing_Fees__c,Lender__c
                         FROM Quote WHERE OpportunityId =: recordId AND Application__c = true LIMIT 1];
             
             if(qt.Product__r.Name != null){
@@ -563,23 +563,23 @@ public class CreateDocumentController{
         }
     }
     
-    public static Map<String, List<FinServ__AssetsAndLiabilities__c>> fetchAssetsAndLiabilities(Id recordId){
-        List<FinServ__AssetsAndLiabilities__c> assetsAndLiabilitiesList = 
-            [SELECT FinServ__Amount__c, FinServ__Description__c, RecordType.Name, Limit__c, Monthly_Repayment__c,
-             FinServ__Ownership__c, FinServ__AssetsAndLiabilitiesType__c, Address__c, Interest_Rate__c,
+    public static Map<String, List<AssetsAndLiabilities__c>> fetchAssetsAndLiabilities(Id recordId){
+        List<AssetsAndLiabilities__c> assetsAndLiabilitiesList = 
+            [SELECT Amount__c, Description__c, RecordType.Name, Limit__c, Monthly_Repayment__c,
+             Ownership__c, AssetsAndLiabilitiesType__c, Address__c, Interest_Rate__c,
              Approximate_Remaining_Term_Years__c, Bank_Type__c, Country__c, Institution__c, Repayment_Type__c,
              Is_Address_Same__c, Is_Find_Address__c, Make_Model__c, Payment_Frequency__c, Postal_Code__c,
              Property_Managed_By__c, Rate_Expires_in_Months__c, Rate_Expires_in_Years__c, Rate_Type__c, Rental_Amount__c,
              Rental_Frequency__c, Repayment_Frequency__c, State__c, Street__c, Street_Number__c, Street_Type__c, Suburb__c,
              Type_of_Fund__c, Type_of_Tenancy__c, Unit_Number__c, Year__c, Post_Payment_Frequency__c, Post_tax_lease_Payment__c,
              Pre_Payment_Frequency__c, Pre_tax_lease_Payment__c, Ownership_Share__c, Other_Ownership_Share__c, Value__c
-             FROM FinServ__AssetsAndLiabilities__c 
-             WHERE FinServ__PrimaryOwner__c in (SELECT Applicant_1__c FROM Opportunity WHERE Id =: recordId)];
-        Map<String, List<FinServ__AssetsAndLiabilities__c>> assetsAndLiabilitiesMap = new Map<String, List<FinServ__AssetsAndLiabilities__c>>();
-        for(FinServ__AssetsAndLiabilities__c assLiab : assetsAndLiabilitiesList){
-            List<FinServ__AssetsAndLiabilities__c>assLiabList = assetsAndLiabilitiesMap.get(assLiab.RecordType.Name);
+             FROM AssetsAndLiabilities__c 
+             WHERE PrimaryOwner__c in (SELECT Applicant_1__c FROM Opportunity WHERE Id =: recordId)];
+        Map<String, List<AssetsAndLiabilities__c>> assetsAndLiabilitiesMap = new Map<String, List<AssetsAndLiabilities__c>>();
+        for(AssetsAndLiabilities__c assLiab : assetsAndLiabilitiesList){
+            List<AssetsAndLiabilities__c>assLiabList = assetsAndLiabilitiesMap.get(assLiab.RecordType.Name);
             if(assLiabList == Null){
-                assLiabList = new List<FinServ__AssetsAndLiabilities__c>();
+                assLiabList = new List<AssetsAndLiabilities__c>();
             }
             assLiabList.add(assLiab);
             assetsAndLiabilitiesMap.put(assLiab.RecordType.Name, assLiabList);
@@ -589,7 +589,7 @@ public class CreateDocumentController{
     
     public class employmentStatus{
         public Contact con{get;set;}
-        public FinServ__Employment__c emp{get;set;}
+        public Employment__c emp{get;set;}
     } 
     
 }

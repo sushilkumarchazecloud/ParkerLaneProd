@@ -8,6 +8,7 @@
         });
         action.setCallback(this, function(response) {
             var state = response.getState();
+            console.log(JSON.stringify('LINE 11 ---> error',response.getError()));
             if (state === "SUCCESS") {
                 var ret = response.getReturnValue();
                 if(ret=='[]' || $A.util.isUndefinedOrNull(ret)){
@@ -16,11 +17,11 @@
                 }else{
                     component.set('v.applicant1', ret.applicant1);
                     
-                    if($A.util.isUndefinedOrNull(component.get('v.applicant1').FinServ__Employment__r)){
+                    if($A.util.isUndefinedOrNull(component.get('v.applicant1').Employment__r)){
                         component.set('v.employmentsList1', []);
                         self.addIncome(component, event, 1);
                     }else{
-                        component.set('v.employmentsList1', component.get('v.applicant1').FinServ__Employment__r);
+                        component.set('v.employmentsList1', component.get('v.applicant1').Employment__r);
                         var emp = component.get("v.employmentsList1");
                         
                         if($A.util.isUndefinedOrNull(emp[0].Months_1_Previous__c)){
@@ -81,11 +82,11 @@
                         component.set("v.applicantNameOptions",ops);
                         component.set('v.applicant2', ret.applicant2);
                         
-                        if($A.util.isUndefinedOrNull(component.get('v.applicant2').FinServ__Employment__r)){
+                        if($A.util.isUndefinedOrNull(component.get('v.applicant2').Employment__r)){
                             component.set('v.employmentsList2', []);
                             self.addIncome(component, event, 2);
                         }else{
-                            component.set('v.employmentsList2', component.get('v.applicant2').FinServ__Employment__r);
+                            component.set('v.employmentsList2', component.get('v.applicant2').Employment__r);
                             var emp = component.get("v.employmentsList2");
                             
                             if($A.util.isUndefinedOrNull(emp[0].Months_1_Previous__c)){
@@ -204,9 +205,9 @@
             isprimary = true;
         }
         employmentsList.push({
-            'sobjectType': 'FinServ__Employment__c',
-            'FinServ__Contact__c': applicant.Id,
-            'FinServ__EmploymentStatus__c': incomeFrom,
+            'sobjectType': 'Employment__c',
+            'Contact__c': applicant.Id,
+            'EmploymentStatus__c': incomeFrom,
             "Years__c":" ",
             "Months__c":"0",
             "Is_Primary__c": isprimary
@@ -344,28 +345,28 @@
         
        
         employment1.forEach(function(item){
-            if(item.FinServ__AnnualIncome__c){
+            if(item.AnnualIncome__c){
                 if(!$A.util.isUndefinedOrNull(item.Income_Frequency__c)){
                     if(item.Income_Frequency__c == 'Weekly'){
-                        totalAmt += parseFloat(item.FinServ__AnnualIncome__c)*52/12;
+                        totalAmt += parseFloat(item.AnnualIncome__c)*52/12;
                     }
                     else if(item.Income_Frequency__c == 'Fortnightly'){
-                        totalAmt += parseFloat(item.FinServ__AnnualIncome__c)*26/12;
+                        totalAmt += parseFloat(item.AnnualIncome__c)*26/12;
                     }
                     else if(item.Income_Frequency__c == 'Monthly'){
-                         totalAmt += parseFloat(item.FinServ__AnnualIncome__c);
+                         totalAmt += parseFloat(item.AnnualIncome__c);
                     }
                     else if(item.Income_Frequency__c == 'Annually'){
-                         totalAmt += parseFloat(item.FinServ__AnnualIncome__c)/12;
+                         totalAmt += parseFloat(item.AnnualIncome__c)/12;
                      }
                 }
                 
-                //totalAmt += parseFloat(item.FinServ__AnnualIncome__c)*12;
+                //totalAmt += parseFloat(item.AnnualIncome__c)*12;
             } 
         });
         employment2.forEach(function(item){
-            if(item.FinServ__AnnualIncome__c){
-                totalhouseholdAmt += parseFloat(item.FinServ__AnnualIncome__c) + totalAmt;
+            if(item.AnnualIncome__c){
+                totalhouseholdAmt += parseFloat(item.AnnualIncome__c) + totalAmt;
             }
         });
         component.set("v.totalAmount",totalAmt*12);

@@ -1,0 +1,87 @@
+<messaging:emailTemplate subject="You’ve got a special {!relatedTo.Purpose__c} finance offer from {!relatedTo.Referrer_First_Name__c} @ {!relatedTo.company}" recipientType="Contact" relatedToType="Lead" renderUsingSystemContextWithoutSharing="true">
+<messaging:htmlEmailBody >
+
+    <div style="max-width: 30rem;">
+        <div>Hi {!relatedTo.FirstName},</div>
+        <br />
+        <div style="text-align: left">
+            <div>
+                <b>{!relatedTo.Referrer_Full_Name__c} asked me to send over some finance offers for your {!relatedTo.Purpose__c} project.</b>
+            </div>
+            <br />
+            <div>     
+                <div >
+                    I’ve prepared some great options specifically for your circumstances and featured what I think are the best below.
+                </div>
+                <br/><br/> 
+                <apex:variable var="cnt" value="{!0}" />
+                <apex:repeat var="qt" value="{!relatedTo.Quotes__r}">
+                    <apex:outputPanel rendered="{!qt.Is_Featured__c}" >
+                        <apex:variable var="cnt" value="{!cnt+1}"/>
+                    </apex:outputPanel>
+                </apex:repeat>
+                <apex:variable var="count" value="{!0}" />       
+                    <apex:repeat var="quote" value="{!relatedTo.Quotes__r}">
+                        <apex:outputPanel rendered="{!quote.Is_Featured__c}" >
+                            <apex:outputPanel rendered="{!IF(quote.Gruop_Name__c == 'Referral-0' || quote.Gruop_Name__c == 'Referral-1' || quote.Gruop_Name__c == 'Referral-2' || quote.Gruop_Name__c == 'Referral-3' || quote.Gruop_Name__c == 'Referral-4' ,false,true)}">
+                                <div><b>{!quote.Gruop_Name__c}</b> </div>
+                            </apex:outputPanel>
+                            <div><b>Amount:&nbsp;</b> <apex:outputText value="{0, Number, Currency}">
+                                <apex:param value="{!quote.Customer_Amount__c}" />
+                                </apex:outputText>
+                            </div>
+                            <div><b>Payments:&nbsp;</b><apex:outputText value="{0, Number, Currency}">
+                                <apex:param value="{!quote.Monthly_Repayments__c}" />
+                                </apex:outputText> </div>
+                            <div><b>Rate:</b> {!quote.Interest_Rate__c}% </div> <br/>
+                                <a href="{!'https://apply-parkerlane.secure.force.com/?id=' + quote.OpportunityId+'&master=' + quote.Master_Quote_For_URL__c}"
+                                style="background-color:#91dadc;border-radius:5px;padding: 16px;color: #1a2745;text-decoration: none;" >REVIEW QUOTE ONLINE</a>
+                            <br/>
+                            <br/>
+                            
+                            <apex:variable var="count" value="{!count+1}"/>
+                            <apex:outputPanel rendered="{!IF(cnt != count ,true,false)}">
+                            <br/>
+                                <div>_____</div>
+                            </apex:outputPanel>
+                            <br/>
+                            <br/>
+                        </apex:outputPanel>
+                    </apex:repeat>
+            </div>            
+            
+            <div > 
+                You are free to take this up in the next fortnight by clicking the button and completing your application.
+                If you’re approved there’s no obligation to take up the loan.
+            </div>
+            <br/>
+            <div>
+                In the meantime, if there’s anything you’d like to ask, just hit reply :)<br/>
+                <br/>
+                <span>Here to help<br/>{!$Label.QuotationReferralName}</span><br/><br/>
+
+                <img width="115px" src="https://lanecorp--uat.sandbox.file.force.com/servlet/servlet.ImageServer?id=0159h00000064c1&oid=00D9h0000008XtF&lastMod=1664367526000" /><br/>
+                <i style="color : #192744; font-size :12px;">Do more with what you’ve got </i><br/><br/>
+                
+                <p>P.S. here’s why we’re recommended more often</p>
+                <ul>
+                    <li>Incredible rates!</li>
+                    <li>Great tech, real people</li>
+                    <li>Available to chat up to 7pm EST</li>
+                    <li>Awarded best in Australia for Personal Loans</li>
+                    <li>Awarded best in Australia for Home Loans</li>
+                    <li>Rated 4.92 out of 5 on ProductReview.com.au</li>
+                </ul>  
+                
+                <p style="color : #D3D3D3;">___</p>
+                <p style="color : #D3D3D3;">Want to get hold of us?<br/>
+                    Email: sethu.rawat@chazecloud.com<br/>
+                    Text: 0480 049 081  Call: 1300 13 17 11<br/>
+                    Australian Credit Licence Number 482276<br/>
+                </p>
+                <p style="color : #BFBFBF; font-size : 10px;">This email is confidential. If received in error, please delete it from your system. No confidentiality, privilege or intellectual property rights are waived or lost by any mis-transmission. To the extent permitted by law, Parker Lane does not assume responsibility or duty of care for any use or reliance upon this email by anyone other than the intended recipient. Parker Lane is committed to minimising its impact on the environment. Please consider the environment before printing this email.</p>
+            </div>                
+        </div>
+    </div>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

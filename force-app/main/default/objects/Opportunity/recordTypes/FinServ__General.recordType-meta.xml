@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>FinServ__General</fullName>
+    <fullName>General</fullName>
     <active>true</active>
-    <businessProcess>FinServ__Opportunity Process</businessProcess>
+    <businessProcess>Opportunity Process</businessProcess>
     <label>General</label>
     <picklistValues>
         <picklist>Any_product_types_you_are_interested_in__c</picklist>

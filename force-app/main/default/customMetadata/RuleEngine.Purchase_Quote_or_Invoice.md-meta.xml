@@ -8,7 +8,8 @@
     </values>
     <values>
         <field>Description__c</field>
-        <value xsi:type="xsd:string">Proof of purchase in the form of a quote or invoice is required for this loan.</value>
+        <value xsi:type="xsd:string">Proof of purchase in the form of a quote or invoice is required
+            for this loan.</value>
     </values>
     <values>
         <field>Document__c</field>
@@ -24,7 +25,8 @@
     </values>
     <values>
         <field>Rules__c</field>
-        <value xsi:type="xsd:string">Quote.Purpose__c == SolarProducts || Quote.Purpose__c == HomeImprovements</value>
+        <value xsi:type="xsd:string">Quote.Purpose__c == SolarProducts || Quote.Purpose__c ==
+            HomeImprovements</value>
     </values>
     <values>
         <field>isGeneral__c</field>

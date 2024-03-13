@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>What_is_spouse_s_primary_income_source__c</fullName>
-    <description>What is your spouse&apos;s primary source of income</description>
     <externalId>false</externalId>
     <label>What is spouse&apos;s primary income source</label>
     <required>false</required>

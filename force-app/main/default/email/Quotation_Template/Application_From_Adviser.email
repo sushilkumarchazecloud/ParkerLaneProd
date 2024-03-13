@@ -1,0 +1,46 @@
+<div>Dear {!Quote.OpportunityName__c},</div>
+<br />
+<div>
+    <b>Congratulations! Your {!Quote.Purpose__c} objectives and Parker Lane could be a good match. </b>
+</div>
+<br />
+<div>
+    Based on our discussions you have opted to proceed with the following loan:
+    <br /><br />
+    <div><b>Lender:</b> {!Quote.Lender__c} </div>
+    <div><b>Purpose:</b> {!Quote.Purpose__c} </div>
+    <div><b>Amount:</b> {!Quote.Customer_Amount__c} </div>
+    <div><b>Term:</b> {!Quote.Loan_Term__c} months </div>
+    <div><b>Interest rate:</b> {!Quote.Interest_Rate__c}% p.a.</div>
+    <div><b>Comparison Rate:</b> {!Quote.Actual_Comparison_Rate__c} p.a.*</div>
+    <div><b>Estimated monthly payment:</b> {!Quote.Monthly_Repayments__c} </div>
+</div>
+
+<br />
+<div>
+    <div>
+        To commence your application please click the link below. 
+    </div>
+    <br/>
+    <div><b><a href="{!Quote.ORG_URL__c}?id={!Quote.OpportunityId__c}&master={!Quote.Quote_Group_Label__c}">Click here to commence your application</a></b></div>
+    <br/>
+    <div>Completing our online application will take around 5-10 minutes, and if you're approved there's absolutely no obligation to take out the loan.</div>
+    <br/>
+    <div><b>What happens next?</b></div>
+    <div>
+        <ul style="list-style: none;">
+            <li>Step 1: Complete your application</li>
+            <li>Step 2: Authorise the docs online (see next email)</li>
+            <li>Step 3: Wait for your decision (typically 24 - 48 hours)</li>
+        </ul>
+    </div>
+    <br/>
+    <div>If you have any questions about borrowing with the help of Parker Lane please don't hesitate to call us on 1300 131 711, or simply reply to this email. </div>
+    <br/>
+    <div>Thank you for trusting me and Parker Lane. </div>
+    <br/>
+</div>
+Kind regards, <br />
+{!Opportunity.Owner}
+<br/>
+The Parker Lane team

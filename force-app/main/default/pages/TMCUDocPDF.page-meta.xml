@@ -4,9 +4,4 @@
     <availableInTouch>false</availableInTouch>
     <confirmationTokenRequired>false</confirmationTokenRequired>
     <label>TMCUDocPDF</label>
-    <packageVersions>
-        <majorNumber>240</majorNumber>
-        <minorNumber>1</minorNumber>
-        <namespace>FinServ</namespace>
-    </packageVersions>
 </ApexPage>

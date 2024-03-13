@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Ownership__c</fullName>
+    <externalId>false</externalId>
+    <label>Ownership</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Value1</fullName>
+                <default>false</default>
+                <label>Value1</label>
+            </value>
+            <value>
+                <fullName>Individual</fullName>
+                <default>false</default>
+                <label>Individual</label>
+            </value>
+            <value>
+                <fullName>Joint</fullName>
+                <default>false</default>
+                <label>Joint</label>
+            </value>
+            <value>
+                <fullName>Trust</fullName>
+                <default>false</default>
+                <label>Trust</label>
+            </value>
+            <value>
+                <fullName>Applicant 2</fullName>
+                <default>false</default>
+                <label>Applicant 2</label>
+            </value>
+            <value>
+                <fullName>Joint (non-applicant)</fullName>
+                <default>false</default>
+                <label>Joint (non-applicant)</label>
+            </value>
+            <value>
+                <fullName>Joint with Spouse</fullName>
+                <default>false</default>
+                <label>Joint with Spouse</label>
+            </value>
+            <value>
+                <fullName>Applicant 1</fullName>
+                <default>false</default>
+                <label>Applicant 1</label>
+            </value>
+            <value>
+                <fullName>Joint with other</fullName>
+                <default>false</default>
+                <label>Joint with other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,20 @@
+<div>Hi {!Opportunity.OwnerFullName}</div>
+
+<div>
+{!Opportunity.Name} uploaded documents at {!DATETIMEVALUE(Opportunity.LastModifiedDate)}. There are {!Opportunity.remaining__c} documents outstanding.
+</div></br>
+
+<div>
+<div>
+<b>Documents Received:</b>
+</div>
+{!Opportunity.Documents_Received__c}
+</div>
+<div>
+<div>
+<b>Documents Outstanding: </b>
+</div>
+{!Opportunity.Documents_Outstanding__c}
+</div></br>
+<div><b><a href="https://lanecorp--uat.my.salesforce.com/{!Opportunity.Id}">Click here to open the application</a></b></div>
+<div></div>

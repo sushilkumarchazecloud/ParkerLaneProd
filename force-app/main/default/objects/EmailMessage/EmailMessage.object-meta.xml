@@ -84,7 +84,7 @@
         <formFactor>Small</formFactor>
         <type>Default</type>
     </actionOverrides>
-    <compactLayoutAssignment>Adviser_Email</compactLayoutAssignment>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <enableFeeds>false</enableFeeds>
     <searchLayouts>
         <customTabListAdditionalFields>Status</customTabListAdditionalFields>

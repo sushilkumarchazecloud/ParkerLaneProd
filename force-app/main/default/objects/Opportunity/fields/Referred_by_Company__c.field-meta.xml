@@ -6,10 +6,10 @@
     <label>Referred by Company</label>
     <referenceTo>Account</referenceTo>
     <relationshipLabel>Opportunities (Referred by Company)</relationshipLabel>
-    <relationshipName>Opportunities2</relationshipName>
+    <relationshipName>Opportunities4</relationshipName>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>true</trackHistory>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
 </CustomField>

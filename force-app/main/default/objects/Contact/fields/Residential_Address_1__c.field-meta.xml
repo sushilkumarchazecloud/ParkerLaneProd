@@ -3,8 +3,10 @@
     <fullName>Residential_Address_1__c</fullName>
     <externalId>false</externalId>
     <label>Residential Address</label>
+    <length>100</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
-    <type>TextArea</type>
+    <type>Text</type>
+    <unique>false</unique>
 </CustomField>

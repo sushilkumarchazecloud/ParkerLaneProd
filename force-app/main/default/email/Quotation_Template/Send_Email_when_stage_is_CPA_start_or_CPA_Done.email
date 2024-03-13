@@ -1,0 +1,11 @@
+<div>Hi {!Opportunity.OwnerFullName}</div>
+
+<div>
+{!Opportunity.Name} moved to {!Opportunity.StageName} at {!DATETIMEVALUE(Opportunity.LastModifiedDate)}.
+</div></br>
+
+<div>Loan Type: {!Opportunity.Record_Type_Name__c}</div>
+<div>Loan Amount: $ {!Opportunity.Loan_Amount__c}</div>
+<div>Lender:  {!Opportunity.Lender__c}</div>
+<div><b><a href="https://lanecorp--uat.my.salesforce.com/{!Opportunity.Id}">Click here to open the application</a></b></div>
+<div></div>

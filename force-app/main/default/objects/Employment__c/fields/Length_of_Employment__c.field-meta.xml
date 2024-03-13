@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Length_of_Employment__c</fullName>
+    <externalId>false</externalId>
+    <formula>If(ISBLANK(EndDate__c),If(And(Month(TODAY())&gt;= month(StartDate__c), Day(TODAY()) &gt;= Day(StartDate__c)),
+Year(TODAY())- Year(StartDate__c) +
+(Month(TODAY())-Month(StartDate__c))/12,
+if(And(month(TODAY())&lt; month(StartDate__c), Day(TODAY())&gt;= Day(StartDate__c)),
+Year(TODAY())-Year(StartDate__c)-1 +
+(12 - Month(StartDate__c)+month(TODAY()))/12,
+if(And( month(TODAY())&lt; month(StartDate__c), Day(TODAY())&lt; Day(StartDate__c)),
+(Year(TODAY())-Year(StartDate__c)-1) +
+((12 - Month(StartDate__c)+month(TODAY())-1))/12,
+if(And( month(TODAY())= month(StartDate__c), Day(TODAY())&lt; Day(StartDate__c)),
+(Year(TODAY())- Year(StartDate__c)-1) + (11/12),
+(Year(TODAY())- Year(StartDate__c)) +
+(Month(TODAY())-Month(StartDate__c)-1)/12)))),If(And(Month(EndDate__c)&gt;= month(StartDate__c), Day(EndDate__c) &gt;= Day(StartDate__c)),
+Year(EndDate__c)- Year(StartDate__c) +
+(Month(EndDate__c)-Month(StartDate__c))/12,
+if(And(month(EndDate__c)&lt; month(StartDate__c), Day(EndDate__c)&gt;= Day(StartDate__c)),
+Year(EndDate__c)-Year(StartDate__c)-1 +
+(12 - Month(StartDate__c)+month(EndDate__c))/12,
+if(And( month(EndDate__c)&lt; month(StartDate__c), Day(EndDate__c)&lt; Day(StartDate__c)),
+(Year(EndDate__c)-Year(StartDate__c)-1) +
+((12 - Month(StartDate__c)+month(EndDate__c)-1))/12,
+if(And( month(EndDate__c)= month(StartDate__c), Day(EndDate__c)&lt; Day(StartDate__c)),
+(Year(EndDate__c)- Year(StartDate__c)-1) + (11/12),
+(Year(EndDate__c)- Year(StartDate__c)) +
+(Month(EndDate__c)-Month(StartDate__c)-1)/12)))))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Length of Employment</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

@@ -15,11 +15,11 @@
             <span><img src={identityImg} width="55px"/></span>
         </div>  
         <div class="slds-m-top-x_small">
-            <p class="text2">Choose the  document type you will upload</p>
+            <p class="text2">Choose the  document type you will upload</p>            
             <div class="slds-grid slds-wrap text_margin">
                 <div class="slds-size_1-of-1">
                     <lightning-radio-group name="radioGroup"                          
-                        options={options}
+                        options={DocuemntsToShow}
                         value={docType}
                         type="button"
                         class="my-radio-group" 
@@ -39,7 +39,17 @@
         <div if:true={isErrorForGlitch} class="slds-align_absolute-left">
             <p class="text2" style="color: red;">Hi, we have found Glitch in your internet please try Again!!</p>
         </div>
-        <div class="slds-grid slds-wrap slds-m-top_small">
+         <div class="slds-m-top_small">
+            <div class="inputWidth slds-grid slds-wrap">               
+                <template for:each={docstoupload} for:item="doc">
+                    <div key={doc} class="slds-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12">
+                        <label style="font-family: Proxima Nova Alt Regular;position : relative; top : 15px; left: 2px; font-size : 1rem; color: #1a2745;" key={doc}>{doc}</label>
+                        <c-voi-file-upload-gen key={doc} idtype={doc} conrecord={conRecord} voidetail={voidt} authtoken={authtoken} oncallparentfordl={checkfileuploaded} oncheckerror={callforError}> </c-voi-file-upload-gen>
+                    </div>  
+                </template>                    
+            </div>                
+         </div>
+         <!--<div class="slds-grid slds-wrap slds-m-top_small">
             <div class="slds-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12"> 
                <div class="inputWidth" data-id="front-dl-Sec" >
                     <c-voi-file-upload-gen conrecord={conRecord} voidetail={voidt} type="Dl Front" idtype={frontId} authtoken={authtoken} oncallparentfordl={checkfileuploaded} oncheckerror={callforError}> </c-voi-file-upload-gen>                        
@@ -53,7 +63,7 @@
                     <c-voi-file-upload-gen conrecord={conRecord} voidetail={voidt} type="Dl Back" idtype={backId} authtoken={authtoken} oncallparentfordl={checkfileuploaded} oncheckerror={callforError}> </c-voi-file-upload-gen>                        
                 </div>
             </div>
-        </div>        
+        </div>-->    
         <div class="buttonOfAnother slds-m-top_x-large"  align="center">
             <div class="slds-grid slds-wrap">
                 <div class={hidedivicediv}>

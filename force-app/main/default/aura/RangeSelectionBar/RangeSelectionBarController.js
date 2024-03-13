@@ -40,32 +40,16 @@
         price = price -(price % 4);
         component.set("v.sliderValue", price);
         
+        
 	},
-    
-    checkExpenses : function(component, event, helper){
+    rangeSelectorValidate : function(component, event, helper){
         var allValid = true;
-        var inputValue =0;
         allValid = component.find('fieldcheck').reduce(function (validSoFar, inputCmp) {
             inputCmp.showHelpMessageIfInvalid();
-            inputValue = component.get("v.val");
             return validSoFar && !inputCmp.get('v.validity').valueMissing;
         }, true);
-
-        if(allValid){
-            if(inputValue == 0){
-                component.set("v.checkError",true);
-                return !allValid;
-            }
-            else{
-                component.set("v.checkError",false);
-                return allValid;
-            }
-        }
-        else{
-            component.set("v.checkError",false);
-            return allValid;
-        }
+        
 		//component.set("v.showError",!allValid);
+		//return allValid;
     }
-    
 })

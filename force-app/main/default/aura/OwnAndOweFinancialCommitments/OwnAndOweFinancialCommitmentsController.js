@@ -3,13 +3,13 @@
         helper.setMonthsYearsTerms(component, event);
         
         var liability = component.get("v.liability");
-        if(liability.FinServ__Ownership__c == 'Joint'){
+        if(liability.Ownership__c == 'Joint'){
             component.set("v.app1Ownership", "Applicant 1 Ownership Share (%)");
             component.set("v.app2Ownership", "Applicant 2 Ownership Share (%)");
-        }else if(liability.FinServ__Ownership__c == 'Joint (non-applicant)'){
+        }else if(liability.Ownership__c == 'Joint (non-applicant)'){
             component.set("v.app1Ownership", "Applicant Ownership Share (%)");
             component.set("v.app2Ownership", "Non-Applicant Ownership Share (%)");
-        }else if(liability.FinServ__Ownership__c == 'Joint with Spouse'){
+        }else if(liability.Ownership__c == 'Joint with Spouse'){
             component.set("v.app1Ownership", "Applicant Ownership Share (%)");
             component.set("v.app2Ownership", "Spouse Ownership Share (%)");
         }
@@ -51,7 +51,7 @@
         
         var liability = component.get("v.liability");
         if(!$A.util.isUndefinedOrNull(liability) && 
-           !$A.util.isUndefinedOrNull(liability.FinServ__Ownership__c) &&
+           !$A.util.isUndefinedOrNull(liability.Ownership__c) &&
            !$A.util.isUndefinedOrNull(liability.Ownership_Share__c) &&
            !$A.util.isUndefinedOrNull(liability.Other_Ownership_Share__c)){
             var app1Share = parseInt(liability.Ownership_Share__c);
@@ -70,17 +70,17 @@
     
     handleOwnership : function(component, event, helper) {
         var liability = component.get("v.liability");
-        if(!$A.util.isUndefinedOrNull(liability) && !$A.util.isUndefinedOrNull(liability.FinServ__Ownership__c)){
+        if(!$A.util.isUndefinedOrNull(liability) && !$A.util.isUndefinedOrNull(liability.Ownership__c)){
             var isJoint = false;
-            if(liability.FinServ__Ownership__c == 'Joint'){
+            if(liability.Ownership__c == 'Joint'){
                 component.set("v.app1Ownership", "Applicant 1 Ownership Share (%)");
                 component.set("v.app2Ownership", "Applicant 2 Ownership Share (%)");
                 isJoint = true;
-            }else if(liability.FinServ__Ownership__c == 'Joint (non-applicant)'){
+            }else if(liability.Ownership__c == 'Joint (non-applicant)'){
                 component.set("v.app1Ownership", "Applicant Ownership Share (%)");
                 component.set("v.app2Ownership", "Non-Applicant Ownership Share (%)");
                 isJoint = true;
-            }else if(liability.FinServ__Ownership__c == 'Joint with Spouse'){
+            }else if(liability.Ownership__c == 'Joint with Spouse'){
                 component.set("v.app1Ownership", "Applicant Ownership Share (%)");
                 component.set("v.app2Ownership", "Spouse Ownership Share (%)");
                 isJoint = true;

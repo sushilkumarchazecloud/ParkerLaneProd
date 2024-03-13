@@ -11,7 +11,7 @@
     <columns>Application_Sections__c</columns>
     <columns>OPPORTUNITY.EXP_AMOUNT</columns>
     <columns>OPPORTUNITY.PROBABILITY</columns>
-    <columns>FinServ__ReferredByContact__c</columns>
+    <columns>ReferredByContact__c</columns>
     <columns>Point_of_Origin__c</columns>
     <columns>OPPORTUNITY.CREATED_DATE</columns>
     <columns>CORE.USERS.FULL_NAME</columns>

@@ -3,7 +3,8 @@
         <div class="exampleHolder">
             <lightning-spinner alternative-text="Loading" size="large" class="slds-is-fixed" variant="brand" style="background-color:#ced3db;"></lightning-spinner>
         </div>
-    </div>
+    </div>     
+
     <div class="main_cont bg-lightest slds-p-horizontal--medium slds-m-top_medium scrollFor" if:true={quoteRecord}>         
         <div class="slds-align_absolute-center slds-m-top_medium">
             <img src={signHead} style="width : 50%;"/>
@@ -16,7 +17,7 @@
         </div>
         <div class="slds-m-top_medium">
             <p class="text1 fontFamreg">Read the following disclosure documents then sign at the bottom</p>
-             <ul class="slds-list_dotted fontFamreg">
+            <!-- <ul class="slds-list_dotted fontFamreg">
                 <div if:false={isTMCUorbhcu}>
                     <li if:false={updateforTMCU}><b>Credit proposal (1 of 1)</b></li>
                 </div>
@@ -26,20 +27,10 @@
                     <li if:true={updateforTMCU} class="highLightTxt"><mark>Lender Membership Application (2 of 2)</mark></li>
                     <li if:false={updateforTMCU} class="lenderText">Lender Membership Application (2 of 2)</li>
                 </div>                
-            </ul>   
+            </ul>-->  
+             <c-collapsible terms={terms}></c-collapsible> 
         </div>
-        <div class="margin_Cls" if:true={quoteRecord}>    
-            <div if:false={updateforTMCU} >
-               <c-signed-cqp quoterecord={quoteRecord} opprecord={oppRecord} condata={conRecord} emp1={emp1} emp2={emp2}></c-signed-cqp>                
-            </div>
-            <div if:true={updateforTMCU}>
-                <div if:true={isTMCU} >
-                   <c-signed-t-m-c-u quoterecord={quoteRecord} opprecord={oppRecord} condata={conRecord} emp1={emp1} emp2={emp2} check={checkValidate} ></c-signed-t-m-c-u>
-                </div>
-                <div if:true={isBHCCU}>
-                    <c-signed-b-h-c-c-u quoterecord={quoteRecord} opprecord={oppRecord} condata={conRecord} emp1={emp1} emp2={emp2}></c-signed-b-h-c-c-u>    
-                </div>
-            </div>
+        <div class="margin_Cls" if:true={quoteRecord}>               
             <div>
                 <div class="slds-form-element margin_Cls">
                     <div class="slds-grid slds-wrap">

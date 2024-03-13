@@ -1,0 +1,48 @@
+<div>Dear {!Quote.Applicant_1_Full_Name__c},</div>
+<br />
+<div>
+    <b>Congratulations! Your application is complete and we’re working on it. </b>
+</div>
+<br />
+<div>
+    Thank you for completing your application via Parker Lane. 
+</div>
+<br />
+<div>
+   We have received your application and will be in touch shortly. 
+</div>
+<br />
+<div>
+    If you haven’t already uploaded them, we may need some documents so the lender can validate your application. 
+</div>
+<br />
+<div>
+    To upload some or all of this information from your phone or PC now please follow this link below. It’s incredibly easy to use - no scanning required. You can even: 
+</div>
+<div>
+    <ul style="list-style: disc;">
+        <li>Point and shoot from your phone </li>
+        <li>Link bank accounts online</li>
+    </ul>
+    </div>
+<br />
+<div>
+    Please click the button below to get started. 
+</div>
+<br />
+
+<div style="font-size:20px;">
+<b><a href="{!Quote.ORG_URL__c}supportingDocument?oppId={!Quote.OpportunityId__c}"> START UPLOADING NOW</a>
+</div>
+<br/>
+<div>
+    If you have any questions about this email please don't hesitate to call us on 1300 131 711, or simply reply to this email.
+</div>
+<br/>
+<div>
+    Thank you in advance for your prompt attention to this email.
+</div>
+<br/>
+
+Kind regards, <br />
+The Parker Lane team

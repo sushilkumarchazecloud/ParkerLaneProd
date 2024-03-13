@@ -128,14 +128,11 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
-        <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>VOI_Detail_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <skipRecordTypeSelect>false</skipRecordTypeSelect>
-        <type>Flexipage</type>
+        <type>Default</type>
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
+        <formFactor>Large</formFactor>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -155,21 +152,16 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>ReadWrite</externalSharingModel>
+    <externalSharingModel>Read</externalSharingModel>
     <label>VOI Detail</label>
     <nameField>
-        <displayFormat>VOI-{00000000}</displayFormat>
+        <displayFormat>VOIDT-{00000}</displayFormat>
         <label>VOI Detail Name</label>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>VOI Details</pluralLabel>
-    <searchLayouts>
-        <searchResultsAdditionalFields>Contact__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Opportunity__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Date_submitted__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>VOI_Type__c</searchResultsAdditionalFields>
-    </searchLayouts>
+    <searchLayouts></searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

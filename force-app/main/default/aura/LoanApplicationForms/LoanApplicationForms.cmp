@@ -1,10 +1,10 @@
-<aura:component controller="ParkerLaneLoanController">
+<aura:component controller="ApplicationFormController">
     <aura:attribute name="YesNoOptions" type="List" default="[{'label': 'Yes, we belong to the same household', 'value': 'Yes'},
                                                              {'label': 'No, we belong to different households', 'value': 'No'}]"/>
     <aura:attribute name="applicant1" type="Contact" default="{'sobjectType': 'Contact', 'FirstName': '', 'LastName': '',
-                                                              'Email': '', 'Phone': '', 'FinServ__MaritalStatus__c':''}"/>
+                                                              'Email': '', 'Phone': '', 'MaritalStatus__c':''}"/>
     <aura:attribute name="applicant2" type="Contact" default="{'sobjectType': 'Contact', 'FirstName': '', 'LastName': '',
-                                                              'Email': '', 'Phone': '', 'FinServ__MaritalStatus__c':''}"/>
+                                                              'Email': '', 'Phone': '', 'MaritalStatus__c':''}"/>
     <aura:attribute name="app1Children" type="Contact[]" />
     <aura:attribute name="app2Children" type="Contact[]" />
     <aura:attribute name="NoOfapplicantsOptions" type="List" default="[{'label': 'One Person', 'value': 'single'},{'label': 'Two Person', 'value':  'joint'}]"/>

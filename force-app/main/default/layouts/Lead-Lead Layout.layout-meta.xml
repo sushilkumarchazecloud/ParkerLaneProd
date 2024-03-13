@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>false</customLabel>
         <detailHeading>false</detailHeading>
@@ -7,12 +8,16 @@
         <label>Lead Information</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Required</behavior>
-                <field>Status</field>
+                <behavior>Edit</behavior>
+                <field>OwnerId</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>Name</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>Company</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -20,8 +25,78 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Email</field>
+                <field>LeadSource</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CampaignId</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Industry</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>AnnualRevenue</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ReferredByContact__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>RelatedAccount__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Point_of_Origin__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Referred_by_Company__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>installationSuburb__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>installationCountry__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>installationPostcode__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>installationState__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Customer_Amount__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Purpose__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Lead_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Product_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Application_Sections__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Current_Application_Sections__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Phone</field>
@@ -32,160 +107,34 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Rating</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Broker_Marketing_Quote_By__c</field>
+                <field>Fax</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Calendly__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Pardot_Marketing_Tag__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>What_is_your_stage_in_life__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Do_you_feel_in_control_of_your_finances__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Do_you_often_take_action_to_save_money__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Is_it_easy_to_find_ways_to_save_money__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Satisfied_with_the_rates_of_interest__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Quick_repay_Confidence__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Happy_With_Financial_Goal_Plan__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Using_System_to_track_your_Finance__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Credit_Guide_Privacy_Consent_Provided__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Confirmed_Email_was_correct__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Privacy_Statement_Read_to_Client__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Customer_Response__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Privacy_Statement_Read_to_client_Date__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Do_not_contact__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>SMS_Opt_Opt__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Lead_Temperature__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Loan_Purpose__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Record_Type_id__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Calendly_Link__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Affected_by_C19__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Proceed_with_solar__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Lead_Created_Date_Time__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>TransactionType__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Referred_by_Aggregator_Acc__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>OwnerId</field>
+                <field>Email</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Website</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Company</field>
+                <behavior>Required</behavior>
+                <field>Status</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Industry</field>
+                <field>Rating</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>NumberOfEmployees</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>LeadSource</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>RecordTypeId</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Lead_Number__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Customer_Amount__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
     <layoutSections>
         <customLabel>false</customLabel>
-        <detailHeading>true</detailHeading>
+        <detailHeading>false</detailHeading>
         <editHeading>true</editHeading>
         <label>Address Information</label>
         <layoutColumns>
@@ -199,37 +148,34 @@
     </layoutSections>
     <layoutSections>
         <customLabel>false</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>true</editHeading>
-        <label>Additional Information</label>
-        <layoutColumns/>
-        <layoutColumns/>
-        <style>TwoColumnsLeftToRight</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>false</customLabel>
         <detailHeading>false</detailHeading>
         <editHeading>true</editHeading>
-        <label>Description Information</label>
+        <label>Additional Information</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Broker_Marketing_Quote__c</field>
+                <field>ProductInterest__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Life_events_in_next_6_months__c</field>
+                <field>SICCode__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Top_Financial_Priorities__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Answers__c</field>
+                <field>NumberofLocations__c</field>
             </layoutItems>
         </layoutColumns>
-        <style>OneColumn</style>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CurrentGenerators__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Primary__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
         <customLabel>false</customLabel>
@@ -252,14 +198,27 @@
     </layoutSections>
     <layoutSections>
         <customLabel>false</customLabel>
+        <detailHeading>false</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Description Information</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Description</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>leadAddress__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>false</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>false</editHeading>
         <label>Custom Links</label>
-        <layoutColumns>
-            <layoutItems>
-                <customLink>GoogleMaps</customLink>
-            </layoutItems>
-        </layoutColumns>
+        <layoutColumns/>
         <layoutColumns/>
         <layoutColumns/>
         <style>CustomLinks</style>
@@ -267,74 +226,124 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
-            <actionName>mercury__Send_SMS</actionName>
-            <actionType>CustomButton</actionType>
-            <sortOrder>0</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>mercury__SMS_Feed</actionName>
-            <actionType>CustomButton</actionType>
-            <sortOrder>1</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Edit</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>2</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Delete</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>3</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Clone</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>4</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Convert</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>5</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>FeedItem.ContentNote</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>6</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>LogACall</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>7</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>NewTask</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>8</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>NewEvent</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>9</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>FeedItem.TextPost</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>10</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>FeedItem.ContentPost</actionName>
+            <actionName>SendEmail</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>11</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>SendEmail</actionName>
-            <actionType>QuickAction</actionType>
+            <actionName>Submit</actionName>
+            <actionType>StandardButton</actionType>
             <sortOrder>12</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Lead.dsfs__LeadDocuSignAction</actionName>
-            <actionType>QuickAction</actionType>
+            <actionName>Clone</actionName>
+            <actionType>StandardButton</actionType>
             <sortOrder>13</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>XClean</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>14</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Delete</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>15</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Share</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>16</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>ChangeRecordType</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>17</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Edit</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>18</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>ChangeOwnerOne</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>19</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Convert</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>20</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>CallHighlightAction</actionName>
+            <actionType>ProductivityAction</actionType>
+            <sortOrder>21</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>SmsHighlightAction</actionName>
+            <actionType>ProductivityAction</actionType>
+            <sortOrder>22</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>EmailHighlightAction</actionName>
+            <actionType>ProductivityAction</actionType>
+            <sortOrder>23</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Lead.Lead_Convert</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>0</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>FeedItem.TextPost</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>1</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>FeedItem.ContentPost</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>2</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>NewTask</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>3</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>LogACall</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>4</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>NewCase</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>5</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>NewNote</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>6</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>NewEvent</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>7</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>FeedItem.LinkPost</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>8</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>FeedItem.PollPost</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>9</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>FeedItem.QuestionPost</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>10</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList>
@@ -345,10 +354,16 @@
             <quickActionName>FeedItem.ContentPost</quickActionName>
         </quickActionListItems>
         <quickActionListItems>
+            <quickActionName>NewTask</quickActionName>
+        </quickActionListItems>
+        <quickActionListItems>
             <quickActionName>LogACall</quickActionName>
         </quickActionListItems>
         <quickActionListItems>
-            <quickActionName>NewTask</quickActionName>
+            <quickActionName>NewCase</quickActionName>
+        </quickActionListItems>
+        <quickActionListItems>
+            <quickActionName>NewNote</quickActionName>
         </quickActionListItems>
         <quickActionListItems>
             <quickActionName>NewEvent</quickActionName>
@@ -360,7 +375,7 @@
             <quickActionName>FeedItem.PollPost</quickActionName>
         </quickActionListItems>
         <quickActionListItems>
-            <quickActionName>FeedItem.ContentNote</quickActionName>
+            <quickActionName>FeedItem.QuestionPost</quickActionName>
         </quickActionListItems>
         <quickActionListItems>
             <quickActionName>SendEmail</quickActionName>
@@ -375,35 +390,47 @@
         </relatedContentItems>
     </relatedContent>
     <relatedLists>
-        <relatedList>RelatedFileList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <relatedList>RelatedContentNoteList</relatedList>
-    </relatedLists>
-    <relatedLists>
         <fields>TASK.SUBJECT</fields>
         <fields>ACTIVITY.TASK</fields>
         <fields>TASK.DUE_DATE</fields>
         <fields>TASK.STATUS</fields>
+        <fields>TASK.PRIORITY</fields>
         <fields>CORE.USERS.FULL_NAME</fields>
-        <fields>EVENT.LOCATION</fields>
         <relatedList>RelatedActivityList</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>TASK.SUBJECT</fields>
         <fields>ACTIVITY.TASK</fields>
         <fields>TASK.DUE_DATE</fields>
-        <fields>EVENT.LOCATION</fields>
         <fields>CORE.USERS.FULL_NAME</fields>
+        <fields>TASK.LAST_UPDATE</fields>
         <relatedList>RelatedHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>CreatedDate</fields>
-        <fields>StepStatus</fields>
-        <fields>OriginalActor</fields>
-        <fields>Actor</fields>
-        <fields>Comments</fields>
-        <relatedList>RelatedProcessHistoryList</relatedList>
+        <fields>CAMPAIGN.NAME</fields>
+        <fields>CAMPAIGN.START_DATE</fields>
+        <fields>CAMPAIGN.CAMPAIGN_TYPE</fields>
+        <fields>CM.STATUS</fields>
+        <fields>CM.RESPONDED</fields>
+        <fields>CM.LAST_UPDATE</fields>
+        <relatedList>RelatedCampaignList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>ACTIVITY.SUBJECT</fields>
+        <fields>EMAIL_STATUS.CREATED_DATE</fields>
+        <fields>EMAIL_STATUS.FIRST_OPEN_DATE</fields>
+        <fields>EMAIL_STATUS.TIMES_OPENED</fields>
+        <fields>EMAIL_STATUS.LAST_OPEN_DATE</fields>
+        <relatedList>RelatedEmailStatusList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>QUOTE.NAME</fields>
+        <fields>OPPORTUNITY.NAME</fields>
+        <fields>Application__c</fields>
+        <fields>QUOTE.EXPIRATIONDATE</fields>
+        <fields>QUOTE.SUBTOTAL</fields>
+        <fields>QUOTE.TOTALPRICE</fields>
+        <relatedList>Quote.Lead__c</relatedList>
     </relatedLists>
     <runAssignmentRulesDefault>false</runAssignmentRulesDefault>
     <showEmailCheckbox>false</showEmailCheckbox>
@@ -412,7 +439,7 @@
     <showRunAssignmentRulesCheckbox>true</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h0o00000ihD9P</masterLabel>
+        <masterLabel>00h5h00000NKaVT</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

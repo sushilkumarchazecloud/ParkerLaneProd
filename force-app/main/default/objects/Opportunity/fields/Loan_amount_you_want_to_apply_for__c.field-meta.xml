@@ -5,7 +5,7 @@
     <label>Loan amount you want to apply for?</label>
     <precision>18</precision>
     <required>false</required>
-    <scale>2</scale>
+    <scale>0</scale>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

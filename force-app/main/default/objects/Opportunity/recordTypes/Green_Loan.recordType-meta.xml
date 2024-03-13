@@ -2,8 +2,7 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Green_Loan</fullName>
     <active>true</active>
-    <businessProcess>Personal Loan</businessProcess>
-    <compactLayoutAssignment>Personal_Loan_Layout</compactLayoutAssignment>
+    <businessProcess>Solar</businessProcess>
     <label>Green Loan</label>
     <picklistValues>
         <picklist>Any_product_types_you_are_interested_in__c</picklist>
@@ -183,7 +182,7 @@
         </values>
         <values>
             <fullName>Priorities</fullName>
-            <default>true</default>
+            <default>false</default>
         </values>
         <values>
             <fullName>Risk Assessment</fullName>
@@ -240,21 +239,6 @@
         </values>
         <values>
             <fullName>Percentage</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Certificate_of_Currency__c</picklist>
-        <values>
-            <fullName>Received from client</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Request sent to client</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Sent to incoming lender</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -378,17 +362,6 @@
         </values>
         <values>
             <fullName>Uncontactable</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Consent_and_Identification__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Yes</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -524,37 +497,22 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Discharge__c</picklist>
+        <picklist>DeliveryInstallationStatus__c</picklist>
         <values>
-            <fullName>Executed %26 received from client</fullName>
+            <fullName>Completed</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Sent to incoming lender</fullName>
+            <fullName>In progress</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Sent to outgoing</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>sent to client</fullName>
+            <fullName>Yet to begin</fullName>
             <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
         <picklist>Do_you_both_live_at_the_same_address__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Yes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Electronic_Communication__c</picklist>
         <values>
             <fullName>No</fullName>
             <default>false</default>
@@ -865,7 +823,7 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Household__c</picklist>
+        <picklist>Household_Values__c</picklist>
         <values>
             <fullName>Couple</fullName>
             <default>false</default>
@@ -1052,51 +1010,23 @@
     <picklistValues>
         <picklist>LeadSource</picklist>
         <values>
-            <fullName>Builder</fullName>
+            <fullName>Other</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Calendly</fullName>
+            <fullName>Partner Referral</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Customer Referral</fullName>
+            <fullName>Phone Inquiry</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Direct Enquiry</fullName>
+            <fullName>Purchased List</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Facebook</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>First Home Centre</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Home Improvment Installer %2F Retailer</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Other Business Referral</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Outgrow</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Real Estate Agent</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Solar Installer %2F Retailer</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SolarQuotes</fullName>
+            <fullName>Web</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1270,32 +1200,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Mortgage_Documents__c</picklist>
-        <values>
-            <fullName>Executed %26 received</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Returned to lender</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Sent</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Mortgage_repayments_halved__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Yes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>Opportunity_Temperature__c</picklist>
         <values>
             <fullName>Cold</fullName>
@@ -1459,6 +1363,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Screw Waiting General</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Solar%40parkerlane</fullName>
             <default>false</default>
         </values>
@@ -1472,36 +1380,6 @@
         </values>
         <values>
             <fullName>Website Quote %2F Application</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Prefer_to_repay_over_a_term__c</picklist>
-        <values>
-            <fullName>Between 3-5 Years</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Less than 3 Years</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>More than 5 Years</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Prefered_Primary_Contact_Method__c</picklist>
-        <values>
-            <fullName>Email</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Phone</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SMS</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1555,28 +1433,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Privacy_and_Credit_Guide__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Yes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Product_Disclosure__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Yes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>Product_Type__c</picklist>
         <values>
             <fullName>Debt Consolidation</fullName>
@@ -1618,21 +1474,6 @@
         </values>
         <values>
             <fullName>Percentage of Revenue</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Rating__c</picklist>
-        <values>
-            <fullName>Cold</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Hot</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Warm</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1702,25 +1543,6 @@
         </values>
         <values>
             <fullName>5 stars</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>SF_Payment_Due__c</picklist>
-        <values>
-            <fullName>Upon termination of the CQ</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Within 7 days of loan settlement</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Within 7 days of signing the credit quote</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Within 7 days of unconditional loan approval</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1796,36 +1618,21 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Timeframe__c</picklist>
-        <values>
-            <fullName>Immediately</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>just looking %28no timeline%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>next 3 months</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>next 4 weeks</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>next 6 months</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>Type</picklist>
         <values>
-            <fullName>Existing Business</fullName>
+            <fullName>Existing Customer - Downgrade</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>New Business</fullName>
+            <fullName>Existing Customer - Replacement</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Existing Customer - Upgrade</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Customer</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1913,17 +1720,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Ways_to_Save_optional__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Yes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>What_is_the_intended_use_of_the_funds__c</picklist>
         <values>
             <fullName>Commercial</fullName>
@@ -1965,6 +1761,21 @@
         </values>
         <values>
             <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>prefer_to_repay_over_a_term__c</picklist>
+        <values>
+            <fullName>Between 3-5 Years</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Less than 3 Years</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>More than 5 Years</fullName>
             <default>false</default>
         </values>
     </picklistValues>

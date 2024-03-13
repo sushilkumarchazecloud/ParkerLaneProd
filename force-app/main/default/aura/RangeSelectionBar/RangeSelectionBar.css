@@ -142,9 +142,6 @@
 .THIS .font_size{
             font-size: 14px;
 }
-.THIS .AmountErr .slds-input{
-    border: 2px solid red !important;
-}
 @media screen and (max-width: 770px) {
   .THIS .range-input .slds-input{
     /*font-size: 1.75rem;

@@ -4,6 +4,7 @@ import headersLogo from '@salesforce/resourceUrl/headersLogo';
 import IMAGES from "@salesforce/resourceUrl/SolarLoan";
 import dataWrapmethod from'@salesforce/apex/newVOIController.dataWrapmethod';
 import updateVOIst from '@salesforce/apex/newVOIController.updateVOIst';
+import getTerms from '@salesforce/apex/newVOIController.getTerms';
 
 export default class New_eSign extends LightningElement {
     @api oppId;
@@ -23,7 +24,8 @@ export default class New_eSign extends LightningElement {
     @api checkForValidation;
     @track isTMCU = false;
     @track isBHCCU = false;
-    @track isTMCUorbhcu =false;    
+    @track isTMCUorbhcu =false;
+    @track terms;  
     isTMCU;
     updateforTMCU;
     checkTogle;
@@ -33,7 +35,18 @@ export default class New_eSign extends LightningElement {
     signIcn =  IMAGES + '/img/eSign.png';
     signHead = headersLogo + '/headersLogo/eSign.png';
        
-    
+    @wire(getTerms)
+    wiredterms({ error, data }) {
+        if (data) {
+            console.log('data--==>>'+JSON.stringify(data));
+            this.terms = data;
+            this.error = undefined;
+        } else if (error) {
+            this.error = error;
+        }
+    }
+
+
     connectedCallback() {
         this.isAgree = false;
             console.log('00--'+this.oppId);
@@ -139,12 +152,12 @@ export default class New_eSign extends LightningElement {
 
     @api
     updateForOtherSign(){
-        this.showSpinEsign = true;  
-        const updatedVOIStatus = { ...this.voiStatus };      
+        this.showSpinEsign = true;        
+        const updatedVOIStatus = { ...this.voiStatus };
         updatedVOIStatus.Current_VOI_section__c = 'TMCU';
             updateVOIst({ vs :updatedVOIStatus })
             .then(reslt => {
-                console.log('reslt-->>'+reslt);
+                alert('---reslt---',reslt);
                 this.showSpinEsign = false;
                 if(this.oppRecord.Lender__c == 'Broken Hill Community Credit Union'){
                     this.isBHCCU = true;                    

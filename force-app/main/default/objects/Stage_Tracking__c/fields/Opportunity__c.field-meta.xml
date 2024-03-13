@@ -8,6 +8,7 @@
     <relationshipName>Stage_Tracking</relationshipName>
     <relationshipOrder>0</relationshipOrder>
     <reparentableMasterDetail>false</reparentableMasterDetail>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>
     <type>MasterDetail</type>
     <writeRequiresMasterRead>false</writeRequiresMasterRead>

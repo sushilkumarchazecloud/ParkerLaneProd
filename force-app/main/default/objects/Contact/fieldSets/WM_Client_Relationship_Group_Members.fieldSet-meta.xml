@@ -13,12 +13,12 @@
         <isRequired>false</isRequired>
     </displayedFields>
     <displayedFields>
-        <field>Account.FinServ__LastInteraction__c</field>
+        <field>Account.LastInteraction__c</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </displayedFields>
     <displayedFields>
-        <field>Account.FinServ__TotalFinancialAccounts__c</field>
+        <field>Account.TotalFinancialAccounts__c</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </displayedFields>

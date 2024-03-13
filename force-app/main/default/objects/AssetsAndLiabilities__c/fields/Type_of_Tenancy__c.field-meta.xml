@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Type_of_Tenancy__c</fullName>
+    <externalId>false</externalId>
+    <label>Type of Tenancy</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Permanent lease</fullName>
+                <default>false</default>
+                <label>Permanent lease</label>
+            </value>
+            <value>
+                <fullName>Holiday / corporate letting</fullName>
+                <default>false</default>
+                <label>Holiday / corporate letting</label>
+            </value>
+            <value>
+                <fullName>Airbnb</fullName>
+                <default>false</default>
+                <label>Airbnb</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

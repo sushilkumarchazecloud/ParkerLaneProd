@@ -6,7 +6,7 @@
     <label>Referral Fee Recipient</label>
     <referenceTo>Account</referenceTo>
     <relationshipLabel>Opportunities (Referral Fee Recipient)</relationshipLabel>
-    <relationshipName>Opportunities5</relationshipName>
+    <relationshipName>Opportunities2</relationshipName>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>

@@ -59,6 +59,10 @@
     padding-top: 5px;
 }
 
+.THIS .slds-large-size--4-of-12{
+    width: 26% !important;
+}
+
 .THIS .slds-btn-img img {
     width: 2.5rem;
 }

@@ -29,6 +29,9 @@
     <aura:attribute name="errorMessage" type="String" default="Error: Please update the form entries highlighted in red and try again."/>
     
     <aura:method name="checkApplicantDetails" action="{!c.checkDetails}" access="PUBLIC" />
+    <aura:attribute name="selectedProductTypeId" type="String" default=""/> <!-- Added by sethu -->
+	
+    
     
     <div class="solar-loan-get-qoute">
         <aura:if isTrue="{!v.showError}">

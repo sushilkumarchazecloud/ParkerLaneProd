@@ -2,283 +2,54 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Home_Improvement</fullName>
     <active>true</active>
-    <businessProcess>FinServ__Lead Process</businessProcess>
+    <businessProcess>Lead Process</businessProcess>
     <label>Home Improvement</label>
     <picklistValues>
-        <picklist>Affected_by_C19__c</picklist>
+        <picklist>Application_Sections__c</picklist>
         <values>
-            <fullName>Out of work</fullName>
+            <fullName>Getting Started</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Unaffected</fullName>
+            <fullName>Loan Recommendation</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Uncertain about work</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Customer_Support__c</picklist>
-        <values>
-            <fullName>Duncan Mcleod</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Michael Shanahan</fullName>
+            <fullName>Priorities</fullName>
             <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Do_you_feel_in_control_of_your_finances__c</picklist>
+        <picklist>Current_Application_Sections__c</picklist>
         <values>
-            <fullName>No</fullName>
+            <fullName>Getting Started</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Yes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Do_you_often_take_action_to_save_money__c</picklist>
-        <values>
-            <fullName>No</fullName>
+            <fullName>Loan Recommendation</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Yes</fullName>
+            <fullName>Priorities</fullName>
             <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>FinServ__ExpressedInterest__c</picklist>
+        <picklist>GenderIdentity</picklist>
         <values>
-            <fullName>Checking Account</fullName>
+            <fullName>Female</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Credit Card</fullName>
+            <fullName>Male</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Day to Day Banking</fullName>
+            <fullName>Nonbinary</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Education</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HELOC</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Investments</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Manage Debt</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Manage Money</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Mortgage</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Personal Loan</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Property Purchase</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Savings Account</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>HLHC_Approx_Term_Left_yrs__c</picklist>
-        <values>
-            <fullName>1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>10</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>11</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>12</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>14</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>15</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>16</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>17</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>18</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>19</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>2</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>20</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>21</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>22</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>23</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>24</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>25</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>26</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>27</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>28</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>3</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>30</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>4</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>5</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>6</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>7</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>8</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>9</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>HLHC_Interest_Rate_Type__c</picklist>
-        <values>
-            <fullName>Fixed</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Variable</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>HLHC_Offer_Outcome__c</picklist>
-        <values>
-            <fullName>Deciding %28future task set%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>No interest</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>No need</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Success HLHC Appointment Booked</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Unsuccessful</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Happy_With_Financial_Goal_Plan__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Yes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>How_would_you_like_us_to_support_you__c</picklist>
-        <values>
-            <fullName>Please contact the customer</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>The customer will contact you</fullName>
+            <fullName>Not Listed</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -414,153 +185,25 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Is_it_easy_to_find_ways_to_save_money__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Yes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>LeadSource</picklist>
         <values>
-            <fullName>Builder</fullName>
+            <fullName>Other</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Calendly</fullName>
+            <fullName>Partner Referral</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Customer Referral</fullName>
+            <fullName>Phone Inquiry</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Direct Enquiry</fullName>
+            <fullName>Purchased List</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Facebook</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>First Home Centre</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Home Improvment Installer %2F Retailer</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Other Business Referral</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Outgrow</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Real Estate Agent</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Solar Installer %2F Retailer</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SolarQuotes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Lead_Type__c</picklist>
-        <values>
-            <fullName>Business Referral</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Customer Referral</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Internal Referrer</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>New Customer</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Life_events_in_next_6_months__c</picklist>
-        <values>
-            <fullName>Buying a car</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Buying a home</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Buying an investment property</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Changing jobs</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Downsizing</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Expanding business</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Get married</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Planning a holiday</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Planning for Retirement</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Refinancing</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Renovating %2F DIY</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Starting a business</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Loan_Purpose__c</picklist>
-        <values>
-            <fullName>Business</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Investment</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Owner Occupied</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Personal</fullName>
+            <fullName>Web</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -583,14 +226,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Prof%2E</fullName>
+            <fullName>Mx%2E</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Pardot_Marketing_Tag__c</picklist>
         <values>
-            <fullName>New SQ leads</fullName>
+            <fullName>Prof%2E</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -654,36 +294,55 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Proceed_with_solar__c</picklist>
+        <picklist>Primary__c</picklist>
         <values>
-            <fullName>No - won%27t consider</fullName>
+            <fullName>No</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>No - would consider</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Yes - panels</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Yes - panels %26 battery</fullName>
+            <fullName>Yes</fullName>
             <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Product_Type__c</picklist>
+        <picklist>ProductInterest__c</picklist>
         <values>
-            <fullName>Consolidation Loan</fullName>
+            <fullName>GC1000 series</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Personal Loan</fullName>
+            <fullName>GC3000 series</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Solar %26 Green Products</fullName>
+            <fullName>GC5000 series</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Pronouns</picklist>
+        <values>
+            <fullName>He%2FHim</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>He%2FThey</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Not Listed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>She%2FHer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>She%2FThey</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>They%2FThem</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -703,17 +362,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Quick_repay_Confidence__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Yes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>Rating</picklist>
         <values>
             <fullName>Cold</fullName>
@@ -725,220 +373,6 @@
         </values>
         <values>
             <fullName>Warm</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Satisfied_with_the_rates_of_interest__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Yes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Send_the_quote_to__c</picklist>
-        <values>
-            <fullName>Me and my customer</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Me only</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Timeframe__c</picklist>
-        <values>
-            <fullName>Immediately</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>just looking %28no timeline%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>next 3 months</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>next 4 weeks</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>next 6 months</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Top_Financial_Priorities__c</picklist>
-        <values>
-            <fullName>Be debt free sooner</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Build wealth through investment</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Consolidate debt</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Lower cost of interest</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Lower household expenditure</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Lower loan repayments</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Manage my finances</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Repay mortgage early</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Save for a house</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Save for an event or purchase</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Track and improve cash flow</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>TransactionType__c</picklist>
-        <values>
-            <fullName>First Home Buyer Pre-Approval</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>First Home Buyer Saving Program</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Pre-Approval</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Purchase</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Rate negotiation</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Refinance</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Top up</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Variation</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Using_System_to_track_your_Finance__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Yes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Wallet_Share_Opportunities_Identified__c</picklist>
-        <values>
-            <fullName>Consolidate</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Invest</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Major Purchase</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Motor Vehicle Purchase</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Move House</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Refinance</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Renovate</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>What_is_your_stage_in_life__c</picklist>
-        <values>
-            <fullName>Building Wealth</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Consolidating Wealth</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Establishing Yourself</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Planning for Retirement</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>mercury__Primary__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Yes</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>mercury__ProductInterest__c</picklist>
-        <values>
-            <fullName>GC1000 series</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>GC3000 series</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>GC5000 series</fullName>
             <default>false</default>
         </values>
     </picklistValues>

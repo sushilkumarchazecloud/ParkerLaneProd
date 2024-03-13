@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Referrer_Status__c</fullName>
     <externalId>false</externalId>
-    <formula>TEXT(FinServ__ReferredByContact__r.Referrer_Status__c)</formula>
+    <formula>TEXT(ReferredByContact__r.Referrer_Status__c)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Referrer Status</label>
     <required>false</required>

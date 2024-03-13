@@ -155,9 +155,7 @@
         <type>Default</type>
     </actionOverrides>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
-    <enableFeeds>true</enableFeeds>
-    <recordTypeTrackFeedHistory>false</recordTypeTrackFeedHistory>
-    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <enableFeeds>false</enableFeeds>
     <searchLayouts></searchLayouts>
     <sharingModel>Private</sharingModel>
 </CustomObject>

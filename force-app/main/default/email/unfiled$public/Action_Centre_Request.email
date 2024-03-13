@@ -1,0 +1,24 @@
+<messaging:emailTemplate subject="{!relatedTo.Quick_Action__c} ({!relatedTo.Referrer_Contact__r.Referrer_Rating__c}) for {!relatedTo.Opportunity__r.Name}"  relatedToType="Action_Centre_Request__c" recipientType="Contact" renderUsingSystemContextWithoutSharing="True">
+<messaging:htmlEmailBody >
+<html>
+<head>
+
+</head>
+<body>
+<p>Hi team,</p>
+
+<p>{!relatedTo.Referrer_Contact__r.Name} from {!relatedTo.Referrer_Account__r.Name} has raised a request. Please action the request within SLA’s {!if(relatedTo.Referrer_Contact__r.Referrer_Rating__c="Platinum","(15 minutes)", "(60 minutes)")}.</p>
+
+<p>Request: {!relatedTo.Quick_Action__c}</p>
+
+<p>Opportunity: <a href="https://lanecorp.lightning.force.com/lightning/r/Opportunity/{!relatedTo.Opportunity__r.Id}/view" target="_main">{!relatedTo.Opportunity__r.Name}</a>  </p>
+
+<p>urgency: {!relatedTo.Urgency__c} </p>
+
+<p>{!if(relatedTo.Quick_Action__c="Request assistance","Related to:","")} {!relatedTo.Related_to__c} </p>
+
+<p>Request: {!relatedTo.Request_Body__c} </p>
+</body> 
+</html>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

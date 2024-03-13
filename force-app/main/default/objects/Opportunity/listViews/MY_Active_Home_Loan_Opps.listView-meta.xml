@@ -12,7 +12,7 @@
     <columns>Total_Revenue__c</columns>
     <columns>OPPORTUNITY.EXP_AMOUNT</columns>
     <columns>Application_Sections__c</columns>
-    <columns>FinServ__ReferredByUser__c</columns>
+    <columns>ReferredByUser__c</columns>
     <filterScope>Team</filterScope>
     <filters>
         <field>OPPORTUNITY.STAGE_NAME</field>

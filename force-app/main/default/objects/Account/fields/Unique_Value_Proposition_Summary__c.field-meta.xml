@@ -7,7 +7,6 @@
 &quot; ✓ &quot;&amp;Unique_Value_Proposition_3__c</formula>
     <label>Unique Value Proposition Summary</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
     <type>Text</type>
     <unique>false</unique>
 </CustomField>

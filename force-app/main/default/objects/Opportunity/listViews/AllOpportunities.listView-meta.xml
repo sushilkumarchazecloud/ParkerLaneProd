@@ -1,21 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>AllOpportunities</fullName>
-    <columns>INACTIVE_DAYS</columns>
-    <columns>OPPORTUNITY.CREATED_DATE</columns>
-    <columns>OPPORTUNITY.NAME</columns>
-    <columns>CORE.USERS.FULL_NAME</columns>
-    <columns>OPPORTUNITY.RECORDTYPE</columns>
-    <columns>OPPORTUNITY.STAGE_NAME</columns>
-    <columns>Loan_Amount__c</columns>
-    <columns>Total_Revenue__c</columns>
-    <columns>Lender__c</columns>
-    <columns>FinServ__ReferredByContact__c</columns>
-    <columns>Referred_by_Company__c</columns>
-    <columns>referred_by_aggregator__c</columns>
-    <columns>Point_of_Origin__c</columns>
-    <columns>OPPORTUNITY.LEAD_SOURCE</columns>
-    <columns>Customer_Support_Person__c</columns>
     <filterScope>Everything</filterScope>
-    <label>All Active Opportunities</label>
+    <label>All Opportunities</label>
 </ListView>

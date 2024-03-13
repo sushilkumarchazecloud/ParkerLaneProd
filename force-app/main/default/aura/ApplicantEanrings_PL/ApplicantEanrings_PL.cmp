@@ -1,4 +1,4 @@
-<aura:component controller="ParkerLaneLoanController">
+<aura:component controller="ApplicationFormController">
     <aura:attribute name="employmentType" type="String" default=""/>
     <aura:attribute name="applicant1" type="contact"/>
     <aura:attribute name="applicant2" type="contact"/>
@@ -8,8 +8,8 @@
     <aura:attribute name="opportunity" type="Opportunity" />
     <!--appChildren-->
     <aura:attribute name="empListSize" type="decimal" default = "0"/>
-    <aura:attribute name="employmentsList1" type="FinServ__Employment__c[]" />
-    <aura:attribute name="employmentsList2" type="FinServ__Employment__c[]" />
+    <aura:attribute name="employmentsList1" type="Employment__c[]" />
+    <aura:attribute name="employmentsList2" type="Employment__c[]" />
     
     <aura:attribute name="incomeFrom1" type="String" default=""/>
     <aura:attribute name="incomeFrom2" type="String" default=""/>
@@ -85,7 +85,7 @@
         <lightning:spinner aura:id="mySpinner" variant="brand" size="large" class="" />
         <section class="max-700 slds-col slds-si1ze_1-of-1 bg-lightest txt-blue slds-p-bottom--medium">
             <div class="slds-align_absolute-center  slds-m-top_x-large">
-                <img src="{!$Resource.headersLogo + '/headersLogo/Employment.png'}" class="trackercls"/>
+                <img src="{!$Resource.SolarLoan + '/img/StepEarn.png'}" class="trackercls"/>
             </div>
             <div class="">                
                 <header class="checkout-page-banner--gradient">
@@ -134,7 +134,7 @@
                             </lightning:select>
                         </div>
                     </aura:if>
-                    <aura:if isTrue="{!v.applicant1.FinServ__MaritalStatus__c == 'Married' || v.applicant1.FinServ__MaritalStatus__c == 'Married / defacto (non-applicant)' || v.applicant1.FinServ__MaritalStatus__c == 'Married / defacto'}">
+                    <aura:if isTrue="{!v.applicant1.MaritalStatus__c == 'Married' || v.applicant1.MaritalStatus__c == 'Married / defacto (non-applicant)' || v.applicant1.MaritalStatus__c == 'Married / defacto'}">
                         <div class="slds-form__row">
                             <div class="slds-form__item" role="listitem">
                                 <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col rg-split">
@@ -169,7 +169,7 @@
                                 <div class="slds-form__item" role="listitem">
                                     <div class="slds-form-element slds-form-element_stacked slds-is-editing">
                                         <lightning:input aura:id="fieldcheck" formatter="currency"
-                                                         type="number" step="1" class="no-abbr"
+                                                         type="number" step="1"
                                                          value="{!v.applicant1.spouse_s_approximate_annual_income__c}"
                                                          required="true"
                                                          label="Your spouse’s annual income after tax?" placeholder="Annual Income"/>
@@ -257,13 +257,13 @@
                         <aura:iteration items="{!v.employmentsList2}" var="item" indexVar="index">
                             <div class="slds-m-bottom_x-large" onchange="{!c.totalPersonalIncome}">
                                 <c:EarningIncome_PL emp = "{!item}" index = "{!index}" applicantNo="2"
-                                                 applicant = "{!v.applicant2}" occupation ="{!v.applicant2.FinServ__Occupation__c}"
+                                                 applicant = "{!v.applicant2}" occupation ="{!v.applicant2.Occupation__c}"
                                                  selectedPerson = "{!v.selectedPerson}"
                                                  applicantChildren = "{!v.app2Children}"/>
                                 
                             </div>
                         </aura:iteration>
-                        <aura:if isTrue="{!v.applicant2.FinServ__MaritalStatus__c == 'Married / defacto (non-applicant)' || v.applicant2.FinServ__MaritalStatus__c == 'Married / defacto'}">
+                        <aura:if isTrue="{!v.applicant2.MaritalStatus__c == 'Married / defacto (non-applicant)' || v.applicant2.MaritalStatus__c == 'Married / defacto'}">
                             <div class="slds-form__row">
                                 <div class="slds-form__item" role="listitem">
                                     <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">

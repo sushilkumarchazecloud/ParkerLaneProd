@@ -1,0 +1,6 @@
+<messaging:emailTemplate subject="Your Loan Options - apply for a low rate {!relatedTo.Purpose__c} loan today" recipientType="Contact" relatedToType="Opportunity" renderUsingSystemContextWithoutSharing="true" >
+<messaging:HtmlEmailBody >
+
+<c:QuoteSendFromApplicationCmp oppId="{!relatedTo.Id}"/>
+</messaging:HtmlEmailBody>
+</messaging:emailTemplate>

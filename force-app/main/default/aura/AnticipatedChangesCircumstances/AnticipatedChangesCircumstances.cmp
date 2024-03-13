@@ -1,4 +1,4 @@
-<aura:component controller="ParkerLaneLoanController">
+<aura:component controller="ApplicationFormController">
     <aura:attribute name="recordId" type="Id" />
     <aura:attribute name="aCCircumstance" type="Anticipated_Changes_to_Circumstance__c" default="{'sobjectType':'Anticipated_Changes_to_Circumstance__c'}"/>
     <aura:attribute name="applicationSection" type="String" default=""/>

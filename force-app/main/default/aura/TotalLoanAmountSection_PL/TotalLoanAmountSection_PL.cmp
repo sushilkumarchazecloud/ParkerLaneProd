@@ -1,4 +1,4 @@
-<aura:component  controller="ParkerLaneLoanController">
+<aura:component  controller="ApplicationFormController">
     <aura:attribute name="customerAmount" type="Integer" default=""/>
     <aura:attribute name="totalCustomerAmount" type="Integer" default=""/>
     <aura:attribute name="totalAmount" type="Integer" />
@@ -34,7 +34,7 @@
                         </div>
                     </div>                    
                 </aura:if>
-                <h5 class="slds-p-top_x-small"><b>Purpose:</b>&nbsp;{!v.selectedQuote.Purpose__c} </h5>
+                <h5 class="slds-p-top_x-small"><b>Purpose:</b>&nbsp;{!v.selectedQuote.Product_Type_Lookup__r.Name} </h5>
                 <h5 class="slds-p-top_x-small"><b>Monthly Repayment:</b>&nbsp; 
                 <lightning:formattedNumber value="{!v.totalAmount}" style="currency" minimumFractionDigits="0"/></h5>
             </div>

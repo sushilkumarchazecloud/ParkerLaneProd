@@ -21,7 +21,7 @@
         <div class="heading4 slds-m-vertical_small"><b>Please read and sign the declaration below before proceeding to access your portal.</b></div>
         <div style ="display: inline-flex;" class="slds-m-top_small">
             <lightning:input type="checkbox" label="" style="width: 20px;" name="opt1" checked ="{!v.opt1}" onchange="{!c.tncChange}" />
-            <span class="slds-p-left_small">I have read and agree to be bound by the <a href="https://www.parkerlane.com.au/referral-terms" target="_main" style="font-weight: bold;color:#032d60"><u>terms of the referral agreement.</u></a></span>
+            <span class="slds-p-left_small">I have read and agree to be bound by the <a href="https://chazecloud.com/referral-terms" target="_main" style="font-weight: bold;color:#032d60"><u>terms of the referral agreement.</u></a></span>
         </div>
         <div style ="display: inline-flex;" class="slds-m-top_small">
             <lightning:input type="checkbox" label="" style="width: 33px;" name="opt2" checked ="{!v.opt2}" onchange="{!c.tncChange}" />

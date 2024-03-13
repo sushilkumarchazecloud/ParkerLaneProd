@@ -162,18 +162,11 @@
     height: 65px;
 }
 
-.THIS .imgStyle{
-    margin-left: 1.5rem !important;
-}
-
 @media screen and (max-width: 770px) {    
     .THIS #index-0 { order: 2 }
     .THIS #index-1 { order: 1 }
     .THIS #index-2 { order: 3 }
     
-    .THIS .imgStyle{
-        margin-left: 0rem !important; 
-    }
     .THIS .txt-dark-blue{
         font-size: 31px !important;
         margin-top: -20px !important;

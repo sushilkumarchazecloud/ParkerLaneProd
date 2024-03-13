@@ -79,7 +79,7 @@
             }
         });
         liabilitiesList.forEach(function(liability){ 
-            if($A.util.isUndefinedOrNull(liability.Value__c) && liability.FinServ__AssetsAndLiabilitiesType__c != 'Child Maintenance'){
+            if($A.util.isUndefinedOrNull(liability.Value__c) && liability.AssetsAndLiabilitiesType__c != 'Child Maintenance'){
                 isValidate = false;
             }
         });
@@ -185,16 +185,16 @@
     
     addNewAsset: function(component, event, name) {
         var asset = {
-            'sobjectType': 'FinServ__AssetsAndLiabilities__c',
-            'FinServ__AssetsAndLiabilitiesType__c': name
+            'sobjectType': 'AssetsAndLiabilities__c',
+            'AssetsAndLiabilitiesType__c': name
         };
         component.set("v.assetsSelected",asset);
     },
     
     addNewLiability: function(component, event, name) {
         var liability = {
-            'sobjectType': 'FinServ__AssetsAndLiabilities__c',
-            'FinServ__AssetsAndLiabilitiesType__c': name
+            'sobjectType': 'AssetsAndLiabilities__c',
+            'AssetsAndLiabilitiesType__c': name
         };
         component.set("v.liabilitiesSelected",liability);
     },

@@ -105,7 +105,7 @@
                         <lightning:radioGroup class="slds-p-around_x-small" name="{!'GenderRG' + v.applicant.Id}"
                                               label="Gender" required="true" aura:id="fieldcheck"
                                               options="{! v.genderOptions }"
-                                              value="{!v.applicant.FinServ__Gender__c}"
+                                              value="{!v.applicant.Gender__c}"
                                               type="button"/>
                     </div>
                 </div>
@@ -248,10 +248,10 @@
                     <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
                         <lightning:combobox aura:id="fieldcheck" required="true"
                                             label="Relationship status" 
-                                            value="{!v.applicant.FinServ__MaritalStatus__c}" 
+                                            value="{!v.applicant.MaritalStatus__c}" 
                                             options="{! v.maritalStatusOptions }" 
                                             onchange ="{!c.changeRelationship}"
-                                            readonly="{! v.applicantNo ==2 &amp;&amp; v.applicant.FinServ__MaritalStatus__c =='Married / Defacto (to applicant 1)'}"
+                                            readonly="{! v.applicantNo ==2 &amp;&amp; v.applicant.MaritalStatus__c =='Married / Defacto (to applicant 1)'}"
                                             placeholder="Relationship status"/>
                     </div>
                 </div>
@@ -330,7 +330,7 @@
                         <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
                             <lightning:combobox aura:id="fieldcheck" required="true"
                                                 label="Number of dependent children in the household?" 
-                                                value="{!v.applicant.FinServ__NumberOfChildren__c}" 
+                                                value="{!v.applicant.NumberOfChildren__c}" 
                                                 options="{! v.noChildrenOptions }" 
                                                 placeholder="Select Number"
                                                 onchange = "{!c.changeDependent}"/> 
@@ -382,7 +382,7 @@
                                           suburb = "{!v.applicant.Suburb__c}"
                                           state = "{!v.applicant.State__c}"
                                           postalCode = "{!v.applicant.Postal_Code__c}"
-                                          country = "{!v.applicant.FinServ__CountryOfResidence__c}"/>
+                                          country = "{!v.applicant.CountryOfResidence__c}"/>
             </aura:if>
             
             <aura:if isTrue="{!v.applicantNo == 2 &amp;&amp; lessthan(v.applicant.Year__c, 3) }">
@@ -453,12 +453,12 @@
                     <div class="slds-form__item" role="listitem">
                         <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
                             <lightning:input type="checkbox" 
-                                             checked="{!v.applicant.FinServ__PrimaryAddressIsOther__c}" 
+                                             checked="{!v.applicant.PrimaryAddressIsOther__c}" 
                                              label="Add Postal Address"/>
                         </div>
                     </div>
                 </div>
-                <aura:if isTrue="{!v.applicant.FinServ__PrimaryAddressIsOther__c}">
+                <aura:if isTrue="{!v.applicant.PrimaryAddressIsOther__c}">
                     <div class="slds-form__row">
                         <div class="slds-form__item" role="listitem">
                             <div class="slds-form-element slds-form-element_stacked slds-is-editing">

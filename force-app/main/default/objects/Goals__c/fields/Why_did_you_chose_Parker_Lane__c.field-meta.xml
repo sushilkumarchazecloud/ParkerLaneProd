@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Why_did_you_chose_Parker_Lane__c</fullName>
+    <externalId>false</externalId>
+    <label>Why did you chose Parker Lane</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Product / rate</fullName>
+                <default>false</default>
+                <label>Product / rate</label>
+            </value>
+            <value>
+                <fullName>Recommended</fullName>
+                <default>false</default>
+                <label>Recommended</label>
+            </value>
+            <value>
+                <fullName>Easiest process</fullName>
+                <default>false</default>
+                <label>Easiest process</label>
+            </value>
+            <value>
+                <fullName>Customer service</fullName>
+                <default>false</default>
+                <label>Customer service</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

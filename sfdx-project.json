@@ -5,7 +5,8 @@
       "default": true
     }
   ],
+  "name": "chazeCloudsOrg",
   "namespace": "",
   "sfdcLoginUrl": "https://login.salesforce.com",
-  "sourceApiVersion": "50.0"
+  "sourceApiVersion": "59.0"
 }

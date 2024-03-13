@@ -6,7 +6,7 @@
     <columns>OPPORTUNITY.STAGE_NAME</columns>
     <columns>OPPORTUNITY.NAME</columns>
     <columns>OPPORTUNITY.LEAD_SOURCE</columns>
-    <columns>FinServ__ReferredByContact__c</columns>
+    <columns>ReferredByContact__c</columns>
     <columns>Lender__c</columns>
     <columns>Loan_Amount__c</columns>
     <columns>OPPORTUNITY.RECORDTYPE</columns>

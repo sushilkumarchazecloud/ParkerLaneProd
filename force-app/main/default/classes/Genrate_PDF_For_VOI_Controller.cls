@@ -10,13 +10,13 @@ public class Genrate_PDF_For_VOI_Controller {
     public static String signId {get; set;} 
     public static string ImageSrc {get; set;} 
     public static imageWrapper imgWrap{get;set;}
-    public static FinServ__FinancialGoal__c financialGoal {get; set;}
+    public static Goals__c financialGoal {get; set;}
     public static string secApplicantName {get; set;}
     public static string Mrepayment{get; set;}
     public static string AccKepoping{get; set;}
     public static string totalLoanamnt {get; set;}
-    public static FinServ__Employment__c emp1{get; set;}
-    public static FinServ__Employment__c emp2{get; set;}
+    public static Employment__c emp1{get; set;}
+    public static Employment__c emp2{get; set;}
     public static Boolean isApp2{get; set;} 
     public static string appOneAddress{get; set;}
     public static string appTwoAddress{get; set;}
@@ -35,9 +35,9 @@ public class Genrate_PDF_For_VOI_Controller {
     }
 	
     
-    public static FinServ__Employment__c Employementdata(string dataId){
+    public static Employment__c Employementdata(string dataId){
         try{
-        	FinServ__Employment__c obj = [select id,Job_Title__c, Name,FinServ__Occupation__c from FinServ__Employment__c WHERE FinServ__Contact__c =: dataId AND Is_Primary__c = true ];
+        	Employment__c obj = [select id,Job_Title__c, Name,Occupation__c from Employment__c WHERE Contact__c =: dataId AND Is_Primary__c = true ];
         	return obj;
         }catch(Exception ex){
             System.debug('exception : '+ex);	
@@ -49,9 +49,9 @@ public class Genrate_PDF_For_VOI_Controller {
     
     public static Opportunity getOpportunity(){
         // RecordId  = ApexPages.currentPage().getParameters().get('id');
-        Opp = [select Id,Applicant_1__r.MiddleName,Applicant_2__r.MiddleName,Applicant_1__r.Postal_Code__pc,Applicant_1__r.Salutation,Applicant_2__r.Salutation,Applicant_2__r.Postal_Code__pc,Name,Referral_Fee_inc_GST__c,Referral_Fee_Recipient__r.Name,Amount,Number_of_applicants__c,Name_s_on_account__c,BSB_number__c,Financial_Institution__c,Account_number__c,Applicant_1__r.Tax_Identification_Number_TIN__pc,Applicant_1__r.Number_of_applicants_to_operate_account__pc, Application_Sections__c,Applicant_2__r.FinServ__Occupation__pc, Applicant_1__r.Tax_Resident_of_countries__pc, Current_Application_Sections__c,FinServ__ReferredByUser__c,Applicant_2__r.FinServ__Gender__pc,Applicant_2__r.Residential_Address__pc,Applicant_2__r.Postal_Address__pc,Applicant_2__r.PersonMobilePhone,Applicant_2__r.PersonEmail,Applicant_2__r.Primary_Employer_Job_Title__pc,Applicant_2__r.FirstName,
-               Purpose__c,Applicant_1__c,Applicant_1__r.Residential_Address__pc,Applicant_1__r.Primary_Employer_Job_Title__pc,Applicant_1__r.FinServ__Occupation__pc, Applicant_1__r.Postal_Address__pc, Lender__c,Product_Name__c,Brokerage_Service_Fee_inc_GST__c,Total_Loan_amount__c,Interest_Rate__c, Applicant_1__r.Name,Applicant_1__r.PersonContactId,Loan_Term_months__c, Applicant_2__c, Applicant_2__r.PersonContactId,Lead_Source__c,Loan_Amount__c,
-               Account.RecordType.Name,Applicant_1__r.PersonEmail,Applicant_2__r.Name, Applicant_1__r.Tax_File_Number_TFN__pc, Applicant_1__r.PersonMobilePhone, Applicant_2__r.LastName, Applicant_1__r.PersonBirthdate,Applicant_2__r.PersonBirthdate, Applicant_1__r.FinServ__Gender__pc, Applicant_1__r.LastName,Applicant_1__r.FirstName, FinServ__Household__c,Type_of_interest_rate__c,Monthly_Repayments__c, Application_Supporting_Notes__c, Preferred_repayment_frequency__c, Relationship_to_Applicant_2__c,RecordType.Name FROM Opportunity WHERE Id =: OppId limit 1];
+        Opp = [select Id,Applicant_1__r.MiddleName,Applicant_2__r.MiddleName,Applicant_1__r.Postal_Code__pc,Applicant_1__r.Salutation,Applicant_2__r.Salutation,Applicant_2__r.Postal_Code__pc,Name,Referral_Fee_inc_GST__c,Referral_Fee_Recipient__r.Name,Amount,Number_of_applicants__c,Name_s_on_account__c,BSB_number__c,Financial_Institution__c,Account_number__c,Applicant_1__r.Tax_Identification_Number_TIN__pc,Applicant_1__r.Number_of_applicants_to_operate_account__pc, Application_Sections__c,Applicant_2__r.Occupation__pc, Applicant_1__r.Tax_Resident_of_countries__pc, Current_Application_Sections__c,ReferredByUser__c,Applicant_2__r.Gender__pc,Applicant_2__r.Residential_Address__pc,Applicant_2__r.Postal_Address__pc,Applicant_2__r.PersonMobilePhone,Applicant_2__r.PersonEmail,Applicant_2__r.Primary_Employer_Job_Title__pc,Applicant_2__r.FirstName,
+               Purpose__c,Applicant_1__c,Applicant_1__r.Residential_Address__pc,Applicant_1__r.Primary_Employer_Job_Title__pc,Applicant_1__r.Occupation__pc, Applicant_1__r.Postal_Address__pc, Lender__c,Product_Name__c,Brokerage_Service_Fee_inc_GST__c,Total_Loan_amount__c,Interest_Rate__c, Applicant_1__r.Name,Applicant_1__r.PersonContactId,Loan_Term_months__c, Applicant_2__c, Applicant_2__r.PersonContactId,Lead_Source__c,Loan_Amount__c,
+               Account.RecordType.Name,Applicant_1__r.PersonEmail,Applicant_2__r.Name, Applicant_1__r.Tax_File_Number_TFN__pc, Applicant_1__r.PersonMobilePhone, Applicant_2__r.LastName, Applicant_1__r.PersonBirthdate,Applicant_2__r.PersonBirthdate, Applicant_1__r.Gender__pc, Applicant_1__r.LastName,Applicant_1__r.FirstName, Household__c,Type_of_interest_rate__c,Monthly_Repayments__c, Application_Supporting_Notes__c, Preferred_repayment_frequency__c, Relationship_to_Applicant_2__c,RecordType.Name FROM Opportunity WHERE Id =: OppId limit 1];
         
         
         if(Opp.Applicant_2__c != null){
@@ -75,16 +75,16 @@ public class Genrate_PDF_For_VOI_Controller {
         return con;
     }
     
-    public static FinServ__FinancialGoal__c getfinancialGoal(){
+    public static Goals__c getfinancialGoal(){
         opportunity op = [select Id, name, Applicant_1__r.Id from opportunity WHERE ID =: OppId LIMIT 1];
         
-        List<FinServ__FinancialGoal__c> fgList = new List<FinServ__FinancialGoal__c>();
+        List<Goals__c> fgList = new List<Goals__c>();
           
-        for(FinServ__FinancialGoal__c obj : [select Id, Which_financial_priorities_relevant_you__c FROM FinServ__FinancialGoal__c where FinServ__PrimaryOwner__c =: op.Applicant_1__r.Id LIMIT 1]){
+        for(Goals__c obj : [select Id, Which_financial_priorities_relevant_you__c FROM Goals__c where PrimaryOwner__c =: op.Applicant_1__r.Id LIMIT 1]){
             fgList.add(obj);
         }
     	
-        FinServ__FinancialGoal__c obj;
+        Goals__c obj;
         
         if(fgList !=  null){
             if(fgList.size() > 0){

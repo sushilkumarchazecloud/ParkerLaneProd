@@ -128,14 +128,11 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
-        <comment>Action override created by Lightning App Builder during activation.</comment>
-        <content>VOI_Status_Record_Page</content>
-        <formFactor>Large</formFactor>
-        <skipRecordTypeSelect>false</skipRecordTypeSelect>
-        <type>Flexipage</type>
+        <type>Default</type>
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
+        <formFactor>Large</formFactor>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -155,20 +152,16 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>ReadWrite</externalSharingModel>
+    <externalSharingModel>Read</externalSharingModel>
     <label>VOI Status</label>
     <nameField>
-        <displayFormat>{00000}</displayFormat>
+        <displayFormat>VOI-{00000}</displayFormat>
         <label>VOI Status Name</label>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>VOI Status</pluralLabel>
-    <searchLayouts>
-        <searchResultsAdditionalFields>VOI_Details__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>VOI_Status__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>VOI_Detail__c</searchResultsAdditionalFields>
-    </searchLayouts>
+    <searchLayouts></searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

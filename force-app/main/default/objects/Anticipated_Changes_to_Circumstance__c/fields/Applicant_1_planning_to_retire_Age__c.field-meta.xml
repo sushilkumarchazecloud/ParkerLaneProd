@@ -3,8 +3,9 @@
     <fullName>Applicant_1_planning_to_retire_Age__c</fullName>
     <externalId>false</externalId>
     <label>Applicant 1 planning to retire Age</label>
-    <length>50</length>
+    <length>255</length>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>
     <type>Text</type>
     <unique>false</unique>

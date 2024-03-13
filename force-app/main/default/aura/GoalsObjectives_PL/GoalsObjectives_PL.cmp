@@ -1,4 +1,4 @@
-<aura:component controller="ParkerLaneLoanController" >
+<aura:component controller="ApplicationFormController" >
     
     <aura:attribute name="recordId" type="Id" />
     <aura:attribute name="applicationSection" type="String" default=""/>
@@ -21,7 +21,7 @@
     <aura:attribute name="showError" type="Boolean" default="false"/>
     <aura:attribute name="redirectURL" type="String" default=""/>
     <aura:attribute name="errorMsg" type="String" default="Please update the form entries highlighted in red and try again"/>
-    <aura:attribute name="goal" type="FinServ__FinancialGoal__c" default="{'sobjectType': 'FinServ__FinancialGoal__c'}"/>
+    <aura:attribute name="goal" type="Goals__c" default="{'sobjectType': 'Goals__c'}"/>
     
     <!--start -->
     <aura:attribute name="rateingOptions" type="List" default="[{'label': '1', 'value': '1'},{'label': '2', 'value': '2'},{'label': '3', 'value': '3'},{'label': '4', 'value': '4'},{'label': '5', 'value': '5'}]"/>
@@ -55,7 +55,7 @@
         <div class="GoodCredit">
             <section class="max-700 slds-p-around_medium slds-col  bg-lightest txt-blue slds-clearfix">
                 <div class="slds-align_absolute-center slds-m-top_medium">
-                    <img src="{!$Resource.headersLogo + '/headersLogo/goals&amp;objectives.png'}" class="trackercls"/>
+                    <img src="{!$Resource.SolarLoan + '/img/Stepgoalsobjectives.png'}" class="trackercls"/>
                 </div>
                 <div class="slds-grid slds-wrap" style="padding-left:0.4rem;padding-right:0.4rem;">
                     <div class="slds-size_2-of-2 slds-m-top_large">
@@ -75,6 +75,7 @@
                                               placeholder="Rate"
                                               class="{!' no-abbr ' + (v.applicant1.Rate_current_Job_Security__c  != NULL ? ' colored-rg': ' colored-fixed-rg' ) }"/>
                     </div>
+                    
                     <aura:if isTrue="{!v.opportunity.Number_of_applicants__c ==2}">
                         <div class="slds-size_2-of-2 slds-m-vertical_medium rg-split radio_button_size">
                             <legend style="margin-bottom:0px !important" class="slds-form-element__legend slds-form-element__label">

@@ -18,7 +18,6 @@
     getSectionStatus : function(component, event, recordId) {
 		var action = component.get("c.getSelectedSection");
         var self = this;
-
      	action.setParams({
             recordId: recordId
         });

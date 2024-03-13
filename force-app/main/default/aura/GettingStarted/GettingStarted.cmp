@@ -1,4 +1,4 @@
-<aura:component controller="ParkerLaneLoanController">
+<aura:component controller="ApplicationFormController">
     <aura:attribute name="mostImportant" type="String" default="Lowest rate"/>
     <aura:attribute name="myPriority" type="String" default="Install"/>
     <aura:attribute name="customerAmount" type="Integer" default=""/>
@@ -19,6 +19,15 @@
     <aura:attribute name="appSectionPath" type="List" default="[]"/>
     <aura:attribute name="showError" type="Boolean" default="false"/>
     <aura:attribute name="errorMsg" type="String"/>
+    
+    <!-- Start by sethu -->
+    <aura:attribute name = "isOtpSent" type = "Boolean" default = "false"/>
+    <aura:attribute name = "isOtpVerified" type = "Boolean" default = "false"/>
+    <aura:attribute name = "otpValue" type = "Integer" />
+    <aura:attribute name="applicantEmail" type="String" default=""/>
+    <aura:attribute name="enteredOTP" type="Integer" default=""/>
+    <aura:attribute name="otpErrorMessage" type="String" default=""/>
+    <!-- End by sethu -->
     
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>       
     
@@ -136,6 +145,42 @@
                         </div>
                     </div>
                     
+                    <div class="slds-p-top_medium slds-grid slds-wrap" style="font-family: Proxima Nova Alt Regular;">
+                        <div class="slds-m-top_medium slds-col slds-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_7-of-12">
+                            <p>Please verify your email : {!v.applicantEmail}</p>         
+                        </div>
+                        <div class="slds-col slds-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_5-of-12">                            
+                            <aura:if isTrue = "{!v.isOtpVerified}">
+                                <div align="right" class="slds-m-top_medium">
+                                	<p>Verfied <img src="{!$Resource.SolarLoan + '/img/tick.png'}"/></p>
+                                </div>                                
+                                <aura:set attribute = "else">
+                                    <aura:if isTrue = "{!v.isOtpSent}">
+                                        <div class="slds-grid slds-wrap">
+                                            <div class="slds-col slds-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_4-of-12 ">
+                                                <label style="font-size:15px;">Enter OTP</label>
+                                                <lightning:input maxlength="4" name="input1" value="{!v.enteredOTP}" />
+                                                <div style="color: red; font-size: 12px;">{!v.otpErrorMessage}</div>
+                                            </div>
+                                            <div align="center" class="slds-m-top_large slds-col slds-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_8-of-12 ">
+                                                <lightning:button variant="brand" label="SUBMIT"  onclick="{! c.submitSendOtpHandleClick }"/><br/>
+                                                <a href="#" onclick="{!c.sendOtpHandleClick}" style="font-size : 15px;"><u>Resend OTP</u></a>                                                
+                                            </div>
+                                        </div>                                                                                
+                                        <aura:set attribute="else">
+                                            <div class="slds-grid slds-wrap">
+                                                <div style="margin-top : 15px;" align="center" class="slds-col slds-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12 ">
+                                                    <lightning:button variant="brand" label="Verify"  onclick="{! c.sendOtpHandleClick }"/>
+                                                </div>
+                                            </div>
+                                        </aura:set>
+                                    </aura:if>
+                                </aura:set>
+                            </aura:if>
+                            
+                        </div>
+                    </div>      
+                    <aura:if isTrue = "{!v.isOtpVerified}"> 
                     <div class="slds-form radio_button">
                         <div class="slds-p-top_medium slds-grid slds-wrap">
                             <div class="slds-col slds-size_8-of-12 slds-medium-size_8-of-12 slds-large-size_10-of-12">
@@ -159,13 +204,13 @@
                                                       label=""
                                                       onchange ="{!c.onChange}"
                                                       options="{!v.YesNo}"
-                                                      value="{!v.quote.Affordability_Confirmation__c}"
+                                                      value="{!v.quote.Up_Front_Costs_Applicable__c}"
                                                       type="button"/>
                             </div>
                         </div>
                         <div class="slds-p-top_small slds-grid slds-wrap">
                             <div class="slds-col slds-size_8-of-12 slds-medium-size_8-of-12 slds-large-size_10-of-12">
-                                <p>I accept Parker Lane's <a href="https://www.parkerlane.com.au/privacy" target="_blank"><u>Privacy Policy</u></a> and <a href="https://www.parkerlane.com.au/credit-guide" target="_blank"><u>Credit Guide</u></a> and I consent to receiving my documents electronically.</p>
+                                <p>I accept Parker Lane's <a href="https://chazecloud.com/privacy" target="_blank"><u>Privacy Policy</u></a> and <a href="https://chazecloud.com/credit-guide" target="_blank"><u>Credit Guide</u></a> and I consent to receiving my documents electronically.</p>
                             </div>
                             <div class="slds-col slds-size_4-of-12 slds-medium-size_4-of-12 slds-large-size_2-of-12">    
                                 <lightning:radioGroup name="isPrivacyCreditGuideRG"
@@ -177,6 +222,7 @@
                             </div>
                         </div>                                                                 
                     </div>
+                        </aura:if>
                     <div class="max-700 preNxtBtn">
                         <lightning:button label="Confirm"   
                                           class="slds-m-vertical_large continue-btn-style"

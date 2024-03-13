@@ -55,9 +55,9 @@
         if(!$A.util.isUndefinedOrNull(applicant2) && !$A.util.isUndefinedOrNull(applicant2.Medicare_Expiry_Year__c) && !$A.util.isUndefinedOrNull(applicant2.Medicare_Expiry_Month__c)){
             applicant2.Medicare_Expiry_Date__c = new Date(applicant2.Medicare_Expiry_Year__c, applicant2.Medicare_Expiry_Month__c, "01");
         }
-        applicant1.FinServ__NumberOfChildren__c = parseInt(applicant1.FinServ__NumberOfChildren__c);
+        applicant1.NumberOfChildren__c = parseInt(applicant1.NumberOfChildren__c);
         if(!$A.util.isUndefinedOrNull(applicant2)) {
-            applicant2.FinServ__NumberOfChildren__c = parseInt(applicant2.FinServ__NumberOfChildren__c);
+            applicant2.NumberOfChildren__c = parseInt(applicant2.NumberOfChildren__c);
         }
        
      	action.setParams({

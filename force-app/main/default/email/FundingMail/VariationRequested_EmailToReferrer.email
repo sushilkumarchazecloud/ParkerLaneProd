@@ -1,0 +1,50 @@
+<messaging:emailTemplate subject="Important! Variation to approved limit requested by [opportunity name without purpose]" renderUsingSystemContextWithoutSharing="True" recipientType="Contact" relatedToType="Funding_Request__c">
+<messaging:htmlEmailBody >
+
+    <div style="max-width: 30rem;">
+        <div>Hi {!relatedTo.Opportunity__r.Referred_by_Company__r.Name} team,</div><br/>
+        <div style="text-align: left">
+            <div>
+                We have received a request to vary the approved limit for {!relatedTo.Opportunity__r.Name}. This can happen when there is a difference between the amount approved and requested for funding. Please review the details below:
+            </div><br/>    
+            <div>
+                Previous Approved Loan Amount: <apex:outputText value="{0, Number, '$'#,##0}">
+                                <apex:param value="{!(relatedTo.Request_Amount__c - relatedTo.Variation_Amount__c)}" />
+                                </apex:outputText><br/>
+                New Loan Amount Requested: <apex:outputText value="{0, Number, '$'#,##0}">
+                                <apex:param value="{!relatedTo.Invoice_Amount__c}" />
+                                </apex:outputText>
+            </div><br/>           
+            <div>
+                If you think this is incorrect or you have any questions please reply to this email. Otherwise we’ll work on a re-approval as fast as we can and let you know when that is sorted. Please allow 24 - 72 hours.
+            </div><br/>
+            <div>
+                Warm regards,<br/>
+                <br/>
+                <span>The Parker Lane Team.</span><br/><br/>
+
+                <img width="115px" src="https://lanecorp--uat.sandbox.file.force.com/servlet/servlet.ImageServer?id=0159h00000064c1&oid=00D9h0000008XtF&lastMod=1664367526000" /><br/>
+                <i style="color : #192744; font-size :12px;">Do more with what you’ve got </i><br/><br/>
+                
+                <p>P.S. here’s why we’re recommended more often</p>
+                <ul>
+                    <li>Incredible rates!</li>
+                    <li>Great tech, real people</li>
+                    <li>Available to chat up to 7pm EST</li>
+                    <li>Awarded best in Australia for Personal Loans</li>
+                    <li>Awarded best in Australia for Home Loans</li>
+                    <li>Rated 4.92 out of 5 on ProductReview.com.au</li>
+                </ul>  
+                
+                <p style="color : #D3D3D3;">___</p>
+                <p style="color : #D3D3D3;">Want to get hold of us?<br/>
+                    Email: sethu.rawat@chazecloud.com<br/>
+                    Text: 0480 049 081  Call: 1300 13 17 11<br/>
+                    Australian Credit Licence Number 482276<br/>
+                </p>
+                <p style="color : #BFBFBF; font-size : 10px;">This email is confidential. If received in error, please delete it from your system. No confidentiality, privilege or intellectual property rights are waived or lost by any mis-transmission. To the extent permitted by law, Parker Lane does not assume responsibility or duty of care for any use or reliance upon this email by anyone other than the intended recipient. Parker Lane is committed to minimising its impact on the environment. Please consider the environment before printing this email.</p>
+            </div>                
+        </div>
+    </div>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

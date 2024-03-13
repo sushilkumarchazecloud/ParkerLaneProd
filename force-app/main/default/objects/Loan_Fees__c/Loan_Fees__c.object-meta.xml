@@ -141,26 +141,36 @@
         <type>Default</type>
     </actionOverrides>
     <allowInChatterGroups>false</allowInChatterGroups>
-    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <compactLayoutAssignment>Custom_Compact_Layout</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
-    <enableActivities>false</enableActivities>
+    <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableFeeds>false</enableFeeds>
+    <enableFeeds>true</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableLicensing>false</enableLicensing>
-    <enableReports>false</enableReports>
+    <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>ReadWrite</externalSharingModel>
+    <externalSharingModel>Read</externalSharingModel>
     <label>Loan Fees</label>
     <nameField>
-        <displayFormat>LF-{0000}</displayFormat>
-        <label>Loan Fees Name</label>
-        <type>AutoNumber</type>
+        <label>Loan Fees</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
     </nameField>
     <pluralLabel>Loan Fees</pluralLabel>
-    <searchLayouts></searchLayouts>
+    <recordTypeTrackFeedHistory>false</recordTypeTrackFeedHistory>
+    <searchLayouts>
+        <searchResultsAdditionalFields>Active__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Amount__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Description__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Fee_From__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Fee_Type__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Frequency__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Notes__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Override_allowed__c</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

@@ -3,7 +3,10 @@
     <fullName>Sale_of_assets_Retirement_Description__c</fullName>
     <externalId>false</externalId>
     <label>Sale of assets Retirement Description</label>
+    <length>255</length>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>
-    <type>TextArea</type>
+    <type>Text</type>
+    <unique>false</unique>
 </CustomField>

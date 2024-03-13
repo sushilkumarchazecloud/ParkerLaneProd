@@ -145,14 +145,13 @@
    
 }
 .THIS .fees-style{
-    font-size: 18px;
+    font-size: 20px;
+    font-weight: 600;
     white-space:nowrap;
 }
 .THIS .fees-title-style{
-    font-size: 13px;
-    font-weight: 600;
-    white-space: nowrap;
-    font-family: ProximaNova-AltBold;
+    font-size: 14px;
+    white-space:nowrap;
 }
 .THIS .non-clickable-checkbox .slds-checkbox_faux:after {
     border-color: #1a2745 !important;

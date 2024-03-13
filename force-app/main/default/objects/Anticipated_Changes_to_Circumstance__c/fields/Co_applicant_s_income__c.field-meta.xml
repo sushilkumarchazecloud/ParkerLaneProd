@@ -3,7 +3,8 @@
     <fullName>Co_applicant_s_income__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Co-applicant&apos;s income</label>
+    <label>Co applicant s income</label>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

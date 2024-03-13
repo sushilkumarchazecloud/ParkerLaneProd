@@ -1,10 +1,10 @@
-<aura:component controller="ParkerLaneLoanController">
+<aura:component controller="ApplicationFormController">
     <aura:attribute name="employmentType" type="String" default=""/>
     <aura:attribute name="applicant1" type="contact" />
     <aura:attribute name="applicant2" type="contact"/>
 	<aura:attribute name="empListSize" type="decimal" default = "0"/>
-    <aura:attribute name="employmentsList1" type="FinServ__Employment__c[]" />
-    <aura:attribute name="employmentsList2" type="FinServ__Employment__c[]" />
+    <aura:attribute name="employmentsList1" type="Employment__c[]" />
+    <aura:attribute name="employmentsList2" type="Employment__c[]" />
 	<aura:attribute name="employmentTypeOptions" type="List" default="[{'label': 'Administration', 'value': 'Administration'},{'label': 'Professional', 'value': 'Professional'},{'label': 'Sales', 'value': 'Sales'},{'label': 'Technical', 'value': 'Technical'},{'label': 'Trade', 'value': 'Trade'},{'label': 'Self Employed', 'value': 'Self Employed'},{'label': 'Home Duties', 'value': 'Home Duties'},{'label': 'Retired', 'value': 'Retired'},{'label': 'Self Funded Retired', 'value': 'Self Funded Retired'},{'label': 'Carer', 'value': 'Carer'},{'label': 'Government Benefits', 'value': 'Government Benefits'},{'label': 'Student', 'value': 'Student'},{'label': 'Workcover / Workers Compensation', 'value': 'Workcover / Workers Compensation'},{'label': 'Unemployed', 'value': 'Unemployed'}]"/>    
     <aura:attribute name="yesNoOptions" type="List" default="[{'label': 'Yes', 'value': 'Yes'},{'label': 'No', 'value': 'No'}]"/>
     <aura:attribute name="spouseIncomeSourceOptions" type="List" default="[{'label': 'Permanent ongoing employment', 'value': 'Permanent ongoing employment'},{'label': 'Casual or temporary employment', 'value': 'Casual or temporary employment'},{'label': 'Self employed', 'value': 'Self employed'},{'label': 'Centrelink', 'value': 'Centrelink'},{'label': 'Other', 'value': 'Other'}]"/>
@@ -76,7 +76,7 @@
                                 <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
                                     <lightning:combobox aura:id="fieldcheck" required="true"
                                                         label="What is your primary Occupation" 
-                                                        value="{!v.applicant1.FinServ__Occupation__c}"                                                 
+                                                        value="{!v.applicant1.Occupation__c}"                                                 
                                                         options="{! v.employmentTypeOptions }"/>
                                 </div>
                             </div>
@@ -86,10 +86,10 @@
                     <h1 class = "header-text">Current Source of Income</h1>
                     <aura:iteration items="{!v.employmentsList1}" var="item" indexVar="index">
                         <c:EarningIncome emp = "{!item}" index = "{!index}" applicantNo="1"
-                                         applicant = "{!v.applicant1}" occupation ="{!v.applicant1.FinServ__Occupation__c}"
+                                         applicant = "{!v.applicant1}" occupation ="{!v.applicant1.Occupation__c}"
                                          selectedPerson = "{!v.selectedPerson}"/>
                     </aura:iteration>
-                    <aura:if isTrue="{!v.applicant1.FinServ__MaritalStatus__c == 'Married / defacto (non-applicant)' || v.applicant1.FinServ__MaritalStatus__c == 'Married / defacto'}">
+                    <aura:if isTrue="{!v.applicant1.MaritalStatus__c == 'Married / defacto (non-applicant)' || v.applicant1.MaritalStatus__c == 'Married / defacto'}">
                         <div class="slds-form__row">
                             <div class="slds-form__item" role="listitem">
                                 <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
@@ -207,7 +207,7 @@
                                     <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">
                                         <lightning:combobox aura:id="fieldcheck" required="true"
                                                             label="What is your primary Occupation" 
-                                                            value="{!v.applicant2.FinServ__Occupation__c}"                                                 
+                                                            value="{!v.applicant2.Occupation__c}"                                                 
                                                             options="{! v.employmentTypeOptions }"/>
                                     </div>
                                 </div>
@@ -217,10 +217,10 @@
                         <h1 class = "header-text">Current Source of Income</h1>
                         <aura:iteration items="{!v.employmentsList2}" var="item" indexVar="index">
                             <c:EarningIncome emp = "{!item}" index = "{!index}" applicantNo="2"
-                                             applicant = "{!v.applicant2}" occupation ="{!v.applicant2.FinServ__Occupation__c}"
+                                             applicant = "{!v.applicant2}" occupation ="{!v.applicant2.Occupation__c}"
                                              selectedPerson = "{!v.selectedPerson}"/>
                         </aura:iteration>
-                        <aura:if isTrue="{!v.applicant2.FinServ__MaritalStatus__c == 'Married / defacto (non-applicant)' || v.applicant2.FinServ__MaritalStatus__c == 'Married / defacto'}">
+                        <aura:if isTrue="{!v.applicant2.MaritalStatus__c == 'Married / defacto (non-applicant)' || v.applicant2.MaritalStatus__c == 'Married / defacto'}">
                             <div class="slds-form__row">
                                 <div class="slds-form__item" role="listitem">
                                     <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col">

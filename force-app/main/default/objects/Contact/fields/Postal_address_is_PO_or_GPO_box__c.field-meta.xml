@@ -3,7 +3,7 @@
     <fullName>Postal_address_is_PO_or_GPO_box__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Postal address is a PO Box or GPO box</label>
+    <label>Postal address is  PO Box or GPO box</label>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <type>Checkbox</type>

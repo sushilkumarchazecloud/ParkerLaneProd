@@ -1,4 +1,4 @@
-<aura:component controller="ParkerLaneLoanController" >
+<aura:component controller="ApplicationFormController" >
     <aura:attribute name="applicationSection" type="String" default=""/>
     <aura:attribute name="appSectionPath" type="List" default="[]"/>
     <aura:attribute name="featuredProducts" type="Product2[]"/>
@@ -17,13 +17,15 @@
     <aura:attribute name="masterQuote" type="String" />
    <!-- <aura:attribute name="showError" type="Boolean" default="false"/>-->
     <aura:attribute name="showErrorParent" type="Boolean" default="false"/>
-	<aura:attribute name="errorMsg" type="String"/>    
-    <aura:attribute name="vfMsgMethod" type="object" description=""/>
+	<aura:attribute name="errorMsg" type="String"/>   
+    
+    <aura:attribute name="productTypeList" type="List" default="[]"/> <!-- Added by Sethu -->
+    <aura:attribute name="selectedProductTypeId" type="String" default=""/> <!-- Added by sethu -->
     
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     
     <div class="priorities-form">
-        <lightning:spinner aura:id="mySpinner" variant="brand" size="large" class="slds-hide" />
+        <lightning:spinner aura:id="mySpinner" variant="brand" size="large" />
         <aura:if isTrue="{!v.showErrorParent}">
             <div class="slds-notify slds-notify_toast slds-theme_error slds-align_absolute-center slds-m-vertical--medium error-section">
                 <span class="slds-assistive-text">error</span>
@@ -32,8 +34,7 @@
                 </div>
             </div>
         </aura:if>
-                 
-                 
+        
         <aura:if isTrue="{!v.showQuote}">
             <div onkeypress="{!c.EnterHandle}" >
                 <c:SolarLoanGetQoute aura:id="SolarLoanGetQoute"
@@ -46,6 +47,7 @@
                                      applicantEmail="{!v.applicantEmail}"
                                      isShowGetQuote = "{!v.isShowGetQuote}"
                                      purpose = "{!v.purpose}"
+                                     selectedProductTypeId = "{!v.selectedProductTypeId}"
                                      />
                 <aura:if isTrue="{!v.isShowGetQuote}">
                     <div class="slds-m-top_small slds-p-around_large slds-text-align_center custom_width" style="font-weight: 600;margin-bottom: 70px;">
@@ -66,26 +68,44 @@
                     <div class="product-selector max-700" style="justify-content:flex-start">
                         <!-- What do you need a loan for? -->
                         <h5 class="slds-p-around_medium sub-header-quoting max_width250">What are you financing?</h5>
-                        <div class="product-selector__choices-container">
+                        
+                        <!-- Start by Sethu -->
+                         <div class="product-selector__choices-container">
+                            <div class="product-selector__choices slds-grid slds-wrap">
+                                <div class="slds-grid slds-wrap slds-align_absolute-center" style="text-align:center;width: 100%;">
+                                <aura:iteration items="{!v.productTypeList}" var="productRec">
+                                            <div class="solarStyle slds-size--1-of-2 slds-medium-size--4-of-12 slds-large-size--4-of-12" >
+                                            <Lightning:button class="slds-button slds-button_neutral slds-p-around_medium" onclick="{!c.getSelectedProductType}" name="{!productRec.Name}" value="{!productRec.Id}">
+                                                <div class="slds-btn-img"><img src="{!productRec.Icon__c}"/></div>
+                                                <div class="slds-btn-txt">{!productRec.Name}</div>
+                                            </Lightning:button>  
+                                        </div>
+                                </aura:iteration>
+                               </div>
+                            </div>
+                        </div>
+                        <!-- End by Sethu -->
+
+                        <!--<div class="product-selector__choices-container">
                             <div class="product-selector__choices slds-grid slds-wrap">
                                 
                                 <div class="slds-grid slds-wrap slds-align_absolute-center" style="text-align:center;width: 100%;">
-                                    <div style=" " class="slds-size--1-of-2 slds-medium-size--1-of-3 slds-large-size--1-of-4 " >
+                                    <div style=" " class="slds-size-1-of-2 slds-medium-size-1-of-3 slds-large-size-1-of-4 " >
                                         <button class="slds-button slds-button_neutral slds-p-around_medium" onclick="{!c.getSolarQuote}">
                                             <div class="slds-btn-img"><img src="{!$Resource.SolarLoan + '/img/solar-energy.png'}"/></div>
                                             <div class="slds-btn-txt">Home Solar and Batteries</div>
                                         </button>  
                                     </div>
                                     
-                                    <div style=" " class="slds-size--1-of-2 slds-medium-size--1-of-3 slds-large-size--1-of-4 ">
+                                    <div style=" " class="slds-size-1-of-2 slds-medium-size-1-of-3 slds-large-size-1-of-4 ">
                                         <button class="slds-button slds-button_neutral slds-p-around_medium" onclick="{!c.getHomeQuote}">
                                             <div class="slds-btn-img"><img src="{!$Resource.SolarLoan + '/img/painting-roller.png'}"/></div>
                                             <div class="slds-btn-txt">Home Improvement</div>
                                         </button>
                                     </div>
                                     
-                                    <div style="" class="slds-size--1-of-1 slds-medium-size--1-of-3 slds-large-size--1-of-4">   
-                                        <div style="" class="slds-size--1-of-2 slds-medium-size--1-of-2 slds-large-size--1-of-1 ">
+                                    <div style="" class="slds-size-1-of-1 slds-medium-size-1-of-3 slds-large-size-1-of-4">   
+                                        <div style="" class="slds-size-1-of-2 slds-medium-size-1-of-2 slds-large-size-1-of-1 ">
                                             <button class="slds-button slds-button_neutral slds-p-around_medium" onclick="{!c.getConsolidationQuote}">
                                                 <div class="slds-btn-img"><img src="{!$Resource.SolarLoan + '/img/puzzle-pieces.png'}"/></div>
                                                 <div class="slds-btn-txt">Debt Consolidation</div>
@@ -95,7 +115,9 @@
                                     
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
+                        
+                        
                     </div>
                 </section>
             </aura:set>

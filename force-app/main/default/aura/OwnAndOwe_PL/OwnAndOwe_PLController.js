@@ -10,8 +10,8 @@
         var newAsset = component.get("v.addAssetValue");
 
         var asset = {
-            'sobjectType': 'FinServ__AssetsAndLiabilities__c',
-            'FinServ__AssetsAndLiabilitiesType__c': newAsset,
+            'sobjectType': 'AssetsAndLiabilities__c',
+            'AssetsAndLiabilitiesType__c': newAsset,
             'Value__c':'0'
         };
         var typesList = component.get("v.assetsList");
@@ -142,7 +142,7 @@
     openAssetModel: function(component, event, helper) {
 		var assetsList = component.get("v.assetsList");
         var indexNo = event.currentTarget.id;
-        component.set("v.selectedTypeName",assetsList[indexNo].FinServ__AssetsAndLiabilitiesType__c);
+        component.set("v.selectedTypeName",assetsList[indexNo].AssetsAndLiabilitiesType__c);
         component.set("v.selectedType","Asset");
         component.set("v.assetsSelected",assetsList[indexNo]);
         component.set("v.isOpenModal", true);

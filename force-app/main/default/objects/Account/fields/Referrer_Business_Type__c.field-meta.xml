@@ -5,7 +5,6 @@
     <label>Referrer Business Type</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
@@ -65,11 +64,6 @@
                 <fullName>Other</fullName>
                 <default>false</default>
                 <label>Other</label>
-            </value>
-            <value>
-                <fullName>Aggregator</fullName>
-                <default>false</default>
-                <label>Aggregator</label>
             </value>
         </valueSetDefinition>
     </valueSet>

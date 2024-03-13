@@ -8,7 +8,8 @@ export default class VoiFileUploadGen extends LightningElement {
     @api type;
     @api authtoken;
     @api voidetail;
-    @api idtype = '';
+    @api idtype;
+    @api key;
     @track imageData = '';
     @api newImgData = '';
     @api newfileTyp = '';
@@ -88,7 +89,7 @@ export default class VoiFileUploadGen extends LightningElement {
     }
 
     handleUploadFinished(event) {
-
+        alert(this.idtype);
         this.isUploadingFront = true;
         const file = event.target.files[0];
         this.fileDt = file;
@@ -108,7 +109,7 @@ export default class VoiFileUploadGen extends LightningElement {
             //alert('methid call');
             const component = this;
             const recordInput = {
-                Title: this.type + ' ' + this.conrecord.Name,
+                Title: this.idtype + ' ' + this.conrecord.Name,
                 VersionData: fileContents,
                 PathOnClient: this.type + ' ' + this.conrecord.Name + '.' + typ,
                 IsMajorVersion: true,

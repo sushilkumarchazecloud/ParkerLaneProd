@@ -3,7 +3,10 @@
     <fullName>Ongoing_income_superannuation_descriptio__c</fullName>
     <externalId>false</externalId>
     <label>Ongoing income superannuation descriptio</label>
+    <length>255</length>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>
-    <type>TextArea</type>
+    <type>Text</type>
+    <unique>false</unique>
 </CustomField>

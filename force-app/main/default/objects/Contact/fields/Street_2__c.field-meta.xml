@@ -3,7 +3,7 @@
     <fullName>Street_2__c</fullName>
     <externalId>false</externalId>
     <label>Street</label>
-    <length>100</length>
+    <length>25</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>

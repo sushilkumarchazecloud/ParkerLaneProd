@@ -1,4 +1,4 @@
-<aura:component controller="ParkerLaneLoanController" implements="force:hasRecordId">
+<aura:component controller="ApplicationFormController" implements="force:hasRecordId">
     <aura:attribute name="recordId" type="Id" />
     <aura:attribute name="masterQuote" type="String" />
     <aura:attribute name="applicationSection" type="String" default=""/>
@@ -40,7 +40,7 @@
                     </span>
                     
                     <span class="slds-p-horizontal--medium" >
-                        <a class="no-anchor" href="https://www.parkerlane.com.au/book-appointment" target="_blank">Book a call</a>
+                        <a class="no-anchor" href="https://chazecloud.com/book-appointment" target="_blank">Book a call</a>
                     </span>
 
                 </aura:set>

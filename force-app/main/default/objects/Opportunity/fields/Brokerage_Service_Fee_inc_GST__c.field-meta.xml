@@ -2,7 +2,9 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Brokerage_Service_Fee_inc_GST__c</fullName>
     <externalId>false</externalId>
-    <formula>IF( SyncedQuote.Application__c = True,     SyncedQuote.Brokerage_Amount__c    , IF( ISPICKVAL( BSF_Type__c , &quot;Percentage&quot;) ,  BSF_Rate_inc_GST__c  *  Loan_Amount__c , BSF_Rate_inc_GST__c) )</formula>
+    <formula>IF( SyncedQuote.Application__c = True, SyncedQuote.Brokerage_Amount__c , IF( ISPICKVAL(
+        BSF_Type__c , &quot;Percentage&quot;) , BSF_Rate_inc_GST__c * Loan_Amount__c ,
+        BSF_Rate_inc_GST__c) )</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Brokerage Service Fee inc GST</label>
     <precision>18</precision>

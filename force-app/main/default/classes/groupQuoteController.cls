@@ -5,11 +5,11 @@ public class groupQuoteController {
             /*@auraEnabled
             public static void resendGenerateAndSendPDF(String oppId){ 
                 
-                list<opportunity> opp = [SELECT Id,FinServ__ReferredByContact__r.id,Send_the_quote_to__c,AccountId,Contact_1__c,Contact_2__c,Contact_1__r.id,Contact_2__r.id from Opportunity where id =: oppId LIMIT 1];
+                list<opportunity> opp = [SELECT Id,ReferredByContact__r.id,Send_the_quote_to__c,AccountId,Contact_1__c,Contact_2__c,Contact_1__r.id,Contact_2__r.id from Opportunity where id =: oppId LIMIT 1];
                 system.debug('opportunity'+opp);
                 
                 List<Contact> con = [SELECT Id, Name, Email, Account.Name, AccountId, Account.Referrer_Business_Type__c 
-                                     FROM Contact WHERE id=: opp[0].FinServ__ReferredByContact__r.id AND Account.On_Board_Referral__c = TRUE AND  Account.RecordType.developerName = 'Referrer_Business' limit 1];
+                                     FROM Contact WHERE id=: opp[0].ReferredByContact__r.id AND Account.On_Board_Referral__c = TRUE AND  Account.RecordType.developerName = 'Referrer_Business' limit 1];
                 system.debug('contact'+con);
                 String conId = '';
                 String referrerEmail = '';
@@ -81,35 +81,35 @@ public class groupQuoteController {
         delete qut;
     }
     
-    @AuraEnabled
-    public static void updateQuote(String quotId, String oppId){
-        Opportunity opp = [Select StageName, Applicant_1__c,FinServ__FinancialAccount__c
-                           FROM opportunity 
-                           WHERE id =: oppId];
-        if(opp.StageName == 'Settled (closed won)'){
-            Id loanAccountRTId = Schema.SObjectType.FinServ__FinancialAccount__c.getRecordTypeInfosByName().get('Loan Account').getRecordTypeId();
-            Quote qut = new Quote();
-            qut.Id = quotId;
-            qut.Financial_Account__c = true;
-            update qut;
-            Quote quote= [Select Id,Loan_Term__c,Customer_Amount__c,Interest_Rate__c,Product__c, Name,Gruop_Name__c from Quote where id=:quotId];
-            FinServ__FinancialAccount__c finAccount = New FinServ__FinancialAccount__c();
-            finAccount.RecordTypeId = loanAccountRTId;
-            finAccount.FinServ__LoanTermMonths__c = quote.Loan_Term__c;
-            finAccount.FinServ__LoanAmount__c = quote.Customer_Amount__c;
-            finAccount.FinServ__InterestRate__c = quote.Interest_Rate__c;
-            finAccount.FinServ__ProductName__c = quote.Product__c;
-            finAccount.Name = quote.Name;
-            finAccount.Quote__c = quote.Id;
-            finAccount.FinServ__PrimaryOwner__c = opp.Applicant_1__c;
-            insert finAccount;
-            opp.FinServ__FinancialAccount__c = finAccount.Id;
-            update opp;
-        }else{
-            throw new AuraHandledException('Stage is not closed won');
-        } 
-    }
-    
+    // @AuraEnabled
+    // public static void updateQuote(String quotId, String oppId){
+    //     Opportunity opp = [Select StageName, Applicant_1__c,FinancialAccount__c
+    //                        FROM opportunity 
+    //                        WHERE id =: oppId];
+    //     if(opp.StageName == 'Settled (closed won)'){
+    //         Id loanAccountRTId = Schema.SObjectType.FinancialAccount__c.getRecordTypeInfosByName().get('Loan Account').getRecordTypeId();
+    //         Quote qut = new Quote();
+    //         qut.Id = quotId;
+    //         qut.Financial_Account__c = true;
+    //         update qut;
+    //         Quote quote= [Select Id,Loan_Term__c,Customer_Amount__c,Interest_Rate__c,Product__c, Name,Gruop_Name__c from Quote where id=:quotId];
+    //         FinancialAccount__c finAccount = New FinancialAccount__c();
+    //         finAccount.RecordTypeId = loanAccountRTId;
+    //         finAccount.LoanTermMonths__c = quote.Loan_Term__c;
+    //         finAccount.LoanAmount__c = quote.Customer_Amount__c;
+    //         finAccount.InterestRate__c = quote.Interest_Rate__c;
+    //         finAccount.ProductName__c = quote.Product__c;
+    //         finAccount.Name = quote.Name;
+    //         finAccount.Quote__c = quote.Id;
+    //         finAccount.PrimaryOwner__c = opp.Applicant_1__c;
+    //         insert finAccount;
+    //         opp.FinancialAccount__c = finAccount.Id;
+    //         update opp;
+    //     }else{
+    //         throw new AuraHandledException('Stage is not closed won');
+    //     } 
+    // }
+    //NO FINANCIALACCOUNT
     @AuraEnabled
     public static void updateQuoteApplication(String quotId, String oppId, String oldQutId){
         Opportunity opp = [Select StageName 
@@ -139,12 +139,12 @@ public class groupQuoteController {
         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage(); 
         mail.setToAddresses(new string[] {op.Applicant_1__r.PersonEmail});
         
-        String fromEmailAddress = 'hello@parkerlane.com.au';
+        String fromEmailAddress = 'sethu.rawat@chazecloud.com';
         if(personalRecTypeNameList.contains(op.RecordType.Name)){
-            fromEmailAddress = 'personalapplications@parkerlane.com.au';
-            mail.setReplyTo('personalapplications@parkerlane.com.au');
+            fromEmailAddress = 'tazeem.khan@chazecloud.com';
+            mail.setReplyTo('tazeem.khan@chazecloud.com');
         }else if(mortgageRecTypeNameList.contains(op.RecordType.Name)){
-            fromEmailAddress = 'mortgageapplications@parkerlane.com.au';
+            fromEmailAddress = 'tazeem.khan@chazecloud.com';
             mail.setReplyTo(op.Owner.Email);
             if(String.isNotBlank(op.Credit_Analyst__c)){
                 mail.setCcAddresses(new string[] {op.Credit_Analyst__r.Email});
@@ -212,7 +212,7 @@ public class groupQuoteController {
         }
         Opportunity op = [Select Name, Owner.Email, Applicant_1__c, Applicant_2__c, Applicant_1__r.PersonEmail, 
                           Applicant_2__r.PersonEmail, Applicant_1__r.Firstname, Applicant_1__r.PersonContactId, 
-                          StageName,Application_Sections__c,Current_Application_Sections__c, Credit_Analyst__c, Credit_Analyst__r.Email,FinServ__ReferredByContact__c,Send_the_quote_to__c,RecordType.Name,RecordTypeId   
+                          StageName,Application_Sections__c,Current_Application_Sections__c, Credit_Analyst__c, Credit_Analyst__r.Email,ReferredByContact__c,Send_the_quote_to__c,RecordType.Name,RecordTypeId   
                           FROM Opportunity WHERE ID =: oppId];
         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage(); 
         mail.setToAddresses(new string[] {op.Applicant_1__r.PersonEmail});
@@ -222,7 +222,7 @@ public class groupQuoteController {
             fromEmailAddress = utilityclass.adminEmail;
             mail.setReplyTo(utilityclass.adminEmail);
         }else if(mortgageRecTypeNameList.contains(op.RecordType.Name)){
-            fromEmailAddress = 'mortgageapplications@parkerlane.com.au';
+            fromEmailAddress = 'tazeem.khan@chazecloud.com';
             if(String.isNotBlank(op.Credit_Analyst__c)){
                 mail.setCcAddresses(new string[] {op.Credit_Analyst__r.Email});
             }
@@ -247,7 +247,7 @@ public class groupQuoteController {
         op.StageName = 'Quote';
         op.Application_Sections__c = 'Loan Recommendation';
         op.Current_Application_Sections__c  = 'Loan Recommendation';
-        if(op.FinServ__ReferredByContact__c != null && op.Send_the_quote_to__c != 'Me and my customer'){ //Created by Rakesh For update 'send quote to' field when sending Quote to Customer
+        if(op.ReferredByContact__c != null && op.Send_the_quote_to__c != 'Me and my customer'){ //Created by Rakesh For update 'send quote to' field when sending Quote to Customer
            op.Send_the_quote_to__c = 'Me and my customer';
         }
         update op;   

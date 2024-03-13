@@ -1,0 +1,6 @@
+<messaging:emailTemplate subject="Important: Your {!relatedTo.Purpose__c} approval will expire in 30 days" recipientType="Contact" relatedToType="Opportunity">
+<messaging:HtmlEmailBody >
+
+<c:ReminderForApprovedCmp oppId="{!relatedTo.Id}" SixtydaysEmailCsmt="true"/>
+</messaging:HtmlEmailBody>
+</messaging:emailTemplate>

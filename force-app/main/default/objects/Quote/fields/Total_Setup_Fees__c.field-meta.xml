@@ -4,7 +4,7 @@
     <externalId>false</externalId>
     <formula>Brokerage_Amount__c + Up_Front_Fees__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-    <label>Capitalise Setup costs</label>
+    <label>Total Setup Fees</label>
     <precision>18</precision>
     <required>false</required>
     <scale>2</scale>

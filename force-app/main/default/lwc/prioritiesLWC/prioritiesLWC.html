@@ -1,0 +1,55 @@
+<template>
+    <div class="priorities-form">
+        <lightning-spinner if:true={showSpinner} variant="brand" size="large"></lightning-spinner>
+
+        <template if:true={showErrorParent}>
+            <div class="slds-notify slds-notify_toast slds-theme_error slds-align_absolute-center slds-m-vertical-medium error-section">
+                <span class="slds-assistive-text">error</span>
+                <div class="slds-notify__content">
+                    <p class="slds-align_absolute-center">{errorMsg}</p>
+                </div>
+            </div>
+        </template>
+
+        <template if:true={isShowGetQuote}>
+            <div class="slds-m-top_small slds-p-around_large slds-text-align_center custom_width" style="font-weight: 600; margin-bottom: 70px;">
+                <lightning-button
+                    label="GET MY QUOTES"
+                    class="btn-light-sky-blue"
+                    title="GET MY QUOTES"
+                    variant="success"
+                    onclick={handleSaveNext}
+                ></lightning-button>
+            </div>
+        </template>
+
+        <section class="bg-light-sky-blue slds-p-around_large slds-text-align_center">
+            <div class="product-selector__choices-container">
+                <h3 style="font-size:1.75rem;font-family: Bely-Bold;">Your Personalised Quote</h3>
+            </div>
+        </section>
+        <section class="priority-section-height slds-p-around_large personalised-button slds-text-align_center" style="margin-bottom: 40px;">
+            <div class="product-selector max-700" style="justify-content:flex-start">
+                <h5 class="slds-p-around_medium sub-header-quoting max_width250">What are you financing?</h5>
+
+                <div class="product-selector__choices-container">
+                    <div class="product-selector__choices slds-grid slds-wrap">
+                        <template for:each={productTypeList} for:item="productRec">
+                            <div key={productRec.Id} class="solarStyle slds-size-1-of-2 slds-medium-size-4-of-12 slds-large-size-4-of-12">
+                                <lightning-button
+                                    class="slds-button slds-button_neutral slds-p-around_medium"
+                                    onclick={handleSelectedProductType}
+                                    name={productRec.Name}
+                                    value={productRec.Id}
+                                >
+                                    <div class="slds-btn-img"><img src={productRec.Icon__c} /></div>
+                                    <div class="slds-btn-txt">{productRec.Name}</div>
+                                </lightning-button>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</template>

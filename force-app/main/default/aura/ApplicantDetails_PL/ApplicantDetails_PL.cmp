@@ -1,4 +1,4 @@
-<aura:component controller="ParkerLaneLoanController">
+<aura:component controller="ApplicationFormController">
       
     <aura:attribute name="applicant" type="Contact" />
     <aura:attribute name="applicantChildren" type="Contact[]" />
@@ -40,11 +40,11 @@
     <aura:attribute name="citizenshipStatus" type="String" default=""/>
     <aura:attribute name="showPreviousAdd" type="Boolean" default="false"/>
     <aura:attribute name="addressList" type="String[]" />
-    <aura:attribute name="homeAssetList" type="FinServ__AssetsAndLiabilities__c[]"/>
+    <aura:attribute name="homeAssetList" type="AssetsAndLiabilities__c[]"/>
     
     
     
-    <aura:attribute name="propertysList" type="FinServ__AssetsAndLiabilities__c[]"/>
+    <aura:attribute name="propertysList" type="AssetsAndLiabilities__c[]"/>
     
     <aura:attribute name="otherProperty" type="String" default="No"/>
     <aura:attribute name="livingSituation" type="String" default="No"/>
@@ -55,12 +55,12 @@
     <!-- Own And Owe-->
     <aura:attribute name="isNotAsset" type="Boolean" default="false"/>
     <aura:attribute name="isNotLiability" type="Boolean" default="false"/>
-    <aura:attribute name="assetsList" type="FinServ__AssetsAndLiabilities__c[]" />
-    <aura:attribute name="allAssetsList" type="FinServ__AssetsAndLiabilities__c[]" />
-    <aura:attribute name="homeAsset" type="FinServ__AssetsAndLiabilities__c" default="{'sobjectType': 'FinServ__AssetsAndLiabilities__c',
-            																			'FinServ__AssetsAndLiabilitiesType__c':''}"/>
-    <aura:attribute name="assetsSelected" type="FinServ__AssetsAndLiabilities__c"/>
-    <aura:attribute name="liabilitiesSelected" type="FinServ__AssetsAndLiabilities__c" />
+    <aura:attribute name="assetsList" type="AssetsAndLiabilities__c[]" />
+    <aura:attribute name="allAssetsList" type="AssetsAndLiabilities__c[]" />
+    <aura:attribute name="homeAsset" type="AssetsAndLiabilities__c" default="{'sobjectType': 'AssetsAndLiabilities__c',
+            																			'AssetsAndLiabilitiesType__c':''}"/>
+    <aura:attribute name="assetsSelected" type="AssetsAndLiabilities__c"/>
+    <aura:attribute name="liabilitiesSelected" type="AssetsAndLiabilities__c" />
     <aura:attribute name="totalAssetsAmount" type="Decimal" default="0"/>
     <aura:attribute name="totalLiabilitiesAmount" type="Decimal" default="0"/>
     <aura:attribute name="selectedType" type="String" default=""/>
@@ -70,7 +70,7 @@
     
     <aura:attribute name="opportunity" type="Opportunity" />
     <!-- Own And Owe-->
-    <aura:attribute name="assetsSelectedYesorNO" type="FinServ__AssetsAndLiabilities__c" default="[{'sobjectType': 'FinServ__AssetsAndLiabilities__c'}]"/>
+    <aura:attribute name="assetsSelectedYesorNO" type="AssetsAndLiabilities__c" default="[{'sobjectType': 'AssetsAndLiabilities__c'}]"/>
     
     
     <aura:attribute name="incomeFrequencyOptions" type="List" default="[{'label': 'Weekly', 'value': 'Weekly'},{'label': 'Fortnightly', 'value': 'Fortnightly'},{'label': 'Monthly', 'value': 'Monthly'},{'label': 'Annually', 'value': 'Annually'}]"/>
@@ -79,8 +79,8 @@
     <aura:attribute name="isOpenAlertModal" type="Boolean" default="false"/>
     <aura:attribute name="deleteIndex" type="Integer" default="0"/>
     
-    <aura:attribute name="OtherAsset" type="FinServ__AssetsAndLiabilities__c" default="{'sobjectType': 'FinServ__AssetsAndLiabilities__c',
-                                                                                        'FinServ__AssetsAndLiabilitiesType__c':''}"/>
+    <aura:attribute name="OtherAsset" type="AssetsAndLiabilities__c" default="{'sobjectType': 'AssetsAndLiabilities__c',
+                                                                                        'AssetsAndLiabilitiesType__c':''}"/>
                                                                                         
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:handler name="monthYearChangeEvent" event="c:monthYearChangeEvent" action="{!c.changeMonthYear}"/>
@@ -108,7 +108,7 @@
                                               suburb = "{!v.applicant.Suburb__c}"
                                               state = "{!v.applicant.State__c}"
                                               postalCode = "{!v.applicant.Postal_Code__c}"
-                                              country = "{!v.applicant.FinServ__CountryOfResidence__c}"/>
+                                              country = "{!v.applicant.CountryOfResidence__c}"/>
 
                     <aura:if isTrue="{!!v.applicant.Is_Previous_Address_Same__c}">
                         <aura:iteration items="{!v.addressList}" var="item" indexVar="index">
@@ -156,7 +156,7 @@
                                         <lightning:select name="Relationship" aura:id="fieldcheck"
                                                           label="# of dependent children in the household?"
                                                           class="no-abbr" required="true"
-                                                          value="{!v.applicant.FinServ__NumberOfChildren__c}"  onchange = "{!c.changeDependent}">
+                                                          value="{!v.applicant.NumberOfChildren__c}"  onchange = "{!c.changeDependent}">
                                             
                                             <option value="">Select</option>
                                             <aura:iteration items="{!v.noChildrenOptions}" var="option">
@@ -230,7 +230,7 @@
                                         <div class="slds-size_1-of-2">
                                             <lightning:select aura:id="fieldcheck" name="select"  label="Ownership"
                                                               required="true" class="no-abbr slds-m-left_x-small slds-p-left_xx-small slds-m-top_small"
-                                                              value="{!v.homeAsset.FinServ__Ownership__c}">
+                                                              value="{!v.homeAsset.Ownership__c}">
                                                 <option value="">Select</option>
                                                 <aura:iteration items="{!v.OwnershipOptions}" var="Ownership">
                                                     <option value="{!Ownership.value}" text="{!Ownership.value}"></option>
@@ -385,7 +385,7 @@
                                             
                                             <lightning:select aura:id="fieldcheck" name="select" onchange="" label="Ownership Share"
                                                               required="true" class="no-abbr slds-m-top_small slds-p-left_xx-small slds-m-left_small"
-                                                              value="{!property.FinServ__Ownership__c}"
+                                                              value="{!property.Ownership__c}"
                                                               >
                                                 <option value="">Select</option>
                                                 <aura:iteration items="{!v.OwnershipOptions}" var="ownershipOption">
@@ -468,10 +468,10 @@
                                 
                                 
                                 <span>
-                                    <aura:if isTrue="{!asset.FinServ__AssetsAndLiabilitiesType__c == 'Motor Vehicle' || asset.FinServ__AssetsAndLiabilitiesType__c == 'Superannuation'}">
-                                        All {!asset.FinServ__AssetsAndLiabilitiesType__c}
+                                    <aura:if isTrue="{!asset.AssetsAndLiabilitiesType__c == 'Motor Vehicle' || asset.AssetsAndLiabilitiesType__c == 'Superannuation'}">
+                                        All {!asset.AssetsAndLiabilitiesType__c}
                                         <aura:set attribute="else">
-                                            {!asset.FinServ__AssetsAndLiabilitiesType__c}
+                                            {!asset.AssetsAndLiabilitiesType__c}
                                         </aura:set>
                                     </aura:if>
                                 </span>

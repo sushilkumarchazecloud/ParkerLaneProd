@@ -6,7 +6,7 @@
         var self = this;
         console.log('----------'+component.get("v.masterQuote"));
         action.setParams({
-            oppId : component.get("v.recordId"),
+            leadId : component.get("v.recordId"),
             masterQuote : component.get("v.masterQuote")
         });
         action.setCallback(this, function(response) {            
@@ -14,7 +14,7 @@
             console.log("state"+state);
             if(state === "SUCCESS") {
                 var ret = response.getReturnValue(); 
-                //console.log("ret+++"+JSON.stringify(ret));
+                console.log("ret+++"+JSON.stringify(ret));
                 
                 if(ret.length == 3){                
                     if(ret[0].quote.Product__r.Product_Order__c == null){
@@ -115,23 +115,13 @@
                 
                 if(ret=='[]' || $A.util.isUndefinedOrNull(ret)){
                     component.set("v.showError", true);
+                    console.log('--ret==-='+JSON.stringify(ret));
                     component.set("v.errorMsg", $A.get("$Label.c.Error_Message"));
                 }else{
-                    component.set('v.quotesWpr', mainArr); 
-                    component.set('v.purpose', mainArr[0].quote.Purpose__c);
-                    var isTrue = true;
-                    for(var i=0;i<mainArr.length;i++){
-                        if(mainArr[i].quote.Not_Applicable__c == false){
-                            isTrue = false;
-                            component.set('v.customerAmount', mainArr[i].quote.Customer_Amount__c);
-                            component.set('v.customerAmountnew', mainArr[i].quote.Customer_Amount__c);
-                            break;
-                        }
-                    }
-                    if(isTrue){
-                        component.set('v.customerAmount', mainArr[0].quote.Customer_Amount__c);
-                        component.set('v.customerAmountnew', mainArr[0].quote.Customer_Amount__c);
-                    }
+                    component.set('v.quotesWpr', mainArr);                    
+                    component.set('v.customerAmount', mainArr[0].quote.Customer_Amount__c);                    
+                    //component.set('v.purpose', mainArr[0].quote.Purpose__c);
+                    component.set('v.purpose', mainArr[0].quote.Product_Type_Lookup__r.Name);// Added by Sethu
                 }
             }
             $A.util.addClass(spinner, 'slds-hide');
@@ -145,7 +135,7 @@
         var action = component.get("c.getLead");
         var self = this;
         action.setParams({
-            oppId : component.get("v.recordId")
+            leadId : component.get("v.recordId")
         });
         action.setCallback(this, function(response) {
             var state = response.getState();

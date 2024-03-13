@@ -107,7 +107,7 @@
                     component.set("v.errorMsg", $A.get("$Label.c.Error_Message"));
                 }else{
                     if(ret !=''){
-                        self.createEnvelope(component, event);
+                        //self.createEnvelope(component, event);
                         component.set('v.applicationSection', JSON.parse(ret).CurrentSection);
                         component.set('v.appSectionPath', JSON.parse(ret).path);                        
                         component.set('v.redirectURL', JSON.parse(ret).url);

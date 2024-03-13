@@ -1,0 +1,6 @@
+<messaging:emailTemplate subject="You’ve got a special {!relatedTo.Purpose__c} finance offer from {!relatedTo.FinServ__ReferredByContact__r.FirstName} @ {!relatedTo.Referred_by_Company__r.Name}" recipientType="Contact" relatedToType="Opportunity" renderUsingSystemContextWithoutSharing="true" >
+<messaging:HtmlEmailBody >
+
+<c:QuotesendCmp oppId="{!relatedTo.Id}"/>
+</messaging:HtmlEmailBody>
+</messaging:emailTemplate>

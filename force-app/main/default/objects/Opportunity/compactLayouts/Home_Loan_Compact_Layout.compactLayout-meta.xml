@@ -7,6 +7,6 @@
     <fields>Applicant_1__c</fields>
     <fields>Applicant_2__c</fields>
     <fields>State__c</fields>
-    <fields>FinServ__ReferredByUser__c</fields>
+    <fields>ReferredByUser__c</fields>
     <label>Home Loan Compact Layout</label>
 </CompactLayout>

@@ -2,12 +2,9 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>VOI_stage__c</fullName>
     <externalId>false</externalId>
-    <formula>IF( ISBLANK(TEXT(VOI_Type_For__c) ) , TEXT(Contact__r.VOI_type__c), TEXT(VOI_Type_For__c) )</formula>
-    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>VOI stage</label>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>TextArea</type>
 </CustomField>

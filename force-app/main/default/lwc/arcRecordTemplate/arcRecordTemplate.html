@@ -1,0 +1,186 @@
+<template>
+
+    <!-- Only for Case record UI -->
+    <template for:each={isCase} for:item="record" for:index="index">
+        <div key={record.Id} class="mainDiv slds-p-around_x-small slds-grid slds-wrap" data-record-id={record.Id}>
+
+            <div class="slds-col slds-size_8-of-8 slds-p-around_xxx-small slds-grid slds-wrap">
+                <div class="slds-col slds-size_7-of-8">
+                    <a href="#" class="slds-text-heading_small" onclick={handleLink} data-record-id={record.Id}>
+                        {record.CaseNumber}
+                    </a>
+                </div>
+                <div class="slds-col slds-size_1-of-8" style="padding-left: 11px;">
+                    <lightning-button-menu alternative-text="Show menu" variant="border-filled" onselect={handleOnselect} icon-size="small" data-record-id={record.Id}>
+                        <lightning-menu-item value="edit" label="Edit"></lightning-menu-item>
+                        <lightning-menu-item value="delete" label="Delete"></lightning-menu-item>
+                    </lightning-button-menu>
+                </div>
+            </div>
+
+            <template if:true={record.isHorizontalLine}>
+                <div class="slds-col slds-size_1-of-8">
+                    <div class="horizontalLineTwo"></div>
+                </div>
+            </template>
+
+            <div class="slds-col slds-size_8-of-8 slds-p-around_xxx-small slds-grid slds-wrap">
+                <div class="slds-col slds-size_3-of-8">
+                    <h4>Case Number</h4>
+                </div>
+                <div class="slds-col slds-size_4-of-8">
+                    <h4>{record.CaseNumber}</h4>
+                </div>
+            </div>
+
+        </div>
+
+    </template> 
+    
+    <!-- Only for Order record UI -->
+    <template for:each={isOrders} for:item="record" for:index="index">
+        <div key={record.Id} class="mainDiv slds-p-around_x-small slds-grid slds-wrap" data-record-id={record.Id}>
+
+            <div class="slds-col slds-size_8-of-8 slds-p-around_xxx-small slds-grid slds-wrap">
+                <div class="slds-col slds-size_7-of-8">
+                    <a href="#" class="slds-text-heading_small" onclick={handleLink} data-record-id={record.Id}>
+                        {record.OrderNumber}
+                    </a>
+                </div>
+                <div class="slds-col slds-size_1-of-8" style="padding-left: 11px;">
+                    <lightning-button-menu alternative-text="Show menu" variant="border-filled" onselect={handleOnselect} icon-size="small" data-record-id={record.Id}>
+                        <lightning-menu-item value="edit" label="Edit"></lightning-menu-item>
+                        <lightning-menu-item value="delete" label="Delete"></lightning-menu-item>
+                    </lightning-button-menu>
+                </div>
+            </div>
+
+            <template if:true={record.isHorizontalLine}>
+                <div class="slds-col slds-size_1-of-8">
+                    <div class="horizontalLineTwo"></div>
+                </div>
+            </template>
+
+            <div class="slds-col slds-size_8-of-8 slds-p-around_xxx-small slds-grid slds-wrap">
+                <div class="slds-col slds-size_3-of-8">
+                    <h4>Order Number</h4>
+                </div>
+                <div class="slds-col slds-size_4-of-8">
+                    <h4>{record.OrderNumber}</h4>
+                </div>
+            </div>
+
+        </div>
+
+    </template> 
+
+    <!-- Only for Contract record UI -->
+    <template for:each={isContracts} for:item="record" for:index="index">
+        <div key={record.Id} class="mainDiv slds-p-around_x-small slds-grid slds-wrap" data-record-id={record.Id}>
+
+            <div class="slds-col slds-size_8-of-8 slds-p-around_xxx-small slds-grid slds-wrap">
+                <div class="slds-col slds-size_7-of-8">
+                    <a href="#" class="slds-text-heading_small" onclick={handleLink} data-record-id={record.Id}>
+                        {record.ContractNumber}
+                    </a>
+                </div>
+                <div class="slds-col slds-size_1-of-8" style="padding-left: 11px;">
+                    <lightning-button-menu alternative-text="Show menu" variant="border-filled" onselect={handleOnselect} icon-size="small" data-record-id={record.Id}>
+                        <lightning-menu-item value="edit" label="Edit"></lightning-menu-item>
+                        <lightning-menu-item value="delete" label="Delete"></lightning-menu-item>
+                    </lightning-button-menu>
+                </div>
+            </div>
+
+            <template if:true={record.isHorizontalLine}>
+                <div class="slds-col slds-size_1-of-8">
+                    <div class="horizontalLineTwo"></div>
+                </div>
+            </template>
+
+            <div class="slds-col slds-size_8-of-8 slds-p-around_xxx-small slds-grid slds-wrap">
+                <div class="slds-col slds-size_3-of-8">
+                    <h4>Contract ...</h4>
+                </div>
+                <div class="slds-col slds-size_4-of-8">
+                    <h4>{record.ContractNumber}</h4>
+                </div>
+                <div class="slds-col slds-size_1-of-8" style="padding-left: 12px;">
+                    <lightning-button-icon icon-name="utility:hierarchy"
+                                            size="small"
+                                            class="hierarchyIcon"
+                                            onclick={handleHierarchy}
+                                            data-record-id={record.Id}>
+                    </lightning-button-icon>
+                </div>
+            </div>
+            <template if:true={record.isOpen}>
+                <c-arc-hierarcy-object-template 
+                                            recordidvalue = {particularRecordId}
+                                            recordaccountidvalue = {particularAccountId}>
+                </c-arc-hierarcy-object-template>
+            </template>
+
+        </div>
+
+    </template>  
+
+    <!-- This is for remaning all record UI -->
+    <template if:false={isOrders}>
+        <template if:false={isContracts}>
+            <template if:false={isCase}>
+                <template for:each={particularObjectRecord} for:item="record" for:index="index">
+                    <div key={record.Id} class="mainDiv slds-p-around_x-small slds-grid slds-wrap" data-record-id={record.Id}>
+                        <div class="slds-col slds-size_8-of-8 slds-p-around_xxx-small slds-grid slds-wrap">
+                            <div class="slds-col slds-size_7-of-8">
+                                <a href="#" class="slds-text-heading_small" onclick={handleLink} data-record-id={record.Id}>
+                                    {record.Name}
+                                </a>
+                            </div>
+                            <div class="slds-col slds-size_1-of-8" style="padding-left: 11px;">
+                                <lightning-button-menu alternative-text="Show menu" variant="border-filled" onselect={handleOnselect} icon-size="small" data-record-id={record.Id}>
+                                    <lightning-menu-item value="edit" label="Edit"></lightning-menu-item>
+                                    <lightning-menu-item value="delete" label="Delete"></lightning-menu-item>
+                                </lightning-button-menu>
+                            </div>
+                        </div>
+            
+                        <template if:true={record.isHorizontalLine}>
+                            <div class="slds-col slds-size_1-of-8">
+                                <div class="horizontalLineTwo"></div>
+                            </div>
+                        </template>
+            
+                        <div class="slds-col slds-size_8-of-8 slds-p-around_xxx-small slds-grid slds-wrap">
+                            <div class="slds-col slds-size_3-of-8">
+                                <h4>Full Name</h4>
+                            </div>
+                            <div class="slds-col slds-size_4-of-8">
+                                <h4>{record.Name}</h4>
+                            </div>
+                            <div class="slds-col slds-size_1-of-8" style="padding-left: 12px;">
+                                <lightning-button-icon icon-name="utility:hierarchy"
+                                                        size="small"
+                                                        class="hierarchyIcon"
+                                                        onclick={handleHierarchy}
+                                                        data-record-id={record.Id}>
+                                </lightning-button-icon>
+                            </div>
+                        </div>
+            
+                        <template if:true={record.isOpen}>
+                            <c-arc-hierarcy-object-template 
+                                                        recordidvalue = {particularRecordId}
+                                                        recordaccountidvalue = {particularAccountId}>
+                            </c-arc-hierarcy-object-template>
+                        </template>
+                    </div>
+                </template>  
+            </template>
+        </template>
+    </template>
+    <template if:true={isLoading}>
+        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+    </template>
+
+</template>

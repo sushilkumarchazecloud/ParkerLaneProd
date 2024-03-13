@@ -1,0 +1,24 @@
+<apex:page showHeader="false" sidebar="false" applyBodyTag="false" applyHtmlTag="false">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0"/>
+    <head>
+        <title>Parker Lane - Australia's No.1 Rated Finance Service</title>
+        <link REL="icon" HREF="{!URLFOR($Resource.faviconNew)}" type="img/x-icon"/> <!---->        
+    </head>
+    <apex:includeLightning />
+    <style>
+        body {
+        background-color: #f3f3f3;
+        }
+    </style>
+    <div class="slds-scope">
+        <div id="SolarLoanHomeId" class="slds-container_x-larg1e slds-container_center" style="position: relative;"></div> 
+    </div> 
+       
+    <script>
+  
+    $Lightning.use("c:testCMPApp", function() {
+        $Lightning.createComponent("c:testCMP",{}, "SolarLoanHomeId", function(component) {
+        });
+    });
+    </script>
+</apex:page>

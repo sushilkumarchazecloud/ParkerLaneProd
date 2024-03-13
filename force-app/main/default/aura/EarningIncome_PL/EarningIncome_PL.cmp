@@ -1,5 +1,5 @@
 <aura:component >
-    <aura:attribute name="emp" type="FinServ__Employment__c" />
+    <aura:attribute name="emp" type="Employment__c" />
     <aura:attribute name="incomeFrom" type="String" default=""/>
     <aura:attribute name="incomeSource" type="String" default=""/>
     <aura:attribute name="managedSource" type="String" default=""/>
@@ -76,7 +76,7 @@
     <aura:registerEvent name="monthYearChangeEvent" type="c:monthYearChangeEvent"/>
     <aura:registerEvent name="validateResultCmpEvent" type="c:ValidateResultCmpEvent"/>
     <aura:handler event="c:validateAppEvent" action="{!c.doValidate}" />
-    <!--aura:handler name="change" value="{!v.applicant.FinServ__Occupation__c}" action="{!c.occupationChanged}" /-->
+    <!--aura:handler name="change" value="{!v.applicant.Occupation__c}" action="{!c.occupationChanged}" /-->
     <aura:handler action="{!c.doInit}" name="init" value="{!this}"/>
     
     
@@ -86,7 +86,7 @@
                 <div class="slds-form__item" role="listitem">
                     <div class="slds-form-element slds-form-element_stacked slds-is-editing slds-form-element_1-col no_animation">
                        <!-- <lightning:combobox label="Your primary source of Income" 
-                                            value="{!v.emp.FinServ__EmploymentStatus__c}"                                                 
+                                            value="{!v.emp.EmploymentStatus__c}"                                                 
                                             options="{! v.incomeFromOptions }"
                                             onchange="{!c.changeMonthYear}"
                                             aura:id="fieldcheckIncome"
@@ -96,7 +96,7 @@
 					-->
                         <lightning:select name="Yourprimarysource" aura:id="fieldcheckIncome"
                                           class="no-abbr" required="true"
-                                          value="{!v.emp.FinServ__EmploymentStatus__c}"
+                                          value="{!v.emp.EmploymentStatus__c}"
                                           onchange="{!c.primaryIncomeChanged}"
                                           label="Your primary source of Income">
                             
@@ -109,13 +109,13 @@
                 </div>
             </div>
         </aura:if>
-        <aura:if isTrue = "{! v.emp.FinServ__EmploymentStatus__c != '' &amp;&amp; v.emp.FinServ__EmploymentStatus__c != null}">
+        <aura:if isTrue = "{! v.emp.EmploymentStatus__c != '' &amp;&amp; v.emp.EmploymentStatus__c != null}">
             <h2 class="header set_header_color">
                 <aura:if isTrue = "{! v.index != 0}">
-                    Income {!v.index + 1}: {!v.emp.FinServ__EmploymentStatus__c}
+                    Income {!v.index + 1}: {!v.emp.EmploymentStatus__c}
                     <aura:set attribute="else">
 
-                        Primary Income: {!v.emp.FinServ__EmploymentStatus__c}
+                        Primary Income: {!v.emp.EmploymentStatus__c}
                     </aura:set>
                 </aura:if>
                 
@@ -127,16 +127,16 @@
                 </aura:if>
             </h2>
         <div class="highlightOnselect1 slds-m-bottom_xx-small">    
-            <aura:if isTrue="{!v.emp.FinServ__EmploymentStatus__c != 'Self Employed / Contractor' &amp;&amp; v.emp.FinServ__EmploymentStatus__c !='Pension' &amp;&amp; v.emp.FinServ__EmploymentStatus__c != 'Family Tax Benefits' &amp;&amp;
-                            v.emp.FinServ__EmploymentStatus__c != 'Dividends or Annuity' 
-                            &amp;&amp; v.emp.FinServ__EmploymentStatus__c != 'Disability Pension' &amp;&amp; v.emp.FinServ__EmploymentStatus__c != 'Carer’s Pension'
-                            &amp;&amp; v.emp.FinServ__EmploymentStatus__c != 'Child Support' &amp;&amp; v.emp.FinServ__EmploymentStatus__c != 'Other' &amp;&amp; v.emp.FinServ__EmploymentStatus__c != 'New Start Allowance'}">
+            <aura:if isTrue="{!v.emp.EmploymentStatus__c != 'Self Employed / Contractor' &amp;&amp; v.emp.EmploymentStatus__c !='Pension' &amp;&amp; v.emp.EmploymentStatus__c != 'Family Tax Benefits' &amp;&amp;
+                            v.emp.EmploymentStatus__c != 'Dividends or Annuity' 
+                            &amp;&amp; v.emp.EmploymentStatus__c != 'Disability Pension' &amp;&amp; v.emp.EmploymentStatus__c != 'Carer’s Pension'
+                            &amp;&amp; v.emp.EmploymentStatus__c != 'Child Support' &amp;&amp; v.emp.EmploymentStatus__c != 'Other' &amp;&amp; v.emp.EmploymentStatus__c != 'New Start Allowance'}">
                 <div class="slds-form__row slds-m-vertical_x-small">
                     <div class="slds-form__item" role="listitem">
                         <div class="slds-form-element slds-form-element_stacked slds-is-editing no_animation">
                         
                         <!--   <lightning:combobox label="Job title / occupation" 
-                                                value="{!v.emp.FinServ__Occupation__c}"                                                 
+                                                value="{!v.emp.Occupation__c}"                                                 
                                                 options="{!v.employmentTypeOptions}"
                                                 aura:id="fieldcheck"
                                                 required="true"                                            
@@ -145,7 +145,7 @@
                             -->
                            <!-- <lightning:select name="Job title" aura:id="fieldcheck"
                                             class="no-abbr" required="true"
-                                            value="{!v.emp.FinServ__Occupation__c}"
+                                            value="{!v.emp.Occupation__c}"
                                             label="Job title / occupation">
                                 
                                 <option value="">Select</option>
@@ -153,7 +153,7 @@
                                     <option value="{!option.value}" text="{!option.label}"></option>
                                 </aura:iteration>
                             </lightning:select> -->
-                            <lightning:input class="no-abbr" type="text" label="Job title" value="{!v.emp.Job_Title__c}" placeholder="Job Title"
+                            <lightning:input type="text" label="Job title" value="{!v.emp.Job_Title__c}" placeholder="Job Title"
                                                  aura:id="fieldcheck" maxlength="80" 
                                                  required="true"/>
                         </div>
@@ -164,7 +164,7 @@
                     <div class="slds-size_1-of-2">
                         <div class="input-dollar1 dollarField ">
                                 <lightning:input label="Income (before tax)" 
-                                            value="{!v.emp.FinServ__AnnualIncome__c}"
+                                            value="{!v.emp.AnnualIncome__c}"
                                             type="number" 
                                             aura:id="fieldcheck"
                                             required="true"
@@ -212,7 +212,7 @@
                     <div class="slds-form__item" role="listitem">
                         <div class="slds-form-element slds-form-element_stacked slds-is-editing">
                             <c:AddressAPItool aura:id="addressTool" isFindAdd = "{!v.emp.Is_Find_Address__c}"
-                                                searchString="{!v.emp.FinServ__EmployerAddress__c}" label="Employer Address"
+                                                searchString="{!v.emp.EmployerAddress__c}" label="Employer Address"
                                                 streetNumber="{!v.emp.Street_Number__c}" street="{!v.emp.Street__c}"
                                                 state="{!v.emp.State__c}" suburb="{!v.emp.Suburb__c}"
                                                 postalCode="{!v.emp.Postal_Code__c}" country="{!v.emp.Country__c}"
@@ -353,7 +353,7 @@
                 
                 
             </aura:if>
-            <aura:if isTrue="{!v.emp.FinServ__EmploymentStatus__c=='Self Employed / Contractor'}">
+            <aura:if isTrue="{!v.emp.EmploymentStatus__c=='Self Employed / Contractor'}">
 
                 <div class="slds-form__row slds-m-vertical_x-small">
                     <div class="slds-form__item" role="listitem">
@@ -384,7 +384,7 @@
                     </div>
                     <div class="slds-size_2-of-2">
                     <c:AddressAPItool aura:id="addressTool" isFindAdd = "{!v.emp.Is_Find_Address__c}"
-                                                searchString="{!v.emp.FinServ__EmployerAddress__c}"
+                                                searchString="{!v.emp.EmployerAddress__c}"
                                                 streetNumber="{!v.emp.Street_Number__c}" street="{!v.emp.Street__c}"
                                                 state="{!v.emp.State__c}" suburb="{!v.emp.Suburb__c}"
                                                 postalCode="{!v.emp.Postal_Code__c}" country="{!v.emp.Country__c}"
@@ -576,14 +576,14 @@
                 </div>
             </aura:if>
             
-            <aura:if isTrue="{!v.emp.FinServ__EmploymentStatus__c == 'Pension' || v.emp.FinServ__EmploymentStatus__c == 'Dividends or Annuity'
-                            || v.emp.FinServ__EmploymentStatus__c == 'Disability Pension' || v.emp.FinServ__EmploymentStatus__c == 'Carer’s Pension'
-                            || v.emp.FinServ__EmploymentStatus__c == 'Child Support' || v.emp.FinServ__EmploymentStatus__c == 'Other' || v.emp.FinServ__EmploymentStatus__c == 'New Start Allowance'}"> 
+            <aura:if isTrue="{!v.emp.EmploymentStatus__c == 'Pension' || v.emp.EmploymentStatus__c == 'Dividends or Annuity'
+                            || v.emp.EmploymentStatus__c == 'Disability Pension' || v.emp.EmploymentStatus__c == 'Carer’s Pension'
+                            || v.emp.EmploymentStatus__c == 'Child Support' || v.emp.EmploymentStatus__c == 'Other' || v.emp.EmploymentStatus__c == 'New Start Allowance'}"> 
                 <div class="slds-grid slds-wrap">
                     <div class="slds-size_1-of-2">
                         <div class="input-dollar1 dollarField ">
                                 <lightning:input label="Income amount" 
-                                            value="{!v.emp.FinServ__AnnualIncome__c}"
+                                            value="{!v.emp.AnnualIncome__c}"
                                             type="number"
                                             
                                             aura:id="fieldcheck"
@@ -630,12 +630,12 @@
                     </div>
                 </div>
             </aura:if>
-            <aura:if isTrue="{!v.emp.FinServ__EmploymentStatus__c == 'Family Tax Benefits'}">
+            <aura:if isTrue="{!v.emp.EmploymentStatus__c == 'Family Tax Benefits'}">
                 <div class="slds-grid slds-wrap">
                     <div class="slds-size_1-of-2">
                         <div class="input-dollar1 dollarField ">
                                 <lightning:input label="Income amount" 
-                                            value="{!v.emp.FinServ__AnnualIncome__c}"
+                                            value="{!v.emp.AnnualIncome__c}"
                                             type="number"
                                             aura:id="fieldcheck"
                                             required="true"
@@ -733,7 +733,7 @@
                     </div>
                 </div>
             </aura:if>
-            <aura:if isTrue="{!v.emp.FinServ__EmploymentStatus__c == 'Other'}">
+            <aura:if isTrue="{!v.emp.EmploymentStatus__c == 'Other'}">
                 <div class="slds-form__row">
                     <div class="slds-form__item" role="listitem">
                         <div class="slds-form-element slds-form-element_stacked slds-is-editing">

@@ -12,13 +12,13 @@
         component.set("v.makeModelOptions", makeModel);
         
         var consumerAssets = component.get("v.consumerAssets");
-        if(consumerAssets.FinServ__Ownership__c == 'Joint'){
+        if(consumerAssets.Ownership__c == 'Joint'){
             component.set("v.app1Ownership", "Applicant 1 Ownership Share (%)");
             component.set("v.app2Ownership", "Applicant 2 Ownership Share (%)");
-        }else if(consumerAssets.FinServ__Ownership__c == 'Joint (non-applicant)'){
+        }else if(consumerAssets.Ownership__c == 'Joint (non-applicant)'){
             component.set("v.app1Ownership", "Applicant Ownership Share (%)");
             component.set("v.app2Ownership", "Non-Applicant Ownership Share (%)");
-        }else if(consumerAssets.FinServ__Ownership__c == 'Joint with Spouse'){
+        }else if(consumerAssets.Ownership__c == 'Joint with Spouse'){
             component.set("v.app1Ownership", "Applicant Ownership Share (%)");
             component.set("v.app2Ownership", "Spouse Ownership Share (%)");
         }
@@ -32,17 +32,17 @@
     handleOwnership : function(component, event, helper) {
         
         var consumerAssets = component.get("v.consumerAssets");
-        if(!$A.util.isUndefinedOrNull(consumerAssets) && !$A.util.isUndefinedOrNull(consumerAssets.FinServ__Ownership__c)){
+        if(!$A.util.isUndefinedOrNull(consumerAssets) && !$A.util.isUndefinedOrNull(consumerAssets.Ownership__c)){
 			var isJoint = false;
-            if(consumerAssets.FinServ__Ownership__c == 'Joint'){
+            if(consumerAssets.Ownership__c == 'Joint'){
                 component.set("v.app1Ownership", "Applicant 1 Ownership Share (%)");
                 component.set("v.app2Ownership", "Applicant 2 Ownership Share (%)");
                 isJoint = true;
-            }else if(consumerAssets.FinServ__Ownership__c == 'Joint (non-applicant)'){
+            }else if(consumerAssets.Ownership__c == 'Joint (non-applicant)'){
                 component.set("v.app1Ownership", "Applicant Ownership Share (%)");
                 component.set("v.app2Ownership", "Non-Applicant Ownership Share (%)");
                 isJoint = true;
-            }else if(consumerAssets.FinServ__Ownership__c == 'Joint with Spouse'){
+            }else if(consumerAssets.Ownership__c == 'Joint with Spouse'){
                 component.set("v.app1Ownership", "Applicant Ownership Share (%)");
                 component.set("v.app2Ownership", "Spouse Ownership Share (%)");
                 isJoint = true;
@@ -84,7 +84,7 @@
         component.set("v.errorMsg", "Please update the form entries highlighted in red and try again");
         var consumerAssets = component.get("v.consumerAssets");
         if(!$A.util.isUndefinedOrNull(consumerAssets) && 
-           !$A.util.isUndefinedOrNull(consumerAssets.FinServ__Ownership__c) &&
+           !$A.util.isUndefinedOrNull(consumerAssets.Ownership__c) &&
            !$A.util.isUndefinedOrNull(consumerAssets.Ownership_Share__c) &&
            !$A.util.isUndefinedOrNull(consumerAssets.Other_Ownership_Share__c)){
             var app1Share = parseInt(consumerAssets.Ownership_Share__c);

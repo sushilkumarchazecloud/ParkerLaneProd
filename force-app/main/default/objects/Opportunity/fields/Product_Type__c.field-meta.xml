@@ -27,30 +27,6 @@
                 <default>false</default>
                 <label>Home Improvement</label>
             </value>
-            <value>
-                <fullName>Consolidation Loan</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Consolidation Loan</label>
-            </value>
-            <value>
-                <fullName>Green Loan</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Green Loan</label>
-            </value>
-            <value>
-                <fullName>Personal Loan</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Personal Loan</label>
-            </value>
-            <value>
-                <fullName>Solar &amp; Green Products</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Solar &amp; Green Products</label>
-            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

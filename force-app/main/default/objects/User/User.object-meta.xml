@@ -197,9 +197,8 @@
         <type>Default</type>
     </actionOverrides>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
-    <enableEnhancedLookup>true</enableEnhancedLookup>
     <enableFeeds>true</enableFeeds>
-    <externalSharingModel>Read</externalSharingModel>
+    <externalSharingModel>Private</externalSharingModel>
     <searchLayouts>
         <lookupDialogsAdditionalFields>FULL_NAME</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>CORE.USER_ROLE.NAME</lookupDialogsAdditionalFields>

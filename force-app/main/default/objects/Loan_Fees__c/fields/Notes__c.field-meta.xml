@@ -3,8 +3,9 @@
     <fullName>Notes__c</fullName>
     <externalId>false</externalId>
     <label>Notes</label>
-    <length>100</length>
+    <length>255</length>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>
     <type>Text</type>
     <unique>false</unique>

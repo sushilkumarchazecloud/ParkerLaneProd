@@ -1,0 +1,13 @@
+{!Opportunity.OwnerFullName},<br/><br/>
+
+{!Opportunity.Applicant_1_FirstName__c} completed their application at {!Opportunity.LastStageChangeDate} 60 minutes ago and is yet to upload documents.<br/><br/>
+
+TAKE ACTION: Contact the customer to offer assistance ASAP.<br/><br/>
+
+Opportunity: <a href="{!Opportunity.Link}"> {!Opportunity.Name} </a><br/>
+Amount: ${!Opportunity.Application_Amount__c}<br/>
+Purpose: {!Opportunity.Purpose__c}<br/>
+Opportunity Owner: {!Opportunity.OwnerFullName}<br/><br/>
+
+Kind regards,<br/>
+The Parker Lane team

@@ -16,15 +16,15 @@
     </values>
     <values>
         <field>Fields__c</field>
-        <value xsi:type="xsd:string">FinServ__EmploymentStatus__c</value>
+        <value xsi:type="xsd:string">EmploymentStatus__c</value>
     </values>
     <values>
         <field>Object__c</field>
-        <value xsi:type="xsd:string">FinServ__Employment__c</value>
+        <value xsi:type="xsd:string">Employment__c</value>
     </values>
     <values>
         <field>Rules__c</field>
-        <value xsi:type="xsd:string">FinServ__Employment__c.FinServ__EmploymentStatus__c == Other</value>
+        <value xsi:type="xsd:string">Employment__c.EmploymentStatus__c == Other</value>
     </values>
     <values>
         <field>isGeneral__c</field>

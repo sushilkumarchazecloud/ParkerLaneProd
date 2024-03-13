@@ -1,0 +1,404 @@
+<template>
+
+    <!-- This is a header of modal -->
+    <lightning-modal-header label="Convert Lead"></lightning-modal-header>
+
+    <!-- This is a body of modal -->
+    <lightning-modal-body>
+
+        <lightning-accordion allow-multiple-sections-open style="background-color: rgb(243,243,243);" active-section-name={actionAccordionSection}>
+            
+            <!-- This is for Account Section------------------------------------------------------------------- -->
+            <lightning-accordion-section name="A" label="Account" style="border: 1px solid rgb(201,201,201);" class="accountScroll">
+
+                <div class="slds-grid slds-gutters">
+                    
+                    <!-- Section 1---------------------------------- -->
+                    <div class="slds-col slds-size_6-of-12">
+
+                        <!-- Account Radio Button -->
+                        <lightning-radio-group name="radioGroupAccount"
+                                               options={options1}
+                                               value={radioAccountValue}
+                                               type="radio"
+                                               onchange={handleRadioGroupAccount}>
+                        </lightning-radio-group>
+
+                        <div class="slds-m-bottom_x-large">
+
+                            <!-- This is for Account Input -->
+                            <div class="slds-p-around_medium lgc-bg" style="background-color : rgb(255,255,255); margin-top: 15px; border: 1px solid rgb(201,201,201); border-radius: 4px;">
+                                <lightning-input type="text"
+                                                 label="Account Name"
+                                                 value={accountNewValue}
+                                                 onchange={handleAccountNewChange} 
+                                                 class="input"
+                                                 required>
+                                </lightning-input>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom:30px; border-right: 2px solid rgb(201,201,201);"></div>
+
+                    <!-- Section 2----------------------------------- -->
+                    <div class="slds-col slds-size_6-of-12">
+
+                        <!-- Account Radio Button -->
+                        <lightning-radio-group name="radioGroupAccount"
+                                               options={options2}
+                                               value={radioAccountValue}
+                                               type="radio"
+                                               onchange={handleRadioGroupAccount}>
+                        </lightning-radio-group>
+
+                        <div class="slds-m-bottom_x-large">
+
+                            <!-- This is Showing Error message -->
+                            <div class="error-message slds-p-around_medium lgc-bg" if:true={accountError} style="color: rgb(186,5,23); padding-bottom: 0px; ">
+                                Please select an account
+                            </div>
+
+                            <!-- This is for Account Fetch Field -->
+                            <div class="slds-p-around_medium lgc-bg">
+                                <lightning-record-picker
+                                                    label="Account Search"
+                                                    placeholder="Search for matching accounts"
+                                                    object-api-name="Account"
+                                                    onchange={handleAccountExistingChange}
+                                                    class="account-picker">
+                                </lightning-record-picker>
+                            </div>
+
+                            <!-- Text Area Filed -->
+                            <div class="slds-p-around_medium lgc-bg">
+                                <div style="height:100px; background-color:rgb(255,255,255); border: 1px solid rgb(201,201,201); border-radius: 4px;">
+                                    <p style="margin:10px 15px 10px 15px;">0 Account Found</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    
+                </div>
+
+            </lightning-accordion-section>
+
+            <!-- This is for Contact Section------------------------------------------------------------------- -->
+            <lightning-accordion-section name="B" label="Contact" style="border: 1px solid rgb(201,201,201)"
+            class="contactScroll">
+                
+                <div class="slds-grid slds-gutters">
+                    
+                    <!-- Section 1---------------------------------- -->
+                    <div class="slds-col slds-size_6-of-12">
+
+                        <!-- Contact Radio Button -->
+                        <lightning-radio-group name="radioGroupContact"
+                                            options={options3}
+                                            value={radioContactValue}
+                                            type="radio"
+                                            onchange={handleRadioGroupContact}>
+                        </lightning-radio-group>
+
+                        <!-- This is for Contact Input -->
+                        <div class="slds-m-bottom_x-large" style="background-color : rgb(255,255,255); margin-top: 15px; border: 1px solid rgb(201,201,201); border-radius: 4px;">
+
+                            <!-- Salutation -->
+                            <div class="slds-p-around_medium lgc-bg">
+                                <lightning-combobox
+                                                    name="progress"
+                                                    label="Salutation"
+                                                    value={contactNewSalutationValue}
+                                                    placeholder="Select Progress"
+                                                    options={optionList}
+                                                    onchange={handleContactNewSalutationChange}>
+                                </lightning-combobox>
+                            </div>
+
+                            <!-- First Name -->
+                            <div class="slds-p-around_medium lgc-bg">
+                                <lightning-input type="text" 
+                                                label="First Name"
+                                                value={contactNewFirstNameValue}
+                                                onchange={handleContactNewFirstNameChange}>
+                                </lightning-input>
+                            </div>
+
+                            <!-- Last Name -->
+                            <div class="slds-p-around_medium lgc-bg">
+                                <lightning-input type="text" 
+                                                label="Last Name"
+                                                value={contactNewLastNameValue} 
+                                                onchange={handleContactNewLastNameChange}
+                                                required>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom:30px; border-right: 2px solid rgb(201,201,201);"></div>
+
+                    <!-- Section 2----------------------------------- -->
+                    <div class="slds-col slds-size_6-of-12">
+
+                        <!-- Contact Radio Button -->
+                        <lightning-radio-group name="radioGroupContact"
+                                            options={options4}
+                                            value={radioContactValue}
+                                            type="radio"
+                                            onchange={handleRadioGroupContact}>
+                        </lightning-radio-group>
+
+                        
+                        <div class="slds-m-bottom_x-large">
+
+                            <!-- This is Showing Error message -->
+                            <div class="error-message slds-p-around_medium lgc-bg" if:true={contactError} style="color: rgb(186,5,23); padding-bottom: 0px; ">
+                                Please select an contact
+                            </div>
+                            
+                            <!-- This is for Contact Fetch Record Field -->
+                            <div class="slds-p-around_medium lgc-bg">
+                                <lightning-record-picker
+                                                    label="Contact Search"
+                                                    placeholder="Search for matching contacts"
+                                                    object-api-name="Contact"
+                                                    onchange={handleContactExistingChange}
+                                                    class="contact-picker">
+                                </lightning-record-picker>
+                            </div>
+
+                            <!-- CheckBox for Lead Saurce -->
+                            <div class="slds-p-around_medium lgc-bg">
+                                <lightning-input 
+                                                type="checkbox" 
+                                                label="Update Lead Source" 
+                                                name="conInput"
+                                                value={contactExistingCheckBoxValue}
+                                                onchange={handleConExistingCheckBoxChange}
+                                                disabled={disableContactCheckbox}>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>                    
+                </div>                
+
+            </lightning-accordion-section>
+
+            <!-- This is for Opportunity Section--------------------------------------------------------------- -->
+            <lightning-accordion-section name="C" label="Opportunity" style="border: 1px solid rgb(201,201,201)" class="opportunityScroll">
+                
+                <div class="slds-grid slds-gutters">
+                    
+                    <!-- Section 1---------------------------------- -->
+                    <div class="slds-col slds-size_6-of-12">
+
+                        <!-- Opportunity Radio Button -->
+                        <lightning-radio-group name="radioGroupOpportunity"
+                                               options={options5}
+                                               value={radioOpportunityValue}
+                                               type="radio"
+                                               onchange={handleRadioGroupOpportunity}
+                                               disabled={disabledNewOpportunity}>
+                        </lightning-radio-group>
+
+                        <div class="slds-m-bottom_x-large">
+
+                            <!-- This is for Opportunity Input --> 
+                            <div class="slds-p-around_medium lgc-bg" style="background-color : rgb(255,255,255); margin-top: 15px; border: 1px solid rgb(201,201,201); border-radius: 4px;">
+                                <lightning-input type="text" 
+                                                label="Opportunity Name"
+                                                value={opportunityNewValue}
+                                                onchange={handleOpportunityNewChange} 
+                                                required
+                                                disabled={disabledNewOpportunity}>
+                                </lightning-input>
+                            </div>
+
+                            <!-- CheckBox for Dont't create Opportunity -->
+                            <div class="slds-p-around_medium lgc-bg">
+                                <lightning-input
+                                                type="checkbox" 
+                                                label="Don't create Opportunity upon conversion" 
+                                                name="oppInput"
+                                                value={opportunityNewCheckBoxValue}
+                                                onchange={handleOppNewCheckBoxChange}>
+                                </lightning-input>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom:30px; border-right: 2px solid rgb(201,201,201);"></div>
+
+                    <!-- Section 2----------------------------------- -->
+                    <div class="slds-col slds-size_6-of-12">
+
+                        <!-- Opportunity Radio Button -->
+                        <lightning-radio-group name="radioGroupOpportunity"
+                                               options={options6}
+                                               value={radioOpportunityValue}
+                                               type="radio"
+                                               onchange={handleRadioGroupOpportunity}
+                                               disabled={disabledExistingTopOpportunity}>
+                        </lightning-radio-group>
+
+                        
+                        <div class="slds-m-bottom_x-large"> 
+                           
+                            <!-- This is Showing Error message -->
+                            <div class="error-message slds-p-around_medium lgc-bg" if:true={opportunityError} style="color: rgb(186,5,23); padding-bottom: 0px; ">
+                                Please select an Opportunity
+                            </div>
+
+                            <template if:true={oppUi1}>
+                                <!-- This is for Opportunity Fetch Field -->
+                                <div class="slds-p-around_medium lgc-bg">
+                                    <div style="height:90px; margin-top: -1; background-color:rgb(255,255,255); border: 1px solid rgb(201,201,201); border-radius: 4px;">
+                                        <p style="margin:10px 0px 0px 15px;"> To find opportunity, choose an existing account</p>
+                                    </div>
+                                </div>
+                            </template>
+
+                            <template if:true={oppUi2}>
+                                <!-- This is for Opportunity Fetch Field -->
+                                <div class="slds-p-around_medium lgc-bg">
+                                    <div style="height:90px; margin-top: -1; background-color:rgb(255,255,255); border: 1px solid rgb(201,201,201); border-radius: 4px;">
+                                        <p style="margin:10px 0px 0px 15px;"> {countOpp} Opportunity Matches</p>
+                                    </div>
+                                </div>
+                            </template>
+
+                            <template if:true={oppUi3}>
+                                <div class="slds-p-around_medium lgc-bg">
+                                    <div class="slds-scrollable_y" style="height:170px; margin-top: -1; background-color:rgb(255,255,255); border: 1px solid rgb(201,201,201); border-radius: 4px;">
+    
+                                        <p style="margin:10px 15px 10px 15px;"> {countOpp} Opportunity Matches</p>
+
+                                        <template for:each={divData} for:item="oppData">
+                                            
+                                            <div key={oppData.Id} style="margin:10px 15px 10px 15px; padding:10px 15px 10px 15px; border: 1px solid rgb(201,201,201)" class="slds-grid slds-wrap">
+                                            
+                                                <!-- This is for Radio button -->
+                                                <div class="slds-col slds-size_1-of-12" style="padding:0px 0px 0px 0px;">
+                                                    <lightning-input type="radio"  
+                                                                    name="radioGroupOppChoice"
+                                                                    value={oppData.Id}
+                                                                    onchange={handleRadioGroupOppChoice}
+                                                                    disabled={disabledExistingBottomOpportunity}>
+                                                    </lightning-input>
+                                                </div>
+    
+                                                <!-- This is for showing data -->
+                                                <div class="slds-col slds-size_10-of-12">
+                                                    <section style="padding: 7px 5px 0px 0px;">
+                                                        <h4><b>{oppData.Name}</b></h4>
+                                                        <h4>Account Name : &nbsp; {oppData.Account.Name} </h4>
+                                                        <h4>Close Date : &nbsp; {oppData.CloseDate}</h4>
+                                                        <h4>Amount : &nbsp; {oppData.Amount}</h4>
+                                                        <h4>Opportunity Owner : &nbsp; {oppData.Owner.Name}</h4>
+                                                    </section>
+                                                </div>
+                                            </div>
+                                        </template>
+    
+                                    </div>
+                                </div>
+                            </template>
+
+                            <template if:true={oppUi4}>
+                                <div class="slds-p-around_medium lgc-bg">
+                                    <div class="slds-scrollable_y" style="height:290px; margin-top: -1; background-color:rgb(255,255,255); border: 1px solid rgb(201,201,201); border-radius: 4px;">
+    
+                                        <p style="margin:10px 15px 10px 15px;"> {countOpp} Opportunity Matches</p>
+
+                                        <template for:each={divData} for:item="oppData">
+                                        
+                                            <div key={oppData.Id} style="margin:10px 15px 10px 15px; padding:10px 15px 10px 15px; border: 1px solid rgb(201,201,201)" class="slds-grid slds-wrap">
+                                            
+                                                <!-- This is for Radio button -->
+                                                <div class="slds-col slds-size_1-of-12" style="padding:5px 0px 0px 0px;">
+                                                    
+                                                    <lightning-input type="radio"  
+                                                                    name="radioGroupOppChoice"
+                                                                    value={oppData.Id}
+                                                                    onchange={handleRadioGroupOppChoice}
+                                                                    disabled={disabledExistingBottomOpportunity}>
+                                                    </lightning-input>
+
+                                                </div>
+    
+                                                <!-- This is for showing data -->
+                                                <div class="slds-col slds-size_10-of-12">
+                                                    <section style="padding: 7px 5px 0px 0px;">
+                                                        <h4><b>{oppData.Name}</b></h4>
+                                                        <h4>Account Name : &nbsp; {oppData.Account.Name} </h4>
+                                                        <h4>Close Date : &nbsp; {oppData.CloseDate}</h4>
+                                                        <h4>Amount : &nbsp; {oppData.Amount}</h4>
+                                                        <h4>Opportunity Owner : &nbsp; {oppData.Owner.Name}</h4>
+                                                    </section>
+                                                </div>
+                                            </div>
+                                        </template>
+    
+                                    </div>
+                                </div>
+                            </template>
+
+                        </div>
+                    </div> 
+                </div>
+            </lightning-accordion-section>
+            
+        </lightning-accordion>
+
+        <!-- Lightning card start from here ------------------------------------------------------------------- -->
+        <lightning-card>
+
+            <div class="slds-grid slds-gutters" style="height: 80px;">
+
+                <!-- Section 1 ----------------------------- -->
+                <div class="slds-col slds-size_6-of-12">
+                    <lightning-record-picker
+                                        label="Record Owner"
+                                        placeholder="Search User..."
+                                        object-api-name="User"
+                                        filter={userFilter}
+                                        value={userRecordPickerValue}
+                                        required>
+                    </lightning-record-picker>
+                </div>
+
+                <!-- Section 2 ----------------------------- -->
+                <div class="slds-col slds-size_6-of-12" style="height: 80px">
+                    <lightning-combobox
+                                    label="Converted Status"
+                                    value={comboboxValue}
+                                    options={options}
+                                    required>
+                    </lightning-combobox>
+
+                </div>
+            </div>
+
+        </lightning-card>
+
+    </lightning-modal-body>
+
+    <!-- This is a footer of modal -->
+    <lightning-modal-footer>
+
+        <template if:true={helptextAndIcon}>
+            <!-- This is lightning icon for help text -->
+            <lightning-helptext content="Review the errors highlighted on this page"
+                            icon-name="utility:warning"
+                            icon-variant="error"
+                            style="margin-right:15px"
+                            class="slds-nubbin_bottom">
+            </lightning-helptext>
+        </template>
+
+        <lightning-button label="Cancel" onclick={handleCancel} style="margin-right:10px"></lightning-button>
+        <lightning-button label="Convert" variant="brand" onclick={handleConvert}></lightning-button>
+    </lightning-modal-footer>
+
+</template>

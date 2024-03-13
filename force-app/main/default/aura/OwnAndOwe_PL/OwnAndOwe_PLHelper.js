@@ -19,9 +19,9 @@
                         console.log('ret.Asset'+JSON.stringify(ret.Asset));
                         component.set('v.assetsList',ret.Asset);
                         ret.Asset.forEach(function(item){
-                            component.set('v.CreditCardscheck', item.FinServ__PrimaryOwner__r.CreditCardsCommitments__pc);
-                            component.set('v.PersonalAndAutoLoanscheck',item.FinServ__PrimaryOwner__r.PersonalAndAuto__pc);
-                            component.set('v.OtherCommitmentscheck', item.FinServ__PrimaryOwner__r.OtherCommitments__pc);
+                            component.set('v.CreditCardscheck', item.PrimaryOwner__r.CreditCardsCommitments__pc);
+                            component.set('v.PersonalAndAutoLoanscheck',item.PrimaryOwner__r.PersonalAndAuto__pc);
+                            component.set('v.OtherCommitmentscheck', item.PrimaryOwner__r.OtherCommitments__pc);
                         });
                     }
                     if(!$A.util.isUndefinedOrNull(ret.Liability)){
@@ -33,19 +33,19 @@
                         var propertyLoanlist = [];
                         
                         ret.Liability.forEach(function(item){
-                            component.set('v.CreditCardscheck', item.FinServ__PrimaryOwner__r.CreditCardsCommitments__pc);
-                            component.set('v.PersonalAndAutoLoanscheck',item.FinServ__PrimaryOwner__r.PersonalAndAuto__pc);
-                            component.set('v.OtherCommitmentscheck', item.FinServ__PrimaryOwner__r.OtherCommitments__pc);
+                            component.set('v.CreditCardscheck', item.PrimaryOwner__r.CreditCardsCommitments__pc);
+                            component.set('v.PersonalAndAutoLoanscheck',item.PrimaryOwner__r.PersonalAndAuto__pc);
+                            component.set('v.OtherCommitmentscheck', item.PrimaryOwner__r.OtherCommitments__pc);
                             
-                            if(item.FinServ__AssetsAndLiabilitiesType__c == 'Home Loan/Mortgage'){
+                            if(item.AssetsAndLiabilitiesType__c == 'Home Loan/Mortgage'){
                                 mortgageList.push(item);
-                            }else if(item.FinServ__AssetsAndLiabilitiesType__c == 'Investment Home Loan'){
+                            }else if(item.AssetsAndLiabilitiesType__c == 'Investment Home Loan'){
                                 propertyLoanlist.push(item);
                             }
-                            else if(item.FinServ__AssetsAndLiabilitiesType__c == 'Credit Card / Store Card'){
+                            else if(item.AssetsAndLiabilitiesType__c == 'Credit Card / Store Card'){
                                 creditCardlist.push(item);
                             }
-                            else if(item.FinServ__AssetsAndLiabilitiesType__c == 'Personal Loan' || item.FinServ__AssetsAndLiabilitiesType__c == 'Auto Loan'){
+                            else if(item.AssetsAndLiabilitiesType__c == 'Personal Loan' || item.AssetsAndLiabilitiesType__c == 'Auto Loan'){
                                 personalAndAutoloanlist.push(item);
                             }
                             else {
@@ -277,8 +277,8 @@
     
     addNewAsset: function(component, event, name) {
         var asset = {
-            'sobjectType': 'FinServ__AssetsAndLiabilities__c',
-            'FinServ__AssetsAndLiabilitiesType__c': name,
+            'sobjectType': 'AssetsAndLiabilities__c',
+            'AssetsAndLiabilitiesType__c': name,
             'Value__c':'0'
         };
         component.set("v.assetsSelected",asset);
@@ -287,8 +287,8 @@
     addNewLiability: function(component, event, name, type) {
         var liabilitiesList = component.get("v."+ name);
         var liability = {
-            'sobjectType': 'FinServ__AssetsAndLiabilities__c',
-            'FinServ__AssetsAndLiabilitiesType__c': type
+            'sobjectType': 'AssetsAndLiabilities__c',
+            'AssetsAndLiabilitiesType__c': type
         };
         liabilitiesList.push(liability);
         component.set("v."+ name, liabilitiesList);

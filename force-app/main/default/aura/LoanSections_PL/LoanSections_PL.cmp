@@ -1,4 +1,4 @@
-<aura:component controller="ParkerLaneLoanController" implements="force:hasRecordId">
+<aura:component controller="ApplicationFormController" implements="force:hasRecordId">
     <aura:attribute name="recordId" type="Id" />
     <aura:attribute name="masterQuote" type="String" />
     <aura:attribute name="applicationSection" type="String" default=""/>
@@ -19,7 +19,6 @@
     <aura:attribute name="redirectURL" type="String" default=""/>
     <aura:attribute name="loanOptionCheckbox" type="String" default=""/>
     <aura:attribute name="pageType" type="String" default=""/>
-    <aura:attribute name="vfMsgMethod" type="object" description=""/>
     <aura:attribute name="IsApplicantTwo" type="String" />
     
     <aura:handler name="PathChangeEvent" event="c:PathChangeEvent" action="{!c.changePath}"/>
@@ -32,7 +31,7 @@
             </span>
         </div>        
         <div class="slds-text-align_center slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 slds-order_2 slds-medium-order_2 slds-large-order_2">
-            <span ><img src="{!$Resource.SolarLoan + '/img/logowhite.png'}"/></span>
+            <span ><img src="{!$Resource.ChazeCloud}"/></span>
         </div>        
         <aura:if isTrue="{!AND(v.applicationSection == 'Loan Recommendation', v.loanOptionCheckbox)}">
             <div class="slds-text-align_right slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12 slds-order_3 slds-medium-order_3 slds-large-order_3 slds-grid slds-wrap">
@@ -107,8 +106,7 @@
                               applicantEmail="{!v.applicantEmail}"
                               purpose = "{!v.purpose}"
                               recordId ="{!v.recordId}"
-                              masterQuote = "{!v.masterQuote}"
-                              vfMsgMethod = "{!v.vfMsgMethod}"/>
+                              masterQuote = "{!v.masterQuote}"/>
             </aura:if>
             <aura:if isTrue="{!v.applicationSection == 'Loan Recommendation'}">
                 <aura:if isTrue="{!AND(v.loanOptionCheckbox, v.pageType == 'Co-branded standard solar page')}">
@@ -143,15 +141,15 @@
                                   recordId ="{!v.recordId}"
                                   quote ="{!v.selectedQuote}"
                                   appSectionPath="{!v.appSectionPath}"
-                                  applicationSection="{!v.applicationSection}"/>
+                                  applicationSection="{!v.applicationSection}"
+                                  applicantEmail="{!v.applicantEmail}"/>
             </aura:if>
             <aura:if isTrue="{!v.applicationSection == 'Who is applying'}">
                 <c:LoanApplicationForms_PL aura:id="whoIsApplying"
                                         recordId ="{!v.recordId}"
                                         appSectionPath="{!v.appSectionPath}"
                                         applicationSection="{!v.applicationSection}"
-                                        selectedPerson="{!v.selectedPerson}"
-                                        selectedQuote ="{!v.selectedQuote}"/>
+                                        selectedPerson="{!v.selectedPerson}"/>
                 
             </aura:if>
             

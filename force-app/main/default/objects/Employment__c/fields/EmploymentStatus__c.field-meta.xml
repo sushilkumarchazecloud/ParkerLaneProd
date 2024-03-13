@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EmploymentStatus__c</fullName>
+    <externalId>false</externalId>
+    <label>EmploymentStatus</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Full time permanent</fullName>
+                <default>false</default>
+                <label>Full time permanent</label>
+            </value>
+            <value>
+                <fullName>Part time permanent</fullName>
+                <default>false</default>
+                <label>Part time permanent</label>
+            </value>
+            <value>
+                <fullName>Self Employed / Contractor</fullName>
+                <default>false</default>
+                <label>Self Employed / Contractor</label>
+            </value>
+            <value>
+                <fullName>Business Income</fullName>
+                <default>false</default>
+                <label>Business Income</label>
+            </value>
+            <value>
+                <fullName>Casual / Temporary</fullName>
+                <default>false</default>
+                <label>Casual / Temporary</label>
+            </value>
+            <value>
+                <fullName>New Start Allowance</fullName>
+                <default>false</default>
+                <label>New Start Allowance</label>
+            </value>
+            <value>
+                <fullName>Rental Income</fullName>
+                <default>false</default>
+                <label>Rental Income</label>
+            </value>
+            <value>
+                <fullName>Pension</fullName>
+                <default>false</default>
+                <label>Pension</label>
+            </value>
+            <value>
+                <fullName>Dividends or Annuity</fullName>
+                <default>false</default>
+                <label>Dividends or Annuity</label>
+            </value>
+            <value>
+                <fullName>Family Tax Benefits</fullName>
+                <default>false</default>
+                <label>Family Tax Benefits</label>
+            </value>
+            <value>
+                <fullName>Disability Pension</fullName>
+                <default>false</default>
+                <label>Disability Pension</label>
+            </value>
+            <value>
+                <fullName>Carer’s Pension</fullName>
+                <default>false</default>
+                <label>Carer’s Pension</label>
+            </value>
+            <value>
+                <fullName>Workcover Workers / Compensation</fullName>
+                <default>false</default>
+                <label>Workcover Workers / Compensation</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Child Support</fullName>
+                <default>false</default>
+                <label>Child Support</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

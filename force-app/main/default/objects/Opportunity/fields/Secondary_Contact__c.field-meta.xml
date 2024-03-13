@@ -6,7 +6,7 @@
     <label>Secondary Contact</label>
     <referenceTo>Account</referenceTo>
     <relationshipLabel>Opportunities (Secondary Contact)</relationshipLabel>
-    <relationshipName>Opportunities3</relationshipName>
+    <relationshipName>Opportunities5</relationshipName>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>

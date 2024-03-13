@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Does_your_spouse_earn_an_income__c</fullName>
     <externalId>false</externalId>
-    <label>Does your spouse earn an income?</label>
+    <label>Does your spouse earn an income</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>

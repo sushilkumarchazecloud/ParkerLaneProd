@@ -5,6 +5,7 @@ import IMAGES from "@salesforce/resourceUrl/SolarLoan";
 import headersLogo from '@salesforce/resourceUrl/headersLogo';
 import sendAnotherDevByLwc from'@salesforce/apex/newVOIController.sendAnotherDevByLwc';
 import updateVOIst from '@salesforce/apex/newVOIController.updateVOIst';
+import fetchMetadataForDocUpload from '@salesforce/apex/newVOIController.fetchMetadataForDocUpload';
 export default class NewDlSections extends LightningElement {
     @api opprec;
     @api quotrec;
@@ -24,12 +25,14 @@ export default class NewDlSections extends LightningElement {
     @api authtoken; 
     @track filesUploaded = []; 
     @track isPassport = false;
-    @track idType = 'Driver\'s License';
-    @track idName = 'Driver\'s License';
+    @track idType;
+    @track idName;
     @track isDeisable = true;
     @track passport;
     @track photoId;
-    @track isErrorForGlitch = false;    
+    @track isErrorForGlitch = false;  
+    @track DocuemntsToShow;  
+    @track docstoupload = [];       
     formatedMobile = '';
     formatedEmail = '';
     showDailog = false;
@@ -39,35 +42,41 @@ export default class NewDlSections extends LightningElement {
     identityImg = IMAGES + '/img/IdentityDocument.png';
     anotherDev = IMAGES + '/img/ContinueAnotherDevice.png';
     dlHead = headersLogo + '/headersLogo/UploadID.png';
-    docType = 'Driver\'s License';
+    docType = '';
     showForSMS = false;
     showForEmail = false;
     hidedivicediv = 'slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_3-of-12';
-        
-   
-    get options() {
-        return [
-            { label: 'Driver\'s License', value: 'Driver\'s License' },
-            { label: 'Passport', value: 'Passport' }
-            //{ label: 'Photo ID Card', value: 'Photo ID Card' }
-        ];
-    }
+    metadata;
+              
 
-    get frontId(){
-        return 'Front of your ' + this.idType;
+   @wire(fetchMetadataForDocUpload)
+    wiredRecs({ data, error }) {
+        if (data) {
+            console.log('data-->>'+JSON.stringify(data));
+            this.metadata = data;            
+            this.docType = data[0].Doc_Name__c;  
+            this.idName = data[0].Doc_Name__c;            
+            this.error = undefined;
+            for(var i=0; i<data.length; i++ ){
+                if(data[i].Front__c && this.docType == data[i].Doc_Name__c){
+                    this.docstoupload.push(data[i].Doc_Name__c);
+                }
+                else{
+                    if(this.docType == data[i].Doc_Name__c){
+                        this.docstoupload.push(data[i].Doc_Name__c + ' Front');
+                        this.docstoupload.push(data[i].Doc_Name__c + ' Back');
+                    }                    
+                }        
+            }           
+            this.DocuemntsToShow = data.map(item => ({ label: item.Doc_Name__c, value: item.Doc_Name__c }));
+        } else if (error) {
+            this.error = error;
+            this.DocuemntsToShow = undefined;
+        }
     }
-
-    get backId(){
-        return 'Back of your ' + this.idType;
-    }
-
-    get passport(){
-        return 'other Doc';
-    }    
-    
 
     connectedCallback() {  
-        
+        console.log('authtoken-'+this.authtoken);
         loadStyle(this, LwcStyle + '/lwcCss.css' )
         .then(() => {
             console.log('Custom CSS loaded successfully----');
@@ -75,13 +84,13 @@ export default class NewDlSections extends LightningElement {
         .catch((error) => {
             console.error('Error loading custom CSS: ', error);
         });
-        loadStyle(this, LwcStyle + '/esign.css' )
+        /*loadStyle(this, LwcStyle + '/esign.css' )
         .then(() => {
             console.log('Custom CSS loaded successfully----');
         })
         .catch((error) => {
             console.error('Error loading custom CSS: ', error);
-        });
+        });*/
                
         this.oppRecord = this.opprec;
         this.conRecord = this.conrec;
@@ -129,51 +138,20 @@ export default class NewDlSections extends LightningElement {
       }
 
     handleRadio(evt){
-        console.log('radoi----',evt.target.value);
         this.idName = evt.target.value;
-        if(evt.target.value == 'Passport'){
-            const front = this.template.querySelector('[data-id="front-dl-Sec"]');
-            const back = this.template.querySelector('[data-id="back-dl-sec"]');
-            const pass = this.template.querySelector('[data-id="passport"]');
-            //const phid = this.template.querySelector('[data-id="photo-id"]');
-            front.style.display = 'none';
-            back.style.display = 'none';
-           // phid.style.display = 'none';
-            pass.style.display = 'block';
-            this.passport = 'Passport';
-            this.isPassport = true;
-            this.idType = '';
-            this.hidedivicediv = 'slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_3-of-12 slds-hide';            
-        }
-        /*if(evt.target.value == 'Photo ID Card'){
-            const front = this.template.querySelector('[data-id="front-dl-Sec"]');
-            const back = this.template.querySelector('[data-id="back-dl-sec"]');
-            const pass = this.template.querySelector('[data-id="passport"]');
-            const phid = this.template.querySelector('[data-id="photo-id"]');
-            front.style.display = 'none';
-            back.style.display = 'none';
-            phid.style.display = 'block';
-            pass.style.display = 'none';
-            this.photoId = 'Photo ID Card';
-            this.isPassport = true;
-            this.idType = '';
-            this.hidedivicediv = 'slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_3-of-12 slds-hide';
-        }*/
-        if(evt.target.value == 'Driver\'s License'){
-            const front = this.template.querySelector('[data-id="front-dl-Sec"]');
-            const back = this.template.querySelector('[data-id="back-dl-sec"]');
-            const pass = this.template.querySelector('[data-id="passport"]');
-           // const phid = this.template.querySelector('[data-id="photo-id"]');
-            front.style.display = 'block';
-            back.style.display = 'block';
-            //phid.style.display = 'none';
-            pass.style.display = 'none';
-            this.isPassport = false;
-            this.idType = evt.target.value;
-            this.hidedivicediv = 'slds-size_1-of-1 slds-medium-size_3-of-12 slds-large-size_3-of-12';
-        }
-        //this.filesUploaded = []; 
-        //this.isDeisable = true;      
+        var data = this.metadata;
+        this.docstoupload.length = 0;
+        for(var i=0; i<data.length; i++ ){
+            if(data[i].Front__c && evt.target.value == data[i].Doc_Name__c){
+                this.docstoupload.push(data[i].Doc_Name__c);
+            }
+            else{                    
+                if(evt.target.value == data[i].Doc_Name__c){
+                    this.docstoupload.push('Front '+data[i].Doc_Name__c);
+                    this.docstoupload.push('Back '+data[i].Doc_Name__c);                             
+                }                    
+            }        
+        }  
     }
     
     showBox(event){  

@@ -1,0 +1,6 @@
+<messaging:emailTemplate subject="Action Required! Your approval is about to expire" recipientType="Contact" relatedToType="Opportunity">
+<messaging:HtmlEmailBody >
+
+<c:ReminderForApprovedCmp oppId="{!relatedTo.Id}" EightyDaysEmailCsmt="true"/>
+</messaging:HtmlEmailBody>
+</messaging:emailTemplate>

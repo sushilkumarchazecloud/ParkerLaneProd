@@ -1,0 +1,55 @@
+<div>Dear {!Lead.Name},</div>
+<br />
+<div>
+    <b>Congratulations! We think your {!Quote.Purpose__c} objectives and Parker Lane could be a good match. </b>
+</div>
+<br />
+<div>
+    We think you and Parker Lane could be a good match. We have found three (3) excellent options to help you achieve your objectives. Our feature option based on your responses is as follows:
+    <br />
+
+    <div><b>Amount:</b> {!Quote.Customer_Amount__c} </div>
+    <div><b>Term:</b> {!Quote.Loan_Term__c} months </div>
+    <div><b>Interest rate:</b> {!Quote.Interest_Rate__c}% p.a.</div>
+    <div><b>Comparison Rate:</b> {!Quote.Actual_Comparison_Rate__c} p.a.*</div>
+    <div><b>Estimated monthly payment:</b> {!Quote.Monthly_Repayment__c} </div>
+</div>
+<br />
+
+<div style="font-size:9px;">{!Quote.Comparison_Rate_Display__c} 
+    <b>WARNING: </b> 
+    These comparison rates apply only to the example or examples given and may not include all fees and charges. Different terms, fees or other loan amounts might result in a different comparison rate.
+</div>
+<br/>
+<div>
+    <div>
+        We think this is likely to be the most competitive unsecured {!Quote.Purpose__c} loan rate around. To proceed and apply for your loan, please visit the website and retrieve your quote.
+    </div>
+<br/>
+    <div><b><a href="{!Quote.ORG_URL__c}/?id={!Quote.OpportunityId__c}&master={!Quote.Master_Quote_For_URL__c}">Click here to retrieve your Three (3) Loan Options and complete an online loan application in minutes</a></b></div>
+<br/>
+    <div>Completing our online application will take around 5-10 minutes, and if you're approved there's absolutely no obligation to take out the loan.</div>
+<br/>
+    <div><b>Why not apply now? </b></div>
+    <div>
+        <ul style="list-style: none;">
+            <li>&#10003; &nbsp; Super flexible low rate unsecured loans </li>
+            <li>&#10003; &nbsp; Fast and simple application process</li>
+            <li>&#10003; &nbsp; No ongoing, extra repayment or early termination fees</li>
+        </ul>
+    </div>
+    <div>
+        <b>Why let us help you?</b><br />
+        Parker Lane specialise in the kinds of lending that helps people save money. If you’re the kind of person who prefers to keep your hard earned for yourself instead of wasting it on things like energy bills and high interest rates, then we’ve already got a lot in common.</div>
+<br/>
+    <div>We’re also Australia’s Personal Loan AND Home Loan Providers of the Year, awarded by leading review website ProductReview.com.au. Read our reviews <a href="https://www.productreview.com.au/listings/parker-lane">here</a>.</div>
+<br/>
+    <div><a href="{!Quote.ORG_URL__c}/?id={!Quote.OpportunityId__c}&master={!Quote.Master_Quote_For_URL__c}">Apply for your loan now</a> </div>
+<br/>
+    <div>If you have any questions about borrowing with the help of Parker Lane please don't hesitate to call us on 1300 131 711, or simply reply to this email. </div>
+<br/>
+    <div>We thank you again for your interest in Parker Lane, and look forward to hearing from you soon. </div>
+<br/>
+</div>
+Kind regards, <br />
+The Parker Lane team

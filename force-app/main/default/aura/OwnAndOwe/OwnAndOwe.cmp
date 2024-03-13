@@ -1,11 +1,11 @@
-<aura:component controller="ParkerLaneLoanController">
+<aura:component controller="ApplicationFormController">
     <aura:attribute name="title" type="String" default=""/>
     <aura:attribute name="isNotAsset" type="Boolean" default="false"/>
     <aura:attribute name="isNotLiability" type="Boolean" default="false"/>
-    <aura:attribute name="assetsList" type="FinServ__AssetsAndLiabilities__c[]" />
-    <aura:attribute name="liabilitiesList" type="FinServ__AssetsAndLiabilities__c[]" />
-    <aura:attribute name="assetsSelected" type="FinServ__AssetsAndLiabilities__c" />
-    <aura:attribute name="liabilitiesSelected" type="FinServ__AssetsAndLiabilities__c" />
+    <aura:attribute name="assetsList" type="AssetsAndLiabilities__c[]" />
+    <aura:attribute name="liabilitiesList" type="AssetsAndLiabilities__c[]" />
+    <aura:attribute name="assetsSelected" type="AssetsAndLiabilities__c" />
+    <aura:attribute name="liabilitiesSelected" type="AssetsAndLiabilities__c" />
     <aura:attribute name="totalAssetsAmount" type="Decimal" default="0"/>
     <aura:attribute name="totalLiabilitiesAmount" type="Decimal" default="0"/>
     <aura:attribute name="selectedType" type="String" default=""/>
@@ -88,33 +88,33 @@
                         <aura:iteration items="{!v.assetsList}" var="asset" indexVar="index">
                             <tr class="slds-hint-parent">
                                 <td data-label="Asset Name"  class="col-size">
-                                    <div class="slds-truncate" title="{!asset.FinServ__AssetsAndLiabilitiesType__c}">
-                                        {!asset.FinServ__AssetsAndLiabilitiesType__c}
+                                    <div class="slds-truncate" title="{!asset.AssetsAndLiabilitiesType__c}">
+                                        {!asset.AssetsAndLiabilitiesType__c}
                                     </div>
                                 </td>
                                 <td data-label="Detail" class="col-detail-width">
                                     <div class="slds-truncate" title="Detail">
-                                        <aura:if isTrue="{!asset.FinServ__AssetsAndLiabilitiesType__c=='Home' ||asset.FinServ__AssetsAndLiabilitiesType__c=='Investment Property' || asset.FinServ__AssetsAndLiabilitiesType__c=='Commercial Property'}">
+                                        <aura:if isTrue="{!asset.AssetsAndLiabilitiesType__c=='Home' ||asset.AssetsAndLiabilitiesType__c=='Investment Property' || asset.AssetsAndLiabilitiesType__c=='Commercial Property'}">
                                         	{!asset.Address__c}
                                         </aura:if>
-                                        <aura:if isTrue="{!asset.FinServ__AssetsAndLiabilitiesType__c=='Bank Account'}">
+                                        <aura:if isTrue="{!asset.AssetsAndLiabilitiesType__c=='Bank Account'}">
                                         	{!asset.Institution__c}
                                         </aura:if>
-                                        <aura:if isTrue="{!asset.FinServ__AssetsAndLiabilitiesType__c=='Motor Vehicle'}">
+                                        <aura:if isTrue="{!asset.AssetsAndLiabilitiesType__c=='Motor Vehicle'}">
                                         	{!asset.Make_Model__c}
                                         </aura:if>
-                                        <aura:if isTrue="{!asset.FinServ__AssetsAndLiabilitiesType__c != 'Home' &amp;&amp; 
-                                                         asset.FinServ__AssetsAndLiabilitiesType__c != 'Investment Property' &amp;&amp;
-                                                         asset.FinServ__AssetsAndLiabilitiesType__c != 'Commercial Property' &amp;&amp;
-                                                         asset.FinServ__AssetsAndLiabilitiesType__c != 'Bank Account' &amp;&amp;
-                                                         asset.FinServ__AssetsAndLiabilitiesType__c != 'Motor Vehicle'}">
-                                        	{!asset.FinServ__Description__c}
+                                        <aura:if isTrue="{!asset.AssetsAndLiabilitiesType__c != 'Home' &amp;&amp; 
+                                                         asset.AssetsAndLiabilitiesType__c != 'Investment Property' &amp;&amp;
+                                                         asset.AssetsAndLiabilitiesType__c != 'Commercial Property' &amp;&amp;
+                                                         asset.AssetsAndLiabilitiesType__c != 'Bank Account' &amp;&amp;
+                                                         asset.AssetsAndLiabilitiesType__c != 'Motor Vehicle'}">
+                                        	{!asset.Description__c}
                                         </aura:if>
                                     </div>
                                 </td>
                                 <td data-label="Ownership" class="col-ownership-width">
-                                    <div class="slds-truncate" title="{!asset.FinServ__Ownership__c}">
-                                        {!asset.FinServ__Ownership__c}
+                                    <div class="slds-truncate" title="{!asset.Ownership__c}">
+                                        {!asset.Ownership__c}
                                     </div>
                                 </td>
                                 <td data-label="Amount">
@@ -196,8 +196,8 @@
                         <aura:iteration items="{!v.liabilitiesList}" var="liability" indexVar="index">
                             <tr class="slds-hint-parent" >
                                 <td data-label="Liability Name" class="col-size">
-                                    <div class="slds-truncate" title="{!liability.FinServ__AssetsAndLiabilitiesType__c}">
-                                        {!liability.FinServ__AssetsAndLiabilitiesType__c}
+                                    <div class="slds-truncate" title="{!liability.AssetsAndLiabilitiesType__c}">
+                                        {!liability.AssetsAndLiabilitiesType__c}
                                     </div>
                                 </td>
                                 <td data-label="detail" class="col-detail-width">
@@ -206,8 +206,8 @@
                                     </div>
                                 </td>
                                 <td data-label="Ownership" class="col-ownership-width">
-                                    <div class="slds-truncate" title="{!liability.FinServ__Ownership__c}">
-                                        {!liability.FinServ__Ownership__c}
+                                    <div class="slds-truncate" title="{!liability.Ownership__c}">
+                                        {!liability.Ownership__c}
                                     </div>
                                 </td>
                                 <td data-label="Amount">
@@ -222,7 +222,7 @@
                                 </td>
                                 <td role="gridcell" class="slds-text-align_center">
                                     <div class="slds-text-link_reset" id="{!index}" onclick="{!c.openLiabilityModel}">
-                                        <aura:if isTrue="{!liability.Value__c || liability.FinServ__AssetsAndLiabilitiesType__c=='Child Maintenance'}">
+                                        <aura:if isTrue="{!liability.Value__c || liability.AssetsAndLiabilitiesType__c=='Child Maintenance'}">
                                             <span class="txt-blue">Edit</span>
                                             <aura:set attribute="else">
                                                 <span style="color:green;">Update</span>

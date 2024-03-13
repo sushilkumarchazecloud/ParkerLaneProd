@@ -4,6 +4,7 @@
     <externalId>false</externalId>
     <label>Frequency</label>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
@@ -11,34 +12,9 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Setup</fullName>
+                <fullName>Value1</fullName>
                 <default>false</default>
-                <label>Setup</label>
-            </value>
-            <value>
-                <fullName>Weekly</fullName>
-                <default>false</default>
-                <label>Weekly</label>
-            </value>
-            <value>
-                <fullName>Fortnightly</fullName>
-                <default>false</default>
-                <label>Fortnightly</label>
-            </value>
-            <value>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-                <label>Monthly</label>
-            </value>
-            <value>
-                <fullName>Annual</fullName>
-                <default>false</default>
-                <label>Annual</label>
-            </value>
-            <value>
-                <fullName>Exit</fullName>
-                <default>false</default>
-                <label>Exit</label>
+                <label>Value1</label>
             </value>
         </valueSetDefinition>
     </valueSet>

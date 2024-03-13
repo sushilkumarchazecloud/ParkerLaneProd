@@ -4,9 +4,4 @@
     <availableInTouch>false</availableInTouch>
     <confirmationTokenRequired>false</confirmationTokenRequired>
     <label>Generate_PDF_FOR_Application_Doc</label>
-    <packageVersions>
-        <majorNumber>238</majorNumber>
-        <minorNumber>0</minorNumber>
-        <namespace>FinServ</namespace>
-    </packageVersions>
 </ApexPage>

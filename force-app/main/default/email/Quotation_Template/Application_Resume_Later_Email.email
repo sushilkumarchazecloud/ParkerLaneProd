@@ -1,0 +1,38 @@
+<div>Dear  {!Quote.Applicant_1_Full_Name__c},</div>
+<br />
+<div style="text-align: justify">
+    <div>
+        <b>Application saved!</b>
+    </div>
+    <br />
+    <div>
+        <div>
+            Most people who save at this page complete their application within the next 3 days. Details of the loan application is as follows:
+        </div>
+        
+        <br />
+
+        <div><b>Loan Type:</b> {!Quote.Product_Type__c} </div>
+    <div><b>Amount:</b> {!Quote.Customer_Amount__c} </div>
+    <div><b>Term:</b> {!Quote.Loan_Term__c} months </div>
+    <div><b>Interest rate:</b> {!Quote.Interest_Rate__c}% p.a.</div>
+    <div><b>Comparison Rate:</b> {!Quote.Actual_Comparison_Rate__c} p.a.*</div>
+    <div><b>Estimated monthly payment:</b> {!Quote.Monthly_Repayment__c} </div>
+    </div>
+    <br />
+    <div >
+    To finish what you’ve started simply sign in via the link below.
+    </div>
+    <br/>
+    <div>
+        <div>
+        <a href="{!Quote.ORG_URL__c}/?id={!Quote.OpportunityId__c}&master={!Quote.Master_Quote_For_URL__c}">Resume my application</a>
+        </div>
+        <br/>
+        <div>Prefer to speak to a human?</div>
+        <div>Our expert Advisers are here to help you find the loan that’s right for you. <a href="https://calendly.com/parker-lane/speak-to-an-expert">Book a call back time</a> or call 1300 13 17 11 today.</div>
+        <br/>
+    </div>
+</div>
+Kind regards, <br />
+The Parker Lane team

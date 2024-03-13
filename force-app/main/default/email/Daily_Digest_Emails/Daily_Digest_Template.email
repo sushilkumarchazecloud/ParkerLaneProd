@@ -1,0 +1,6 @@
+<messaging:emailTemplate subject="Daily Digest for {!recipient.Name} {!$Label.Email_Subject}" recipientType="Contact" >
+<messaging:HtmlEmailBody >
+
+<c:DailyDigestCmp conId="{!recipient.Id}"/>
+</messaging:HtmlEmailBody>
+</messaging:emailTemplate>

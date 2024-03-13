@@ -4,7 +4,7 @@
     <columns>Referred_by_Company__c</columns>
     <columns>LAST_ACTIVITY_DATETIME</columns>
     <columns>OPPORTUNITY.NAME</columns>
-    <columns>FinServ__ReferredByContact__c</columns>
+    <columns>ReferredByContact__c</columns>
     <columns>OPPORTUNITY.STAGE_NAME</columns>
     <columns>Time_at_current_stage__c</columns>
     <columns>Loan_Amount__c</columns>

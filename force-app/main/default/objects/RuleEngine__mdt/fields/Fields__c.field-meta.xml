@@ -4,6 +4,6 @@
     <externalId>false</externalId>
     <fieldManageability>DeveloperControlled</fieldManageability>
     <label>Fields</label>
-    <required>true</required>
+    <required>false</required>
     <type>TextArea</type>
 </CustomField>

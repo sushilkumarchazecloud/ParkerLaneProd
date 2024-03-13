@@ -35,30 +35,6 @@
                 <default>false</default>
                 <label>Motor Vehicle</label>
             </value>
-            <value>
-                <fullName>Balance payments with solar savings</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Balance payments with solar savings</label>
-            </value>
-            <value>
-                <fullName>Install Solar Panels</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Install Solar Panels</label>
-            </value>
-            <value>
-                <fullName>Reduce my outgoings immediately</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Reduce my outgoings immediately</label>
-            </value>
-            <value>
-                <fullName>Repay my loans as soon as possible</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Repay my loans as soon as possible</label>
-            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

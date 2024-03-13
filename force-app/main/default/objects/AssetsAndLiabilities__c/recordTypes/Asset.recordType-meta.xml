@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Asset</fullName>
+    <active>true</active>
+    <label>Asset</label>
+    <picklistValues>
+        <picklist>AssetsAndLiabilitiesSource__c</picklist>
+        <values>
+            <fullName>Manual Entry</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yodlee</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>AssetsAndLiabilitiesType__c</picklist>
+        <values>
+            <fullName>Auto Loan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Automobile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bank Account</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Car Lease</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Car Loan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cash</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Child Maintenance</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Child support</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Collectibles</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Collection</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Commercial Mortgage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Commercial Property</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Credit Card %2F Store Card</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Equipment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gold</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HECS%2FHELP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Home</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Home Contents</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Home Loan%2FMortgage</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Investment Home Loan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Investment Property</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Jewelry</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Leisure</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Margin Loan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Merchant Credit %28zip pay %2F afterpay %2F certigy%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Motor Vehicle</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Overdraft</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Payday Loan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Personal Loan</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Real Estate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Shares Portfolio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Superannuation</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tax liability</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Bank_Type__c</picklist>
+        <values>
+            <fullName>Savings</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Term deposit</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Ownership__c</picklist>
+        <values>
+            <fullName>Applicant 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Applicant 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Individual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Joint</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Joint %28non-applicant%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Joint with Spouse</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Joint with other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Trust</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Value1</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Payment_Frequency__c</picklist>
+        <values>
+            <fullName>Annually</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fortnightly</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Monthly</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Weekly</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Post_Payment_Frequency__c</picklist>
+        <values>
+            <fullName>Annually</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fortnightly</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Monthly</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Weekly</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Pre_Payment_Frequency__c</picklist>
+        <values>
+            <fullName>Annually</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fortnightly</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Monthly</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Weekly</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Property_Managed_By__c</picklist>
+        <values>
+            <fullName>By a real estate agent</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Privately</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Property_Situation__c</picklist>
+        <values>
+            <fullName>Own outright</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Own with mortgage</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Rate_Type__c</picklist>
+        <values>
+            <fullName>Fixed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Variable</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Rental_Frequency__c</picklist>
+        <values>
+            <fullName>Annually</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fortnightly</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Monthly</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Weekly</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Repayment_Frequency__c</picklist>
+        <values>
+            <fullName>Annually</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fortnightly</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Monthly</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Weekly</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Repayment_Type__c</picklist>
+        <values>
+            <fullName>Interest only</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Principal and interest</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Salary_sacrifice_any_of_the_payments__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Yes</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type_of_Fund__c</picklist>
+        <values>
+            <fullName>Industry</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Retail fund</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Self-managed super fund</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type_of_Tenancy__c</picklist>
+        <values>
+            <fullName>Airbnb</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Holiday %2F corporate letting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Permanent lease</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

@@ -11,7 +11,7 @@
     <columns>OPPORTUNITY.RECORDTYPE</columns>
     <columns>Lender__c</columns>
     <columns>Loan_Amount__c</columns>
-    <columns>FinServ__ReferredByContact__c</columns>
+    <columns>ReferredByContact__c</columns>
     <columns>Application_Pending_Status__c</columns>
     <columns>Application_Pending_Notes__c</columns>
     <filterScope>Everything</filterScope>

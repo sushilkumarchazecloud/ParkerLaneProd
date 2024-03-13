@@ -26,7 +26,7 @@
         var opp = component.get("v.opportunity");
         
         var isPrivacyCreditGuide = component.get("v.isPrivacyCreditGuide");
-        var productDisclosure = quote.Affordability_Confirmation__c;
+        var productDisclosure = quote.Up_Front_Costs_Applicable__c;
         var timeInfo = component.get("v.timeInfo");
 
         if(isPrivacyCreditGuide == 'Yes' && productDisclosure == 'Yes' && timeInfo == 'Yes'){
@@ -45,5 +45,47 @@
         helper.toggleSpinner(component, event);
         helper.scrollTop(component, event);
         helper.updateApplicationSection(component, event);
+    },
+    
+    // Start by sethu
+    sendOtpHandleClick : function(component, event, helper){
+        helper.toggleSpinner(component, event);
+        var randomNum = Math.floor(1000 + Math.random() * 9000);
+		var num = Math.round(randomNum);
+        alert(num);
+        var email = component.get("v.applicantEmail");
+        var action  = component.get("c.sendOtpMail");
+        action.setParams({
+            otp : num,
+            email : email
+        })
+        action.setCallback(this, function(response){
+            var state = response.getState();
+	
+            if (state === "SUCCESS") {
+                var ret = response.getReturnValue();
+                component.set("v.isOtpSent",true);
+        		component.set("v.otpValue",num);
+                
+            }
+			helper.toggleSpinner(component, event);
+        })
+        $A.enqueueAction(action);
+        
+    },
+    submitSendOtpHandleClick:function(component, event,helper){
+        var enteredOtp = component.get("v.enteredOTP");
+        var expectedOtp = component.get("v.otpValue");
+        
+        if (enteredOtp == expectedOtp) {
+            component.set("v.isOtpVerified", true);
+            component.set("v.otpErrorMessage", "");
+        }else if (enteredOtp == null) {
+            component.set("v.otpErrorMessage", "Please enter OTP");
+        }else {
+            component.set("v.isOtpVerified", false);
+            component.set("v.otpErrorMessage", "OTP does not match.");
+        }
     }
+    // End by sethu
 })

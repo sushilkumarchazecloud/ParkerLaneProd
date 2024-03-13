@@ -1,0 +1,79 @@
+<messaging:emailTemplate subject="Referral successful! Loan options for your customer enclosed" recipientType="Contact" relatedToType="Lead" renderUsingSystemContextWithoutSharing="true">
+<messaging:htmlEmailBody >
+    <div style="max-width: 30rem;">
+        <div>Dear {!relatedTo.Referrer_First_Name__c},</div>
+        <br />
+        <div style="text-align: left">
+            <div>
+                <b>Thank you! Your customers are lucky that you’re willing to go the extra mile.</b>
+            </div>
+            <br />
+            <div>
+                <div>
+                    We’re thrilled that you thought of us to offer alternative payment options for your customers, we won’t let you down. Your referral details are as follows
+                </div>
+                
+                <br />
+        
+                <div><b>Name:</b> {!relatedTo.Name} </div>            
+                <div><b>Address:</b> {!relatedTo.leadAddress__c} </div>
+                <div><b>Phone:</b> {!relatedTo.Phone}</div>
+                <div><b>Send email to:</b> {!relatedTo.Send_the_quote_to__c} </div>
+                <br/>
+                <table> 
+                <tr style="font-weight: bold;padding:5px">
+                    <th>Quote Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                    <th>Quote Amount</th>
+                </tr>      
+                    <apex:repeat var="quote" value="{!relatedTo.Quotes__r}">
+                        <apex:outputPanel rendered="{!quote.Is_Featured__c}" >
+                        <tr>
+                            <apex:outputPanel rendered="{!IF(quote.Gruop_Name__c == 'Referral-0' || quote.Gruop_Name__c == 'Referral-1' || quote.Gruop_Name__c == 'Referral-2' || quote.Gruop_Name__c == 'Referral-3' || quote.Gruop_Name__c == 'Referral-4' ,false,true)}">
+                                <td>{!quote.Gruop_Name__c}</td>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!IF(quote.Gruop_Name__c == 'Referral-0' || quote.Gruop_Name__c == 'Referral-1' || quote.Gruop_Name__c == 'Referral-2' || quote.Gruop_Name__c == 'Referral-3' || quote.Gruop_Name__c == 'Referral-4' ,true,false)}">
+                                <td>---</td>
+                            </apex:outputPanel>
+                            <td><apex:outputText value="{0, Number, Currency}">
+                                <apex:param value="{!quote.Customer_Amount__c}" />
+                                </apex:outputText>
+                            </td>
+                        </tr>
+                        </apex:outputPanel>
+                    </apex:repeat> 
+                </table>           
+            </div>
+            <br />
+            <div >
+            Attached are three (3) excellent options to help your customers do business with you. We think these are likely to be the most competitive unsecured {!relatedTo.Purpose__c} loan rate around.
+            </div>
+            <br/>
+            <div>
+                <div>
+                <i>This document is provided only for the purposes of forwarding to the customer. Do not discuss its contents with the customer.</i>
+                </div>
+                <br/>
+                <div><b><u>Please provide the attached document to your customer within the next 5 days.</u></b></div>
+                <br/>
+                <div>And remember, the NCCP Act strictly prohibits engaging in any credit activities by non credit license holders. Stay safe and avoid discussing any matters relating to finance.</div>
+                <br/>
+                <div>If you have any questions about this email please don't hesitate to call us on 1300 131 711, or simply reply to this email.</div>
+                <br/>
+            </div>
+        
+            Kind regards, <br />
+            The Parker Lane team <br/>
+            
+            <p style="color : #D3D3D3;">___</p>
+            <p style="color : #D3D3D3;">Want to get hold of us?<br/>
+                Email: sethu.rawat@chazecloud.com<br/>
+                Text: 0480 049 081  Call: 1300 13 17 11<br/>
+                Australian Credit Licence Number 482276<br/>
+            </p>
+            <p style="color : #BFBFBF; font-size : 10px;">This email is confidential. If received in error, please delete it from your system. No confidentiality, privilege or intellectual property rights are waived or lost by any mis-transmission. To the extent permitted by law, Parker Lane does not assume responsibility or duty of care for any use or reliance upon this email by anyone other than the intended recipient. Parker Lane is committed to minimising its impact on the environment. Please consider the environment before printing this email.</p>
+        </div>
+    </div>
+
+</messaging:htmlEmailBody>
+
+</messaging:emailTemplate>

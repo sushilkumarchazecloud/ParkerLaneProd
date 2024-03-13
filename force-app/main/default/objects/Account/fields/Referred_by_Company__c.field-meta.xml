@@ -5,10 +5,9 @@
     <externalId>false</externalId>
     <label>Referred by Company</label>
     <referenceTo>Account</referenceTo>
-    <relationshipLabel>Accounts (Referred by Company)</relationshipLabel>
+    <relationshipLabel>Accounts</relationshipLabel>
     <relationshipName>Accounts</relationshipName>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
     <type>Lookup</type>
 </CustomField>

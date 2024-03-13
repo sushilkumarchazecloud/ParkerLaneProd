@@ -10,7 +10,7 @@
     <columns>OPPORTUNITY.RECORDTYPE</columns>
     <columns>OPPORTUNITY.STAGE_NAME</columns>
     <columns>Application_Sections__c</columns>
-    <columns>FinServ__ReferredByContact__c</columns>
+    <columns>ReferredByContact__c</columns>
     <columns>Point_of_Origin__c</columns>
     <columns>How_would_you_like_us_to_support_you__c</columns>
     <columns>Send_the_quote_to__c</columns>

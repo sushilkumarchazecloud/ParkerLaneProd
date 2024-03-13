@@ -237,7 +237,7 @@ return 'please contact to admin';
         try{
             System.debug('oppId==='+oppId);
             opportunity Opp = [select Id,Applicant_1__r.resident_of_country__pc,Applicant_2__r.resident_of_country__pc,Applicant_1__r.Tax_Resident_of_countries__pc,Applicant_2__r.Tax_Resident_of_countries__pc,Applicant_1__r.Postal_Code__pc,Applicant_2__r.Postal_Code__pc,Applicant_1__r.Salutation,Applicant_2__r.Salutation,Applicant_1__r.MiddleName,Applicant_2__r.MiddleName,Name,SyncedQuote.Gruop_Name__c,Referral_Fee_Recipient__r.Name,Referral_Fee_inc_GST__c,Applicant_2__r.PersonContactId,Applicant_1__r.Number_of_applicants_to_operate_account__pc, Applicant_2__r.Number_of_applicants_to_operate_account__pc,Amount,Number_of_applicants__c, Application_Sections__c,Applicant_2__r.Occupation__pc, Current_Application_Sections__c,ReferredByUser__c,Applicant_2__r.Gender__pc,Applicant_2__r.Residential_Address__pc,Applicant_2__r.Postal_Address__pc,Applicant_2__r.PersonMobilePhone,Applicant_2__r.PersonEmail,Applicant_2__r.Primary_Employer_Job_Title__pc,Applicant_2__r.FirstName,
-                               Applicant_1__c,Applicant_1__r.Residential_Address__pc,Applicant_1__r.Primary_Employer_Job_Title__pc,Applicant_1__r.Occupation__pc, Applicant_1__r.Postal_Address__pc, Lender__c,Product_Name__c,Brokerage_Service_Fee_inc_GST__c,Total_Loan_amount__c,Interest_Rate__c, Applicant_1__r.Name,Applicant_1__r.PersonContactId,Loan_Term_months__c, Applicant_2__c,Lead_Source__c,Loan_Amount__c,
+                               Applicant_1__c,Applicant_1__r.Residential_Address__pc,Applicant_1__r.Primary_Employer_Job_Title__pc,Applicant_1__r.Occupation__pc, Applicant_1__r.Postal_Address__pc, Lender__c,Product_Name__c,Brokerage_Service_Fee_inc_GST__c,Total_Loan_amount__c,/*Interest_Rate__c*/ Applicant_1__r.Name,Applicant_1__r.PersonContactId,Loan_Term_months__c, Applicant_2__c,Lead_Source__c,Loan_Amount__c,
                                Account.RecordType.Name,Applicant_1__r.PersonEmail,Applicant_2__r.Name,Customer_Support_Person__c, Applicant_1__r.Tax_File_Number_TFN__pc, Applicant_1__r.PersonMobilePhone, Applicant_2__r.LastName, Applicant_1__r.PersonBirthdate,Applicant_2__r.PersonBirthdate, Applicant_1__r.Gender__pc, Applicant_1__r.LastName,Applicant_1__r.FirstName, Household__c,Type_of_interest_rate__c,Monthly_Repayments__c, Application_Supporting_Notes__c, Preferred_repayment_frequency__c, Relationship_to_Applicant_2__c,RecordType.Name,
                                Name_s_on_account__c,Financial_Institution__c,BSB_number__c,Account_number__c FROM Opportunity WHERE Id =: oppId limit 1];
             system.debug('Opp--='+Opp);
@@ -682,7 +682,7 @@ return 'please contact to admin';
                                      (SELECT Id, Lead__c, Lender__c, Purpose__c  FROM Quotes WHERE Application__c = TRUE)
                                      FROM Opportunity WHERE Id =: oppId];
             
-            //CreateDocumentController.createDocumentRequest(oppId);                                
+            CreateDocumentController.createDocumentRequest(oppId);                                
             
             Map<String, Contact> empDetail =  new Map<String, Contact>();
             empDetail = ApplicationFormController.getEmploymentDetails(oppUpdate.id);
@@ -1001,13 +1001,13 @@ return 'please contact to admin';
             email.setTemplateId(emailTemplate.id);         
             email.setTargetObjectId(con.id);
             email.setWhatId(OppId);
-            OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address =: UtilityClass.adminEmail]; // 'personalapplications@parkerlane.com.au'
+            OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address =: UtilityClass.adminEmail]; // 'tazeem.khan@chazecloud.com'
             if(owea != null){
                 if ( owea.size() > 0 ) {
                     email.setOrgWideEmailAddressId(owea.get(0).Id);
                 }
             }
-            email.setReplyTo('personalapplications@parkerlane.com.au');
+            email.setReplyTo('tazeem.khan@chazecloud.com');
             System.debug('efaList+'+efaList.size());
             email.setFileAttachments(efaList);
             //email.setFileAttachments(new Messaging.EmailFileAttachment[] {efa});
@@ -1031,7 +1031,7 @@ return 'please contact to admin';
             contact con = [Select id,voi_Email_Verification_Code__c,Email,Phone from contact where id =: conId LIMIT 1];
             con.voi_Email_Verification_Code__c = String.valueOf(num);
             update con;
-            OrgWideEmailAddress[] owea = [SELECT Id from OrgWideEmailAddress WHERE Address =:UtilityClass.adminEmail];
+           /* OrgWideEmailAddress[] owea = [SELECT Id from OrgWideEmailAddress WHERE Address =:UtilityClass.adminEmail];
             List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
             Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
             List<string> sendTo = new List<string>();
@@ -1052,7 +1052,7 @@ return 'please contact to admin';
             mails.add(mail);
             if(!test.isRunningTest()){
                 Messaging.sendEmail(mails);   
-            }
+            }*/
             return con;
         }catch(exception e){
             UtilityClass.createException('','Digital_ID_Sign', 'emailForOtp', e.getMessage(), e.getStackTraceString(), ''+e.getLineNumber(),

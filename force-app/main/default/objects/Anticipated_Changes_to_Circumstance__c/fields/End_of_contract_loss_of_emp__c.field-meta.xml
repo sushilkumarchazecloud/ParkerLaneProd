@@ -3,7 +3,8 @@
     <fullName>End_of_contract_loss_of_emp__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>End of contract / loss of emp</label>
+    <label>End of contract loss of emp</label>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

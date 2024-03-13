@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All</fullName>
+    <columns>NAME</columns>
+    <columns>AnnualIncome__c</columns>
+    <columns>EmployerAddress__c</columns>
+    <columns>EmployerPhoneNumber__c</columns>
+    <columns>EmploymentStatus__c</columns>
+    <columns>EndDate__c</columns>
+    <columns>Occupation__c</columns>
+    <columns>Position__c</columns>
+    <columns>SourceSystemId__c</columns>
+    <columns>Verified_Income_Frequency__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>All Records</label>
+</ListView>

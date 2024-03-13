@@ -7,7 +7,6 @@
 &quot;★ &quot;&amp;Key_Accreditations_3__c</formula>
     <label>Key Accreditations Summary</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
     <type>Text</type>
     <unique>false</unique>
 </CustomField>

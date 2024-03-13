@@ -1,0 +1,13 @@
+{!Opportunity.OwnerFullName},<br/><br/>
+
+{!Opportunity.Applicant_1_FirstName__c} uploaded documents 60 minutes ago and is yet to sign the credit proposal.<br/><br/>
+
+TAKE ACTION: Review file and contact the customer to offer assistance.<br/><br/>
+
+Opportunity: <a href="{!Opportunity.Link}"> {!Opportunity.Name} </a><br/>
+Amount: ${!Opportunity.Application_Amount__c}<br/>
+Purpose: {!Opportunity.Purpose__c}<br/>
+Opportunity Owner: {!Opportunity.OwnerFullName}<br/><br/>
+
+Kind regards,<br/>
+The Parker Lane team

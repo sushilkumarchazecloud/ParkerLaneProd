@@ -63,7 +63,7 @@
                                     <td><b>Date of Birth : </b>{!opportunity.Applicant_1__r.PersonBirthdate}</td>
                                 </tr>
                                 <tr>
-                                    <td><b>Gender : </b>{!opportunity.Applicant_1__r.FinServ__Gender__pc}</td>
+                                    <td><b>Gender : </b>{!opportunity.Applicant_1__r.Gender__pc}</td>
                                 </tr>
                                 <tr>
                                     <td><b>Address : </b>{!opportunity.Applicant_1__r.Residential_Address__pc}</td>
@@ -81,7 +81,7 @@
                                     <td><b>Employer : </b>{!emp1.Name}</td>
                                 </tr>
                                 <tr>
-                                    <td><b>Occupation : </b>{!emp1.FinServ__Occupation__c}</td>
+                                    <td><b>Occupation : </b>{!emp1.Occupation__c}</td>
                                 </tr>
                             </table><br/>
                         </div>
@@ -100,7 +100,7 @@
                                     <td><b>Date of Birth : </b>{!opportunity.Applicant_2__r.PersonBirthdate}</td>
                                 </tr>
                                 <tr>
-                                    <td><b>Gender : </b>{!opportunity.Applicant_2__r.FinServ__Gender__pc}</td>
+                                    <td><b>Gender : </b>{!opportunity.Applicant_2__r.Gender__pc}</td>
                                 </tr>
                                 <tr>
                                     <td><b>Address : </b>{!opportunity.Applicant_2__r.Residential_Address__pc}</td>
@@ -118,7 +118,7 @@
                                     <td><b>Employer : </b>{!emp2.Name}</td>
                                 </tr>
                                 <tr>
-                                    <td><b>Occupation : </b>{!emp2.FinServ__Occupation__c}</td>
+                                    <td><b>Occupation : </b>{!emp2.Occupation__c}</td>
                                 </tr>
                             </table><br/>
                         </div>

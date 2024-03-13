@@ -1,4 +1,4 @@
-<aura:component controller="ParkerLaneLoanController">
+<aura:component controller="ApplicationFormController">
     <aura:attribute name="recordId" type="Id" />
     <aura:attribute name="applicationSection" type="String" default=""/>
     <aura:attribute name="appSectionPath" type="List" default="[]"/>

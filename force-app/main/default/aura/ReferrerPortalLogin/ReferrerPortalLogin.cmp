@@ -116,10 +116,10 @@
             </div>
             <div class="slds-align_absolute-center slds-m-top_medium loginMessage">
                 <aura:if isTrue="{!v.conWrp == null}">
-                    To register as a referrer, go to parkerlane.com.au/affiliates or call 1300 13 17 11
+                    To register as a referrer, go to chazecloud.com/affiliates or call 1300 13 17 11
                 </aura:if>
                 <aura:if isTrue="{!v.checkSize}">
-                    To resolve this issue email personalapplications@parkerlane.com.au or call 1300 13 17 11.
+                    To resolve this issue email tazeem.khan@chazecloud.com or call 1300 13 17 11.
                 </aura:if>
             </div>        
         </aura:if>

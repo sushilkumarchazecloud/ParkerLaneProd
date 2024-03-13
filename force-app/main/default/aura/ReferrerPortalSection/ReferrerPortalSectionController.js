@@ -28,14 +28,9 @@
         component.set("v.ShowAccount", false);
     },
     
-    navcalculator : function(component, event, helper) {
-        component.set("v.navSection", "Calculator");
-        component.set("v.ShowAccount", false);
-    },
-    
     myAction : function(component, event, helper) {
         helper.getdeclarationmodel(component, event);        
         helper.getContactData(component, event);
-        
+ 
     },
 })

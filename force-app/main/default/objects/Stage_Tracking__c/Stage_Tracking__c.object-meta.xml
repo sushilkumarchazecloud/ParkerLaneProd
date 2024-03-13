@@ -141,26 +141,36 @@
         <type>Default</type>
     </actionOverrides>
     <allowInChatterGroups>false</allowInChatterGroups>
-    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <compactLayoutAssignment>Custom_Compact_Layout</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>true</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableFeeds>false</enableFeeds>
+    <enableFeeds>true</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
-    <enableSearch>false</enableSearch>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ControlledByParent</externalSharingModel>
     <label>Stage Tracking</label>
     <nameField>
-        <displayFormat>ST-{00000}</displayFormat>
-        <label>Stage Tracking Name</label>
-        <type>AutoNumber</type>
+        <label>Stage Tracking</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
     </nameField>
     <pluralLabel>Stage Tracking</pluralLabel>
-    <searchLayouts></searchLayouts>
+    <searchLayouts>
+        <searchResultsAdditionalFields>Previous_Stage__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>New_Stage__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>New_Stage_Beginning_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Last_Stage_Change_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Duration_Bus_Days__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Time_at_current_stage__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>New_Stage_End_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>New_Stage_Duration__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Stage_Count__c</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

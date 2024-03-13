@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Custom_Compact_Layout</fullName>
+    <fields>Name</fields>
+    <fields>Previous_Stage__c</fields>
+    <fields>New_Stage__c</fields>
+    <fields>New_Stage_Beginning_Date__c</fields>
+    <fields>Last_Stage_Change_Date__c</fields>
+    <fields>Duration_Bus_Days__c</fields>
+    <fields>Time_at_current_stage__c</fields>
+    <fields>New_Stage_End_Date__c</fields>
+    <fields>New_Stage_Duration__c</fields>
+    <fields>Stage_Count__c</fields>
+    <label>Custom Compact Layout</label>
+</CompactLayout>

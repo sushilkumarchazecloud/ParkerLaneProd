@@ -3,8 +3,8 @@
     <fullName>Number_of_applicants__c</fullName>
     <externalId>false</externalId>
     <formula>IF( AND( NOT(ISBLANK( Applicant_1__c )) , NOT(ISBLANK( Applicant_2__c ))) ,
- 2,  IF( OR( NOT(ISBLANK( Applicant_1__c )) , NOT(ISBLANK( Applicant_2__c ))) ,
- 1, 0))</formula>
+        2, IF( OR( NOT(ISBLANK( Applicant_1__c )) , NOT(ISBLANK( Applicant_2__c ))) ,
+        1, 0))</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Number of applicants</label>
     <precision>18</precision>

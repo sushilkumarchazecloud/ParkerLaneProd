@@ -66,9 +66,10 @@
         });
         action.setCallback(this, function(response) {
             var state = response.getState();
-            console.log('@@@@state----------' + state);
+            // console.log('@@@@state----------' + state);
             if (state === "SUCCESS") {
                 var ret = response.getReturnValue();
+                console.log('-->>>>'+JSON.stringify(ret));
                 if(ret=='[]' || $A.util.isUndefinedOrNull(ret)){
                     component.set("v.showError", true);
                     component.set("v.errorMsg", $A.get("$Label.c.Error_Message"));
@@ -99,7 +100,9 @@
         }*/
         
         var assetListdata = component.get("v.allAssetsList");
-
+		console.log('00-assetListdata-->>>'+JSON.stringify(assetListdata));
+        console.log('00--oppId->>>'+oppId);
+        
         action.setParams({
             assetsList:  assetListdata,
             liabilitiesList: [],
@@ -115,6 +118,7 @@
         action.setCallback(this, function(response) {
             var state = response.getState();
             console.log('@@@@state----------' + state);
+            console.log('@@@ error-------' + JSON.stringify(response.getError()));
             if (state === "SUCCESS") {
                 var ret = response.getReturnValue();
                 if(ret=='[]' || $A.util.isUndefinedOrNull(ret)){
@@ -178,24 +182,6 @@
         });
         $A.enqueueAction(action);
 	},
-    
-    // Pawan Code related to PDO-1124.
-    getUpdatedQuote : function(component, event, emailIds) {
-        let recordId = component.get("v.recordId");
-        var action = component.get("c.getSelectedQuote");
-        action.setParams({
-            recordId : recordId
-        });
-        action.setCallback(this, function(response) {
-            var state = response.getState();
-            if (state === "SUCCESS") {
-                var ret = response.getReturnValue();
-                component.set("v.selectedQuote",ret);
-            }
-        });
-        $A.enqueueAction(action);
-    },
-    // Pawan Code End.
     
     scrollTop: function (component, event, top){
         var isMoile = false;

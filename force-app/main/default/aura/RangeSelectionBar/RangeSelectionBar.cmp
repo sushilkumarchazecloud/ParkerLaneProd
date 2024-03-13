@@ -1,20 +1,16 @@
 <aura:component >
     <aura:attribute name="sliderValue" default="0" type="Integer"/>
-    <aura:attribute name="val" default="0" type="Integer" />
+    <aura:attribute name="val" type="Integer" default="0" />
     <aura:attribute name="heading" type="String" default="Personal care" />
     <aura:attribute name="subHeading" type="String" default="Personal care" />
     <aura:attribute name="sliderNo" type="String" default="Personal care" />
     <aura:attribute name="imgName" type="String" default="" />
     <aura:attribute name="isIconImag" type="Boolean" default="false" />
     <aura:attribute name="isIconShow" type="Boolean" default="false" />
-    <aura:attribute name="isRequired" type="Boolean" default="true" />
-    <aura:attribute name="checkError" type="Boolean" default="false" />
 	<aura:handler action="{!c.changeInputValue}" name="init" value="{!this}"/>
     <aura:handler name="change" value="{!v.val}" action="{!c.changeInputValue}"/>
-    <aura:method name="rangeSelectorValidate" action="{!c.checkExpenses}"
-                 access="public">
-    </aura:method>
-    
+   <!-- <aura:method name="rangeSelectorValidate" action="{!c.rangeSelectorValidate}" access="PUBLIC" />
+    -->
     <aura:html tag="style" >
         .{!v.sliderNo}-range-selector input[type=range] {
             -moz-apperance: none;
@@ -47,15 +43,15 @@
             </div>
             <div class="slds-col slds-size_4-of-12 slds-large-size_3-of-12">
                 <span class="input-euro left">
-                <lightning:input aura:id="fieldcheck" required="{!v.isRequired}" type="number" class="{!v.checkError == true ? 'range-input slds-text-align_right AmountErr': 'range-input slds-text-align_right'}" onchange="{!c.changeInputValue}"
-                                 value="{!v.val}"  step="1" />
+                <lightning:input aura:id="fieldcheck" type="number" class="range-input slds-text-align_right" onchange="{!c.changeInputValue}"
+                                 value="{!v.val}"  step="1"/>
                 </span>
             </div>
         </div>
         <div class="range-container">
             
 
-            <lightning:slider aura:id="fieldcheck" required="true" label="Volume" variant="label-hidden" 
+            <lightning:slider aura:id="fieldcheck" label="Volume" variant="label-hidden" 
                               value="{!v.sliderValue}" step ="4" 
                               onchange="{! c.getValue }"/>
             <div>

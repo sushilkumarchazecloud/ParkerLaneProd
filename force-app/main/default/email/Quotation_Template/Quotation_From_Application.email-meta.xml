@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Quotation From Application</name>
+    <style>none</style>
+    <subject>Your Loan Options - apply for a low rate {!Quote.Purpose__c} loan today</subject>
+    <textOnly>Dear Chris White,
+
+Congratulations! We think your {!Quote.Purpose__c} objectives and Parker Lane could be a good match.
+
+We think you and Parker Lane could be a good match. We have found three (3) excellent options to help you achieve your objectives. Our feature option based on your responses is as follows:
+Amount: ${!Quote.Customer_Amount__c}
+Term: {!Quote.Loan_Term__c} months
+Interest rate: {!Quote.Interest_Rate__c}% p.a.
+Comparison Rate: {!Quote.Actual_Comparison_Rate__c} p.a.*
+Estimated monthly payment: ${!Quote.Monthly_Repayment__c}
+
+We think this is likely to be the most competitive unsecured [purpose] loan rate around. To proceed and apply for your loan, please visit the website and retrieve your quote.
+
+Click here to retrieve your Three (3) Loan Options and complete an online loan application in minutes
+
+Completing our online application will take around 5-10 minutes, and if you&apos;re approved there&apos;s absolutely no obligation to take out the loan.
+
+Why not apply now?
+
+
+→     Super flexible low rate unsecured loans
+→     Fast and simple application process
+→     No ongoing, extra repayment or early termination fees
+
+
+Why let us help you?
+Parker Lane specialise in the kinds of lending that helps people save money. If you’re the kind of person who prefers to keep your hard earned for yourself instead of wasting it on things like energy bills and high interest rates, then we’ve already got a lot in common.
+
+We’re also Australia’s Personal Loan AND Home Loan Providers of the Year, awarded by leading review website ProductReview.com.au. Read our reviews here.
+
+Apply for your loan now
+
+If you have any questions about borrowing with the help of Parker Lane please don&apos;t hesitate to call us on 1300 131 711, or simply reply to this email.
+
+We thank you again for your interest in Parker Lane, and look forward to hearing from you soon.
+
+Kind regards,
+The Parker Lane team</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

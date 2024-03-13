@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>DOCUMENTS UPLOADED (STATUS REMAINS PACKS OUT)</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>DOCUMENTS UPLOADED (STATUS REMAINS PACKS OUT)</name>
+    <style>none</style>
+    <subject>DOCS UPLOADED: {!Opportunity.Applicant_1_FirstName__c} has [number of docs] docs outstanding for {!Opportunity.Purpose__c}</subject>
+    <textOnly>{!Opportunity.OwnerFullName},
+
+{!Opportunity.Applicant_1_FirstName__c} uploaded documents 60 minutes ago and is yet to sign the credit proposal.
+
+TAKE ACTION: Review file and contact the customer to offer assistance.
+
+Opportunity:  {!Opportunity.Name}
+Amount: ${!Opportunity.Application_Amount__c}
+Purpose: {!Opportunity.Purpose__c}
+Opportunity Owner: {!Opportunity.OwnerFullName}
+
+Kind regards,
+The Parker Lane team</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

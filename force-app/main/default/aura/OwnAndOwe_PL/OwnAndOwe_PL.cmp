@@ -1,13 +1,13 @@
-<aura:component controller="ParkerLaneLoanController">
+<aura:component controller="ApplicationFormController">
     <!--<aura:attribute name="applicant" type="Contact" default="{'sobjectType': 'Contact'}"/>-->
     
     <aura:attribute name="title" type="String" default=""/>
     <aura:attribute name="isNotAsset" type="Boolean" default="false"/>
     <aura:attribute name="isNotLiability" type="Boolean" default="false"/>
-    <aura:attribute name="assetsList" type="FinServ__AssetsAndLiabilities__c[]" />
-    <aura:attribute name="liabilitiesList" type="FinServ__AssetsAndLiabilities__c[]" />
-    <aura:attribute name="assetsSelected" type="FinServ__AssetsAndLiabilities__c" />
-    <aura:attribute name="liabilitiesSelected" type="FinServ__AssetsAndLiabilities__c" />
+    <aura:attribute name="assetsList" type="AssetsAndLiabilities__c[]" />
+    <aura:attribute name="liabilitiesList" type="AssetsAndLiabilities__c[]" />
+    <aura:attribute name="assetsSelected" type="AssetsAndLiabilities__c" />
+    <aura:attribute name="liabilitiesSelected" type="AssetsAndLiabilities__c" />
     <aura:attribute name="totalAssetsAmount" type="Decimal" default="0"/>
     <aura:attribute name="totalLiabilitiesAmount" type="Decimal" default="0"/>
     <aura:attribute name="selectedType" type="String" default=""/>
@@ -34,12 +34,12 @@
     <aura:attribute name="HomeAndInvestmentOption" type="List" default="[{'label': 'Home', 'value': 'Home Loan/Mortgage'},{'label': 'Investment', 'value': 'Investment Home Loan'}]"/>
     <aura:attribute name="PersonalAndAutoOption" type="List" default="[{'label': 'Personal', 'value': 'Personal Loan'},{'label': 'Auto', 'value': 'Auto Loan'}]"/>
     
-    <aura:attribute name="mortgageList" type="FinServ__AssetsAndLiabilities__c[]" />
-    <aura:attribute name="creditCardlist" type="FinServ__AssetsAndLiabilities__c[]" />
-    <aura:attribute name="personalAndAutoloanlist" type="FinServ__AssetsAndLiabilities__c[]" />
-    <aura:attribute name="otherCommitmentlist" type="FinServ__AssetsAndLiabilities__c[]" />
+    <aura:attribute name="mortgageList" type="AssetsAndLiabilities__c[]" />
+    <aura:attribute name="creditCardlist" type="AssetsAndLiabilities__c[]" />
+    <aura:attribute name="personalAndAutoloanlist" type="AssetsAndLiabilities__c[]" />
+    <aura:attribute name="otherCommitmentlist" type="AssetsAndLiabilities__c[]" />
     <aura:attribute name="OtherliabilityTypeOptions" type="List" default="[{'label': 'HECS/HELP', 'value': 'HECS/HELP'},{'label': 'Child Maintenance', 'value': 'Child Maintenance'},{'label': 'Car Lease', 'value': 'Car Lease'},{'label': 'Tax liability', 'value': 'Tax liability'},{'label': 'Margin Loan', 'value': 'Margin Loan'},{'label': 'Overdraft', 'value': 'Overdraft'},{'label': 'Commercial Mortgage', 'value': 'Commercial Mortgage'}]"/>
-    <aura:attribute name="propertyLoanlist" type="FinServ__AssetsAndLiabilities__c[]" />
+    <aura:attribute name="propertyLoanlist" type="AssetsAndLiabilities__c[]" />
     
     <aura:attribute name="homeAndInvestmentcheck" type="String" />
     <aura:attribute name="PersonalAndAutoLoanscheck" type="String" />
@@ -83,7 +83,7 @@
         
         <section class="max-700 slds-p-around--medium slds-col  bg-lightest txt-blue">
             <div class="slds-align_absolute-center slds-m-top_medium">
-                <img src="{!$Resource.headersLogo + '/headersLogo/Liabilities.png'}" class="trackercls"/>
+                <img src="{!$Resource.SolarLoan + '/img/Stepownowe.png'}" class="trackercls"/>
             </div>
         	<div class="listYourCommitments slds-m-top_medium slds-p-vertical_medium">
                 <h1 style="font-size: 1.75rem;font-weight: 900;font-family:ProximaNova-AltBold;">List <u>all</u> your financial commitments</h1>
@@ -142,7 +142,7 @@
                                 </div>
                                 <div class="slds-size_1-of-2 ">
                                     <div class="input-dollar2">
-                                        <lightning:input label="Minimum Repayment" 
+                                        <lightning:input label="Min.Repayment" 
                                                          type="number" aura:id="fieldcheck" required="true"
                                                          value="{!liability.Monthly_Repayment__c}"
                                                          class="no-abbr slds-m-around1_xx-small slds-p-around_xx-small"/>  
@@ -211,7 +211,7 @@
                                 </div>
                                 <div class="slds-size_1-of-2 ">
                                     <div class="input-dollar2">
-                                        <lightning:input label="Minimum Repayment" 
+                                        <lightning:input label="Min.Repayment" 
                                                          type="number" aura:id="fieldcheck" required="true"
                                                          value="{!liability.Monthly_Repayment__c}"
                                                          class="no-abbr slds-m-around1_xx-small slds-p-around_xx-small"/>  
@@ -367,7 +367,7 @@
                                                           aura:id="fieldcheck" 
                                                           label=""
                                                           options="{! v.PersonalAndAutoOption }"
-                                                          value="{!liability.FinServ__AssetsAndLiabilitiesType__c}"
+                                                          value="{!liability.AssetsAndLiabilitiesType__c}"
                                                           type="button"
                                                           class="no-abbr "/> 
                                 </div>
@@ -388,7 +388,7 @@
                                 </div>
                                 <div class="slds-size_1-of-2 ">
                                     <div class="input-dollar2">
-                                        <lightning:input label="Minimum Repayment" 
+                                        <lightning:input label="Min.Repayment" 
                                                          type="number" aura:id="fieldcheck" required="true"
                                                          value="{!liability.Monthly_Repayment__c}"
                                                          class="no-abbr slds-m-around1_xx-small slds-p-around_xx-small"/> 
@@ -426,7 +426,7 @@
                         <h6 class="heading-edit">
                             <!--Any Other commitments?-->
                             Do you have any other commitments?<br/>
-                            <p style="font-weight: normal;font-size: 16px;font-family: 'Proxima Nova Alt Regular';">(eg child maintenance, HECS, tax etc)?</p>
+                            <p style="font-weight: normal;font-size: 16px;font-family: 'Proxima Nova Alt Regular';">(eg child maintenance, HECS, tax, deb etc)?</p>
                         </h6>
                     </div>
                     <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_2-of-12 rg-split">
@@ -466,7 +466,7 @@
                                 <div class="slds-size_2-of-2">    
                                     <lightning:select aura:id="fieldcheck" name="select" onchange="" label="Other Commitment Type"
                                                       required="true" class="no-abbr slds-m-around1_xx-small slds-p-around_xx-small"
-                                                      value="{!liability.FinServ__AssetsAndLiabilitiesType__c}">
+                                                      value="{!liability.AssetsAndLiabilitiesType__c}">
                                         <option value="">Select</option>
                                         <aura:iteration items="{!v.OtherliabilityTypeOptions}" var="liabilityTypeOption">
                                             <option value="{!liabilityTypeOption.value}" text="{!liabilityTypeOption.value}"></option>
@@ -484,7 +484,7 @@
                                 </div>
                                 <div class="slds-size_1-of-2 ">
                                     <div class="input-dollar2">
-                                        <lightning:input label="Minimum Repayment" 
+                                        <lightning:input label="Min.Repayment" 
                                                          type="number" aura:id="fieldcheck" required="true"
                                                          value="{!liability.Monthly_Repayment__c}"
                                                          class="no-abbr slds-m-around1_xx-small slds-p-around_xx-small"/>   

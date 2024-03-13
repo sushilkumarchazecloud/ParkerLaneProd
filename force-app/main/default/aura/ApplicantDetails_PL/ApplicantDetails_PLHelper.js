@@ -19,12 +19,12 @@
                     if(!$A.util.isUndefinedOrNull(ret.Asset)){
                         var allAssetList = ret.Asset;
                         allAssetList.forEach(function(item){
-                            if(item.FinServ__AssetsAndLiabilitiesType__c == 'Investment Property'){
+                            if(item.AssetsAndLiabilitiesType__c == 'Investment Property'){
                                 propertyList.push(item);
-                            }else if(item.FinServ__AssetsAndLiabilitiesType__c == 'Home'){
+                            }else if(item.AssetsAndLiabilitiesType__c == 'Home'){
                                 component.set("v.homeAsset",item);
                             }
-                             else if(item.FinServ__AssetsAndLiabilitiesType__c == 'Other'){
+                             else if(item.AssetsAndLiabilitiesType__c == 'Other'){
                                 component.set("v.OtherAsset",item)    
                              
                             }else{
@@ -38,9 +38,9 @@
                     }else{
                         if(component.get("v.opportunity.Lender__c") == 'Transport Mutual Credit Union' || component.get("v.opportunity.Lender__c")== 'TMCU'){
                             var asset = {
-                                'sobjectType': 'FinServ__AssetsAndLiabilities__c',
-                                'FinServ__AssetsAndLiabilitiesType__c': 'Other',
-                                'FinServ__Description__c':'Total non-property assets'
+                                'sobjectType': 'AssetsAndLiabilities__c',
+                                'AssetsAndLiabilitiesType__c': 'Other',
+                                'Description__c':'Total non-property assets'
                             }; 
                             component.set("v.OtherAsset",asset);   
                         }
@@ -88,8 +88,8 @@
     addNewAsset: function(component, event, name) {
         var assetList = component.get('v.assetsList');
         var asset = {
-            'sobjectType': 'FinServ__AssetsAndLiabilities__c',
-            'FinServ__AssetsAndLiabilitiesType__c': name
+            'sobjectType': 'AssetsAndLiabilities__c',
+            'AssetsAndLiabilitiesType__c': name
         };
         assetList.push(asset);
         component.set('v.assetsList', assetList);
@@ -134,7 +134,7 @@
      
         if(!$A.util.isUndefinedOrNull(assetListdata)){
             assetListdata.forEach(function(item) {
-                if(item.FinServ__AssetsAndLiabilitiesType__c == 'Motor Vehicle'){
+                if(item.AssetsAndLiabilitiesType__c == 'Motor Vehicle'){
                     item.Make_Model__c = (item.Value__c!=null ? item.Value__c : '0') + '';
                     item.Year__c = new Date().getFullYear();
                     
@@ -158,7 +158,7 @@
             applicant.Rental_Amount__c = '';
             applicant.Rental_Frequency__c = '';
             component.set('v.applicant',applicant);
-            homeAsset.FinServ__AssetsAndLiabilitiesType__c = 'Home';
+            homeAsset.AssetsAndLiabilitiesType__c = 'Home';
             homeAsset.Is_Find_Address__c = applicant.Is_Find_Address__c;
             homeAsset.Unit_Number__c = applicant.Unit_Number__c;
             homeAsset.Street_Number__c = applicant.Street_Number__c;
@@ -168,7 +168,7 @@
             homeAsset.Street_Type__c = applicant.Street_Type__c;
             homeAsset.Postal_Code__c = applicant.Postal_Code__c;
             homeAsset.Address__c = applicant.Residential_Address__c;
-            homeAsset.Country__c = applicant.FinServ__CountryOfResidence__c;
+            homeAsset.Country__c = applicant.CountryOfResidence__c;
             if(applicant.Living_Situation__c == 'Own home outright'){
                 homeAsset.Property_Situation__c = 'Own outright';
             }else if(applicant.Living_Situation__c == 'Own home with mortgage'){
@@ -289,8 +289,8 @@
     addMoreProperty:function(component,event,name,type){
         var propertyList = component.get("v."+ name);
         var property = {
-            'sobjectType': 'FinServ__AssetsAndLiabilities__c',
-            'FinServ__AssetsAndLiabilitiesType__c': type
+            'sobjectType': 'AssetsAndLiabilities__c',
+            'AssetsAndLiabilitiesType__c': type
         };
         propertyList.push(property);
         component.set("v."+ name, propertyList);
@@ -344,8 +344,8 @@
             applicant1.Suburb__c = applicant.Suburb__c;
             applicant1.State__c = applicant.State__c;
             applicant1.Postal_Code__c = applicant.Postal_Code__c;
-            applicant1.FinServ__CountryOfResidence__c = applicant.FinServ__CountryOfResidence__c;
-            applicant1.FinServ__PrimaryAddressIsOther__c = applicant.FinServ__PrimaryAddressIsOther__c;
+            applicant1.CountryOfResidence__c = applicant.CountryOfResidence__c;
+            applicant1.PrimaryAddressIsOther__c = applicant.PrimaryAddressIsOther__c;
             applicant1.Postal_Address__c = applicant.Postal_Address__c;
             applicant1.isFindPostalAdd__c = applicant.isFindPostalAdd__c;
             applicant1.Postal_address_is_PO_or_GPO_box__c = applicant.Postal_address_is_PO_or_GPO_box__c;
@@ -382,8 +382,8 @@
             applicant1.Postal_Code_2__c = applicant.Postal_Code_2__c;
             applicant1.Country_2__c = applicant.Country_2__c;
             
-            if(!$A.util.isUndefinedOrNull(applicant.FinServ__NumberOfChildren__c )){
-                applicant1.FinServ__NumberOfChildren__c = applicant.FinServ__NumberOfChildren__c;
+            if(!$A.util.isUndefinedOrNull(applicant.NumberOfChildren__c )){
+                applicant1.NumberOfChildren__c = applicant.NumberOfChildren__c;
             }
             component.set("v.applicant1", applicant1);
             

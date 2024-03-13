@@ -4,18 +4,17 @@
     <externalId>false</externalId>
     <label>Current VOI section</label>
     <required>false</required>
-    <trackHistory>true</trackHistory>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
-        <controllingField>VOI_Type_For__c</controllingField>
         <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Email Verificaiton</fullName>
-                <default>true</default>
-                <label>Email Verificaiton</label>
+                <fullName>Email Verification</fullName>
+                <default>false</default>
+                <label>Email Verification</label>
             </value>
             <value>
                 <fullName>Id Upload</fullName>
@@ -38,30 +37,5 @@
                 <label>TMCU</label>
             </value>
         </valueSetDefinition>
-        <valueSettings>
-            <controllingFieldValue>FULL</controllingFieldValue>
-            <controllingFieldValue>VOI</controllingFieldValue>
-            <valueName>Email Verificaiton</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>FULL</controllingFieldValue>
-            <controllingFieldValue>VOI</controllingFieldValue>
-            <valueName>Id Upload</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>FULL</controllingFieldValue>
-            <controllingFieldValue>VOI</controllingFieldValue>
-            <valueName>Video</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>FULL</controllingFieldValue>
-            <controllingFieldValue>E-SIGN</controllingFieldValue>
-            <valueName>CQP</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>FULL</controllingFieldValue>
-            <controllingFieldValue>E-SIGN</controllingFieldValue>
-            <valueName>TMCU</valueName>
-        </valueSettings>
     </valueSet>
 </CustomField>

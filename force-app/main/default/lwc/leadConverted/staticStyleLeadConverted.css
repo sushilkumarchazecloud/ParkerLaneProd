@@ -1,0 +1,30 @@
+.runtime_platform_actionsQuickActionWrapper .quick-actions-panel {
+    overflow-y: hidden !important;
+}
+
+.uiModal--horizontalForm .modal-container {
+    width: 90% !important;
+    max-width: 1024px !important;
+    min-width: var(--lwc-sizeXLarge,40rem) !important;
+}
+
+lightning-modal-body .slds-modal__content{
+    overflow-y: auto !important;
+    height: 362px !important;
+}
+
+.slds-input{
+    border-color: rgb(201,201,201) !important;
+}
+
+.slds-input_faux{
+    border-color: rgb(201,201,201) !important;
+}
+
+lightning-helptext .slds-button_icon{
+    --lwc-squareIconMediumContentAlt: 1.10rem !important;
+}
+
+/* .slds-popover_tooltip{
+    background-color: brown;
+} */

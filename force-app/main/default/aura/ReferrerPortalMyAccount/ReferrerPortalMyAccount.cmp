@@ -76,7 +76,7 @@
                 <div class="slds-p-top_medium heading4" >
                     <div style ="display: inline-flex;">
                         <lightning:input type="checkbox" label="" style="width: 19px;" name="opt1" checked ="{!v.opt1}" onchange="{!c.tncChange}" disabled="{!v.decCheckBoxdisabled}" />
-                        <span class="slds-p-left_small" >I have read and agree to comply with <a href="https://www.parkerlane.com.au/referral-terms" target="_main" style="font-weight: bold;color:black"><u>terms of the referral agreement</u></a> signed by my company.</span>
+                        <span class="slds-p-left_small" >I have read and agree to comply with <a href="https://chazecloud.com/referral-terms" target="_main" style="font-weight: bold;color:black"><u>terms of the referral agreement</u></a> signed by my company.</span>
                     </div>
                     <div style ="display: inline-flex;" class="slds-m-top_small">
                         <lightning:input type="checkbox" label="" style="width: 29px;" name="opt2" checked ="{!v.opt2}" onchange="{!c.tncChange}" disabled="{!v.decCheckBoxdisabled}" />

@@ -1,0 +1,25 @@
+<html>
+<head>
+</head>
+<body style="font-size : 15px;">
+<p >Dear Parker Lane Team,</p>
+<p>{!Contact.FirstName} has reported an issue with their VOI request. The VOI remains incomplete.</p>
+<p>TAKE ACTION: Contact the customer to offer assistance. </p>
+<table>
+<tr>
+<td>Opportunity: <a href="{!'https://lanecorp--uat.sandbox.lightning.force.com/lightning/r/Opportunity/' + Opportunity.Id + '/view'}">{!Opportunity.Name}</a></td>
+</tr>
+<tr>
+<td>Amount: {!Opportunity.Loan_Amount__c}</td>
+</tr>
+<tr>
+<td>Purpose: {!Opportunity.Purpose__c}</.td>
+</tr>
+<tr>
+<td>Opportunity Owner: {!Opportunity.OwnerFullName}</td>
+<tr/>
+</table>
+<p>Kind regards,</p>
+<p>The Parker Lane team</p>
+</body>
+</html>

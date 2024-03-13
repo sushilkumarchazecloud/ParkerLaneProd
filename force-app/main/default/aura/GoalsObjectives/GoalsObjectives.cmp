@@ -1,4 +1,4 @@
-<aura:component controller="ParkerLaneLoanController">
+<aura:component controller="ApplicationFormController">
     
     <aura:attribute name="recordId" type="Id" />
     <aura:attribute name="applicationSection" type="String" default=""/>
@@ -20,7 +20,7 @@
     <aura:attribute name="isMortgage" type="Boolean" default="false"/>
     <aura:attribute name="showError" type="Boolean" default="false"/>
     <aura:attribute name="errorMsg" type="String" default="Please update the form entries highlighted in red and try again"/>
-	<aura:attribute name="goal" type="FinServ__FinancialGoal__c" default="{'sobjectType': 'FinServ__FinancialGoal__c'}"/>
+	<aura:attribute name="goal" type="Goals__c" default="{'sobjectType': 'Goals__c'}"/>
     
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <aura:method name="saveGoalsDetails" action="{!c.saveApplication}" access="PUBLIC" >
@@ -307,7 +307,7 @@
                     <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-large-size_4-of-12">
                         <div class="slds-form__item" role="listitem">
                             <div class="slds-form-element slds-form-element_stacked slds-is-editing no-abbr">
-                                <lightning:radioGroup name="financialGoalsRG"
+                                <lightning:radioGroup name="GoalssRG"
                                                       aura:id="fieldcheck" 
                                                       required="{!v.goal.Plan_to_achieve_your_financial_goals__c !='Not applicable'}"
                                                       label=""

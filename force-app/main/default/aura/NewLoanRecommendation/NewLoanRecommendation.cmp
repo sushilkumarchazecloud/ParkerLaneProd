@@ -1,7 +1,6 @@
-<aura:component controller="ParkerLaneLoanController">
-    <aura:attribute name="quotesWpr" type="ParkerLaneLoanController.WrapperLoanRate[]" />
+<aura:component controller="ApplicationFormController">
+    <aura:attribute name="quotesWpr" type="ApplicationFormController.WrapperLoanRate[]" />
     <aura:attribute name="customerAmount" type="String" />
-     <aura:attribute name="customerAmountnew" type="String" />
     <aura:attribute name="masterQuote" type="String" />
     <aura:attribute name="bgImage" type="String" />
     <aura:attribute name="lgImage" type="String" />
@@ -16,10 +15,7 @@
     <aura:attribute name="applicationSection" type="String" default=""/>
     <aura:attribute name="appSectionPath" type="List" default="[]"/>
     <aura:attribute name="selectedQuote" type="sObject" />
-    <aura:attribute name="timer" type="Integer"/>
-    <aura:attribute name= "isSpinner" type="boolean"/>
     
-    <aura:handler name="change" value="{!v.isSpinner}" action="{!c.addSpinner}"/>  
     <aura:handler name="ApplyNowEvent" event="c:ApplyNowEvent" action="{!c.Apply}"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     
@@ -53,8 +49,7 @@
                                          class="txt-left no-abbr input-style"  
                                          step="1" 
                                          value = "{!v.customerAmount}" 
-                                         placeholder="How much do you need?"
-                                         onchange="{!c.onAmountChange}"/>
+                                         placeholder="How much do you need?"/>
                     </div>
                 </div>
             </div>
@@ -67,13 +62,12 @@
                     <h2 style="color:#0176D3;padding-left: 5px;font-size: 14px;">Select the drop down to change your loan term</h2>
                 </div>
             </div>
-            <div class="slds-m-top_large">
+            <div class="slds-align_absolute-center slds-m-top_large">
                 <div class="product-selector__choices slds-grid slds-wrap slds-grid slds-gutters"> 
                     <aura:iteration items="{!v.quotesWpr}" var="quotesWpr" indexVar = "indx">
                         <c:LoanRecommendationCard quote ="{!quotesWpr.quote}" 
                                                   loanRates = "{!quotesWpr.loanRatelist}"
-                                                  customerAmount="{!v.customerAmountnew}"
-                                                  isSpinner="{!v.isSpinner}"
+                                                  customerAmount="{!v.customerAmount}"
                                                   purpose="{!v.purpose}"
                                                   index = "{!indx}"/>
                     </aura:iteration> 
@@ -85,15 +79,15 @@
             <div class="slds-col slds-m-top_medium">
                 <img src="{!$Resource.SolarLoan + '/img/parkerlanecropped.png'}" style="height: 35px"/>
             </div>
-            <div class="slds-col slds-m-top_x-large headings_css">Australia's highest rated finance provider</div>
-            <div class="slds-col slds-medium-size_8-of-12 slds-large-size_5-of-12 slds-p-around_x-small rating_css">Parker Lane has earned <b>4.9 </b>out of <b>5 </b>stars on ProductReview.com.au and is recommended by 1,600+ advisors nationwide.</div>
+            <div class="slds-col slds-m-top_x-large headings_css">Australia's highest rated green loan provider</div>
+            <div class="slds-col slds-medium-size_8-of-12 slds-large-size_5-of-12 slds-p-around_x-small rating_css">Parker Lane has earned <b>4.9 </b>out of <b>5 </b>stars on ProductReview.com.au and is recommended by 1,600+ solar advisors nationwide.</div>
             <div class="slds-col slds-m-top_xx-large">
                 <img src="{!$Resource.ReferralPortal + '/ReferralPortal/4.9Stars.png'}" class="stars_css"/>
             </div>
             <div class="slds-col small_hd2">More for you</div>
             <div class="slds-col slds-p-around_small headings_css">Fast, flexible and 100% Aussie owned</div>
         </div>
-        <div class="slds-grid slds-wrap slds-align_absolute-center slds-m-top_xx-large imgStyle">            
+        <div class="slds-grid slds-wrap slds-align_absolute-center slds-m-top_xx-large">            
             <div class="slds-col slds-size_12-of-12 slds-medium-size_3-of-12 slds-large-size_3-of-12" style="width: auto;">
                 <div class="slds-grid slds-grid_vertical slds-align_absolute-center">
                     <div class="slds-col">

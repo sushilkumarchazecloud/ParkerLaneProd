@@ -1,0 +1,5 @@
+<messaging:emailTemplate subject="We need some information to complete your {!relatedTo.Purpose__c} application" recipientType="Contact" relatedToType="Opportunity" renderUsingSystemContextWithoutSharing="true">
+<messaging:htmlEmailBody >
+<c:customerInformationRequired oppId="{!relatedTo.Id}"/>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

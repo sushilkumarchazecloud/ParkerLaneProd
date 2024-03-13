@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Referrer_Rating__c</fullName>
     <externalId>false</externalId>
-    <formula>TEXT(FinServ__ReferredByContact__r.Referrer_Rating__c)</formula>
+    <formula>TEXT(ReferredByContact__r.Referrer_Rating__c)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Referrer Rating</label>
     <required>false</required>

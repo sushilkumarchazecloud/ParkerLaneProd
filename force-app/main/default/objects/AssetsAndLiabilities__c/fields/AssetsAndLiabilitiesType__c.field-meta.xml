@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AssetsAndLiabilitiesType__c</fullName>
+    <externalId>false</externalId>
+    <label>AssetsAndLiabilitiesType</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Auto Loan</fullName>
+                <default>false</default>
+                <label>Auto Loan</label>
+            </value>
+            <value>
+                <fullName>Home Loan/Mortgage</fullName>
+                <default>false</default>
+                <label>Home Loan/Mortgage</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+            <value>
+                <fullName>Personal Loan</fullName>
+                <default>false</default>
+                <label>Personal Loan</label>
+            </value>
+            <value>
+                <fullName>Real Estate</fullName>
+                <default>false</default>
+                <label>Real Estate</label>
+            </value>
+            <value>
+                <fullName>Equipment</fullName>
+                <default>false</default>
+                <label>Equipment</label>
+            </value>
+            <value>
+                <fullName>Automobile</fullName>
+                <default>false</default>
+                <label>Automobile</label>
+            </value>
+            <value>
+                <fullName>Collection</fullName>
+                <default>false</default>
+                <label>Collection</label>
+            </value>
+            <value>
+                <fullName>Gold</fullName>
+                <default>false</default>
+                <label>Gold</label>
+            </value>
+            <value>
+                <fullName>Jewelry</fullName>
+                <default>false</default>
+                <label>Jewelry</label>
+            </value>
+            <value>
+                <fullName>Cash</fullName>
+                <default>false</default>
+                <label>Cash</label>
+            </value>
+            <value>
+                <fullName>Home</fullName>
+                <default>false</default>
+                <label>Home</label>
+            </value>
+            <value>
+                <fullName>Motor Vehicle</fullName>
+                <default>false</default>
+                <label>Motor Vehicle</label>
+            </value>
+            <value>
+                <fullName>Bank Account</fullName>
+                <default>false</default>
+                <label>Bank Account</label>
+            </value>
+            <value>
+                <fullName>Home Contents</fullName>
+                <default>false</default>
+                <label>Home Contents</label>
+            </value>
+            <value>
+                <fullName>HECS/HELP</fullName>
+                <default>false</default>
+                <label>HECS/HELP</label>
+            </value>
+            <value>
+                <fullName>Child support</fullName>
+                <default>false</default>
+                <label>Child support</label>
+            </value>
+            <value>
+                <fullName>Investment Property</fullName>
+                <default>false</default>
+                <label>Investment Property</label>
+            </value>
+            <value>
+                <fullName>Car Loan</fullName>
+                <default>false</default>
+                <label>Car Loan</label>
+            </value>
+            <value>
+                <fullName>Superannuation</fullName>
+                <default>false</default>
+                <label>Superannuation</label>
+            </value>
+            <value>
+                <fullName>Credit Card / Store Card</fullName>
+                <default>false</default>
+                <label>Credit Card / Store Card</label>
+            </value>
+            <value>
+                <fullName>Commercial Property</fullName>
+                <default>false</default>
+                <label>Commercial Property</label>
+            </value>
+            <value>
+                <fullName>Leisure</fullName>
+                <default>false</default>
+                <label>Leisure</label>
+            </value>
+            <value>
+                <fullName>Payday Loan</fullName>
+                <default>false</default>
+                <label>Payday Loan</label>
+            </value>
+            <value>
+                <fullName>Car Lease</fullName>
+                <default>false</default>
+                <label>Car Lease</label>
+            </value>
+            <value>
+                <fullName>Merchant Credit (zip pay / afterpay / certigy)</fullName>
+                <default>false</default>
+                <label>Merchant Credit (zip pay / afterpay / certigy)</label>
+            </value>
+            <value>
+                <fullName>Shares Portfolio</fullName>
+                <default>false</default>
+                <label>Shares Portfolio</label>
+            </value>
+            <value>
+                <fullName>Collectibles</fullName>
+                <default>false</default>
+                <label>Collectibles</label>
+            </value>
+            <value>
+                <fullName>Margin Loan</fullName>
+                <default>false</default>
+                <label>Margin Loan</label>
+            </value>
+            <value>
+                <fullName>Overdraft</fullName>
+                <default>false</default>
+                <label>Overdraft</label>
+            </value>
+            <value>
+                <fullName>Tax liability</fullName>
+                <default>false</default>
+                <label>Tax liability</label>
+            </value>
+            <value>
+                <fullName>Investment Home Loan</fullName>
+                <default>false</default>
+                <label>Investment Home Loan</label>
+            </value>
+            <value>
+                <fullName>Commercial Mortgage</fullName>
+                <default>false</default>
+                <label>Commercial Mortgage</label>
+            </value>
+            <value>
+                <fullName>Child Maintenance</fullName>
+                <default>false</default>
+                <label>Child Maintenance</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

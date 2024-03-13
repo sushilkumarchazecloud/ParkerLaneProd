@@ -15,19 +15,7 @@
                 <field>DeveloperName</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
-                <field>Document__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
-                <field>Object__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
-                <field>Fields__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>Category__c</field>
             </layoutItems>
             <layoutItems>
@@ -36,11 +24,23 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Rules__c</field>
+                <field>Document__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Fields__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>isGeneral__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Object__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Rules__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -78,8 +78,6 @@
         <customLabel>false</customLabel>
         <detailHeading>false</detailHeading>
         <editHeading>false</editHeading>
-        <layoutColumns/>
-        <layoutColumns/>
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>

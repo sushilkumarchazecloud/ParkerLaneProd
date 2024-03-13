@@ -18,7 +18,7 @@
     <aura:attribute name="app1Ownership" type="String" default="Applicant 1 Ownership Share (%)"/>
     <aura:attribute name="app2Ownership" type="String" default="Applicant 2 Ownership Share (%)"/>
     <aura:attribute name="selectedPerson" type="String" default="single"/>
-    <aura:attribute name="consumerAssets" type="FinServ__AssetsAndLiabilities__c" />
+    <aura:attribute name="consumerAssets" type="AssetsAndLiabilities__c" />
     <aura:attribute name="index" type="Integer" />
     <aura:attribute name="showError" type="Boolean" default="false"/>
     <aura:attribute name="errorMsg" type="String" default="Please update the form entries highlighted in red and try again"/>
@@ -42,7 +42,7 @@
             <div class="slds-form__item" role="listitem">
                 <div class="slds-form-element slds-form-element_stacked slds-is-editing">
                     <lightning:combobox label="Asset Type" aura:id="fieldcheckType" required="true"
-                                        value="{!v.consumerAssets.FinServ__AssetsAndLiabilitiesType__c}" 
+                                        value="{!v.consumerAssets.AssetsAndLiabilitiesType__c}" 
                                         options="{! v.assetTypeOptions }" 
                                         placeholder="Asset Type"/>
                 </div>
@@ -50,16 +50,16 @@
             
             <div class="slds-form__item" role="listitem">
                 <div class="slds-form-element slds-form-element_stacked slds-is-editing">
-                    <aura:if isTrue="{!v.consumerAssets.FinServ__AssetsAndLiabilitiesType__c != null &amp;&amp; v.consumerAssets.FinServ__AssetsAndLiabilitiesType__c != ''}">
+                    <aura:if isTrue="{!v.consumerAssets.AssetsAndLiabilitiesType__c != null &amp;&amp; v.consumerAssets.AssetsAndLiabilitiesType__c != ''}">
                         <aura:if isTrue="{!v.selectedPerson == 'joint'}">
                             <lightning:combobox label="Ownership" aura:id="fieldcheck" required="true"
-                                                value="{!v.consumerAssets.FinServ__Ownership__c}" 
+                                                value="{!v.consumerAssets.Ownership__c}" 
                                                 options="{! v.OwnershipOptions }" 
                                                 placeholder="Ownership"
                                                 onchange="{!c.handleOwnership}"/>
                             <aura:set attribute="else">
                                 <lightning:combobox label="Ownership" aura:id="fieldcheck" required="true"
-                                                    value="{!v.consumerAssets.FinServ__Ownership__c}" 
+                                                    value="{!v.consumerAssets.Ownership__c}" 
                                                     options="{! v.OwnershipSingleOptions }" 
                                                     placeholder="Ownership"
                                                     onchange="{!c.handleOwnership}"/>
@@ -70,9 +70,9 @@
             </div>
         </div>
        
-        <aura:if isTrue="{!v.consumerAssets.FinServ__Ownership__c == 'Joint' || 
-                         v.consumerAssets.FinServ__Ownership__c == 'Joint (non-applicant)' ||
-                         v.consumerAssets.FinServ__Ownership__c == 'Joint with Spouse'}">
+        <aura:if isTrue="{!v.consumerAssets.Ownership__c == 'Joint' || 
+                         v.consumerAssets.Ownership__c == 'Joint (non-applicant)' ||
+                         v.consumerAssets.Ownership__c == 'Joint with Spouse'}">
             <div aura:id = "ownShare" class="slds-form__row ">
                 <div class="slds-form__item" role="listitem">
                     <div class="slds-form-element slds-form-element_stacked slds-is-editing">
@@ -99,7 +99,7 @@
             </div> 
         </aura:if>
         
-        <aura:if isTrue="{!v.consumerAssets.FinServ__AssetsAndLiabilitiesType__c=='Home' ||v.consumerAssets.FinServ__AssetsAndLiabilitiesType__c=='Investment Property' || v.consumerAssets.FinServ__AssetsAndLiabilitiesType__c=='Commercial Property'}">
+        <aura:if isTrue="{!v.consumerAssets.AssetsAndLiabilitiesType__c=='Home' ||v.consumerAssets.AssetsAndLiabilitiesType__c=='Investment Property' || v.consumerAssets.AssetsAndLiabilitiesType__c=='Commercial Property'}">
             <div class="slds-form__row ">
                     <div class="slds-form__item" role="listitem">
                         <div class="slds-form-element">
@@ -107,7 +107,7 @@
                         </div>
                     </div>
                 </div>
-            <aura:if isTrue="{!v.consumerAssets.FinServ__AssetsAndLiabilitiesType__c=='Home'}">
+            <aura:if isTrue="{!v.consumerAssets.AssetsAndLiabilitiesType__c=='Home'}">
                 
                 <div class="slds-form__row">
                     <div class="slds-form__item" role="listitem">
@@ -228,7 +228,7 @@
                 </div>
             </div>
         </aura:if>
-        <aura:if isTrue="{!v.consumerAssets.FinServ__AssetsAndLiabilitiesType__c=='Motor Vehicle'}">
+        <aura:if isTrue="{!v.consumerAssets.AssetsAndLiabilitiesType__c=='Motor Vehicle'}">
             <div class="slds-form__row">
                 <div class="slds-form__item" role="listitem">
                     <div class="slds-form-element slds-form-element_stacked slds-is-editing">
@@ -260,7 +260,7 @@
                 </div>
             </div>
         </aura:if>
-        <aura:if isTrue="{!v.consumerAssets.FinServ__AssetsAndLiabilitiesType__c=='Bank Account'}">
+        <aura:if isTrue="{!v.consumerAssets.AssetsAndLiabilitiesType__c=='Bank Account'}">
             <div class="slds-form__row">
                 <div class="slds-form__item" role="listitem">
                     <div class="slds-form-element slds-form-element_stacked slds-is-editing">
@@ -290,7 +290,7 @@
                 </div>
             </div>
         </aura:if>
-        <aura:if isTrue="{!v.consumerAssets.FinServ__AssetsAndLiabilitiesType__c=='Superannuation'}">
+        <aura:if isTrue="{!v.consumerAssets.AssetsAndLiabilitiesType__c=='Superannuation'}">
             <div class="slds-form__row">
                 <div class="slds-form__item" role="listitem">
                     <div class="slds-form-element slds-form-element_stacked slds-is-editing">
@@ -311,9 +311,9 @@
             </div>
         </aura:if>
         
-        <aura:if isTrue="{!v.consumerAssets.FinServ__AssetsAndLiabilitiesType__c=='Home Contents' ||v.consumerAssets.FinServ__AssetsAndLiabilitiesType__c=='Shares Portfolio' ||
-                         v.consumerAssets.FinServ__AssetsAndLiabilitiesType__c=='Collectibles' || v.consumerAssets.FinServ__AssetsAndLiabilitiesType__c=='Leisure' ||
-                         v.consumerAssets.FinServ__AssetsAndLiabilitiesType__c=='Other'}">
+        <aura:if isTrue="{!v.consumerAssets.AssetsAndLiabilitiesType__c=='Home Contents' ||v.consumerAssets.AssetsAndLiabilitiesType__c=='Shares Portfolio' ||
+                         v.consumerAssets.AssetsAndLiabilitiesType__c=='Collectibles' || v.consumerAssets.AssetsAndLiabilitiesType__c=='Leisure' ||
+                         v.consumerAssets.AssetsAndLiabilitiesType__c=='Other'}">
             <div class="slds-form__row">
                 <div class="slds-form__item" role="listitem">
                     <div class="slds-form-element slds-form-element_stacked slds-is-editing">
@@ -325,7 +325,7 @@
                 </div>
             </div>
         </aura:if>
-        <aura:if isTrue="{!v.consumerAssets.FinServ__AssetsAndLiabilitiesType__c=='Investment Property' || v.consumerAssets.FinServ__AssetsAndLiabilitiesType__c=='Commercial Property'}">
+        <aura:if isTrue="{!v.consumerAssets.AssetsAndLiabilitiesType__c=='Investment Property' || v.consumerAssets.AssetsAndLiabilitiesType__c=='Commercial Property'}">
             <div class="slds-form__row">
                 <div class="slds-form__item" role="listitem">
                     <div class="slds-form-element slds-form-element_stacked slds-is-editing">
@@ -369,13 +369,13 @@
                 </div>
             </div>
         </aura:if>
-        <aura:if isTrue="{!v.consumerAssets.FinServ__AssetsAndLiabilitiesType__c != null &amp;&amp; v.consumerAssets.FinServ__AssetsAndLiabilitiesType__c != ''}">
+        <aura:if isTrue="{!v.consumerAssets.AssetsAndLiabilitiesType__c != null &amp;&amp; v.consumerAssets.AssetsAndLiabilitiesType__c != ''}">
             
             <div class="slds-form__row">
                 <div class="slds-form__item" role="listitem">
                     <div class="slds-form-element slds-form-element_stacked slds-is-editing">
                         <lightning:input label="Description (optional)" maxlength="255"
-                                         value="{!v.consumerAssets.FinServ__Description__c}" placeholder="Description"/>
+                                         value="{!v.consumerAssets.Description__c}" placeholder="Description"/>
                     </div>
                 </div>
             </div>

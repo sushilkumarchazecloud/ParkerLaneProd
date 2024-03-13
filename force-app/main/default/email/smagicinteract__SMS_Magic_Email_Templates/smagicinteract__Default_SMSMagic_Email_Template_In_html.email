@@ -1,0 +1,12 @@
+<messaging:emailTemplate subject="SMS-Magic: New Message received" recipientType="User" relatedToType="smagicinteract__Incoming_SMS__c">
+<messaging:htmlEmailBody >
+         
+    <p style="margin: 0px 95px 10px 0px;font-size: 16px;color: #333333;">Hi {!recipient.name},</p>
+    <c:VFNotificationTemplate IncId="{!relatedTo.Id}" ConvId="{!relatedTo.smagicinteract__Conversation__c}"
+        PrimObj="{!relatedTo.smagicinteract__ObjectType__c}"
+        IncDate="{!relatedTo.CreatedDate}" text="{!relatedTo.smagicinteract__SMS_Text__c}" IncObj="{!relatedTo}"/>
+    <p>Thank You,</p>
+    <p>Team SMS-Magic</p>
+   
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

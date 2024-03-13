@@ -254,7 +254,7 @@
                                                     <apex:image url="{!URLFOR($Resource.SolarLoan, 'img/applynow.png')}" style="width:100px" />
                                                 </div>
                                                 <div style="font-size:12px;">
-                                                    www.parkerlane.com.au/apply<br/>
+                                                    www.chazecloud.com/apply<br/>
                                                     <b>Call 1300 131 711</b>
                                                 </div>
                                             </td>
@@ -433,7 +433,7 @@
                                     are not included in the comparison rate but may influence the cost of the loan. Comparison rate has been calculated based upon the nominal interest rate and any one-off and/or ongoing 
                                     fees which apply to your loan and is based on monthly repayments. Rates subject to change, or may be withdrawn at any time. All applications for credit are subject to normal credit approval criteria. 
                                     Parker Lane specifically disclaims any responsibility or liability for any losses or damages arising from any use of or reliance upon any calculations or conclusions reached using the payment table. 
-                                    See our credit guide for further detail: https://www.parkerlane.com.au/credit-guide. Conditions Apply.
+                                    See our credit guide for further detail: https://www.chazecloud.com Conditions Apply.
                                     
                                 </div>
                             </td>

@@ -1,0 +1,11 @@
+New Task Created
+
+You have received a new SMS:
+-----------------------------------------------------------------------
+Subject: {!Task.Subject}
+Message: {!Task.Description}
+Sent From: {!Task.mercury__SMS_Sent_From__c}
+Sent To: {!Task.mercury__Sent_To__c}  {!Task.mercury__SMS_Reference__c}
+
+A Task has been created: {!Task.Link}
+-----------------------------------------------------------------------

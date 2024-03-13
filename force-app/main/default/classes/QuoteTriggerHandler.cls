@@ -1,41 +1,93 @@
-public class QuoteTriggerHandler {
-    public void onAfterDelete(List<Quote> oldQuote, Map<Id,Quote> oldQuoteMap){
-        Set<Id> v = new Set<Id>();
-        for(Quote q: oldQuote){
-            if(q.Application__c == true){
-                v.add(q.OpportunityId);
-            }
-        }
-        if(v.size() > 0){
-            List<Opportunity> oppList = [Select Id, Loan_Amount__c from Opportunity where Id in: v];
-            for(Opportunity opp: oppList){
-                opp.Loan_Amount__c = 0;
-                opp.Lender__c = '';
-            }
-            update oppList;
-        }
+/**
+ * @description	: Handler class for Quote triggers to encapsulate the trigger logic.
+ * @author     	: Sethu Singh Rawat
+ * @created on 	: 26-02-2024
+ */
+public with sharing class QuoteTriggerHandler implements ITriggerHandlerInf {
+    public static boolean triggerDisabled = false;
+    
+    /**
+     * @description: Checks if the trigger is disabled.
+     * @author     : Sethu Singh Rawat
+     * @created on : 26-02-2024
+     * @return     : Boolean - True if the trigger is disabled, false otherwise.
+     */
+    public Boolean isDisabled() {
+        return triggerDisabled;
     }
     
-    public void afterInsert(List<Quote> QtList){
-        Set<Id> qtIds = new Set<Id>();
-        List<Quote> qtListToUpdate = new List<Quote>();
-        if(!QtList.isEmpty()){
-            for(Quote qtt : QtList){
-               qtIds.add(qtt.Id); 
-               system.debug('tigeuih'+qtt.Product__r.Lender_Account__c);
-            }
-            List<Quote> newQtList = [SELECT Id,Lender_Account__c,Product__c,Product__r.Lender_Account__c FROM Quote WHERE Id IN: qtIds];
-            for(Quote qt : newQtList){
-                if(qt.Product__c != null){
-                    if(qt.Product__r.Lender_Account__c != null){
-                       qt.Lender_Account__c = qt.Product__r.Lender_Account__c;
-                       qtListToUpdate.add(qt);
-                    } 
-                }
-            }  
-        } 
-        if(!qtListToUpdate.isEmpty()){
-            update qtListToUpdate;
-        }
+    /**
+     * @description: Logic to be executed before account records are inserted.
+     * @author     : Sethu Singh Rawat
+     * @created on : 26-02-2024
+     * @param      : newItems - List of new SObject records being inserted.
+     */
+    public void beforeInsert(List<SObject> newItems) {
+        System.debug('beforeInsert: ' + newItems);
+        // Additional logic to be implemented
+    }
+    
+    /**
+     * @description: Logic to be executed before account records are updated.
+     * @author     : Sethu Singh Rawat
+     * @created on : 26-02-2024
+     * @param      : newItems - Map of new SObject records being updated, keyed by their Id.
+     * @param      : oldItems - Map of old SObject records before the update, keyed by their Id.
+     */
+    public void beforeUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) {
+        System.debug('beforeUpdate: ' + newItems + '\noldItems: ' + oldItems);
+        // Additional logic to be implemented
+    }
+    
+    /**
+     * @description: Logic to be executed before account records are deleted.
+     * @author     : Sethu Singh Rawat
+     * @created on : 26-02-2024
+     * @param      : oldItems - Map of SObject records being deleted, keyed by their Id.
+     */
+    public void beforeDelete(Map<Id, SObject> oldItems) {
+        System.debug('beforeDelete: ' + oldItems);
+        // Additional logic to be implemented
+    }
+    
+    /**
+     * @description: Logic to be executed after account records are inserted.
+     * @author     : Sethu Singh Rawat
+     * @created on : 22-02-2024
+     * @param      : newItems - Map of new SObject records that were inserted, keyed by their Id.
+     */
+    public void afterInsert(Map<Id, SObject> newItems) {
+        System.debug('afterInsert: ' + newItems);
+    }
+    
+    /**
+     * @description: Logic to be executed after account records are updated.
+     * @author     : Sethu Singh Rawat
+     * @created on : 26-02-2024
+     * @param      : newItems - Map of new SObject records after the update, keyed by their Id.
+     * @param      : oldItems - Map of old SObject records before the update, keyed by their Id.
+     */
+    public void afterUpdate(Map<Id, SObject> newItems, Map<Id, SObject> oldItems) {
+        System.debug('afterUpdate: ' + newItems + ' oldItems: ' + oldItems);
+    }
+    
+    /**
+     * @description: Logic to be executed after account records are deleted.
+     * @author     : Sethu Singh Rawat
+     * @created on : 26-02-2024
+     * @param      : oldItems - Map of SObject records that were deleted, keyed by their Id.
+     */
+    public void afterDelete(Map<Id, SObject> oldItems) {
+        System.debug('afterDelete: ' + 'oldItems: ' + oldItems);
+    }
+    
+    /**
+     * @description: Logic to be executed after account records are undeleted.
+     * @author     : Sethu Singh Rawat
+     * @created on : 26-02-2024
+     * @param      : newItems - Map of SObject records that were undeleted, keyed by their Id.
+     */
+    public void afterUndelete(Map<Id, SObject> newItems) {
+        System.debug('afterUndelete: ' + 'newItems: ' + newItems);
     }
 }

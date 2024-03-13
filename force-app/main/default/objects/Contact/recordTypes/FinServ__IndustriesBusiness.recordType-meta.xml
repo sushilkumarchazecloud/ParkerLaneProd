@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>FinServ__IndustriesBusiness</fullName>
+    <fullName>IndustriesBusiness</fullName>
     <active>true</active>
     <description>Contact data for an institution or a business account</description>
     <label>Business</label>
@@ -140,7 +140,7 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>FinServ__CommunicationPreferences__c</picklist>
+        <picklist>CommunicationPreferences__c</picklist>
         <values>
             <fullName>Balance Activities%3AEmail</fullName>
             <default>false</default>
@@ -179,7 +179,7 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>FinServ__ContactPreference__c</picklist>
+        <picklist>ContactPreference__c</picklist>
         <values>
             <fullName>Email</fullName>
             <default>false</default>
@@ -194,7 +194,7 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>FinServ__CountryOfBirth__c</picklist>
+        <picklist>CountryOfBirth__c</picklist>
         <values>
             <fullName>Afghanistan</fullName>
             <default>false</default>
@@ -1153,7 +1153,7 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>FinServ__CustomerTimezone__c</picklist>
+        <picklist>CustomerTimezone__c</picklist>
         <values>
             <fullName>Africa%2FCairo</fullName>
             <default>false</default>
@@ -1504,7 +1504,7 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>FinServ__Gender__c</picklist>
+        <picklist>Gender__c</picklist>
         <values>
             <fullName>Decline to Specify</fullName>
             <default>false</default>
@@ -1523,7 +1523,7 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>FinServ__HomeOwnership__c</picklist>
+        <picklist>HomeOwnership__c</picklist>
         <values>
             <fullName>Other</fullName>
             <default>false</default>
@@ -1538,14 +1538,14 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>FinServ__IndividualType__c</picklist>
+        <picklist>IndividualType__c</picklist>
         <values>
             <fullName>Individual</fullName>
             <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>FinServ__MaritalStatus__c</picklist>
+        <picklist>MaritalStatus__c</picklist>
         <values>
             <fullName>Divorced</fullName>
             <default>false</default>
@@ -1572,7 +1572,7 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>FinServ__MostUsedChannel__c</picklist>
+        <picklist>MostUsedChannel__c</picklist>
         <values>
             <fullName>Branch</fullName>
             <default>false</default>
@@ -1595,7 +1595,7 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>FinServ__NextLifeEvent__c</picklist>
+        <picklist>NextLifeEvent__c</picklist>
         <values>
             <fullName>Children</fullName>
             <default>false</default>
@@ -1638,7 +1638,7 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>FinServ__PrimaryCitizenship__c</picklist>
+        <picklist>PrimaryCitizenship__c</picklist>
         <values>
             <fullName>Afghanistan</fullName>
             <default>false</default>
@@ -2597,7 +2597,7 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>FinServ__PrimaryLanguage__c</picklist>
+        <picklist>PrimaryLanguage__c</picklist>
         <values>
             <fullName>Abkhaz</fullName>
             <default>false</default>
@@ -3128,7 +3128,7 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>FinServ__SecondaryCitizenship__c</picklist>
+        <picklist>SecondaryCitizenship__c</picklist>
         <values>
             <fullName>Afghanistan</fullName>
             <default>false</default>
@@ -4087,7 +4087,7 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>FinServ__SecondaryLanguage__c</picklist>
+        <picklist>SecondaryLanguage__c</picklist>
         <values>
             <fullName>Abkhaz</fullName>
             <default>false</default>
@@ -4618,7 +4618,7 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>FinServ__TaxBracket__c</picklist>
+        <picklist>TaxBracket__c</picklist>
         <values>
             <fullName>10%25</fullName>
             <default>false</default>
