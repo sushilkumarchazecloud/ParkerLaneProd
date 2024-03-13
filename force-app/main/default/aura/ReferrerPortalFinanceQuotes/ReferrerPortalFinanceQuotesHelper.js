@@ -43,9 +43,9 @@
         var oppId=component.get("v.WrapperData.Id");
         var leadId=component.get("v.WrapperData.LeadId__c");
         //alert(leadId);
-        var conId = component.get("v.WrapperData.FinServ__ReferredByContact__c");
+        var conId = component.get("v.WrapperData.ReferredByContact__c");
         var custEmail = component.get("v.WrapperData.Applicant_1_Email__c");
-        var refEmail = component.get("v.WrapperData.FinServ__ReferredByContact__r.Email");
+        var refEmail = component.get("v.WrapperData.ReferredByContact__r.Email");
         var action = component.get("c.sendQuotes");
         action.setParams({wrapperList : selectedQuotesList,
                           OppId : oppId,

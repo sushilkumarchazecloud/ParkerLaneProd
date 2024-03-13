@@ -1,0 +1,51 @@
+<aura:component controller="ResendSMSController" implements="lightning:actionOverride,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="getName" type="List" default=""/> 
+    <aura:attribute name="isButtonActive" type="Boolean" default="true"/>
+    <aura:attribute name="spinnerShow" type="Boolean" default="false"/>
+    <aura:attribute name="getPhone" type="string" default=""/> 
+    <aura:attribute name="vois" type="string"  default=""/>     
+    <aura:handler name="init" value="{!this}" action="{!c.myAction}"/>
+    <aura:attribute name="opp" type="contact" default="{'sobjectType': 'contact', 'VOI_type__c':''}"/>
+    <aura:attribute name="voiType" type="List" default="[{'label': 'FULL', 'value': 'FULL'},{'label': 'VOI', 'value': 'VOI'},{'label': 'E-SIGN', 'value': 'E-SIGN'}]"/>
+    <aura:attribute name="voiVia" type="List" default="[{'label': 'SMS and email', 'value': 'SMS and email'},{'label': 'SMS only', 'value': 'SMS only'},{'label': 'Email only', 'value': 'Email only'}]"/>
+    
+    <aura:if isTrue="{!v.spinnerShow}">
+        <div class="slds-spinner_container slds-is-relative" style="position : fixed;">
+            <div role="status" class="slds-spinner slds-spinner--large slds-spinner--brand">
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+    
+    <div class="slds-box" style="background-color: white;" >
+        <div style="background-color:white">
+            <lightning:recordEditForm  objectApiName="Contact">
+                <lightning:messages />
+                <lightning:select name="select" label="Select Contact" aura:id="contactName" onchange="{!c.getPhoneNumber}">
+                    <option value="">-- None --</option>
+                    <aura:iteration items="{!v.getName}" var="item">
+                        <option value="{!item}" text="{!item}"></option>
+                    </aura:iteration>
+                </lightning:select>	
+                <div class="slds-m-around_small">
+                    <label>Phone :</label> 
+                    <ui:outputText value="{!v.getPhone}" />	
+                </div>
+                <lightning:select required="true" value="{!v.opp.VOI_type__c}" label="Type" disabled="{!v.isButtonActive}">
+                    <option value="">Select</option>
+                    <aura:iteration items="{!v.voiType}" var="option">
+                        <option value="{!option.value}" text="{!option.value}"></option>
+                    </aura:iteration>
+                </lightning:select>     
+                <lightning:select label="Send Via" required="true" aura:id="voiVIa" >
+                <option value="">Select</option>
+                <aura:iteration items="{!v.voiVia}" var="option" >
+                    <option value="{!option.value}" text="{!option.value}"></option>
+                </aura:iteration>
+            </lightning:select>
+            </lightning:recordEditForm>             
+        </div><br/> 
+        <lightning:button variant="brand" label="Submit" onclick="{!c.SendSMS}"/>
+    </div>
+</aura:component>

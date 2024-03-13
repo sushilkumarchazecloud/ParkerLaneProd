@@ -111,7 +111,7 @@
                                     </div> 
                                     <div class="slds-form__item" role="listitem">
                                         <div class="slds-form-element slds-form-element_stacked slds-is-editing">
-                                            <lightning:input  label="Name" value="{!v.oppWrapper.FinServ__ReferredByContact__r.Name}" 
+                                            <lightning:input  label="Name" value="{!v.oppWrapper.ReferredByContact__r.Name}" 
                                                              readonly="true"/>
                                         </div>
                                     </div>

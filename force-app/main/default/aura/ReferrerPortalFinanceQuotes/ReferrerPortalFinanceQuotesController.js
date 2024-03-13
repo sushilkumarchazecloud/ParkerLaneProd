@@ -1,11 +1,11 @@
 ({  
     doInit : function(component, event, helper){
         //code for showing edit button on conditions
-        var quoteType=component.get("v.WrapperData.RecordType.Name");
-        if(quoteType=='Green Loan'){
+        var quoteType=component.get("v.WrapperData.Product_Type_Lookup__c");
+       /* if(quoteType=='Green Loan'){
             quoteType='Solar';
             component.set("v.quoteType",quoteType);
-        }
+        }*/
         component.set("v.quoteType",quoteType);
         var oppApplicationSection = component.get("v.WrapperData.Current_Application_Sections__c");
         var oppStage = component.get("v.WrapperData.StageName");

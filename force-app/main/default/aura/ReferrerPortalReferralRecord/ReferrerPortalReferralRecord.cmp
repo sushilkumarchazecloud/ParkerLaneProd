@@ -86,7 +86,7 @@
                         </aura:if>
                     </td> 
                     <td style="width: 13%;">Address</td>
-                    <td style="width: 11%;">{!v.oppWrapper.Opportunity.FinServ__ReferredByContact__r.Name}</td>
+                    <td style="width: 11%;">{!v.oppWrapper.Opportunity.ReferredByContact__r.Name}</td>
                     <td style="width: 5%;"><lightning:buttonIcon iconName="utility:expand_alt" size="small" variant="bare" onclick="{!c.showModal}"/></td>
                 </tr>
             </tbody>
@@ -287,7 +287,7 @@
                                                         </div> 
                                                         <div class="slds-form__item" role="listitem">
                                                             <div class="slds-form-element slds-form-element_stacked slds-is-editing">
-                                                                <lightning:input  label="Name" value="{!v.oppWrapper.Opportunity.FinServ__ReferredByContact__r.Name}" 
+                                                                <lightning:input  label="Name" value="{!v.oppWrapper.Opportunity.ReferredByContact__r.Name}" 
                                                                                  readonly="true"/>
                                                             </div>
                                                         </div>

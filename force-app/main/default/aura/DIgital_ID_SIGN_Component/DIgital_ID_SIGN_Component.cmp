@@ -213,7 +213,7 @@
                         </div>
                     </div>
                      <div class="slds-col slds-size_6-of-12">
-                        <lightning:select name="select1" label="Gender" value="{!v.Con.FinServ__Gender__c}">
+                        <lightning:select name="select1" label="Gender" value="{!v.Con.Gender__c}">
                             <option value="">choose one...</option>
                             <option value="Female">Female</option>
                             <option value="Male">Male</option>
