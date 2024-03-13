@@ -1,9 +1,0 @@
-<aura:component >
-    <aura:attribute name="sessionId" type="String"/>
-    <aura:attribute name="phone" type="String"/>
-    <aura:attribute name="accountId" type="String"/>
-    
-    <div class="lender-dashboard-container">        
-        <c:LenderDashboardSection sessionId = "{!v.sessionId}" accountId = "{!v.accountId}"/>
-    </div>
-</aura:component>

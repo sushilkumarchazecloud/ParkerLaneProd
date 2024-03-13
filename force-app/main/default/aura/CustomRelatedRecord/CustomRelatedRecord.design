@@ -1,6 +1,0 @@
-<design:component>
-	<design:attribute name="parentRecordAPIName" label="Parent Record API Name" />
-    <design:attribute name="headerName" label="Header Name" />
-    <design:attribute name="fieldSetName" label="FieldSet Name" />
-    <!--<design:attribute name="lookupFields" label="lookup Field" />-->
-</design:component>

@@ -1,3 +1,0 @@
-<apex:page standardController="Opportunity" extensions="SaveAndOpenPDF" action="{!savePDF}">
-<apex:pageMessages ></apex:pageMessages>
-</apex:page>

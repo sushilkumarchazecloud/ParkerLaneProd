@@ -1,5 +1,0 @@
-<aura:component controller="OpportunityLeadController" implements="force:appHostable,force:hasSObjectName,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
-    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
-    <aura:attribute access="public" name="recordId" type="String"/>
-    <aura:attribute access="public" name="sobjecttype" type="String" default="{!v.sObjectName}"/>
-</aura:component>
